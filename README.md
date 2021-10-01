@@ -72,3 +72,37 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 #### 7. Estado de la tuberia:
 ##### 7.1 Si se realiza el merge a la rama develop , los cambios pasarán a desarrollo y podra visualizar:
 
+
+# ANEXO
+
+1. Requisitos
+
+* Node: 14.18.0
+* Angular CLI: 12.2.7
+* Angular Core: 12.2.0
+* Nebular 8
+
+2. Thema
+
+upeu (theme-1-default, theme-1-dark)
+```shell
+primary: 934054
+success: 529871
+info: 0287B6
+warning: E0CA08
+danger: c62828
+```
+patmos (theme-2-default, theme-2-dark)
+```shell
+primary: 037AA4
+success: 529871
+info: 2B2B2A
+warning: E0CA08
+danger: c62828
+```
+
+Actualmente se carga 4 temas: 2 son de la upeu y los otros 2 son de patmos por defecto esta theme-1-default
+esto puede hacer que demore al momento de compilar, se recomienda tener solo 2 claro y oscuro.
+
+
+
