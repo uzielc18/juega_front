@@ -1,0 +1,115 @@
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
+import {delay, map, startWith, takeUntil} from 'rxjs/operators';
+import {Observable, of, Subject} from 'rxjs';
+
+import {NbAuthResult, NbAuthService} from '@nebular/auth';
+import {CORE_OPTIONS, CoreOptions} from '../core.options';
+import {AppService} from '../state/app.service';
+import {AppValidateTokenService} from '../state/app-validate-token.service';
+
+@Component({
+    selector: 'app-scaffold',
+    template: `
+        <div [nbSpinner]="spinner" nbSpinnerMessage="Cargando..." nbSpinnerSize="giant"
+             nbSpinnerStatus="primary">
+            <nb-layout withScroll [windowMode]="false">
+                <nb-layout-header class="header-actions" fixed>
+                    <nb-actions>
+                        <nb-action icon="menu-2-outline" (click)="toggle()"></nb-action>
+                        <nb-action>
+                            <img *ngIf="!hidden" src="../../../assets/logo-upeu-blanco.png" alt="Lamb" width='180'>
+                        </nb-action>
+                    </nb-actions>
+                    <nb-actions>
+                        <nb-action [nbContextMenu]="userMenu">
+                            <nb-user class="header-user"
+                                     [name]="user?.user_name"
+                                     [title]="user?.departament_name"
+                                     [picture]="user?.foto"
+                                     [onlyPicture]="minimum" size="large"></nb-user>
+                        </nb-action>
+                    </nb-actions>
+                </nb-layout-header>
+                <nb-sidebar responsive tag="core-sidebar">
+                    <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
+                    <nb-sidebar-footer *ngIf="!hidden">
+                        <nb-toggle (checkedChange)="changeTheme($event)" *ngIf="!minimum"></nb-toggle>
+                    </nb-sidebar-footer>
+                </nb-sidebar>
+                <nb-layout-column>
+                    <router-outlet></router-outlet>
+                </nb-layout-column>
+            </nb-layout>
+        </div>
+    `,
+    styleUrls: ['./scaffold.component.scss']
+})
+export class ScaffoldComponent implements OnInit, OnDestroy {
+
+    MENU_ITEMS: NbMenuItem[] = [];
+    minimum = false;
+    hidden = false;
+    user: any;
+    userMenu: any[] = [];
+
+    private destroy$: Subject<void> = new Subject<void>();
+    spinner = false;
+
+    constructor(
+        private sidebarService: NbSidebarService,
+        private themeService: NbThemeService,
+        private nbMenuService: NbMenuService,
+        private nbAuthService: NbAuthService,
+        private breakpointService: NbMediaBreakpointsService,
+        private appService: AppService,
+        private tokenService: AppValidateTokenService,
+        @Inject(CORE_OPTIONS) protected options: CoreOptions) {
+    }
+
+    ngOnInit(): void {
+        this.appService.onLoader().pipe(
+            takeUntil(this.destroy$)).subscribe((status: boolean) => this.spinner = status);
+
+        this.user = this.appService.user;
+        this.userMenu = this.appService.usernameMenu;
+        const {xl} = this.breakpointService.getBreakpointsMap();
+        this.themeService.onMediaQueryChange()
+            .pipe(
+                map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
+                takeUntil(this.destroy$),
+            )
+            .subscribe((isLessThanXl: boolean) => this.minimum = isLessThanXl);
+
+        this.nbMenuService.onItemClick()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((data: any) => {
+                if (data.item.subtag === 'logout') {
+                    this.nbAuthService.logout(this.options.strategyName)
+                        .pipe(takeUntil(this.destroy$))
+                        .subscribe((authResult: NbAuthResult) => {
+                            if (authResult.isSuccess()) {
+                                this.tokenService.authorize();
+                            }
+                        });
+                }
+            });
+
+
+    }
+
+    toggle(): void {
+        this.hidden = !this.hidden;
+        this.sidebarService.toggle(true, 'core-sidebar');
+    }
+
+    changeTheme(status: boolean): void {
+        this.themeService.changeTheme(status ? 'theme-1-dark' : 'theme-1-default');
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
+}
