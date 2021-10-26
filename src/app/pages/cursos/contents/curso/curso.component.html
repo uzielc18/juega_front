@@ -64,38 +64,44 @@
                             status="warning"
                           ></nb-progress-bar>
                         </div>
-                        <div class="d-flex col-sm-12 col-xl-auto mt-2 justify-content-center">
-                          <p class="text-black-50 me-4 mt-3">
-                            <nb-icon icon="people" class="fs-6"></nb-icon>16
-                          </p>
-                          <p class="text-black-50 me-4 mt-3">
-                            <nb-icon
-                              icon="checkmark-square-2"
-                              class="fs-6"
-                            ></nb-icon
-                            >16
-                          </p>
-                          <p class="text-black-50 me-4 mt-3">
-                            <nb-icon
-                              icon="message-circle"
-                              class="fs-6"
-                            ></nb-icon
-                            >16
-                          </p>
-                          <p class="text-black-50 me-4 mt-3">
-                            <nb-icon
-                              icon="checkmark-circle-2"
-                              class="fs-6"
-                            ></nb-icon
-                            >16
-                          </p>
-                          <p class="text-black-50 me-4 mt-3">
-                            <nb-icon icon="play-circle" class="fs-6"></nb-icon
-                            >16
-                          </p>
+                        <div class="col-sm-12 col-xl-auto">
+                          <div class="d-flex align-items-center mt-2">
+                            <p class="text-black-50 m-0 me-4">
+                              <nb-icon icon="people" class="fs-6"></nb-icon>16
+                            </p>
+                            <p class="text-black-50 m-0 me-4">
+                              <nb-icon
+                                icon="checkmark-square-2"
+                                class="fs-6"
+                              ></nb-icon
+                              >16
+                            </p>
+                            <p class="text-black-50 m-0 me-4">
+                              <nb-icon
+                                icon="message-circle"
+                                class="fs-6"
+                              ></nb-icon
+                              >16
+                            </p>
+                            <p class="text-black-50 m-0 me-4">
+                              <nb-icon
+                                icon="checkmark-circle-2"
+                                class="fs-6"
+                              ></nb-icon
+                              >16
+                            </p>
+                            <p class="text-black-50 m-0 me-4">
+                              <nb-icon icon="play-circle" class="fs-6"></nb-icon
+                              >16
+                            </p>
+                            <nb-button-group status="primary">
+                              <button nbButton>
+                                <nb-icon icon="edit-2-outline"></nb-icon>
+                              </button>
+                            </nb-button-group>
+                          </div>
                         </div>
                       </div>
-
                       <app-unidad></app-unidad>
                       <app-unidad></app-unidad>
                       <app-unidad></app-unidad>
@@ -120,7 +126,7 @@
               <nb-menu [items]="items"></nb-menu>
               <div class="buttons d-flex justify-content-around mt-4">
                 <button nbButton class="d-flex flex-column align-items-center">
-                  <nb-icon icon="file-text-outline" class="m-0"></nb-icon>
+                  <nb-icon icon="file-text-outline" class="m-0 me-4"></nb-icon>
                   <small class="fw-normal" style="font-size: 10px"
                     >Silabo</small
                   >
