@@ -1,0 +1,147 @@
+<nb-card>
+  <nb-card-header>
+    <div class="d-flex align-items-center">
+      <div class="ms-2">
+        <xng-breadcrumb [separator]="iconTemplate"></xng-breadcrumb>
+        <ng-template #iconTemplate>
+          <nb-icon icon="chevron-right"></nb-icon>
+        </ng-template>
+      </div>
+      <div class="ms-auto d-none d-xxl-block me-5">
+        <nb-select placeholder="Semestre 2021 - 1" status="primary">
+          <nb-option>Semestre 2021 - 1</nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="p-0">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 col-xxl-9">
+          <div class="row">
+            <div class="col mt-3" style="height: 350px; overflow: hidden">
+              <img
+                src="../../../../../assets/books.jpg"
+                class="img-fluid"
+                alt=""
+                style="object-fit: fill"
+              />
+            </div>
+          </div>
+          <div class="container-fluid" style="margin-top: -180px">
+            <div class="row">
+              <div class="col">
+                <div class="row px-4">
+                  <h2 class="fs-2 text-white mx-1">
+                    Capacidades Comunicativas I
+                  </h2>
+                  <small
+                    style="
+                      background: linear-gradient(
+                        to right,
+                        #934054,
+                        transparent
+                      );
+                      border-radius: 100px;
+                    "
+                    class="text-white px-2 py-0 mx-3"
+                  >
+                    2021-1 - INGENIERIA DE SISTEMAS - CICLO 1 - Campus Lima
+                  </small>
+                </div>
+                <div class="row px-3" style="margin-top: 15px">
+                  <nb-card>
+                    <nb-card-body class="py-4 px-3">
+                      <div class="row justify-content-between mb-3">
+                        <div class="col-sm-12 col-xl-6">
+                          <small class="d-flex justify-content-between mb-2">
+                            <span>Avance del curso</span>
+                            <span>40%</span>
+                          </small>
+                          <nb-progress-bar
+                            size="tiny"
+                            [value]="40"
+                            status="warning"
+                          ></nb-progress-bar>
+                        </div>
+                        <div class="d-flex col-sm-12 col-xl-auto mt-2 justify-content-center">
+                          <p class="text-black-50 me-4 mt-3">
+                            <nb-icon icon="people" class="fs-6"></nb-icon>16
+                          </p>
+                          <p class="text-black-50 me-4 mt-3">
+                            <nb-icon
+                              icon="checkmark-square-2"
+                              class="fs-6"
+                            ></nb-icon
+                            >16
+                          </p>
+                          <p class="text-black-50 me-4 mt-3">
+                            <nb-icon
+                              icon="message-circle"
+                              class="fs-6"
+                            ></nb-icon
+                            >16
+                          </p>
+                          <p class="text-black-50 me-4 mt-3">
+                            <nb-icon
+                              icon="checkmark-circle-2"
+                              class="fs-6"
+                            ></nb-icon
+                            >16
+                          </p>
+                          <p class="text-black-50 me-4 mt-3">
+                            <nb-icon icon="play-circle" class="fs-6"></nb-icon
+                            >16
+                          </p>
+                        </div>
+                      </div>
+
+                      <app-unidad></app-unidad>
+                      <app-unidad></app-unidad>
+                      <app-unidad></app-unidad>
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-xxl-3">
+          <div class="col d-none d-xxl-block">
+            <div class="container mt-5 d-flex flex-column align-content-center">
+              <nb-form-field>
+                <input type="text" nbInput placeholder="Buscar" shape="round" />
+                <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+              </nb-form-field>
+              <p class="mt-4 text-center">
+                <span>Navegacion de Contenido</span>
+              </p>
+              <nb-menu [items]="items"></nb-menu>
+              <div class="buttons d-flex justify-content-around mt-4">
+                <button nbButton class="d-flex flex-column align-items-center">
+                  <nb-icon icon="file-text-outline" class="m-0"></nb-icon>
+                  <small class="fw-normal" style="font-size: 10px"
+                    >Silabo</small
+                  >
+                </button>
+                <button nbButton class="d-flex flex-column align-items-center">
+                  <nb-icon icon="message-square-outline" class="m-0"></nb-icon>
+                  <small class="fw-normal" style="font-size: 10px"
+                    >Silabo</small
+                  >
+                </button>
+                <button nbButton class="d-flex flex-column align-items-center">
+                  <nb-icon icon="email-outline" class="m-0"></nb-icon>
+                  <small class="fw-normal" style="font-size: 10px"
+                    >Silabo</small
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

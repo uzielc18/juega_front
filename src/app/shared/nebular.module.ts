@@ -8,10 +8,12 @@ import {
     NbCheckboxModule, NbContextMenuModule,
     NbDatepickerModule,
     NbDialogModule,
+    NbFormFieldModule,
     NbIconModule,
-    NbInputModule, NbListModule, NbPopoverModule,
+    NbInputModule, NbLayoutModule, NbListModule, NbMenuModule, NbPopoverModule,
+    NbProgressBarModule,
     NbRadioModule,
-    NbSelectModule, NbSpinnerModule,
+    NbSelectModule, NbSidebarModule, NbSpinnerModule,
     NbTabsetModule,
     NbTimepickerModule, NbToggleModule,
     NbTooltipModule
@@ -47,7 +49,10 @@ const COMPONENTS: any[] = [
     NbActionsModule,
     NbPopoverModule,
     NbSpinnerModule,
-    NbContextMenuModule
+    NbContextMenuModule,
+    NbProgressBarModule,
+    NbFormFieldModule,
+    NbMenuModule
 ];
 
 @NgModule({

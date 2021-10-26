@@ -1,36 +1,58 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { NbButtonModule, NbCardModule } from '@nebular/theme';
+import { NebularModule } from '../../shared/nebular.module';
+import { BreadcrumbModule } from 'xng-breadcrumb';
+
 import { MainComponent } from './contents/main/main.component';
-import {RouterModule} from '@angular/router';
-import {NbButtonModule, NbCardModule} from '@nebular/theme';
 import { ChildrenComponent } from './components/children/children.component';
 import { InfoComponent } from './components/info/info.component';
-import {NebularModule} from '../../shared/nebular.module';
-
-
+import { CursoComponent } from './contents/curso/curso.component';
+import { UnidadComponent } from './components/unidad/unidad.component';
+import { SesionComponent } from './components/sesion/sesion.component';
+import { CursosComponent } from './contents/cursos/cursos.component';
 
 @NgModule({
   declarations: [
     MainComponent,
     ChildrenComponent,
-    InfoComponent
+    InfoComponent,
+    CursoComponent,
+    UnidadComponent,
+    SesionComponent,
+    CursosComponent,
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild([
-            {
-                path: '',
-                component: MainComponent,
-                children: [
-                    {
-                        path: 'children',
-                        component: ChildrenComponent
-                    },
-                ]
-            }
-
-        ]),
-      NebularModule
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: CursosComponent,
+      },
+      {
+        path: '',
+        component: CursoComponent,
+        children: [
+          {
+            path: 'course',
+            data: { breadcrumb: 'Capacidades Comunicativas I' },
+          },
+        ],
+      },
+      {
+        path: '',
+        component: MainComponent,
+        children: [
+          {
+            path: 'children',
+            component: ChildrenComponent,
+          },
+        ],
+      },
+    ]),
+    NebularModule,
+    BreadcrumbModule,
+  ],
 })
-export class CursosModule { }
+export class CursosModule {}

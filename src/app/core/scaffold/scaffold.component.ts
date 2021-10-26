@@ -47,7 +47,47 @@ import {AppValidateTokenService} from '../state/app-validate-token.service';
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
 
-    MENU_ITEMS: NbMenuItem[] = [];
+    // MENU_ITEMS: NbMenuItem[] = [];
+    MENU_ITEMS: NbMenuItem[] = [
+        {
+          title: 'Inicio',
+          icon: 'home-outline',
+          link: 'dashboard'
+        },
+        {
+          title: 'Agenda',
+          icon: 'calendar-outline',
+        },
+        {
+          title: 'Asignaturas',
+          icon: 'book-open-outline',
+          link: 'courses'
+        },
+        {
+          title: 'Tareas',
+          icon: 'clipboard-outline',
+        },
+        {
+          title: 'Evaluaciones',
+          icon: 'checkmark-circle-outline',
+        },
+        {
+          title: 'Investigacion',
+          icon: 'thermometer-outline',
+        },
+        {
+          title: 'Publicaciones',
+          icon: 'file-text-outline',
+        },
+        {
+          title: 'Biblioteca',
+          icon: 'book-outline',
+        },
+        {
+          title: 'Anuncios',
+          icon: 'bell-outline',
+        },
+      ];
     minimum = false;
     hidden = false;
     user: any;
