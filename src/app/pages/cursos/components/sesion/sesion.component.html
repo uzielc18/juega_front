@@ -1,20 +1,29 @@
 <br />
 <nb-card class="mb-1">
-  <nb-card-body class="p-2">
-    <div class="container ps-3 pe-2">
+  <nb-card-body class="p-0">
+    <div class="container ps-0 pe-3">
       <div class="d-flex align-items-center">
-        <div class="">
-          <p class="d-flex flex-column align-items-center m-0">
-            <span class="fs-4 fw-bold">06</span
-            ><small class="fw-light">Marzo</small>
-          </p>
+        <div
+          class="
+            d-flex
+            flex-column
+            align-items-center
+            m-0
+            bg-light
+            py-2
+            px-4
+            rounded-start
+          "
+        >
+          <span class="fs-4 fw-bold pt-2">06</span
+          ><small class="fw-light pb-2">Marzo</small>
         </div>
         <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex flex-column ps-3">
             <small class="m-1 fw-bold">
               1.1 - Esto es un tema de la sesion
             </small>
-            <div>
+            <div class="d-flex align-items-center ms-1">
               <nb-icon
                 class="me-2 fs-4 text-black-50"
                 icon="video-outline"
@@ -45,23 +54,25 @@
               ></nb-icon>
             </div>
           </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between w-100 p-0">
           <nb-icon
-            class="fs-3 mt-4"
+            class="fs-2 mt-4 me-6"
             icon="arrow-right"
             style="color: #6dcb96"
           ></nb-icon>
-        </div>
-        <div class="ms-auto">
-          <nb-button-group ghost class="me-2 shadow-sm">
-            <button nbButton>
-              <nb-icon icon="edit-2-outline" class="fs-4"></nb-icon>
-            </button>
-          </nb-button-group>
-          <nb-button-group class="shadow-sm rounded">
-            <button nbButton>
-              <nb-icon icon="plus" class="fs-4"></nb-icon>
-            </button>
-          </nb-button-group>
+          <div class="ms-6">
+            <nb-button-group ghost>
+              <button nbButton class="me-2 shadow-sm">
+                <nb-icon icon="edit-2-outline" class="fs-4"></nb-icon>
+              </button>
+            </nb-button-group>
+            <nb-button-group>
+              <button nbButton class="shadow-sm">
+                <nb-icon icon="plus" class="fs-4"></nb-icon>
+              </button>
+            </nb-button-group>
+          </div>
         </div>
       </div>
     </div>
