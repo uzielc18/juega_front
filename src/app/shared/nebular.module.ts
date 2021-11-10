@@ -14,17 +14,20 @@ import {
   NbFormFieldModule,
   NbIconModule,
   NbInputModule,
+  NbLayoutModule,
   NbListModule,
   NbMenuModule,
   NbPopoverModule,
   NbProgressBarModule,
   NbRadioModule,
   NbSelectModule,
+  NbSidebarModule,
   NbSpinnerModule,
   NbTabsetModule,
   NbTimepickerModule,
   NbToggleModule,
   NbTooltipModule,
+  NbWindowModule,
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -40,8 +43,8 @@ const COMPONENTS: any[] = [
   NbInputModule,
   NbSelectModule,
   NbAutocompleteModule,
-  NbDatepickerModule,
-  NbTimepickerModule,
+  // NbDatepickerModule,
+  // NbTimepickerModule,
   NbRadioModule,
   NbCheckboxModule,
   NbTooltipModule,
@@ -58,6 +61,11 @@ const COMPONENTS: any[] = [
   NbFormFieldModule,
   NbMenuModule,
   NbButtonGroupModule,
+  NbLayoutModule,
+  NbSidebarModule,
+  NbWindowModule.forRoot(),
+  NbDatepickerModule.forRoot(),
+  NbTimepickerModule.forRoot(),
 ];
 
 @NgModule({
