@@ -4,14 +4,12 @@ import { NbMenuItem } from '@nebular/theme';
 @Component({
   selector: 'app-curso',
   templateUrl: './curso.component.html',
-  styleUrls: ['./curso.component.scss']
+  styleUrls: ['./curso.component.scss'],
 })
 export class CursoComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   items: NbMenuItem[] = [
     {
@@ -32,4 +30,5 @@ export class CursoComponent implements OnInit {
     },
   ];
 
+  selectedItem = '0';
 }

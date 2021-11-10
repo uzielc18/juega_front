@@ -13,3 +13,16 @@
   background-color: #0F483F;
   color: white;
 }
+
+.xng-breadcrumb-trail {
+  color: var(--text-primary-color) !important;
+}
+
+.xng-breadcrumb-link:hover {
+  color: var(--text-primary-color) !important;
+  text-decoration: none !important;
+}
+
+.select-button {
+  color: var(--text-primary-color) !important;
+}

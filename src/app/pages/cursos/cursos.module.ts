@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NbButtonModule, NbCardModule } from '@nebular/theme';
 import { NebularModule } from '../../shared/nebular.module';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 

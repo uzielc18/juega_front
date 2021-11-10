@@ -37,7 +37,7 @@ import {AppValidateTokenService} from '../state/app-validate-token.service';
                         <nb-toggle (checkedChange)="changeTheme($event)" *ngIf="!minimum"></nb-toggle>
                     </nb-sidebar-footer>
                 </nb-sidebar>
-                <nb-layout-column>
+                <nb-layout-column class="p-2">
                     <router-outlet></router-outlet>
                 </nb-layout-column>
             </nb-layout>

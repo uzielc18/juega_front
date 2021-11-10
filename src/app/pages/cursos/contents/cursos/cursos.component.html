@@ -1,5 +1,5 @@
-<nb-card>
-  <nb-card-header>
+<nb-card class="m-0 border-0">
+  <nb-card-header class="ps-3 pe-2 py-2">
     <div class="d-flex align-items-center">
       <div class="ms-2">
         <xng-breadcrumb [separator]="iconTemplate"></xng-breadcrumb>
@@ -7,9 +7,10 @@
           <nb-icon icon="chevron-right"></nb-icon>
         </ng-template>
       </div>
-      <div class="ms-auto d-none d-xxl-block me-5">
-        <nb-select placeholder="Semestre 2021 - 1" status="primary">
-          <nb-option>Semestre 2021 - 1</nb-option>
+      <div class="ms-auto d-none d-xxl-block">
+        <nb-select [(selected)]="selectedItem" status="primary">
+          <nb-option value="0">Semestre 2021 - 1</nb-option>
+          <nb-option value="1">Semestre 2021 - 2</nb-option>
         </nb-select>
       </div>
     </div>
