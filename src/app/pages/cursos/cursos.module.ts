@@ -12,6 +12,7 @@ import { UnidadComponent } from './components/unidad/unidad.component';
 import { SesionComponent } from './components/sesion/sesion.component';
 import { CursosComponent } from './contents/cursos/cursos.component';
 import { HomeworkFormComponent } from './components/homework-form/homework-form.component';
+import { CursoCardComponent } from './components/curso-card/curso-card.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HomeworkFormComponent } from './components/homework-form/homework-form.
     SesionComponent,
     CursosComponent,
     HomeworkFormComponent,
+    CursoCardComponent,
   ],
   imports: [
     CommonModule,
