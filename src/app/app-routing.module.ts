@@ -22,6 +22,10 @@ const routes: Routes = [
                 loadChildren: () => import('./pages/cursos/cursos.module').then(m => m.CursosModule)
             },
             {
+                path: 'asignaturas',
+                loadChildren: () => import('./pages/asignaturas/asignaturas.module').then(m => m.AsignaturasModule)
+            },
+            {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'
