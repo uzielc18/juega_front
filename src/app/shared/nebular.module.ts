@@ -43,8 +43,6 @@ const COMPONENTS: any[] = [
   NbInputModule,
   NbSelectModule,
   NbAutocompleteModule,
-  // NbDatepickerModule,
-  // NbTimepickerModule,
   NbRadioModule,
   NbCheckboxModule,
   NbTooltipModule,
@@ -63,7 +61,7 @@ const COMPONENTS: any[] = [
   NbButtonGroupModule,
   NbLayoutModule,
   NbSidebarModule,
-  NbWindowModule.forRoot(),
+  NbWindowModule,
   NbDatepickerModule.forRoot(),
   NbTimepickerModule.forRoot(),
 ];

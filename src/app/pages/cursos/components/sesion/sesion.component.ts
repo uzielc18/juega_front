@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NbWindowService } from '@nebular/theme';
+import { NbDialogService } from '@nebular/theme';
 import { HomeworkFormComponent } from '../homework-form/homework-form.component';
 
 @Component({
@@ -8,13 +8,13 @@ import { HomeworkFormComponent } from '../homework-form/homework-form.component'
   styleUrls: ['./sesion.component.scss'],
 })
 export class SesionComponent implements OnInit {
-  constructor(
-    private windowService: NbWindowService,
-  ) {}
+  constructor(private dialogService: NbDialogService) {}
 
   ngOnInit(): void {}
 
-  openWindow() {
-    this.windowService.open(HomeworkFormComponent, { title: `Window` });
+  open() {
+    this.dialogService.open(HomeworkFormComponent, {
+      dialogClass: 'dialog-limited-height',
+    });
   }
 }

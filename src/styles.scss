@@ -1,16 +1,15 @@
-@import 'themes';
+@import "themes";
 
-@import '~@nebular/theme/styles/globals';
-@import '~node_modules/bootstrap/scss/bootstrap';
+@import "~@nebular/theme/styles/globals";
+@import "~node_modules/bootstrap/scss/bootstrap";
 
 @include nb-install() {
   @include nb-theme-global();
-};
+}
 /* You can add global styles to this file, and also import other style files */
 
-
 .mi-estilo-global {
-  background-color: #0F483F;
+  background-color: #0f483f;
   color: white;
 }
 
@@ -32,5 +31,14 @@
 }
 
 .progress-value {
-  background-color: #E39D0D !important;
+  background-color: #e39d0d !important;
+}
+
+.dialog-limited-height {
+  max-height: 90vh;
+  max-width: 500px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
