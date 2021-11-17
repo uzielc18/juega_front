@@ -13,7 +13,7 @@ const routes: Routes = [
     component: ScaffoldComponent,
     data: {
       breadcrumb: {
-        label: 'Home',
+        label: 'Inicio',
       }
     },
     canActivate: [Auth2Guard],

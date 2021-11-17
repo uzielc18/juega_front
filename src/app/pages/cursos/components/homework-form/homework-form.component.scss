@@ -5,11 +5,22 @@ nb-card {
   border: none;
   & nb-card-body {
     padding: 0;
-
-    & nb-layout {
-      & nb-layout-column {
-        height: 100%;
-      }
-    }
   }
+}
+
+.menu-container {
+  // background-color: #f7f7f7;
+  background-color: #692040;
+}
+
+.menu-title {
+  font-size: 11px;
+}
+
+.date-input {
+  width: 55%;
+}
+
+.hour-input {
+  width: 43%;
 }
