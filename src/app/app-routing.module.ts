@@ -3,6 +3,7 @@ import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { Auth2Guard, ScaffoldComponent } from './core';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { DashboardModule } from './pages/dashboard/dashboard.module';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -30,8 +31,9 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'dashboard',
         pathMatch: 'full',
+        loadChildren: () =>
+          import('./pages/dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
       {
         path: '**',

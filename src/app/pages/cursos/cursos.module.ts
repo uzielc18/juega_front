@@ -26,6 +26,9 @@ import { CursoCardComponent } from './components/curso-card/curso-card.component
     HomeworkFormComponent,
     CursoCardComponent,
   ],
+  exports: [
+    CursosComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild([
