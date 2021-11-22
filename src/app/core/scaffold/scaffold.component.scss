@@ -1,0 +1,20 @@
+:host {
+
+    ::ng-deep nb-layout-header.header-actions nav {
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+
+    h4 {
+        color: white;
+    }
+
+    ::ng-deep nb-user.header-user div {
+        color: white;
+    }
+
+    ::ng-deep nb-action nb-icon {
+        color: white;
+    }
+}
+
