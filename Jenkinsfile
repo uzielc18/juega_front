@@ -19,9 +19,9 @@ pipeline {
       }
       steps {
         echo 'preparando despliegue en el entorno desarollo'
-        sh 'ssh devops@192.168.15.52 sudo chown -R devops:apache /u01/vhosts/www.upeu.dev/httpdocs/patmos-base/fronts/patmos'
+        sh 'ssh devops@192.168.15.49 sudo chown -R devops:apache /u01/vhosts/www.upeu.dev/httpdocs/patmos-base/fronts/patmos'
         sh 'ssh devops@192.168.12.7 "rsync -avz /u02/patmos-base-build-dev/patmos-dist/dist devops@192.168.15.52:/u01/vhosts/www.upeu.dev/httpdocs/patmos-base/fronts/patmos"'
-        sh 'ssh devops@192.168.15.52 sudo chown -R apache:apache /u01/vhosts/www.upeu.dev/httpdocs/patmos-base/fronts/patmos'
+        sh 'ssh devops@192.168.15.49 sudo chown -R apache:apache /u01/vhosts/www.upeu.dev/httpdocs/patmos-base/fronts/patmos'
       }
     }
     
