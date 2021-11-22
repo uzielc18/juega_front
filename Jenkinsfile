@@ -9,7 +9,7 @@ pipeline {
         echo 'preparando construcción en el entorno desarollo'
         sh 'ssh devops@192.168.12.7 sudo chown -R devops:devops  /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist'
         sh ' rsync -avz * .[^.]* devops@192.168.12.7:/u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist'
-        sh 'ssh devops@192.168.12.7 "cd /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist && nvm use 12.16.1 && npm i -g @angular/cli && npm install"'
+        sh 'ssh devops@192.168.12.7 "cd /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist && nvm use 16.13 && npm i -g @angular/cli && npm install"'
         sh 'ssh devops@192.168.12.7 "cd /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist && ng build --configuration dev --base-href /lamb-patmos/fronts/patmos-upeu-base-front/ --output-path /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist"'
       }
     }
