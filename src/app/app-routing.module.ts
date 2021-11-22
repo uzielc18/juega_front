@@ -15,13 +15,22 @@ const routes: Routes = [
     data: {
       breadcrumb: {
         label: 'Inicio',
-      }
+      },
     },
     canActivate: [Auth2Guard],
     children: [
       {
         path: 'dashboard',
         component: DashboardComponent,
+        data: { breadcrumb: 'Asignaturas' },
+      },
+      {
+        path: 'dashboard',
+        data: { breadcrumb: 'Asignaturas' },
+        loadChildren: () =>
+          import('./pages/dashboard/dashboard.module').then(
+            (m) => m.DashboardModule
+          ),
       },
       {
         path: 'courses',
@@ -31,9 +40,8 @@ const routes: Routes = [
       },
       {
         path: '',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
-        loadChildren: () =>
-          import('./pages/dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
       {
         path: '**',

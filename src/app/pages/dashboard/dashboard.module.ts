@@ -4,6 +4,7 @@ import { NebularModule } from '../../shared/nebular.module';
 import { DashboardComponent } from './dashboard.component';
 import { CursosModule } from '../cursos/cursos.module';
 import { RouterModule } from '@angular/router';
+import { CursoComponent } from '../cursos/contents/curso/curso.component';
 
 
 
@@ -17,7 +18,7 @@ import { RouterModule } from '@angular/router';
       {
         path: '',
         component: DashboardComponent,
-      }
+      },
     ]),
     NebularModule,
     CursosModule
