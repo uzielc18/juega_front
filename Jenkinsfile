@@ -13,7 +13,7 @@ pipeline {
         sh 'ssh devops@192.168.12.7 "cd /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist && ng build --patmos dev --base-href /lamb-patmos/fronts/patmos-upeu-base-front/ --outputPath /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist"'
       }
     }
-    stage('Despliegue desarrollo') {
+    stage('Despliegue Entorno de Desarrollo') {
       when {
         branch 'develop'
       }
