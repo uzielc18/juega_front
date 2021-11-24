@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { NebularModule } from '../../shared/nebular.module';
 import { BreadcrumbModule } from 'xng-breadcrumb';
+
+import { CursosRoutingModule } from './cursos-routing.module';
 
 import { MainComponent } from './contents/main/main.component';
 import { ChildrenComponent } from './components/children/children.component';
@@ -13,6 +14,8 @@ import { SesionComponent } from './components/sesion/sesion.component';
 import { CursosComponent } from './contents/cursos/cursos.component';
 import { HomeworkFormComponent } from './components/homework-form/homework-form.component';
 import { CursoCardComponent } from './components/curso-card/curso-card.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { NavegacionComponent } from './components/navegacion/navegacion.component';
 
 @NgModule({
   declarations: [
@@ -25,38 +28,15 @@ import { CursoCardComponent } from './components/curso-card/curso-card.component
     CursosComponent,
     HomeworkFormComponent,
     CursoCardComponent,
+    BreadcrumbComponent,
+    NavegacionComponent,
   ],
   exports: [
-    CursosComponent,
+    CursosComponent
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: CursosComponent,
-      },
-      {
-        path: '',
-        component: CursoComponent,
-        children: [
-          {
-            path: 'course',
-            data: { breadcrumb: 'Capacidades Comunicativas I' },
-          },
-        ],
-      },
-      {
-        path: '',
-        component: MainComponent,
-        children: [
-          {
-            path: 'children',
-            component: ChildrenComponent,
-          },
-        ],
-      },
-    ]),
+    CursosRoutingModule,
     NebularModule,
     BreadcrumbModule,
   ],

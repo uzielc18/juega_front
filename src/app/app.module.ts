@@ -20,7 +20,7 @@ import {RouterModule} from '@angular/router';
       moduleId: environment.module_id
     }),
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

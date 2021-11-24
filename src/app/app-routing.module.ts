@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { Auth2Guard, ScaffoldComponent } from './core';
+import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
-import { DashboardModule } from './pages/dashboard/dashboard.module';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -21,16 +21,7 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: DashboardComponent,
-        data: { breadcrumb: 'Asignaturas' },
-      },
-      {
-        path: 'dashboard',
-        data: { breadcrumb: 'Asignaturas' },
-        loadChildren: () =>
-          import('./pages/dashboard/dashboard.module').then(
-            (m) => m.DashboardModule
-          ),
+        component: DashboardComponent
       },
       {
         path: 'courses',
