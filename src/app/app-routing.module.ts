@@ -10,6 +10,11 @@ const config: ExtraOptions = {
 };
 const routes: Routes = [
   {
+    path: 'auth',
+    loadChildren: () =>
+      import('./pages/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
     path: 'pages',
     component: ScaffoldComponent,
     data: {
@@ -21,7 +26,7 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: DashboardComponent
+        component: DashboardComponent,
       },
       {
         path: 'courses',

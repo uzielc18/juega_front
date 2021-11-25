@@ -16,6 +16,8 @@ import { HomeworkFormComponent } from './components/homework-form/homework-form.
 import { CursoCardComponent } from './components/curso-card/curso-card.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
+import { TrabajoComponent } from './contents/trabajo/trabajo.component';
+import { VideoConferenciaComponent } from './contents/video-conferencia/video-conferencia.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { NavegacionComponent } from './components/navegacion/navegacion.componen
     CursoCardComponent,
     BreadcrumbComponent,
     NavegacionComponent,
+    TrabajoComponent,
+    VideoConferenciaComponent,
   ],
   exports: [
     CursosComponent
