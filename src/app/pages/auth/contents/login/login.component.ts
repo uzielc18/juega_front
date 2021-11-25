@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 export class LoginComponent implements OnDestroy {
 
   token!: NbAuthOAuth2Token | null;
+  loginWith: boolean = true;
 
   private destroy$ = new Subject<void>();
 
@@ -43,6 +44,10 @@ export class LoginComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  clickEmail() {
+    this.loginWith = !this.loginWith;
   }
 
 }
