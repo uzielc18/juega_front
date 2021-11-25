@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { Auth2Guard, ScaffoldComponent } from './core';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { NotfoundModule } from './pages/notfound/notfound.module';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const config: ExtraOptions = {
   useHash: false,
