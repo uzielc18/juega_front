@@ -1,53 +1,97 @@
-import { Component, OnDestroy } from '@angular/core';
-import { NbAuthOAuth2Token, NbAuthResult, NbAuthService, NbAuthToken } from '@nebular/auth';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UsuarioService } from '../../../../shared/services/usuario.service';
+
+declare const gapi: any;
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnInit {
+  public formSubmitted = false;
+  public auth2: any;
+  public loginWith: boolean = true;
 
-  token!: NbAuthOAuth2Token | null;
-  loginWith: boolean = true;
+  public loginForm = this.fb.group({
+    email: [
+      localStorage.getItem('email') || '',
+      [Validators.required, Validators.email],
+    ],
+    password: ['', Validators.required],
+    remember: [false],
+  });
 
-  private destroy$ = new Subject<void>();
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private usuarioService: UsuarioService,
+    private ngZone: NgZone
+  ) {}
 
-  constructor(private authService: NbAuthService) {
-    this.authService
-      .onTokenChange()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((token: NbAuthToken) => {
-        this.token = null;
-        if (token && token.isValid()) {
-          this.token = token as NbAuthOAuth2Token;
-        }
-      });
+  ngOnInit(): void {
+    this.renderButton();
   }
 
   login() {
-    this.authService
-      .authenticate('google')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((authResult: NbAuthResult) => {});
+    this.usuarioService.login(this.loginForm.value).subscribe(
+      (resp) => {
+        if (this.loginForm.get('remember')?.value) {
+          localStorage.setItem('email', this.loginForm.get('email')?.value);
+        } else {
+          localStorage.removeItem('email');
+        }
+        // navegar al dashboard
+        this.router.navigateByUrl('/');
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    // console.log(this.loginForm.value)
   }
 
-  logout() {
-    this.authService
-      .logout('google')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((authResult: NbAuthResult) => {});
+  renderButton() {
+    gapi.signin2.render('my-signin2', {
+      scope: 'profile email',
+      width: 240,
+      height: 50,
+      longtitle: true,
+      theme: 'dark',
+    });
+    this.startApp();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  async startApp() {
+    await this.usuarioService.googleInit();
+    this.auth2 = this.usuarioService.auth2;
+
+    this.attachSignin(document.getElementById('my-signin2'));
+  }
+
+  attachSignin(element: any) {
+    this.auth2.attachClickHandler(
+      element,
+      {},
+      (googleUser: any) => {
+        const id_token = googleUser.getAuthResponse().id_token;
+        // console.log(id_token);
+        this.usuarioService.loginGoogle(id_token).subscribe((resp) => {
+          // navegar al dashboard
+          this.ngZone.run(() => {
+            this.router.navigateByUrl('/');
+          });
+        });
+      },
+      (error: any) => {
+        alert(JSON.stringify(error, undefined, 2));
+      }
+    );
   }
 
   clickEmail() {
     this.loginWith = !this.loginWith;
   }
-
 }
