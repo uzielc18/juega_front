@@ -9,5 +9,4 @@ export class CursosComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-  selectedItem = '0';
 }
