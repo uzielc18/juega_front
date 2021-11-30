@@ -24,8 +24,8 @@ import {
         NbOAuth2AuthStrategy.setup({
           name: 'google',
           clientId:
-            '451397129105-sh5t7qilt3cv1adu1ejp9vs729qi5vua.apps.googleusercontent.com',
-          clientSecret: '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',
+            '649461344129-0thst4vl3n9aj0j7njie8nd73psls419.apps.googleusercontent.com',
+          clientSecret: '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',
           authorize: {
             endpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
             responseType: NbOAuth2ResponseType.TOKEN,
