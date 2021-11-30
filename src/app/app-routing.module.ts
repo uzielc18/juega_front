@@ -23,7 +23,7 @@ const routes: Routes = [
         label: 'Inicio',
       },
     },
-    canActivate: [Auth2Guard],
+    // canActivate: [Auth2Guard],
     children: [
       {
         path: 'dashboard',
