@@ -10,7 +10,8 @@ export const environment = {
     },
     apiUrls: {
         auth: 'https://www.upeu.dev/lamb-academic/backs/auth',
-        setup: 'https://www.upeu.dev/lamb-academic/backs/setup'
+        setup: 'https://www.upeu.dev/lamb-academic/backs/setup',
+        base_url: 'https://www.upeu.dev/lamb-patmos/backs/patmos-upeu-base-back/api'
     },
     shellApp: 'https://www.upeu.dev/lamb-academic/fronts/shell',
 };
