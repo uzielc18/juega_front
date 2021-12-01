@@ -61,7 +61,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         {
           title: 'Asignaturas',
           icon: 'book-open-outline',
-          link: 'courses'
+          link: 'asignaturas'
         },
         {
           title: 'Tareas',
