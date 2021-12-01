@@ -18,11 +18,6 @@ const routes: Routes = [
   {
     path: 'pages',
     component: ScaffoldComponent,
-    data: {
-      breadcrumb: {
-        label: 'Inicio',
-      },
-    },
     // canActivate: [Auth2Guard],
     children: [
       {

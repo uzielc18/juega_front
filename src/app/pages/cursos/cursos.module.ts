@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NebularModule } from '../../shared/nebular.module';
-import { BreadcrumbModule } from 'xng-breadcrumb';
 
 import { CursosRoutingModule } from './cursos-routing.module';
 
@@ -16,6 +15,7 @@ import { HomeworkFormComponent } from './components/homework-form/homework-form.
 import { CursoCardComponent } from './components/curso-card/curso-card.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
+import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
 
 @NgModule({
   declarations: [
@@ -32,6 +32,11 @@ import { NavegacionComponent } from './components/navegacion/navegacion.componen
     NavegacionComponent,
   ],
   exports: [CursosComponent],
-  imports: [CommonModule, CursosRoutingModule, NebularModule, BreadcrumbModule],
+  imports: [
+    CommonModule,
+    CursosRoutingModule,
+    NebularModule,
+    NgDynamicBreadcrumbModule,
+  ],
 })
 export class CursosModule {}
