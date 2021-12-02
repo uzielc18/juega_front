@@ -1,9 +1,12 @@
 <div class="d-flex align-items-center">
   <div class="ms-2">
-    <xng-breadcrumb [separator]="iconTemplate"></xng-breadcrumb>
-    <ng-template #iconTemplate>
-      <nb-icon icon="chevron-right"></nb-icon>
-    </ng-template>
+    <app-ng-dynamic-breadcrumb
+      bgColor="#fff"
+      fontColor="#969696"
+      symbol="&rang;"
+      lastLinkColor="#A76575"
+      fontSize="15px"
+    ></app-ng-dynamic-breadcrumb>
   </div>
   <div class="ms-auto d-none d-xxl-block">
     <nb-select [(selected)]="selectedItem" status="primary">

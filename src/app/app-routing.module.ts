@@ -18,11 +18,6 @@ const routes: Routes = [
   {
     path: 'pages',
     component: ScaffoldComponent,
-    data: {
-      breadcrumb: {
-        label: 'Inicio',
-      },
-    },
     // canActivate: [Auth2Guard],
     children: [
       {
@@ -30,7 +25,7 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path: 'courses',
+        path: 'asignaturas',
         data: { breadcrumb: 'Asignaturas' },
         loadChildren: () =>
           import('./pages/cursos/cursos.module').then((m) => m.CursosModule),
