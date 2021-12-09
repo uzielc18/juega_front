@@ -12,11 +12,11 @@ import { CORE_OPTIONS, CoreOptions } from '../core.options';
 import { AppValidateTokenService } from '../state/app-validate-token.service';
 
 @Component({
-  selector: 'app-oauth2-callback',
+  selector: 'app-oauth2google-callback',
   template: `<span>Authenticating...</span>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Oauth2CallbackComponent implements OnDestroy {
+export class Oauth2GoogleCallbackComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -26,13 +26,13 @@ export class Oauth2CallbackComponent implements OnDestroy {
     @Inject(CORE_OPTIONS) protected options: CoreOptions
   ) {
     this.authService
-      .authenticate(this.options.strategyName)
+      .authenticate(this.options.strategyGoogleName)
       .pipe(takeUntil(this.destroy$))
       .subscribe((authResult: NbAuthResult) => {
         if (authResult.isSuccess()) {
-          const response: any = authResult.getToken();
+          console.log(authResult);
           this.appValidateTokenService
-            .validateLamb(response.token.access_token)
+            .validateGoogle(authResult.getToken().getValue())
             .then(() => {
               if (authResult.isSuccess() && authResult.getRedirect()) {
                 window.location.href = authResult.getRedirect();
