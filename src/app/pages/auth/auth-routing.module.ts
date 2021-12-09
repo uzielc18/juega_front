@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './contents/login/login.component';
-import { CallbackComponent } from './contents/callback/callback.component';
 
 const routes: Routes = [
   {
@@ -10,10 +9,6 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent
-      },
-      {
-        path: 'callback',
-        component: CallbackComponent
       },
       {
         path: '**',

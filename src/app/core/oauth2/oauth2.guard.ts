@@ -12,7 +12,7 @@ export class Auth2Guard implements CanActivate {
     return this.authService.isAuthenticated().pipe(
       tap((authenticated) => {
         if (!authenticated) {
-          this.router.navigate(['oauth2']).then((_) => null);
+          this.router.navigate(['/auth']).then((_) => null);
         }
       })
     );

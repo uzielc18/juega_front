@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: 'pages',
     component: ScaffoldComponent,
-    // canActivate: [Auth2Guard],
+    canActivate: [Auth2Guard],
     children: [
       {
         path: 'dashboard',
@@ -43,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'pages',
+    redirectTo: 'auth',
     pathMatch: 'full',
   },
 ];
