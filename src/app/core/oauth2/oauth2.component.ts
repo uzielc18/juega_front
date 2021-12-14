@@ -31,7 +31,9 @@ export class Oauth2Component implements OnInit, OnDestroy {
     this.authService
       .authenticate(this.options.strategyName)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((authResult: NbAuthResult) => {});
+      .subscribe((authResult: NbAuthResult) => {
+        console.log("oiath3",authResult)
+      });
   }
 
   ngOnDestroy(): void {

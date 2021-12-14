@@ -1,5 +1,5 @@
 import { Inject, Injectable, Injector } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NbMenuService } from '@nebular/theme';
 import { CORE_OPTIONS, CoreOptions } from '../core.options';
 import { NbAuthService } from '@nebular/auth';
@@ -18,7 +18,8 @@ export class AppService {
   private _user: any = null;
   private _menu: any[] = [];
   private _usernameMenu: any[] = [];
-  private _userInfoUrl = `${this.options.apiAuth}/api/user/info`;
+  // private _userInfoUrl = `${this.options.apiAuth}/api/user/info`;
+  private _userInfoUrl = `${this.options.apiAuth}/api/user/me`;
   private _loading = new BehaviorSubject<boolean>(false);
 
   constructor(
@@ -56,38 +57,65 @@ export class AppService {
     this._menu = value;
   }
 
+  // init(injector: Injector): Observable<any> {
+  //   const auth: NbAuthService = injector.get(NbAuthService);
+  //   console.log('====================>', this._userInfoUrl);
+  //   const token = localStorage.getItem('token');
+  //   let data$ = this.httpClient.get(this._userInfoUrl, { headers: new HttpHeaders({'Authorization': 'Bearer ' + token})})
+  //   data$.subscribe((data) => {
+  //     console.log(data);
+  //   });
+  //   return data$;
+  // }
+
   init(injector: Injector): Observable<boolean> {
     const auth: NbAuthService = injector.get(NbAuthService);
+    const token = JSON.parse(localStorage.getItem('token') || '{}')
+    console.log(token);
+    this.httpClient
+      .get(this._userInfoUrl, {
+        headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }),
+      })
+      .subscribe((data) => {
+        console.log('gaaaaaaaaaaaaaaa', data);
+      });
     return auth.isAuthenticated().pipe(
-      switchMap((status: boolean) =>
-        status
-          ? this.httpClient
-              .post(this._userInfoUrl, {
-                id_padre: this.options.moduleId,
-              })
-              .pipe(
-                map((data: any) => data.data),
-                map((data: any) => {
-                  if (data) {
-                    if (
-                      data.hasOwnProperty('user') &&
-                      Object.keys(data.user).length > 0
-                    ) {
-                      this._user = data.user;
-                    }
-                    if (
-                      data.hasOwnProperty('menu') &&
-                      Array.isArray(data.menu)
-                    ) {
-                      this.nbMenuService.addItems(data.menu, 'core-menu');
-                    }
-                    return true;
-                  } else {
-                    return false;
-                  }
-                })
-              )
-          : of(false)
+      switchMap(
+        (status: boolean) => {
+          console.log(status);
+          if (status) {
+            return of(true);
+          } else {
+            return of(false);
+          }
+        }
+        //   status
+        //     ? this.httpClient
+        //         .get(this._userInfoUrl, {
+        //           headers: new HttpHeaders({ Authorization: 'Bearer ' + token }),
+        //         })
+        //         .pipe(
+        //           map((data: any) => data.data),
+        //           map((data: any) => {
+        //             if (data) {
+        //               if (
+        //                 data.hasOwnProperty('user') &&
+        //                 Object.keys(data.user).length > 0
+        //               ) {
+        //               }
+        //               if (
+        //                 data.hasOwnProperty('menu') &&
+        //                 Array.isArray(data.menu)
+        //               ) {
+        //                 this.nbMenuService.addItems(data.menu, 'core-menu');
+        //               }
+        //               return true;
+        //             } else {
+        //               return false;
+        //             }
+        //           })
+        //         )
+        //     : of(false)
       )
     );
   }

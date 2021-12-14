@@ -33,9 +33,10 @@ export class Oauth2CallbackComponent implements OnDestroy {
           const response: any = authResult.getToken();
           this.appValidateTokenService
             .validateLamb(response.token.access_token)
-            .then(() => {
+            .subscribe(() => {
               if (authResult.isSuccess() && authResult.getRedirect()) {
-                window.location.href = authResult.getRedirect();
+                // window.location.href = authResult.getRedirect();
+                this.router.navigateByUrl(authResult.getRedirect());
               }
             });
         }
