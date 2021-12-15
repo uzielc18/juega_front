@@ -2,10 +2,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  NgZone,
   OnDestroy,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { NbAuthResult, NbAuthService } from '@nebular/auth';
+import {
+  NbAuthResult,
+  NbAuthService,
+  NbAuthSimpleToken,
+  NbTokenService,
+} from '@nebular/auth';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { CORE_OPTIONS, CoreOptions } from '../core.options';
@@ -20,8 +26,10 @@ export class Oauth2CallbackComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
+    // private _ngZone: NgZone,
+    private tokenService: NbTokenService,
     private authService: NbAuthService,
-    private router: Router,
+    // private router: Router,
     private appValidateTokenService: AppValidateTokenService,
     @Inject(CORE_OPTIONS) protected options: CoreOptions
   ) {
@@ -33,10 +41,19 @@ export class Oauth2CallbackComponent implements OnDestroy {
           const response: any = authResult.getToken();
           this.appValidateTokenService
             .validateLamb(response.token.access_token)
-            .then(() => {
-              if (authResult.isSuccess() && authResult.getRedirect()) {
-                window.location.href = authResult.getRedirect();
-              }
+            .subscribe((data: any) => {
+              console.log('------>', data.data.token);
+              const token = new NbAuthSimpleToken(
+                data.data.token,
+                this.options.strategyName
+              );
+              console.log(token);
+              this.tokenService.set(token).subscribe(() => {
+                console.log('ok');
+                if (authResult.isSuccess() && authResult.getRedirect()) {
+                  window.location.href = authResult.getRedirect();
+                }
+              });
             });
         }
       });

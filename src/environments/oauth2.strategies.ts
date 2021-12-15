@@ -1,6 +1,7 @@
 import {
   NbAuthOAuth2Token,
   NbOAuth2AuthStrategy,
+  NbOAuth2ClientAuthMethod,
   NbOAuth2GrantType,
   NbOAuth2ResponseType,
 } from '@nebular/auth';
@@ -11,6 +12,7 @@ export const strategies = {
     NbOAuth2AuthStrategy.setup({
       name: environment.authStrategy.name,
       clientId: environment.authStrategy.clientId,
+      // clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
       baseEndpoint: `${environment.authStrategy.baseEndpoint}/oauth`,
       authorize: {
         endpoint: '/authorize',
@@ -25,6 +27,11 @@ export const strategies = {
         endpoint: '/token/',
         grantType: NbOAuth2GrantType.REFRESH_TOKEN,
       },
+      // token: {
+      //   endpoint: '/token/',
+      //   grantType: NbOAuth2GrantType.PASSWORD,
+      //   class: NbAuthOAuth2Token
+      // }
     }),
     // NbOAuth2AuthStrategy.setup({
     //   name: environment.authGoogleStrategy.name,

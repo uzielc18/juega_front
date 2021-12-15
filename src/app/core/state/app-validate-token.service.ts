@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { CORE_OPTIONS, CoreOptions } from '../core.options';
 import { DOCUMENT } from '@angular/common';
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class AppValidateTokenService {
@@ -12,10 +14,22 @@ export class AppValidateTokenService {
     @Inject(DOCUMENT) protected document: any
   ) {}
 
-  validateLamb(token: any): Promise<any> {
-    return this.httpClient
-      .post(`${this.options.apiAuth}/api/loginLamb`, { token })
-      .toPromise();
+  // validateLamb(access_token: any): Observable<any> {
+  //   // console.log("servicio", token)
+  //   return this.httpClient
+  //     .post<any>(`${this.options.apiAuth}/api/loginLamb`, { access_token })
+  //     .pipe(
+  //       tap(({ data: { token } }) => {
+  //         JSON.stringify(localStorage.setItem('token', token));
+  //         // console.log("gaaaaaaaaaaaaa", token)
+  //       })
+  //     );
+  // }
+
+  validateLamb(access_token: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.options.apiAuth}/api/loginLamb`, {
+      access_token,
+    });
   }
 
   validateGoogle(token: any): Promise<any> {

@@ -40,9 +40,9 @@ import { AppValidateTokenService } from '../state/app-validate-token.service';
             <nb-action [nbContextMenu]="userMenu">
               <nb-user
                 class="header-user"
-                [name]="user?.user_name"
-                [title]="user?.departament_name"
-                [picture]="user?.foto"
+                [name]="user?.name"
+                [title]="user?.email"
+                [picture]="user?.profile_photo_url"
                 [onlyPicture]="minimum"
                 size="large"
               ></nb-user>
