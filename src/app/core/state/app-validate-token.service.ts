@@ -14,15 +14,22 @@ export class AppValidateTokenService {
     @Inject(DOCUMENT) protected document: any
   ) {}
 
+  // validateLamb(access_token: any): Observable<any> {
+  //   // console.log("servicio", token)
+  //   return this.httpClient
+  //     .post<any>(`${this.options.apiAuth}/api/loginLamb`, { access_token })
+  //     .pipe(
+  //       tap(({ data: { token } }) => {
+  //         JSON.stringify(localStorage.setItem('token', token));
+  //         // console.log("gaaaaaaaaaaaaa", token)
+  //       })
+  //     );
+  // }
+
   validateLamb(access_token: any): Observable<any> {
-    // console.log("servicio", token)
-    return this.httpClient
-      .post<any>(`${this.options.apiAuth}/api/loginLamb`, { access_token }).pipe(
-        tap(({data: { token }}) => {
-          localStorage.setItem('token', token)
-          console.log("gaaaaaaaaaaaaa", token)
-        })
-      )
+    return this.httpClient.post<any>(`${this.options.apiAuth}/api/loginLamb`, {
+      access_token,
+    });
   }
 
   validateGoogle(token: any): Promise<any> {

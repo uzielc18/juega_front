@@ -70,52 +70,26 @@ export class AppService {
 
   init(injector: Injector): Observable<boolean> {
     const auth: NbAuthService = injector.get(NbAuthService);
-    const token = JSON.parse(localStorage.getItem('token') || '{}')
-    console.log(token);
-    this.httpClient
-      .get(this._userInfoUrl, {
-        headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }),
-      })
-      .subscribe((data) => {
-        console.log('gaaaaaaaaaaaaaaa', data);
-      });
     return auth.isAuthenticated().pipe(
-      switchMap(
-        (status: boolean) => {
-          console.log(status);
-          if (status) {
-            return of(true);
-          } else {
-            return of(false);
-          }
-        }
-        //   status
-        //     ? this.httpClient
-        //         .get(this._userInfoUrl, {
-        //           headers: new HttpHeaders({ Authorization: 'Bearer ' + token }),
-        //         })
-        //         .pipe(
-        //           map((data: any) => data.data),
-        //           map((data: any) => {
-        //             if (data) {
-        //               if (
-        //                 data.hasOwnProperty('user') &&
-        //                 Object.keys(data.user).length > 0
-        //               ) {
-        //               }
-        //               if (
-        //                 data.hasOwnProperty('menu') &&
-        //                 Array.isArray(data.menu)
-        //               ) {
-        //                 this.nbMenuService.addItems(data.menu, 'core-menu');
-        //               }
-        //               return true;
-        //             } else {
-        //               return false;
-        //             }
-        //           })
-        //         )
-        //     : of(false)
+      switchMap((status: boolean) =>
+        status
+          ? this.httpClient.get(this._userInfoUrl).pipe(
+              map((data: any) => data.data),
+              map((data: any) => {
+                if (data) {
+                  if (
+                    data.hasOwnProperty('user') &&
+                    Object.keys(data.user).length > 0
+                  ) {
+                    this._user = data.user;
+                  }
+                  return true;
+                } else {
+                  return false;
+                }
+              })
+            )
+          : of(false)
       )
     );
   }
