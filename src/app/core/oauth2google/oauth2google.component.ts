@@ -1,23 +1,28 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import {
   NbAuthOAuth2Token,
   NbAuthResult,
   NbAuthService,
   NbAuthToken,
 } from '@nebular/auth';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { CoreOptions, CORE_OPTIONS } from '../../../../core/core.options';
+import { CORE_OPTIONS, CoreOptions } from '../core.options';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-oauth2google',
+  template: `<span>Authenticating...</span>`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnDestroy {
-  token!: NbAuthOAuth2Token | null;
-
+export class Oauth2GoogleComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
+  token!: NbAuthOAuth2Token | null;
 
   constructor(
     private authService: NbAuthService,
@@ -41,14 +46,11 @@ export class LoginComponent implements OnDestroy {
       .subscribe((authResult: NbAuthResult) => {});
   }
 
-  loginLamb(): void {
-    console.log('entrando aqui login page ')
+  logout() {
     this.authService
-      .authenticate(this.options.strategyName)
+      .logout(this.options.strategyGoogleName)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((authResult: NbAuthResult) => {
-        console.log('pageeeeeeee', authResult)
-      });
+      .subscribe((authResult: NbAuthResult) => {});
   }
 
   ngOnDestroy(): void {

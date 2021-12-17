@@ -1,46 +1,69 @@
-<h1 class="display-3">
-  <nb-icon style="font-size: 40px" icon="book-open-outline"></nb-icon>
-  Mis Asignaturas
-</h1>
-<span class="pl-st">2021-1 INGENIERÍA DE SISTEMAS</span>
+<div class="d-flex align-items-center">
+  <div class="ms-2">
+    <h2>
+      <nb-icon style="font-size: 40px" icon="book-open-outline"></nb-icon>
+      Mis Asignaturas
+    </h2>
+    <span class="pl-st">2021-1 INGENIERÍA DE SISTEMAS</span>
+  </div>
+  <div class="ms-auto d-none d-xxl-block p-3">
+    <nb-icon
+      class="icon-size text-muted"
+      icon="list-outline"
+      (click)="curso = 1"
+    ></nb-icon>
+    <nb-icon
+      class="icon-size text-muted"
+      icon="grid-outline"
+      (click)="curso = 0"
+    ></nb-icon>
+  </div>
+</div>
 <hr />
-
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-6 col-md-3 col-lg-3">
+  <div class="col-12" *ngIf="curso == 1">
+    <app-curso-list></app-curso-list>
+    <app-curso-list></app-curso-list>
+    <app-curso-list></app-curso-list>
+    <app-curso-list></app-curso-list>
+    <app-curso-list></app-curso-list>
+    <app-curso-list></app-curso-list>
+  </div>
+  <div class="row" *ngIf="curso != 1">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
       <app-curso-card></app-curso-card>
     </div>
   </div>

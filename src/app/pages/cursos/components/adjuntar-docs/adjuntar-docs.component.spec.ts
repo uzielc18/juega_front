@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HomeworkFormComponent } from './adjuntar-docs.component';
 
-import { CallbackComponent } from './callback.component';
 
-describe('CallbackComponent', () => {
-  let component: CallbackComponent;
-  let fixture: ComponentFixture<CallbackComponent>;
+describe('HomeworkFormComponent', () => {
+  let component: HomeworkFormComponent;
+  let fixture: ComponentFixture<HomeworkFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CallbackComponent ]
+      declarations: [ HomeworkFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CallbackComponent);
+    fixture = TestBed.createComponent(HomeworkFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
