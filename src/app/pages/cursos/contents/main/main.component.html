@@ -1,11 +1,8 @@
-<nb-card>
-    <!-- <nb-card-header>Principal - cursos alumno</nb-card-header> -->
-    <nb-card-body>
-        <!-- Soy componente padre
-        <br>
-        <app-info></app-info> -->
-
-        <!-- <app-cursos></app-cursos> -->
-
-    </nb-card-body>
+<nb-card class="m-0 border-0">
+  <nb-card-header class="ps-3 pe-2 py-2">
+    <app-breadcrumb></app-breadcrumb>
+  </nb-card-header>
+  <nb-card-body>
+    <router-outlet></router-outlet>
+  </nb-card-body>
 </nb-card>

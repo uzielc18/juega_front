@@ -1,29 +1,26 @@
-import {NgModule} from '@angular/core';
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {NbAuthModule} from '@nebular/auth';
-import {strategies} from '../environments/oauth2.strategies';
-import {CoreModule} from './core';
-import {environment} from '../environments/environment';
-import {RouterModule} from '@angular/router';
-
+import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { NbAuthModule } from '@nebular/auth';
+import { strategies } from '../environments/oauth2.strategies';
+import { CoreModule } from './core';
+import { environment } from '../environments/environment';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     NbAuthModule.forRoot(strategies),
     CoreModule.forRoot({
       strategyName: environment.authStrategy.name,
+      strategyGoogleName: environment.authGoogleStrategy.name,
       apiAuth: environment.apiUrls.auth,
-      moduleId: environment.module_id
+      moduleId: environment.module_id,
     }),
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

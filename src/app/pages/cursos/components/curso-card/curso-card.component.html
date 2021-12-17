@@ -1,11 +1,20 @@
-<nb-card routerLink="course">
+<!-- <nb-card routerLink="course">
   <nb-card-header>
-    <p class="text-muted">Imagen del curso</p>
+    <div class="row">
+      <div class="col mt-0 p-0" style="height: 150px; overflow: hidden">
+        <img
+          src="../../../../../assets/books.jpg"
+          class="img-fluid"
+          alt=""
+          style="object-fit: fill"
+        />
+      </div>
+    </div>
   </nb-card-header>
   <nb-card-body>
-    <h6>Matemática Básica</h6>
-    <p>C202101-0001 - Juan Soria</p>
-    <small>Ciclo 1 - Arquitectura</small>
+    <h6>Capacidades Comunicativas I</h6>
+    <p>C202101-0001 - Jorge Guiterrez</p>
+    <small>Ciclo 1 - Ingeniería de sistemas</small>
   </nb-card-body>
   <nb-card-footer>
     <ul class="list-group list-group-horizontal">
@@ -28,4 +37,38 @@
       </li>
     </ul>
   </nb-card-footer>
+</nb-card> -->
+
+<nb-card routerLink="../asignaturas/:curso">
+  <div>
+    <img src="../../../../../assets/books.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h6>Capacidades Comunicativas I</h6>
+      <p>C202101-0001 - Jorge Guiterrez</p>
+      <small>Ciclo 1 - Ingeniería de sistemas</small>
+    </div>
+    <div>
+      <nb-progress-bar size="tiny" [value]="40" status="warning"></nb-progress-bar>
+    </div>
+    <ul class="list-group list-group-horizontal">
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="people-outline"></nb-icon> 1
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
+        5
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon> 2
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
+        4
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="video-outline"></nb-icon> 6
+      </li>
+    </ul>
+  </div>
 </nb-card>
+

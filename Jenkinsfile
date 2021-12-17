@@ -7,21 +7,21 @@ pipeline {
       }
       steps {
         echo 'preparando construcción en el entorno desarollo'
-        sh 'ssh devops@192.168.12.7 sudo chown -R devops:devops  /u02/patmos-base-build-dev/patmos-dist'
-        sh ' rsync -avz * .[^.]* devops@192.168.12.7:/u02/patmos-base-build-dev/patmos-dist'
-        sh 'ssh devops@192.168.12.7 "cd /u02/patmos-base-build-dev/patmos-dist && nvm use 12.16.1 && npm i -g @angular/cli && npm install"'
-        sh 'ssh devops@192.168.12.7 "cd /u02/patmos-base-build-dev/patmos-dist && ng build --patmos dev --base-href /patmos-base/fronts/patmos/ --outputPath /u02/patmos-base-build-dev/patmos-dist/dist"'
+        sh 'ssh devops@192.168.12.7 sudo chown -R devops:devops  /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist'
+        sh ' rsync -avz * .[^.]* devops@192.168.12.7:/u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist'
+        sh 'ssh devops@192.168.12.7 "cd /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist && nvm use 16.13 && npm i -g @angular/cli && npm install"'
+        sh 'ssh devops@192.168.12.7 "cd /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist && ng build --configuration dev --base-href /lamb-patmos/fronts/patmos-upeu-base-front/ --output-path /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist/dist"'
       }
     }
-    stage('Despliegue desarrollo') {
+    stage('Despliegue Entorno de Desarrollo') {
       when {
         branch 'develop'
       }
       steps {
         echo 'preparando despliegue en el entorno desarollo'
-        sh 'ssh devops@192.168.15.49 sudo chown -R devops:apache /u01/vhosts/www.upeu.dev/httpdocs/patmos-base/fronts/patmos'
-        sh 'ssh devops@192.168.12.7 "rsync -avz /u02/patmos-base-build-dev/patmos-dist/dist devops@192.168.15.52:/u01/vhosts/www.upeu.dev/httpdocs/patmos-base/fronts/patmos"'
-        sh 'ssh devops@192.168.15.49 sudo chown -R apache:apache /u01/vhosts/www.upeu.dev/httpdocs/patmos-base/fronts/patmos'
+        sh 'ssh devops@192.168.15.49 sudo chown -R devops:apache /u01/vhosts/lamb-patmos-dev.upeu.edu.pe/httpdocs/lamb-patmos/fronts/patmos-upeu-base-front'
+        sh 'ssh devops@192.168.12.7 "rsync -avz /u02/lamb-patmos-build-dev/patmos-upeu-base-front-dist/dist devops@192.168.15.49:/u01/vhosts/lamb-patmos-dev.upeu.edu.pe/httpdocs/lamb-patmos/fronts/patmos-upeu-base-front"'
+        sh 'ssh devops@192.168.15.49 sudo chown -R apache:apache /u01/vhosts/lamb-patmos-dev.upeu.edu.pe/httpdocs/lamb-patmos/fronts/patmos-upeu-base-front'
       }
     }
     

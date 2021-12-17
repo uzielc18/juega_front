@@ -1,0 +1,17 @@
+<div class="d-flex align-items-center">
+  <div class="ms-2">
+    <app-ng-dynamic-breadcrumb
+      bgColor="#fff"
+      fontColor="#969696"
+      symbol="&rang;"
+      lastLinkColor="#A76575"
+      fontSize="15px"
+    ></app-ng-dynamic-breadcrumb>
+  </div>
+  <div class="ms-auto d-none d-xxl-block">
+    <nb-select [(selected)]="selectedItem" status="primary">
+      <nb-option value="0">Semestre 2021 - 1</nb-option>
+      <nb-option value="1">Semestre 2021 - 2</nb-option>
+    </nb-select>
+  </div>
+</div>

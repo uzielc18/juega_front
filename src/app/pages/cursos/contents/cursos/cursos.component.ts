@@ -6,8 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cursos.component.scss'],
 })
 export class CursosComponent implements OnInit {
+  curso = 0;
+
   constructor() {}
 
   ngOnInit(): void {}
-  selectedItem = '0';
 }

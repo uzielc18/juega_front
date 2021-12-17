@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { Auth2Guard, ScaffoldComponent } from './core';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardModule } from './pages/dashboard/dashboard.module';
+import { NotfoundModule } from './pages/notfound/notfound.module';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const config: ExtraOptions = {
   useHash: false,
 };
 const routes: Routes = [
   {
+    path: 'auth',
+    loadChildren: () =>
+      import('./pages/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
     path: 'pages',
     component: ScaffoldComponent,
-    data: {
-      breadcrumb: {
-        label: 'Inicio',
-      }
-    },
     canActivate: [Auth2Guard],
     children: [
       {
@@ -23,7 +25,7 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path: 'courses',
+        path: 'asignaturas',
         data: { breadcrumb: 'Asignaturas' },
         loadChildren: () =>
           import('./pages/cursos/cursos.module').then((m) => m.CursosModule),
@@ -41,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'pages',
+    redirectTo: 'auth',
     pathMatch: 'full',
   },
 ];
