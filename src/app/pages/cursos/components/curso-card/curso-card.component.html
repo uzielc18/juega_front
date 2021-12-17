@@ -39,16 +39,23 @@
   </nb-card-footer>
 </nb-card> -->
 
-<nb-card routerLink="../asignaturas/:curso">
+<nb-card
+  routerLink="../asignaturas/:curso"
+  *ngFor="let curso of cursos; let i = index"
+>
   <div>
-    <img src="../../../../../assets/books.jpg" class="card-img-top" alt="...">
+    <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
     <div class="card-body">
-      <h6>Capacidades Comunicativas I</h6>
-      <p>C202101-0001 - Jorge Guiterrez</p>
-      <small>Ciclo 1 - Ingeniería de sistemas</small>
+      <h6>{{ curso.id_carga_curso_docente }}</h6>
+      <p>{{ curso.codigo }}</p>
+      <small>{{ curso.origen_matricula }}</small>
     </div>
     <div>
-      <nb-progress-bar size="tiny" [value]="40" status="warning"></nb-progress-bar>
+      <nb-progress-bar
+        size="tiny"
+        [value]="40"
+        status="warning"
+      ></nb-progress-bar>
     </div>
     <ul class="list-group list-group-horizontal">
       <li class="list-group-item">
@@ -71,4 +78,3 @@
     </ul>
   </div>
 </nb-card>
-
