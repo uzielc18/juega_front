@@ -32,7 +32,7 @@ export class Oauth2Component implements OnInit, OnDestroy {
       .authenticate(this.options.strategyName)
       .pipe(takeUntil(this.destroy$))
       .subscribe((authResult: NbAuthResult) => {
-        console.log("oiath3",authResult)
+        // console.log("oiath3",authResult)
       });
   }
 
