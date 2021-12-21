@@ -25,7 +25,7 @@ export const environment = {
     clientId: 'CCoDFWUHL6OJ4sus9eEIUh6Vk62lNCAnPGY3FXgg',
     baseEndpoint: 'https://oauth.upeu.edu.pe',
     redirectUri: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/oauth2/callback`,
-    success: '/pages/dashboard',
+    success: '/lamb-patmos/fronts/patmos-upeu-base-front/pages/dashboard',
   },
   authGoogleStrategy: {
     name: 'google',
