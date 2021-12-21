@@ -15,7 +15,7 @@ export class CursosService {
     @Inject(CORE_OPTIONS) protected options: CoreOptions
   ) {}
 
-  getCourses() {
-    return this.httpClient.get(`${this._base_url}/resources-person/enrollment-student`);
+  getCourses(): Observable<Cursos[]> {
+    return this.httpClient.get<Cursos[]>(`${this._base_url}/resources-person/enrollment-student`);
   }
 }
