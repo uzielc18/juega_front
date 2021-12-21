@@ -24,7 +24,7 @@ export const environment = {
     name: 'lamb',
     clientId: 'tp6DXQQjwFHlEPrkilrDDB3rknQqsVctAbjaYQiM',
     baseEndpoint: 'https://oauth.upeu.edu.pe',
-    redirectUri: `${window.location.origin}/oauth2/callback`,
+    redirectUri: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/oauth2/callback`,
     success: '/pages/dashboard',
   },
   authGoogleStrategy: {
