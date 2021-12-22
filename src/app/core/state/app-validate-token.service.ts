@@ -32,10 +32,10 @@ export class AppValidateTokenService {
     });
   }
 
-  validateGoogle(token: any): Promise<any> {
-    return this.httpClient
-      .post(`${this.options.apiAuth}/api/loginGoogle`, { token })
-      .toPromise();
+  validateGoogle(access_token: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.options.apiAuth}/api/loginGoogle`, {
+      access_token,
+    });
   }
 
   // Change
