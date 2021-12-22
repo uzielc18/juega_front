@@ -19,6 +19,6 @@ export const routesConfig: Routes = [
   },
   {
     path: 'oauth2/google/callback',
-    component: Oauth2GoogleCallbackComponent
+    component: Oauth2GoogleCallbackComponent,
   },
 ];

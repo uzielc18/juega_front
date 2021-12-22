@@ -42,12 +42,12 @@ export class LoginComponent implements OnDestroy {
   }
 
   loginLamb(): void {
-    console.log('entrando aqui login page ')
+    // console.log('entrando aqui login page ')
     this.authService
       .authenticate(this.options.strategyName)
       .pipe(takeUntil(this.destroy$))
       .subscribe((authResult: NbAuthResult) => {
-        console.log('pageeeeeeee', authResult)
+        // console.log('pageeeeeeee', authResult)
       });
   }
 

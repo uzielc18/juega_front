@@ -26,10 +26,9 @@ export class Oauth2CallbackComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    // private _ngZone: NgZone,
     private tokenService: NbTokenService,
     private authService: NbAuthService,
-    // private router: Router,
+    private router: Router,
     private appValidateTokenService: AppValidateTokenService,
     @Inject(CORE_OPTIONS) protected options: CoreOptions
   ) {
