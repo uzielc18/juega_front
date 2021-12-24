@@ -163,7 +163,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe((authResult: NbAuthResult) => {
               if (authResult.isSuccess()) {
-                this.tokenService.authorize();
+                this.tokenService.authorizeLamb();
               }
             });
 
@@ -173,7 +173,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe((authResult: NbAuthResult) => {
               if (authResult.isSuccess()) {
-                this.tokenService.authorize();
+                this.tokenService.authorizeGoogle();
               }
             });
           window.location.href = '';
