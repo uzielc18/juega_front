@@ -18,6 +18,7 @@ import {
 import { CORE_OPTIONS, CoreOptions } from '../core.options';
 import { AppService } from '../state/app.service';
 import { AppValidateTokenService } from '../state/app-validate-token.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-scaffold',
@@ -175,7 +176,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                 this.tokenService.authorize();
               }
             });
-          window.location.href = '/auth/login';
+          window.location.href = '';
         }
       });
   }
