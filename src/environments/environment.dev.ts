@@ -32,7 +32,7 @@ export const environment = {
     clientId:
       '649461344129-0thst4vl3n9aj0j7njie8nd73psls419.apps.googleusercontent.com',
     endpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
-    redirectUri: `${window.location.origin}/oauth2/google/callback`,
+    redirectUri: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/oauth2/google/callback`,
     success: '/lamb-patmos/fronts/patmos-upeu-base-front/pages/dashboard',
   },
   apiUrls: {
