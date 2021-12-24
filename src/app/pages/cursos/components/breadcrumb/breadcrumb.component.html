@@ -9,7 +9,14 @@
     ></app-ng-dynamic-breadcrumb>
   </div>
   <div class="ms-auto d-none d-xxl-block">
-    <nb-select [(selected)]="selectedItem" status="primary">
+    <nb-select  (selectedChange)="selecionar($event)" [(selected)]="selectedRole" status="primary" class="me-2">
+      <nb-option *ngFor="let role of roles; let i = index" [value]="role">
+        Cursos - {{ role }}
+      </nb-option>
+      <!-- <nb-option value="0">Cursos - Docente</nb-option>
+      <nb-option value="1">Cursos - Estudiante</nb-option> -->
+    </nb-select>
+    <nb-select [(selected)]="selectedSemester" status="primary">
       <nb-option value="0">Semestre 2021 - 1</nb-option>
       <nb-option value="1">Semestre 2021 - 2</nb-option>
     </nb-select>

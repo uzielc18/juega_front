@@ -82,6 +82,7 @@ export class AppService {
                     Object.keys(data.user).length > 0
                   ) {
                     this._user = data.user;
+                    console.log('====================>', this._user.roles);
                   }
                   return true;
                 } else {
