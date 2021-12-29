@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  Router,
-} from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { NbAuthService } from '@nebular/auth';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class IsLoggedGuard implements CanActivate {
   constructor(private authService: NbAuthService, private router: Router) {}
 
