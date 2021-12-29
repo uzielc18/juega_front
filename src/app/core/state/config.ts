@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { Oauth2Component } from '../oauth2/oauth2.component';
+// import { Oauth2Component } from '../oauth2/oauth2.component';
 import { Oauth2CallbackComponent } from '../oauth2/oauth2.callback.component';
-import { Oauth2GoogleCallbackComponent } from '../oauth2google/oauth2google.callback.component';
+import { Oauth2GoogleCallbackComponent } from '../oauth2/oauth2google.callback.component';
 
 export const toastConfig: any = {
   hasIcon: true,
@@ -9,10 +9,10 @@ export const toastConfig: any = {
 };
 
 export const routesConfig: Routes = [
-  {
-    path: 'oauth2',
-    component: Oauth2Component,
-  },
+  // {
+  //   path: 'oauth2',
+  //   component: Oauth2Component,
+  // },
   {
     path: 'oauth2/callback',
     component: Oauth2CallbackComponent,

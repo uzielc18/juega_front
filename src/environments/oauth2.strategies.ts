@@ -26,7 +26,7 @@ export class NbAuthGoogleStrategy extends NbOAuth2AuthStrategy {
   }
 }
 
-export const NB_CORE_PROVIDERS = [
+export const strategies = [
   NbAuthModule.forRoot({
     strategies: [
       NbAuthLambStrategy.setup({

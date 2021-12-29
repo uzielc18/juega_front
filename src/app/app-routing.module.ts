@@ -5,6 +5,7 @@ import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { NotfoundModule } from './pages/notfound/notfound.module';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { IsLoggedGuard } from './core/oauth2/is-logged.guard';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -14,6 +15,7 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () =>
       import('./pages/auth/auth.module').then((m) => m.AuthModule),
+    canActivate: [IsLoggedGuard],
   },
   {
     path: 'pages',

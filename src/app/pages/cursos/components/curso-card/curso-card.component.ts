@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CursosService } from '../../services/cursos.service';
+import { Component, Input } from '@angular/core';
 import { Cursos } from '../../interfaces/cursos.interface';
 
 @Component({
@@ -7,22 +6,20 @@ import { Cursos } from '../../interfaces/cursos.interface';
   templateUrl: './curso-card.component.html',
   styleUrls: ['./curso-card.component.scss'],
 })
-export class CursoCardComponent implements OnInit {
+export class CursoCardComponent {
   @Input() cursosEstudiante: any = [];
   @Input() cursosDocente: any = [];
+  @Input() cursos: Cursos[] = [];
 
+  constructor() {}
 
-  constructor(
-    private cursosService: CursosService,
-  ) {}
-
-  ngOnInit(): void {
-    this.cursosService.data$.subscribe(resp => {
-      console.log('curso carddddddddddddddd',resp)
-      this.cursosDocente = resp.data.cursos_docente;
-      // console.log('cursos docente - ', this.cursosDocente);
-      this.cursosEstudiante = resp.data.cursos_estudiante;
-      // console.log('cursos estudiante - ', this.cursosEstudiante);
-    })
-  }
+  // ngOnInit(): void {
+  //   this.cursosService.data$.subscribe((resp) => {
+  //     console.log('curso carddddddddddddddd', resp);
+  //     this.cursosDocente = resp.data.cursos_docente;
+  //     // console.log('cursos docente - ', this.cursosDocente);
+  //     this.cursosEstudiante = resp.data.cursos_estudiante;
+  //     // console.log('cursos estudiante - ', this.cursosEstudiante);
+  //   });
+  // }
 }

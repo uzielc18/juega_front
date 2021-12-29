@@ -9,7 +9,12 @@
     ></app-ng-dynamic-breadcrumb>
   </div>
   <div class="ms-auto d-none d-xxl-block">
-    <nb-select  (selectedChange)="selecionar($event)" [(selected)]="selectedRole" status="primary" class="me-2">
+    <nb-select
+      (selectedChange)="selecionar($event)"
+      selected="0"
+      status="primary"
+      class="me-2"
+    >
       <nb-option *ngFor="let role of roles; let i = index" [value]="role">
         Cursos - {{ role }}
       </nb-option>
