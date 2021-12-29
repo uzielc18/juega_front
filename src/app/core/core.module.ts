@@ -47,7 +47,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { Oauth2GoogleComponent } from './oauth2google/oauth2google.component';
 import { AuthInterceptorService } from './oauth2/interceptor.service';
 import { Oauth2GoogleCallbackComponent } from './oauth2/oauth2google.callback.component';
-import { IsLoggedGuard } from './oauth2/is-logged.guard';
 
 registerLocaleData(localePe);
 
@@ -87,7 +86,6 @@ registerLocaleData(localePe);
     LoadInterceptor,
     AppValidateTokenService,
     Auth2Guard,
-    IsLoggedGuard,
     { provide: LOCALE_ID, useValue: 'es-Pe' },
     {
       provide: HTTP_INTERCEPTORS,

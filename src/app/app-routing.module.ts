@@ -17,8 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'pages',
-    component: ScaffoldComponent,
     canActivate: [Auth2Guard],
+    component: ScaffoldComponent,
     children: [
       {
         path: 'dashboard',

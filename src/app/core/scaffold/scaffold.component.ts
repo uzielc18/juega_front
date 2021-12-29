@@ -176,7 +176,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                 this.tokenService.authorizeGoogle();
               }
             });
-          window.location.href = '';
+          window.location.href = '/auth';
         }
       });
   }
