@@ -5,7 +5,12 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { NbAuthResult, NbAuthService, NbAuthSimpleToken, NbTokenService } from '@nebular/auth';
+import {
+  NbAuthResult,
+  NbAuthService,
+  NbAuthSimpleToken,
+  NbTokenService,
+} from '@nebular/auth';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { CORE_OPTIONS, CoreOptions } from '../core.options';
@@ -35,14 +40,14 @@ export class Oauth2GoogleCallbackComponent implements OnDestroy {
           this.appValidateTokenService
             .validateGoogle(response.token.access_token)
             .subscribe((data: any) => {
-              console.log('------>', data.data.token);
+              // console.log('------>', data.data.token);
               const token = new NbAuthSimpleToken(
                 data.data.token,
                 this.options.strategyName
               );
-              console.log(token);
+              // console.log(token);
               this.tokenService.set(token).subscribe(() => {
-                console.log('ok');
+                // console.log('ok');
                 if (authResult.isSuccess() && authResult.getRedirect()) {
                   window.location.href = authResult.getRedirect();
                 }

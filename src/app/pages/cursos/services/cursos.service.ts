@@ -25,4 +25,8 @@ export class CursosService {
       })
     );
   }
+
+  getUnidades(courseId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this._base_url}/resources-person/elements-course/${courseId}`);
+  }
 }

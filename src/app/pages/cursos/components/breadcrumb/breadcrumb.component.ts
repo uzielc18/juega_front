@@ -14,7 +14,12 @@ export class BreadcrumbComponent implements OnInit {
 
   ngOnInit(): void {
     for (let i = 0; i < this.userRole.user.roles.length; i++) {
-      this.roles.push(this.userRole.user.roles[i].name);
+      if (
+        this.userRole.user.roles[i].name === 'Estudiante' ||
+        this.userRole.user.roles[i].name === 'Docente'
+      ) {
+        this.roles.push(this.userRole.user.roles[i].name);
+      }
     }
   }
 

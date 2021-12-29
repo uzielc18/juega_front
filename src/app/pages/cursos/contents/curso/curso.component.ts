@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { CursosService } from '../../services/cursos.service';
 
 @Component({
   selector: 'app-curso',
@@ -6,8 +9,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./curso.component.scss'],
 })
 export class CursoComponent implements OnInit {
-  constructor() {}
+  routeSub!: Subscription;
+  path: number = 0;
+  curso: any = [];
+  unidades: any = [];
+  // sesiones: any = [];
 
-  ngOnInit(): void {}
+  constructor(
+    private cursosService: CursosService,
+    private courseId: ActivatedRoute
+  ) {}
 
+  ngOnInit(): void {
+    this.routeSub = this.courseId.params.subscribe((params) => {
+      console.log(params); //log the entire params object
+      this.path = params['curso'];
+    });
+
+    this.cursosService.getUnidades(this.path).subscribe((data: any) => {
+      console.log('sfafsdafasfa', data);
+      this.curso = data.data;
+      console.log('soy el curso', this.curso);
+      this.unidades = this.curso.units;
+      console.log('unidades', this.unidades);
+      // this.sesiones = this.unidades.topics;
+      // this.sesiones = this.unidades;
+      // console.log('sesiones', this.sesiones);
+    });
+  }
 }
