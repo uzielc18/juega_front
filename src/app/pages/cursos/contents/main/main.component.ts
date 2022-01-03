@@ -7,9 +7,20 @@ import { CursosService } from '../../services/cursos.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  constructor() {}
 
-  ngOnInit(): void {}
+  constructor(
+    private cursosService: CursosService
+  ) {}
+
+  ngOnInit(): void {
+    this.getCourses();
+  }
+
+  getCourses() {
+    this.cursosService.getCursos().subscribe((data: any) => {
+      console.log('Ejecutando desde main')
+    });
+  }
 
   prueba(event: any) {
     console.log('desdeee main', event);

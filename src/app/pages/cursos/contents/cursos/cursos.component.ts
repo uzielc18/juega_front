@@ -15,15 +15,19 @@ export class CursosComponent implements OnInit {
   constructor(private cursosService: CursosService) {}
 
   ngOnInit(): void {
-    this.cursosService.getCourses().subscribe((data: any) => {
+    // this.cursosService.getCursos().subscribe((data: any) => {
+    //   console.log(data);
+    //   this.cursosDocente = data.data.cursos_docente;
+    //   console.log('cursos docente - ', this.cursosDocente);
+    //   this.cursosEstudiante = data.data.cursos_estudiante;
+    //   console.log('cursos estudiante - ', this.cursosEstudiante);
+    // });
+
+    this.cursosService.data$.subscribe((data) => {
+      console.log('evemgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', data);
       this.cursosDocente = data.data.cursos_docente;
       console.log('cursos docente - ', this.cursosDocente);
       this.cursosEstudiante = data.data.cursos_estudiante;
-      console.log('cursos estudiante - ', this.cursosEstudiante);
     });
-
-    // this.cursosService.data$.subscribe(resp => {
-    //   console.log('evemgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',resp)
-    // })
   }
 }

@@ -16,6 +16,7 @@ export function init_app(
 @Injectable()
 export class AppService {
   private _user: any = null;
+  private _semestre: any = null;
   private _menu: any[] = [];
   private _usernameMenu: any[] = [];
   // private _userInfoUrl = `${this.options.apiAuth}/api/user/info`;
@@ -57,6 +58,14 @@ export class AppService {
     this._menu = value;
   }
 
+  get semestre(): any {
+    return this._semestre;
+  }
+
+  set semestre(value: any) {
+    this._semestre = value;
+  }
+
   // init(injector: Injector): Observable<any> {
   //   const auth: NbAuthService = injector.get(NbAuthService);
   //   console.log('====================>', this._userInfoUrl);
@@ -82,6 +91,7 @@ export class AppService {
                     Object.keys(data.user).length > 0
                   ) {
                     this._user = data.user;
+                    this._semestre = data.semestre;
                     console.log('====================>', this._user.roles);
                   }
                   return true;

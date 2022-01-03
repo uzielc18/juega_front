@@ -18,12 +18,13 @@
       <nb-option *ngFor="let role of roles; let i = index" [value]="role">
         Cursos - {{ role }}
       </nb-option>
-      <!-- <nb-option value="0">Cursos - Docente</nb-option>
-      <nb-option value="1">Cursos - Estudiante</nb-option> -->
     </nb-select>
-    <nb-select [(selected)]="selectedSemester" status="primary">
-      <nb-option value="0">Semestre 2021 - 1</nb-option>
-      <nb-option value="1">Semestre 2021 - 2</nb-option>
+    <nb-select [formControl]="seme" status="primary">
+      <nb-option
+        *ngFor="let semestre of semestres; let i = index"
+        [value]="semestre.id"
+        >{{ semestre.nombre }}</nb-option
+      >
     </nb-select>
   </div>
 </div>
