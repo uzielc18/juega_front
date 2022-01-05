@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 export class ValidatorsService {
 
     getMessage(validatorName: string, validatorValue?: any): any {
-        const config = {
+        const config:any = {
             required: 'Campo requerido',
             email: 'Correo electronico invalido'
         };

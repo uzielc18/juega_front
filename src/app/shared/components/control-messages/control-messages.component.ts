@@ -11,8 +11,8 @@ export class ControlMessagesComponent {
     @Input() control: any = {
         errors: [],
     };
-    @Input() status: string;
-    @Input() noTouched: boolean;
+    @Input() status: string = '';
+    @Input() noTouched: boolean = false;
 
     constructor(private validator: ValidatorsService) {
     }

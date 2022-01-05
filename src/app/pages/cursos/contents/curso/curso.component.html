@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col">
             <div class="row px-4">
-              <h2 class="fs-2 text-white mx-1">{{ curso.nombre }}</h2>
+              <h2 class="fs-2 text-white mx-1">{{ curso?.nombre }}</h2>
               <small
                 style="
                   background: linear-gradient(
@@ -28,7 +28,7 @@
                 "
                 class="text-white px-2 py-0 mx-3"
               >
-                {{ curso.programa_estudio.nombre }}
+                {{ curso?.programa_estudio?.nombre }}
               </small>
             </div>
             <div class="row px-2 mt-3">

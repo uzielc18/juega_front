@@ -21,7 +21,21 @@ import { TrabajoComponent } from './contents/trabajo/trabajo.component';
 import { VideoConferenciaComponent } from './contents/video-conferencia/video-conferencia.component';
 import { AdjuntarDocsComponent } from './components/adjuntar-docs/adjuntar-docs.component';
 import { CursoListComponent } from './components/curso-list/curso-list.component';
+import { PrepareFileProModule } from 'src/app/shared/components/prepare-file-pro/prepare-file-pro.module';
+import { WorksComponent } from './components/forms/works/works.component';
+import { ControlMessagesModule } from 'src/app/shared/components/control-messages/control-messages.module';
+import { MoreOptionsModule } from 'src/app/shared/components/more-options/more-options.module';
+import { GeneralService } from 'src/app/providers';
 
+const COMPONENTS: any[] = [
+  WorksComponent
+];
+const CONTROL_MESSAGGE: any = [
+  ControlMessagesModule,
+];
+const SERVICES: any = [
+  GeneralService,
+]
 @NgModule({
   declarations: [
     MainComponent,
@@ -38,7 +52,8 @@ import { CursoListComponent } from './components/curso-list/curso-list.component
     NavegacionComponent,
     TrabajoComponent,
     VideoConferenciaComponent,
-    AdjuntarDocsComponent
+    AdjuntarDocsComponent,
+    ...COMPONENTS
   ],
   exports: [CursosComponent],
   imports: [
@@ -46,6 +61,10 @@ import { CursoListComponent } from './components/curso-list/curso-list.component
     CursosRoutingModule,
     NebularModule,
     NgDynamicBreadcrumbModule,
+    PrepareFileProModule,
+    MoreOptionsModule,
+    ...CONTROL_MESSAGGE
   ],
+  providers: [...SERVICES]
 })
 export class CursosModule {}

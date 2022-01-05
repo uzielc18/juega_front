@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { NbMenuItem, NbSidebarService } from '@nebular/theme';
-import { FormControl } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { NbDialogRef, NbMenuItem, NbSidebarService } from '@nebular/theme';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-form-homework',
@@ -38,4 +38,22 @@ export class HomeworkFormComponent {
       icon: 'checkmark-circle-outline',
     },
   ];
+  @Input() sesion:any;
+  constructor(public activeModal: NbDialogRef<HomeworkFormComponent>) {
+
+  }
+  ngOnInit(): void {
+    console.log(this.sesion, 'eeeeeeeeee');
+
+  }
+  closeModal() {
+    this.activeModal.close('close');
+  }
+  saveValue($event: any){
+    if ($event === 'ok') {
+      this.activeModal.close('ok');
+    } else {
+      this.activeModal.close('close');
+    }
+  }
 }
