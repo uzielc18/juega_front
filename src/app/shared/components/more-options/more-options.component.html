@@ -8,27 +8,27 @@
   <br>
   <div>
     <label class="label">Activar el chat durante el vídeo</label>
-    <nb-toggle status="primary" class="my-3 d-block" formControlName="active_chat" (change)="setEmiter()"></nb-toggle>
+    <nb-toggle status="primary" class="my-3 d-block" formControlName="active_chat" (keyup)="setEmiter()"></nb-toggle>
     <control-messages [control]="formHeader.get('active_chat')"></control-messages>
   </div>
   <br>
   <div>
     <label class="label">Duración de la actividad (Duración por mínutos)</label>
-    <input class="w-100" type="number" nbInput fullWidth status="basic" placeholder="Ingresa un secuencia" formControlName="duration" (change)="setEmiter()"/>
+    <input class="w-100" type="number" nbInput fullWidth status="basic" placeholder="Ingresa un secuencia" formControlName="duration" (keyup)="setEmiter()"/>
     <control-messages [control]="formHeader.get('duration')"></control-messages>
   </div>
   <br>
   <div>
     <label class="label">¿ Es calificable ?</label>
-    <nb-toggle status="primary" class="my-3 d-block" formControlName="calificable" (change)="setEmiter()"></nb-toggle>
+    <nb-toggle status="primary" class="my-3 d-block" formControlName="calificable" (keyup)="setEmiter()"></nb-toggle>
     <control-messages [control]="formHeader.get('calificable')"></control-messages>
   </div>
   <br>
   <div>
     <label class="label">¿ Visivilidad ?</label>
     <nb-select placeholder="Mostrar al estudiante"  fullWidth formControlName="visibilidad" (selectedChange)="setEmiter()">
-      <nb-option value="S">Si</nb-option>
-      <nb-option value="N">No</nb-option>
+      <nb-option value="S">Si mostrar al estudiante</nb-option>
+      <nb-option value="N">No mostrar al estudiante</nb-option>
     </nb-select>
     <control-messages [control]="formHeader.get('visibilidad')"></control-messages>
   </div>

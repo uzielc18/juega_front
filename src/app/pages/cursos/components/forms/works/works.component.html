@@ -23,30 +23,30 @@
   <div>
     <label class="label">Fecha y hora de inicio</label>
     <div class="d-flex">
-      <input class="date-input" nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="dateTimePicker" formControlName="fecha_inicio"/>
-      <nb-datepicker #dateTimePicker></nb-datepicker>
-      <input class="hour-input ms-auto" nbInput placeholder="Hora Inicio" [nbTimepicker]="timepicker" type="text" />
-      <nb-timepicker #timepicker></nb-timepicker>
+      <input class="date-input" nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="fechaInicio" formControlName="fecha_inicio"/>
+      <nb-datepicker #fechaInicio format="dd/MM/yyyy"></nb-datepicker>
+      <input class="hour-input ms-auto" nbInput placeholder="Hora Inicio" [nbTimepicker]="horaInicio" type="text" formControlName="hora_inicio"/>
+      <nb-timepicker #horaInicio></nb-timepicker>
     </div>
   </div>
   <br>
   <div>
     <label class="label">Fecha y hora de término</label>
     <div class="d-flex">
-      <input class="date-input" nbInput placeholder="Fecha Termino" fullWidth [nbDatepicker]="dateTimePicker" formControlName="fecha_fin"/>
-      <nb-datepicker #dateTimePicker></nb-datepicker>
-      <input class="hour-input ms-auto" nbInput placeholder="Hora Termino" [nbTimepicker]="timepicker" type="text" />
-      <nb-timepicker #timepicker></nb-timepicker>
+      <input class="date-input" nbInput placeholder="Fecha Termino" fullWidth [nbDatepicker]="fechaTermino" formControlName="fecha_fin"/>
+      <nb-datepicker #fechaTermino format="dd/MM/yyyy"></nb-datepicker>
+      <input class="hour-input ms-auto" nbInput placeholder="Hora Termino" [nbTimepicker]="horaFin" type="text" formControlName="hora_fin"/>
+      <nb-timepicker #horaFin></nb-timepicker>
     </div>
   </div>
   <br>
   <div>
     <label class="label">Fecha y hora de gracia</label>
     <div class="d-flex">
-      <input class="date-input" nbInput placeholder="Fecha de Gracia" fullWidth [nbDatepicker]="dateTimePicker" formControlName="fecha_gracia"/>
-      <nb-datepicker #dateTimePicker></nb-datepicker>
-      <input class="hour-input ms-auto" nbInput placeholder="Hora de Gracia" [nbTimepicker]="timepicker" type="text" />
-      <nb-timepicker #timepicker></nb-timepicker>
+      <input class="date-input" nbInput placeholder="Fecha de Gracia" fullWidth [nbDatepicker]="fechaGracia" formControlName="fecha_gracia"/>
+      <nb-datepicker #fechaGracia format="dd/MM/yyyy"></nb-datepicker>
+      <input class="hour-input ms-auto" nbInput placeholder="Hora de Gracia" [nbTimepicker]="horaGracia" type="text" formControlName="hora_gracia"/>
+      <nb-timepicker #horaGracia></nb-timepicker>
     </div>
   </div>
   <br>
@@ -84,6 +84,6 @@
     <button nbButton outline status="primary" class="me-2" (click)="closeModal()">
       Cancelar
     </button>
-    <button nbButton status="primary">Añadir actividad</button>
+    <button nbButton status="primary" (click)="saveInformtion()">Añadir actividad</button>
   </div>
 </form>

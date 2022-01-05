@@ -38,12 +38,14 @@ export class HomeworkFormComponent {
       icon: 'checkmark-circle-outline',
     },
   ];
-  @Input() sesion:any;
+  @Input() topics: any;
+  @Input() unidad: any;
+  @Input() curso: any;
   constructor(public activeModal: NbDialogRef<HomeworkFormComponent>) {
 
   }
   ngOnInit(): void {
-    console.log(this.sesion, 'eeeeeeeeee');
+    console.log(this.topics, 'eeeeeeeeee', this.unidad, 'ooooo', this.curso);
 
   }
   closeModal() {

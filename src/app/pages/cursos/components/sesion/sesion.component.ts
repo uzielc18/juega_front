@@ -10,7 +10,8 @@ import { HomeworkFormComponent } from '../homework-form/homework-form.component'
 })
 export class SesionComponent implements OnInit {
   @Input() sesion: any = [];
-
+  @Input() unidad: any;
+  @Input() curso: any;
   constructor(private dialogService: NbDialogService) {}
 
   ngOnInit(): void {}
@@ -19,7 +20,9 @@ export class SesionComponent implements OnInit {
     this.dialogService.open(HomeworkFormComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
-        sesion: this.sesion,
+        topics: this.sesion,
+        unidad: this.unidad,
+        curso: this.curso,
       },
       closeOnBackdropClick: false,
       closeOnEsc: false

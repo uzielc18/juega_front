@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class UnidadComponent implements OnInit {
   @Input() unidades: any = [];
+  @Input() curso: any;
   // sesiones: any = this.unidades.topics;
   // unidades = this.sesiones.units;
 
