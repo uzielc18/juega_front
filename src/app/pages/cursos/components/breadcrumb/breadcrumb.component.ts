@@ -9,7 +9,7 @@ import { CursosService } from '../../services/cursos.service';
   styleUrls: ['./breadcrumb.component.scss'],
 })
 export class BreadcrumbComponent implements OnInit {
-  roles: string[] = [];
+  // roles: string[] = [];
   semestres: any[] = [];
   @Output() course = new EventEmitter<boolean>();
 
@@ -35,10 +35,10 @@ export class BreadcrumbComponent implements OnInit {
     );
   }
 
-  selecionar(event: any) {
-    console.log('hola desde el breadcrumb', event);
-    // this.role.emit(event);
-  }
+  // selecionar(event: any) {
+  //   console.log('hola desde el breadcrumb', event);
+  //   // this.role.emit(event);
+  // }
 
   updateSemestre(id: number) {
     this.cursosService.updateSemestre(id).subscribe((resp) => {

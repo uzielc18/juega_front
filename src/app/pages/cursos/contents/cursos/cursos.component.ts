@@ -8,25 +8,14 @@ import { CursosService } from '../../services/cursos.service';
 })
 export class CursosComponent implements OnInit {
   curso = 0;
-
   cursosEstudiante: any = [];
   cursosDocente: any = [];
   cursos: any = [];
   constructor(private cursosService: CursosService) {}
 
   ngOnInit(): void {
-    // this.cursosService.getCursos().subscribe((data: any) => {
-    //   console.log(data);
-    //   this.cursosDocente = data.data.cursos_docente;
-    //   console.log('cursos docente - ', this.cursosDocente);
-    //   this.cursosEstudiante = data.data.cursos_estudiante;
-    //   console.log('cursos estudiante - ', this.cursosEstudiante);
-    // });
-
     this.cursosService.data$.subscribe((data) => {
-      console.log('evemgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', data);
       this.cursosDocente = data.data.cursos_docente;
-      console.log('cursos docente - ', this.cursosDocente);
       this.cursosEstudiante = data.data.cursos_estudiante;
     });
   }

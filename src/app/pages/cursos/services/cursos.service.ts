@@ -25,7 +25,7 @@ export class CursosService {
   updateSemestre(semesterId: number): Observable<any> {
     return this.httpClient.get<any>(
       `${this._base_url}/user/updatesemester/${semesterId}`
-    )
+    );
   }
 
   getCursos(): Observable<Cursos[]> {
@@ -42,5 +42,9 @@ export class CursosService {
     return this.httpClient.get<any>(
       `${this._base_url}/resources-person/elements-course/${courseId}`
     );
+  }
+
+  getTypeElements(): Observable<any> {
+    return this.httpClient.get<any>(`${this._base_url}/typeElements`);
   }
 }
