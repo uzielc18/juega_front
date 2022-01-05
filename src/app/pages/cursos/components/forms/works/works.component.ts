@@ -29,7 +29,7 @@ export class WorksComponent implements OnInit {
       course_id: ['', [Validators.required]],
       element_id: [''],
       topic_id: ['', [Validators.required]],
-      type_element_id: [1, [Validators.required]],
+      type_element_id: ['1', [Validators.required]],
       evaluation_id: [''],
       id_carga_curso_docente: ['', [Validators.required]],
       id_programa_estudio: ['', [Validators.required]],
@@ -48,7 +48,7 @@ export class WorksComponent implements OnInit {
       fecha_gracia: ['', [Validators.required]],
       hora_gracia: ['', [Validators.required]],
       grupal: [false],
-      visibilidad: [false],
+      visibilidad: ['S'],
       intentos: [''],
       calificable: [true],
       duracion: ['180', [Validators.required]],
@@ -73,8 +73,6 @@ export class WorksComponent implements OnInit {
     })
   }
   formsValues($event:any) {
-    console.log($event, 'formsValue');
-
     this.formHeader.patchValue({
       calificable: $event.calificable,
       duracion: $event.duration || '',
@@ -95,51 +93,66 @@ export class WorksComponent implements OnInit {
       this.options = 'N';
     }
   }
+  get validCampos(): any {
+    if (!this.formHeader.value.titulo ||
+       !this.formHeader.value.descripcion ||
+       !this.formHeader.value.fecha_inicio ||
+       !this.formHeader.value.fecha_fin ||
+       !this.formHeader.value.fecha_gracia ||
+       !this.formHeader.value.hora_inicio ||
+       !this.formHeader.value.hora_fin ||
+       !this.formHeader.value.hora_gracia) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   saveInformtion() {
     const forms = this.formHeader.value;
-    const serviceName = END_POINTS.base_back.resourse + '/elements';
+    const serviceName = END_POINTS.base_back.elements;
+
     const f_inicio = this.datepipe.transform(forms.fecha_inicio, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_inicio, 'HH:mm');
     const f_fin = this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_fin, 'HH:mm');
     const f_gracia = this.datepipe.transform(forms.fecha_gracia, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_gracia, 'HH:mm');
     const params = {
       course_id:                forms.course_id,
-      element_id:               forms.element_id,
+      // element_id:               forms.element_id,
       topic_id:                 forms.topic_id,
-      type_element_id:          1,
-      evaluation_id:            forms.evaluation_id,
+      type_element_id:          forms.type_element_id,
+      // evaluation_id:            forms.evaluation_id,
       id_carga_curso_docente:   forms.id_carga_curso_docente,
       id_programa_estudio:      forms.id_programa_estudio,
       titulo:                   forms.titulo,
       descripcion:              forms.descripcion,
       tipo:                     forms.tipo,
-      orden:                    forms.orden,
-      nota:                     forms.nota,
-      url_externa:              forms.url_externa,
-      documento_ayuda:          forms.documento_ayuda,
-      tamano_peso:              forms.tamano_peso,
+      // orden:                    forms.orden,
+      // nota:                     forms.nota,
+      // url_externa:              forms.url_externa,
+      // documento_ayuda:          forms.documento_ayuda,
+      // tamano_peso:              forms.tamano_peso,
       fecha_inicio:             f_inicio,
       fecha_fin:                f_fin,
       fecha_gracia:             f_gracia,
       grupal:                   forms.grupal === true ? '1' : '0',
-      visibilidad:              forms.visibilidad === true ? '1' : '0',
-      intentos:                 forms.intentos,
+      visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
+      // intentos:                 forms.intentos,
       calificable:              forms.calificable  === true ? '1' : '0',
       duracion:                 forms.duracion,
       estado:                   forms.estado,
-      userid:                   forms.userid,
-      files:                    forms.files,
+      userid:                   1,
+      files:                    forms.files || [],
     };
     // console.log(params, serviceName);
 
-    if (this.formHeader.valid) {
+    // if (this.formHeader.valid) {
       this.loading = true;
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {
         if (r.success) {
           this.saveCloseValue.emit('ok');
         }
       }, () => { this.loading = false; }, () => { this.loading = false; });
-    }
+    // }
   }
   closeModal() {
     this.saveCloseValue.emit('close');

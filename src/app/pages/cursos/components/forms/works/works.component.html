@@ -24,6 +24,7 @@
       </lamb-prepare-file-pro>
     </div>
   </div>
+  <!-- {{formHeader.value | json}} -->
   <div style="padding-top: 4px;">
     <label class="label">Fecha y hora de inicio</label>
     <div class="d-flex">
@@ -97,7 +98,7 @@
       {{options === 'N' ? 'Mostrar' : 'Ocultar'}} opciones avanzadas</label>
 
       <div *ngIf="options === 'S'">
-        <br>
+
         <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)"></app-more-options>
       </div>
   </div>
@@ -106,6 +107,6 @@
     <button nbButton outline status="primary" class="me-2" (click)="closeModal()">
       Cancelar
     </button>
-    <button nbButton status="primary" [disabled]="formHeader.invalid" (click)="saveInformtion()">Añadir actividad</button>
+    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">Añadir actividad</button>
   </div>
 </form>
