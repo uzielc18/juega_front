@@ -18,6 +18,15 @@ export class SesionComponent implements OnInit {
   open() {
     this.dialogService.open(HomeworkFormComponent, {
       dialogClass: 'dialog-limited-height',
+      context: {
+        sesion: this.sesion,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result == 'ok') {
+        // this.filtrar();
+      }
     });
   }
 }

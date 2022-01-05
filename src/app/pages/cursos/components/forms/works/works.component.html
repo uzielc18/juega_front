@@ -1,0 +1,89 @@
+<form [formGroup]="formHeader">
+  <div>
+    <label class="label">Título</label>
+    <input class="w-100" type="text" nbInput fullWidth status="basic" placeholder="Ingresa un título" formControlName="titulo"/>
+    <control-messages [control]="formHeader.get('titulo')"></control-messages>
+  </div>
+  <br>
+  <div>
+    <label class="label">Descripción</label>
+    <textarea class="w-100" type="text" nbInput fullWidth status="basic" placeholder="Ingresa un descripción" formControlName="descripcion"></textarea>
+    <control-messages [control]="formHeader.get('descripcion')"></control-messages>
+  </div>
+  <br>
+  <div>
+    <label class="label">Adjuntar documento</label>
+    <div>
+      <lamb-prepare-file-pro
+        [paramsInfo]="{id: '111', codigo: '201410594', directory: 'plantillas/upeu', type: 'put', tabla: 'elements', tipo: ''}"
+        [numFiles]="1" (filterValueChange)="valueFile($event)"></lamb-prepare-file-pro>
+    </div>
+  </div>
+  <br>
+  <div>
+    <label class="label">Fecha y hora de inicio</label>
+    <div class="d-flex">
+      <input class="date-input" nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="dateTimePicker" formControlName="fecha_inicio"/>
+      <nb-datepicker #dateTimePicker></nb-datepicker>
+      <input class="hour-input ms-auto" nbInput placeholder="Hora Inicio" [nbTimepicker]="timepicker" type="text" />
+      <nb-timepicker #timepicker></nb-timepicker>
+    </div>
+  </div>
+  <br>
+  <div>
+    <label class="label">Fecha y hora de término</label>
+    <div class="d-flex">
+      <input class="date-input" nbInput placeholder="Fecha Termino" fullWidth [nbDatepicker]="dateTimePicker" formControlName="fecha_fin"/>
+      <nb-datepicker #dateTimePicker></nb-datepicker>
+      <input class="hour-input ms-auto" nbInput placeholder="Hora Termino" [nbTimepicker]="timepicker" type="text" />
+      <nb-timepicker #timepicker></nb-timepicker>
+    </div>
+  </div>
+  <br>
+  <div>
+    <label class="label">Fecha y hora de gracia</label>
+    <div class="d-flex">
+      <input class="date-input" nbInput placeholder="Fecha de Gracia" fullWidth [nbDatepicker]="dateTimePicker" formControlName="fecha_gracia"/>
+      <nb-datepicker #dateTimePicker></nb-datepicker>
+      <input class="hour-input ms-auto" nbInput placeholder="Hora de Gracia" [nbTimepicker]="timepicker" type="text" />
+      <nb-timepicker #timepicker></nb-timepicker>
+    </div>
+  </div>
+  <br>
+  <div>
+    <!-- <label class="label" >Fecha y hora de gracia</label> -->
+    <nb-toggle status="basic" class="my-3 d-block">Contiene rúbrica</nb-toggle>
+    <nb-select placeholder="Seleccionar rúbrica"  fullWidth>
+      <nb-option value="1">Option 1</nb-option>
+      <nb-option value="2">Option 2</nb-option>
+      <nb-option value="3">Option 3</nb-option>
+      <nb-option value="4">Option 4</nb-option>
+    </nb-select>
+    <!-- <control-messages [control]="formHeader.get('rubrica')"></control-messages> -->
+  </div>
+  <br>
+  <div>
+    <label class="label">Secuencia de aprendizaje</label>
+    <input class="w-100" type="text" nbInput fullWidth status="basic" placeholder="Ingresa un secuencia" />
+    <!-- <control-messages [control]="formHeader.get('secuencia')"></control-messages> -->
+  </div>
+  <br>
+  <div>
+    <label class="label">
+      <nb-icon *ngIf="options === 'N'" style="cursor: pointer; font-size: 25px;" icon="arrow-ios-downward-outline" (click)="moreOptions('N')"></nb-icon>
+      <nb-icon *ngIf="options === 'S'" style="cursor: pointer; font-size: 25px;" icon="arrow-ios-upward-outline" (click)="moreOptions('S')"></nb-icon>
+      {{options === 'N' ? 'Mostrar' : 'Ocultar'}} opciones avanzadas</label>
+
+      <div *ngIf="options === 'S'">
+        <br>
+        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)"></app-more-options>
+      </div>
+  </div>
+  <br>
+  <div class="buttons d-flex justify-content-end">
+    <button nbButton outline status="primary" class="me-2" (click)="closeModal()">
+      Cancelar
+    </button>
+    <button nbButton status="primary">Añadir actividad</button>
+  </div>
+</form>
