@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeneralService } from 'src/app/providers';
@@ -16,7 +17,9 @@ export class WorksComponent implements OnInit {
   @Input() topics: any;
   @Input() unidad: any;
   @Input() curso: any;
-  constructor(private formBuilder: FormBuilder, private generalServi: GeneralService) { }
+  directorio: any = 'plantillas/upeu';
+  constructor(private formBuilder: FormBuilder, private generalServi: GeneralService,
+    public datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -24,35 +27,39 @@ export class WorksComponent implements OnInit {
   private fieldReactive() {
     const controls = {
       course_id: ['', [Validators.required]],
-      element_id: [0, [Validators.required]],
+      element_id: [''],
       topic_id: ['', [Validators.required]],
-      type_element_id: ['', [Validators.required]],
-      evaluation_id: ['', [Validators.required]],
+      type_element_id: [1, [Validators.required]],
+      evaluation_id: [''],
       id_carga_curso_docente: ['', [Validators.required]],
       id_programa_estudio: ['', [Validators.required]],
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
       tipo: ['TRABAJO', [Validators.required]],
-      orden: ['', [Validators.required]],
-      nota: ['', [Validators.required]],
-      url_externa: ['', [Validators.required]],
-      documento_ayuda: ['', [Validators.required]],
-      tamano_peso: ['', [Validators.required]],
+      orden: [''],
+      nota: [''],
+      url_externa: [''],
+      documento_ayuda: [''],
+      tamano_peso: [''],
       fecha_inicio: ['', [Validators.required]],
       hora_inicio: ['', [Validators.required]],
       fecha_fin: ['', [Validators.required]],
       hora_fin: ['', [Validators.required]],
       fecha_gracia: ['', [Validators.required]],
       hora_gracia: ['', [Validators.required]],
-      grupal: ['', [Validators.required]],
-      visibilidad: ['', [Validators.required]],
-      intentos: ['', [Validators.required]],
-      calificable: ['', [Validators.required]],
-      duracion: ['', [Validators.required]],
+      grupal: [false],
+      visibilidad: [false],
+      intentos: [''],
+      calificable: [true],
+      duracion: ['180', [Validators.required]],
       estado: ['1', [Validators.required]],
-      userid: ['', [Validators.required]],
-      carpeta: ['', [Validators.required]],
+      userid: [''],
       files: [''],
+
+      rubrica: [false],
+      id_rubrica: [''],
+      secuencia_aprendizaje: [''],
+
     };
     this.formHeader = this.formBuilder.group(controls);
     this.setValuesPre();
@@ -73,7 +80,7 @@ export class WorksComponent implements OnInit {
       duracion: $event.duration || '',
       visibilidad: $event.visibilidad,
       // active_chat: $event.active_chat,
-      carpeta: $event.carpeta || '',
+      element_id: $event.element_id || '',
     })
   }
   valueFile($event:any){
@@ -92,11 +99,14 @@ export class WorksComponent implements OnInit {
   saveInformtion() {
     const forms = this.formHeader.value;
     const serviceName = END_POINTS.base_back.resourse + '/elements';
+    const f_inicio = this.datepipe.transform(forms.fecha_inicio, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_inicio, 'HH:mm');
+    const f_fin = this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_fin, 'HH:mm');
+    const f_gracia = this.datepipe.transform(forms.fecha_gracia, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_gracia, 'HH:mm');
     const params = {
       course_id:                forms.course_id,
       element_id:               forms.element_id,
       topic_id:                 forms.topic_id,
-      type_element_id:          forms.type_element_id,
+      type_element_id:          1,
       evaluation_id:            forms.evaluation_id,
       id_carga_curso_docente:   forms.id_carga_curso_docente,
       id_programa_estudio:      forms.id_programa_estudio,
@@ -108,31 +118,28 @@ export class WorksComponent implements OnInit {
       url_externa:              forms.url_externa,
       documento_ayuda:          forms.documento_ayuda,
       tamano_peso:              forms.tamano_peso,
-      fecha_inicio:             forms.fecha_inicio,
-      hora_inicio:              forms.hora_inicio,
-      fecha_fin:                forms.fecha_fin,
-      hora_fin:                 forms.hora_fin,
-      fecha_gracia:             forms.fecha_gracia,
-      hora_gracia:              forms.hora_fin,
-      grupal:                   forms.grupal,
-      visibilidad:              forms.visibilidad,
+      fecha_inicio:             f_inicio,
+      fecha_fin:                f_fin,
+      fecha_gracia:             f_gracia,
+      grupal:                   forms.grupal === true ? '1' : '0',
+      visibilidad:              forms.visibilidad === true ? '1' : '0',
       intentos:                 forms.intentos,
-      calificable:              forms.calificable,
+      calificable:              forms.calificable  === true ? '1' : '0',
       duracion:                 forms.duracion,
       estado:                   forms.estado,
       userid:                   forms.userid,
-      carpeta:                  forms.carpeta,
       files:                    forms.files,
     };
-    console.log(params, serviceName);
+    // console.log(params, serviceName);
 
-    // if (this.formHeader.valid) {
-    //   this.generalServi.addNameData$(serviceName, params).subscribe(r => {
-    //     if (r.success) {
-    //       this.saveCloseValue.emit('ok');
-    //     }
-    //   });
-    // }
+    if (this.formHeader.valid) {
+      this.loading = true;
+      this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+        if (r.success) {
+          this.saveCloseValue.emit('ok');
+        }
+      }, () => { this.loading = false; }, () => { this.loading = false; });
+    }
   }
   closeModal() {
     this.saveCloseValue.emit('close');

@@ -45,7 +45,7 @@ export class HomeworkFormComponent {
 
   }
   ngOnInit(): void {
-    console.log(this.topics, 'eeeeeeeeee', this.unidad, 'ooooo', this.curso);
+    // console.log(this.topics, 'eeeeeeeeee', this.unidad, 'ooooo', this.curso);
 
   }
   closeModal() {

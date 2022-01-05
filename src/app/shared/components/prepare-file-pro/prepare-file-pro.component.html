@@ -1,6 +1,9 @@
 <!-- El componente esta diseñado solo para imagenes y pdf si desea añadir otras extensiones, cree otro componente -->
 <form [formGroup]="formHeaders">
-  <div>
+  <div [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Preparando">
     <div style="background: #f7f7f7;">
       <div class="text-center">
         <br>
