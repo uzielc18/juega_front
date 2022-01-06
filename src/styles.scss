@@ -6,6 +6,9 @@
 @include nb-install() {
   @include nb-theme-global();
 }
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
 /* You can add global styles to this file, and also import other style files */
 
 .mi-estilo-global {

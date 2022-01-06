@@ -26,9 +26,21 @@ import { WorksComponent } from './components/forms/works/works.component';
 import { ControlMessagesModule } from 'src/app/shared/components/control-messages/control-messages.module';
 import { MoreOptionsModule } from 'src/app/shared/components/more-options/more-options.module';
 import { GeneralService } from 'src/app/providers';
+import { ForusComponent } from './components/forms/forus/forus.component';
+import { EnlaceExternalComponent } from './components/forms/enlace-external/enlace-external.component';
+import { VidioConferenceComponent } from './components/forms/vidio-conference/vidio-conference.component';
+import { EvaluationsComponent } from './components/forms/evaluations/evaluations.component';
+import { DocumentsComponent } from './components/forms/documents/documents.component';
+import { VidioComponent } from './components/forms/vidio/vidio.component';
 
 const COMPONENTS: any[] = [
-  WorksComponent
+  WorksComponent,
+  ForusComponent,
+  EnlaceExternalComponent,
+  VidioConferenceComponent,
+  EvaluationsComponent,
+  DocumentsComponent,
+  VidioComponent,
 ];
 const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,
@@ -53,7 +65,7 @@ const SERVICES: any = [
     TrabajoComponent,
     VideoConferenciaComponent,
     AdjuntarDocsComponent,
-    ...COMPONENTS
+    ...COMPONENTS,
   ],
   exports: [CursosComponent],
   imports: [

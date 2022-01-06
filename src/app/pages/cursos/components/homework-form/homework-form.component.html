@@ -1,4 +1,7 @@
-<nb-card>
+<nb-card [nbSpinner]="loading"
+nbSpinnerStatus="primary"
+nbSpinnerSize="large"
+nbSpinnerMessage="Preparando información">
   <nb-card-body>
     <div class="row container p-0 m-0">
       <div class="col-4 menu-container p-4">
@@ -18,9 +21,35 @@
             </div>
           </div>
         </div>
+
+        <!-- <div  class="form mt-4 px-5">
+          <app-works (saveCloseValue)="saveValue($event)" [topics]="topics" [unidad]="unidad" [curso]="curso" [item]="item" [code]="code"></app-works>
+        </div> -->
+
+        <!-- <div  class="form mt-4 px-5">
+          <app-forus (saveCloseValue)="saveValue($event)" [topics]="topics" [unidad]="unidad" [curso]="curso" [item]="item" [code]="code"></app-forus>
+        </div> -->
+
+        <!-- <div  class="form mt-4 px-5">
+          <app-enlace-external (saveCloseValue)="saveValue($event)" [topics]="topics" [unidad]="unidad" [curso]="curso" [item]="item" [code]="code"></app-enlace-external>
+        </div> -->
+
+        <!--<div  class="form mt-4 px-5">
+          <app-vidio-conference (saveCloseValue)="saveValue($event)" [topics]="topics" [unidad]="unidad" [curso]="curso" [item]="item" [code]="code"></app-vidio-conference>
+        </div> -->
+
+        <!-- <div  class="form mt-4 px-5">
+          <app-evaluations (saveCloseValue)="saveValue($event)" [topics]="topics" [unidad]="unidad" [curso]="curso" [item]="item" [code]="code"></app-evaluations>
+        </div> -->
+
+        <!-- <div  class="form mt-4 px-5">
+          <app-documents (saveCloseValue)="saveValue($event)" [topics]="topics" [unidad]="unidad" [curso]="curso" [item]="item" [code]="code"></app-documents>
+        </div> -->
+
         <div  class="form mt-4 px-5">
-          <app-works (saveCloseValue)="saveValue($event)" [topics]="topics" [unidad]="unidad" [curso]="curso"></app-works>
+          <app-vidio (saveCloseValue)="saveValue($event)" [topics]="topics" [unidad]="unidad" [curso]="curso" [item]="item" [code]="code"></app-vidio>
         </div>
+
         <!-- <div class="row">
           <div class="col px-0">
             <div class="d-flex align-items-center">

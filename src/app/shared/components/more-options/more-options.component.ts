@@ -11,6 +11,7 @@ export class MoreOptionsComponent implements OnInit {
   formHeader: any = FormGroup;
   @Input() tipo:any;
   @Output() formsValues = new EventEmitter<any>();
+  @Input() setValues:any;
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {

@@ -18,7 +18,7 @@ export class PrepareFileProComponent implements OnInit {
   @Input() isDisabled: boolean = false; // no modificar
   @Input() numFiles: number = 10; // no modificar
   accept: any;
-  listArrayFile: any = [];
+  @Input() listArrayFile: any = [];
   loading: boolean = false;
   constructor(private formBuilder: FormBuilder, private modalServiceNebular: NbDialogService,
     private s3ServiceServ: S3ServiceService) {
@@ -43,8 +43,6 @@ export class PrepareFileProComponent implements OnInit {
     this.loading = true;
     this.s3ServiceServ.getUserMe().subscribe(res => {
       this.userData = res['data'];
-      console.log(this.userData);
-
     }, () => { this.loading = false; }, () => { this.loading = false; });
   }
   typeFileSet(typeFile: string) {

@@ -41,6 +41,12 @@ export class HomeworkFormComponent {
   @Input() topics: any;
   @Input() unidad: any;
   @Input() curso: any;
+
+  @Input() item: any;
+  @Input() code: any;
+
+  loading: boolean = false;
+
   constructor(public activeModal: NbDialogRef<HomeworkFormComponent>) {
 
   }

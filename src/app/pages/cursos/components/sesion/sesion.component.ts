@@ -23,6 +23,8 @@ export class SesionComponent implements OnInit {
         topics: this.sesion,
         unidad: this.unidad,
         curso: this.curso,
+        code: 'NEW',
+        item: '',
       },
       closeOnBackdropClick: false,
       closeOnEsc: false

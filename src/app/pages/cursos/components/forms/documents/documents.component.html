@@ -8,11 +8,11 @@
   <div style="padding-top: 4px;">
     <label class="label">Descripción</label>
     <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una descripción"
-    [status]="(formHeader.hasError('required', ['descripcion'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
+    [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
     <control-messages [control]="formHeader.get('descripcion')"></control-messages>
   </div>
   <div style="padding-top: 4px;">
-    <label class="label">Documento ayuda</label>
+    <label class="label">Adjuntar documento</label>
     <div>
       <lamb-prepare-file-pro
         [paramsInfo]="{
@@ -80,26 +80,6 @@
       <nb-timepicker #horaGracia></nb-timepicker>
       </nb-form-field>
     </div>
-  </div>
-  <div style="padding-top: 4px;">
-    <!-- <label class="label" >Fecha y hora de gracia</label> -->
-    <nb-toggle status="basic" class="my-3 d-block" formControlName="rubrica">Contiene rúbrica</nb-toggle>
-    <nb-select placeholder="Seleccionar rúbrica"  fullWidth
-    [status]="(formHeader.hasError('required', ['id_rubrica'])) === true ? 'primary' : 'basic'" formControlName="id_rubrica">
-      <nb-option value="1">Option 1</nb-option>
-      <nb-option value="2">Option 2</nb-option>
-    </nb-select>
-    <control-messages [control]="formHeader.get('id_rubrica')"></control-messages>
-  </div>
-  <!-- <div style="padding-top: 4px;">
-    <nb-toggle status="basic" class="my-3 d-block" formControlName="grupal">Grupal</nb-toggle>
-    <control-messages [control]="formHeader.get('grupal')"></control-messages>
-  </div> -->
-  <div style="padding-top: 4px;">
-    <label class="label">Secuencia de aprendizaje</label>
-    <input class="w-100" type="text" nbInput fullWidth status="basic" placeholder="Ingresa un secuencia"
-    [status]="(formHeader.hasError('required', ['secuencia_aprendizaje'])) === true ? 'primary' : 'basic'" formControlName="secuencia_aprendizaje"/>
-    <!-- <control-messages [control]="formHeader.get('secuencia')"></control-messages> -->
   </div>
   <div style="padding-top: 4px;">
     <label class="label">

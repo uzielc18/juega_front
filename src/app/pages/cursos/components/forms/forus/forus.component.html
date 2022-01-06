@@ -2,7 +2,7 @@
   <div>
     <label class="label">Título</label>
     <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa un título"
-    [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="titulo"/>
+     [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="titulo"/>
     <control-messages [control]="formHeader.get('titulo')"></control-messages>
   </div>
   <div style="padding-top: 4px;">
@@ -12,20 +12,12 @@
     <control-messages [control]="formHeader.get('descripcion')"></control-messages>
   </div>
   <div style="padding-top: 4px;">
-    <label class="label">Documento ayuda</label>
-    <div>
-      <lamb-prepare-file-pro
-        [paramsInfo]="{
-          id: topics?.id_carga_curso_docente,
-          directory: directorio,
-          type: 'put',
-          tabla: 'elements',
-          tipo: 'DOCUMENTO_AYUDA'}"
-        [numFiles]="6"
-        (filterValueChange)="valueFile($event)">
-      </lamb-prepare-file-pro>
-    </div>
+    <label class="label">Pregunta para el foro</label>
+    <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una intervención inicial"
+    [status]="(formHeader.hasError('required', ['pregunta'])) === true ? 'primary' : 'basic'" formControlName="pregunta"></textarea>
+    <control-messages [control]="formHeader.get('pregunta')"></control-messages>
   </div>
+
   <!-- {{formHeader.value | json}} -->
   <div style="padding-top: 4px;">
     <label class="label">Fecha y hora de inicio</label>
@@ -82,25 +74,30 @@
     </div>
   </div>
   <div style="padding-top: 4px;">
-    <!-- <label class="label" >Fecha y hora de gracia</label> -->
-    <nb-toggle status="basic" class="my-3 d-block" formControlName="rubrica">Contiene rúbrica</nb-toggle>
-    <nb-select placeholder="Seleccionar rúbrica"  fullWidth
-    [status]="(formHeader.hasError('required', ['id_rubrica'])) === true ? 'primary' : 'basic'" formControlName="id_rubrica">
-      <nb-option value="1">Option 1</nb-option>
-      <nb-option value="2">Option 2</nb-option>
-    </nb-select>
-    <control-messages [control]="formHeader.get('id_rubrica')"></control-messages>
+    <div class="row">
+      <div class="col-md-6">
+        <nb-toggle status="basic" class="my-3 d-block" formControlName="ver_respuestas">Mostrar respuestas</nb-toggle>
+      </div>
+      <div class="col-md-6">
+        <nb-toggle status="basic" class="my-3 d-block" formControlName="permitir_comentarios">Permitir comentarios</nb-toggle>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <nb-toggle status="basic" class="my-3 d-block" formControlName="autocalificable" (change)="valueAuthentofi()">autocalificable</nb-toggle>
+      </div>
+      <div class="col-md-6">
+        <nb-toggle status="basic" class="my-3 d-block" formControlName="editor">Texto enriquecido</nb-toggle>
+      </div>
+    </div>
   </div>
-  <!-- <div style="padding-top: 4px;">
-    <nb-toggle status="basic" class="my-3 d-block" formControlName="grupal">Grupal</nb-toggle>
-    <control-messages [control]="formHeader.get('grupal')"></control-messages>
-  </div> -->
-  <div style="padding-top: 4px;">
-    <label class="label">Secuencia de aprendizaje</label>
-    <input class="w-100" type="text" nbInput fullWidth status="basic" placeholder="Ingresa un secuencia"
-    [status]="(formHeader.hasError('required', ['secuencia_aprendizaje'])) === true ? 'primary' : 'basic'" formControlName="secuencia_aprendizaje"/>
-    <!-- <control-messages [control]="formHeader.get('secuencia')"></control-messages> -->
+  <div style="padding-top: 4px;" *ngIf="formHeader.value.autocalificable">
+    <label class="label">Nota sugerida</label>
+    <input class="w-100" type="number" nbInput fullWidth placeholder="Nota"
+    [status]="(formHeader.hasError('required', ['nota'])) === true ? 'primary' : 'basic'" formControlName="nota"/>
+    <control-messages [control]="formHeader.get('nota')"></control-messages>
   </div>
+
   <div style="padding-top: 4px;">
     <label class="label">
       <nb-icon *ngIf="options === 'N'" style="cursor: pointer; font-size: 25px;" status="primary" icon="arrow-ios-downward-outline" (click)="moreOptions('N')"></nb-icon>
