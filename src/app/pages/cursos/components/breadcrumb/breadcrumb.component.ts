@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AppService } from '../../../../core/state/app.service';
+import { GeneralService } from '../../../../providers';
+import { END_POINTS } from '../../../../providers/utils';
 import { CursosService } from '../../services/cursos.service';
 
 @Component({
@@ -11,35 +13,59 @@ import { CursosService } from '../../services/cursos.service';
 export class BreadcrumbComponent implements OnInit {
   // roles: string[] = [];
   semestres: any[] = [];
+  data$ = new EventEmitter<any>();
+
   @Output() course = new EventEmitter<boolean>();
 
-  seme = this.fb.control('');
+  semestre = this.formBuilder.control('');
 
   constructor(
     private userService: AppService,
+    private generalService: GeneralService,
     private cursosService: CursosService,
-    private fb: FormBuilder
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.cursosService.getSemestres().subscribe((data) => {
-      this.semestres = data.data;
-      console.log('semestres', this.semestres);
-    });
+    this.getSemestres();
     const { semester } = this.userService.semestre;
-    this.seme.patchValue(semester);
+    this.semestre.patchValue(semester);
     this.updateSemestre(semester);
-
-    this.seme.valueChanges.subscribe((semester) =>
+    this.semestre.valueChanges.subscribe((semester) =>
       this.updateSemestre(semester)
     );
   }
 
-  updateSemestre(id: number) {
-    this.cursosService.updateSemestre(id).subscribe((resp) => {
-      console.log('sfcsefsefsefsefse', resp);
+  // getCursos() {
+  //   const serviceName = END_POINTS.base_back.resourse + '/enrollment-student';
+  //   this.generalService.nameAll$(serviceName).subscribe((data) => {
+  //     console.log('cursossosososo desde breadcrumb', data);
+  //   });
+  // }
+
+  getSemestres() {
+    const serviceName = END_POINTS.base_back.user + '/mysemesters';
+    this.generalService
+      .nameAll$(serviceName)
+      .subscribe(({ data: semestres }) => {
+        console.log('my semstrressssss', semestres);
+        this.semestres = semestres;
+      });
+  }
+
+  updateSemestre(semesterId: number) {
+    const serviceName = END_POINTS.base_back.user + '/updatesemester';
+    const id = semesterId;
+    this.generalService.nameId$(serviceName, id).subscribe(({ data }) => {
+      console.log('update semestrre', data);
       this.cursosService.getCursos();
       this.course.emit(true);
     });
+
+    // this.cursosService.updateSemestre(id).subscribe((resp) => {
+    //   console.log('sfcsefsefsefsefse', resp);
+    //   this.cursosService.getCursos();
+    //   this.course.emit(true);
+    // });
   }
 }

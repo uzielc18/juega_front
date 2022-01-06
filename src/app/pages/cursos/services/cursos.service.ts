@@ -18,15 +18,15 @@ export class CursosService {
     @Inject(CORE_OPTIONS) protected options: CoreOptions
   ) {}
 
-  getSemestres(): Observable<any> {
-    return this.httpClient.get<any>(`${this._base_url}/user/mysemesters`);
-  }
+  // getSemestres(): Observable<any> {
+  //   return this.httpClient.get<any>(`${this._base_url}/user/mysemesters`);
+  // }
 
-  updateSemestre(semesterId: number): Observable<any> {
-    return this.httpClient.get<any>(
-      `${this._base_url}/user/updatesemester/${semesterId}`
-    );
-  }
+  // updateSemestre(semesterId: number): Observable<any> {
+  //   return this.httpClient.get<any>(
+  //     `${this._base_url}/user/updatesemester/${semesterId}`
+  //   );
+  // }
 
   getCursos(): Observable<Cursos[]> {
     return this.httpClient
@@ -38,13 +38,13 @@ export class CursosService {
       );
   }
 
-  getUnidades(courseId: number): Observable<any> {
-    return this.httpClient.get<any>(
-      `${this._base_url}/resources-person/elements-course/${courseId}`
-    );
-  }
+  // getUnidades(courseId: number): Observable<any> {
+  //   return this.httpClient.get<any>(
+  //     `${this._base_url}/resources-person/elements-course/${courseId}`
+  //   );
+  // }
 
-  getTypeElements(): Observable<any> {
-    return this.httpClient.get<any>(`${this._base_url}/typeElements`);
-  }
+  // getTypeElements(): Observable<any> {
+  //   return this.httpClient.get<any>(`${this._base_url}/typeElements`);
+  // }
 }

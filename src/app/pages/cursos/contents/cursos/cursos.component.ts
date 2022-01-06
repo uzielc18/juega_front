@@ -10,7 +10,6 @@ export class CursosComponent implements OnInit {
   curso = 0;
   cursosEstudiante: any = [];
   cursosDocente: any = [];
-  cursos: any = [];
   constructor(private cursosService: CursosService) {}
 
   ngOnInit(): void {

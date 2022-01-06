@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CursosService } from '../../services/cursos.service';
+import { GeneralService } from '../../../../providers';
+import { END_POINTS } from '../../../../providers/utils';
 
 @Component({
   selector: 'app-curso',
@@ -13,28 +14,44 @@ export class CursoComponent implements OnInit {
   path: number = 0;
   curso: any = [];
   unidades: any = [];
-  // sesiones: any = [];
 
   constructor(
-    private cursosService: CursosService,
-    private courseId: ActivatedRoute
+    private courseId: ActivatedRoute,
+    private generalService: GeneralService
   ) {}
 
   ngOnInit(): void {
+    this.getCursoById();
+
+    this.getUnidades(this.path);
+    // this.cursosService.getUnidades(this.path).subscribe((data: any) => {
+    //   console.log('sfafsdafasfa', data);
+    //   this.curso = data.data;
+    //   console.log('soy el curso', this.curso);
+    //   this.unidades = this.curso.units;
+    //   console.log('unidades', this.unidades);
+    //   // this.sesiones = this.unidades.topics;
+    //   // this.sesiones = this.unidades;
+    //   // console.log('sesiones', this.sesiones);
+    // });
+  }
+
+  getCursoById() {
     this.routeSub = this.courseId.params.subscribe((params) => {
       console.log(params); //log the entire params object
       this.path = params['curso'];
     });
+  }
 
-    this.cursosService.getUnidades(this.path).subscribe((data: any) => {
-      console.log('sfafsdafasfa', data);
+  getUnidades(cursoId: number) {
+    const serviceName = END_POINTS.base_back.resourse + '/elements-course';
+    const id = cursoId;
+    this.generalService.nameId$(serviceName, id).subscribe((data) => {
+      console.log('unidadesdsdsdsdsdsds', data);
       this.curso = data.data;
       console.log('soy el curso', this.curso);
       this.unidades = this.curso.units;
       console.log('unidades', this.unidades);
-      // this.sesiones = this.unidades.topics;
-      // this.sesiones = this.unidades;
-      // console.log('sesiones', this.sesiones);
     });
   }
 }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { GeneralService } from '../../../providers';
+import { END_POINTS } from '../../../providers/utils';
 
 @Component({
   selector: 'app-menu-elements',
@@ -19,12 +20,11 @@ export class MenuElementsComponent implements OnInit {
   }
 
   getElements() {
-    this.menuElements
-      .nameAll$('typeElements')
-      .subscribe(({ data: elements }) => {
-        console.log('elements', elements);
-        this.elements = elements;
-      });
+    const serviceName = '/typeElements';
+    this.menuElements.nameAll$(serviceName).subscribe(({ data: elements }) => {
+      console.log('elements', elements);
+      this.elements = elements;
+    });
   }
 
   elementStyle() {
@@ -45,9 +45,8 @@ export class MenuElementsComponent implements OnInit {
 
   elementStyleHover(element: any) {
     return {
-      'background-color': '#f5f5f5',
       'border-left': `4px solid ${element.color_hover}`,
-      color: `${element.background} !important`,
+      color: element.background,
     };
   }
 
