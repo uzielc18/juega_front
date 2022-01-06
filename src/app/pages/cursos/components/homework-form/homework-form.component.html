@@ -1,12 +1,13 @@
 <nb-card>
   <nb-card-body>
     <div class="row container p-0 m-0">
-      <div class="col-4 menu-container p-4">
-        <small class="fw-bold menu-title text-white"
+      <div class="col-4 menu-container p-4 pe-0">
+        <small class="fw-bold menu-title pe-2"
           >Que recurso o actividad deseas añadir al curso?</small
         >
-        <nb-menu [items]="items" menu-background-color="blue" class="mt-3" menu-text-color='black'>
-        </nb-menu>
+        <!-- <nb-menu [items]="items" menu-background-color="blue" class="mt-3" menu-text-color='black'>
+        </nb-menu> -->
+        <app-menu-elements (onSelect)="selectedElement($event)"></app-menu-elements>
       </div>
       <div class="col-8 p-4">
         <div class="col px-0">

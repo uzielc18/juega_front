@@ -35,11 +35,6 @@ export class BreadcrumbComponent implements OnInit {
     );
   }
 
-  // selecionar(event: any) {
-  //   console.log('hola desde el breadcrumb', event);
-  //   // this.role.emit(event);
-  // }
-
   updateSemestre(id: number) {
     this.cursosService.updateSemestre(id).subscribe((resp) => {
       console.log('sfcsefsefsefsefse', resp);

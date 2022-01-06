@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { NbDialogRef, NbMenuItem, NbSidebarService } from '@nebular/theme';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-form-homework',
@@ -8,52 +13,25 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./homework-form.component.scss'],
 })
 export class HomeworkFormComponent {
-  items: NbMenuItem[] = [
-    {
-      title: 'Trabajo',
-      icon: 'list-outline',
-    },
-    {
-      title: 'Video conferencia',
-      icon: 'video-outline',
-    },
-    {
-      title: 'Clases grabadas',
-      icon: 'folder-add-outline',
-    },
-    {
-      title: 'Foro',
-      icon: 'message-circle-outline',
-    },
-    {
-      title: 'Enlace externo',
-      icon: 'external-link-outline',
-    },
-    {
-      title: 'Video compartido',
-      icon: 'play-circle-outline',
-    },
-    {
-      title: 'Evaluación',
-      icon: 'checkmark-circle-outline',
-    },
-  ];
-  @Input() sesion:any;
-  constructor(public activeModal: NbDialogRef<HomeworkFormComponent>) {
+  @Input() sesion: any;
+  element: any;
 
-  }
+  constructor(public activeModal: NbDialogRef<HomeworkFormComponent>) {}
   ngOnInit(): void {
     console.log(this.sesion, 'eeeeeeeeee');
-
   }
   closeModal() {
     this.activeModal.close('close');
   }
-  saveValue($event: any){
+  saveValue($event: any) {
     if ($event === 'ok') {
       this.activeModal.close('ok');
     } else {
       this.activeModal.close('close');
     }
+  }
+  selectedElement($element: any) {
+    this.element = $element;
+    console.log($element, 'seleccionado');
   }
 }

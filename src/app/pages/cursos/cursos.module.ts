@@ -26,16 +26,11 @@ import { WorksComponent } from './components/forms/works/works.component';
 import { ControlMessagesModule } from 'src/app/shared/components/control-messages/control-messages.module';
 import { MoreOptionsModule } from 'src/app/shared/components/more-options/more-options.module';
 import { GeneralService } from 'src/app/providers';
+import { MenuElementsModule } from '../../shared/components/menu-elements/menu-elements.module';
 
-const COMPONENTS: any[] = [
-  WorksComponent
-];
-const CONTROL_MESSAGGE: any = [
-  ControlMessagesModule,
-];
-const SERVICES: any = [
-  GeneralService,
-]
+const COMPONENTS: any[] = [WorksComponent];
+const CONTROL_MESSAGGE: any = [ControlMessagesModule];
+const SERVICES: any = [GeneralService];
 @NgModule({
   declarations: [
     MainComponent,
@@ -53,7 +48,7 @@ const SERVICES: any = [
     TrabajoComponent,
     VideoConferenciaComponent,
     AdjuntarDocsComponent,
-    ...COMPONENTS
+    ...COMPONENTS,
   ],
   exports: [CursosComponent],
   imports: [
@@ -63,8 +58,9 @@ const SERVICES: any = [
     NgDynamicBreadcrumbModule,
     PrepareFileProModule,
     MoreOptionsModule,
-    ...CONTROL_MESSAGGE
+    MenuElementsModule,
+    ...CONTROL_MESSAGGE,
   ],
-  providers: [...SERVICES]
+  providers: [...SERVICES],
 })
 export class CursosModule {}
