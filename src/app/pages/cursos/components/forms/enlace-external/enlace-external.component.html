@@ -1,5 +1,11 @@
 <form [formGroup]="formHeader">
   <div>
+    <label class="label">Url</label>
+    <input class="w-100" type="url" nbInput fullWidth placeholder="Ingresa una url"
+    [status]="(formHeader.hasError('required', ['url_externo'])) === true ? 'primary' : 'basic'" formControlName="url_externo"/>
+    <control-messages [control]="formHeader.get('url_externo')"></control-messages>
+  </div>
+  <div>
     <label class="label">Título</label>
     <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa un título"
     [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="titulo"/>
@@ -8,24 +14,10 @@
   <div style="padding-top: 4px;">
     <label class="label">Descripción</label>
     <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una descripción"
-    [status]="(formHeader.hasError('required', ['descripcion'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
+    [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
     <control-messages [control]="formHeader.get('descripcion')"></control-messages>
   </div>
-  <div style="padding-top: 4px;">
-    <label class="label">Documento ayuda</label>
-    <div>
-      <lamb-prepare-file-pro
-        [paramsInfo]="{
-          id: topics?.id_carga_curso_docente,
-          directory: directorio,
-          type: 'put',
-          tabla: 'elements',
-          tipo: 'DOCUMENTO_AYUDA'}"
-        [numFiles]="6"
-        (filterValueChange)="valueFile($event)">
-      </lamb-prepare-file-pro>
-    </div>
-  </div>
+
   <!-- {{formHeader.value | json}} -->
   <div style="padding-top: 4px;">
     <label class="label">Fecha y hora de inicio</label>
@@ -80,26 +72,6 @@
       <nb-timepicker #horaGracia></nb-timepicker>
       </nb-form-field>
     </div>
-  </div>
-  <div style="padding-top: 4px;">
-    <!-- <label class="label" >Fecha y hora de gracia</label> -->
-    <nb-toggle status="basic" class="my-3 d-block" formControlName="rubrica">Contiene rúbrica</nb-toggle>
-    <nb-select placeholder="Seleccionar rúbrica"  fullWidth
-    [status]="(formHeader.hasError('required', ['id_rubrica'])) === true ? 'primary' : 'basic'" formControlName="id_rubrica">
-      <nb-option value="1">Option 1</nb-option>
-      <nb-option value="2">Option 2</nb-option>
-    </nb-select>
-    <control-messages [control]="formHeader.get('id_rubrica')"></control-messages>
-  </div>
-  <!-- <div style="padding-top: 4px;">
-    <nb-toggle status="basic" class="my-3 d-block" formControlName="grupal">Grupal</nb-toggle>
-    <control-messages [control]="formHeader.get('grupal')"></control-messages>
-  </div> -->
-  <div style="padding-top: 4px;">
-    <label class="label">Secuencia de aprendizaje</label>
-    <input class="w-100" type="text" nbInput fullWidth status="basic" placeholder="Ingresa un secuencia"
-    [status]="(formHeader.hasError('required', ['secuencia_aprendizaje'])) === true ? 'primary' : 'basic'" formControlName="secuencia_aprendizaje"/>
-    <!-- <control-messages [control]="formHeader.get('secuencia')"></control-messages> -->
   </div>
   <div style="padding-top: 4px;">
     <label class="label">

@@ -5,11 +5,11 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
 @Component({
-  selector: 'app-works',
-  templateUrl: './works.component.html',
-  styleUrls: ['./works.component.scss']
+  selector: 'app-documents',
+  templateUrl: './documents.component.html',
+  styleUrls: ['./documents.component.scss']
 })
-export class WorksComponent implements OnInit {
+export class DocumentsComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
   options: any = 'N';
@@ -18,6 +18,7 @@ export class WorksComponent implements OnInit {
   @Input() unidad: any;
   @Input() curso: any;
   directorio: any = 'plantillas/upeu';
+
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
@@ -46,7 +47,7 @@ export class WorksComponent implements OnInit {
       fecha_gracia: ['', [Validators.required]],
       hora_gracia: ['', [Validators.required]],
 
-      tipo: ['TRABAJO', [Validators.required]],
+      tipo: ['DOCUMENTO', [Validators.required]],
 
       element_id: [''],
       visibilidad: ['S'],
@@ -57,10 +58,6 @@ export class WorksComponent implements OnInit {
       userid: [''],
 
       files: [''],
-
-      rubrica: [false],
-      id_rubrica: [''],
-      secuencia_aprendizaje: [''],
 
     };
     this.formHeader = this.formBuilder.group(controls);
@@ -103,20 +100,21 @@ export class WorksComponent implements OnInit {
   }
   get validCampos(): any {
     const form = this.formHeader.value;
-    if (!form.titulo ||
+    if (
+       !form.titulo ||
        !form.descripcion ||
        !form.fecha_inicio ||
        !form.fecha_fin ||
        !form.fecha_gracia ||
        !form.hora_inicio ||
        !form.hora_fin ||
-       !form.hora_gracia) {
+       !form.hora_gracia
+       ) {
       return true;
     } else {
       return false;
     }
   }
-
   saveInformtion() {
     const forms = this.formHeader.value;
     const serviceName = END_POINTS.base_back.elements;
@@ -132,6 +130,7 @@ export class WorksComponent implements OnInit {
       id_carga_curso_docente:   forms.id_carga_curso_docente,
       id_programa_estudio:      forms.id_programa_estudio,
 
+      grupal:                   0,
       intentos:                 1,
 
       titulo:                   forms.titulo,
@@ -143,7 +142,6 @@ export class WorksComponent implements OnInit {
       fecha_fin:                f_fin,
       fecha_gracia:             f_gracia,
 
-      grupal:                   forms.grupal === true ? '1' : '0',
       // element_id:               forms.element_id,
       visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
       calificable:              forms.calificable  === true ? '1' : '0',
@@ -151,10 +149,9 @@ export class WorksComponent implements OnInit {
 
       estado:                   forms.estado,
       userid:                   1,
+
       files:                    forms.files || [],
     };
-    // console.log(params, serviceName);
-
     if (!this.validCampos) {
       this.loadingsForm.emit(true);
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {

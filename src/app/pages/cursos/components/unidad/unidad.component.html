@@ -43,7 +43,7 @@
           de informacion
         </small>
         <div *ngFor="let sesion of unidad.topics">
-          <app-sesion [sesion]="sesion"></app-sesion>
+          <app-sesion [sesion]="sesion" [unidad]="unidad" [curso]="curso"></app-sesion>
         </div>
       </div>
     </nb-accordion-item-body>

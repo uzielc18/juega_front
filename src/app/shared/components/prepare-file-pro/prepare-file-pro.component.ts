@@ -18,7 +18,8 @@ export class PrepareFileProComponent implements OnInit {
   @Input() isDisabled: boolean = false; // no modificar
   @Input() numFiles: number = 10; // no modificar
   accept: any;
-  listArrayFile: any = [];
+  @Input() listArrayFile: any = [];
+  loading: boolean = false;
   constructor(private formBuilder: FormBuilder, private modalServiceNebular: NbDialogService,
     private s3ServiceServ: S3ServiceService) {
 
@@ -39,10 +40,10 @@ export class PrepareFileProComponent implements OnInit {
     this.formHeaders = this.formBuilder.group(controls);
   }
   getUsers() {
+    this.loading = true;
     this.s3ServiceServ.getUserMe().subscribe(res => {
       this.userData = res['data'];
-      console.log(this.userData);
-    });
+    }, () => { this.loading = false; }, () => { this.loading = false; });
   }
   typeFileSet(typeFile: string) {
     // Create by Cristian
@@ -92,7 +93,7 @@ export class PrepareFileProComponent implements OnInit {
       accepts: this.accept,
       params: {
         id: this.paramsInfo.id,
-        codigoEst: this.paramsInfo.codigo,
+        codigoEst: this.userData.user && this.userData.user.person.codigo || '',
         codAleatory: Math.floor(Math.random() * 90000) + 10000,
         directory: this.paramsInfo.directory,
         type: this.paramsInfo.type,
@@ -118,7 +119,7 @@ export class PrepareFileProComponent implements OnInit {
           url: result.url,
           peso: result.peso,
           tipo: this.paramsInfo.tipo || '',
-          person_id: this.userData.user.id_persona,
+          person_id: this.userData.user.id,
           tabla: this.paramsInfo.tabla,
           tabla_id: '',
         }

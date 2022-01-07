@@ -5,11 +5,11 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
 @Component({
-  selector: 'app-works',
-  templateUrl: './works.component.html',
-  styleUrls: ['./works.component.scss']
+  selector: 'app-enlace-external',
+  templateUrl: './enlace-external.component.html',
+  styleUrls: ['./enlace-external.component.scss']
 })
-export class WorksComponent implements OnInit {
+export class EnlaceExternalComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
   options: any = 'N';
@@ -17,7 +17,7 @@ export class WorksComponent implements OnInit {
   @Input() topics: any;
   @Input() unidad: any;
   @Input() curso: any;
-  directorio: any = 'plantillas/upeu';
+
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
@@ -29,6 +29,7 @@ export class WorksComponent implements OnInit {
     this.fieldReactive();
   }
   private fieldReactive() {
+    const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
     const controls = {
       course_id: ['', [Validators.required]],
       topic_id: ['', [Validators.required]],
@@ -36,6 +37,7 @@ export class WorksComponent implements OnInit {
       id_carga_curso_docente: ['', [Validators.required]],
       id_programa_estudio: ['', [Validators.required]],
 
+      url_externo: ['', [Validators.required, Validators.pattern(urlRegex)]],
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
 
@@ -46,7 +48,7 @@ export class WorksComponent implements OnInit {
       fecha_gracia: ['', [Validators.required]],
       hora_gracia: ['', [Validators.required]],
 
-      tipo: ['TRABAJO', [Validators.required]],
+      tipo: ['ENLACE', [Validators.required]],
 
       element_id: [''],
       visibilidad: ['S'],
@@ -55,12 +57,6 @@ export class WorksComponent implements OnInit {
 
       estado: ['1', [Validators.required]],
       userid: [''],
-
-      files: [''],
-
-      rubrica: [false],
-      id_rubrica: [''],
-      secuencia_aprendizaje: [''],
 
     };
     this.formHeader = this.formBuilder.group(controls);
@@ -84,11 +80,7 @@ export class WorksComponent implements OnInit {
       element_id: $event.element_id || '',
     })
   }
-  valueFile($event:any){
-    this.formHeader.patchValue({
-      files: $event.arrayFile,
-    });
-  }
+
   moreOptions(value:any){
     if (value === 'N') {
       this.options = 'S';
@@ -103,7 +95,9 @@ export class WorksComponent implements OnInit {
   }
   get validCampos(): any {
     const form = this.formHeader.value;
-    if (!form.titulo ||
+    if (
+       !form.url_externo ||
+       !form.titulo ||
        !form.descripcion ||
        !form.fecha_inicio ||
        !form.fecha_fin ||
@@ -116,7 +110,6 @@ export class WorksComponent implements OnInit {
       return false;
     }
   }
-
   saveInformtion() {
     const forms = this.formHeader.value;
     const serviceName = END_POINTS.base_back.elements;
@@ -132,8 +125,10 @@ export class WorksComponent implements OnInit {
       id_carga_curso_docente:   forms.id_carga_curso_docente,
       id_programa_estudio:      forms.id_programa_estudio,
 
+      grupal:                   0,
       intentos:                 1,
 
+      url_externo:              forms.url_externo,
       titulo:                   forms.titulo,
       descripcion:              forms.descripcion,
 
@@ -143,7 +138,6 @@ export class WorksComponent implements OnInit {
       fecha_fin:                f_fin,
       fecha_gracia:             f_gracia,
 
-      grupal:                   forms.grupal === true ? '1' : '0',
       // element_id:               forms.element_id,
       visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
       calificable:              forms.calificable  === true ? '1' : '0',
@@ -151,10 +145,7 @@ export class WorksComponent implements OnInit {
 
       estado:                   forms.estado,
       userid:                   1,
-      files:                    forms.files || [],
     };
-    // console.log(params, serviceName);
-
     if (!this.validCampos) {
       this.loadingsForm.emit(true);
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {

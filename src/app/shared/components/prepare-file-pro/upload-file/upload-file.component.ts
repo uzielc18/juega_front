@@ -98,6 +98,7 @@ export class UploadFileComponent implements OnInit {
       key: key,
     }
     if (prams && prams.type && prams.directory && prams.key) {
+      this.loading = true;
         this.s3ServiceServ.addFimadoS3$(prams).subscribe(r => {
           if (r.data.success) {
             const data = new FormData();
@@ -126,7 +127,7 @@ export class UploadFileComponent implements OnInit {
               }
             });
           }
-        });
+        }, () => { this.loading = false }, () => { this.loading = false });
     }
 
   }

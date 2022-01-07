@@ -12,19 +12,22 @@ export class MenuElementsComponent implements OnInit {
   elements: any[] = [];
   clickedIndex: number = 0;
   hoveredIndex: any;
-
-  constructor(private generalService: GeneralService) {}
+  @Output() loadingsMenu: EventEmitter<boolean> = new EventEmitter();
+  constructor(private menuElements: GeneralService) {}
 
   ngOnInit(): void {
     this.getElements();
   }
 
   getElements() {
-    const serviceName = '/typeElements';
-    this.generalService.nameAll$(serviceName).subscribe(({ data: elements }) => {
-      console.log('elements', elements);
-      this.elements = elements;
-    });
+    const serviceName = 'typeElements';
+    this.loadingsMenu.emit(true);
+    this.menuElements.nameAll$(serviceName).subscribe(({ data: elements }) => {
+      this.elements = elements || [];
+      if (this.elements.length>0) {
+          this.selectedElement(this.elements[0]);
+      }
+    }, () => { this.loadingsMenu.emit(false); }, () => { this.loadingsMenu.emit(false); });
   }
 
   elementStyle() {
@@ -51,7 +54,6 @@ export class MenuElementsComponent implements OnInit {
   }
 
   selectedElement(element: any) {
-    this.onSelect.emit(element.nombre);
-    console.log('elemento seleccionado', element.nombre);
+    this.onSelect.emit(element);
   }
 }

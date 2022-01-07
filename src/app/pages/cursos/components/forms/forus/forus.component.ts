@@ -5,11 +5,11 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
 @Component({
-  selector: 'app-works',
-  templateUrl: './works.component.html',
-  styleUrls: ['./works.component.scss']
+  selector: 'app-forus',
+  templateUrl: './forus.component.html',
+  styleUrls: ['./forus.component.scss']
 })
-export class WorksComponent implements OnInit {
+export class ForusComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
   options: any = 'N';
@@ -17,7 +17,7 @@ export class WorksComponent implements OnInit {
   @Input() topics: any;
   @Input() unidad: any;
   @Input() curso: any;
-  directorio: any = 'plantillas/upeu';
+
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
@@ -38,6 +38,7 @@ export class WorksComponent implements OnInit {
 
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
+      pregunta: ['', [Validators.required]],
 
       fecha_inicio: ['', [Validators.required]],
       hora_inicio: ['', [Validators.required]],
@@ -46,7 +47,13 @@ export class WorksComponent implements OnInit {
       fecha_gracia: ['', [Validators.required]],
       hora_gracia: ['', [Validators.required]],
 
-      tipo: ['TRABAJO', [Validators.required]],
+      ver_respuestas: [false],
+      permitir_comentarios: [false],
+      autocalificable: [false],
+      editor: [false],
+
+      nota: [''],
+      tipo: ['FORO', [Validators.required]],
 
       element_id: [''],
       visibilidad: ['S'],
@@ -55,12 +62,6 @@ export class WorksComponent implements OnInit {
 
       estado: ['1', [Validators.required]],
       userid: [''],
-
-      files: [''],
-
-      rubrica: [false],
-      id_rubrica: [''],
-      secuencia_aprendizaje: [''],
 
     };
     this.formHeader = this.formBuilder.group(controls);
@@ -84,16 +85,22 @@ export class WorksComponent implements OnInit {
       element_id: $event.element_id || '',
     })
   }
-  valueFile($event:any){
-    this.formHeader.patchValue({
-      files: $event.arrayFile,
-    });
-  }
+
   moreOptions(value:any){
     if (value === 'N') {
       this.options = 'S';
     } else {
       this.options = 'N';
+    }
+  }
+  valueAuthentofi() {
+    this.formHeader.controls['nota'].setValue('');
+    if (this.formHeader.value.autocalificable) {
+      this.formHeader.controls['nota'].setValidators([Validators.required]);
+      this.formHeader.controls['nota'].updateValueAndValidity();
+    } else {
+      this.formHeader.controls['nota'].setValidators([]);
+      this.formHeader.controls['nota'].updateValueAndValidity();
     }
   }
   setMenuValues() {
@@ -103,14 +110,19 @@ export class WorksComponent implements OnInit {
   }
   get validCampos(): any {
     const form = this.formHeader.value;
+    const validAut = (form.autocalificable &&  !form.nota) ? true : false;
+
     if (!form.titulo ||
        !form.descripcion ||
+       !form.pregunta ||
        !form.fecha_inicio ||
        !form.fecha_fin ||
        !form.fecha_gracia ||
        !form.hora_inicio ||
        !form.hora_fin ||
-       !form.hora_gracia) {
+       !form.hora_gracia ||
+       validAut
+       ) {
       return true;
     } else {
       return false;
@@ -132,18 +144,19 @@ export class WorksComponent implements OnInit {
       id_carga_curso_docente:   forms.id_carga_curso_docente,
       id_programa_estudio:      forms.id_programa_estudio,
 
+      grupal:                   0,
       intentos:                 1,
 
       titulo:                   forms.titulo,
       descripcion:              forms.descripcion,
 
+      nota:                     forms.nota,
       tipo:                     forms.tipo,
 
       fecha_inicio:             f_inicio,
       fecha_fin:                f_fin,
       fecha_gracia:             f_gracia,
 
-      grupal:                   forms.grupal === true ? '1' : '0',
       // element_id:               forms.element_id,
       visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
       calificable:              forms.calificable  === true ? '1' : '0',
@@ -151,10 +164,15 @@ export class WorksComponent implements OnInit {
 
       estado:                   forms.estado,
       userid:                   1,
-      files:                    forms.files || [],
-    };
-    // console.log(params, serviceName);
 
+      foro: {
+        pregunta:                 forms.pregunta,
+        ver_respuestas:           forms.ver_respuestas === true ? 'SI' : 'NO',
+        permitir_comentarios:     forms.permitir_comentarios === true ? 'SI' : 'NO',
+        autocalificable:          forms.autocalificable === true ? 'SI' : 'NO',
+        // editor:                   forms.editor === true ? 'SI' : 'NO',
+      }
+    };
     if (!this.validCampos) {
       this.loadingsForm.emit(true);
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {

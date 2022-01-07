@@ -1,11 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NbDialogRef, NbMenuItem, NbSidebarService } from '@nebular/theme';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'app-form-homework',
@@ -13,17 +7,24 @@ import {
   styleUrls: ['./homework-form.component.scss'],
 })
 export class HomeworkFormComponent {
-  @Input() sesion: any;
-  element: any;
+  @Input() topics: any;
+  @Input() unidad: any;
+  @Input() curso: any;
 
-  constructor(public activeModal: NbDialogRef<HomeworkFormComponent>) {}
+  @Input() item: any;
+  @Input() code: any;
+
+  loading: boolean = false;
+  element:any;
+  constructor(public activeModal: NbDialogRef<HomeworkFormComponent>) {
+
+  }
   ngOnInit(): void {
-    console.log(this.sesion, 'eeeeeeeeee');
   }
   closeModal() {
     this.activeModal.close('close');
   }
-  saveValue($event: any) {
+  saveValue($event: any){
     if ($event === 'ok') {
       this.activeModal.close('ok');
     } else {
@@ -33,5 +34,15 @@ export class HomeworkFormComponent {
   selectedElement($element: any) {
     this.element = $element;
     console.log($element, 'seleccionado');
+  }
+  loadingsMenu($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
+  }
+  loadingsForm($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
   }
 }

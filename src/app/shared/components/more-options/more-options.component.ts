@@ -11,6 +11,7 @@ export class MoreOptionsComponent implements OnInit {
   formHeader: any = FormGroup;
   @Input() tipo:any;
   @Output() formsValues = new EventEmitter<any>();
+  @Input() setValues:any;
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -18,13 +19,14 @@ export class MoreOptionsComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      carpeta: [''],
-      active_chat: ['', [Validators.required]],
+      element_id: [''],
+      active_chat: [false],
       duration: ['180', [Validators.required]],
-      calificable: ['', [Validators.required]],
-      visibilidad: ['', [Validators.required]],
+      calificable: [true],
+      visibilidad: ['S', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
+    this.formsValues.emit(this.formHeader.value);
   }
   setEmiter() {
     if (this.formHeader.valid) {
