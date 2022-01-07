@@ -68,7 +68,7 @@ export class VidioComponent implements OnInit {
     const controls = {
       course_id: ['', [Validators.required]],
       topic_id: ['', [Validators.required]],
-      type_element_id: ['2', [Validators.required]],
+      type_element_id: ['', [Validators.required]],
       id_carga_curso_docente: ['', [Validators.required]],
       id_programa_estudio: ['', [Validators.required]],
 
@@ -99,7 +99,7 @@ export class VidioComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.setValuesPre();
-    // this.setMenuValues();
+    this.setMenuValues();
 
   }
   setValuesPre() {
@@ -139,11 +139,11 @@ export class VidioComponent implements OnInit {
       this.options = 'N';
     }
   }
-  // setMenuValues() {
-  //   this.formHeader.patchValue({
-  //     type_element_id: this.valueMenu.type_element_id,
-  //   })
-  // }
+  setMenuValues() {
+    this.formHeader.patchValue({
+      type_element_id: this.valueMenu.id,
+    })
+  }
   get validCampos(): any {
     const form = this.formHeader.value;
     if (

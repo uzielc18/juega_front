@@ -8,7 +8,7 @@
   <div style="padding-top: 4px;">
     <label class="label">Intervención inicial</label>
     <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una intervención"
-    [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="pregunta"></textarea>
+    [status]="(formHeader.hasError('required', ['pregunta'])) === true ? 'primary' : 'basic'" formControlName="pregunta"></textarea>
     <control-messages [control]="formHeader.get('pregunta')"></control-messages>
   </div>
 

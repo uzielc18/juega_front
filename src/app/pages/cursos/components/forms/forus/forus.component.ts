@@ -32,7 +32,7 @@ export class ForusComponent implements OnInit {
     const controls = {
       course_id: ['', [Validators.required]],
       topic_id: ['', [Validators.required]],
-      type_element_id: ['4', [Validators.required]],
+      type_element_id: ['', [Validators.required]],
       id_carga_curso_docente: ['', [Validators.required]],
       id_programa_estudio: ['', [Validators.required]],
 
@@ -66,7 +66,7 @@ export class ForusComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.setValuesPre();
-    // this.setMenuValues();
+    this.setMenuValues();
   }
   setValuesPre() {
     this.formHeader.patchValue({
@@ -103,11 +103,11 @@ export class ForusComponent implements OnInit {
       this.formHeader.controls['nota'].updateValueAndValidity();
     }
   }
-  // setMenuValues() {
-  //   this.formHeader.patchValue({
-  //     type_element_id: this.valueMenu.type_element_id,
-  //   })
-  // }
+  setMenuValues() {
+    this.formHeader.patchValue({
+      type_element_id: this.valueMenu.id,
+    })
+  }
   get validCampos(): any {
     const form = this.formHeader.value;
     const validAut = (form.autocalificable &&  !form.nota) ? true : false;
