@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Cursos } from '../../interfaces/cursos.interface';
 
 @Component({
@@ -6,7 +6,7 @@ import { Cursos } from '../../interfaces/cursos.interface';
   templateUrl: './curso-card.component.html',
   styleUrls: ['./curso-card.component.scss'],
 })
-export class CursoCardComponent {
+export class CursoCardComponent implements OnInit {
   @Input() cursosEstudiante: any = [];
   @Input() cursosDocente: any = [];
   @Input() cursos: Cursos[] = [];
@@ -22,4 +22,6 @@ export class CursoCardComponent {
   //     // console.log('cursos estudiante - ', this.cursosEstudiante);
   //   });
   // }
+  ngOnInit(): void {
+  }
 }
