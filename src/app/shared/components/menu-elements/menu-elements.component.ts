@@ -13,7 +13,7 @@ export class MenuElementsComponent implements OnInit {
   clickedIndex: number = 0;
   hoveredIndex: any;
 
-  constructor(private menuElements: GeneralService) {}
+  constructor(private generalService: GeneralService) {}
 
   ngOnInit(): void {
     this.getElements();
@@ -21,7 +21,7 @@ export class MenuElementsComponent implements OnInit {
 
   getElements() {
     const serviceName = '/typeElements';
-    this.menuElements.nameAll$(serviceName).subscribe(({ data: elements }) => {
+    this.generalService.nameAll$(serviceName).subscribe(({ data: elements }) => {
       console.log('elements', elements);
       this.elements = elements;
     });
@@ -48,10 +48,6 @@ export class MenuElementsComponent implements OnInit {
       'border-left': `4px solid ${element.color_hover}`,
       color: element.background,
     };
-  }
-
-  elementIcon(element: any) {
-    return element.icono;
   }
 
   selectedElement(element: any) {

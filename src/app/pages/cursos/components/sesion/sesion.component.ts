@@ -13,20 +13,23 @@ export class SesionComponent implements OnInit {
 
   constructor(private dialogService: NbDialogService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   open() {
-    this.dialogService.open(HomeworkFormComponent, {
-      dialogClass: 'dialog-limited-height',
-      context: {
-        sesion: this.sesion,
-      },
-      closeOnBackdropClick: false,
-      closeOnEsc: false
-    }).onClose.subscribe(result => {
-      if (result == 'ok') {
-        // this.filtrar();
-      }
-    });
+    this.dialogService
+      .open(HomeworkFormComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          sesion: this.sesion,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe((result) => {
+        if (result == 'ok') {
+          // this.filtrar();
+        }
+      });
   }
 }

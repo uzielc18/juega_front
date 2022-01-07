@@ -22,18 +22,7 @@ export class CursoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCursoById();
-
     this.getUnidades(this.path);
-    // this.cursosService.getUnidades(this.path).subscribe((data: any) => {
-    //   console.log('sfafsdafasfa', data);
-    //   this.curso = data.data;
-    //   console.log('soy el curso', this.curso);
-    //   this.unidades = this.curso.units;
-    //   console.log('unidades', this.unidades);
-    //   // this.sesiones = this.unidades.topics;
-    //   // this.sesiones = this.unidades;
-    //   // console.log('sesiones', this.sesiones);
-    // });
   }
 
   getCursoById() {

@@ -27,6 +27,7 @@ import { ControlMessagesModule } from 'src/app/shared/components/control-message
 import { MoreOptionsModule } from 'src/app/shared/components/more-options/more-options.module';
 import { GeneralService } from 'src/app/providers';
 import { MenuElementsModule } from '../../shared/components/menu-elements/menu-elements.module';
+import { ElementComponent } from './components/element/element.component';
 
 const COMPONENTS: any[] = [WorksComponent];
 const CONTROL_MESSAGGE: any = [ControlMessagesModule];
@@ -49,6 +50,7 @@ const SERVICES: any = [GeneralService];
     VideoConferenciaComponent,
     AdjuntarDocsComponent,
     ...COMPONENTS,
+    ElementComponent,
   ],
   exports: [CursosComponent],
   imports: [
