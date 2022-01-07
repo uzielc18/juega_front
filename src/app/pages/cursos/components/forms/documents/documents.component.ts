@@ -21,6 +21,8 @@ export class DocumentsComponent implements OnInit {
 
   @Input() item: any;
   @Input() code: any;
+  @Input() valueMenu: any;
+  @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private generalServi: GeneralService,
     public datepipe: DatePipe) { }
 
@@ -60,6 +62,7 @@ export class DocumentsComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.setValuesPre();
+    // this.setMenuValues();
   }
   setValuesPre() {
     this.formHeader.patchValue({
@@ -90,17 +93,22 @@ export class DocumentsComponent implements OnInit {
       this.options = 'N';
     }
   }
+  // setMenuValues() {
+  //   this.formHeader.patchValue({
+  //     type_element_id: this.valueMenu.type_element_id,
+  //   })
+  // }
   get validCampos(): any {
     const form = this.formHeader.value;
     if (
        !form.titulo ||
-       !form.descripcion
-      //  !form.fecha_inicio ||
-      //  !form.fecha_fin ||
-      //  !form.fecha_gracia ||
-      //  !form.hora_inicio ||
-      //  !form.hora_fin ||
-      //  !form.hora_gracia
+       !form.descripcion ||
+       !form.fecha_inicio ||
+       !form.fecha_fin ||
+       !form.fecha_gracia ||
+       !form.hora_inicio ||
+       !form.hora_fin ||
+       !form.hora_gracia
        ) {
       return true;
     } else {
@@ -145,12 +153,12 @@ export class DocumentsComponent implements OnInit {
       files:                    forms.files || [],
     };
     if (!this.validCampos) {
-      this.loading = true;
+      this.loadingsForm.emit(true);
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {
         if (r.success) {
           this.saveCloseValue.emit('ok');
         }
-      }, () => { this.loading = false; }, () => { this.loading = false; });
+      }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
     }
   }
   closeModal() {

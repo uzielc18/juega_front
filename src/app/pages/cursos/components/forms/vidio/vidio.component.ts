@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
@@ -9,6 +9,7 @@ import { END_POINTS } from 'src/app/providers/utils';
   templateUrl: './vidio.component.html',
   styleUrls: ['./vidio.component.scss']
 })
+// OnChanges
 export class VidioComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
@@ -20,7 +21,7 @@ export class VidioComponent implements OnInit {
 
   @Input() item: any;
   @Input() code: any;
-
+  @Input() valueMenu: any;
   directorio: any = 'plantillas/upeu';
 
   listIcons:any = [
@@ -52,11 +53,14 @@ export class VidioComponent implements OnInit {
       link: 'https://www.centroveterinarioalbayda.com/wp-content/uploads/2015/01/facebook-veterinaria.png',
       id: 4
     },
-
 ]
+@Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private generalServi: GeneralService,
     public datepipe: DatePipe) { }
 
+  // ngOnChanges() {
+  //   console.log(this.valueMenu, 'llegueeeee');
+  // }
   ngOnInit(): void {
     this.fieldReactive();
   }
@@ -95,6 +99,8 @@ export class VidioComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.setValuesPre();
+    // this.setMenuValues();
+
   }
   setValuesPre() {
     this.formHeader.patchValue({
@@ -133,6 +139,11 @@ export class VidioComponent implements OnInit {
       this.options = 'N';
     }
   }
+  // setMenuValues() {
+  //   this.formHeader.patchValue({
+  //     type_element_id: this.valueMenu.type_element_id,
+  //   })
+  // }
   get validCampos(): any {
     const form = this.formHeader.value;
     if (
@@ -192,12 +203,12 @@ export class VidioComponent implements OnInit {
       files:                    forms.files || [],
     };
     if (!this.validCampos) {
-      this.loading = true;
+      this.loadingsForm.emit(true);
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {
         if (r.success) {
           this.saveCloseValue.emit('ok');
         }
-      }, () => { this.loading = false; }, () => { this.loading = false; });
+      }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
     }
   }
   closeModal() {
