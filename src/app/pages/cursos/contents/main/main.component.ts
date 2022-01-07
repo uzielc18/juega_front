@@ -7,11 +7,17 @@ import { CursosService } from '../../services/cursos.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  constructor() {}
+  constructor(private cursosService: CursosService) {}
 
-  ngOnInit(): void {}
-
-  prueba(event: any) {
-    console.log('desdeee main', event);
+  ngOnInit(): void {
+    this.getCourses();
   }
+
+  getCourses() {
+    this.cursosService.getCursos().subscribe();
+  }
+
+  // prueba(event: any) {
+  //   console.log('desdeee main', event);
+  // }
 }

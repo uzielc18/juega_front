@@ -32,6 +32,7 @@ import { VidioConferenceComponent } from './components/forms/vidio-conference/vi
 import { EvaluationsComponent } from './components/forms/evaluations/evaluations.component';
 import { DocumentsComponent } from './components/forms/documents/documents.component';
 import { VidioComponent } from './components/forms/vidio/vidio.component';
+import { MenuElementsModule } from '../../shared/components/menu-elements/menu-elements.module';
 
 const COMPONENTS: any[] = [
   WorksComponent,
@@ -48,6 +49,7 @@ const CONTROL_MESSAGGE: any = [
 const SERVICES: any = [
   GeneralService,
 ]
+
 @NgModule({
   declarations: [
     MainComponent,
@@ -75,8 +77,9 @@ const SERVICES: any = [
     NgDynamicBreadcrumbModule,
     PrepareFileProModule,
     MoreOptionsModule,
-    ...CONTROL_MESSAGGE
+    MenuElementsModule,
+    ...CONTROL_MESSAGGE,
   ],
-  providers: [...SERVICES]
+  providers: [...SERVICES],
 })
 export class CursosModule {}

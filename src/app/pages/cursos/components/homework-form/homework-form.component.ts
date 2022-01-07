@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NbDialogRef, NbMenuItem, NbSidebarService } from '@nebular/theme';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NbDialogRef, NbMenuItem } from '@nebular/theme';
 
 @Component({
   selector: 'app-form-homework',
@@ -46,7 +45,7 @@ export class HomeworkFormComponent {
   @Input() code: any;
 
   loading: boolean = false;
-
+  element:any;
   constructor(public activeModal: NbDialogRef<HomeworkFormComponent>) {
 
   }
@@ -63,5 +62,9 @@ export class HomeworkFormComponent {
     } else {
       this.activeModal.close('close');
     }
+  }
+  selectedElement($element: any) {
+    this.element = $element;
+    console.log($element, 'seleccionado');
   }
 }

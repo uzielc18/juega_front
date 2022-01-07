@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core';
 import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
-import { strategies } from '../environments/oauth2.strategies';
+import { STRATEGIES } from '../environments/oauth2.strategies';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +18,7 @@ import { strategies } from '../environments/oauth2.strategies';
     RouterModule,
     AppRoutingModule,
   ],
-  providers: [strategies],
+  providers: [STRATEGIES],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -29,12 +29,15 @@
   color: var(--text-primary-color) !important;
 }
 
+// .progress-container {
+//   height: 10px !important;
+// }
 .progress-container {
-  height: 10px !important;
+  height: 100% !important;
 }
 
 .progress-value {
-  background-color: #e39d0d !important;
+  background-color: #E39800 !important;
 }
 
 .dialog-limited-height {
@@ -48,7 +51,7 @@
 
 .ng-star-inserted:hover {
   text-decoration: none !important;
-  color: #A76575 !important;
+  // color: #A76575 !important;
 }
 
 .line {
