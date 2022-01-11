@@ -1,4 +1,5 @@
 <form [formGroup]="formHeader">
+  <br>
   <div *ngIf="!['FORO', 'TRABAJO', 'EVALUACION'].includes(tipo)" >
     <label class="label">Elegir una carpeta</label>
     <nb-select placeholder="Sin carpeta"  fullWidth formControlName="element_id" (selectedChange)="setEmiter()">
@@ -7,8 +8,8 @@
   </div>
   <div style="padding-top: 4px;">
     <!-- <label class="label">Activar el chat durante el vídeo</label> -->
-    <nb-toggle status="primary" class="my-3 d-block" formControlName="active_chat" (change)="setEmiter()">Activar el chat durante el vídeo</nb-toggle>
-    <control-messages [control]="formHeader.get('active_chat')"></control-messages>
+    <nb-toggle status="primary" class="my-3 d-block" formControlName="permitir_comentarios" (change)="setEmiter()">Actvar preguntas y comentarios</nb-toggle>
+    <control-messages [control]="formHeader.get('permitir_comentarios')"></control-messages>
   </div>
   <div style="padding-top: 4px;">
     <label class="label">Duración de la actividad (Duración por mínutos)</label>

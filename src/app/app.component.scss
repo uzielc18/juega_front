@@ -8,6 +8,11 @@
   max-height: 85vh;
   // height: 80vw;
 }
+::ng-deep .scrollModal { /// scroll modal segun el tamaño de la pantalla
+  // margin-right: 5rem;
+  max-width: 95vw;
+  max-height: 95vh
+}
 ::ng-deep nb-select.ng-invalid{ // campo requerido
   border-left: 3px solid #e74c3c !important;
 }

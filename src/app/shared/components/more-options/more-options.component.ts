@@ -20,7 +20,7 @@ export class MoreOptionsComponent implements OnInit {
   private fieldReactive() {
     const controls = {
       element_id: [''],
-      active_chat: [false],
+      permitir_comentarios: [false],
       duration: ['180', [Validators.required]],
       calificable: [true],
       visibilidad: ['S', [Validators.required]],

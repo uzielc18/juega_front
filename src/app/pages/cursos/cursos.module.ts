@@ -33,6 +33,8 @@ import { EvaluationsComponent } from './components/forms/evaluations/evaluations
 import { DocumentsComponent } from './components/forms/documents/documents.component';
 import { VidioComponent } from './components/forms/vidio/vidio.component';
 import { MenuElementsModule } from '../../shared/components/menu-elements/menu-elements.module';
+import { AdminGroupsComponent } from './components/modals/admin-groups/admin-groups.component';
+import { CarpetaComponent } from './components/forms/carpeta/carpeta.component';
 
 const COMPONENTS: any[] = [
   WorksComponent,
@@ -42,6 +44,8 @@ const COMPONENTS: any[] = [
   EvaluationsComponent,
   DocumentsComponent,
   VidioComponent,
+  CarpetaComponent,
+  AdminGroupsComponent,
 ];
 const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,
@@ -49,7 +53,9 @@ const CONTROL_MESSAGGE: any = [
 const SERVICES: any = [
   GeneralService,
 ]
-
+const MODALS: any = [
+  AdminGroupsComponent
+];
 @NgModule({
   declarations: [
     MainComponent,
@@ -68,6 +74,7 @@ const SERVICES: any = [
     VideoConferenciaComponent,
     AdjuntarDocsComponent,
     ...COMPONENTS,
+
   ],
   exports: [CursosComponent],
   imports: [
@@ -81,5 +88,6 @@ const SERVICES: any = [
     ...CONTROL_MESSAGGE,
   ],
   providers: [...SERVICES],
+  entryComponents: [...MODALS]
 })
 export class CursosModule {}

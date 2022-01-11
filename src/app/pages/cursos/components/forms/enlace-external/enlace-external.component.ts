@@ -54,6 +54,7 @@ export class EnlaceExternalComponent implements OnInit {
       visibilidad: ['S'],
       calificable: [true],
       duracion: ['180', [Validators.required]],
+      permitir_comentarios: [false],
 
       estado: ['1', [Validators.required]],
       userid: [''],
@@ -76,7 +77,7 @@ export class EnlaceExternalComponent implements OnInit {
       calificable: $event.calificable,
       duracion: $event.duration || '',
       visibilidad: $event.visibilidad,
-      // active_chat: $event.active_chat,
+      permitir_comentarios: $event.permitir_comentarios,
       element_id: $event.element_id || '',
     })
   }
@@ -125,7 +126,7 @@ export class EnlaceExternalComponent implements OnInit {
       id_carga_curso_docente:   forms.id_carga_curso_docente,
       id_programa_estudio:      forms.id_programa_estudio,
 
-      grupal:                   0,
+      grupal:                   '0',
       intentos:                 1,
 
       url_externo:              forms.url_externo,
@@ -142,6 +143,7 @@ export class EnlaceExternalComponent implements OnInit {
       visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
       calificable:              forms.calificable  === true ? '1' : '0',
       duracion:                 forms.duracion,
+      permitir_comentarios:     forms.permitir_comentarios  === true ? '1' : '0',
 
       estado:                   forms.estado,
       userid:                   1,
@@ -150,12 +152,20 @@ export class EnlaceExternalComponent implements OnInit {
       this.loadingsForm.emit(true);
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {
         if (r.success) {
-          this.saveCloseValue.emit('ok');
+          const valueClose = {
+            value_close: 'ok',
+            value: params,
+          }
+          this.saveCloseValue.emit(valueClose);
         }
       }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
     }
   }
   closeModal() {
-    this.saveCloseValue.emit('close');
+    const valueClose = {
+      value_close: 'close',
+      value: '',
+    }
+    this.saveCloseValue.emit(valueClose);
   }
 }

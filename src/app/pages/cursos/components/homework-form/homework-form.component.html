@@ -96,6 +96,16 @@ nbSpinnerMessage="Preparando información">
           [valueMenu]="element"></app-vidio>
         </div>
 
+        <div  class="form mt-4 px-5" *ngIf="['CARPETA'].includes(element?.nombre)">
+          <app-carpeta (saveCloseValue)="saveValue($event)" (loadingsForm)="loadingsForm($event)"
+          [topics]="topics"
+          [unidad]="unidad"
+          [curso]="curso"
+          [item]="item"
+          [code]="code"
+          [valueMenu]="element"></app-carpeta>
+        </div>
+
         <!-- <div class="row">
           <div class="col px-0">
             <div class="d-flex align-items-center">

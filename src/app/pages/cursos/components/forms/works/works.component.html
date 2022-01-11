@@ -81,20 +81,24 @@
       </nb-form-field>
     </div>
   </div>
-  <div style="padding-top: 4px;">
+  <div style="padding-top: 4px;" class="row">
     <!-- <label class="label" >Fecha y hora de gracia</label> -->
-    <nb-toggle status="basic" class="my-3 d-block" formControlName="rubrica">Contiene rúbrica</nb-toggle>
-    <nb-select placeholder="Seleccionar rúbrica"  fullWidth
+    <div class="col-md-6">
+      <nb-toggle status="basic" class="my-3 d-block" formControlName="grupal">Grupal</nb-toggle>
+      <control-messages [control]="formHeader.get('grupal')"></control-messages>
+    </div>
+    <div class="col-md-6">
+      <nb-toggle status="basic" class="my-3 d-block" formControlName="rubrica">Contiene rúbrica</nb-toggle>
+      <control-messages [control]="formHeader.get('rubrica')"></control-messages>
+    </div>
+
+    <!-- <nb-select placeholder="Seleccionar rúbrica"  fullWidth
     [status]="(formHeader.hasError('required', ['id_rubrica'])) === true ? 'primary' : 'basic'" formControlName="id_rubrica">
       <nb-option value="1">Option 1</nb-option>
       <nb-option value="2">Option 2</nb-option>
     </nb-select>
-    <control-messages [control]="formHeader.get('id_rubrica')"></control-messages>
+    <control-messages [control]="formHeader.get('id_rubrica')"></control-messages> -->
   </div>
-  <!-- <div style="padding-top: 4px;">
-    <nb-toggle status="basic" class="my-3 d-block" formControlName="grupal">Grupal</nb-toggle>
-    <control-messages [control]="formHeader.get('grupal')"></control-messages>
-  </div> -->
   <div style="padding-top: 4px;">
     <label class="label">Secuencia de aprendizaje</label>
     <input class="w-100" type="text" nbInput fullWidth status="basic" placeholder="Ingresa un secuencia"

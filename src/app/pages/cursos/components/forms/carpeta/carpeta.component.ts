@@ -5,11 +5,11 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
 @Component({
-  selector: 'app-documents',
-  templateUrl: './documents.component.html',
-  styleUrls: ['./documents.component.scss']
+  selector: 'app-carpeta',
+  templateUrl: './carpeta.component.html',
+  styleUrls: ['./carpeta.component.scss']
 })
-export class DocumentsComponent implements OnInit {
+export class CarpetaComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
   options: any = 'N';
@@ -17,7 +17,6 @@ export class DocumentsComponent implements OnInit {
   @Input() topics: any;
   @Input() unidad: any;
   @Input() curso: any;
-  directorio: any = 'plantillas/upeu';
 
   @Input() item: any;
   @Input() code: any;
@@ -40,14 +39,12 @@ export class DocumentsComponent implements OnInit {
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
 
-      fecha_inicio: ['', [Validators.required]],
-      hora_inicio: ['', [Validators.required]],
-      fecha_fin: ['', [Validators.required]],
-      hora_fin: ['', [Validators.required]],
-      fecha_gracia: ['', [Validators.required]],
-      hora_gracia: ['', [Validators.required]],
+      // fecha_inicio: ['', [Validators.required]],
+      // hora_inicio: ['', [Validators.required]],
+      // fecha_fin: ['', [Validators.required]],
+      // hora_fin: ['', [Validators.required]],
 
-      tipo: ['DOCUMENTO', [Validators.required]],
+      tipo: ['CARPETA', [Validators.required]],
 
       element_id: [''],
       visibilidad: ['S'],
@@ -57,8 +54,6 @@ export class DocumentsComponent implements OnInit {
 
       estado: ['1', [Validators.required]],
       userid: [''],
-
-      files: [''],
 
     };
     this.formHeader = this.formBuilder.group(controls);
@@ -82,11 +77,7 @@ export class DocumentsComponent implements OnInit {
       element_id: $event.element_id || '',
     })
   }
-  valueFile($event:any){
-    this.formHeader.patchValue({
-      files: $event.arrayFile,
-    });
-  }
+
   moreOptions(value:any){
     if (value === 'N') {
       this.options = 'S';
@@ -103,14 +94,7 @@ export class DocumentsComponent implements OnInit {
     const form = this.formHeader.value;
     if (
        !form.titulo ||
-       !form.descripcion ||
-       !form.fecha_inicio ||
-       !form.fecha_fin ||
-       !form.fecha_gracia ||
-       !form.hora_inicio ||
-       !form.hora_fin ||
-       !form.hora_gracia
-       ) {
+       !form.descripcion) {
       return true;
     } else {
       return false;
@@ -120,9 +104,10 @@ export class DocumentsComponent implements OnInit {
     const forms = this.formHeader.value;
     const serviceName = END_POINTS.base_back.elements;
 
-    const f_inicio = this.datepipe.transform(forms.fecha_inicio, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_inicio, 'HH:mm');
-    const f_fin = this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_fin, 'HH:mm');
-    const f_gracia = this.datepipe.transform(forms.fecha_gracia, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_gracia, 'HH:mm');
+    let date = new Date();
+    let fecha =  date.toISOString().split('T')[0];
+    let hora = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    const f_h =  fecha + ' ' + hora;
     const params = {
       course_id:                forms.course_id,
       element_id:                0,
@@ -139,9 +124,9 @@ export class DocumentsComponent implements OnInit {
 
       tipo:                     forms.tipo,
 
-      fecha_inicio:             f_inicio,
-      fecha_fin:                f_fin,
-      fecha_gracia:             f_gracia,
+      fecha_inicio:             f_h,
+      fecha_fin:                f_h,
+      fecha_gracia:             f_h,
 
       // element_id:               forms.element_id,
       visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
@@ -152,8 +137,9 @@ export class DocumentsComponent implements OnInit {
       estado:                   forms.estado,
       userid:                   1,
 
-      files:                    forms.files || [],
     };
+    // console.log(params);
+
     if (!this.validCampos) {
       this.loadingsForm.emit(true);
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {

@@ -77,10 +77,10 @@ export class VidioComponent implements OnInit {
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
 
-      // fecha_inicio: ['', [Validators.required]],
-      // hora_inicio: ['', [Validators.required]],
-      // fecha_fin: ['', [Validators.required]],
-      // hora_fin: ['', [Validators.required]],
+      fecha_inicio: ['', [Validators.required]],
+      hora_inicio: ['', [Validators.required]],
+      fecha_fin: ['', [Validators.required]],
+      hora_fin: ['', [Validators.required]],
       // fecha_gracia: ['', [Validators.required]],
       // hora_gracia: ['', [Validators.required]],
 
@@ -90,6 +90,7 @@ export class VidioComponent implements OnInit {
       visibilidad: ['S'],
       calificable: [true],
       duracion: ['180', [Validators.required]],
+      permitir_comentarios: [false],
 
       estado: ['1', [Validators.required]],
       userid: [''],
@@ -115,7 +116,7 @@ export class VidioComponent implements OnInit {
       calificable: $event.calificable,
       duracion: $event.duration || '',
       visibilidad: $event.visibilidad,
-      // active_chat: $event.active_chat,
+      permitir_comentarios: $event.permitir_comentarios,
       element_id: $event.element_id || '',
     })
   }
@@ -150,25 +151,102 @@ export class VidioComponent implements OnInit {
        !form.url_externo ||
        !form.tamano_peso ||
        !form.titulo ||
-       !form.descripcion
-      //  !form.fecha_inicio ||
-      //  !form.fecha_fin ||
+       !form.descripcion ||
+       !form.fecha_inicio ||
+       !form.fecha_fin ||
       //  !form.fecha_gracia ||
-      //  !form.hora_inicio ||
-      //  !form.hora_fin ||
-      //  !form.hora_gracia
+       !form.hora_inicio ||
+       !form.hora_fin
        ) {
       return true;
     } else {
       return false;
     }
   }
+  procesar() {
+    const serviceName = END_POINTS.base_back.config + '/meta';
+    if (this.formHeader.value.url_externo) {
+      const params = {
+        url: this.formHeader.value.url_externo,
+      };
+
+      this.loadingsForm.emit(true);
+      this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+        if (r.success) {
+          const data = r.data;
+          this.vaciarCamps();
+          this.formHeader.patchValue({
+            titulo: data.title || data['twitter:title'] || '',
+            descripcion: data.description || '',
+            tamano_peso: data['twitter:app:name:googleplay'] || '',
+          });
+          if (data['twitter:app:name:googleplay']) {
+            this.listIcons.map((r:any) => {
+              if (r.name === data['twitter:app:name:googleplay']) {
+                r.checked = true;
+              }
+            });
+          }
+
+        }
+
+      }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
+    }
+  }
+
+  vaciarCamps() {
+    this.formHeader.patchValue({
+      tamano_peso: '',
+      titulo: '',
+      descripcion: '',
+      key_video: '',
+    });
+    this.listIcons.map((r:any) => {
+        r.checked = false;
+    });
+  }
+
+  valueLink() {
+    if (!this.formHeader.value.url_externo) {
+      this.vaciarCamps();
+    }
+  }
+  recopilaKeyVideo(url:any, tamanoPeso: any) {
+    console.log(url, tamanoPeso);
+
+    let idKeyVideo = '';
+    switch (tamanoPeso) {
+      case 'YouTube':
+        const re:any = /^(https?:\/\/)?((www\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i;
+        const you = url.match(re)[7];
+        idKeyVideo = you;
+        console.log(idKeyVideo);
+
+        break;
+      case 'Vimeo':
+        const a = /(videos|video|channels|\.com)\/([\d]+)/;
+        const vim = url.match(a)[2];
+        idKeyVideo = vim;
+        break;
+      case 'Loom':
+
+        break;
+      case 'Facebook':
+
+        break;
+      default:
+
+        break;
+    }
+    return idKeyVideo;
+  }
+
   saveInformtion() {
     const forms = this.formHeader.value;
     const serviceName = END_POINTS.base_back.elements;
 
-    // const f_inicio = this.datepipe.transform(forms.fecha_inicio, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_inicio, 'HH:mm');
-    // const f_fin = this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_fin, 'HH:mm');
+    const f_inicio = this.datepipe.transform(forms.fecha_inicio, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_inicio, 'HH:mm');
+    const f_fin = this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_fin, 'HH:mm');
     // const f_gracia = this.datepipe.transform(forms.fecha_gracia, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_gracia, 'HH:mm');
     const params = {
       course_id:                forms.course_id,
@@ -178,24 +256,26 @@ export class VidioComponent implements OnInit {
       id_carga_curso_docente:   forms.id_carga_curso_docente,
       id_programa_estudio:      forms.id_programa_estudio,
 
-      grupal:                   0,
+      grupal:                   '0',
       intentos:                 1,
 
       url_externo:              forms.url_externo,
       tamano_peso:              forms.tamano_peso,
       titulo:                   forms.titulo,
       descripcion:              forms.descripcion,
+      key_video:                this.recopilaKeyVideo(forms.url_externo, forms.tamano_peso),
 
       tipo:                     forms.tipo,
 
-      // fecha_inicio:             f_inicio,
-      // fecha_fin:                f_fin,
-      // fecha_gracia:             f_gracia,
+      fecha_inicio:             f_inicio,
+      fecha_fin:                f_fin,
+      fecha_gracia:             f_fin,
 
       // element_id:               forms.element_id,
       visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
       calificable:              forms.calificable  === true ? '1' : '0',
       duracion:                 forms.duracion,
+      permitir_comentarios:     forms.permitir_comentarios  === true ? '1' : '0',
 
       estado:                   forms.estado,
       userid:                   1,
@@ -206,12 +286,20 @@ export class VidioComponent implements OnInit {
       this.loadingsForm.emit(true);
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {
         if (r.success) {
-          this.saveCloseValue.emit('ok');
+          const valueClose = {
+            value_close: 'ok',
+            value: params,
+          }
+          this.saveCloseValue.emit(valueClose);
         }
       }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
     }
   }
   closeModal() {
-    this.saveCloseValue.emit('close');
+    const valueClose = {
+      value_close: 'close',
+      value: '',
+    }
+    this.saveCloseValue.emit(valueClose);
   }
 }

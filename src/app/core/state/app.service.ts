@@ -5,14 +5,21 @@ import { CORE_OPTIONS, CoreOptions } from '../core.options';
 import { NbAuthService } from '@nebular/auth';
 import { map, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-export function init_app(
-  configService: AppService,
-  injector: Injector
-): () => Observable<boolean> {
+// / Antes
+// export function init_app(
+//   configService: AppService,
+//   injector: Injector
+// ): () => Observable<boolean> {
+//   return () => configService.init(injector);
+// }
+
+// Cambiado
+export function init_app(configService: AppService, injector: Injector): any {
   return () => configService.init(injector);
 }
-
+//////
 @Injectable()
 export class AppService {
   private _user: any = null;
@@ -77,33 +84,70 @@ export class AppService {
   //   return data$;
   // }
 
-  init(injector: Injector): Observable<boolean> {
-    const auth: NbAuthService = injector.get(NbAuthService);
-    return auth.isAuthenticated().pipe(
-      switchMap((status: boolean) =>
-        status
-          ? this.httpClient.get(this._userInfoUrl).pipe(
-              map((data: any) => data.data),
-              map((data: any) => {
-                if (data) {
-                  if (
-                    data.hasOwnProperty('user') &&
-                    Object.keys(data.user).length > 0
-                  ) {
-                    this._user = data.user;
-                    this._semestre = data.semestre;
-                    console.log('====================>', this._user.roles);
-                  }
-                  return true;
-                } else {
-                  return false;
-                }
-              })
-            )
-          : of(false)
-      )
-    );
-  }
+  /// Cambiado
+  init(injector: any): Promise<any> {
+    return injector.get(NbAuthService).isAuthenticated().toPromise().then((isAuthent: any) => {
+        if (isAuthent) {
+            return this.httpClient.get(`${this._userInfoUrl}`)
+                .pipe(map((data: any) => data))
+                .toPromise()
+                .then((data: any) => {
+                  console.log(data.data.user);
+
+                    if (data.data && data.data.user) {
+                        this._user = data.data.user;
+                        this._semestre = data.data.semestre;
+                        console.log('====================>', this._user.roles);
+                        // this.nbMenuService.addItems(data.data.hasOwnProperty('menu') ? data.data.menu : [], 'core-menu');
+                        return true;
+                    } else {
+                      localStorage.clear();
+                        return false;
+                    }
+                }, () => {
+                  localStorage.clear();
+                    return false;
+                });
+        } else {
+          localStorage.clear();
+          return false;
+        }
+
+    });
+}
+/////
+
+// Antes
+
+  // init(injector: Injector): Observable<boolean> {
+  //   const auth: NbAuthService = injector.get(NbAuthService);
+  //   return auth.isAuthenticated().pipe(
+  //     switchMap((status: boolean) =>
+  //       status
+  //         ? this.httpClient.get(this._userInfoUrl).pipe(
+  //             map((data: any) => data.data),
+  //             map((data: any) => {
+  //               console.log(data, 'helllo');
+
+  //               if (data) {
+  //                 if (
+  //                   data.hasOwnProperty('user') &&
+  //                   Object.keys(data.user).length > 0
+  //                 ) {
+  //                   this._user = data.user;
+  //                   this._semestre = data.semestre;
+  //                   console.log('====================>', this._user.roles);
+  //                 }
+  //                 return true;
+  //               } else {
+  //                 return false;
+  //               }
+  //             })
+  //           )
+  //         : of(false)
+  //     )
+  //   );
+  // }
 
   start = (): void => this._loading.next(true);
 

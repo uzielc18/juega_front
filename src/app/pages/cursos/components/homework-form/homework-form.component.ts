@@ -22,18 +22,22 @@ export class HomeworkFormComponent {
   ngOnInit(): void {
   }
   closeModal() {
-    this.activeModal.close('close');
+    const valueClose = {
+      value_close: 'close',
+      value: '',
+    }
+    this.activeModal.close(valueClose);
   }
   saveValue($event: any){
-    if ($event === 'ok') {
-      this.activeModal.close('ok');
+    if ($event.value_close === 'ok') {
+      this.activeModal.close($event);
     } else {
-      this.activeModal.close('close');
+      this.closeModal();
     }
   }
   selectedElement($element: any) {
     this.element = $element;
-    console.log($element, 'seleccionado');
+    // console.log($element, 'seleccionado');
   }
   loadingsMenu($event: boolean) {
     setTimeout(() => {
