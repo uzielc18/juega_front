@@ -6,7 +6,7 @@ export const END_POINTS = {
   base_back: { // Proyecto
     resourse: 'resources-person',
     elements: 'elements',
-    user: '/user',
+    user: 'user',
     config: 'config',
   },
 };
