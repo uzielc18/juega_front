@@ -19,39 +19,10 @@
               {{ sesion.orden_tema }} - {{ sesion.tema }}
             </small>
             <div class="d-flex align-items-center ms-1">
-              <div *ngFor="let element of sesion.elements">
+              <!-- <div *ngFor="let element of sesion.elements"> -->
+              <div *ngFor="let element of uniqueElements | keyvalue">
                 <app-element [element]="element"></app-element>
               </div>
-              <!-- *ngFor="let element of sesion.elements" -->
-              <!-- <nb-icon
-                class="me-2 fs-5 text-black-50"
-                icon="video-outline"
-              ></nb-icon>
-              <nb-icon
-                class="me-2 fs-5 text-black-50"
-                icon="folder-add-outline"
-              ></nb-icon>
-              <nb-icon
-                class="me-2 fs-5 text-black-50"
-                icon="message-circle-outline"
-              ></nb-icon>
-              <nb-icon
-                class="me-2 fs-5 text-black-50"
-                icon="external-link-outline"
-              ></nb-icon>
-              <nb-icon
-                class="me-2 fs-5 text-black-50"
-                icon="play-circle-outline"
-              ></nb-icon>
-              <nb-icon
-                class="me-2 fs-5 text-black-50"
-                icon="checkmark-circle-outline"
-              ></nb-icon>
-              <nb-icon
-                class="me-2 fs-5 text-black-50"
-                icon="list-outline"
-                routerLink=":sesion/:unidad/trabajo"
-              ></nb-icon> -->
               <nb-icon
                 class="fs-3 me-2"
                 icon="arrow-right"

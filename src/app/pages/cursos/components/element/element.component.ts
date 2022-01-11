@@ -7,48 +7,28 @@ import { GeneralService } from '../../../../providers';
   styleUrls: ['./element.component.scss'],
 })
 export class ElementComponent implements OnInit {
-  iconElements: any = [];
-  uniqueElements: any = [];
   @Input() element: any = [];
 
-  constructor(private generalService: GeneralService) {}
+  clickedIndex: number = 0;
+  hoveredIndex: any;
+
+  constructor() {}
 
   ngOnInit(): void {
-    this.getIconElements();
-    console.log('elementos', this.element);
+    console.log('elementos ------', this.element);
   }
 
-  getIconElements() {
-    const serviceName = '/typeElements';
-    this.generalService
-      .nameAll$(serviceName)
-      .subscribe(({ data: elements }) => {
-        this.iconElements = elements;
-      });
+  elementStyleActive(element: any) {
+    return {
+      'background-color': element.background,
+      color: element.color_active,
+    };
   }
 
-  // getIconByElement(tipo: any) {
-  //   // get icon by type
-  //   const iconElement = this.iconElements.find(
-  //     (element: any) => element.nombre === tipo
-  //     );
-  //   return iconElement.icon;
-  // }
-
-  // getUniqueElements() {
-  //   this.uniqueElements = [
-  //     ...new Map(
-  //       Object.keys(this.element).map((item: any) => [item['tipo'], item])
-  //     ).values(),
-  //   ];
-  //   console.log(this.uniqueElements);
-  // }
-
-  // getTotalElements(typeElement: string) {
-  //   let total = 0;
-  //   if (this.element.tipo === typeElement) {
-  //     total++;
-  //   }
-  //   return total;
-  // }
+  elementStyleHover(element: any) {
+    return {
+      'background-color': element.background,
+      color: element.color_active,
+    };
+  }
 }

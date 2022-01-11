@@ -9,22 +9,24 @@
     ></app-ng-dynamic-breadcrumb>
   </div>
   <div class="ms-auto d-none d-xxl-block">
-    <!-- <nb-select
-      (selectedChange)="selecionar($event)"
-      selected="0"
-      status="primary"
-      class="me-2"
-    > -->
-    <!-- <nb-option>
-        rol - pendiente
-      </nb-option>
-    </nb-select> -->
-    <nb-select [formControl]="semestre" status="primary">
-      <nb-option
-        *ngFor="let semestre of semestres; let i = index"
-        [value]="semestre.id"
-        >Semestre - {{ semestre.nombre }}</nb-option
+    <form [formGroup]="form">
+      <nb-select
+        *ngIf="roles.length > 0"
+        status="primary"
+        class="me-2"
+        formControlName="rol"
       >
-    </nb-select>
+        <nb-option *ngFor="let rol of roles; let i = index" [value]="rol.name"
+          >Cursos - {{ rol.name }}</nb-option
+        >
+      </nb-select>
+      <nb-select status="primary" formControlName="semestre">
+        <nb-option
+          *ngFor="let semestre of semestres; let i = index"
+          [value]="semestre.id"
+          >Semestre - {{ semestre.nombre }}</nb-option
+        >
+      </nb-select>
+    </form>
   </div>
 </div>

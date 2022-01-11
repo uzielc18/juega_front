@@ -1,7 +1,7 @@
 import { EventEmitter, Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CORE_OPTIONS, CoreOptions } from '../../../core/core.options';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Cursos } from '../interfaces/cursos.interface';
 import { tap } from 'rxjs/operators';
 
@@ -11,22 +11,14 @@ import { tap } from 'rxjs/operators';
 export class CursosService {
   private _base_url = `${this.options.apiAuth}/api`;
 
+  private emitRoleSource = new Subject<any>();
+
   data$ = new EventEmitter<any>();
 
   constructor(
     private httpClient: HttpClient,
     @Inject(CORE_OPTIONS) protected options: CoreOptions
   ) {}
-
-  // getSemestres(): Observable<any> {
-  //   return this.httpClient.get<any>(`${this._base_url}/user/mysemesters`);
-  // }
-
-  // updateSemestre(semesterId: number): Observable<any> {
-  //   return this.httpClient.get<any>(
-  //     `${this._base_url}/user/updatesemester/${semesterId}`
-  //   );
-  // }
 
   getCursos(): Observable<Cursos[]> {
     return this.httpClient
@@ -38,13 +30,9 @@ export class CursosService {
       );
   }
 
-  // getUnidades(courseId: number): Observable<any> {
-  //   return this.httpClient.get<any>(
-  //     `${this._base_url}/resources-person/elements-course/${courseId}`
-  //   );
-  // }
+  roleEmitted$ = this.emitRoleSource.asObservable();
 
-  // getTypeElements(): Observable<any> {
-  //   return this.httpClient.get<any>(`${this._base_url}/typeElements`);
-  // }
+  emitRol(rol: any) {
+    this.emitRoleSource.next(rol);
+  }
 }

@@ -34,6 +34,7 @@ import { DocumentsComponent } from './components/forms/documents/documents.compo
 import { VidioComponent } from './components/forms/vidio/vidio.component';
 import { MenuElementsModule } from '../../shared/components/menu-elements/menu-elements.module';
 import { ElementComponent } from './components/element/element.component';
+import { GroupByModule } from '../../shared/pipes/group-by/group-by.module';
 
 const COMPONENTS: any[] = [
   WorksComponent,
@@ -43,34 +44,28 @@ const COMPONENTS: any[] = [
   EvaluationsComponent,
   DocumentsComponent,
   VidioComponent,
+  MainComponent,
+  ChildrenComponent,
+  InfoComponent,
+  CursoComponent,
+  UnidadComponent,
+  SesionComponent,
+  CursosComponent,
+  HomeworkFormComponent,
+  CursoCardComponent,
+  CursoListComponent,
+  BreadcrumbComponent,
+  NavegacionComponent,
+  TrabajoComponent,
+  VideoConferenciaComponent,
+  AdjuntarDocsComponent,
+  ElementComponent,
 ];
-const CONTROL_MESSAGGE: any = [
-  ControlMessagesModule,
-];
-const SERVICES: any = [
-  GeneralService,
-]
+const CONTROL_MESSAGGE: any = [ControlMessagesModule];
+const SERVICES: any = [GeneralService];
 
 @NgModule({
-  declarations: [
-    MainComponent,
-    ChildrenComponent,
-    InfoComponent,
-    CursoComponent,
-    UnidadComponent,
-    SesionComponent,
-    CursosComponent,
-    HomeworkFormComponent,
-    CursoCardComponent,
-    CursoListComponent,
-    BreadcrumbComponent,
-    NavegacionComponent,
-    TrabajoComponent,
-    VideoConferenciaComponent,
-    AdjuntarDocsComponent,
-    ...COMPONENTS,
-    ElementComponent,
-  ],
+  declarations: [...COMPONENTS],
   exports: [CursosComponent],
   imports: [
     CommonModule,
@@ -80,6 +75,7 @@ const SERVICES: any = [
     PrepareFileProModule,
     MoreOptionsModule,
     MenuElementsModule,
+    GroupByModule,
     ...CONTROL_MESSAGGE,
   ],
   providers: [...SERVICES],

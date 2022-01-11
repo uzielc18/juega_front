@@ -17,9 +17,9 @@ export function init_app(
 export class AppService {
   private _user: any = null;
   private _semestre: any = null;
+  private _rol: any = null;
   private _menu: any[] = [];
   private _usernameMenu: any[] = [];
-  // private _userInfoUrl = `${this.options.apiAuth}/api/user/info`;
   private _userInfoUrl = `${this.options.apiAuth}/api/user/me`;
   private _loading = new BehaviorSubject<boolean>(false);
 
@@ -66,16 +66,13 @@ export class AppService {
     this._semestre = value;
   }
 
-  // init(injector: Injector): Observable<any> {
-  //   const auth: NbAuthService = injector.get(NbAuthService);
-  //   console.log('====================>', this._userInfoUrl);
-  //   const token = localStorage.getItem('token');
-  //   let data$ = this.httpClient.get(this._userInfoUrl, { headers: new HttpHeaders({'Authorization': 'Bearer ' + token})})
-  //   data$.subscribe((data) => {
-  //     console.log(data);
-  //   });
-  //   return data$;
-  // }
+  get rol(): any {
+    return this._rol;
+  }
+
+  set rol(value: any) {
+    this._rol = value;
+  }
 
   init(injector: Injector): Observable<boolean> {
     const auth: NbAuthService = injector.get(NbAuthService);
@@ -92,7 +89,7 @@ export class AppService {
                   ) {
                     this._user = data.user;
                     this._semestre = data.semestre;
-                    console.log('====================>', this._user.roles);
+                    this._rol = data.roles;
                   }
                   return true;
                 } else {

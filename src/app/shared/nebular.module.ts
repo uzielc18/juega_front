@@ -4,6 +4,7 @@ import {
   NbActionsModule,
   NbAlertModule,
   NbAutocompleteModule,
+  NbBadgeModule,
   NbButtonGroupModule,
   NbButtonModule,
   NbCardModule,
@@ -66,6 +67,7 @@ const COMPONENTS: any[] = [
   NbDatepickerModule,
   NbTimepickerModule.forRoot(),
   NbDateFnsDateModule,
+  NbBadgeModule,
 ];
 
 @NgModule({
