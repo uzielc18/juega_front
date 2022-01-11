@@ -1,0 +1,53 @@
+<!-- El componente esta diseñado solo para imagenes y pdf si desea añadir otras extensiones, cree otro componente -->
+<nb-card accent="primary"  class="scrollModal text-center" [ngStyle]="{'width': formHeaders.value.ext === 'pdf' ? '800px' : '450px'}"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="large"
+         nbSpinnerMessage="Preparando archivo">
+    <nb-card-header >
+      <div class="d-flex align-items-center justify-content-between">
+        <div >
+          Adjuntar archivo
+         </div>
+         <button nbButton (click)="closeModal()" status="basic" outline size="small" >
+          X
+        </button>
+      </div>
+    </nb-card-header>
+  <nb-card-body>
+    <!-- <div class="col-md-12">
+      <label class="label">Nombre archivo</label>
+      <input type="button" class="text-center" fullWidth nbInput status="primary" fieldSize="small" value="{{formHeaders.value.name}}" placeholder="Nombre archivo">
+    </div> -->
+    <br>
+    <div *ngIf="formHeaders.value.ext === 'pdf'">
+      <div *ngIf="urlSafe">
+        <object [data]="urlSafe" type="application/pdf" width="100%" height="600">
+          <embed [src]="urlSafe" type="application/pdf" />
+        </object>
+      </div>
+    </div>
+    <div *ngIf="formHeaders.value.ext === 'png' || formHeaders.value.ext === 'jpg' || formHeaders.value.ext === 'jpeg'">
+      <div class="text-center">
+        <img [src]="formHeaders.value.base64" type="image/*" height="400" width="100%" alt="" />
+      </div>
+    </div>
+    <div *ngIf="formHeaders.value.ext !== 'pdf' && formHeaders.value.ext !== 'png' && formHeaders.value.ext !== 'jpg' && formHeaders.value.ext !== 'jpeg' && formHeaders.value.ext">
+      <div class="text-center">
+        <nb-icon icon="file-outline" class="lamb-file-icon"></nb-icon><br>
+      </div>
+    </div>
+    <br>
+    <div class="text-center">
+      <div class="col-md-12">
+          <input  type="file" status="basic" placeholder="Documento" class="form-control form-control-sm"
+          [accept]="accepts" id='adjunto' name="adjunto" (change)="onFileChange($event)" style="display: none">
+          <button fullWidth
+          (click)="selectArchivo()"  nbButton outline status="basic"  size="tiny">Seleccionar archivo</button>
+      </div>
+    </div>
+    </nb-card-body>
+    <nb-card-footer class="text-center">
+      <button [disabled]="formHeaders.invalid" nbButton status="primary"  size="small" (click)="anadirFile()">Añadir</button>
+    </nb-card-footer>
+    </nb-card>

@@ -13,7 +13,7 @@ export const environment = {
   authGoogleStrategy: {
     name: 'google',
     clientId:
-      '912215458731-qedg8b3vpmdf3qrtuumgtk5msbva0gmr.apps.googleusercontent.com',
+      '649461344129-0thst4vl3n9aj0j7njie8nd73psls419.apps.googleusercontent.com',
     endpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
     redirectUri: `${window.location.origin}/oauth2/google/callback`,
     success: '/pages/dashboard',
@@ -21,6 +21,7 @@ export const environment = {
   apiUrls: {
     auth: API.auth.dev,
     setup: API.setup.dev,
+    base: API.base.dev,
   },
   shellApp: `${window.location.origin}`,
 };

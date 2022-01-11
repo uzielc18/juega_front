@@ -1,7 +1,6 @@
 export const API = {
   auth: {
-    local: 'http://localhost:9002',
-    // dev: 'https://www.upeu.dev/lamb-academic/backs/auth',
+    local: 'http://localhost:7050',
     dev: 'https://www.upeu.dev/lamb-patmos/backs/patmos-upeu-base-back'
   },
   setup: {
@@ -12,4 +11,8 @@ export const API = {
         'http://app21.cristian.lamb-dev.upeu/lamb-academic/lamb-academic-setup-back/academic/public',
     },
   },
+  base: {
+    local: 'http://localhost:7050',
+    dev: 'https://www.upeu.dev/lamb-patmos/backs/patmos-upeu-base-back'
+  }
 };

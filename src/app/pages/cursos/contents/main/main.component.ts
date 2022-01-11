@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { CursosService } from '../../services/cursos.service';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-
-    name = 'Uziel';
-
-  constructor() { }
+  constructor(private cursosService: CursosService) {}
 
   ngOnInit(): void {
+    this.getCourses();
   }
 
+  getCourses() {
+    this.cursosService.getCursos().subscribe();
+  }
 }

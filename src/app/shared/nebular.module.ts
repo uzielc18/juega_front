@@ -4,6 +4,7 @@ import {
   NbActionsModule,
   NbAlertModule,
   NbAutocompleteModule,
+  NbBadgeModule,
   NbButtonGroupModule,
   NbButtonModule,
   NbCardModule,
@@ -32,6 +33,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DialogConfimComponent } from './components/dialog-confim/dialog-confim.component';
+import { NbDateFnsDateModule } from '@nebular/date-fns';
 
 const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -62,8 +64,10 @@ const COMPONENTS: any[] = [
   NbLayoutModule,
   NbSidebarModule,
   NbWindowModule,
-  NbDatepickerModule.forRoot(),
+  NbDatepickerModule,
   NbTimepickerModule.forRoot(),
+  NbDateFnsDateModule,
+  NbBadgeModule,
 ];
 
 @NgModule({

@@ -5,7 +5,12 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { NbAuthResult, NbAuthService } from '@nebular/auth';
+import {
+  NbAuthResult,
+  NbAuthService,
+  NbAuthSimpleToken,
+  NbTokenService,
+} from '@nebular/auth';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { CORE_OPTIONS, CoreOptions } from '../core.options';
@@ -20,6 +25,7 @@ export class Oauth2GoogleCallbackComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
+    private tokenService: NbTokenService,
     private authService: NbAuthService,
     private router: Router,
     private appValidateTokenService: AppValidateTokenService,
@@ -30,13 +36,22 @@ export class Oauth2GoogleCallbackComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((authResult: NbAuthResult) => {
         if (authResult.isSuccess()) {
-          console.log(authResult);
+          const response: any = authResult.getToken();
           this.appValidateTokenService
-            .validateGoogle(authResult.getToken().getValue())
-            .then(() => {
-              if (authResult.isSuccess() && authResult.getRedirect()) {
-                window.location.href = authResult.getRedirect();
-              }
+            .validateGoogle(response.token.access_token)
+            .subscribe((data: any) => {
+              // console.log('------>', data.data.token);
+              const token = new NbAuthSimpleToken(
+                data.data.token,
+                this.options.strategyName
+              );
+              // console.log(token);
+              this.tokenService.set(token).subscribe(() => {
+                // console.log('ok');
+                if (authResult.isSuccess() && authResult.getRedirect()) {
+                  window.location.href = authResult.getRedirect();
+                }
+              });
             });
         }
       });

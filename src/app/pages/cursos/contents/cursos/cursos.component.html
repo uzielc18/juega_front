@@ -1,10 +1,17 @@
 <div class="d-flex align-items-center">
   <div class="ms-2">
-    <h2>
-      <nb-icon style="font-size: 40px" icon="book-open-outline"></nb-icon>
-      Mis Asignaturas
-    </h2>
-    <span class="pl-st">2021-1 INGENIERÍA DE SISTEMAS</span>
+    <div class="d-flex align-items-center">
+      <nb-icon
+        style="width: 62px; height: 52px; color: #b37987"
+        icon="book-open-outline"
+      ></nb-icon>
+      <p class="d-flex flex-column mb-0">
+        <span class="mb-2" style="font-size: 28px; font-weight: bold"
+          >Mis Asignaturas</span
+        >
+        <span style="font-size: 14px">2021-1 INGENIERÍA DE SISTEMAS</span>
+      </p>
+    </div>
   </div>
   <div class="ms-auto d-none d-xxl-block p-3">
     <nb-icon
@@ -23,48 +30,14 @@
 <div class="container-fluid">
   <div class="col-12" *ngIf="curso == 1">
     <app-curso-list></app-curso-list>
-    <app-curso-list></app-curso-list>
-    <app-curso-list></app-curso-list>
-    <app-curso-list></app-curso-list>
-    <app-curso-list></app-curso-list>
-    <app-curso-list></app-curso-list>
   </div>
   <div class="row" *ngIf="curso != 1">
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
-    </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
-      <app-curso-card></app-curso-card>
+    <div class="col-12">
+      <app-curso-card
+        class="cursos-card"
+        [cursosDocente]="cursosDocente"
+        [cursosEstudiante]="cursosEstudiante"
+      ></app-curso-card>
     </div>
   </div>
 </div>

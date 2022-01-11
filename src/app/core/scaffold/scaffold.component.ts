@@ -9,10 +9,16 @@ import {
 import { delay, map, startWith, takeUntil } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 
-import { NbAuthResult, NbAuthService } from '@nebular/auth';
+import {
+  NbAuthResult,
+  NbAuthService,
+  NbTokenService,
+  routes,
+} from '@nebular/auth';
 import { CORE_OPTIONS, CoreOptions } from '../core.options';
 import { AppService } from '../state/app.service';
 import { AppValidateTokenService } from '../state/app-validate-token.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-scaffold',
@@ -117,6 +123,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   spinner = false;
 
   constructor(
+    private nbTokenService: NbTokenService,
     private sidebarService: NbSidebarService,
     private themeService: NbThemeService,
     private nbMenuService: NbMenuService,
@@ -149,14 +156,27 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         if (data.item.subtag === 'logout') {
+          this.nbTokenService.clear();
+          // lamb
           this.nbAuthService
             .logout(this.options.strategyName)
             .pipe(takeUntil(this.destroy$))
             .subscribe((authResult: NbAuthResult) => {
               if (authResult.isSuccess()) {
-                this.tokenService.authorize();
+                this.tokenService.authorizeLamb();
               }
             });
+
+          // google
+          this.nbAuthService
+            .logout(this.options.strategyGoogleName)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((authResult: NbAuthResult) => {
+              if (authResult.isSuccess()) {
+                this.tokenService.authorizeGoogle();
+              }
+            });
+          window.location.href = '/lamb-patmos/fronts/patmos-upeu-base-front/auth';
         }
       });
   }
