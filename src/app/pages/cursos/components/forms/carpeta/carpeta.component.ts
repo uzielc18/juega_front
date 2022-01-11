@@ -147,6 +147,7 @@ export class CarpetaComponent implements OnInit {
           const valueClose = {
             value_close: 'ok',
             value: params,
+            response: r.data,
           }
           this.saveCloseValue.emit(valueClose);
         }
@@ -157,6 +158,7 @@ export class CarpetaComponent implements OnInit {
     const valueClose = {
       value_close: 'close',
       value: '',
+      response: '',
     }
     this.saveCloseValue.emit(valueClose);
   }
