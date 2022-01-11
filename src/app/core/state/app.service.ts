@@ -24,9 +24,9 @@ export function init_app(configService: AppService, injector: Injector): any {
 export class AppService {
   private _user: any = null;
   private _semestre: any = null;
+  private _rol: any = null;
   private _menu: any[] = [];
   private _usernameMenu: any[] = [];
-  // private _userInfoUrl = `${this.options.apiAuth}/api/user/info`;
   private _userInfoUrl = `${this.options.apiAuth}/api/user/me`;
   private _loading = new BehaviorSubject<boolean>(false);
 
@@ -73,17 +73,15 @@ export class AppService {
     this._semestre = value;
   }
 
-  // init(injector: Injector): Observable<any> {
-  //   const auth: NbAuthService = injector.get(NbAuthService);
-  //   console.log('====================>', this._userInfoUrl);
-  //   const token = localStorage.getItem('token');
-  //   let data$ = this.httpClient.get(this._userInfoUrl, { headers: new HttpHeaders({'Authorization': 'Bearer ' + token})})
-  //   data$.subscribe((data) => {
-  //     console.log(data);
-  //   });
-  //   return data$;
-  // }
+  get rol(): any {
+    return this._rol;
+  }
 
+  set rol(value: any) {
+    this._rol = value;
+  }
+
+<<<<<<< HEAD
   /// Cambiado
   init(injector: any): Promise<any> {
     return injector.get(NbAuthService).isAuthenticated().toPromise().then((isAuthent: any) => {
@@ -148,6 +146,35 @@ export class AppService {
   //     )
   //   );
   // }
+=======
+  init(injector: Injector): Observable<boolean> {
+    const auth: NbAuthService = injector.get(NbAuthService);
+    return auth.isAuthenticated().pipe(
+      switchMap((status: boolean) =>
+        status
+          ? this.httpClient.get(this._userInfoUrl).pipe(
+              map((data: any) => data.data),
+              map((data: any) => {
+                if (data) {
+                  if (
+                    data.hasOwnProperty('user') &&
+                    Object.keys(data.user).length > 0
+                  ) {
+                    this._user = data.user;
+                    this._semestre = data.semestre;
+                    this._rol = data.roles;
+                  }
+                  return true;
+                } else {
+                  return false;
+                }
+              })
+            )
+          : of(false)
+      )
+    );
+  }
+>>>>>>> 829d8e423f166de48d83e2de42e7297b96a44ac8
 
   start = (): void => this._loading.next(true);
 

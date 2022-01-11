@@ -53,10 +53,6 @@ export class MenuElementsComponent implements OnInit {
     };
   }
 
-  elementIcon(element: any) {
-    return element.icono;
-  }
-
   selectedElement(element: any) {
     this.onSelect.emit(element);
   }

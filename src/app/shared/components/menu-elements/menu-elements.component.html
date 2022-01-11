@@ -5,7 +5,13 @@
     *ngFor="let element of elements; let i = index"
     (click)="selectedElement(element)"
     (click)="clickedIndex = i"
-    [ngStyle]="clickedIndex === i ? elementStyleActive(element) : elementStyle() && hoveredIndex === i ? elementStyleHover(element) : elementStyle()"
+    [ngStyle]="
+      clickedIndex === i
+        ? elementStyleActive(element)
+        : elementStyle() && hoveredIndex === i
+        ? elementStyleHover(element)
+        : elementStyle()
+    "
     (mouseenter)="hoveredIndex = i"
     (mouseleave)="hoveredIndex = null"
   >

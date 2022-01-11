@@ -38,7 +38,8 @@ const routes: Routes = [
               url: '/pages/asignaturas',
             },
             {
-              label: 'Capacidades Comunicativas I',
+              // label: 'Capacidades Comunicativas I',
+              label: '{{curso}}',
               url: '',
             },
           ],

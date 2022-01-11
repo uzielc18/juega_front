@@ -16,8 +16,4 @@ export class MainComponent implements OnInit {
   getCourses() {
     this.cursosService.getCursos().subscribe();
   }
-
-  // prueba(event: any) {
-  //   console.log('desdeee main', event);
-  // }
 }

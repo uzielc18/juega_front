@@ -33,8 +33,13 @@ import { EvaluationsComponent } from './components/forms/evaluations/evaluations
 import { DocumentsComponent } from './components/forms/documents/documents.component';
 import { VidioComponent } from './components/forms/vidio/vidio.component';
 import { MenuElementsModule } from '../../shared/components/menu-elements/menu-elements.module';
+<<<<<<< HEAD
 import { AdminGroupsComponent } from './components/modals/admin-groups/admin-groups.component';
 import { CarpetaComponent } from './components/forms/carpeta/carpeta.component';
+=======
+import { ElementComponent } from './components/element/element.component';
+import { GroupByModule } from '../../shared/pipes/group-by/group-by.module';
+>>>>>>> 829d8e423f166de48d83e2de42e7297b96a44ac8
 
 const COMPONENTS: any[] = [
   WorksComponent,
@@ -44,6 +49,7 @@ const COMPONENTS: any[] = [
   EvaluationsComponent,
   DocumentsComponent,
   VidioComponent,
+<<<<<<< HEAD
   CarpetaComponent,
   AdminGroupsComponent,
 ];
@@ -76,6 +82,30 @@ const MODALS: any = [
     ...COMPONENTS,
 
   ],
+=======
+  MainComponent,
+  ChildrenComponent,
+  InfoComponent,
+  CursoComponent,
+  UnidadComponent,
+  SesionComponent,
+  CursosComponent,
+  HomeworkFormComponent,
+  CursoCardComponent,
+  CursoListComponent,
+  BreadcrumbComponent,
+  NavegacionComponent,
+  TrabajoComponent,
+  VideoConferenciaComponent,
+  AdjuntarDocsComponent,
+  ElementComponent,
+];
+const CONTROL_MESSAGGE: any = [ControlMessagesModule];
+const SERVICES: any = [GeneralService];
+
+@NgModule({
+  declarations: [...COMPONENTS],
+>>>>>>> 829d8e423f166de48d83e2de42e7297b96a44ac8
   exports: [CursosComponent],
   imports: [
     CommonModule,
@@ -85,6 +115,7 @@ const MODALS: any = [
     PrepareFileProModule,
     MoreOptionsModule,
     MenuElementsModule,
+    GroupByModule,
     ...CONTROL_MESSAGGE,
   ],
   providers: [...SERVICES],

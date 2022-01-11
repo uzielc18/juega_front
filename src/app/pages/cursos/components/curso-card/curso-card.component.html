@@ -1,44 +1,92 @@
-<nb-card
-  *ngFor="let curso of cursosDocente; let i = index"
-  [routerLink]="['../asignaturas', curso.id_carga_curso_docente]"
->
-  <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
-  <div class="card-body">
-    <h6 class="course-name mb-0">{{ curso.course_nombre }}</h6>
-    <p class="course-teacher mb-0">{{ curso.person_teacher_nombre }}</p>
-    <p class="course-description mb-0">
-      Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}
-    </p>
-  </div>
-  <div>
-    <nb-progress-bar
-      size="tiny"
-      [value]="40"
-      status="warning"
-    ></nb-progress-bar>
-  </div>
-  <ul
-    class="list-group list-group-horizontal d-flex justify-content-between px-2"
+<ng-container *ngIf="rol === 'Docente'">
+  <nb-card
+    *ngFor="let curso of cursosDocente; let i = index"
+    [routerLink]="['../asignaturas', curso.id_carga_curso_docente]"
   >
-    <li class="list-group-item">
-      <nb-icon class="text-muted" icon="people-outline"></nb-icon>
-      <p>1</p>
-    </li>
-    <li class="list-group-item">
-      <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
-      <p>1</p>
-    </li>
-    <li class="list-group-item">
-      <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
-      <p>1</p>
-    </li>
-    <li class="list-group-item">
-      <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
-      <p>1</p>
-    </li>
-    <li class="list-group-item">
-      <nb-icon class="text-muted" icon="video-outline"></nb-icon>
-      <p>1</p>
-    </li>
-  </ul>
-</nb-card>
+    <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
+    <div class="card-body">
+      <h6 class="course-name mb-0">{{ curso.nombre }}</h6>
+      <p class="course-teacher mb-0">{{ curso.persons_teacher_nombre }}</p>
+      <p class="course-description mb-0">
+        Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}
+      </p>
+    </div>
+    <div>
+      <nb-progress-bar
+        size="tiny"
+        [value]="40"
+        status="warning"
+      ></nb-progress-bar>
+    </div>
+    <ul
+      class="list-group list-group-horizontal d-flex justify-content-between px-2"
+    >
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="people-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="video-outline"></nb-icon>
+        <p>1</p>
+      </li>
+    </ul>
+  </nb-card>
+</ng-container>
+<ng-container *ngIf="rol === 'Estudiante'">
+  <nb-card
+    *ngFor="let curso of cursosEstudiante; let i = index"
+    [routerLink]="['../asignaturas', curso.id_carga_curso_docente]"
+  >
+    <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
+    <div class="card-body">
+      <h6 class="course-name mb-0">{{ curso.course_nombre }}</h6>
+      <p class="course-teacher mb-0">{{ curso.person_teacher_nombre }}</p>
+      <p class="course-description mb-0">
+        Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}
+      </p>
+    </div>
+    <div>
+      <nb-progress-bar
+        size="tiny"
+        [value]="40"
+        status="warning"
+      ></nb-progress-bar>
+    </div>
+    <ul
+      class="list-group list-group-horizontal d-flex justify-content-between px-2"
+    >
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="people-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="video-outline"></nb-icon>
+        <p>1</p>
+      </li>
+    </ul>
+  </nb-card>
+</ng-container>
