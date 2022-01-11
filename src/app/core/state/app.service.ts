@@ -93,7 +93,7 @@ export class AppService {
                     if (data.data && data.data.user) {
                         this._user = data.data.user;
                         this._semestre = data.data.semestre;
-                        this._rol = data..data.roles;
+                        this._rol = data.data.roles;
                         // this.nbMenuService.addItems(data.data.hasOwnProperty('menu') ? data.data.menu : [], 'core-menu');
                         return true;
                     } else {
