@@ -3,8 +3,8 @@
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
-        Administrar grupo <br>
-        <label class="label">Trabajo grupal</label> {{curso?.nombre}} 2021222
+        Administrar grupo {{type}} <br>
+        <label class="label">Trabajo grupal - {{curso?.nombre}} 2021222</label>
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
@@ -23,7 +23,7 @@
           <nb-card-body style="padding-top: 0px;">
             <div>
               <nb-tabset (changeTab)="selectTabChange($event)">
-                <nb-tab tabTitle="Manual" tabId="GM" class="reducir">
+                <nb-tab tabTitle="Manual" tabId="GM" class="reducir" #item1>
                   <form [formGroup]="formGroupManual">
                   <strong>Grupo manual</strong><br>
                   <div>
@@ -39,7 +39,7 @@
                   </div>
                 </form>
                 </nb-tab>
-                <nb-tab tabTitle="Generar" tabId="G" class="reducir" [disabled]="listGroups?.length > 0">
+                <nb-tab tabTitle="Generar" tabId="G" class="reducir" [disabled]="listGroups?.length > 0" #item2>
                   <form [formGroup]="formGenerar">
                     <strong>Generar grupos</strong><br>
                     <strong style="font-size: 10px; color: brown;">N° alumnos {{listMiembros?.length}}</strong> <br>
@@ -89,7 +89,7 @@
                     </div>
                   </form>
                 </nb-tab>
-                <nb-tab tabTitle="Importar" tabId="I" class="reducir" [disabled]="listGroups?.length > 0">
+                <nb-tab tabTitle="Importar" tabId="I" class="reducir" [disabled]="listGroups?.length > 0" #item3>
                   <form [formGroup]="formImportar">
                     <strong>Importar grupos</strong><br>
                     <div>
@@ -104,7 +104,7 @@
                     <br>
                     <div class="d-flex align-items-center justify-content-between">
                       <div></div>
-                        <button nbButton status="primary" size="small" [disabled]="formImportar.invalid" (click)="save()"><nb-icon icon="plus"></nb-icon>Añadir</button>
+                        <button nbButton status="primary" size="small" [disabled]="formImportar.invalid" (click)="save()"><nb-icon icon="plus"></nb-icon>Importar</button>
                     </div>
                   </form>
                 </nb-tab>
@@ -164,10 +164,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- <tr *ngFor="let item of partirArrayPending?.array_B" style="font-size: 10px;">
-                        <td></td>
+                      <tr *ngFor="let item of partidos?.array_B" style="font-size: 10px;">
+                        <td> <nb-checkbox status="primary"  [(ngModel)]="item.checked"></nb-checkbox></td>
                         <td>{{item.nombre}}</td>
-                      </tr> -->
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -182,10 +182,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- <tr *ngFor="let item of partirArrayPending?.array_A" style="font-size: 10px;">
-                      <td></td>
+                      <tr *ngFor="let item of partidos?.array_A" style="font-size: 10px;">
+                      <td><nb-checkbox status="primary" [(ngModel)]="item.checked"></nb-checkbox></td>
                       <td>{{item.nombre}}</td>
-                      </tr> -->
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -193,7 +193,7 @@
             </div>
             <div class="d-flex align-items-center justify-content-between">
               <div></div>
-                <button nbButton status="primary" size="small"><nb-icon icon="plus"></nb-icon>Añadir</button>
+                <button nbButton status="primary" size="small" (click)="anadirPending()"><nb-icon icon="plus"></nb-icon>Añadir</button>
             </div>
             <hr/>
             <label class="label">Lista de alumnos asignados al grupo</label>

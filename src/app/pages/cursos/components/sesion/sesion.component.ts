@@ -35,8 +35,16 @@ export class SesionComponent implements OnInit {
       closeOnEsc: false
     }).onClose.subscribe(result => {
       if (result.value_close === 'ok') {
-      // this.openGroups();
+        if (result.response && result.response.id && result.value.grupal === '1') {
+          // console.log(result, 'que tenemos');
+          // this.openGroups(result.response);
+          // const response = {
+          //   id: 1,
+          //   course_id: 1,
+          // }
+          // this.openGroups(response);
       }
+    }
     });
   }
 
@@ -47,18 +55,19 @@ export class SesionComponent implements OnInit {
     }, {});
     // console.log('elementos unicos', this.uniqueElements);
   }
-  // openGroups() {
-  //   this.dialogService.open(AdminGroupsComponent, {
-  //     dialogClass: 'dialog-limited-height',
-  //     context: {
-  //       curso: this.curso,
-  //     },
-  //     closeOnBackdropClick: false,
-  //     closeOnEsc: false
-  //   }).onClose.subscribe(result => {
-  //     if (result === 'ok') {
-  //       // this.filtrar();
-  //     }
-  //   });
-  // }
+  openGroups(response:any) {
+    this.dialogService.open(AdminGroupsComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        curso: this.curso,
+        response: response,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        // this.filtrar();
+      }
+    });
+  }
 }

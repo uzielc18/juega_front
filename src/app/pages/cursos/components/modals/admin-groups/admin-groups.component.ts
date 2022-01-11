@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
@@ -15,6 +15,7 @@ export class AdminGroupsComponent implements OnInit {
   @Input() item: any;
   @Input() code: any;
   @Input() curso:any;
+  @Input() response: any;
   loading: boolean = false;
   listMiembros:any = [
     {
@@ -65,44 +66,58 @@ export class AdminGroupsComponent implements OnInit {
   alumnsPending: any = [
     {
       nombre: 'Crsitian Huarcaya Quilla',
+      checked: false,
       id: 1,
     },
     {
       nombre: 'Carlos Calderón Huarcaya',
+      checked: false,
       id: 2,
     },
     {
       nombre: 'Juan Peréz Huarcaya',
+      checked: false,
       id: 3,
     },
     {
       nombre: 'Felipe peso Lucas',
+      checked: false,
       id: 4,
     },
     {
       nombre: 'Sebastian rodriguez jaimes Acaya',
+      checked: false,
       id: 5,
     },
     {
       nombre: 'Gonzalo Higuain Huarcaya',
+      checked: false,
       id: 6,
     },
     {
       nombre: 'Edmundo Caracagno Huarcaya',
+      checked: false,
       id: 7,
     },
     {
       nombre: 'Eusebio Goñi Huarcaya',
+      checked: false,
       id: 8,
     },
     {
       nombre: 'Teofilo Cubillas Saavedra Huarcaya',
+      checked: false,
       id: 9,
     },
   ];
   partidos:any = {
-
+    array_A: [],
+    array_B: [],
   }
+
+  @ViewChild('item1') tabGM:any;
+  @ViewChild('item2') tabG:any;
+  @ViewChild('item3') tabI:any;
   constructor(public activeModal: NbDialogRef<AdminGroupsComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService,
     private dialogService: NbDialogService) { }
 
@@ -137,6 +152,8 @@ export class AdminGroupsComponent implements OnInit {
       this.activeModal.close('close');
   }
   selectTabChange($event:any) {
+    console.log($event);
+
     this.type = '';
     const idTab = $event.tabId;
     this.refresForms();
@@ -224,48 +241,54 @@ export class AdminGroupsComponent implements OnInit {
   }
 
   partirArrayPending() {
-    // this.partidos = {
-    //   array_A: [],
-    //   array_B: [],
-    // }
-    // if (this.alumnsPending.length > 0) {
+     this.partidos.array_A = [];
+     this.partidos.array_B = [];
 
-    //   values.array_A = this.alumnsPending.splice(0,(this.alumnsPending.length/2));
+    if (this.alumnsPending.length > 0) {
 
-    //   console.log("Mitad 1 --> ",values.array_A);
+      this.partidos.array_A = this.alumnsPending.splice(0,(this.alumnsPending.length/2));
 
-    //   values.array_B = this.alumnsPending.splice(0,this.alumnsPending.length);
-    //   console.log("Mitad 2 -->",values.array_B);
+      console.log("Mitad 1 --> ",this.partidos.array_A);
 
-
-    // }
-    // console.log(values);
-
-    // return values;
+      this.partidos.array_B = this.alumnsPending.splice(0,this.alumnsPending.length);
+      console.log("Mitad 2 -->",this.partidos.array_B);
+    }
+  }
+  setTab() {
+    this.tabGM.active = true;
+    this.tabG.active = false;
+    this.tabI.active = false;
+    this.type = 'GM';
   }
 
   save() {
-    const serviceName = '';
+    this.listGroups.push({nombre:'ssss'});
+    this.setTab();
+    let serviceName = '';
     let params:any = '';
 
     if (this.type === 'GM') {
+      serviceName = '/groups';
       params = {
         nombre: this.formGroupManual.value.nombre_grupo,
-        element_id: 'id',
-        course_id: '',
-        type: this.type,
+        element_id: this.response.id,
+        course_id: this.response.course_id,
       }
     }
     if (this.type === 'G') {
+      serviceName = '/generar-groups';
       params = {
         array: this.arregloDeArreglos,
-        type: this.type,
+        element_id: this.response.id,
+        course_id: this.response.course_id,
       }
     }
     if (this.type === 'I') {
+      serviceName = '/importar-groups';
       params = {
         id_trabajo: this.formImportar.value.id_trabajo,
-        type: this.type,
+        element_id: this.response.id,
+        course_id: this.response.course_id,
       }
     }
       // this.loading = true;
@@ -275,6 +298,30 @@ export class AdminGroupsComponent implements OnInit {
       // }, () => { this.loading =false; }, () => { this.loading =false; });
     console.log(params);
 
+  }
+  anadirPending() {
+    let array:any = [];
+    if (this.partidos.array_A.length>0) {
+      this.partidos.array_A.map((res:any) => {
+        if (res.checked) {
+          array.push(res);
+        }
+      });
+    }
+    if (this.partidos.array_B.length>0) {
+      this.partidos.array_B.map((res:any) => {
+        if (res.checked) {
+          array.push(res);
+        }
+      });
+    }
+
+    const params:any = {
+      list: array || [],
+    };
+    // if (array.length>0) {
+      console.log(params, 'jejej soy la union de listas');
+    // }
   }
 
 }
