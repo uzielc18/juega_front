@@ -250,7 +250,9 @@ export class AdminGroupsComponent implements OnInit {
 
     if (this.type === 'GM') {
       params = {
-        nombre_grupo: this.formGroupManual.value.nombre_grupo,
+        nombre: this.formGroupManual.value.nombre_grupo,
+        element_id: 'id',
+        course_id: '',
         type: this.type,
       }
     }
