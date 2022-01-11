@@ -1,5 +1,5 @@
-<nb-accordion>
-  <nb-accordion-item *ngFor="let unidad of unidades">
+<nb-accordion class="mb-2" *ngFor="let unidad of unidades">
+  <nb-accordion-item>
     <nb-accordion-item-header>
       <div class="container p-0 pe-4">
         <div class="d-flex align-items-center">
@@ -32,22 +32,20 @@
     </nb-accordion-item-header>
     <nb-accordion-item-body>
       <div class="container d-flex flex-column">
-        <small class="fw-bold">Descripcion</small>
-        <small>
+        <small class="fw-bold another-color">Descripcion</small>
+        <small class="description">
           Conceptos fundamentales, recopilacion de informacion. Modelo
           Conceptual y Relacional
         </small>
-
-        <small class="fw-bold">Resultado de apredizaje</small>
-        <small>
+        <small class="fw-bold another-color">Resultado de apredizaje</small>
+        <small class="mb-4 description">
           Elabora el modelo Entidad Relacion de la base de datos para un sistema
           de informacion
         </small>
         <div *ngFor="let sesion of unidad.topics">
-          <app-sesion [sesion]="sesion"></app-sesion>
+          <app-sesion [sesion]="sesion" [unidad]="unidad" [curso]="curso"></app-sesion>
         </div>
       </div>
     </nb-accordion-item-body>
   </nb-accordion-item>
 </nb-accordion>
-<br />

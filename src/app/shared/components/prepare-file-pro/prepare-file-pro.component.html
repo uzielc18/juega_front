@@ -1,0 +1,37 @@
+<!-- El componente esta diseñado solo para imagenes y pdf si desea añadir otras extensiones, cree otro componente -->
+<form [formGroup]="formHeaders">
+  <div [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="large">
+    <div style="background: #f7f7f7;">
+      <div class="text-center">
+        <br>
+        <label class="label">Dar click para adjuntar, máx ({{numFiles}}) {{numFiles === 1 ? 'archivo' : 'archivos'}}</label><br><br>
+        <div   class="text-center">
+          <button nbButton  size="small" (click)="openModal();"
+          [disabled]="listArrayFile.length === numFiles" style="font-size: 12px; font-weight: bold; cursor: pointer; background: rgb(213 213 213);">Adjuntar archivo <nb-icon icon="cloud-upload-outline"></nb-icon> </button>
+        </div>
+        <br>
+      </div>
+      <div class="table-responsive" *ngIf="listArrayFile.length>0">
+        <table class="table table-sm table-hover table-bordered">
+          <thead>
+            <tr style="font-size: 10px;">
+              <th style="width: 1px;">#</th>
+              <th>Nombre</th>
+              <th style="width: 1px;" class="center">Opc.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listArrayFile; let i = index" style="font-size: 9px;">
+              <td>{{i+1}}</td>
+              <td>{{item.nombre_original}}</td>
+              <td><nb-icon icon="trash" nbTooltip="Eliminar archivo" nbTooltipStatus="danger"
+                style="cursor: pointer; color: brown;" (click)="deleteItem(i)"></nb-icon></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</form>

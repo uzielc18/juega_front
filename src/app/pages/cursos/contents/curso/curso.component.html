@@ -12,11 +12,11 @@
           />
         </div>
       </div>
-      <div class="container-fluid" style="margin-top: -180px">
+      <div class="container-fluid h-100" style="margin-top: -180px">
         <div class="row">
           <div class="col">
             <div class="row px-4">
-              <h2 class="fs-2 text-white mx-1">{{ curso.nombre }}</h2>
+              <h2 class="fs-2 text-white mx-1">{{ curso?.nombre }}</h2>
               <small
                 style="
                   background: linear-gradient(
@@ -28,7 +28,7 @@
                 "
                 class="text-white px-2 py-0 mx-3"
               >
-                {{ curso.programa_estudio.nombre }}
+                {{ curso?.programa_estudio?.nombre }}
               </small>
             </div>
             <div class="row px-2 mt-3">
@@ -37,7 +37,7 @@
                   <div class="row justify-content-between mb-3">
                     <div class="col-sm-12 col-xl-6">
                       <small class="d-flex justify-content-between">
-                        <span>Avance del curso</span>
+                        <span style="font-size: 12px">Avance del curso</span>
                         <span>40%</span>
                       </small>
                       <nb-progress-bar
@@ -49,25 +49,13 @@
                     <div class="col-sm-12 col-xl-auto mt-2 mt-xl-0">
                       <div class="d-flex align-items-center">
                         <p
-                          class="
-                            text-black text-opacity-25
-                            m-0
-                            me-4
-                            d-flex
-                            align-items-center
-                          "
+                          class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center"
                         >
                           <nb-icon icon="people" class="fs-6"></nb-icon
                           ><small class="text-black ms-1">16</small>
                         </p>
                         <p
-                          class="
-                            text-black text-opacity-25
-                            m-0
-                            me-4
-                            d-flex
-                            align-items-center
-                          "
+                          class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center"
                         >
                           <nb-icon
                             icon="checkmark-square-2"
@@ -76,25 +64,13 @@
                           ><small class="text-black ms-1">5</small>
                         </p>
                         <p
-                          class="
-                            text-black text-opacity-25
-                            m-0
-                            me-4
-                            d-flex
-                            align-items-center
-                          "
+                          class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center"
                         >
                           <nb-icon icon="message-circle" class="fs-6"></nb-icon
                           ><small class="text-black ms-1">25</small>
                         </p>
                         <p
-                          class="
-                            text-black text-opacity-25
-                            m-0
-                            me-4
-                            d-flex
-                            align-items-center
-                          "
+                          class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center"
                         >
                           <nb-icon
                             icon="checkmark-circle-2"
@@ -103,13 +79,7 @@
                           ><small class="text-black ms-1">1</small>
                         </p>
                         <p
-                          class="
-                            text-black text-opacity-25
-                            m-0
-                            me-4
-                            d-flex
-                            align-items-center
-                          "
+                          class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center"
                         >
                           <nb-icon icon="play-circle" class="fs-6"></nb-icon
                           ><small class="text-black ms-1">3</small>
@@ -122,7 +92,7 @@
                       </div>
                     </div>
                   </div>
-                  <app-unidad [unidades]="unidades"></app-unidad>
+                  <app-unidad [unidades]="unidades" [curso]="curso"></app-unidad>
                 </nb-card-body>
               </nb-card>
             </div>

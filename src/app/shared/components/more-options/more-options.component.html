@@ -1,0 +1,32 @@
+<form [formGroup]="formHeader">
+  <div *ngIf="!['FORO', 'TRABAJO', 'EVALUACION'].includes(tipo)" >
+    <label class="label">Elegir una carpeta</label>
+    <nb-select placeholder="Sin carpeta"  fullWidth formControlName="element_id" (selectedChange)="setEmiter()">
+    </nb-select>
+    <control-messages [control]="formHeader.get('element_id')"></control-messages>
+  </div>
+  <div style="padding-top: 4px;">
+    <!-- <label class="label">Activar el chat durante el vídeo</label> -->
+    <nb-toggle status="primary" class="my-3 d-block" formControlName="active_chat" (change)="setEmiter()">Activar el chat durante el vídeo</nb-toggle>
+    <control-messages [control]="formHeader.get('active_chat')"></control-messages>
+  </div>
+  <div style="padding-top: 4px;">
+    <label class="label">Duración de la actividad (Duración por mínutos)</label>
+    <input class="w-100" type="number" nbInput fullWidth status="basic" placeholder="Ingresa un secuencia" formControlName="duration" (keyup)="setEmiter()"/>
+    <control-messages [control]="formHeader.get('duration')"></control-messages>
+  </div>
+  <div style="padding-top: 4px;">
+    <!-- <label class="label">¿ Es calificable ?</label> -->
+    <nb-toggle status="primary" class="my-3 d-block" formControlName="calificable" size="tiny" (change)="setEmiter()">¿ Es calificable ?</nb-toggle>
+    <control-messages [control]="formHeader.get('calificable')"></control-messages>
+  </div>
+  <div style="padding-top: 4px;">
+    <label class="label">¿ Vísivilidad ?</label>
+    <nb-select placeholder="Mostrar al estudiante"  fullWidth formControlName="visibilidad" (selectedChange)="setEmiter()">
+      <nb-option value="S">Si mostrar al estudiante</nb-option>
+      <nb-option value="N">No mostrar al estudiante</nb-option>
+    </nb-select>
+    <control-messages [control]="formHeader.get('visibilidad')"></control-messages>
+  </div>
+  <br>
+</form>

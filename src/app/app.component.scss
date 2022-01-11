@@ -1,0 +1,24 @@
+@import 'src/app/core/themes'; // esta hoja de estilo es global para todo el proyecto.
+@include nb-install-component() {
+
+::ng-deep .topScrollModal { /// scroll modal segun el tamaño de la pantalla
+  // margin-right: 5rem;
+  max-width: 80vw;
+  width: 70vw;
+  max-height: 85vh;
+  // height: 80vw;
+}
+::ng-deep nb-select.ng-invalid{ // campo requerido
+  border-left: 3px solid #e74c3c !important;
+}
+::ng-deep input.ng-invalid{
+  border-left: 3px solid #e74c3c !important;
+}
+::ng-deep select.ng-invalid{ // campo requerido
+  border-left: 3px solid #e74c3c !important;
+}
+::ng-deep textarea.ng-invalid{ // campo requerido
+  border-left: 3px solid #e74c3c !important;
+}
+
+}

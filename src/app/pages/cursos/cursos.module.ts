@@ -21,31 +21,63 @@ import { TrabajoComponent } from './contents/trabajo/trabajo.component';
 import { VideoConferenciaComponent } from './contents/video-conferencia/video-conferencia.component';
 import { AdjuntarDocsComponent } from './components/adjuntar-docs/adjuntar-docs.component';
 import { CursoListComponent } from './components/curso-list/curso-list.component';
+import { PrepareFileProModule } from 'src/app/shared/components/prepare-file-pro/prepare-file-pro.module';
+import { WorksComponent } from './components/forms/works/works.component';
+import { ControlMessagesModule } from 'src/app/shared/components/control-messages/control-messages.module';
+import { MoreOptionsModule } from 'src/app/shared/components/more-options/more-options.module';
+import { GeneralService } from 'src/app/providers';
+import { ForusComponent } from './components/forms/forus/forus.component';
+import { EnlaceExternalComponent } from './components/forms/enlace-external/enlace-external.component';
+import { VidioConferenceComponent } from './components/forms/vidio-conference/vidio-conference.component';
+import { EvaluationsComponent } from './components/forms/evaluations/evaluations.component';
+import { DocumentsComponent } from './components/forms/documents/documents.component';
+import { VidioComponent } from './components/forms/vidio/vidio.component';
+import { MenuElementsModule } from '../../shared/components/menu-elements/menu-elements.module';
+import { ElementComponent } from './components/element/element.component';
+import { GroupByModule } from '../../shared/pipes/group-by/group-by.module';
+
+const COMPONENTS: any[] = [
+  WorksComponent,
+  ForusComponent,
+  EnlaceExternalComponent,
+  VidioConferenceComponent,
+  EvaluationsComponent,
+  DocumentsComponent,
+  VidioComponent,
+  MainComponent,
+  ChildrenComponent,
+  InfoComponent,
+  CursoComponent,
+  UnidadComponent,
+  SesionComponent,
+  CursosComponent,
+  HomeworkFormComponent,
+  CursoCardComponent,
+  CursoListComponent,
+  BreadcrumbComponent,
+  NavegacionComponent,
+  TrabajoComponent,
+  VideoConferenciaComponent,
+  AdjuntarDocsComponent,
+  ElementComponent,
+];
+const CONTROL_MESSAGGE: any = [ControlMessagesModule];
+const SERVICES: any = [GeneralService];
 
 @NgModule({
-  declarations: [
-    MainComponent,
-    ChildrenComponent,
-    InfoComponent,
-    CursoComponent,
-    UnidadComponent,
-    SesionComponent,
-    CursosComponent,
-    HomeworkFormComponent,
-    CursoCardComponent,
-    CursoListComponent,
-    BreadcrumbComponent,
-    NavegacionComponent,
-    TrabajoComponent,
-    VideoConferenciaComponent,
-    AdjuntarDocsComponent
-  ],
+  declarations: [...COMPONENTS],
   exports: [CursosComponent],
   imports: [
     CommonModule,
     CursosRoutingModule,
     NebularModule,
     NgDynamicBreadcrumbModule,
+    PrepareFileProModule,
+    MoreOptionsModule,
+    MenuElementsModule,
+    GroupByModule,
+    ...CONTROL_MESSAGGE,
   ],
+  providers: [...SERVICES],
 })
 export class CursosModule {}
