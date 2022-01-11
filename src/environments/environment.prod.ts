@@ -16,8 +16,8 @@ export const environment = {
       success: '/pages/dashboard',
     },
     apiUrls: {
-        auth: 'https://api.patmos.edu.pe/',
-        base: 'https://api.patmos.edu.pe/',
+        auth: 'https://api.patmos.edu.pe',
+        base: 'https://api.patmos.edu.pe',
     },
     shellApp: `${window.location.origin}`,
 };
