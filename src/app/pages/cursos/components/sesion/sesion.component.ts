@@ -22,7 +22,6 @@ export class SesionComponent implements OnInit {
   }
 
   open() {
-<<<<<<< HEAD
     this.dialogService.open(HomeworkFormComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
@@ -39,25 +38,6 @@ export class SesionComponent implements OnInit {
       // this.openGroups();
       }
     });
-=======
-    this.dialogService
-      .open(HomeworkFormComponent, {
-        dialogClass: 'dialog-limited-height',
-        context: {
-          topics: this.sesion,
-          unidad: this.unidad,
-          curso: this.curso,
-          code: 'NEW',
-          item: '',
-        },
-        closeOnBackdropClick: false,
-        closeOnEsc: false,
-      })
-      .onClose.subscribe((result) => {
-        if (result == 'ok') {
-          // this.filtrar();
-        }
-      });
   }
 
   groupBy() {
@@ -66,7 +46,6 @@ export class SesionComponent implements OnInit {
       return r;
     }, {});
     // console.log('elementos unicos', this.uniqueElements);
->>>>>>> 829d8e423f166de48d83e2de42e7297b96a44ac8
   }
   // openGroups() {
   //   this.dialogService.open(AdminGroupsComponent, {

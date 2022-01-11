@@ -81,8 +81,6 @@ export class AppService {
     this._rol = value;
   }
 
-<<<<<<< HEAD
-  /// Cambiado
   init(injector: any): Promise<any> {
     return injector.get(NbAuthService).isAuthenticated().toPromise().then((isAuthent: any) => {
         if (isAuthent) {
@@ -95,7 +93,7 @@ export class AppService {
                     if (data.data && data.data.user) {
                         this._user = data.data.user;
                         this._semestre = data.data.semestre;
-                        console.log('====================>', this._user.roles);
+                        this._rol = data..data.roles;
                         // this.nbMenuService.addItems(data.data.hasOwnProperty('menu') ? data.data.menu : [], 'core-menu');
                         return true;
                     } else {
@@ -146,38 +144,34 @@ export class AppService {
   //     )
   //   );
   // }
-=======
-  init(injector: Injector): Observable<boolean> {
-    const auth: NbAuthService = injector.get(NbAuthService);
-    return auth.isAuthenticated().pipe(
-      switchMap((status: boolean) =>
-        status
-          ? this.httpClient.get(this._userInfoUrl).pipe(
-              map((data: any) => data.data),
-              map((data: any) => {
-                if (data) {
-                  if (
-                    data.hasOwnProperty('user') &&
-                    Object.keys(data.user).length > 0
-                  ) {
-                    this._user = data.user;
-                    this._semestre = data.semestre;
-                    this._rol = data.roles;
-                  }
-                  return true;
-                } else {
-                  return false;
-                }
-              })
-            )
-          : of(false)
-      )
-    );
-  }
->>>>>>> 829d8e423f166de48d83e2de42e7297b96a44ac8
+  // init(injector: Injector): Observable<boolean> {
+  //   return auth.isAuthenticated().pipe(
+  //     switchMap((status: boolean) =>
+  //       status
+  //         ? this.httpClient.get(this._userInfoUrl).pipe(
+  //             map((data: any) => data.data),
+  //             map((data: any) => {
+  //               if (data) {
+  //                 if (
+  //                   data.hasOwnProperty('user') &&
+  //                   Object.keys(data.user).length > 0
+  //                 ) {
+  //                   this._user = data.user;
+  //                   this._semestre = data.semestre;
+  //                   this._rol = data.roles;
+  //                 }
+  //                 return true;
+  //               } else {
+  //                 return false;
+  //               }
+  //             })
+  //           )
+  //         : of(false)
+  //     )
+  //   );
+  // }
 
   start = (): void => this._loading.next(true);
-
   stop = (): void => this._loading.next(false);
 
   onLoader = (): Observable<boolean> => this._loading.asObservable();

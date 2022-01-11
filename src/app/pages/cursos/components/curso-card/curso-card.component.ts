@@ -15,18 +15,6 @@ export class CursoCardComponent implements OnInit {
 
   constructor(private cursosService: CursosService) {}
 
-<<<<<<< HEAD
-  // ngOnInit(): void {
-  //   this.cursosService.data$.subscribe((resp) => {
-  //     console.log('curso carddddddddddddddd', resp);
-  //     this.cursosDocente = resp.data.cursos_docente;
-  //     // console.log('cursos docente - ', this.cursosDocente);
-  //     this.cursosEstudiante = resp.data.cursos_estudiante;
-  //     // console.log('cursos estudiante - ', this.cursosEstudiante);
-  //   });
-  // }
-  ngOnInit(): void {
-=======
   ngOnInit(): void {
     this.rolSeleccionado();
   }
@@ -36,6 +24,5 @@ export class CursoCardComponent implements OnInit {
       this.rol = rol;
       console.log('rol desde curso-card', this.rol);
     });
->>>>>>> 829d8e423f166de48d83e2de42e7297b96a44ac8
   }
 }
