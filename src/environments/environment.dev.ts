@@ -40,5 +40,5 @@ export const environment = {
     setup: API.setup.dev,
     base: API.base.dev,
   },
-  shellApp: `${window.location.origin}`,
+  shellApp: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/auth`,
 };

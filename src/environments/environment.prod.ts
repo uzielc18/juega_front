@@ -19,5 +19,5 @@ export const environment = {
         auth: 'https://api.patmos.edu.pe',
         base: 'https://api.patmos.edu.pe',
     },
-    shellApp: `${window.location.origin}`,
+    shellApp: `https://upeu.patmos.edu.pe/auth`,
 };
