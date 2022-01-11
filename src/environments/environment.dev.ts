@@ -38,6 +38,7 @@ export const environment = {
   apiUrls: {
     auth: API.auth.dev,
     setup: API.setup.dev,
+    base: API.base.dev,
   },
   shellApp: `${window.location.origin}`,
 };

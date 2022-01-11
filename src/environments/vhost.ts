@@ -1,7 +1,6 @@
 export const API = {
   auth: {
     local: 'http://localhost:7050',
-    // dev: 'https://www.upeu.dev/lamb-academic/backs/auth',
     dev: 'https://www.upeu.dev/lamb-patmos/backs/patmos-upeu-base-back'
   },
   setup: {
