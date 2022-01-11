@@ -33,6 +33,8 @@ import { EvaluationsComponent } from './components/forms/evaluations/evaluations
 import { DocumentsComponent } from './components/forms/documents/documents.component';
 import { VidioComponent } from './components/forms/vidio/vidio.component';
 import { MenuElementsModule } from '../../shared/components/menu-elements/menu-elements.module';
+import { AdminGroupsComponent } from './components/modals/admin-groups/admin-groups.component';
+import { CarpetaComponent } from './components/forms/carpeta/carpeta.component';
 import { ElementComponent } from './components/element/element.component';
 import { GroupByModule } from '../../shared/pipes/group-by/group-by.module';
 
@@ -44,28 +46,39 @@ const COMPONENTS: any[] = [
   EvaluationsComponent,
   DocumentsComponent,
   VidioComponent,
-  MainComponent,
-  ChildrenComponent,
-  InfoComponent,
-  CursoComponent,
-  UnidadComponent,
-  SesionComponent,
-  CursosComponent,
-  HomeworkFormComponent,
-  CursoCardComponent,
-  CursoListComponent,
-  BreadcrumbComponent,
-  NavegacionComponent,
-  TrabajoComponent,
-  VideoConferenciaComponent,
-  AdjuntarDocsComponent,
+  CarpetaComponent,
+  AdminGroupsComponent,
   ElementComponent,
 ];
-const CONTROL_MESSAGGE: any = [ControlMessagesModule];
-const SERVICES: any = [GeneralService];
-
+const CONTROL_MESSAGGE: any = [
+  ControlMessagesModule,
+];
+const SERVICES: any = [
+  GeneralService,
+]
+const MODALS: any = [
+  AdminGroupsComponent
+];
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [
+    MainComponent,
+    ChildrenComponent,
+    InfoComponent,
+    CursoComponent,
+    UnidadComponent,
+    SesionComponent,
+    CursosComponent,
+    HomeworkFormComponent,
+    CursoCardComponent,
+    CursoListComponent,
+    BreadcrumbComponent,
+    NavegacionComponent,
+    TrabajoComponent,
+    VideoConferenciaComponent,
+    AdjuntarDocsComponent,
+    ...COMPONENTS,
+
+  ],
   exports: [CursosComponent],
   imports: [
     CommonModule,
@@ -79,5 +92,6 @@ const SERVICES: any = [GeneralService];
     ...CONTROL_MESSAGGE,
   ],
   providers: [...SERVICES],
+  entryComponents: [...MODALS]
 })
 export class CursosModule {}

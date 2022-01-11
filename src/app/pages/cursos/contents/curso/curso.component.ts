@@ -36,11 +36,11 @@ export class CursoComponent implements OnInit {
     const serviceName = END_POINTS.base_back.resourse + '/elements-course';
     const id = cursoId;
     this.generalService.nameId$(serviceName, id).subscribe((data) => {
-      console.log('unidadesdsdsdsdsdsds', data);
+      // console.log('unidadesdsdsdsdsdsds', data);
       this.curso = data.data;
-      console.log('soy el curso', this.curso);
+      // console.log('soy el curso', this.curso);
       this.unidades = this.curso.units;
-      console.log('unidades', this.unidades);
+      // console.log('unidades', this.unidades);
     });
   }
 }

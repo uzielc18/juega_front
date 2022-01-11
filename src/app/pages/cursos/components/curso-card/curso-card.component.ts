@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Cursos } from '../../interfaces/cursos.interface';
 import { CursosService } from '../../services/cursos.service';
 
@@ -7,7 +7,7 @@ import { CursosService } from '../../services/cursos.service';
   templateUrl: './curso-card.component.html',
   styleUrls: ['./curso-card.component.scss'],
 })
-export class CursoCardComponent {
+export class CursoCardComponent implements OnInit {
   @Input() cursosEstudiante: any = [];
   @Input() cursosDocente: any = [];
   @Input() cursos: Cursos[] = [];
