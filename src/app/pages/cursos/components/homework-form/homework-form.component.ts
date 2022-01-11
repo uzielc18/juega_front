@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { NbMenuItem, NbSidebarService } from '@nebular/theme';
-import { FormControl } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'app-form-homework',
@@ -8,34 +7,46 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./homework-form.component.scss'],
 })
 export class HomeworkFormComponent {
-  items: NbMenuItem[] = [
-    {
-      title: 'Trabajo',
-      icon: 'list-outline',
-    },
-    {
-      title: 'Video conferencia',
-      icon: 'video-outline',
-    },
-    {
-      title: 'Clases grabadas',
-      icon: 'folder-add-outline',
-    },
-    {
-      title: 'Foro',
-      icon: 'message-circle-outline',
-    },
-    {
-      title: 'Enlace externo',
-      icon: 'external-link-outline',
-    },
-    {
-      title: 'Video compartido',
-      icon: 'play-circle-outline',
-    },
-    {
-      title: 'Evaluación',
-      icon: 'checkmark-circle-outline',
-    },
-  ];
+  @Input() topics: any;
+  @Input() unidad: any;
+  @Input() curso: any;
+
+  @Input() item: any;
+  @Input() code: any;
+
+  loading: boolean = false;
+  element:any;
+  constructor(public activeModal: NbDialogRef<HomeworkFormComponent>) {
+
+  }
+  ngOnInit(): void {
+  }
+  closeModal() {
+    const valueClose = {
+      value_close: 'close',
+      value: '',
+    }
+    this.activeModal.close(valueClose);
+  }
+  saveValue($event: any){
+    if ($event.value_close === 'ok') {
+      this.activeModal.close($event);
+    } else {
+      this.closeModal();
+    }
+  }
+  selectedElement($element: any) {
+    this.element = $element;
+    // console.log($element, 'seleccionado');
+  }
+  loadingsMenu($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
+  }
+  loadingsForm($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
+  }
 }

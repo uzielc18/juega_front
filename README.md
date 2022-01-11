@@ -72,6 +72,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 #### 7. Estado de la tuberia:
 ##### 7.1 Si se realiza el merge a la rama develop , los cambios pasarán a desarrollo y podra visualizar:
 
+[![Build Status](https://jenkinserp.upeu.edu.pe/buildStatus/icon?job=PatmOS-E-learning%2Fpatmos-upeu-base-front%2Fdevelop)](https://jenkinserp.upeu.edu.pe/blue/organizations/jenkins/PatmOS-E-learning%2Fpatmos-upeu-base-front/activity?branch=develop)
+
 
 # ANEXO
 

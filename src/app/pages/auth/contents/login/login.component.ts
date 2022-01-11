@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import {
   NbAuthOAuth2Token,
@@ -21,6 +22,7 @@ export class LoginComponent implements OnDestroy {
 
   constructor(
     private authService: NbAuthService,
+    private http: HttpClient,
     @Inject(CORE_OPTIONS) protected options: CoreOptions
   ) {
     this.authService
@@ -42,13 +44,10 @@ export class LoginComponent implements OnDestroy {
   }
 
   loginLamb(): void {
-    console.log('entrando aqui login page ')
     this.authService
       .authenticate(this.options.strategyName)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((authResult: NbAuthResult) => {
-        console.log('pageeeeeeee', authResult)
-      });
+      .subscribe((authResult: NbAuthResult) => {});
   }
 
   ngOnDestroy(): void {

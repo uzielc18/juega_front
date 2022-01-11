@@ -26,10 +26,9 @@ export class Oauth2CallbackComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    // private _ngZone: NgZone,
     private tokenService: NbTokenService,
     private authService: NbAuthService,
-    // private router: Router,
+    private router: Router,
     private appValidateTokenService: AppValidateTokenService,
     @Inject(CORE_OPTIONS) protected options: CoreOptions
   ) {
@@ -42,14 +41,14 @@ export class Oauth2CallbackComponent implements OnDestroy {
           this.appValidateTokenService
             .validateLamb(response.token.access_token)
             .subscribe((data: any) => {
-              console.log('------>', data.data.token);
+              // console.log('------>', data.data.token);
               const token = new NbAuthSimpleToken(
                 data.data.token,
                 this.options.strategyName
               );
-              console.log(token);
+              // console.log(token);
               this.tokenService.set(token).subscribe(() => {
-                console.log('ok');
+                // console.log('ok');
                 if (authResult.isSuccess() && authResult.getRedirect()) {
                   window.location.href = authResult.getRedirect();
                 }

@@ -1,0 +1,108 @@
+<form [formGroup]="formHeader">
+  <div>
+    <label class="label">Url del vídeo (Presione el botón, después de añadir el link)</label>
+    <nb-form-field>
+    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una url" (keyup)="valueLink()"
+    [status]="(formHeader.hasError('required', ['url_externo'])) === true ? 'primary' : 'basic'" formControlName="url_externo"/>
+    <button nbSuffix nbButton status="primary" size="small" [disabled]="!formHeader.value.url_externo" (click)="procesar()">
+      <nb-icon  icon="link-2-outline"  pack="eva"></nb-icon></button>
+
+    </nb-form-field>
+    <control-messages [control]="formHeader.get('url_externo')"></control-messages>
+  </div>
+  <div>
+    <label class="label">Orígen</label>
+    <div class="d-flex text-center">
+        <div *ngFor="let item of listIcons" >
+          <button nbButton  [status]="item.checked === false ? 'basic' : 'primary'" [ghost]="item.checked === false ? true : false" [disabled]="true"
+          [ngStyle]="{'border-color': item.checked === true ? 'brown' : ''}"
+          size="small" (click)="valueButtom(item)">
+            <img [src]="item.link" height="20px" alt="">&nbsp;{{item.name}}
+          </button>&nbsp;
+        </div>
+    </div>
+    <control-messages [control]="formHeader.get('tamano_peso')"></control-messages>
+  </div>
+  <div>
+    <label class="label">Título</label>
+    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa un título"
+    [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="titulo"/>
+    <control-messages [control]="formHeader.get('titulo')"></control-messages>
+  </div>
+  <div style="padding-top: 4px;">
+    <label class="label">Descripción</label>
+    <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una descripción"
+    [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
+    <control-messages [control]="formHeader.get('descripcion')"></control-messages>
+  </div>
+  <div style="padding-top: 4px;">
+    <label class="label">Adjuntar documento</label>
+    <div>
+      <lamb-prepare-file-pro
+        [paramsInfo]="{
+          id: topics?.id_carga_curso_docente,
+          directory: directorio,
+          type: 'put',
+          tabla: 'elements',
+          tipo: 'DOCUMENTO_AYUDA'}"
+        [numFiles]="6"
+        (filterValueChange)="valueFile($event)">
+      </lamb-prepare-file-pro>
+    </div>
+  </div>
+  <div style="padding-top: 4px;">
+    <label class="label">Fecha y hora de inicio</label>
+    <div class="d-flex">
+      <nb-form-field  class="date-input">
+      <input nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="fechaInicio"
+      [status]="(formHeader.hasError('required', ['fecha_inicio'])) === true ? 'primary' : 'basic'" formControlName="fecha_inicio"/>
+      <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+      <nb-datepicker #fechaInicio format="dd/MM/yyyy"></nb-datepicker>
+      <control-messages [control]="formHeader.get('fecha_inicio')"></control-messages>
+      </nb-form-field>
+      <nb-form-field class="hour-input ms-auto">
+      <input nbInput placeholder="Hora Inicio" [nbTimepicker]="horaInicio" type="text"
+      [status]="(formHeader.hasError('required', ['hora_inicio'])) === true ? 'primary' : 'basic'" formControlName="hora_inicio"/>
+      <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
+      <nb-timepicker #horaInicio></nb-timepicker>
+      </nb-form-field>
+    </div>
+  </div>
+  <div style="padding-top: 4px;">
+    <label class="label">Fecha y hora de término</label>
+    <div class="d-flex">
+      <nb-form-field  class="date-input">
+      <input nbInput placeholder="Fecha Termino" fullWidth [nbDatepicker]="fechaTermino"
+      [status]="(formHeader.hasError('required', ['fecha_fin'])) === true ? 'primary' : 'basic'" formControlName="fecha_fin"/>
+      <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+      <nb-datepicker #fechaTermino format="dd/MM/yyyy"></nb-datepicker>
+      <control-messages [control]="formHeader.get('fecha_fin')"></control-messages>
+      </nb-form-field>
+      <nb-form-field class="hour-input ms-auto">
+      <input nbInput placeholder="Hora Termino" [nbTimepicker]="horaFin" type="text"
+      [status]="(formHeader.hasError('required', ['hora_fin'])) === true ? 'primary' : 'basic'" formControlName="hora_fin"/>
+      <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
+      <nb-timepicker #horaFin></nb-timepicker>
+      </nb-form-field>
+    </div>
+  </div>
+  <!-- <iframe width="560" height="315" src="//www.youtube.com/embed/zbYf5_S7oJo" frameborder="0" allowfullscreen></iframe> -->
+  <div style="padding-top: 4px;">
+    <label class="label">
+      <nb-icon *ngIf="options === 'N'" style="cursor: pointer; font-size: 25px;" status="primary" icon="arrow-ios-downward-outline" (click)="moreOptions('N')"></nb-icon>
+      <nb-icon *ngIf="options === 'S'" style="cursor: pointer; font-size: 25px;" status="primary" icon="arrow-ios-upward-outline" (click)="moreOptions('S')"></nb-icon>
+      {{options === 'N' ? 'Mostrar' : 'Ocultar'}} opciones avanzadas</label>
+
+      <div *ngIf="options === 'S'">
+
+        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)"></app-more-options>
+      </div>
+  </div>
+  <br>
+  <div class="buttons d-flex justify-content-end">
+    <button nbButton outline status="primary" class="me-2" (click)="closeModal()">
+      Cancelar
+    </button>
+    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">Añadir actividad</button>
+  </div>
+</form>

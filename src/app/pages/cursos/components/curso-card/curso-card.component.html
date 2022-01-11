@@ -1,74 +1,92 @@
-<!-- <nb-card routerLink="course">
-  <nb-card-header>
-    <div class="row">
-      <div class="col mt-0 p-0" style="height: 150px; overflow: hidden">
-        <img
-          src="../../../../../assets/books.jpg"
-          class="img-fluid"
-          alt=""
-          style="object-fit: fill"
-        />
-      </div>
-    </div>
-  </nb-card-header>
-  <nb-card-body>
-    <h6>Capacidades Comunicativas I</h6>
-    <p>C202101-0001 - Jorge Guiterrez</p>
-    <small>Ciclo 1 - Ingeniería de sistemas</small>
-  </nb-card-body>
-  <nb-card-footer>
-    <ul class="list-group list-group-horizontal">
-      <li class="list-group-item">
-        <nb-icon class="text-muted" icon="people-outline"></nb-icon> 1
-      </li>
-      <li class="list-group-item">
-        <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
-        5
-      </li>
-      <li class="list-group-item">
-        <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon> 2
-      </li>
-      <li class="list-group-item">
-        <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
-        4
-      </li>
-      <li class="list-group-item">
-        <nb-icon class="text-muted" icon="video-outline"></nb-icon> 6
-      </li>
-    </ul>
-  </nb-card-footer>
-</nb-card> -->
-
-<nb-card routerLink="../asignaturas/:curso">
-  <div>
-    <img src="../../../../../assets/books.jpg" class="card-img-top" alt="...">
+<ng-container *ngIf="rol === 'Docente'">
+  <nb-card
+    *ngFor="let curso of cursosDocente; let i = index"
+    [routerLink]="['../asignaturas', curso.id_carga_curso_docente]"
+  >
+    <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
     <div class="card-body">
-      <h6>Capacidades Comunicativas I</h6>
-      <p>C202101-0001 - Jorge Guiterrez</p>
-      <small>Ciclo 1 - Ingeniería de sistemas</small>
+      <h6 class="course-name mb-0">{{ curso.nombre }}</h6>
+      <p class="course-teacher mb-0">{{ curso.persons_teacher_nombre }}</p>
+      <p class="course-description mb-0">
+        Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}
+      </p>
     </div>
     <div>
-      <nb-progress-bar size="tiny" [value]="40" status="warning"></nb-progress-bar>
+      <nb-progress-bar
+        size="tiny"
+        [value]="40"
+        status="warning"
+      ></nb-progress-bar>
     </div>
-    <ul class="list-group list-group-horizontal">
+    <ul
+      class="list-group list-group-horizontal d-flex justify-content-between px-2"
+    >
       <li class="list-group-item">
-        <nb-icon class="text-muted" icon="people-outline"></nb-icon> 1
+        <nb-icon class="text-muted" icon="people-outline"></nb-icon>
+        <p>1</p>
       </li>
       <li class="list-group-item">
         <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
-        5
+        <p>1</p>
       </li>
       <li class="list-group-item">
-        <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon> 2
+        <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
+        <p>1</p>
       </li>
       <li class="list-group-item">
         <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
-        4
+        <p>1</p>
       </li>
       <li class="list-group-item">
-        <nb-icon class="text-muted" icon="video-outline"></nb-icon> 6
+        <nb-icon class="text-muted" icon="video-outline"></nb-icon>
+        <p>1</p>
       </li>
     </ul>
-  </div>
-</nb-card>
-
+  </nb-card>
+</ng-container>
+<ng-container *ngIf="rol === 'Estudiante'">
+  <nb-card
+    *ngFor="let curso of cursosEstudiante; let i = index"
+    [routerLink]="['../asignaturas', curso.id_carga_curso_docente]"
+  >
+    <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
+    <div class="card-body">
+      <h6 class="course-name mb-0">{{ curso.course_nombre }}</h6>
+      <p class="course-teacher mb-0">{{ curso.person_teacher_nombre }}</p>
+      <p class="course-description mb-0">
+        Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}
+      </p>
+    </div>
+    <div>
+      <nb-progress-bar
+        size="tiny"
+        [value]="40"
+        status="warning"
+      ></nb-progress-bar>
+    </div>
+    <ul
+      class="list-group list-group-horizontal d-flex justify-content-between px-2"
+    >
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="people-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
+        <p>1</p>
+      </li>
+      <li class="list-group-item">
+        <nb-icon class="text-muted" icon="video-outline"></nb-icon>
+        <p>1</p>
+      </li>
+    </ul>
+  </nb-card>
+</ng-container>

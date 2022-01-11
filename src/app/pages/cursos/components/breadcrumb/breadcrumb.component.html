@@ -9,9 +9,24 @@
     ></app-ng-dynamic-breadcrumb>
   </div>
   <div class="ms-auto d-none d-xxl-block">
-    <nb-select [(selected)]="selectedItem" status="primary">
-      <nb-option value="0">Semestre 2021 - 1</nb-option>
-      <nb-option value="1">Semestre 2021 - 2</nb-option>
-    </nb-select>
+    <form [formGroup]="form">
+      <nb-select
+        *ngIf="roles.length > 0"
+        status="primary"
+        class="me-2"
+        formControlName="rol"
+      >
+        <nb-option *ngFor="let rol of roles; let i = index" [value]="rol.name"
+          >Cursos - {{ rol.name }}</nb-option
+        >
+      </nb-select>
+      <nb-select status="primary" formControlName="semestre">
+        <nb-option
+          *ngFor="let semestre of semestres; let i = index"
+          [value]="semestre.id"
+          >Semestre - {{ semestre.nombre }}</nb-option
+        >
+      </nb-select>
+    </form>
   </div>
 </div>
