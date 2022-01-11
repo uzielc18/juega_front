@@ -176,7 +176,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                 this.tokenService.authorizeGoogle();
               }
             });
-          window.location.href = '/auth';
+          window.location.href = '/lamb-patmos/fronts/patmos-upeu-base-front/auth';
         }
       });
   }
