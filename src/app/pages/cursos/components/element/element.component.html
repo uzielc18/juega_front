@@ -6,7 +6,12 @@
     status="basic"
     position="top right"
   ></nb-badge>
-  <nb-icon class="me-2 mt-3" [icon]="element.value[0].type_element.icono">
+
+  <nb-icon
+    class="me-2 mt-3"
+    (click)="selectedElement(element.value[0])"
+    [icon]="element.value[0].type_element.icono"
+  >
   </nb-icon>
 </div>
 <!-- <p>{{ element.value.length }}</p> -->

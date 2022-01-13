@@ -37,6 +37,8 @@ import { AdminGroupsComponent } from './components/modals/admin-groups/admin-gro
 import { CarpetaComponent } from './components/forms/carpeta/carpeta.component';
 import { ElementComponent } from './components/element/element.component';
 import { GroupByModule } from '../../shared/pipes/group-by/group-by.module';
+import { ElementListComponent } from './components/element-list/element-list.component';
+import { ElementItemComponent } from './components/element-item/element-item.component';
 
 const COMPONENTS: any[] = [
   WorksComponent,
@@ -77,6 +79,8 @@ const MODALS: any = [
     VideoConferenciaComponent,
     AdjuntarDocsComponent,
     ...COMPONENTS,
+    ElementListComponent,
+    ElementItemComponent,
 
   ],
   exports: [CursosComponent],

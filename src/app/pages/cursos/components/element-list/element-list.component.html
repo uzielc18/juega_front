@@ -1,0 +1,7 @@
+<!-- <app-element [element]="element"></app-element> -->
+<!-- <app-element-list></app-element-list> -->
+<nb-card>
+  <nb-card-body *ngFor="let element of uniqueElements | keyvalue">
+    <app-element-item [element]="element" [elem]="elem"></app-element-item>
+  </nb-card-body>
+</nb-card>
