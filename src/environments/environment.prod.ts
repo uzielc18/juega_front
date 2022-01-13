@@ -19,5 +19,5 @@ export const environment = {
         auth: 'https://api.patmos.edu.pe',
         base: 'https://api.patmos.edu.pe',
     },
-    shellApp: `https://upeu.patmos.edu.pe/auth`,
+    shellApp: `https://lamb-elearning.upeu.edu.pe/auth`,
 };
