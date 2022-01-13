@@ -43,6 +43,13 @@ import { environment } from '../../../environments/environment';
             </nb-action>
           </nb-actions>
           <nb-actions>
+          <!-- <nb-action >
+              <nb-select placeholder="Idioma"  size="small" [selected]="'ES'" formControlName="id_trabajo">
+                          <nb-option value="EN">Ingles</nb-option>
+                          <nb-option value="ES">Español</nb-option>
+              </nb-select>
+
+            </nb-action> -->
             <nb-action [nbContextMenu]="userMenu">
               <nb-user
                 class="header-user"
@@ -176,7 +183,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                 this.tokenService.authorizeGoogle();
               }
             });
-          window.location.href = '/lamb-patmos/fronts/patmos-upeu-base-front/auth';
+            window.location.href = environment.shellApp;
+          // window.location.href = '/lamb-patmos/fronts/patmos-upeu-base-front/auth';
         }
       });
   }

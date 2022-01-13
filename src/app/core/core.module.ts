@@ -25,6 +25,7 @@ import {
   NbIconModule,
   NbLayoutModule,
   NbMenuModule,
+  NbSelectModule,
   NbSidebarModule,
   NbSpinnerModule,
   NbThemeModule,
@@ -78,6 +79,7 @@ registerLocaleData(localePe);
     NbToggleModule,
     NbContextMenuModule,
     RouterModule.forChild(routesConfig),
+    NbSelectModule,
   ],
   // exports: [RouterModule],
   providers: [

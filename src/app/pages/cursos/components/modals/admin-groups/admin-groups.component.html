@@ -35,7 +35,13 @@
                   <br>
                   <div class="d-flex align-items-center justify-content-between">
                     <div></div>
-                      <button nbButton status="primary" size="small" [disabled]="formGroupManual.invalid" (click)="save()"><nb-icon icon="plus"></nb-icon>Añadir</button>
+                    <div>
+                      <button *ngIf="formGroupManual.value.opc === 'U'" nbButton status="basic" size="small" (click)="cancelSave()">Cancelar</button>&nbsp;
+                      <button nbButton status="primary" size="small" [disabled]="formGroupManual.invalid" (click)="saveGM()">
+                        <nb-icon [icon]="formGroupManual.value.opc === 'NEWS' ? 'plus' : 'edit-2-outline'"></nb-icon>
+                        {{formGroupManual.value.opc === 'NEWS' ? 'Añadir' : 'Editar'}}
+                      </button>
+                    </div>
                   </div>
                 </form>
                 </nb-tab>
@@ -52,7 +58,7 @@
                       </div>
                       <div class="col-md-3">
                         <label class="label">Aleatorio</label>
-                        <nb-toggle status="primary" formControlName="aleatorio"></nb-toggle>
+                        <nb-toggle status="primary" formControlName="aleatorio" (change)="changeAleatorio()"></nb-toggle>
                       </div>
                       <div class="col-md-3">
                         <label class="label">Procesar</label>
@@ -85,7 +91,8 @@
                     <br>
                     <div class="d-flex align-items-center justify-content-between">
                       <div></div>
-                        <button nbButton status="primary" size="small" [disabled]="arregloDeArreglos?.length <= 0" (click)="save()"><nb-icon icon="plus"></nb-icon>Añadir</button>
+                        <button nbButton status="primary" size="small" [disabled]="arregloDeArreglos?.length <= 0"
+                        (click)="saveGenerate()"><nb-icon icon="plus"></nb-icon>Añadir</button>
                     </div>
                   </form>
                 </nb-tab>
@@ -93,18 +100,18 @@
                   <form [formGroup]="formImportar">
                     <strong>Importar grupos</strong><br>
                     <div>
-                      <label class="label">Nombre del grupo</label>
+                      <label class="label">Selecciona el trabajo referencial para importar sus grupos</label>
                        <nb-select placeholder="Seleccionar trabajo"  fullWidth size="small"
-                        [status]="(formImportar.hasError('required', ['id_trabajo'])) === true ? 'primary' : 'basic'" formControlName="id_trabajo">
-                          <nb-option value="1">Trabajo 1</nb-option>
-                          <nb-option value="2">Trabajo 2</nb-option>
+                        [status]="(formImportar.hasError('required', ['selected_element_id'])) === true ? 'primary' : 'basic'" formControlName="selected_element_id">
+                          <nb-option *ngFor="let item of listTrabajos" [value]="item.id">{{item.titulo}}</nb-option>
                         </nb-select>
-                      <control-messages [control]="formImportar.get('id_trabajo')"></control-messages>
+                      <control-messages [control]="formImportar.get('selected_element_id')"></control-messages>
                     </div>
                     <br>
                     <div class="d-flex align-items-center justify-content-between">
                       <div></div>
-                        <button nbButton status="primary" size="small" [disabled]="formImportar.invalid" (click)="save()"><nb-icon icon="plus"></nb-icon>Importar</button>
+                        <button nbButton status="primary" size="small" [disabled]="formImportar.invalid"
+                        (click)="saveImportar()"><nb-icon icon="plus"></nb-icon>Importar</button>
                     </div>
                   </form>
                 </nb-tab>
@@ -130,16 +137,28 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="font-size: 10px;">
-                    <td>1</td>
-                    <td>Grupo 1</td>
-                    <td>4</td>
-                    <td class="text-center" style="width: 1px;"><nb-icon icon="person-add-outline" size="tiny" status="success"></nb-icon></td>
-                    <td class="text-center" style="width: 1px;"><nb-icon icon="edit-2-outline" size="tiny" status="info"></nb-icon></td>
-                    <td class="text-center" style="width: 1px;"><nb-icon icon="trash" size="tiny" status="danger"></nb-icon></td>
+                  <tr *ngFor="let item of listGroups; let i = index" [ngStyle]="{'background': item?.color, 'font-size': '10px'}">
+                    <td>{{i+1}}</td>
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.group_members_count}}</td>
+                    <td class="text-center" style="width: 1px; cursor: pointer; font-size: 10px;">
+                      <nb-icon icon="person-add-outline" size="tiny" status="success"
+                      nbTooltip="Ver" nbTooltipPlacement="top" nbTooltipStatus="success"></nb-icon>
+                    </td>
+                    <td class="text-center" style="width: 1px; cursor: pointer; font-size: 10px;">
+                      <nb-icon icon="edit-2-outline" size="tiny" status="info" (click)="updateGruop(item)"
+                      nbTooltip="Editar" nbTooltipPlacement="top" nbTooltipStatus="info"></nb-icon>
+                    </td>
+                    <td *ngIf="!item?.color" class="text-center" style="width: 1px; cursor: pointer; font-size: 10px;">
+                      <nb-icon  icon="trash" size="tiny" status="danger" (click)="deleteGroup(item)"
+                      nbTooltip="Eliminar" nbTooltipPlacement="top" nbTooltipStatus="danger"></nb-icon>
+                    </td>
                   </tr>
                 </tbody>
               </table>
+              <div class="text-center">
+                <nb-alert *ngIf="listGroups.length<=0" outline="basic" style="font-size: 10px;">No se encontraron grupos.</nb-alert>
+              </div>
             </div>
           </nb-card-body>
         </nb-card>
@@ -244,7 +263,7 @@
                 <td style="font-weight: bold;">Grupo {{i+1}}</td>
               </tr>
               <tr *ngFor="let ite of item; let ind = index">
-                 <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ite?.nombre}}</td>
+                 <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ite?.apellido_paterno + ' ' + ite?.apellido_materno + ' ' + ite?.nombres}}</td>
               </tr>
             </tbody>
           </table>

@@ -23,5 +23,5 @@ export const environment = {
     setup: API.setup.dev,
     base: API.base.dev,
   },
-  shellApp: `${window.location.origin}`,
+  shellApp: `${window.location.origin}/auth`,
 };

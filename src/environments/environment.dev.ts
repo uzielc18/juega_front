@@ -22,7 +22,7 @@ export const environment = {
   module_id: 1050,
   authStrategy: {
     name: 'lamb',
-    clientId: 'CCoDFWUHL6OJ4sus9eEIUh6Vk62lNCAnPGY3FXgg',
+    clientId: 'SDR74A0tHgbCgqOctjdC36eMaHqs4pE6II37uzQW',
     baseEndpoint: 'https://oauth.upeu.edu.pe',
     redirectUri: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/oauth2/callback`,
     success: '/lamb-patmos/fronts/patmos-upeu-base-front/pages/dashboard',
@@ -40,5 +40,5 @@ export const environment = {
     setup: API.setup.dev,
     base: API.base.dev,
   },
-  shellApp: `${window.location.origin}`,
+  shellApp: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/auth`,
 };

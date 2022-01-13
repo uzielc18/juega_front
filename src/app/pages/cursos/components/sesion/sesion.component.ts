@@ -17,7 +17,7 @@ export class SesionComponent implements OnInit {
   constructor(private dialogService: NbDialogService) {}
 
   ngOnInit(): void {
-    // console.log('elements', this.sesion.elements);
+    console.log('coursessss', this.sesion);
     this.groupBy();
   }
 
@@ -36,11 +36,11 @@ export class SesionComponent implements OnInit {
     }).onClose.subscribe(result => {
       if (result.value_close === 'ok') {
         if (result.response && result.response.id && result.value.grupal === '1') {
-          // console.log(result, 'que tenemos');
+          console.log(result, 'que tenemos');
           // this.openGroups(result.response);
           // const response = {
-          //   id: 1,
-          //   course_id: 1,
+          //   id: 12, // id del elemento.
+          //   course_id: this.curso.id,
           // }
           // this.openGroups(response);
       }
