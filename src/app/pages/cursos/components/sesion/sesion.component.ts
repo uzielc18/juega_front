@@ -17,7 +17,7 @@ export class SesionComponent implements OnInit {
   constructor(private dialogService: NbDialogService) {}
 
   ngOnInit(): void {
-    console.log('coursessss', this.sesion);
+    // console.log('coursessss', this.sesion);
     this.groupBy();
   }
 

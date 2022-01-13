@@ -40,5 +40,6 @@ export class ElementComponent implements OnInit {
 
   selectedElement(element: any) {
     this.cursosService.emitElement(element);
+    console.log(element)
   }
 }
