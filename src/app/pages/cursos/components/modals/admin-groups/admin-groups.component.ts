@@ -2,6 +2,7 @@ import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-groups',
@@ -17,44 +18,7 @@ export class AdminGroupsComponent implements OnInit {
   @Input() curso:any;
   @Input() response: any;
   loading: boolean = false;
-  listMiembros:any = [
-    {
-      nombre: 'Crsitian Huarcaya Quilla',
-      id: 1,
-    },
-    {
-      nombre: 'Carlos Calderón Huarcaya',
-      id: 2,
-    },
-    {
-      nombre: 'Juan Peréz Huarcaya',
-      id: 3,
-    },
-    {
-      nombre: 'Felipe peso Lucas',
-      id: 4,
-    },
-    {
-      nombre: 'Sebastian rodriguez jaimes Acaya',
-      id: 5,
-    },
-    {
-      nombre: 'Gonzalo Higuain Huarcaya',
-      id: 6,
-    },
-    {
-      nombre: 'Edmundo Caracagno Huarcaya',
-      id: 7,
-    },
-    {
-      nombre: 'Eusebio Goñi Huarcaya',
-      id: 8,
-    },
-    {
-      nombre: 'Teofilo Cubillas Saavedra Huarcaya',
-      id: 9,
-    },
-  ];
+  listMiembros:any = [];
   arregloDeArreglos:any = [];
   datosGrup: any = {
     g_completos: 0,
@@ -118,20 +82,22 @@ export class AdminGroupsComponent implements OnInit {
   @ViewChild('item1') tabGM:any;
   @ViewChild('item2') tabG:any;
   @ViewChild('item3') tabI:any;
+  listTrabajos:any = [];
   constructor(public activeModal: NbDialogRef<AdminGroupsComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService,
     private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
-    console.log(this.curso);
-
     this.fieldGrupManual();
     this.fieldGenerar();
     this.fieldImportar();
+    this.getListGroups();
     this.partirArrayPending();
   }
   private fieldGrupManual() {
     const controls = {
       nombre_grupo: ['', [Validators.required]],
+      opc: ['NEWS'],
+      id_group: [''],
     };
     this.formGroupManual = this.formBuilder.group(controls);
   }
@@ -144,16 +110,26 @@ export class AdminGroupsComponent implements OnInit {
   }
   private fieldImportar() {
     const controls = {
-      id_trabajo: ['', [Validators.required]],
+      selected_element_id: ['', [Validators.required]],
     };
     this.formImportar = this.formBuilder.group(controls);
+  }
+  getListGroups() {
+    const serviceName = 'list-group';
+    if (this.response.id) { //element id
+      this.loading = true;
+      this.generalServi.nameId$(serviceName, this.response.id).subscribe((res:any) => {
+        this.listGroups = res.data || [];
+        if (this.listGroups.length>0) {
+          this.setTab();
+        }
+      }, () => { this.loading =false; }, () => { this.loading =false; });
+    }
   }
   closeModal() {
       this.activeModal.close('close');
   }
   selectTabChange($event:any) {
-    console.log($event);
-
     this.type = '';
     const idTab = $event.tabId;
     this.refresForms();
@@ -164,13 +140,35 @@ export class AdminGroupsComponent implements OnInit {
         break;
       case 'G': //Generar
       this.type = idTab;
+      this.getListMember();
         break;
       case 'I': //Importar
       this.type = idTab;
+      this.getListTrabs();
         break;
       default:
         this.type = '';
         break;
+    }
+  }
+  getListMember() {
+    this.listMiembros = [];
+    const serviceName = 'list-sin-group';
+    if (this.response.id) { //element id
+      this.loading = true;
+      this.generalServi.nameIdAndId$(serviceName, this.response.course_id, this.response.id).subscribe((res:any) => {
+        this.listMiembros = res.data || [];
+      }, () => { this.loading =false; }, () => { this.loading =false; });
+    }
+  }
+  getListTrabs() {
+    this.listTrabajos = [];
+    const serviceName = 'importar-group';
+    if (this.response.course_id) { //element id
+      this.loading = true;
+      this.generalServi.nameId$(serviceName, this.response.course_id).subscribe((res:any) => {
+        this.listTrabajos = res.data || [];
+      }, () => { this.loading =false; }, () => { this.loading =false; });
     }
   }
   refresForms() {
@@ -239,6 +237,14 @@ export class AdminGroupsComponent implements OnInit {
   open(dialog: TemplateRef<any>) {
     this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
   }
+  changeAleatorio() {
+    this.vaciarDatosGroup();
+    this.arregloDeArreglos = [];
+    const forms = this.formGenerar.value;
+    if (!forms.aleatorio) {
+      this.getListMember();
+    }
+  }
 
   partirArrayPending() {
      this.partidos.array_A = [];
@@ -261,44 +267,165 @@ export class AdminGroupsComponent implements OnInit {
     this.type = 'GM';
   }
 
-  save() {
-    this.listGroups.push({nombre:'ssss'});
-    this.setTab();
-    let serviceName = '';
-    let params:any = '';
-
-    if (this.type === 'GM') {
-      serviceName = '/groups';
-      params = {
-        nombre: this.formGroupManual.value.nombre_grupo,
+  saveGM() {
+    const serviceName = 'groups';
+    const forms = this.formGroupManual.value;
+    const params = {
+        nombre: forms.nombre_grupo,
         element_id: this.response.id,
         course_id: this.response.course_id,
       }
-    }
-    if (this.type === 'G') {
-      serviceName = '/generar-groups';
-      params = {
-        array: this.arregloDeArreglos,
-        element_id: this.response.id,
-        course_id: this.response.course_id,
+      if (params && params.nombre && params.course_id && params.element_id) {
+        this.loading = true;
+        if (forms.opc === 'NEWS') {
+          this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+            if (r.success) {
+              this.getListGroups();
+              this.fieldGrupManual();
+            }
+          }, () => { this.loading =false; }, () => { this.loading =false; });
+        } else {
+          this.generalServi.updateNameIdData$(serviceName, forms.id_group, params).subscribe(r => {
+            if (r.success) {
+              this.getListGroups();
+              this.fieldGrupManual();
+            }
+          }, () => { this.loading =false; }, () => { this.loading =false; });
+        }
       }
-    }
-    if (this.type === 'I') {
-      serviceName = '/importar-groups';
-      params = {
-        id_trabajo: this.formImportar.value.id_trabajo,
-        element_id: this.response.id,
-        course_id: this.response.course_id,
-      }
-    }
-      // this.loading = true;
-      // this.generalServi.addNameData$(serviceName, params).subscribe(r => {
-      //   if (r.success) {
-      //   }
-      // }, () => { this.loading =false; }, () => { this.loading =false; });
-    console.log(params);
-
   }
+  updateGruop(item:any) {
+    this.recorrerGroup();
+    item.color = '#F9DDD9';
+    this.formGroupManual.patchValue({
+      opc: 'U',
+      id_group: item.id,
+      nombre_grupo: item.nombre,
+    });
+  }
+  cancelSave() {
+    this.fieldGrupManual();
+    this.recorrerGroup();
+  }
+  recorrerGroup() {
+    this.listGroups.map((r:any) => {
+      r.color = '';
+    });
+  }
+  deleteGroup(item:any) {
+    const serviceName = 'groups';
+    if (item.id) {
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿ Desea eliminar ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+          if (result.isConfirmed) {
+            this.loading = true;
+            this.generalServi.deleteNameId$(serviceName, item.id).subscribe(r => {
+              if (r.success) {
+                this.getListGroups();
+              }
+            }, () => { this.loading =false; }, () => { this.loading =false; });
+          }
+        });
+      }
+  }
+
+  saveGenerate() {
+    const serviceName = 'save-list-group-members';
+    let arrays:any = [];
+    let i = 1;
+    this.arregloDeArreglos.map((res:any) => {
+     const numG = i++;
+      const params = {
+          nombre: 'Grupo' + ' ' + numG,
+          element_id: this.response.id,
+          course_id: this.response.course_id,
+          members: res,
+        }
+      arrays.push(params);
+    });
+    // console.log(arrays, 'array', this.arregloDeArreglos, 'arrardearray');
+      if (arrays.length>0) {
+        this.loading = true;
+
+          this.generalServi.addNameData$(serviceName, arrays).subscribe(r => {
+            if (r.success) {
+              this.getListGroups();
+              this.fieldGenerar();
+              this.arregloDeArreglos = [];
+              this.vaciarDatosGroup();
+            }
+          }, () => { this.loading =false; }, () => { this.loading =false; });
+      }
+  }
+  saveImportar() {
+    const serviceName = 'importar-save';
+    const forms = this.formImportar.value;
+    const params = {
+        selected_element_id: forms.selected_element_id,
+        element_id: this.response.id,
+        course_id: this.response.course_id,
+      }
+      if (params && params.selected_element_id && params.course_id && params.element_id) {
+        this.loading = true;
+
+          this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+            if (r.success) {
+              this.getListGroups();
+              this.fieldImportar();
+            }
+          }, () => { this.loading =false; }, () => { this.loading =false; });
+      }
+  }
+  // saveGM() {
+  //   this.listGroups.push({nombre:'ssss'});
+  //   this.setTab();
+  //   let serviceName = '';
+  //   let params:any = '';
+
+  //   if (this.type === 'GM') {
+  //     serviceName = '/groups';
+  //     params = {
+  //       nombre: this.formGroupManual.value.nombre_grupo,
+  //       element_id: this.response.id,
+  //       course_id: this.response.course_id,
+  //     }
+  //   }
+  //   if (this.type === 'G') {
+  //     serviceName = '/generar-groups';
+  //     params = {
+  //       array: this.arregloDeArreglos,
+  //       element_id: this.response.id,
+  //       course_id: this.response.course_id,
+  //     }
+  //   }
+  //   if (this.type === 'I') {
+  //     serviceName = '/importar-groups';
+  //     params = {
+  //       id_trabajo: this.formImportar.value.id_trabajo,
+  //       element_id: this.response.id,
+  //       course_id: this.response.course_id,
+  //     }
+  //   }
+  //     // this.loading = true;
+  //     // this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+  //     //   if (r.success) {
+  //     //   }
+  //     // }, () => { this.loading =false; }, () => { this.loading =false; });
+  //   console.log(params);
+
+  // }
   anadirPending() {
     let array:any = [];
     if (this.partidos.array_A.length>0) {

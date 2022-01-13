@@ -35,5 +35,8 @@ export class GeneralService extends EntityDataService<IResponse> {
     }
     public updateNameId$(serviceName: any, id: any): Observable<IResponse> {
       return this.httpClient.put<IResponse>(`${this.endPoint}/${serviceName}/${id}`, {});
-  }
+    }
+    public nameIdAndId$(serviceName: any, id: any, id2:any): Observable<IResponse> {
+      return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}/${id2}`);
+    }
 }
