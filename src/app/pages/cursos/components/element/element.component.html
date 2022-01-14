@@ -1,10 +1,12 @@
-<!-- <div *ngFor="let el of element.value"> -->
-<div style="position: relative">
+<div
+  style="position: relative"
+
+>
   <nb-badge
-    text="{{ element.count }}"
+    text="{{ element.realizo }}-{{ element.count }}"
     class="rounded-circle"
     status="basic"
-    position="top right"
+    position="top start"
   ></nb-badge>
 
   <nb-icon
@@ -14,5 +16,3 @@
   >
   </nb-icon>
 </div>
-<!-- <p>{{ element.value.length }}</p> -->
-<!-- </div> -->
