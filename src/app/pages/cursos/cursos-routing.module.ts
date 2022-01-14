@@ -7,7 +7,7 @@ import { MainComponent } from './contents/main/main.component';
 import { UnidadComponent } from './components/unidad/unidad.component';
 import { SesionComponent } from './components/sesion/sesion.component';
 import { TrabajoComponent } from './contents/element-view/trabajo/trabajo.component';
-import { VideoConferenciaComponent } from './contents/video-conferencia/video-conferencia.component';
+import { VideoConferenciaComponent } from './contents/element-view/video-conferencia/video-conferencia.component';
 
 const routes: Routes = [
   {

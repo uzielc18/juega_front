@@ -32,7 +32,7 @@
         <input nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="fechaInicio"
         [status]="(formHeader.hasError('required', ['fecha_inicio'])) === true ? 'primary' : 'basic'" formControlName="fecha_inicio"/>
         <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
-        <nb-datepicker #fechaInicio format="dd/MM/yyyy"></nb-datepicker>
+        <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min"></nb-datepicker>
         <control-messages [control]="formHeader.get('fecha_inicio')"></control-messages>
         </nb-form-field>
       </div>

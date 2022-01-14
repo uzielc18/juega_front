@@ -11,15 +11,19 @@ import { tap, throwIfEmpty } from 'rxjs/operators';
 export class CursosService {
   private _base_url = `${this.options.apiAuth}/api`;
 
+  public elementSelected$!: EventEmitter<any>;
+
   private emitRoleSource = new Subject<any>();
-  private emitElementSource = new Subject<any>();
+  // private emitElementSource = new Subject<any>();
 
   data$ = new EventEmitter<any>();
 
   constructor(
     private httpClient: HttpClient,
     @Inject(CORE_OPTIONS) protected options: CoreOptions
-  ) {}
+  ) {
+    this.elementSelected$ = new EventEmitter();
+  }
 
   getCursos(): Observable<Cursos[]> {
     return this.httpClient
@@ -32,13 +36,17 @@ export class CursosService {
   }
 
   roleEmitted$ = this.emitRoleSource.asObservable();
-  elementEmitted$ = this.emitElementSource.asObservable();
+  // elementEmitted$ = this.emitElementSource.asObservable();
 
   emitRol(rol: any) {
     this.emitRoleSource.next(rol);
   }
 
-  emitElement(element: any) {
-    this.emitElementSource.next(element);
+  selElement(element: any): void {
+    this.elementSelected$.emit(element);
   }
+
+  // emitElement(element: any) {
+  //   this.emitElementSource.next(element);
+  // }
 }
