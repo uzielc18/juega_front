@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CursosService } from '../../services/cursos.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { CursosService } from '../../services/cursos.service';
 })
 export class ElementListComponent implements OnInit {
   elem: any;
+  subsElem!: Subscription;
 
   constructor(private cursosService: CursosService) {}
 
@@ -16,9 +18,17 @@ export class ElementListComponent implements OnInit {
   }
 
   elementoSeleccionado() {
-    this.cursosService.elementEmitted$.subscribe((element) => {
+    this.subsElem = this.cursosService.elementEmitted$.subscribe((element) => {
       this.elem = element;
-      console.log('-------------', this.elem);
+      console.log('elemento seleccionado --->', this.elem);
     });
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if (this.subsElem) {
+      this.subsElem.unsubscribe();
+    }
   }
 }

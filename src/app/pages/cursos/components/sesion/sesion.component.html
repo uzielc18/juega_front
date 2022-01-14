@@ -20,7 +20,7 @@
             </small>
             <div class="d-flex align-items-center ms-1">
               <!-- <div *ngFor="let element of sesion.elements"> -->
-              <div *ngFor="let element of uniqueElements | keyvalue">
+              <div *ngFor="let element of sesion.elements">
                 <app-element [element]="element"></app-element>
               </div>
               <nb-icon
