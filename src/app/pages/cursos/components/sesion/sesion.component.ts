@@ -14,6 +14,9 @@ export class SesionComponent implements OnInit {
   @Input() unidad: any;
   @Input() curso: any;
 
+  arrayEl: any = [];
+  loading: boolean = false;
+
   constructor(private dialogService: NbDialogService) {}
 
   ngOnInit(): void {
@@ -77,5 +80,15 @@ export class SesionComponent implements OnInit {
           // this.filtrar();
         }
       });
+  }
+
+  arrayElement(event: any) {
+    this.arrayEl = event;
+  }
+
+  loadingsForm($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
   }
 }

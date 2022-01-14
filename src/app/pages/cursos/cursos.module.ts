@@ -18,7 +18,7 @@ import { CursoCardComponent } from './components/curso-card/curso-card.component
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
 import { TrabajoComponent } from './contents/element-view/trabajo/trabajo.component';
-import { VideoConferenciaComponent } from './contents/video-conferencia/video-conferencia.component';
+import { VideoConferenciaComponent } from './contents/element-view/video-conferencia/video-conferencia.component';
 import { AdjuntarDocsComponent } from './components/adjuntar-docs/adjuntar-docs.component';
 import { CursoListComponent } from './components/curso-list/curso-list.component';
 import { PrepareFileProModule } from 'src/app/shared/components/prepare-file-pro/prepare-file-pro.module';
@@ -36,7 +36,6 @@ import { MenuElementsModule } from '../../shared/components/menu-elements/menu-e
 import { AdminGroupsComponent } from './components/modals/admin-groups/admin-groups.component';
 import { CarpetaComponent } from './components/forms/carpeta/carpeta.component';
 import { ElementComponent } from './components/element/element.component';
-import { ElementListComponent } from './components/element-list/element-list.component';
 
 const COMPONENTS: any[] = [
   WorksComponent,
@@ -64,7 +63,6 @@ const COMPONENTS: any[] = [
   TrabajoComponent,
   VideoConferenciaComponent,
   AdjuntarDocsComponent,
-  ElementListComponent,
 ];
 const CONTROL_MESSAGGE: any = [ControlMessagesModule];
 const SERVICES: any = [GeneralService];

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GeneralService } from '../../../../providers';
+import { END_POINTS } from '../../../../providers/utils';
 import { CursosService } from '../../services/cursos.service';
 
 @Component({
@@ -9,15 +10,21 @@ import { CursosService } from '../../services/cursos.service';
 })
 export class ElementComponent implements OnInit {
   @Input() element: any = [];
+  listElem: any;
+  loading: boolean = false;
+
+  @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
+  @Output() arrayElement: EventEmitter<any> = new EventEmitter();
 
   clickedIndex: number = 0;
   hoveredIndex: any;
 
-  constructor(private cursosService: CursosService) {}
+  constructor(
+    private cursosService: CursosService,
+    private generalService: GeneralService
+  ) {}
 
-  ngOnInit(): void {
-    // console.log('elementos ------', this.element);
-  }
+  ngOnInit(): void {}
 
   elementStyleActive(element: any) {
     return {
@@ -34,12 +41,38 @@ export class ElementComponent implements OnInit {
   }
 
   // selectedElement(element: any) {
-  //   this.onSelect.emit(element.type_element);
-  //   console.log('selected---------', element.type_element);
+  //   this.cursosService.emitElement(element);
+  //   console.log(element)
   // }
 
+  listElements(topic: any, type: any) {
+    const serviceName = END_POINTS.base_back.resourse + '/list-elements';
+    const topic_id = topic;
+    const type_element_id = type;
+    this.loadingsForm.emit(true);
+
+    this.generalService
+
+      .nameIdAndId$(serviceName, topic_id, type_element_id)
+      .subscribe(
+        (data) => {
+          this.listElem = data.data;
+          console.log('aaaaaaaaaaaaaaaaaaaa', this.listElem);
+          // this.cursosService.selElement(this.listElem);
+          this.arrayElement.emit(this.listElem);
+        },
+        () => {
+          this.loadingsForm.emit(false);
+        },
+        () => {
+          this.loadingsForm.emit(false);
+        }
+      );
+  }
+
   selectedElement(element: any) {
-    this.cursosService.emitElement(element);
-    console.log(element)
+    console.log('elelelelelelel', element);
+    this.listElements(element.topic_id, element.type_element_id);
+    // this.listElements(37, 1);
   }
 }
