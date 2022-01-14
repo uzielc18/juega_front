@@ -36,13 +36,13 @@ export class SesionComponent implements OnInit {
     }).onClose.subscribe(result => {
       if (result.value_close === 'ok') {
         if (result.response && result.response.id && result.value.grupal === '1') {
-          console.log(result, 'que tenemos');
+          // console.log(result, 'que tenemos');
           // this.openGroups(result.response);
-          // const response = {
-          //   id: 12, // id del elemento.
-          //   course_id: this.curso.id,
-          // }
-          // this.openGroups(response);
+          const params = {
+            id: result.response.id, // id del elemento.
+            course_id: this.curso.id,
+          }
+          this.openGroups(params);
       }
     }
     });
@@ -55,12 +55,12 @@ export class SesionComponent implements OnInit {
     }, {});
     // console.log('elementos unicos', this.uniqueElements);
   }
-  openGroups(response:any) {
+  openGroups(params:any) {
     this.dialogService.open(AdminGroupsComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
         curso: this.curso,
-        response: response,
+        response: params,
       },
       closeOnBackdropClick: false,
       closeOnEsc: false
