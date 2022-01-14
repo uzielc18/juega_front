@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CORE_OPTIONS, CoreOptions } from '../../../core/core.options';
 import { Observable, Subject } from 'rxjs';
 import { Cursos } from '../interfaces/cursos.interface';
-import { tap } from 'rxjs/operators';
+import { tap, throwIfEmpty } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +12,7 @@ export class CursosService {
   private _base_url = `${this.options.apiAuth}/api`;
 
   private emitRoleSource = new Subject<any>();
+  private emitElementSource = new Subject<any>();
 
   data$ = new EventEmitter<any>();
 
@@ -31,8 +32,13 @@ export class CursosService {
   }
 
   roleEmitted$ = this.emitRoleSource.asObservable();
+  elementEmitted$ = this.emitElementSource.asObservable();
 
   emitRol(rol: any) {
     this.emitRoleSource.next(rol);
+  }
+
+  emitElement(element: any) {
+    this.emitElementSource.next(element);
   }
 }
