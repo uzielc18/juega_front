@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Cursos } from '../../interfaces/cursos.interface';
 import { CursosService } from '../../services/cursos.service';
 
 @Component({
@@ -10,7 +9,6 @@ import { CursosService } from '../../services/cursos.service';
 export class CursoCardComponent implements OnInit {
   @Input() cursosEstudiante: any = [];
   @Input() cursosDocente: any = [];
-  @Input() cursos: Cursos[] = [];
   rol: any;
 
   constructor(private cursosService: CursosService) {}

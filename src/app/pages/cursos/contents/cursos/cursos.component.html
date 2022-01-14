@@ -29,9 +29,14 @@
 <hr />
 <div class="container-fluid">
   <div class="col-12" *ngIf="curso == 1">
-    <app-curso-list></app-curso-list>
+    <div class="col-12">
+      <app-curso-list
+        [cursosDocente]="cursosDocente"
+        [cursosEstudiante]="cursosEstudiante"
+      ></app-curso-list>
+    </div>
   </div>
-  <div class="row" *ngIf="curso != 1">
+  <div class="row" *ngIf="curso == 0">
     <div class="col-12">
       <app-curso-card
         class="cursos-card"

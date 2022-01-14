@@ -17,7 +17,7 @@ import { HomeworkFormComponent } from './components/homework-form/homework-form.
 import { CursoCardComponent } from './components/curso-card/curso-card.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
-import { TrabajoComponent } from './contents/trabajo/trabajo.component';
+import { TrabajoComponent } from './contents/element-view/trabajo/trabajo.component';
 import { VideoConferenciaComponent } from './contents/video-conferencia/video-conferencia.component';
 import { AdjuntarDocsComponent } from './components/adjuntar-docs/adjuntar-docs.component';
 import { CursoListComponent } from './components/curso-list/curso-list.component';
@@ -36,7 +36,7 @@ import { MenuElementsModule } from '../../shared/components/menu-elements/menu-e
 import { AdminGroupsComponent } from './components/modals/admin-groups/admin-groups.component';
 import { CarpetaComponent } from './components/forms/carpeta/carpeta.component';
 import { ElementComponent } from './components/element/element.component';
-import { GroupByModule } from '../../shared/pipes/group-by/group-by.module';
+import { ElementListComponent } from './components/element-list/element-list.component';
 
 const COMPONENTS: any[] = [
   WorksComponent,
@@ -49,36 +49,28 @@ const COMPONENTS: any[] = [
   CarpetaComponent,
   AdminGroupsComponent,
   ElementComponent,
+  MainComponent,
+  ChildrenComponent,
+  InfoComponent,
+  CursoComponent,
+  UnidadComponent,
+  SesionComponent,
+  CursosComponent,
+  HomeworkFormComponent,
+  CursoCardComponent,
+  CursoListComponent,
+  BreadcrumbComponent,
+  NavegacionComponent,
+  TrabajoComponent,
+  VideoConferenciaComponent,
+  AdjuntarDocsComponent,
+  ElementListComponent,
 ];
-const CONTROL_MESSAGGE: any = [
-  ControlMessagesModule,
-];
-const SERVICES: any = [
-  GeneralService,
-]
-const MODALS: any = [
-  AdminGroupsComponent
-];
+const CONTROL_MESSAGGE: any = [ControlMessagesModule];
+const SERVICES: any = [GeneralService];
+const MODALS: any = [AdminGroupsComponent];
 @NgModule({
-  declarations: [
-    MainComponent,
-    ChildrenComponent,
-    InfoComponent,
-    CursoComponent,
-    UnidadComponent,
-    SesionComponent,
-    CursosComponent,
-    HomeworkFormComponent,
-    CursoCardComponent,
-    CursoListComponent,
-    BreadcrumbComponent,
-    NavegacionComponent,
-    TrabajoComponent,
-    VideoConferenciaComponent,
-    AdjuntarDocsComponent,
-    ...COMPONENTS,
-
-  ],
+  declarations: [...COMPONENTS],
   exports: [CursosComponent],
   imports: [
     CommonModule,
@@ -88,10 +80,9 @@ const MODALS: any = [
     PrepareFileProModule,
     MoreOptionsModule,
     MenuElementsModule,
-    GroupByModule,
     ...CONTROL_MESSAGGE,
   ],
   providers: [...SERVICES],
-  entryComponents: [...MODALS]
+  entryComponents: [...MODALS],
 })
 export class CursosModule {}

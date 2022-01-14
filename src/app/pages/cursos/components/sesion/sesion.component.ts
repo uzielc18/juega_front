@@ -13,12 +13,12 @@ export class SesionComponent implements OnInit {
   @Input() sesion: any = [];
   @Input() unidad: any;
   @Input() curso: any;
-  uniqueElements: any
+
   constructor(private dialogService: NbDialogService) {}
 
   ngOnInit(): void {
-    console.log('coursessss', this.sesion);
-    this.groupBy();
+    // console.log('coursessss', this.sesion.elements);
+    // this.groupBy();
   }
 
   open() {
@@ -48,13 +48,13 @@ export class SesionComponent implements OnInit {
     });
   }
 
-  groupBy() {
-    this.uniqueElements = this.sesion.elements.reduce((r: any, a: any) => {
-      r[a.type_element_id] = [...(r[a.type_element_id] || []), a];
-      return r;
-    }, {});
-    // console.log('elementos unicos', this.uniqueElements);
-  }
+  // groupBy() {
+  //   this.uniqueElements = this.sesion.elements.reduce((r: any, a: any) => {
+  //     r[a.type_element_id] = [...(r[a.type_element_id] || []), a];
+  //     return r;
+  //   }, {});
+  //   // console.log('elementos unicos', this.uniqueElements);
+  // }
   openGroups(params:any) {
     this.dialogService.open(AdminGroupsComponent, {
       dialogClass: 'dialog-limited-height',

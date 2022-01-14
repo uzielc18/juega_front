@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GeneralService } from '../../../../providers';
+import { CursosService } from '../../services/cursos.service';
 
 @Component({
   selector: 'app-element',
@@ -12,10 +13,10 @@ export class ElementComponent implements OnInit {
   clickedIndex: number = 0;
   hoveredIndex: any;
 
-  constructor() {}
+  constructor(private cursosService: CursosService) {}
 
   ngOnInit(): void {
-    console.log('elementos ------', this.element);
+    // console.log('elementos ------', this.element);
   }
 
   elementStyleActive(element: any) {
@@ -30,5 +31,15 @@ export class ElementComponent implements OnInit {
       'background-color': element.background,
       color: element.color_active,
     };
+  }
+
+  // selectedElement(element: any) {
+  //   this.onSelect.emit(element.type_element);
+  //   console.log('selected---------', element.type_element);
+  // }
+
+  selectedElement(element: any) {
+    this.cursosService.emitElement(element);
+    console.log(element)
   }
 }

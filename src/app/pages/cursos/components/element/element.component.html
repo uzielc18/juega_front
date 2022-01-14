@@ -1,12 +1,17 @@
 <!-- <div *ngFor="let el of element.value"> -->
 <div style="position: relative">
   <nb-badge
-    text="{{ element.value.length }}"
+    text="{{ element.count }}"
     class="rounded-circle"
     status="basic"
     position="top right"
   ></nb-badge>
-  <nb-icon class="me-2 mt-3" [icon]="element.value[0].type_element.icono">
+
+  <nb-icon
+    class="me-2 mt-3"
+    (click)="selectedElement(element)"
+    [icon]="element.icono"
+  >
   </nb-icon>
 </div>
 <!-- <p>{{ element.value.length }}</p> -->

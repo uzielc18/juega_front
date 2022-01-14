@@ -12,7 +12,6 @@ export class CursosComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
   cursosEstudiante: any = [];
   cursosDocente: any = [];
-  rolSeleccionado: any = [];
   constructor(private cursosService: CursosService) {}
 
   ngOnInit(): void {
@@ -20,6 +19,7 @@ export class CursosComponent implements OnInit, OnDestroy {
       this.cursosDocente = data.data.cursos_docente;
       this.cursosEstudiante = data.data.cursos_estudiante;
     });
+    console.log('curso', this.curso);
   }
 
   ngOnDestroy(): void {
