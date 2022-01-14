@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDateService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
@@ -22,8 +23,24 @@ export class WorksComponent implements OnInit {
   @Input() code: any;
   @Input() valueMenu: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
-  constructor(private formBuilder: FormBuilder, private generalServi: GeneralService,
-    public datepipe: DatePipe) { }
+  // current = new Date();
+  // minDateActual: any = '';
+  min: any = Date;
+  constructor(private formBuilder: FormBuilder, private generalServi: GeneralService, dateService: NbDateService<Date>,
+    public datepipe: DatePipe) {
+      let date:any = Date;
+        date = dateService.today();
+        this.min = dateService.addDay(date, 0);
+        // Otra forma
+      // const fecha = {
+      //   year: this.current.getFullYear(),
+      //   month: this.current.getMonth() + 1,
+      //   day: this.current.getDate(),
+      //   };
+      // this.minDateActual = new Date(`${fecha.year}/${fecha.month}/${fecha.day}`);
+      // console.log(this.minDateActual);
+
+     }
 
   ngOnInit(): void {
     this.fieldReactive();

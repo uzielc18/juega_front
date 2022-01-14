@@ -41,12 +41,12 @@ export class EnlaceExternalComponent implements OnInit {
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
 
-      fecha_inicio: ['', [Validators.required]],
-      hora_inicio: ['', [Validators.required]],
-      fecha_fin: ['', [Validators.required]],
-      hora_fin: ['', [Validators.required]],
-      fecha_gracia: ['', [Validators.required]],
-      hora_gracia: ['', [Validators.required]],
+      // fecha_inicio: ['', [Validators.required]],
+      // hora_inicio: ['', [Validators.required]],
+      // fecha_fin: ['', [Validators.required]],
+      // hora_fin: ['', [Validators.required]],
+      // fecha_gracia: ['', [Validators.required]],
+      // hora_gracia: ['', [Validators.required]],
 
       tipo: ['ENLACE', [Validators.required]],
 
@@ -99,13 +99,7 @@ export class EnlaceExternalComponent implements OnInit {
     if (
        !form.url_externo ||
        !form.titulo ||
-       !form.descripcion ||
-       !form.fecha_inicio ||
-       !form.fecha_fin ||
-       !form.fecha_gracia ||
-       !form.hora_inicio ||
-       !form.hora_fin ||
-       !form.hora_gracia) {
+       !form.descripcion) {
       return true;
     } else {
       return false;
@@ -115,9 +109,10 @@ export class EnlaceExternalComponent implements OnInit {
     const forms = this.formHeader.value;
     const serviceName = END_POINTS.base_back.elements;
 
-    const f_inicio = this.datepipe.transform(forms.fecha_inicio, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_inicio, 'HH:mm');
-    const f_fin = this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_fin, 'HH:mm');
-    const f_gracia = this.datepipe.transform(forms.fecha_gracia, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_gracia, 'HH:mm');
+    let date = new Date();
+    let fecha =  date.toISOString().split('T')[0];
+    let hora = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    const f_h =  fecha + ' ' + hora;
     const params = {
       course_id:                forms.course_id,
       element_id:                0,
@@ -135,9 +130,9 @@ export class EnlaceExternalComponent implements OnInit {
 
       tipo:                     forms.tipo,
 
-      fecha_inicio:             f_inicio,
-      fecha_fin:                f_fin,
-      fecha_gracia:             f_gracia,
+      fecha_inicio:             f_h,
+      fecha_fin:                f_h,
+      fecha_gracia:             f_h,
 
       // element_id:               forms.element_id,
       visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
