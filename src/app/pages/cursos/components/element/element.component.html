@@ -1,7 +1,4 @@
-<div
-  style="position: relative"
-
->
+<div style="position: relative">
   <nb-badge
     text="{{ element.realizo }}-{{ element.count }}"
     class="rounded-circle"
@@ -11,6 +8,16 @@
 
   <nb-icon
     class="me-2 mt-3"
+    (click)="clickedIndex = 1"
+    [ngStyle]="
+      clickedIndex === 1
+        ? elementStyleActive(element)
+        : elementStyle() && hoveredIndex === 1
+        ? elementStyleHover(element)
+        : elementStyle()
+    "
+    (mouseenter)="hoveredIndex = 1"
+    (mouseleave)="hoveredIndex = null"
     (click)="selectedElement(element)"
     [icon]="element.icono"
   >

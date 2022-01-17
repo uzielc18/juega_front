@@ -17,8 +17,8 @@ import { HomeworkFormComponent } from './components/homework-form/homework-form.
 import { CursoCardComponent } from './components/curso-card/curso-card.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
-import { TrabajoComponent } from './contents/element-view/trabajo/trabajo.component';
-import { VideoConferenciaComponent } from './contents/element-view/video-conferencia/video-conferencia.component';
+import { TrabajoComponent } from './components/views/trabajo/trabajo.component';
+import { VideoConferenciaComponent } from './components/views/video-conferencia/video-conferencia.component';
 import { AdjuntarDocsComponent } from './components/adjuntar-docs/adjuntar-docs.component';
 import { CursoListComponent } from './components/curso-list/curso-list.component';
 import { PrepareFileProModule } from 'src/app/shared/components/prepare-file-pro/prepare-file-pro.module';

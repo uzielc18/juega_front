@@ -64,8 +64,8 @@
 <nb-card *ngIf="arrayEl.length > 0" class="list-element">
   <div *ngFor="let el of arrayEl; let i = index">
     <ul class="p-0 m-0">
-      <li class="ps-4 d-flex justify-content-between">
-        <div>
+      <li class="ps-4 d-flex justify-content-between list">
+        <div class="">
           <h5>{{ i + 1 }}. {{ el.titulo }}</h5>
           <p>{{ el.descripcion }}</p>
         </div>

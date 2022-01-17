@@ -6,8 +6,8 @@ import { CursoComponent } from './contents/curso/curso.component';
 import { MainComponent } from './contents/main/main.component';
 import { UnidadComponent } from './components/unidad/unidad.component';
 import { SesionComponent } from './components/sesion/sesion.component';
-import { TrabajoComponent } from './contents/element-view/trabajo/trabajo.component';
-import { VideoConferenciaComponent } from './contents/element-view/video-conferencia/video-conferencia.component';
+import { TrabajoComponent } from './components/views/trabajo/trabajo.component';
+import { VideoConferenciaComponent } from './components/views/video-conferencia/video-conferencia.component';
 
 const routes: Routes = [
   {

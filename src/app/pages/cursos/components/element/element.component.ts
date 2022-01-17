@@ -19,31 +19,27 @@ export class ElementComponent implements OnInit {
   clickedIndex: number = 0;
   hoveredIndex: any;
 
-  constructor(
-    private cursosService: CursosService,
-    private generalService: GeneralService
-  ) {}
+  constructor(private generalService: GeneralService) {}
 
   ngOnInit(): void {}
 
+  elementStyle() {
+    return {
+      color: '#898989',
+    };
+  }
+
   elementStyleActive(element: any) {
     return {
-      'background-color': element.background,
-      color: element.color_active,
+      color: element.color_hover,
     };
   }
 
   elementStyleHover(element: any) {
     return {
-      'background-color': element.background,
-      color: element.color_active,
+      color: element.color_hover,
     };
   }
-
-  // selectedElement(element: any) {
-  //   this.cursosService.emitElement(element);
-  //   console.log(element)
-  // }
 
   listElements(topic: any, type: any) {
     const serviceName = END_POINTS.base_back.resourse + '/list-elements';
@@ -58,7 +54,6 @@ export class ElementComponent implements OnInit {
         (data) => {
           this.listElem = data.data;
           console.log('aaaaaaaaaaaaaaaaaaaa', this.listElem);
-          // this.cursosService.selElement(this.listElem);
           this.arrayElement.emit(this.listElem);
         },
         () => {
@@ -73,6 +68,5 @@ export class ElementComponent implements OnInit {
   selectedElement(element: any) {
     console.log('elelelelelelel', element);
     this.listElements(element.topic_id, element.type_element_id);
-    // this.listElements(37, 1);
   }
 }
