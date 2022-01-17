@@ -80,7 +80,7 @@ export class SesionComponent implements OnInit {
   }
 
   arrayElement(event: any) {
-    this.arrayEl = event;
+    this.arrayEl = event || [];
   }
 
   loadingsForm($event: boolean) {

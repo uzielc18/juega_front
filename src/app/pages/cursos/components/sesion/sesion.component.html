@@ -9,8 +9,8 @@
     <div class="ps-0">
       <div class="d-flex align-items-center">
         <div
-          class="d-flex flex-column align-items-center m-0 rounded-start"
-          style="background-color: #faf5f6; padding: 12px 20px 12px 20px"
+          class="d-flex flex-column align-items-center justify-content-center rounded-start"
+          style="background-color: #faf5f6; width: 80px; padding: 15px 0 15px 0"
         >
           <span class="fw-bold" style="font-size: 24px">{{
             sesion.fecha_tema | date: "dd"
@@ -26,13 +26,13 @@
             </small>
             <div class="d-flex align-items-center ms-1">
               <!-- <div *ngFor="let element of sesion.elements"> -->
-              <div *ngFor="let element of sesion.elements">
-                <app-element
-                  [element]="element"
-                  (arrayElement)="arrayElement($event)"
-                  (loadingsForm)="loadingsForm($event)"
-                ></app-element>
-              </div>
+              <!-- [element]="element" -->
+              <app-element
+                [element]="sesion.elements"
+                (arrayElement)="arrayElement($event)"
+                (loadingsForm)="loadingsForm($event)"
+              ></app-element>
+              <!-- </div> -->
               <nb-icon
                 class="fs-3 me-2"
                 icon="arrow-right"
@@ -62,30 +62,40 @@
   </nb-card-body>
 </nb-card>
 <nb-card *ngIf="arrayEl.length > 0" class="list-element">
-  <div *ngFor="let el of arrayEl; let i = index">
-    <ul class="p-0 m-0">
+  <!-- <div *ngFor="let el of arrayEl; let i = index"> -->
+
+  <nb-list>
+    <nb-list-item
+      *ngFor="let el of arrayEl; let i = index"
+      class="p-2 ps-4 d-flex justify-content-between list"
+    >
+      <div>
+        <h5>{{ i + 1 }}. {{ el.titulo }}</h5>
+        <p>{{ el.descripcion }}</p>
+      </div>
+      <nb-button-group
+        class="d-flex align-items-center justify-content-end p-0"
+      >
+        <button nbButton class="border-0 shadow-sm me-2">
+          <nb-icon icon="people-outline" class="fs-4"></nb-icon>
+        </button>
+        <button nbButton class="border-0 shadow-sm me-2">
+          <nb-icon icon="eye-outline" class="fs-4"></nb-icon>
+        </button>
+        <button nbButton class="border-0 shadow-sm me-2">
+          <nb-icon icon="edit-2-outline" class="fs-4"></nb-icon>
+        </button>
+        <button nbButton class="border-0 shadow-sm me-2">
+          <nb-icon icon="trash-2-outline" class="fs-4"></nb-icon>
+        </button>
+      </nb-button-group>
+    </nb-list-item>
+  </nb-list>
+
+  <!-- <ul class="p-0 m-0">
       <li class="ps-4 d-flex justify-content-between list">
-        <div class="">
-          <h5>{{ i + 1 }}. {{ el.titulo }}</h5>
-          <p>{{ el.descripcion }}</p>
-        </div>
-        <nb-button-group
-          class="d-flex align-items-center justify-content-end p-0"
-        >
-          <button nbButton class="border-0 shadow-sm me-2">
-            <nb-icon icon="people-outline" class="fs-4"></nb-icon>
-          </button>
-          <button nbButton class="border-0 shadow-sm me-2">
-            <nb-icon icon="eye-outline" class="fs-4"></nb-icon>
-          </button>
-          <button nbButton class="border-0 shadow-sm me-2">
-            <nb-icon icon="edit-2-outline" class="fs-4"></nb-icon>
-          </button>
-          <button nbButton class="border-0 shadow-sm me-3">
-            <nb-icon icon="trash-2-outline" class="fs-4"></nb-icon>
-          </button>
-        </nb-button-group>
+
       </li>
-    </ul>
-  </div>
+    </ul> -->
+  <!-- </div> -->
 </nb-card>

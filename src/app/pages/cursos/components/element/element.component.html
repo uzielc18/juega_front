@@ -1,25 +1,28 @@
-<div style="position: relative">
-  <nb-badge
-    text="{{ element.realizo }}-{{ element.count }}"
+<div>
+  <!-- <nb-badge
+    text="{{ elem.realizo }}-{{ elem.count }}"
     class="rounded-circle"
     status="basic"
     position="top start"
-  ></nb-badge>
+  ></nb-badge> -->
 
   <nb-icon
-    class="me-2 mt-3"
-    (click)="clickedIndex = 1"
+    *ngFor="let elem of element; let i = index"
+    nbTooltip="{{ elem.realizo }}-{{ elem.count }}"
+    class="me-2"
+    (click)="clickedIndex = i"
+    (click)="selectedElement(elem)"
+    (mouseenter)="hoveredIndex = i"
+    (mouseleave)="hoveredIndex = null"
     [ngStyle]="
-      clickedIndex === 1
-        ? elementStyleActive(element)
-        : elementStyle() && hoveredIndex === 1
-        ? elementStyleHover(element)
+      clickedIndex === i
+        ? elementStyleActive(elem)
+        : elementStyle() && hoveredIndex === i
+        ? elementStyleHover(elem)
         : elementStyle()
     "
-    (mouseenter)="hoveredIndex = 1"
-    (mouseleave)="hoveredIndex = null"
-    (click)="selectedElement(element)"
-    [icon]="element.icono"
+    [icon]="elem.icono"
   >
+    {{ elem.realizo }}-{{ elem.count }}
   </nb-icon>
 </div>
