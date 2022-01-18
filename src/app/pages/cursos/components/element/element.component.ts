@@ -14,7 +14,6 @@ export class ElementComponent implements OnInit {
   ele: any;
   loading: boolean = false;
   showList: any = false;
-
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   @Output() arrayElement: EventEmitter<any> = new EventEmitter();
 
@@ -53,9 +52,9 @@ export class ElementComponent implements OnInit {
 
     this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe(
         (data) => {
-          const listElem = data.data || [];
+          this.listElem = data.data || [];
           // this.cursosService.selElement(this.listElem);
-          this.arrayElement.emit(listElem);
+          this.arrayElement.emit(this.listElem);
         },
         () => {
           this.loadingsForm.emit(false);
@@ -71,20 +70,32 @@ export class ElementComponent implements OnInit {
   }
 
   addCheck() {
-    return this.element.map((el: any) => {
-      let o = Object.assign({}, el);
-      o.check = false;
-    });
+    if (this.element.length>0) {
+      this.element.map((el: any) => {
+       el.check = false;
+     });
+    }
   }
 
   revisarCheck(element: any) {
-    if (element.check) {
+
+    if(!element.check) {
+      this.addCheck();
+      element.check = true;
+      this.listElements(element.topic_id, element.type_element_id);
+      this.arrayElement.emit(this.listElem);
+    } else {
       element.check = false;
       this.listElem = [];
       this.arrayElement.emit(this.listElem);
-    } else {
-      element.check = true;
-      this.listElements(element.topic_id, element.type_element_id);
     }
+    // if (element.check) {
+    //   element.check = false;
+    //   this.listElem = [];
+    //   this.arrayElement.emit(this.listElem);
+    // } else {
+    //   element.check = true;
+    //   this.listElements(element.topic_id, element.type_element_id);
+    // }
   }
 }

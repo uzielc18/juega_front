@@ -85,8 +85,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     {
       title: 'Inicio',
       icon: 'home-outline',
-      link: 'dashboard',
-      pathMatch: undefined,
+      link: '/pages/dashboard',
+      pathMatch: 'prefix',
     },
     {
       title: 'Agenda',
@@ -95,8 +95,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     {
       title: 'Asignaturas',
       icon: 'book-open-outline',
-      link: 'asignaturas',
-      pathMatch: undefined,
+      link: '/pages/asignaturas',
+      pathMatch: 'prefix',
     },
     {
       title: 'Tareas',

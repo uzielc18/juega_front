@@ -1,0 +1,131 @@
+<form [formGroup]="formHeader">
+  <div>
+    <label class="label">Título</label>
+    <input class="w-100" type="text" nbInput fieldSize="small" fullWidth placeholder="Ingresa un título"
+    [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="titulo"/>
+    <control-messages [control]="formHeader.get('titulo')"></control-messages>
+  </div>
+  <div style="padding-top: 4px;">
+    <label class="label">Descripción</label>
+    <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una descripción"
+    [status]="(formHeader.hasError('required', ['descripcion'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
+    <control-messages [control]="formHeader.get('descripcion')"></control-messages>
+  </div>
+  <div style="padding-top: 4px;">
+    <label class="label">Documento ayuda</label>
+    <div>
+      <lamb-prepare-file-pro
+        [paramsInfo]="{
+          id: topics?.id_carga_curso_docente,
+          directory: directorio,
+          type: 'put',
+          tabla: 'elements',
+          tipo: 'DOCUMENTO_AYUDA'}"
+        [numFiles]="6"
+        (filterValueChange)="valueFile($event)"
+        [listArrayFile]="formHeader.value.files || []">
+      </lamb-prepare-file-pro>
+    </div>
+  </div>
+  <!-- {{formHeader.value | json}} -->
+  <div style="padding-top: 4px;">
+    <label class="label">Fecha y hora de inicio</label>
+    <div class="d-flex">
+      <nb-form-field  class="date-input">
+      <input nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="fechaInicio" fieldSize="small"
+      [status]="(formHeader.hasError('required', ['fecha_inicio'])) === true ? 'primary' : 'basic'" formControlName="fecha_inicio"/>
+      <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+      <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min"></nb-datepicker>
+      <control-messages [control]="formHeader.get('fecha_inicio')"></control-messages>
+      </nb-form-field>
+      <nb-form-field class="hour-input ms-auto">
+      <input nbInput placeholder="Hora Inicio" [nbTimepicker]="horaInicio" type="text" fieldSize="small"
+      [status]="(formHeader.hasError('required', ['hora_inicio'])) === true ? 'primary' : 'basic'" formControlName="hora_inicio"/>
+      <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
+      <nb-timepicker #horaInicio></nb-timepicker>
+      </nb-form-field>
+    </div>
+  </div>
+  <div style="padding-top: 4px;">
+    <label class="label">Fecha y hora de término</label>
+    <fieldset [disabled]="!formHeader.value.fecha_inicio">
+    <div class="d-flex">
+      <nb-form-field  class="date-input">
+      <input nbInput placeholder="Fecha Termino" fullWidth [nbDatepicker]="fechaTermino" fieldSize="small"
+      [status]="(formHeader.hasError('required', ['fecha_fin'])) === true ? 'primary' : 'basic'" formControlName="fecha_fin"/>
+      <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+      <nb-datepicker #fechaTermino format="dd/MM/yyyy" [min]="formHeader.value.fecha_inicio"></nb-datepicker>
+      <control-messages [control]="formHeader.get('fecha_fin')"></control-messages>
+      </nb-form-field>
+      <nb-form-field class="hour-input ms-auto">
+      <input nbInput placeholder="Hora Termino" [nbTimepicker]="horaFin" type="text" fieldSize="small"
+      [status]="(formHeader.hasError('required', ['hora_fin'])) === true ? 'primary' : 'basic'" formControlName="hora_fin"/>
+      <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
+      <nb-timepicker #horaFin></nb-timepicker>
+      </nb-form-field>
+    </div>
+  </fieldset>
+  </div>
+  <div style="padding-top: 4px;">
+    <label class="label">Fecha y hora de gracia</label>
+    <fieldset [disabled]="!formHeader.value.fecha_fin">
+    <div class="d-flex">
+      <nb-form-field  class="date-input">
+      <input nbInput placeholder="Fecha de Gracia" fullWidth [nbDatepicker]="fechaGracia" fieldSize="small"
+      [status]="(formHeader.hasError('required', ['fecha_gracia'])) === true ? 'primary' : 'basic'" formControlName="fecha_gracia"/>
+      <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+      <nb-datepicker #fechaGracia format="dd/MM/yyyy" [min]="formHeader.value.fecha_fin"></nb-datepicker>
+      <control-messages [control]="formHeader.get('fecha_gracia')"></control-messages>
+      </nb-form-field>
+      <nb-form-field class="hour-input ms-auto">
+      <input nbInput placeholder="Hora de Gracia" [nbTimepicker]="horaGracia" type="text" fieldSize="small"
+      [status]="(formHeader.hasError('required', ['hora_gracia'])) === true ? 'primary' : 'basic'" formControlName="hora_gracia"/>
+      <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
+      <nb-timepicker #horaGracia></nb-timepicker>
+      </nb-form-field>
+    </div>
+  </fieldset>
+  </div>
+  <div style="padding-top: 4px;" class="row">
+    <!-- <label class="label" >Fecha y hora de gracia</label> -->
+    <div class="col-md-6">
+      <nb-toggle status="basic" formControlName="grupal">Grupal</nb-toggle>
+      <control-messages [control]="formHeader.get('grupal')"></control-messages>
+    </div>
+    <div class="col-md-6">
+      <nb-toggle status="basic" formControlName="rubrica">Contiene rúbrica</nb-toggle>
+      <control-messages [control]="formHeader.get('rubrica')"></control-messages>
+    </div>
+
+    <!-- <nb-select placeholder="Seleccionar rúbrica"  fullWidth
+    [status]="(formHeader.hasError('required', ['id_rubrica'])) === true ? 'primary' : 'basic'" formControlName="id_rubrica">
+      <nb-option value="1">Option 1</nb-option>
+      <nb-option value="2">Option 2</nb-option>
+    </nb-select>
+    <control-messages [control]="formHeader.get('id_rubrica')"></control-messages> -->
+  </div>
+  <!-- <div style="padding-top: 4px;">
+    <label class="label">Secuencia de aprendizaje</label>
+    <input class="w-100" type="text" nbInput fullWidth status="basic" placeholder="Ingresa un secuencia"
+    [status]="(formHeader.hasError('required', ['secuencia_aprendizaje'])) === true ? 'primary' : 'basic'" formControlName="secuencia_aprendizaje"/>
+    <control-messages [control]="formHeader.get('secuencia')"></control-messages>
+  </div> -->
+  <div style="padding-top: 4px;">
+    <label class="label">
+      <nb-icon *ngIf="options === 'N'" style="cursor: pointer; font-size: 25px;" status="primary" icon="arrow-ios-downward-outline" (click)="moreOptions('N')"></nb-icon>
+      <nb-icon *ngIf="options === 'S'" style="cursor: pointer; font-size: 25px;" status="primary" icon="arrow-ios-upward-outline" (click)="moreOptions('S')"></nb-icon>
+      {{options === 'N' ? 'Mostrar' : 'Ocultar'}} opciones avanzadas</label>
+
+      <div *ngIf="options === 'S'">
+
+        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)" [code]="code" [setValues]="settValuesMore"></app-more-options>
+      </div>
+  </div>
+  <br>
+  <div class="buttons d-flex justify-content-end">
+    <button nbButton outline status="primary" class="me-2" (click)="closeModal()">
+      Cancelar
+    </button>
+    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">{{code === 'NEW' ? 'Añadir' : 'Modificar'}} actividad</button>
+  </div>
+</form>

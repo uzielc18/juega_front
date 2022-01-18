@@ -1,0 +1,41 @@
+<nb-card style="border-radius: 1rem;">
+  <nb-card-header>
+    <div class="d-flex align-items-center">
+      <div class="ms-2">
+        <!-- <app-ng-dynamic-breadcrumb
+          bgColor="#fff"
+          fontColor="#969696"
+          symbol="&rang;"
+          lastLinkColor="#A76575"
+          fontSize="15px"
+        ></app-ng-dynamic-breadcrumb> -->
+      </div>
+      <div class="ms-auto d-none d-xxl-block">
+        <form [formGroup]="form">
+          <nb-select
+            *ngIf="roles.length > 0"
+            status="primary"
+            class="me-2"
+            formControlName="rol"
+            (selectedChange)="changeRol()"
+          >
+            <nb-option *ngFor="let rol of roles; let i = index" [value]="rol.name"
+              >Cursos - {{ rol.name }}</nb-option
+            >
+          </nb-select>
+          <nb-select status="primary" formControlName="semestre" (selectedChange)="changeSemestre($event)">
+            <nb-option
+              *ngFor="let semestre of semestres; let i = index"
+              [value]="semestre.id"
+              >Semestre - {{ semestre.nombre }}</nb-option
+            >
+          </nb-select>
+        </form>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <router-outlet></router-outlet>
+  </nb-card-body>
+</nb-card>
+

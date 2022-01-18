@@ -24,11 +24,16 @@ const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
       },
+      // {
+      //   path: 'asignaturas',
+      //   data: { breadcrumb: 'Asignaturas' },
+      //   loadChildren: () =>
+      //     import('./pages/cursos/cursos.module').then((m) => m.CursosModule),
+      // },
       {
         path: 'asignaturas',
-        data: { breadcrumb: 'Asignaturas' },
-        loadChildren: () =>
-          import('./pages/cursos/cursos.module').then((m) => m.CursosModule),
+        // data: { breadcrumb: 'Asignaturas' },
+        loadChildren: () => import('./pages/asignatures/asignatures.module').then((m) => m.AsignaturesModule),
       },
       {
         path: '',
