@@ -20,7 +20,7 @@
 
       <div *ngIf="options === 'S'">
 
-        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)"></app-more-options>
+        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)" [code]="code" [setValues]="settValuesMore"></app-more-options>
       </div>
   </div>
   <br>
@@ -28,6 +28,6 @@
     <button nbButton outline status="primary" class="me-2" (click)="closeModal()">
       Cancelar
     </button>
-    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">Añadir actividad</button>
+    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">{{code === 'NEW' ? 'Añadir' : 'Modificar'}} actividad</button>
   </div>
 </form>

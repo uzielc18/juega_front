@@ -1,5 +1,5 @@
 import { KeyValuePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
@@ -21,6 +21,7 @@ export class SesionComponent implements OnInit {
 
   clickedIndex: any = true;
   hoveredIndex: any;
+  @Output() validaExist = new EventEmitter<any>();
   constructor(private dialogService: NbDialogService, private generalService: GeneralService) {}
 
   ngOnInit(): void {
@@ -54,6 +55,20 @@ export class SesionComponent implements OnInit {
       closeOnEsc: false
     }).onClose.subscribe(result => {
       if (result.value_close === 'ok') {
+        // console.log(result.response);
+        let valid = false;
+        if (this.sesion.elements.length>0) {
+          valid =  this.sesion.elements.find((r:any) => r.type_element_id === result.response.type_element_id ? true : false);
+          if (valid) {
+            this.setCheck(result.response.type_element_id);
+            this.listElements(result.response.topic_id, result.response.type_element_id);
+          } else {
+            this.arrayEl = [];
+            this.validaExist.emit();
+          }
+        }
+
+
         if (result.response && result.response.id && result.value.grupal === '1') {
           // console.log(result, 'que tenemos');
           // this.openGroups(result.response);
@@ -63,6 +78,7 @@ export class SesionComponent implements OnInit {
           }
           this.openGroups(params);
       }
+
     }
     });
   }
@@ -153,5 +169,15 @@ export class SesionComponent implements OnInit {
           this.loading = false;
         }
       );
+  }
+  setCheck(type_element_id:any) {
+    if (this.sesion.elements.length>0) {
+      this.sesion.elements.map((el: any) => {
+        el.check = false;
+        if (el.type_element_id === type_element_id) {
+          el.check = true;
+        }
+     });
+    }
   }
 }

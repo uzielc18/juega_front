@@ -23,6 +23,7 @@ export class DocumentsComponent implements OnInit {
   @Input() code: any;
   @Input() valueMenu: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
+  settValuesMore:any;
   constructor(private formBuilder: FormBuilder, private generalServi: GeneralService,
     public datepipe: DatePipe) { }
 
@@ -40,6 +41,7 @@ export class DocumentsComponent implements OnInit {
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
 
+      fecha: [''],
       // fecha_inicio: ['', [Validators.required]],
       // hora_inicio: ['', [Validators.required]],
       // fecha_fin: ['', [Validators.required]],
@@ -49,7 +51,6 @@ export class DocumentsComponent implements OnInit {
 
       tipo: ['DOCUMENTO', [Validators.required]],
 
-      element_id: [''],
       visibilidad: ['S'],
       calificable: [true],
       duracion: ['180', [Validators.required]],
@@ -64,6 +65,10 @@ export class DocumentsComponent implements OnInit {
     this.formHeader = this.formBuilder.group(controls);
     this.setValuesPre();
     this.setMenuValues();
+    this.setFechaActual();
+    if(this.code === 'UPDATE') {
+      this.setObjectUpdate();
+    }
   }
   setValuesPre() {
     this.formHeader.patchValue({
@@ -79,7 +84,6 @@ export class DocumentsComponent implements OnInit {
       duracion: $event.duration || '',
       visibilidad: $event.visibilidad,
       permitir_comentarios: $event.permitir_comentarios,
-      element_id: $event.element_id || '',
     })
   }
   valueFile($event:any){
@@ -110,14 +114,18 @@ export class DocumentsComponent implements OnInit {
       return false;
     }
   }
-  saveInformtion() {
-    const forms = this.formHeader.value;
-    const serviceName = END_POINTS.base_back.elements;
-
+  setFechaActual() {
     let date = new Date();
     let fecha =  date.toISOString().split('T')[0];
     let hora = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
     const f_h =  fecha + ' ' + hora;
+    this.formHeader.patchValue({
+      fecha: f_h,
+    });
+  }
+  saveInformtion() {
+    const forms = this.formHeader.value;
+    const serviceName = END_POINTS.base_back.elements;
 
     const params = {
       course_id:                forms.course_id,
@@ -135,9 +143,9 @@ export class DocumentsComponent implements OnInit {
 
       tipo:                     forms.tipo,
 
-      fecha_inicio:             f_h,
-      fecha_fin:                f_h,
-      fecha_gracia:             f_h,
+      fecha_inicio:             forms.fecha,
+      fecha_fin:                forms.fecha,
+      fecha_gracia:             forms.fecha,
 
       // element_id:               forms.element_id,
       visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
@@ -146,12 +154,13 @@ export class DocumentsComponent implements OnInit {
       permitir_comentarios:     forms.permitir_comentarios  === true ? '1' : '0',
 
       estado:                   forms.estado,
-      userid:                   1,
+      userid:                   forms.userid || 1,
 
       files:                    forms.files || [],
     };
     if (!this.validCampos) {
       this.loadingsForm.emit(true);
+      if (this.code === 'NEW') {
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {
         if (r.success) {
           const valueClose = {
@@ -162,6 +171,18 @@ export class DocumentsComponent implements OnInit {
           this.saveCloseValue.emit(valueClose);
         }
       }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
+    } else {
+      this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+        if (r.success) {
+          const valueClose = {
+            value_close: 'ok',
+            value: params,
+            response: r.data,
+          }
+          this.saveCloseValue.emit(valueClose);
+        }
+      }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
+    }
     }
   }
   closeModal() {
@@ -171,5 +192,54 @@ export class DocumentsComponent implements OnInit {
       response: '',
     }
     this.saveCloseValue.emit(valueClose);
+  }
+  setObjectUpdate() {
+    if (this.item) {
+
+          const fil:any = [];
+          if (this.item.files.length>0) {
+            this.item.files.map((res : any) => {
+              const datos:any = {
+                ext: res.ext,
+                nombre: res.nombre,
+                nombre_original: res.nombre_original,
+                url: res.url,
+                peso: res.peso,
+                tipo: res.tipo,
+                person_id: res.person_id,
+                tabla: res.tabla,
+                tabla_id: '',
+              }
+              fil.push(datos);
+            })
+          }
+          this.formHeader.patchValue({
+            titulo:                   this.item.titulo,
+            descripcion:              this.item.descripcion,
+
+            // tipo:                     this.item.tipo,
+
+            fecha:                    this.item.fecha_inicio,
+
+            // element_id:               forms.element_id,
+            visibilidad:              this.item.visibilidad === '1' ? 'S' : 'N',
+            calificable:              this.item.calificable  === '1' ? true : false,
+            duracion:                 this.item.duracion,
+            permitir_comentarios:     this.item.permitir_comentarios  === '1' ? true : false,
+
+            estado:                   this.item.estado,
+            userid:                   this.item.userid,
+
+            type_element_id:          this.item.type_element.id,
+            files:                    fil || [],
+          });
+          const values = {
+            calificable:            this.item.calificable,
+            duracion:               this.item.duracion,
+            visibilidad:            this.item.visibilidad,
+            permitir_comentarios:   this.item.permitir_comentarios,
+          }
+          this.settValuesMore = values;
+        }
   }
 }

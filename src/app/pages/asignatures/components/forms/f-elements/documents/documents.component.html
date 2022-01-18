@@ -1,14 +1,14 @@
 <form [formGroup]="formHeader">
   <div>
     <label class="label">Título</label>
-    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa un título"
+    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa un título" fieldSize="small"
     [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="titulo"/>
     <control-messages [control]="formHeader.get('titulo')"></control-messages>
   </div>
   <div style="padding-top: 4px;">
     <label class="label">Descripción</label>
     <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una descripción"
-    [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
+    [status]="(formHeader.hasError('required', ['descripcion'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
     <control-messages [control]="formHeader.get('descripcion')"></control-messages>
   </div>
   <div style="padding-top: 4px;">
@@ -22,7 +22,8 @@
           tabla: 'elements',
           tipo: 'DOCUMENTO_AYUDA'}"
         [numFiles]="6"
-        (filterValueChange)="valueFile($event)">
+        (filterValueChange)="valueFile($event)"
+        [listArrayFile]="formHeader.value.files || []">
       </lamb-prepare-file-pro>
     </div>
   </div>
@@ -89,7 +90,7 @@
 
       <div *ngIf="options === 'S'">
 
-        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)"></app-more-options>
+        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)" [code]="code" [setValues]="settValuesMore"></app-more-options>
       </div>
   </div>
   <br>
@@ -97,6 +98,6 @@
     <button nbButton outline status="primary" class="me-2" (click)="closeModal()">
       Cancelar
     </button>
-    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">Añadir actividad</button>
+    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">{{code === 'NEW' ? 'Añadir' : 'Modificar'}} actividad</button>
   </div>
 </form>

@@ -6,10 +6,10 @@
     <control-messages [control]="formHeader.get('titulo')"></control-messages>
   </div>
   <div style="padding-top: 4px;">
-    <label class="label">Intervención inicial</label>
+    <label class="label">Intervención inicial (Descripción)</label>
     <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una intervención"
-    [status]="(formHeader.hasError('required', ['pregunta'])) === true ? 'primary' : 'basic'" formControlName="pregunta"></textarea>
-    <control-messages [control]="formHeader.get('pregunta')"></control-messages>
+    [status]="(formHeader.hasError('required', ['descripcion'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
+    <control-messages [control]="formHeader.get('descripcion')"></control-messages>
   </div>
 
   <!-- {{formHeader.value | json}} -->
@@ -59,7 +59,7 @@
 
       <div *ngIf="options === 'S'">
 
-        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)"></app-more-options>
+        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)"  [code]="code" [setValues]="settValuesMore"></app-more-options>
       </div>
   </div>
   <br>
@@ -67,6 +67,6 @@
     <button nbButton outline status="primary" class="me-2" (click)="closeModal()">
       Cancelar
     </button>
-    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">Añadir actividad</button>
+    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">{{code === 'NEW' ? 'Añadir' : 'Modificar'}} actividad</button>
   </div>
 </form>

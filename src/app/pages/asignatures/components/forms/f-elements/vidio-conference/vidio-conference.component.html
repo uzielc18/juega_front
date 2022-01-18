@@ -3,7 +3,7 @@
     <label class="label">Tipo</label>
     <div class="d-flex text-center">
         <div *ngFor="let item of listIcons">
-          <button nbButton  [status]="item.checked === false ? 'basic' : 'primary'" [ghost]="item.checked === false ? true : false"
+          <button nbButton   [ghost]="item.checked === false ? true : false"
           [ngStyle]="{'border-color': item.checked === true ? 'brown' : ''}"
           size="small" (click)="valueButtom(item)">
             <img [src]="item.link" height="20px" alt="">&nbsp;{{item.name}}
@@ -71,7 +71,7 @@
 
       <div *ngIf="options === 'S'">
 
-        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)"></app-more-options>
+        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)" [code]="code" [setValues]="settValuesMore"></app-more-options>
       </div>
   </div>
   <br>
@@ -79,6 +79,6 @@
     <button nbButton outline status="primary" class="me-2" (click)="closeModal()">
       Cancelar
     </button>
-    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">Añadir actividad</button>
+    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">{{code === 'NEW' ? 'Añadir' : 'Modificar'}} actividad</button>
   </div>
 </form>

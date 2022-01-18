@@ -44,8 +44,6 @@ export class WorksComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    console.log(this.item, this.code, 'hola soy el valor a modificar');
-
     this.fieldReactive();
   }
   private fieldReactive() {
