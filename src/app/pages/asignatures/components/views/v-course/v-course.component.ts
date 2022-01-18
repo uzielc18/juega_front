@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
+import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { AdminGroupsComponent } from '../../modals/admin-groups/admin-groups.component';
@@ -19,7 +20,8 @@ export class VCourseComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private generalService: GeneralService,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService
   ) {}
 
   ngOnInit(): void {
@@ -32,11 +34,29 @@ export class VCourseComponent implements OnInit {
       this.loading = true;
       this.generalService.nameId$(serviceName, this.idCargaCursoDocente).subscribe((data) => {
         this.curso = data.data;
+        if (this.curso) {
+          this.updateBreadcrumb();
+        }
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
   }
   validaExist() {
     this.getUnidades();
+  }
+  updateBreadcrumb(): void {
+    const breadcrumbs  =  [
+      {
+        label: 'Asignaturas',
+        url: '/pages/asignaturas'
+      },
+      {
+        label: this.curso.nombre,
+        url: '',
+        // url: '/pages/asignaturas/course/' + this.curso.id_carga_curso_docente,
+      },
+
+    ];
+    this.ngDynamicBreadcrumbService.updateBreadcrumb(breadcrumbs);
   }
 }
 

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { VListCoursesComponent } from 'src/app/pages/asignatures/components/views/v-list-courses/v-list-courses.component';
 import { AsignaturesComponent } from './asignatures.component';
 import { VCourseComponent } from './components/views/v-course/v-course.component';
-import { VListCoursesComponent } from './components/views/v-list-courses/v-list-courses.component';
 import { AsignaturesHomeComponent } from './containers/asignatures-home.component';
 
 // const routes: Routes = [
@@ -29,12 +29,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: VListCoursesComponent
+        component: VListCoursesComponent,
       },
       {
         path: 'course/:id_carga_curso_docente',
         component: VCourseComponent
-      }
+      },
     ]
   }
 ];

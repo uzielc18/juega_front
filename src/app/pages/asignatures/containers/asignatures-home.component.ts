@@ -1,10 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
-import { CursosService } from '../../cursos/services/cursos.service';
 
 @Component({
   selector: 'app-asignatures-home',
@@ -19,7 +18,7 @@ export class AsignaturesHomeComponent implements OnInit {
     private userService: AppService,
     private generalService: GeneralService,
     private formBuilder: FormBuilder,
-    private emitEventsService: EmitEventsService,
+    private emitEventsService: EmitEventsService
   ) {}
 
   ngOnInit(): void {
