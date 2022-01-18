@@ -2,13 +2,14 @@
   <nb-card-header>
     <div class="d-flex align-items-center">
       <div class="ms-2">
-        <!-- <app-ng-dynamic-breadcrumb
-          bgColor="#fff"
-          fontColor="#969696"
-          symbol="&rang;"
-          lastLinkColor="#A76575"
-          fontSize="15px"
-        ></app-ng-dynamic-breadcrumb> -->
+        <!-- <nb-icon icon="home-outline" status="primary" routerLink="/pages"></nb-icon> &nbsp; -->
+        <app-ng-dynamic-breadcrumb
+          [bgColor]="'#fff'"
+          [fontColor]="'#969696'"
+          [symbol]="'&rang;'"
+          [lastLinkColor]="'#A76575'"
+          [fontSize]="'15px'"
+        ></app-ng-dynamic-breadcrumb>
       </div>
       <div class="ms-auto d-none d-xxl-block">
         <form [formGroup]="form">
