@@ -1,0 +1,302 @@
+<div
+[nbSpinner]="loading" nbSpinnerStatus="primary"
+  nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+
+<div class="d-flex align-items-center">
+  <div class="ms-2">
+    <div class="d-flex align-items-center">
+      <nb-icon
+        style="width: 62px; height: 52px; color: #b37987"
+        icon="book-open-outline"
+      ></nb-icon>
+      <p class="d-flex flex-column mb-0">
+        <span class="mb-2" style="font-size: 28px; font-weight: bold"
+          >Mis Asignaturas</span
+        >
+        <span style="font-size: 14px">2021-1 INGENIERÍA DE SISTEMAS</span>
+      </p>
+    </div>
+  </div>
+  <div class="ms-auto d-none d-xxl-block p-3">
+    <nb-icon
+    [status]="form.value.tipo === '1' ? 'primary' : 'basic'"
+    style="cursor: pointer; font-size: 30px;"
+      icon="list-outline"
+      (click)="cambioTypo('1')"
+    ></nb-icon>
+    <nb-icon
+      [status]="form.value.tipo === '2' ? 'primary' : 'basic'"
+      style="cursor: pointer; font-size: 30px"
+      icon="grid-outline"
+      (click)="cambioTypo('2')"
+    ></nb-icon>
+  </div>
+</div>
+<hr />
+
+  <!-- cursos en tipo lista -->
+
+<div class="container-fluid">
+  <div class="col-12" *ngIf="form.value.tipo == '1'">
+    <div class="col-12">
+      <div *ngIf="theRolSemestre?.rol === 'Docente'">
+        <nb-card class="car-list"
+          *ngFor="let curso of cursosDocente; let i = index"
+         (click)="navigate(curso)"
+        >
+          <div class="row">
+            <div class="col-2 col-sm-2">
+              <img
+                src="../../../../../assets/books.jpg"
+                class="img-fluid"
+                alt=""
+                style="object-fit: fill; height: 100px; width: 350px"
+                width="250px"
+              />
+            </div>
+            <div class="col-5 col-sm-5 mt-3">
+              <h6>{{ curso.nombre }}</h6>
+              <p>
+                {{ curso.persons_teacher_nombre }}
+                <small
+                  >Ciclo - {{ curso.ciclo }} -
+                  {{ curso.programa_estudio_nombre }}</small
+                >
+              </p>
+            </div>
+            <div class="col-4 col-sm-4">
+              <ul class="list-group list-group-horizontal mt-4">
+                <li class="list-group-item">
+                  <nb-icon class="text-muted" icon="people-outline"></nb-icon> 1
+                </li>
+                <li class="list-group-item">
+                  <nb-icon
+                    class="text-muted"
+                    icon="checkmark-square-2-outline"
+                  ></nb-icon>
+                  5
+                </li>
+                <li class="list-group-item">
+                  <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
+                  2
+                </li>
+                <li class="list-group-item">
+                  <nb-icon
+                    class="text-muted"
+                    icon="checkmark-circle-2-outline"
+                  ></nb-icon>
+                  4
+                </li>
+                <li class="list-group-item">
+                  <nb-icon class="text-muted" icon="video-outline"></nb-icon> 6
+                </li>
+              </ul>
+              <div style="width: 340px">
+                <nb-progress-bar
+                  size="tiny"
+                  [value]="40"
+                  status="warning"
+                ></nb-progress-bar>
+              </div>
+            </div>
+            <div class="col-1 col-sm-1">
+              <img
+                src="../../../../../assets/play-list.png"
+                class="img-fluid"
+                alt=""
+                style="object-fit: fill; height: 100px; width: 350px"
+                width="250px"
+              />
+            </div>
+          </div>
+        </nb-card>
+      </div>
+      <div *ngIf="theRolSemestre?.rol === 'Estudiante'">
+        <nb-card class="car-list"
+          *ngFor="let curso of cursosEstudiante; let i = index"
+         (click)="navigate(curso)"
+        >
+          <div class="row">
+            <div class="col-2 col-sm-2">
+              <img
+                src="../../../../../assets/books.jpg"
+                class="img-fluid"
+                alt=""
+                style="object-fit: fill; height: 100px; width: 350px"
+                width="250px"
+              />
+            </div>
+            <div class="col-5 col-sm-5 mt-3">
+              <h6>{{ curso.course_nombre }}</h6>
+              <p>
+                {{ curso.person_teacher_nombre }}
+                <small
+                  >Ciclo - {{ curso.ciclo }} -
+                  {{ curso.programa_estudio_nombre }}</small
+                >
+              </p>
+            </div>
+            <div class="col-4 col-sm-4">
+              <ul class="list-group list-group-horizontal mt-4">
+                <li class="list-group-item">
+                  <nb-icon class="text-muted" icon="people-outline"></nb-icon> 1
+                </li>
+                <li class="list-group-item">
+                  <nb-icon
+                    class="text-muted"
+                    icon="checkmark-square-2-outline"
+                  ></nb-icon>
+                  5
+                </li>
+                <li class="list-group-item">
+                  <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
+                  2
+                </li>
+                <li class="list-group-item">
+                  <nb-icon
+                    class="text-muted"
+                    icon="checkmark-circle-2-outline"
+                  ></nb-icon>
+                  4
+                </li>
+                <li class="list-group-item">
+                  <nb-icon class="text-muted" icon="video-outline"></nb-icon> 6
+                </li>
+              </ul>
+              <div style="width: 340px">
+                <nb-progress-bar
+                  size="tiny"
+                  [value]="40"
+                  status="warning"
+                ></nb-progress-bar>
+              </div>
+            </div>
+            <div class="col-1 col-sm-1">
+              <img
+                src="../../../../../assets/play-list.png"
+                class="img-fluid"
+                alt=""
+                style="object-fit: fill; height: 100px; width: 350px"
+                width="250px"
+              />
+            </div>
+          </div>
+        </nb-card>
+      </div>
+
+      <!-- <app-curso-list
+        [cursosDocente]="cursosDocente"
+        [cursosEstudiante]="cursosEstudiante"
+      ></app-curso-list> -->
+    </div>
+  </div>
+
+  <!-- cursos en tipo card -->
+
+  <div class="row" *ngIf="form.value.tipo == '2'">
+    <div class="col-12">
+      <div *ngIf="theRolSemestre?.rol === 'Docente'" class="row">
+        <nb-card
+          *ngFor="let curso of cursosDocente; let i = index"
+          (click)="navigate(curso)"
+          class="car-car col-md-2"
+        >
+          <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h6 class="course-name mb-0">{{ curso.nombre }}</h6>
+            <p class="course-teacher mb-0">{{ curso.persons_teacher_nombre }}</p>
+            <p class="course-description mb-0">
+              Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}
+            </p>
+          </div>
+          <div>
+            <nb-progress-bar
+              size="tiny"
+              [value]="40"
+              status="warning"
+            ></nb-progress-bar>
+          </div>
+          <ul
+            class="list-group list-group-horizontal d-flex justify-content-between px-2"
+          >
+            <li class="list-group-item">
+              <nb-icon class="text-muted" icon="people-outline"></nb-icon>
+              <p>1</p>
+            </li>
+            <li class="list-group-item">
+              <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
+              <p>1</p>
+            </li>
+            <li class="list-group-item">
+              <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
+              <p>1</p>
+            </li>
+            <li class="list-group-item">
+              <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
+              <p>1</p>
+            </li>
+            <li class="list-group-item">
+              <nb-icon class="text-muted" icon="video-outline"></nb-icon>
+              <p>1</p>
+            </li>
+          </ul>
+        </nb-card>
+      </div>
+      <div *ngIf="theRolSemestre?.rol === 'Estudiante'" class="row">
+        <nb-card
+          *ngFor="let curso of cursosEstudiante; let i = index"
+          (click)="navigate(curso)"
+          class="car-car col-md-2"
+        >
+          <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h6 class="course-name mb-0">{{ curso.course_nombre }}</h6>
+            <p class="course-teacher mb-0">{{ curso.person_teacher_nombre }}</p>
+            <p class="course-description mb-0">
+              Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}
+            </p>
+          </div>
+          <div>
+            <nb-progress-bar
+              size="tiny"
+              [value]="40"
+              status="warning"
+            ></nb-progress-bar>
+          </div>
+          <ul
+            class="list-group list-group-horizontal d-flex justify-content-between px-2"
+          >
+            <li class="list-group-item">
+              <nb-icon class="text-muted" icon="people-outline"></nb-icon>
+              <p>1</p>
+            </li>
+            <li class="list-group-item">
+              <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
+              <p>1</p>
+            </li>
+            <li class="list-group-item">
+              <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
+              <p>1</p>
+            </li>
+            <li class="list-group-item">
+              <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
+              <p>1</p>
+            </li>
+            <li class="list-group-item">
+              <nb-icon class="text-muted" icon="video-outline"></nb-icon>
+              <p>1</p>
+            </li>
+          </ul>
+        </nb-card>
+      </div>
+
+
+      <!-- <app-curso-card
+        class="cursos-card"
+        [cursosDocente]="cursosDocente"
+        [cursosEstudiante]="cursosEstudiante"
+      ></app-curso-card> -->
+    </div>
+  </div>
+</div>
+</div>

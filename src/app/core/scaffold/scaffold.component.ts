@@ -81,11 +81,12 @@ import { environment } from '../../../environments/environment';
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
-  MENU_ITEMS: NbMenuItem[] = [
+  MENU_ITEMS:  NbMenuItem[] = [
     {
       title: 'Inicio',
       icon: 'home-outline',
-      link: 'dashboard',
+      link: '/pages/dashboard',
+      pathMatch: 'prefix',
     },
     {
       title: 'Agenda',
@@ -94,7 +95,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     {
       title: 'Asignaturas',
       icon: 'book-open-outline',
-      link: 'asignaturas',
+      link: '/pages/asignaturas',
+      pathMatch: 'prefix',
     },
     {
       title: 'Tareas',

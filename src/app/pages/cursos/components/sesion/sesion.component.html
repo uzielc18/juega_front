@@ -9,8 +9,8 @@
     <div class="ps-0">
       <div class="d-flex align-items-center">
         <div
-          class="d-flex flex-column align-items-center m-0 rounded-start"
-          style="background-color: #faf5f6; padding: 12px 20px 12px 20px"
+          class="d-flex flex-column align-items-center justify-content-center rounded-start"
+          style="background-color: #faf5f6; width: 80px; padding: 15px 0 15px 0"
         >
           <span class="fw-bold" style="font-size: 24px">{{
             sesion.fecha_tema | date: "dd"
@@ -25,14 +25,11 @@
               {{ sesion.orden_tema }} - {{ sesion.tema }}
             </small>
             <div class="d-flex align-items-center ms-1">
-              <!-- <div *ngFor="let element of sesion.elements"> -->
-              <div *ngFor="let element of sesion.elements">
-                <app-element
-                  [element]="element"
-                  (arrayElement)="arrayElement($event)"
-                  (loadingsForm)="loadingsForm($event)"
-                ></app-element>
-              </div>
+              <app-element
+                [element]="sesion.elements"
+                (arrayElement)="arrayElement($event)"
+                (loadingsForm)="loadingsForm($event)"
+              ></app-element>
               <nb-icon
                 class="fs-3 me-2"
                 icon="arrow-right"
@@ -51,8 +48,8 @@
               </button>
             </nb-button-group>
             <nb-button-group>
-              <button (click)="open()" nbButton class="shadow-sm">
-                <nb-icon icon="plus" class="fs-4"></nb-icon>
+              <button (click)="newElemnts()" nbButton class="shadow-sm"  nbTooltip="Crear elementos" nbTooltipPlacement="top" nbTooltipStatus="primary">
+                <nb-icon icon="plus" status="primary" class="fs-4"></nb-icon>
               </button>
             </nb-button-group>
           </div>
@@ -72,17 +69,18 @@
         <nb-button-group
           class="d-flex align-items-center justify-content-end p-0"
         >
-          <button nbButton class="border-0 shadow-sm me-2">
-            <nb-icon icon="people-outline" class="fs-4"></nb-icon>
+          <button *ngIf="el?.grupal === '1'" nbButton class="border-0 shadow-sm me-2" nbTooltip="Administrar grupos" nbTooltipPlacement="top" nbTooltipStatus="primary"
+          (click)="adminGrupal(el)">
+            <nb-icon icon="people-outline" status="primary" class="fs-4"></nb-icon>
           </button>
-          <button nbButton class="border-0 shadow-sm me-2">
-            <nb-icon icon="eye-outline" class="fs-4"></nb-icon>
+          <button nbButton class="border-0 shadow-sm me-2" nbTooltip="Ver" nbTooltipPlacement="top" nbTooltipStatus="success">
+            <nb-icon icon="eye-outline" status="success" class="fs-4"></nb-icon>
           </button>
-          <button nbButton class="border-0 shadow-sm me-2">
-            <nb-icon icon="edit-2-outline" class="fs-4"></nb-icon>
+          <button nbButton class="border-0 shadow-sm me-2" nbTooltip="Editar" nbTooltipPlacement="top" nbTooltipStatus="info" (click)="updateElements(el)">
+            <nb-icon icon="edit-2-outline" status="info" class="fs-4" ></nb-icon>
           </button>
-          <button nbButton class="border-0 shadow-sm me-3">
-            <nb-icon icon="trash-2-outline" class="fs-4"></nb-icon>
+          <button nbButton class="border-0 shadow-sm me-3" nbTooltip="Eliminar" nbTooltipPlacement="top" nbTooltipStatus="danger">
+            <nb-icon icon="trash-2-outline" status="danger" class="fs-4"></nb-icon>
           </button>
         </nb-button-group>
       </li>

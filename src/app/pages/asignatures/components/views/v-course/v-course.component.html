@@ -1,0 +1,136 @@
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-xxl-9">
+        <!-- <div class="col-12 col-sm-9 col-md-6 col-lg-3 col-xl-3"> -->
+        <div class="row">
+          <div class="col mt-0 p-0" style="height: 350px; overflow: hidden">
+            <img src="../../../../../assets/books.jpg" class="img-fluid" alt="" style="object-fit: fill" />
+          </div>
+        </div>
+        <div class="container-fluid h-100" style="margin-top: -180px">
+          <div class="row">
+            <div class="col">
+              <div class="row px-4">
+                <h2 class="fs-2 text-white mx-1">{{ curso?.nombre }}</h2>
+                <small style="
+                  background: linear-gradient(
+                    to right,
+                    var(--text-primary-color),
+                    transparent
+                  );
+                  border-radius: 100px;
+                " class="text-white px-2 py-0 mx-3">
+                  {{ curso?.programa_estudio?.nombre }}
+                </small>
+              </div>
+              <div class="row px-2 mt-3">
+                <nb-card class="p-0">
+                  <nb-card-body class="p-3">
+                    <div class="row justify-content-between mb-3">
+                      <div class="col-sm-12 col-xl-6">
+                        <small class="d-flex justify-content-between">
+                          <span style="font-size: 12px">Avance del curso</span>
+                          <span>40%</span>
+                        </small>
+                        <nb-progress-bar size="tiny" [value]="40" status="warning"></nb-progress-bar>
+                      </div>
+                      <div class="col-sm-12 col-xl-auto mt-2 mt-xl-0">
+                        <div class="d-flex align-items-center">
+                          <p class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center">
+                            <nb-icon icon="people" class="fs-6"></nb-icon><small class="text-black ms-1">16</small>
+                          </p>
+                          <p class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center">
+                            <nb-icon icon="checkmark-square-2" class="fs-6"></nb-icon><small
+                              class="text-black ms-1">5</small>
+                          </p>
+                          <p class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center">
+                            <nb-icon icon="message-circle" class="fs-6"></nb-icon><small
+                              class="text-black ms-1">25</small>
+                          </p>
+                          <p class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center">
+                            <nb-icon icon="checkmark-circle-2" class="fs-6"></nb-icon><small
+                              class="text-black ms-1">1</small>
+                          </p>
+                          <p class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center">
+                            <nb-icon icon="play-circle" class="fs-6"></nb-icon><small class="text-black ms-1">3</small>
+                          </p>
+                          <nb-button-group status="primary">
+                            <button nbButton class="p-2">
+                              <nb-icon icon="edit-2-outline"></nb-icon>
+                            </button>
+                          </nb-button-group>
+                        </div>
+                      </div>
+                    </div>
+                    <nb-accordion class="mb-2" *ngFor="let unidad of curso?.units">
+                      <nb-accordion-item>
+                        <nb-accordion-item-header>
+                          <div class="container p-0 pe-4">
+                            <div class="d-flex align-items-center">
+                              <div class="p-2">
+                                <nb-icon icon="pricetags-outline" class="fs-2"></nb-icon>
+                              </div>
+                              <div class="ps-2">
+                                <h6 class="fs-6 lh-1">{{ unidad.nombre }}</h6>
+                                <!-- <small>{{ unidad.fecha_inicio }} al {{ unidad.fecha_fin }}</small> -->
+                                <small>01 marzo al 04 abril</small>
+                              </div>
+                              <div class="ps-2 mb-3">
+                                <nb-button-group ghost>
+                                  <button nbButton class="shadow-sm p-2">
+                                    <nb-icon icon="edit-2-outline" class="fs-4"></nb-icon>
+                                  </button>
+                                </nb-button-group>
+                              </div>
+                            </div>
+                            <hr class="me-3 mt-2" />
+                            <div class="row">
+                              <small class="fw-light text-muted">
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit ea
+                                corporis obcaecati aperiam aspernatur recusandae vel tempore
+                                molestiae, eveniet ipsam iure impedit fugiat quas dolorum accusamus
+                                error vitae saepe explicabo!
+                              </small>
+                            </div>
+                          </div>
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                          <div class="container d-flex flex-column">
+                            <small class="fw-bold another-color">Descripcion</small>
+                            <small class="description">
+                              Conceptos fundamentales, recopilacion de informacion. Modelo
+                              Conceptual y Relacional
+                            </small>
+                            <small class="fw-bold another-color">Resultado de apredizaje</small>
+                            <small class="mb-4 description">
+                              Elabora el modelo Entidad Relacion de la base de datos para un sistema
+                              de informacion
+                            </small>
+                            <div *ngFor="let sesion of unidad?.topics">
+                              <app-sesion
+                              [sesion]="sesion"
+                              [unidad]="unidad"
+                              [curso]="curso"
+                              (validaExist)="validaExist()"
+                            ></app-sesion>
+                            </div>
+                          </div>
+                        </nb-accordion-item-body>
+                      </nb-accordion-item>
+                    </nb-accordion>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-xxl-3">
+        <app-navegacion></app-navegacion>
+      </div>
+    </div>
+  </div>
+
+</div>

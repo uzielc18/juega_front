@@ -1,18 +1,28 @@
-<div
-  style="position: relative"
-
->
-  <nb-badge
-    text="{{ element.realizo }}-{{ element.count }}"
+<div class="table-responsive">
+  <!-- <nb-badge
+    text="{{ elem.realizo }}-{{ elem.count }}"
     class="rounded-circle"
     status="basic"
     position="top start"
-  ></nb-badge>
-
-  <nb-icon
-    class="me-2 mt-3"
-    (click)="selectedElement(element)"
-    [icon]="element.icono"
-  >
-  </nb-icon>
+  ></nb-badge> -->
+<table class="table table-sm">
+  <tbody>
+    <tr>
+      <td *ngFor="let elem of element; let i = index" style="width: 1px; padding-top: 0px;" class="text-center">
+        <label class="label" style="font-size: 9px">{{ elem.realizo }}-{{ elem.count }}</label><br>
+        <nb-icon  nbTooltip="{{ elem.nombre }}" class="me-2"
+        (click)="selectedElement(elem)" (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null" [ngStyle]="
+          clickedIndex === elem.check
+            ? elementStyleActive(elem)
+            : elementStyle() && hoveredIndex === i
+            ? elementStyleHover(elem)
+            : elementStyle()
+        " [icon]="elem.icono">
+      </nb-icon>
+      <!-- <br>
+      <label class="label" style="font-size: 7px">{{ elem.nombre }}</label> -->
+      </td>
+    </tr>
+  </tbody>
+</table>
 </div>

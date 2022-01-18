@@ -95,7 +95,7 @@ export class VidioComponent implements OnInit {
       estado: ['1', [Validators.required]],
       userid: [''],
 
-      files: [''],
+      // files: [''],
 
     };
     this.formHeader = this.formBuilder.group(controls);
@@ -120,11 +120,11 @@ export class VidioComponent implements OnInit {
       element_id: $event.element_id || '',
     })
   }
-  valueFile($event:any){
-    this.formHeader.patchValue({
-      files: $event.arrayFile,
-    });
-  }
+  // valueFile($event:any){
+  //   this.formHeader.patchValue({
+  //     files: $event.arrayFile,
+  //   });
+  // }
 
   valueButtom(item:any) {
     this.listIcons.forEach((element:any) => {
@@ -276,7 +276,7 @@ export class VidioComponent implements OnInit {
       estado:                   forms.estado,
       userid:                   1,
 
-      files:                    forms.files || [],
+      files:                    [],
     };
     if (!this.validCampos) {
       this.loadingsForm.emit(true);
