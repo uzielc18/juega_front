@@ -1,11 +1,5 @@
 <form [formGroup]="formHeader">
   <br>
-  <div *ngIf="false" >
-    <label class="label">Elegir una carpeta</label>
-    <nb-select placeholder="Sin carpeta"  fullWidth formControlName="element_id" (selectedChange)="setEmiter()">
-    </nb-select>
-    <control-messages [control]="formHeader.get('element_id')"></control-messages>
-  </div>
   <div style="padding-top: 4px;">
     <!-- <label class="label">Activar el chat durante el vídeo</label> -->
     <nb-toggle status="primary" class="my-3 d-block" formControlName="permitir_comentarios" (change)="setEmiter()">Activar preguntas y comentarios</nb-toggle>

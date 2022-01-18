@@ -23,16 +23,30 @@ export class SesionComponent implements OnInit {
     // console.log('coursessss', this.sesion.elements);
     // this.groupBy();
   }
+  newElemnts() {
+    const params = {
+      code: 'NEW',
+      item: '',
+    }
+    this.open(params);
+  }
+  updateElements(el:any) {
+    const params = {
+      code: 'UPDATE',
+      item: el,
+    }
+    this.open(params);
+  }
 
-  open() {
+  open(params:any) {
     this.dialogService.open(HomeworkFormComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
         topics: this.sesion,
         unidad: this.unidad,
         curso: this.curso,
-        code: 'NEW',
-        item: '',
+        code: params.code,
+        item: params.item,
       },
       closeOnBackdropClick: false,
       closeOnEsc: false
@@ -49,6 +63,15 @@ export class SesionComponent implements OnInit {
       }
     }
     });
+  }
+  adminGrupal(el:any) {
+    const params = {
+      id: el.id, // id del elemento.
+      course_id: this.curso.id,
+    }
+    if (params && params.id && params.course_id) {
+      this.openGroups(params);
+    }
   }
 
   // groupBy() {

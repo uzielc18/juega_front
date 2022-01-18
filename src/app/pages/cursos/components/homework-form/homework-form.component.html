@@ -6,7 +6,7 @@
 >
   <nb-card-body>
     <div class="row container p-0 m-0">
-      <div class="col-4 menu-container p-4 pe-0">
+      <div *ngIf="code === 'NEW'" class="col-4 menu-container p-4 pe-0">
         <p class="fw-bold menu-title pe-2" style="font-size: 12px">
           ¿ Que recurso o actividad deseas añadir al curso?
         </p>
@@ -15,8 +15,8 @@
           (loadingsMenu)="loadingsMenu($event)"
         ></app-menu-elements>
       </div>
-      <div class="col-8 p-3">
-        <div class="col px-0">
+      <div class="{{code === 'NEW' ? 'col-8' : 'col-12'}} p-3">
+        <div *ngIf="element" class="col px-0">
           <div class="d-flex align-items-center">
             <nb-icon
               [icon]="element?.icono"
@@ -30,17 +30,14 @@
           </div>
         </div>
 
-        <div
-          class="form mt-4 px-5"
-          *ngIf="['TRABAJO'].includes(element?.nombre)"
-        >
+        <div class="form mt-4 px-5"  *ngIf="['TRABAJO'].includes(element?.nombre)">
           <app-works
             (saveCloseValue)="saveValue($event)"
             (loadingsForm)="loadingsForm($event)"
             [topics]="topics"
             [unidad]="unidad"
             [curso]="curso"
-            [item]="item"
+            [item]="itemsValue"
             [code]="code"
             [valueMenu]="element"
           ></app-works>
@@ -53,7 +50,7 @@
             [topics]="topics"
             [unidad]="unidad"
             [curso]="curso"
-            [item]="item"
+            [item]="itemsValue"
             [code]="code"
             [valueMenu]="element"
           ></app-forus>
@@ -69,7 +66,7 @@
             [topics]="topics"
             [unidad]="unidad"
             [curso]="curso"
-            [item]="item"
+            [item]="itemsValue"
             [code]="code"
             [valueMenu]="element"
           ></app-enlace-external>
@@ -85,7 +82,7 @@
             [topics]="topics"
             [unidad]="unidad"
             [curso]="curso"
-            [item]="item"
+            [item]="itemsValue"
             [code]="code"
             [valueMenu]="element"
           ></app-vidio-conference>
@@ -101,7 +98,7 @@
             [topics]="topics"
             [unidad]="unidad"
             [curso]="curso"
-            [item]="item"
+            [item]="itemsValue"
             [code]="code"
             [valueMenu]="element"
           ></app-evaluations>
@@ -117,7 +114,7 @@
             [topics]="topics"
             [unidad]="unidad"
             [curso]="curso"
-            [item]="item"
+            [item]="itemsValue"
             [code]="code"
             [valueMenu]="element"
           ></app-documents>
@@ -130,7 +127,7 @@
             [topics]="topics"
             [unidad]="unidad"
             [curso]="curso"
-            [item]="item"
+            [item]="itemsValue"
             [code]="code"
             [valueMenu]="element"
           ></app-vidio>
@@ -141,7 +138,7 @@
           [topics]="topics"
           [unidad]="unidad"
           [curso]="curso"
-          [item]="item"
+          [item]="itemsValue"
           [code]="code"
           [valueMenu]="element"></app-carpeta>
         </div>

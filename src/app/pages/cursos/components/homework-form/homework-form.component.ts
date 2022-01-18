@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
+import { GeneralService } from 'src/app/providers';
+import { END_POINTS } from 'src/app/providers/utils';
 
 @Component({
   selector: 'app-form-homework',
@@ -16,10 +18,14 @@ export class HomeworkFormComponent {
 
   loading: boolean = false;
   element:any;
-  constructor(public activeModal: NbDialogRef<HomeworkFormComponent>) {
+  itemsValue: any;
+  constructor(public activeModal: NbDialogRef<HomeworkFormComponent>,  private generalServi: GeneralService) {
 
   }
   ngOnInit(): void {
+    if (this.code === 'UPDATE') {
+      this.setValueElementUpdate();
+    }
   }
   closeModal() {
     const valueClose = {
@@ -48,5 +54,18 @@ export class HomeworkFormComponent {
     setTimeout(() => {
       this.loading = $event;
     }, 100);
+  }
+  setValueElementUpdate() {
+    const serviceName = END_POINTS.base_back.elements;
+    if (this.item.id) {
+      this.loading = true;
+      this.generalServi.nameId$(serviceName, this.item.id).subscribe(r => {
+        const data = r.data || '';
+        if (data) {
+          this.element = data.type_element;
+          this.itemsValue = data;
+        }
+      }, () => { this.loading = false; }, () => { this.loading  = false; });
+    }
   }
 }

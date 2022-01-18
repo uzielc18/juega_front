@@ -35,7 +35,7 @@
     [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
     <control-messages [control]="formHeader.get('descripcion')"></control-messages>
   </div>
-  <div style="padding-top: 4px;">
+  <!-- <div style="padding-top: 4px;">
     <label class="label">Adjuntar documento</label>
     <div>
       <lamb-prepare-file-pro
@@ -49,7 +49,7 @@
         (filterValueChange)="valueFile($event)">
       </lamb-prepare-file-pro>
     </div>
-  </div>
+  </div> -->
   <!-- <div style="padding-top: 4px;">
     <label class="label">Fecha y hora de inicio</label>
     <div class="d-flex">

@@ -10,7 +10,6 @@ import { CursosService } from '../../services/cursos.service';
 })
 export class ElementComponent implements OnInit {
   @Input() element: any = [];
-  listElem: any;
   loading: boolean = false;
 
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
@@ -51,15 +50,11 @@ export class ElementComponent implements OnInit {
     const type_element_id = type;
     this.loadingsForm.emit(true);
 
-    this.generalService
-
-      .nameIdAndId$(serviceName, topic_id, type_element_id)
-      .subscribe(
+    this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe(
         (data) => {
-          this.listElem = data.data;
-          console.log('aaaaaaaaaaaaaaaaaaaa', this.listElem);
+          const listElem = data.data || [];
           // this.cursosService.selElement(this.listElem);
-          this.arrayElement.emit(this.listElem);
+          this.arrayElement.emit(listElem);
         },
         () => {
           this.loadingsForm.emit(false);
