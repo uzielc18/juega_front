@@ -7,10 +7,10 @@
 >
   <nb-card-body class="p-0">
     <div class="ps-0">
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center" style="position: relative;">
         <div
           class="d-flex flex-column align-items-center justify-content-center rounded-start"
-          style="background-color: #faf5f6; width: 80px; padding: 15px 0 15px 0"
+          style="background-color: #faf5f6; width: 80px; height: 100%;"
         >
           <span class="fw-bold" style="font-size: 24px">{{
             sesion.fecha_tema | date: "dd"
@@ -77,14 +77,16 @@
   </nb-card-body>
 </nb-card>
 <nb-card *ngIf="arrayEl.length > 0" class="list-element">
-  <div *ngFor="let el of arrayEl; let i = index">
-    <ul class="p-0 m-0">
-      <li class="ps-4 d-flex justify-content-between">
-        <div>
-          <h5>{{ i + 1 }}. {{ el.titulo }}</h5>
-          <p>{{ el.descripcion }}</p>
-        </div>
-        <nb-button-group
+  <nb-list>
+    <nb-list-item
+      *ngFor="let el of arrayEl; let i = index"
+      class="p-2 ps-3 d-flex justify-content-between list"
+    >
+      <div>
+        <h5>{{ i + 1 }}. {{ el.titulo }}</h5>
+        <p>{{ el.descripcion }}</p>
+      </div>
+      <nb-button-group
           class="d-flex align-items-center justify-content-end p-0"
         >
           <button *ngIf="el?.grupal === '1'" nbButton class="border-0 shadow-sm me-2" nbTooltip="Administrar grupos" nbTooltipPlacement="top" nbTooltipStatus="primary"
@@ -101,7 +103,6 @@
             <nb-icon icon="trash-2-outline" status="danger" class="fs-4"></nb-icon>
           </button>
         </nb-button-group>
-      </li>
-    </ul>
-  </div>
+    </nb-list-item>
+  </nb-list>
 </nb-card>
