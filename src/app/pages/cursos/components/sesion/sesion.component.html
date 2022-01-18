@@ -25,14 +25,11 @@
               {{ sesion.orden_tema }} - {{ sesion.tema }}
             </small>
             <div class="d-flex align-items-center ms-1">
-              <!-- <div *ngFor="let element of sesion.elements"> -->
-              <!-- [element]="element" -->
               <app-element
                 [element]="sesion.elements"
                 (arrayElement)="arrayElement($event)"
                 (loadingsForm)="loadingsForm($event)"
               ></app-element>
-              <!-- </div> -->
               <nb-icon
                 class="fs-3 me-2"
                 icon="arrow-right"
@@ -62,12 +59,10 @@
   </nb-card-body>
 </nb-card>
 <nb-card *ngIf="arrayEl.length > 0" class="list-element">
-  <!-- <div *ngFor="let el of arrayEl; let i = index"> -->
-
   <nb-list>
     <nb-list-item
       *ngFor="let el of arrayEl; let i = index"
-      class="p-2 ps-4 d-flex justify-content-between list"
+      class="p-2 ps-3 d-flex justify-content-between list"
     >
       <div>
         <h5>{{ i + 1 }}. {{ el.titulo }}</h5>
@@ -91,11 +86,4 @@
       </nb-button-group>
     </nb-list-item>
   </nb-list>
-
-  <!-- <ul class="p-0 m-0">
-      <li class="ps-4 d-flex justify-content-between list">
-
-      </li>
-    </ul> -->
-  <!-- </div> -->
 </nb-card>

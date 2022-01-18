@@ -18,7 +18,7 @@ export class ElementComponent implements OnInit {
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   @Output() arrayElement: EventEmitter<any> = new EventEmitter();
 
-  clickedIndex: any;
+  clickedIndex: any = true;
   hoveredIndex: any;
 
   constructor(private generalService: GeneralService) {}
