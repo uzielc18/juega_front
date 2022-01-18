@@ -5,7 +5,7 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { AdminGroupsComponent } from '../../modals/admin-groups/admin-groups.component';
 import { HomeworkFormComponent } from '../../modals/homework-form/homework-form.component';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-sesion',
   templateUrl: './sesion.component.html',
@@ -179,5 +179,44 @@ export class SesionComponent implements OnInit {
         }
      });
     }
+  }
+  deleteElements(el:any) {
+    const serviceName = END_POINTS.base_back.elements;
+    if (el.id) {
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿ Desea eliminar ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+          if (result.isConfirmed) {
+            this.loading = true;
+            this.generalService.deleteNameId$(serviceName, el.id).subscribe(r => {
+              if (r.success) {
+
+                let valid = false;
+                if (this.sesion.elements.length>0) {
+                  valid =  this.sesion.elements.find((r:any) => r.type_element_id === el.type_element_id ? true : false);
+                  if (valid) {
+                    this.setCheck(el.type_element_id);
+                    this.listElements(el.topic_id, el.type_element_id);
+                  } else {
+                    this.arrayEl = [];
+                    this.validaExist.emit();
+                  }
+                }
+              }
+            }, () => { this.loading =false; }, () => { this.loading =false; });
+          }
+        });
+      }
   }
 }
