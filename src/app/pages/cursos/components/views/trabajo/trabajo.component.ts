@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { NbMenuItem } from '@nebular/theme';
-import { TrabajoModalComponent } from '../../../components/trabajo-modal/trabajo-modal.component';
+import { TrabajoModalComponent } from '../../trabajo-modal/trabajo-modal.component';
 
 @Component({
   selector: 'app-trabajo',

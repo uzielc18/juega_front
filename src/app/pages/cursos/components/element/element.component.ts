@@ -10,39 +10,40 @@ import { CursosService } from '../../services/cursos.service';
 })
 export class ElementComponent implements OnInit {
   @Input() element: any = [];
+  listElem: any;
+  ele: any;
   loading: boolean = false;
+  showList: any = false;
 
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   @Output() arrayElement: EventEmitter<any> = new EventEmitter();
 
-  clickedIndex: number = 0;
+  clickedIndex: any = true;
   hoveredIndex: any;
 
-  constructor(
-    private cursosService: CursosService,
-    private generalService: GeneralService
-  ) {}
+  constructor(private generalService: GeneralService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.addCheck();
+  }
+
+  elementStyle() {
+    return {
+      color: '#898989',
+    };
+  }
 
   elementStyleActive(element: any) {
     return {
-      'background-color': element.background,
-      color: element.color_active,
+      color: element.color_hover,
     };
   }
 
   elementStyleHover(element: any) {
     return {
-      'background-color': element.background,
-      color: element.color_active,
+      color: element.color_hover,
     };
   }
-
-  // selectedElement(element: any) {
-  //   this.cursosService.emitElement(element);
-  //   console.log(element)
-  // }
 
   listElements(topic: any, type: any) {
     const serviceName = END_POINTS.base_back.resourse + '/list-elements';
@@ -66,8 +67,24 @@ export class ElementComponent implements OnInit {
   }
 
   selectedElement(element: any) {
-    console.log('elelelelelelel', element);
-    this.listElements(element.topic_id, element.type_element_id);
-    // this.listElements(37, 1);
+    this.revisarCheck(element);
+  }
+
+  addCheck() {
+    return this.element.map((el: any) => {
+      let o = Object.assign({}, el);
+      o.check = false;
+    });
+  }
+
+  revisarCheck(element: any) {
+    if (element.check) {
+      element.check = false;
+      this.listElem = [];
+      this.arrayElement.emit(this.listElem);
+    } else {
+      element.check = true;
+      this.listElements(element.topic_id, element.type_element_id);
+    }
   }
 }

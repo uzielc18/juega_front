@@ -9,8 +9,8 @@
     <div class="ps-0">
       <div class="d-flex align-items-center">
         <div
-          class="d-flex flex-column align-items-center m-0 rounded-start"
-          style="background-color: #faf5f6; padding: 12px 20px 12px 20px"
+          class="d-flex flex-column align-items-center justify-content-center rounded-start"
+          style="background-color: #faf5f6; width: 80px; padding: 15px 0 15px 0"
         >
           <span class="fw-bold" style="font-size: 24px">{{
             unidad.fecha_tema | date: "dd"
@@ -25,14 +25,11 @@
               {{ sesion.orden_tema }} - {{ sesion.tema }}
             </small>
             <div class="d-flex align-items-center ms-1">
-              <!-- <div *ngFor="let element of sesion.elements"> -->
-              <div *ngFor="let element of sesion.elements">
-                <app-element
-                  [element]="element"
-                  (arrayElement)="arrayElement($event)"
-                  (loadingsForm)="loadingsForm($event)"
-                ></app-element>
-              </div>
+              <app-element
+                [element]="sesion.elements"
+                (arrayElement)="arrayElement($event)"
+                (loadingsForm)="loadingsForm($event)"
+              ></app-element>
               <nb-icon
                 class="fs-3 me-2"
                 icon="arrow-right"
