@@ -5,7 +5,7 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { AdminGroupsComponent } from '../../modals/admin-groups/admin-groups.component';
 import { HomeworkFormComponent } from '../../modals/homework-form/homework-form.component';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-sesion',
   templateUrl: './sesion.component.html',
@@ -156,11 +156,8 @@ export class SesionComponent implements OnInit {
     const type_element_id = type;
     this.loading = true;
 
-    this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe(
-        (data) => {
+    this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe((data) => {
           this.arrayEl = data.data || [];
-          // this.cursosService.selElement(this.listElem);
-          // this.arrayElement.emit(this.arrayEl);
         },
         () => {
           this.loading = false;
@@ -174,10 +171,42 @@ export class SesionComponent implements OnInit {
     if (this.sesion.elements.length>0) {
       this.sesion.elements.map((el: any) => {
         el.check = false;
-        if (el.type_element_id === type_element_id) {
+        if (Number(el.type_element_id) === Number(type_element_id)) {
           el.check = true;
         }
      });
     }
+  }
+  deleteElements(el:any) {
+    const serviceName = END_POINTS.base_back.elements;
+    if (el.id) {
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿ Desea eliminar ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+          if (result.isConfirmed) {
+            this.loading = true;
+            this.generalService.deleteNameId$(serviceName, el.id).subscribe(r => {
+              if (r.success) {
+                this.listElements(el.topic_id, el.type_element_id);
+                if (this.arrayEl.length<=0) {
+                  this.arrayEl = [];
+                  this.validaExist.emit();
+                }
+              }
+            }, () => { this.loading =false; }, () => { this.loading =false; });
+          }
+        });
+      }
   }
 }
