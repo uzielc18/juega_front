@@ -8,7 +8,6 @@ import { GeneralService } from 'src/app/providers';
 import { AsignaturesComponent } from './asignatures.component';
 import { AsignaturesHomeComponent } from './containers/asignatures-home.component';
 import { VCourseComponent } from './components/views/v-course/v-course.component';
-import { VListCoursesComponent } from './components/views/v-list-courses/v-list-courses.component';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 import { HomeworkFormComponent } from './components/modals/homework-form/homework-form.component';
 import { AdminGroupsComponent } from './components/modals/admin-groups/admin-groups.component';
@@ -25,12 +24,13 @@ import { VidioComponent } from './components/forms/f-elements/vidio/vidio.compon
 import { CarpetaComponent } from './components/forms/f-elements/carpeta/carpeta.component';
 import { SesionComponent } from './components/c-free/sesion/sesion.component';
 import { NavegacionComponent } from './components/c-free/navegacion/navegacion.component';
+import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
+import { VListCoursesComponent } from './components/views/v-list-courses/v-list-courses.component';
 
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
   VCourseComponent,
-  VListCoursesComponent,
   HomeworkFormComponent,
   AdminGroupsComponent,
   WorksComponent,
@@ -43,9 +43,11 @@ const COMPONENTS: any[] = [
   CarpetaComponent,
   SesionComponent,
   NavegacionComponent,
+  VListCoursesComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
+  NgDynamicBreadcrumbModule,
 ];
 const NGB_MODULES: any = [
   // NgbModule
@@ -62,6 +64,7 @@ const MODALS: any = [
   AdminGroupsComponent
 ];
 const NGX_MODULES: any = [
+
 ];
 const MODULES: any = [
   PrepareFileProModule,
