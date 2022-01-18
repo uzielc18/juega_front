@@ -81,7 +81,7 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
     const breadcrumbs  =  [
       {
         label: 'Asignaturas',
-        url: '/pages/asignaturas'
+        url: ''
       },
     ];
     this.ngDynamicBreadcrumbService.updateBreadcrumb(breadcrumbs);
