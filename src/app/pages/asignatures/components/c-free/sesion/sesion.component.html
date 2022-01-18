@@ -31,7 +31,7 @@
                 <tbody>
                   <tr>
                     <td *ngFor="let elem of sesion?.elements; let i = index" style="width: 1px; padding-top: 0px;" class="text-center">
-                      <label class="label" style="font-size: 9px">{{ elem.realizo }}-{{ elem.count }}</label><br>
+                      <label class="label" style="font-size: 9px">{{ elem.realizo }}-{{ (arrayEl.length>0 && elem.type_element_id === arrayEl[0].type_element_id) ? arrayEl.length : elem.count }}</label><br>
                       <nb-icon  nbTooltip="{{ elem.nombre }}" class="me-2"
                       (click)="selectedElement(elem)" (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null" [ngStyle]="
                         clickedIndex === elem.check

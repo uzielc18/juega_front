@@ -3,18 +3,18 @@
     <label class="label">Url del vídeo (Presione el botón, después de añadir el link)</label>
     <nb-form-field>
     <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una url" (keyup)="valueLink()"
-    [status]="(formHeader.hasError('required', ['url_externo'])) === true ? 'primary' : 'basic'" formControlName="url_externo"/>
-    <button nbSuffix nbButton status="primary" size="small" [disabled]="!formHeader.value.url_externo" (click)="procesar()">
+    [status]="(formHeader.hasError('required', ['url_externa'])) === true ? 'primary' : 'basic'" formControlName="url_externa"/>
+    <button nbSuffix nbButton status="primary" size="small" [disabled]="!formHeader.value.url_externa" (click)="procesar()">
       <nb-icon  icon="link-2-outline"  pack="eva"></nb-icon></button>
 
     </nb-form-field>
-    <control-messages [control]="formHeader.get('url_externo')"></control-messages>
+    <control-messages [control]="formHeader.get('url_externa')"></control-messages>
   </div>
   <div>
     <label class="label">Orígen</label>
     <div class="d-flex text-center">
         <div *ngFor="let item of listIcons" >
-          <button nbButton  [status]="item.checked === false ? 'basic' : 'primary'" [ghost]="item.checked === false ? true : false" [disabled]="true"
+          <button nbButton  [ghost]="item.checked === false ? true : false" [disabled]="true"
           [ngStyle]="{'border-color': item.checked === true ? 'brown' : ''}"
           size="small" (click)="valueButtom(item)">
             <img [src]="item.link" height="20px" alt="">&nbsp;{{item.name}}
@@ -95,7 +95,7 @@
 
       <div *ngIf="options === 'S'">
 
-        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)"></app-more-options>
+        <app-more-options [tipo]="formHeader.value.tipo" (formsValues)="formsValues($event)" [code]="code" [setValues]="settValuesMore"></app-more-options>
       </div>
   </div>
   <br>
@@ -103,6 +103,6 @@
     <button nbButton outline status="primary" class="me-2" (click)="closeModal()">
       Cancelar
     </button>
-    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">Añadir actividad</button>
+    <button nbButton status="primary" [disabled]="validCampos" (click)="saveInformtion()">{{code === 'NEW' ? 'Añadir' : 'Modificar'}} actividad</button>
   </div>
 </form>

@@ -35,5 +35,8 @@ export class VCourseComponent implements OnInit {
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
   }
+  validaExist() {
+    this.getUnidades();
+  }
 }
 
