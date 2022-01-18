@@ -75,7 +75,7 @@ export class AsignaturesHomeComponent implements OnInit {
     if (id) {
       this.generalService.nameId$(serviceName, id).subscribe((data:any) => {
         if (data.success) {
-          console.log('Si pado');
+          console.log('Si pasó');
           this.emitEventsService.valuesRolSem$.emit(this.form.value); //Guardar valores en la cabecera
         }
       });
