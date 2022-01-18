@@ -22,61 +22,53 @@ export class SesionComponent implements OnInit {
   ngOnInit(): void {}
 
   open() {
-    this.dialogService
-      .open(HomeworkFormComponent, {
-        dialogClass: 'dialog-limited-height',
-        context: {
-          topics: this.sesion,
-          unidad: this.unidad,
-          curso: this.curso,
-          code: 'NEW',
-          item: '',
-        },
-        closeOnBackdropClick: false,
-        closeOnEsc: false,
-      })
-      .onClose.subscribe((result) => {
-        if (result.value_close === 'ok') {
-          if (
-            result.response &&
-            result.response.id &&
-            result.value.grupal === '1'
-          ) {
-            console.log(result, 'que tenemos');
-            // this.openGroups(result.response);
-            // const response = {
-            //   id: 12, // id del elemento.
-            //   course_id: this.curso.id,
-            // }
-            // this.openGroups(response);
+    this.dialogService.open(HomeworkFormComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        topics: this.sesion,
+        unidad: this.unidad,
+        curso: this.curso,
+        code: 'NEW',
+        item: '',
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result.value_close === 'ok') {
+        if (result.response && result.response.id && result.value.grupal === '1') {
+          // console.log(result, 'que tenemos');
+          // this.openGroups(result.response);
+          const params = {
+            id: result.response.id, // id del elemento.
+            course_id: this.curso.id,
           }
-        }
-      });
+          this.openGroups(params);
+      }
+    }
+    });
   }
 
   // groupBy() {
-  // this.uniqueElements = this.sesion.elements.reduce((r: any, a: any) => {
-  // r[a.type_element_id] = [...(r[a.type_element_id] || []), a];
-  // return r;
-  // }, {});
-  // console.log('elementos unicos', this.uniqueElements);
+  //   this.uniqueElements = this.sesion.elements.reduce((r: any, a: any) => {
+  //     r[a.type_element_id] = [...(r[a.type_element_id] || []), a];
+  //     return r;
+  //   }, {});
+  //   // console.log('elementos unicos', this.uniqueElements);
   // }
-  openGroups(response: any) {
-    this.dialogService
-      .open(AdminGroupsComponent, {
-        dialogClass: 'dialog-limited-height',
-        context: {
-          curso: this.curso,
-          response: response,
-        },
-        closeOnBackdropClick: false,
-        closeOnEsc: false,
-      })
-      .onClose.subscribe((result) => {
-        if (result === 'ok') {
-          // this.filtrar();
-        }
-      });
+  openGroups(params:any) {
+    this.dialogService.open(AdminGroupsComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        curso: this.curso,
+        response: params,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        // this.filtrar();
+      }
+    });
   }
 
   arrayElement(event: any) {

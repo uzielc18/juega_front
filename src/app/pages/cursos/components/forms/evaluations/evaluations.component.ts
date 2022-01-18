@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDateService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
@@ -22,8 +23,13 @@ export class EvaluationsComponent implements OnInit {
   @Input() code: any;
   @Input() valueMenu: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
-  constructor(private formBuilder: FormBuilder, private generalServi: GeneralService,
-    public datepipe: DatePipe) { }
+  min: any = Date;
+  constructor(private formBuilder: FormBuilder, private generalServi: GeneralService, dateService: NbDateService<Date>,
+    public datepipe: DatePipe) {
+      let date:any = Date;
+      date = dateService.today();
+      this.min = dateService.addDay(date, 0);
+    }
 
   ngOnInit(): void {
     this.fieldReactive();

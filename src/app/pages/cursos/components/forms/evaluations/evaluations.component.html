@@ -20,7 +20,7 @@
       <input nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="fechaInicio"
       [status]="(formHeader.hasError('required', ['fecha_inicio'])) === true ? 'primary' : 'basic'" formControlName="fecha_inicio"/>
       <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
-      <nb-datepicker #fechaInicio format="dd/MM/yyyy"></nb-datepicker>
+      <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min"></nb-datepicker>
       <control-messages [control]="formHeader.get('fecha_inicio')"></control-messages>
       </nb-form-field>
       <nb-form-field class="hour-input ms-auto">
@@ -33,12 +33,13 @@
   </div>
   <div style="padding-top: 4px;">
     <label class="label">Fecha y hora de término</label>
+    <fieldset [disabled]="!formHeader.value.fecha_inicio">
     <div class="d-flex">
       <nb-form-field  class="date-input">
       <input nbInput placeholder="Fecha Termino" fullWidth [nbDatepicker]="fechaTermino"
       [status]="(formHeader.hasError('required', ['fecha_fin'])) === true ? 'primary' : 'basic'" formControlName="fecha_fin"/>
       <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
-      <nb-datepicker #fechaTermino format="dd/MM/yyyy"></nb-datepicker>
+      <nb-datepicker #fechaTermino format="dd/MM/yyyy" [min]="formHeader.value.fecha_inicio"></nb-datepicker>
       <control-messages [control]="formHeader.get('fecha_fin')"></control-messages>
       </nb-form-field>
       <nb-form-field class="hour-input ms-auto">
@@ -48,6 +49,7 @@
       <nb-timepicker #horaFin></nb-timepicker>
       </nb-form-field>
     </div>
+  </fieldset>
   </div>
   <div style="padding-top: 4px;">
     <label class="label">

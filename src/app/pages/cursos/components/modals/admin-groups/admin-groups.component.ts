@@ -13,6 +13,7 @@ export class AdminGroupsComponent implements OnInit {
   formGroupManual: any = FormGroup;
   formGenerar: any = FormGroup;
   formImportar: any = FormGroup;
+  formGroup: any = FormGroup;
   @Input() item: any;
   @Input() code: any;
   @Input() curso:any;
@@ -27,53 +28,7 @@ export class AdminGroupsComponent implements OnInit {
   };
   listGroups:any = [];
   type: any;
-  alumnsPending: any = [
-    {
-      nombre: 'Crsitian Huarcaya Quilla',
-      checked: false,
-      id: 1,
-    },
-    {
-      nombre: 'Carlos Calderón Huarcaya',
-      checked: false,
-      id: 2,
-    },
-    {
-      nombre: 'Juan Peréz Huarcaya',
-      checked: false,
-      id: 3,
-    },
-    {
-      nombre: 'Felipe peso Lucas',
-      checked: false,
-      id: 4,
-    },
-    {
-      nombre: 'Sebastian rodriguez jaimes Acaya',
-      checked: false,
-      id: 5,
-    },
-    {
-      nombre: 'Gonzalo Higuain Huarcaya',
-      checked: false,
-      id: 6,
-    },
-    {
-      nombre: 'Edmundo Caracagno Huarcaya',
-      checked: false,
-      id: 7,
-    },
-    {
-      nombre: 'Eusebio Goñi Huarcaya',
-      checked: false,
-      id: 8,
-    },
-    {
-      nombre: 'Teofilo Cubillas Saavedra Huarcaya',
-      checked: false,
-      id: 9,
-    },
-  ];
+  alumnsPending: any = [];
   partidos:any = {
     array_A: [],
     array_B: [],
@@ -83,6 +38,7 @@ export class AdminGroupsComponent implements OnInit {
   @ViewChild('item2') tabG:any;
   @ViewChild('item3') tabI:any;
   listTrabajos:any = [];
+  memberGroup: any = [];
   constructor(public activeModal: NbDialogRef<AdminGroupsComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService,
     private dialogService: NbDialogService) { }
 
@@ -90,8 +46,8 @@ export class AdminGroupsComponent implements OnInit {
     this.fieldGrupManual();
     this.fieldGenerar();
     this.fieldImportar();
+    this.fieldGrupo();
     this.getListGroups();
-    this.partirArrayPending();
   }
   private fieldGrupManual() {
     const controls = {
@@ -114,7 +70,20 @@ export class AdminGroupsComponent implements OnInit {
     };
     this.formImportar = this.formBuilder.group(controls);
   }
+  private fieldGrupo() {
+    const controls = {
+      nombre_grupo: [''],
+      group_id: ['']
+    };
+    this.formGroup = this.formBuilder.group(controls);
+  }
   getListGroups() {
+    this.fieldGrupo();
+    this.memberGroup = [];
+    this.alumnsPending = [];
+    this.partidos.array_A = [];
+    this.partidos.array_B = [];
+
     const serviceName = 'list-group';
     if (this.response.id) { //element id
       this.loading = true;
@@ -161,6 +130,22 @@ export class AdminGroupsComponent implements OnInit {
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
   }
+  getListMemberSinGroup() {
+    this.alumnsPending = [];
+    const serviceName = 'list-sin-group';
+    if (this.response.id) { //element id
+      this.loading = true;
+      this.generalServi.nameIdAndId$(serviceName, this.response.course_id, this.response.id).subscribe((res:any) => {
+        this.alumnsPending = res.data || [];
+        if (this.alumnsPending.length>0) {
+          this.alumnsPending.map((res:any) => {
+            res.checked = false;
+          });
+          this.partirArrayPending();
+        }
+      }, () => { this.loading =false; }, () => { this.loading =false; });
+    }
+  }
   getListTrabs() {
     this.listTrabajos = [];
     const serviceName = 'importar-group';
@@ -168,6 +153,15 @@ export class AdminGroupsComponent implements OnInit {
       this.loading = true;
       this.generalServi.nameId$(serviceName, this.response.course_id).subscribe((res:any) => {
         this.listTrabajos = res.data || [];
+      }, () => { this.loading =false; }, () => { this.loading =false; });
+    }
+  }
+  getListMembGroup(id_grup:any) {
+    const serviceName = 'list-members-group';
+    if (id_grup) { //element id
+      this.loading = true;
+      this.generalServi.nameId$(serviceName, id_grup).subscribe((res:any) => {
+        this.memberGroup = res.data || [];
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
   }
@@ -192,7 +186,7 @@ export class AdminGroupsComponent implements OnInit {
       }
       this.caldatosGrup();
     }
-    console.log("Arreglo de arreglos: ", this.arregloDeArreglos);
+    // console.log("Arreglo de arreglos: ", this.arregloDeArreglos);
   }
   valueMembers() {
     this.arregloDeArreglos = [];
@@ -254,10 +248,10 @@ export class AdminGroupsComponent implements OnInit {
 
       this.partidos.array_A = this.alumnsPending.splice(0,(this.alumnsPending.length/2));
 
-      console.log("Mitad 1 --> ",this.partidos.array_A);
+      // console.log("Mitad 1 --> ",this.partidos.array_A);
 
       this.partidos.array_B = this.alumnsPending.splice(0,this.alumnsPending.length);
-      console.log("Mitad 2 -->",this.partidos.array_B);
+      // console.log("Mitad 2 -->",this.partidos.array_B);
     }
   }
   setTab() {
@@ -296,7 +290,8 @@ export class AdminGroupsComponent implements OnInit {
   }
   updateGruop(item:any) {
     this.recorrerGroup();
-    item.color = '#F9DDD9';
+    item.color = '#fce9e6';
+    item.checks = true;
     this.formGroupManual.patchValue({
       opc: 'U',
       id_group: item.id,
@@ -308,8 +303,15 @@ export class AdminGroupsComponent implements OnInit {
     this.recorrerGroup();
   }
   recorrerGroup() {
+    this.fieldGrupo();
+    this.memberGroup = [];
+    this.alumnsPending = [];
+    this.partidos.array_A = [];
+    this.partidos.array_B = [];
+
     this.listGroups.map((r:any) => {
       r.color = '';
+      r.checks = false;
     });
   }
   deleteGroup(item:any) {
@@ -358,7 +360,6 @@ export class AdminGroupsComponent implements OnInit {
     // console.log(arrays, 'array', this.arregloDeArreglos, 'arrardearray');
       if (arrays.length>0) {
         this.loading = true;
-
           this.generalServi.addNameData$(serviceName, arrays).subscribe(r => {
             if (r.success) {
               this.getListGroups();
@@ -388,67 +389,117 @@ export class AdminGroupsComponent implements OnInit {
           }, () => { this.loading =false; }, () => { this.loading =false; });
       }
   }
-  // saveGM() {
-  //   this.listGroups.push({nombre:'ssss'});
-  //   this.setTab();
-  //   let serviceName = '';
-  //   let params:any = '';
+  viewMembers(item?:any) {
+    item.color = '#fce9e6';
+    this.formGroup.patchValue({
+      nombre_grupo: item.nombre,
+      group_id:item.id,
+    })
+    this.getListMemberSinGroup();
+    this.getListMembGroup(item.id); // id grupo
+  }
+  get validPending() {
+    if (this.partidos.array_A.length <= 0 && this.partidos.array_B.length <= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  get validPAna() {
+    let arraySelected = [];
+    if (this.partidos.array_A.length > 0) {
+      this.partidos.array_A.map((res:any) => {
+        if (res.checked) {
+          arraySelected.push(res);
+        }
+      })
+    }
+    if (this.partidos.array_B.length > 0) {
+      this.partidos.array_B.map((res:any) => {
+        if (res.checked) {
+          arraySelected.push(res);
+        }
+      })
+    }
+    return arraySelected.length > 0 ? false : true;
+  }
 
-  //   if (this.type === 'GM') {
-  //     serviceName = '/groups';
-  //     params = {
-  //       nombre: this.formGroupManual.value.nombre_grupo,
-  //       element_id: this.response.id,
-  //       course_id: this.response.course_id,
-  //     }
-  //   }
-  //   if (this.type === 'G') {
-  //     serviceName = '/generar-groups';
-  //     params = {
-  //       array: this.arregloDeArreglos,
-  //       element_id: this.response.id,
-  //       course_id: this.response.course_id,
-  //     }
-  //   }
-  //   if (this.type === 'I') {
-  //     serviceName = '/importar-groups';
-  //     params = {
-  //       id_trabajo: this.formImportar.value.id_trabajo,
-  //       element_id: this.response.id,
-  //       course_id: this.response.course_id,
-  //     }
-  //   }
-  //     // this.loading = true;
-  //     // this.generalServi.addNameData$(serviceName, params).subscribe(r => {
-  //     //   if (r.success) {
-  //     //   }
-  //     // }, () => { this.loading =false; }, () => { this.loading =false; });
-  //   console.log(params);
-
-  // }
   anadirPending() {
+    const serviceName = 'groupMembers';
     let array:any = [];
     if (this.partidos.array_A.length>0) {
       this.partidos.array_A.map((res:any) => {
         if (res.checked) {
-          array.push(res);
+          const datoA = {
+            group_id: this.formGroup.value.group_id,
+            codigo: res.codigo,
+            persons_student_id: res.persons_student_id,
+          }
+          array.push(datoA);
         }
       });
     }
     if (this.partidos.array_B.length>0) {
       this.partidos.array_B.map((res:any) => {
         if (res.checked) {
-          array.push(res);
+          const datoB = {
+            group_id: this.formGroup.value.group_id,
+            codigo: res.codigo,
+            persons_student_id: res.persons_student_id,
+          }
+          array.push(datoB);
         }
       });
     }
+    if (array.length>0) {
+      this.loading = true;
+      this.generalServi.addNameData$(serviceName, array).subscribe(r => {
+        if (r.success) {
+          this.getListMemberSinGroup();
+          this.getListMembGroup(this.formGroup.value.group_id); // id grupo
+            this.calculaNMember();
+        }
+      }, () => { this.loading =false; }, () => { this.loading =false; });
+    }
+  }
+  calculaNMember() {
+    setTimeout(() => {
+      this.listGroups.map((a:any) => {
+        if (this.formGroup.value.group_id === a.id) {
+          a.group_members_count = this.memberGroup.length;
+        }
+      });
+    }, 10000);
+  }
+  deleteMembersGroup(item:any) {
+    const serviceName = 'groupMembers';
+    if (item.id) {
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿ Desea eliminar ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+          if (result.isConfirmed) {
+            this.loading = true;
+            this.generalServi.deleteNameId$(serviceName, item.id).subscribe(r => {
+              if (r.success) {
+                this.getListMembGroup(this.formGroup.value.group_id); // id grupo
+                this.calculaNMember();
 
-    const params:any = {
-      list: array || [],
-    };
-    // if (array.length>0) {
-      console.log(params, 'jejej soy la union de listas');
-    // }
+              }
+            }, () => { this.loading =false; }, () => { this.loading =false; });
+          }
+        });
+      }
   }
 
 }
