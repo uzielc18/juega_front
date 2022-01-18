@@ -25,11 +25,9 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fieldReactive();
-
     this.nombreSubscription = this.emitEventsService.valuesRolSem$.subscribe(value => { // para emitir evento desde la cabecera
       if (value && value.rol && value.semestre) {
         this.theRolSemestre =  value;
-        console.log(value, 'valuesss');
         setTimeout(() => {
           this.getCourses();
         }, 1000);
@@ -44,6 +42,15 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
       tipo: ['2']
     };
     this.form = this.formBuilder.group(controls);
+    this.emitEventsService.castRolSemester.subscribe(value => {
+      if (value && value.rol && value.semestre) {
+        this.theRolSemestre =  value;
+        setTimeout(() => {
+          this.getCourses();
+        }, 1000);
+      }
+    });
+
   }
   cambioTypo($event:any) {
     this.form.patchValue({
@@ -54,8 +61,8 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
     const serviceName = END_POINTS.base_back.resourse + '/enrollment-student';
     this.loading = true;
     this.generalService.nameAll$(serviceName).subscribe((res:any) => {
-      this.cursosDocente = res.data.cursos_docente;
-      this.cursosEstudiante = res.data.cursos_estudiante;
+      this.cursosDocente = res.data.cursos_docente || [];
+      this.cursosEstudiante = res.data.cursos_estudiante || [];
     }, () => { this.loading =false; }, () => { this.loading =false; });
   }
   navigate(item:any): any {

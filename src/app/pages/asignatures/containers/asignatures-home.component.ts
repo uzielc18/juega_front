@@ -63,7 +63,8 @@ export class AsignaturesHomeComponent implements OnInit {
      });
   }
   changeRol() {
-
+    this.emitEventsService.valuesRolSem$.emit(this.form.value); //Guardar valores en la cabecera
+    this.emitEventsService.asingDatos(this.form.value);
   }
   changeSemestre($event:any) {
     this.updateSemestre($event);
@@ -75,8 +76,8 @@ export class AsignaturesHomeComponent implements OnInit {
     if (id) {
       this.generalService.nameId$(serviceName, id).subscribe((data:any) => {
         if (data.success) {
-          console.log('Si pasó');
           this.emitEventsService.valuesRolSem$.emit(this.form.value); //Guardar valores en la cabecera
+          this.emitEventsService.asingDatos(this.form.value);
         }
       });
     }
