@@ -1,23 +1,15 @@
-<nb-card
-  class="mb-2 cardd"
-  [nbSpinner]="loading"
-  nbSpinnerStatus="primary"
-  nbSpinnerSize="large"
-  nbSpinnerMessage="Procesando información"
->
+<nb-card class="mb-2 cardd" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+  nbSpinnerMessage="Procesando información">
   <nb-card-body class="p-0">
     <div class="ps-0">
       <div class="d-flex align-items-center" style="position: relative;">
-        <div
-          class="d-flex flex-column align-items-center justify-content-center rounded-start"
-          style="background-color: #faf5f6; width: 80px; height: 100%;"
-        >
+        <div class="d-flex flex-column align-items-center justify-content-center rounded-start"
+          style="background-color: #faf5f6; width: 80px; height: 100%;">
           <span class="fw-bold" style="font-size: 24px">{{
             sesion.fecha_tema | date: "dd"
-          }}</span
-          ><small style="font-size: 14px; color: #898989">{{
+            }}</span><small style="font-size: 14px; color: #898989">{{
             sesion.fecha_tema | date: "MMM" | titlecase
-          }}</small>
+            }}</small>
         </div>
         <div class="d-flex justify-content-between align-items-center mt-2">
           <div class="d-flex flex-column ps-3">
@@ -27,46 +19,39 @@
             <div class="d-flex align-items-center ms-1">
 
               <div class="table-responsive">
-              <table class="table table-sm">
-                <tbody>
-                  <tr>
-                    <td *ngFor="let elem of sesion?.elements; let i = index" style="width: 1px; padding-top: 0px;" class="text-center">
-                      <label class="label" style="font-size: 9px">{{ elem.realizo }}-{{ (arrayEl.length>0 && elem.type_element_id === arrayEl[0].type_element_id) ? arrayEl.length : elem.count }}</label><br>
-                      <nb-icon  nbTooltip="{{ elem.nombre }}" class="me-2"
-                      (click)="selectedElement(elem)" (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null" [ngStyle]="
+                <table class="table table-sm">
+                  <tbody>
+                    <tr>
+                      <td *ngFor="let elem of sesion?.elements; let i = index" style="width: 1px; padding-top: 0px;"
+                        class="text-center">
+                        <label class="label" style="font-size: 9px">{{ elem.realizo }}-{{ (arrayEl.length>0 &&
+                          elem.type_element_id === arrayEl[0].type_element_id) ? arrayEl.length : elem.count
+                          }}</label><br>
+                        <nb-icon nbTooltip="{{ elem.nombre }}" class="me-2" (click)="selectedElement(elem)"
+                          (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null" [ngStyle]="
                         clickedIndex === elem.check
                           ? elementStyleActive(elem)
                           : elementStyle() && hoveredIndex === i
                           ? elementStyleHover(elem)
                           : elementStyle()
                       " [icon]="elem.icono">
-                    </nb-icon>
-                    <!-- <br>
+                        </nb-icon>
+                        <!-- <br>
                     <label class="label" style="font-size: 7px">{{ elem.nombre }}</label> -->
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <nb-icon
-                class="fs-3 me-2"
-                icon="arrow-right"
-                style="color: #6dcb96"
-              ></nb-icon>
+              <nb-icon class="fs-3 me-2" icon="arrow-right" style="color: #6dcb96"></nb-icon>
             </div>
           </div>
         </div>
-        <div
-          class="d-flex align-items-center justify-content-end p-0 ms-auto pe-3"
-        >
+        <div class="d-flex align-items-center justify-content-end p-0 ms-auto pe-3">
           <div class="ms-6">
-            <nb-button-group ghost>
-              <button nbButton class="me-2 shadow-sm">
-                <nb-icon icon="edit-2-outline" class="fs-4"></nb-icon>
-              </button>
-            </nb-button-group>
             <nb-button-group>
-              <button (click)="newElemnts()" nbButton class="shadow-sm"  nbTooltip="Crear elementos" nbTooltipPlacement="top" nbTooltipStatus="primary">
+              <button (click)="newElemnts()" nbButton class="shadow-sm" nbTooltip="Crear elementos"
+                nbTooltipPlacement="top" nbTooltipStatus="primary">
                 <nb-icon icon="plus" status="primary" class="fs-4"></nb-icon>
               </button>
             </nb-button-group>
@@ -78,31 +63,29 @@
 </nb-card>
 <nb-card *ngIf="arrayEl.length > 0" class="list-element">
   <nb-list>
-    <nb-list-item
-      *ngFor="let el of arrayEl; let i = index"
-      class="p-2 ps-3 d-flex justify-content-between list"
-    >
+    <nb-list-item *ngFor="let el of arrayEl; let i = index" class="p-2 ps-3 d-flex justify-content-between list">
       <div>
         <h5>{{ i + 1 }}. {{ el.titulo }}</h5>
         <p>{{ el.descripcion }}</p>
       </div>
-      <nb-button-group
-          class="d-flex align-items-center justify-content-end p-0"
-        >
-          <button *ngIf="el?.grupal === '1'" nbButton class="border-0 shadow-sm me-2" nbTooltip="Administrar grupos" nbTooltipPlacement="top" nbTooltipStatus="primary"
-          (click)="adminGrupal(el)">
-            <nb-icon icon="people-outline" status="primary" class="fs-4"></nb-icon>
-          </button>
-          <button nbButton class="border-0 shadow-sm me-2" nbTooltip="Ver" nbTooltipPlacement="top" nbTooltipStatus="success">
-            <nb-icon icon="eye-outline" status="success" class="fs-4"></nb-icon>
-          </button>
-          <button nbButton class="border-0 shadow-sm me-2" nbTooltip="Editar" nbTooltipPlacement="top" nbTooltipStatus="info" (click)="updateElements(el)">
-            <nb-icon icon="edit-2-outline" status="info" class="fs-4" ></nb-icon>
-          </button>
-          <button nbButton class="border-0 shadow-sm me-3" nbTooltip="Eliminar" nbTooltipPlacement="top" nbTooltipStatus="danger" (click)="deleteElements(el)">
-            <nb-icon icon="trash-2-outline" status="danger" class="fs-4"></nb-icon>
-          </button>
-        </nb-button-group>
+      <nb-button-group class="d-flex align-items-center justify-content-end p-0">
+        <button *ngIf="el?.grupal === '1'" nbButton class="border-0 shadow-sm me-2" nbTooltip="Administrar grupos"
+          nbTooltipPlacement="top" nbTooltipStatus="primary" (click)="adminGrupal(el)">
+          <nb-icon icon="people-outline" status="primary" class="fs-4"></nb-icon>
+        </button>
+        <button nbButton class="border-0 shadow-sm me-2" nbTooltip="Ver" nbTooltipPlacement="top"
+          nbTooltipStatus="success" (click)="navigate(el)">
+          <nb-icon icon="eye-outline" status="success" class="fs-4"></nb-icon>
+        </button>
+        <button nbButton class="border-0 shadow-sm me-2" nbTooltip="Editar" nbTooltipPlacement="top"
+          nbTooltipStatus="info" (click)="updateElements(el)">
+          <nb-icon icon="edit-2-outline" status="info" class="fs-4"></nb-icon>
+        </button>
+        <button nbButton class="border-0 shadow-sm me-3" nbTooltip="Eliminar" nbTooltipPlacement="top"
+          nbTooltipStatus="danger" (click)="deleteElements(el)">
+          <nb-icon icon="trash-2-outline" status="danger" class="fs-4"></nb-icon>
+        </button>
+      </nb-button-group>
     </nb-list-item>
   </nb-list>
 </nb-card>

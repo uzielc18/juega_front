@@ -6,6 +6,8 @@ import { END_POINTS } from 'src/app/providers/utils';
 import { AdminGroupsComponent } from '../../modals/admin-groups/admin-groups.component';
 import { HomeworkFormComponent } from '../../modals/homework-form/homework-form.component';
 import Swal from 'sweetalert2';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EmitEventsService } from '../../../../../shared/services/emit-events.service';
 @Component({
   selector: 'app-sesion',
   templateUrl: './sesion.component.html',
@@ -22,7 +24,13 @@ export class SesionComponent implements OnInit {
   clickedIndex: any = true;
   hoveredIndex: any;
   @Output() validaExist = new EventEmitter<any>();
-  constructor(private dialogService: NbDialogService, private generalService: GeneralService) {}
+  constructor(
+    private dialogService: NbDialogService,
+    private generalService: GeneralService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private emitEventsService: EmitEventsService
+  ) {}
 
   ngOnInit(): void {
   }
@@ -210,5 +218,8 @@ export class SesionComponent implements OnInit {
           }
         });
       }
+  }
+  navigate(element:any): any {
+    this.router.navigate([`../asignaturas/course/${this.curso.id_carga_curso_docente}/${(element.tipo).toLowerCase()}/${element.id}`], { relativeTo: this.activatedRoute.parent});
   }
 }
