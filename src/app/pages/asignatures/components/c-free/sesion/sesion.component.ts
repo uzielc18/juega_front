@@ -199,10 +199,12 @@ export class SesionComponent implements OnInit {
             this.generalService.deleteNameId$(serviceName, el.id).subscribe(r => {
               if (r.success) {
                 this.listElements(el.topic_id, el.type_element_id);
-                if (this.arrayEl.length<=0) {
-                  this.arrayEl = [];
-                  this.validaExist.emit();
-                }
+                setTimeout(() => {
+                  if (this.arrayEl.length<=0) {
+                    this.arrayEl = [];
+                    this.validaExist.emit();
+                  }
+                }, 5000);
               }
             }, () => { this.loading =false; }, () => { this.loading =false; });
           }
