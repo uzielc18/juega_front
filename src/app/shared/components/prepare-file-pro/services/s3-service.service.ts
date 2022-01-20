@@ -24,11 +24,11 @@ export class S3ServiceService {
     const headers = new HttpHeaders(
       {
         'Content-Type': contenttype,
+        'Accept': '*/*',
+        // 'Content-Type': 'multipart/form-data',
+
       });
-    const req = new HttpRequest(
-      'PUT',
-      url,
-      fileFormData,
+    const req = new HttpRequest('PUT', url, fileFormData,
       {
         headers: headers,
       });

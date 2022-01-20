@@ -16,17 +16,22 @@
         ></app-menu-elements>
       </div>
       <div class="{{code === 'NEW' ? 'col-8' : 'col-12'}} p-3">
-        <div *ngIf="element" class="col px-0">
+        <div *ngIf="element" class="col-md-12 px-0 d-flex align-items-center justify-content-between">
           <div class="d-flex align-items-center">
             <nb-icon
               [icon]="element?.icono"
               [ngStyle]="{ color: element?.background }"
               class="fs-1 me-2"
             ></nb-icon>
-            <div class="">
+            <div>
               <p class="fw-bold fs-6 mb-0">{{ element?.nombre }}</p>
               <small>Completa los datos a continuación</small>
             </div>
+          </div>
+          <div>
+            <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
         </div>
 

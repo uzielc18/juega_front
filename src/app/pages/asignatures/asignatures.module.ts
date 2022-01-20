@@ -26,6 +26,9 @@ import { SesionComponent } from './components/c-free/sesion/sesion.component';
 import { NavegacionComponent } from './components/c-free/navegacion/navegacion.component';
 import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
 import { VListCoursesComponent } from './components/views/v-list-courses/v-list-courses.component';
+import { RubricasModule } from 'src/app/shared/components/rubricas/rubricas.module';
+import { ListViewFilesModule } from 'src/app/shared/components/list-view-files/list-view-files.module';
+import { MenuElementsChildModule } from 'src/app/shared/components/menu-elements-child/menu-elements-child.module';
 
 const COMPONENTS: any[] = [
   AsignaturesComponent,
@@ -70,6 +73,9 @@ const MODULES: any = [
   PrepareFileProModule,
   MoreOptionsModule,
   MenuElementsModule,
+  RubricasModule,
+  ListViewFilesModule,
+  MenuElementsChildModule
 ];
 
 @NgModule({

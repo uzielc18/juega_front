@@ -1,0 +1,25 @@
+<div>
+  <strong>Rúbrica</strong> <label class="label">&nbsp;(Criterios de evaluación)</label>
+  <div class="teble-responsive">
+    <table class="table table-sm table-striped">
+      <thead>
+        <tr style="font-size: 12px;">
+          <th>Criterios / Niveles</th>
+          <th class="excelente">Excelente</th>
+          <th class="bueno">Bueno</th>
+          <th class="regular">Regular</th>
+          <th class="deficiente">Deficiente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listRubricas; let i = index" style="font-size: 11px;">
+          <td>{{item.nombre}}</td>
+          <td>{{item.excelente}}</td>
+          <td>{{item.bueno}}</td>
+          <td>{{item.regular}}</td>
+          <td>{{item.deficiente}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
