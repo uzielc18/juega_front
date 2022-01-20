@@ -42,7 +42,7 @@
       color: #A82133;
       font-weight: bold;
       margin: 0;
-      margin-right: 5px;
+      display: inline-block;
     }
 
     span {
@@ -56,6 +56,8 @@
       border-radius: 6px;
       font-size: 14px;
       font-weight: bold;
+      width: 173px;
+      height: 30px;
 
       &:hover {
         background-color: #ebdee1;

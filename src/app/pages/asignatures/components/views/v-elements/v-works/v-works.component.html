@@ -21,11 +21,11 @@
               secondsLeft | i18nPlural:secondsMap }}</span>
         </div>
         <div class="work work-expired m-4" *ngIf="tiempo_vencido">
-          <p>Hola {{ userInfo.name }}!,</p><span>Lo sentimos tu Trabajo: {{ element?.titulo }} acaba de caducar hace {{ expiredDays |
+          <span><p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu Trabajo: {{ element?.titulo }} acaba de caducar hace {{ expiredDays |
             i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
               expiredSeconds | i18nPlural:secondsMap }}</span>
           <div class="ms-auto d-flex align-items-center">
-            <button class="d-flex align-items-center me-2 px-3 py-1 work-expired-button">
+            <button class="d-flex align-items-center mx-3 py-1 work-expired-button">
               <nb-icon class="me-2" icon="info"></nb-icon>
               <span>Solicitar apertura</span>
             </button>

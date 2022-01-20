@@ -1,1 +1,23 @@
-<p>v-document works!</p>
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+  <div class="container m-0">
+    <div class="row">
+      <div class="col-9 p-0">
+        <div class="d-flex align-items-center p-4">
+          <nb-icon class="me-1" [ngStyle]="{ color: element?.type_element?.color_hover, width: '56px', height: '48px' }"
+            [icon]="element?.type_element?.icono">
+          </nb-icon>
+          <div>
+            <h1 class="element-title">{{ element?.titulo }}</h1>
+            <p class="element-title-description">{{ element?.course?.nombre }} - {{ element?.course?.semester?.nombre }}
+              - {{ element?.course?.programa_estudio?.nombre | uppercase }} - CICLO {{ element?.course?.ciclo }}
+              - {{ element?.course?.programa_estudio?.sede_area?.sede?.nombre }}</p>
+          </div>
+        </div>
+        <div [ngStyle]="{ height: '5px', 'background-color': element?.type_element?.background }"></div>
+      </div>
+      <div class="col-3">
+        menu de elementos :v
+      </div>
+    </div>
+  </div>
+</div>
