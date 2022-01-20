@@ -26,6 +26,9 @@ import { SesionComponent } from './components/c-free/sesion/sesion.component';
 import { NavegacionComponent } from './components/c-free/navegacion/navegacion.component';
 import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
 import { VListCoursesComponent } from './components/views/v-list-courses/v-list-courses.component';
+import { RubricasModule } from 'src/app/shared/components/rubricas/rubricas.module';
+import { ListViewFilesModule } from 'src/app/shared/components/list-view-files/list-view-files.module';
+import { MenuElementsChildModule } from 'src/app/shared/components/menu-elements-child/menu-elements-child.module';
 import { VWorksComponent } from './components/views/v-elements/v-works/v-works.component';
 import { VVideoConferenceComponent } from './components/views/v-elements/v-video-conference/v-video-conference.component';
 import { VVideoComponent } from './components/views/v-elements/v-video/v-video.component';
@@ -54,6 +57,14 @@ const COMPONENTS: any[] = [
   NavegacionComponent,
   VListCoursesComponent,
   VWorksComponent,
+  VVideoConferenceComponent,
+  VVideoComponent,
+  VLinkComponent,
+  VForumComponent,
+  VDocumentComponent,
+  VFolderComponent,
+  VRecordedClassComponent,
+  VEvaluationComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -80,6 +91,9 @@ const MODULES: any = [
   PrepareFileProModule,
   MoreOptionsModule,
   MenuElementsModule,
+  RubricasModule,
+  ListViewFilesModule,
+  MenuElementsChildModule
 ];
 
 @NgModule({
@@ -94,7 +108,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS, VVideoConferenceComponent, VVideoComponent, VLinkComponent, VForumComponent, VDocumentComponent, VFolderComponent, VRecordedClassComponent, VEvaluationComponent],
+  declarations: [...COMPONENTS],
   entryComponents: [...MODALS],
 
 })

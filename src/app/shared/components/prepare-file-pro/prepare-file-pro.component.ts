@@ -13,7 +13,7 @@ export class PrepareFileProComponent implements OnInit {
   userData: any;
   formHeaders: any = FormGroup;
   @Input() paramsInfo: any;
-  @Input() typeFile: string = 'img-pdf'; // no modificar
+  @Input() typeFile: string = 'all'; // no modificar
   @Output() filterValueChange: any = new EventEmitter<any>();
   @Input() isDisabled: boolean = false; // no modificar
   @Input() numFiles: number = 10; // no modificar
@@ -55,10 +55,10 @@ export class PrepareFileProComponent implements OnInit {
         this.accept = 'application/pdf';
         break;
       case 'excel':
-        this.accept = '.xlsx, .xls, .csv';
+        this.accept = '.xlsx, .xls';
         break;
       case 'doc':
-        this.accept = '.doc, .docx';
+        this.accept = '.doc, .docx, .ppt, .pptx';
         break;
       case 'txt':
         this.accept = 'text/plain';
@@ -69,11 +69,8 @@ export class PrepareFileProComponent implements OnInit {
       case 'audio':
         this.accept = 'audio/mp3';
         break;
-      case 'zip':
-        this.accept = '.zip, .rar, .7zip';
-        break;
       case 'all':
-        this.accept = 'image/png, image/jpg, image/jpeg, application/pdf, .doc, .docx,.xlsx, .xls, .csv, text/plain';
+        this.accept = 'image/png, image/jpg, image/jpeg, application/pdf, .doc, .docx, .ppt, .pptx, .xlsx, .xls, text/plain';
         break;
       default:
         this.accept = 'image/png, image/jpg, image/jpeg, application/pdf';
@@ -99,8 +96,6 @@ export class PrepareFileProComponent implements OnInit {
         type: this.paramsInfo.type,
       }
     }
-    console.log(param);
-
     this.modalServiceNebular.open(UploadFileComponent, {
       closeOnBackdropClick: false,
       context: param,

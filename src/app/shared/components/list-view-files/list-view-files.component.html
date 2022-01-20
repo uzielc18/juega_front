@@ -1,0 +1,10 @@
+<div>
+  <label class="label">{{title}}</label>
+  <br>
+  <div class="contenedor-imagenes table-responsive">
+    <div *ngFor="let item of arrayFiles" class="imgs text-center"  (click)="valueFile(item)">
+      <img [src]="item?.icon" class="imgs" alt="" [title]="item?.nombre_original"><br>
+      <label class="label" style="font-size: 9px;" [ngStyle]="{'color': item?.color ? item?.color : ''}">{{item.name_corto}}</label>
+    </div>
+  </div>
+</div>
