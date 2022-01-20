@@ -26,6 +26,15 @@ import { SesionComponent } from './components/c-free/sesion/sesion.component';
 import { NavegacionComponent } from './components/c-free/navegacion/navegacion.component';
 import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
 import { VListCoursesComponent } from './components/views/v-list-courses/v-list-courses.component';
+import { VWorksComponent } from './components/views/v-elements/v-works/v-works.component';
+import { VVideoConferenceComponent } from './components/views/v-elements/v-video-conference/v-video-conference.component';
+import { VVideoComponent } from './components/views/v-elements/v-video/v-video.component';
+import { VLinkComponent } from './components/views/v-elements/v-link/v-link.component';
+import { VForumComponent } from './components/views/v-elements/v-forum/v-forum.component';
+import { VDocumentComponent } from './components/views/v-elements/v-document/v-document.component';
+import { VFolderComponent } from './components/views/v-elements/v-folder/v-folder.component';
+import { VRecordedClassComponent } from './components/views/v-elements/v-recorded-class/v-recorded-class.component';
+import { VEvaluationComponent } from './components/views/v-elements/v-evaluation/v-evaluation.component';
 
 const COMPONENTS: any[] = [
   AsignaturesComponent,
@@ -43,7 +52,8 @@ const COMPONENTS: any[] = [
   CarpetaComponent,
   SesionComponent,
   NavegacionComponent,
-  VListCoursesComponent
+  VListCoursesComponent,
+  VWorksComponent,
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -84,7 +94,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, VVideoConferenceComponent, VVideoComponent, VLinkComponent, VForumComponent, VDocumentComponent, VFolderComponent, VRecordedClassComponent, VEvaluationComponent],
   entryComponents: [...MODALS],
 
 })

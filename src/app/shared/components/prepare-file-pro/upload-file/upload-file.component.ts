@@ -46,11 +46,11 @@ export class UploadFileComponent implements OnInit {
     };
     this.activeModal.close(file);
   }
-  private isExistFiles(event:any) {
+  private isExistFiles(event: any) {
     return event.target.files && (event.target.files.length > 0);
   }
   /// imagen
-  onFileChange(event:any) {
+  onFileChange(event: any) {
     this.limpiarDatos();
     this.urlSafe = '';
     if (this.isExistFiles(event)) {
@@ -85,7 +85,7 @@ export class UploadFileComponent implements OnInit {
     });
   }
   selectArchivo() {
-    const opens:any = document.getElementById('adjunto');
+    const opens: any = document.getElementById('adjunto');
     opens.click();
   }
   anadirFile() {
@@ -99,35 +99,35 @@ export class UploadFileComponent implements OnInit {
     }
     if (prams && prams.type && prams.directory && prams.key) {
       this.loading = true;
-        this.s3ServiceServ.addFimadoS3$(prams).subscribe(r => {
-          if (r.data.success) {
-            const data = new FormData();
-            data.append('file', form.file);
-            const valore = data;
+      this.s3ServiceServ.addFimadoS3$(prams).subscribe(r => {
+        if (r.data.success) {
+          const data = new FormData();
+          data.append('file', form.file);
+          const valore = data;
 
-            const u = r.data.url.split('?');
-            const urls = u[0];
+          const u = r.data.url.split('?');
+          const urls = u[0];
 
-            this.s3ServiceServ.addS3$(r.data.url, form.file.type, valore).subscribe(r => {
-              console.log(r.status);
+          this.s3ServiceServ.addS3$(r.data.url, form.file.type, valore).subscribe(r => {
+            console.log(r.status);
 
-              if (r.status === 200) {
-                const parameter:any = {
-                  base64: form.base64,
-                  archivo: form.file,
-                  name: form.name,
-                  ext: form.ext,
-                  nombre: key,
-                  nombre_original: form.name,
-                  url: urls,
-                  peso: form.size,
-                  close: 'save',
-                };
-                  this.activeModal.close(parameter);
-              }
-            });
-          }
-        }, () => { this.loading = false }, () => { this.loading = false });
+            if (r.status === 200) {
+              const parameter: any = {
+                base64: form.base64,
+                archivo: form.file,
+                name: form.name,
+                ext: form.ext,
+                nombre: key,
+                nombre_original: form.name,
+                url: urls,
+                peso: form.size,
+                close: 'save',
+              };
+              this.activeModal.close(parameter);
+            }
+          });
+        }
+      }, () => { this.loading = false }, () => { this.loading = false });
     }
 
   }

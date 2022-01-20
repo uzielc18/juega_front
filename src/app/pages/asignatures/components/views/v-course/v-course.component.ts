@@ -52,7 +52,6 @@ export class VCourseComponent implements OnInit {
       {
         label: this.curso.nombre,
         url: '',
-        // url: '/pages/asignaturas/course/' + this.curso.id_carga_curso_docente,
       },
 
     ];
