@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
-import { AppService } from 'src/app/core';
 import { GeneralService } from '../../../../../../providers';
+import { AppService } from 'src/app/core';
 import { END_POINTS } from '../../../../../../providers/utils';
 
 @Component({
-  selector: 'app-v-works',
-  templateUrl: './v-works.component.html',
-  styleUrls: ['./v-works.component.scss']
+  selector: 'app-v-video-conference',
+  templateUrl: './v-video-conference.component.html',
+  styleUrls: ['./v-video-conference.component.scss']
 })
-export class VWorksComponent implements OnInit {
+export class VVideoConferenceComponent implements OnInit {
+
   elementId: any = this.activatedRoute.snapshot.paramMap.get('id');
   idCargaCursoDocente: any = this.activatedRoute.snapshot.paramMap.get('id_carga_curso_docente');
   element: any = [];
   userInfo: any = [];
+
+  loading: boolean = false;
 
   fechaFin: any;
 
@@ -29,10 +31,6 @@ export class VWorksComponent implements OnInit {
   expiredSeconds: any;
 
   tiempo_vencido: boolean = false;
-  tiempo_calificado: any;
-
-  form: any = FormGroup;
-  selectedItem = '3';
 
   daysMap = {
     '=0': '',
@@ -58,30 +56,40 @@ export class VWorksComponent implements OnInit {
     'other': '# segundos.'
   }
 
-  loading: boolean = false;
-
   constructor(
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
     private generalService: GeneralService,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
     private userService: AppService
   ) {
     setInterval(() => {
       this.countdown(this.element?.fecha_fin)
-      // console.log(this.tiempo_vencido)
+      console.log(this.tiempo_vencido)
     }, 1000);
   }
 
   ngOnInit(): void {
     this.getUserInfo();
     this.getElement();
-    this.fieldReactive();
   }
 
   getUserInfo() {
     this.userInfo = this.userService.user;
-    // console.log(this.userInfo);
+    console.log(this.userInfo);
+  }
+
+  getElement() {
+    const serviceName = END_POINTS.base_back.resourse + '/info-element';
+    if (this.elementId) {
+      this.loading = true;
+      this.generalService.nameId$(serviceName, this.elementId).subscribe((data) => {
+        this.element = data.data;
+        if (this.element) {
+          this.updateBreadcrumb();
+          console.log('element content', this.element)
+        }
+      }, () => { this.loading = false; }, () => { this.loading = false; });
+    }
   }
 
   countdown(fecha_fin: any) {
@@ -107,20 +115,6 @@ export class VWorksComponent implements OnInit {
 
     if (this.daysLeft <= 0 && this.hoursLeft <= 0 && this.minutesLeft <= 0 && this.secondsLeft <= 0) {
       this.tiempo_vencido = true;
-    }
-  }
-
-  getElement() {
-    const serviceName = END_POINTS.base_back.resourse + '/info-element';
-    if (this.elementId) {
-      this.loading = true;
-      this.generalService.nameId$(serviceName, this.elementId).subscribe((data) => {
-        this.element = data.data;
-        if (this.element) {
-          this.updateBreadcrumb();
-          console.log('element content', this.element)
-        }
-      }, () => { this.loading = false; }, () => { this.loading = false; });
     }
   }
 
@@ -157,18 +151,4 @@ export class VWorksComponent implements OnInit {
     this.ngDynamicBreadcrumbService.updateBreadcrumb(breadcrumbs);
   }
 
-
-  private fieldReactive() {
-    const controls = {
-      tipo: ['1']
-    };
-    this.form = this.formBuilder.group(controls);
-    this.updateBreadcrumb();
-  }
-
-  cambioTypo($event: any) {
-    this.form.patchValue({
-      tipo: $event,
-    });
-  }
 }

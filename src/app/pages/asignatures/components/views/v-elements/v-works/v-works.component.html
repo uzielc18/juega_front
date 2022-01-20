@@ -4,22 +4,28 @@
       <div class="col-9 p-0">
         <div class="d-flex align-items-center p-4">
           <!-- <nb-icon [icon]="element?.type_element?.icono" ></nb-icon> -->
-          <nb-icon class="me-1" [ngStyle]="{ color: '#246C75', width: '56px', height: '48px' }" icon="list-outline">
+          <nb-icon class="me-1" [ngStyle]="{ color: element?.type_element?.color_hover, width: '56px', height: '48px' }"
+            [icon]="element?.type_element?.icono">
           </nb-icon>
           <div>
-            <h1 class="element-title">Trabajo 01</h1>
-            <p class="element-title-description">Capacidades Comunicativas I - 2021-1 - INGENIERÍA DE SISTEMAS - CICLO 1
-              - Campus Lima</p>
+            <h1 class="element-title">{{ element?.titulo }}</h1>
+            <p class="element-title-description">{{ element?.course?.nombre }} - {{ element?.course?.semester?.nombre }}
+              - {{ element?.course?.programa_estudio?.nombre | uppercase }} - CICLO {{ element?.course?.ciclo }}
+              - {{ element?.course?.programa_estudio?.sede_area?.sede?.nombre }}</p>
           </div>
         </div>
-        <div [ngStyle]="{ height: '5px', 'background-color': '#458188'}"></div>
-        <div class="work work-remember m-4">
-          <p>Hola Howard!,</p><span>Recuerda que tu Trabajo 01 está por vencer en 2 días</span>
+        <div [ngStyle]="{ height: '5px', 'background-color': element?.type_element?.background }"></div>
+        <div class="work work-remember m-4" *ngIf="!tiempo_vencido">
+          <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Trabajo: {{ element?.titulo }} está por vencer en {{ daysLeft |
+            i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} {{
+              secondsLeft | i18nPlural:secondsMap }}</span>
         </div>
-        <div class="work work-expired m-4">
-          <p>Hola Howard!,</p><span>Lo sentimos tu Trabajo 01 acaba de caducar hace 1 minuto</span>
+        <div class="work work-expired m-4" *ngIf="tiempo_vencido">
+          <p>Hola {{ userInfo.name }}!,</p><span>Lo sentimos tu Trabajo: {{ element?.titulo }} acaba de caducar hace {{ expiredDays |
+            i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
+              expiredSeconds | i18nPlural:secondsMap }}</span>
           <div class="ms-auto d-flex align-items-center">
-            <button class="d-flex align-items-center me-5 px-3 py-1 work-expired-button">
+            <button class="d-flex align-items-center me-2 px-3 py-1 work-expired-button">
               <nb-icon class="me-2" icon="info"></nb-icon>
               <span>Solicitar apertura</span>
             </button>
@@ -27,31 +33,14 @@
           </div>
         </div>
         <div class="work work-evaluated m-4">
-          <p>Hola Howard!,</p><span>Tu Trabajo 01 fué calificado hace 4 días</span>
+          <p>Hola {{ userInfo.name }}!,</p><span>Tu Trabajo: {{ element?.titulo }} fué calificado hace 4 días</span>
         </div>
         <nb-card class="instructions-container m-4">
           <nb-card-body class="px-4 py-5">
             <div class="d-flex">
               <div class="instructions">
-                <h4 class="instructions-title">Instrucciones</h4>
-                <p class="instructions-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                  nonumy eirmod tempor invidunt ut labore
-                  et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                  rebum.
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore
-                  et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                  rebum.
-                </p>
-                <p class="instructions-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                  nonumy eirmod tempor invidunt ut labore
-                  et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                  rebum.
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore
-                  et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                  rebum.
-                </p>
+                <h4 class="instructions-title">{{ element?.titulo }}</h4>
+                <p class="instructions-description">{{ element?.descripcion }}</p>
               </div>
 
               <div class="calification">
@@ -62,7 +51,11 @@
                 <span>Calificación</span>
               </div>
             </div>
-            <button nbButton class="my-4"><nb-icon icon="download-outline"></nb-icon>Descargar Tarea</button>
+            <div class="d-flex justify-content-center">
+              <button nbButton class="my-4">
+                <nb-icon icon="download-outline"></nb-icon>Descargar Tarea
+              </button>
+            </div>
             <div class="d-flex">
               <h4 class="rubrica-title me-2">Rubrica</h4>
               <span class="rubrica-title-desc">(Criterios de evaluación)</span>
@@ -70,24 +63,28 @@
             <div class="mt-4">
               <div class="d-flex">
                 <h4 class="send-work-title">Entrega de trabajo</h4>
-                <nb-icon class="send-work-icon" icon="cloud-upload-outline"></nb-icon>
-                <nb-icon class="send-work-icon" icon="external-link-outline"></nb-icon>
+                <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon"
+                  icon="cloud-upload-outline" (click)="cambioTypo('1')"></nb-icon>
+                <nb-icon [status]="form.value.tipo === '2' ? 'primary' : 'basic'" class="send-work-icon"
+                  icon="external-link-outline" (click)="cambioTypo('2')"></nb-icon>
               </div>
-              <div>
+              <div *ngIf="form.value.tipo == '1'">
                 <lamb-prepare-file-pro>
                 </lamb-prepare-file-pro>
               </div>
-              <div>
+              <div *ngIf="form.value.tipo == '2'">
                 <nb-card>
                   <nb-card-body class="send-work-link d-flex">
-                    <input type="text" nbInput fullWidth shape="rectangle" placeholder="Ingrese una url válida por favor">
+                    <input type="text" nbInput fullWidth shape="rectangle"
+                      placeholder="Ingrese una url válida por favor">
                     <nb-select placeholder="Select Showcase" [(selected)]="selectedItem">
                       <nb-option value="0">YouTube</nb-option>
                       <nb-option value="1">SoundCloud</nb-option>
                       <nb-option value="2">Vimeo</nb-option>
                       <nb-option value="3">Referencia</nb-option>
                     </nb-select>
-                    <button nbButton status="primary">Guardar enlace <nb-icon icon="external-link-outline"></nb-icon></button>
+                    <button nbButton status="primary">Guardar enlace <nb-icon icon="external-link-outline"></nb-icon>
+                    </button>
                   </nb-card-body>
                 </nb-card>
               </div>
