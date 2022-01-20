@@ -1,0 +1,47 @@
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+  <div class="container m-0">
+    <div class="row">
+      <div class="col-9 p-0">
+        <div class="d-flex align-items-center p-4">
+          <nb-icon class="me-1" [ngStyle]="{ color: element?.type_element?.color_hover, width: '56px', height: '48px' }"
+            [icon]="element?.type_element?.icono">
+          </nb-icon>
+          <div>
+            <h1 class="element-title">{{ element?.titulo }}</h1>
+            <p class="element-title-description">{{ element?.course?.nombre }} - {{ element?.course?.semester?.nombre }}
+              - {{ element?.course?.programa_estudio?.nombre | uppercase }} - CICLO {{ element?.course?.ciclo }}
+              - {{ element?.course?.programa_estudio?.sede_area?.sede?.nombre }}</p>
+          </div>
+        </div>
+        <div [ngStyle]="{ height: '5px', 'background-color': element?.type_element?.background }"></div>
+        <div class="work work-remember m-4" *ngIf="!tiempo_vencido">
+          <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Trabajo 01 está por vencer en {{ daysLeft |
+            i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} {{
+            secondsLeft | i18nPlural:secondsMap }}</span>
+        </div>
+        <div class="work work-evaluated m-4" *ngIf="tiempo_vencido">
+          <p>Hola {{ userInfo.name }}!,</p><span>La videoconferencia de la Clase 01 terminó hace 1 mes y 5 días</span>
+        </div>
+        <nb-card class="instructions-container m-4">
+          <nb-card-body class="px-4 py-5">
+            <div class="d-flex">
+              <div class="instructions">
+                <h4 class="instructions-title">{{ element?.titulo }}</h4>
+                <p class="instructions-description">{{ element?.descripcion }}</p>
+              </div>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <button nbButton status="primary" class="mb-3 px-5">Entrar ahora <nb-icon icon="arrow-right"></nb-icon>
+                </button>
+              <button nbButton appearance="outline" class="px-4">Hoy no podré asistir<nb-icon icon="eye-outline">
+                </nb-icon></button>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-3">
+        menu de elementos :v
+      </div>
+    </div>
+  </div>
+</div>

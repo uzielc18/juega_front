@@ -29,6 +29,15 @@ import { VListCoursesComponent } from './components/views/v-list-courses/v-list-
 import { RubricasModule } from 'src/app/shared/components/rubricas/rubricas.module';
 import { ListViewFilesModule } from 'src/app/shared/components/list-view-files/list-view-files.module';
 import { MenuElementsChildModule } from 'src/app/shared/components/menu-elements-child/menu-elements-child.module';
+import { VWorksComponent } from './components/views/v-elements/v-works/v-works.component';
+import { VVideoConferenceComponent } from './components/views/v-elements/v-video-conference/v-video-conference.component';
+import { VVideoComponent } from './components/views/v-elements/v-video/v-video.component';
+import { VLinkComponent } from './components/views/v-elements/v-link/v-link.component';
+import { VForumComponent } from './components/views/v-elements/v-forum/v-forum.component';
+import { VDocumentComponent } from './components/views/v-elements/v-document/v-document.component';
+import { VFolderComponent } from './components/views/v-elements/v-folder/v-folder.component';
+import { VRecordedClassComponent } from './components/views/v-elements/v-recorded-class/v-recorded-class.component';
+import { VEvaluationComponent } from './components/views/v-elements/v-evaluation/v-evaluation.component';
 
 const COMPONENTS: any[] = [
   AsignaturesComponent,
@@ -46,7 +55,16 @@ const COMPONENTS: any[] = [
   CarpetaComponent,
   SesionComponent,
   NavegacionComponent,
-  VListCoursesComponent
+  VListCoursesComponent,
+  VWorksComponent,
+  VVideoConferenceComponent,
+  VVideoComponent,
+  VLinkComponent,
+  VForumComponent,
+  VDocumentComponent,
+  VFolderComponent,
+  VRecordedClassComponent,
+  VEvaluationComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
