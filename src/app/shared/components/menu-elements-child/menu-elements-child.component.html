@@ -1,41 +1,35 @@
-
-<ul >
-  <div class="text-center">
-    <label class="label">_________ Navegación de contenido _________</label>
+<ul class="p-0" [class.sticky]="sticky" #stickyMenu>
+  <div class="text-center mb-1 mt-4">
+    <label class="label">&ndash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; Navegación de contenido
+      &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</label>
   </div>
-  <br>
-  <li
-    class="p-0"
-    *ngFor="let element of listElemtChild; let i = index"
-    (click)="recorrerLisElChild(element)"
-    (click)="clickedIndex = i"
-    (mouseenter)="hoveredIndex = i"
-    (mouseleave)="hoveredIndex = null"
-  >
-  <div class="p-2" [style]="elementStyleActive(element)"
-  [ngStyle]="element.checked
+  <li class="p-0" *ngFor="let element of listElemtChild; let i = index" (click)="recorrerLisElChild(element)"
+    (click)="clickedIndex = i" (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null">
+    <div class="p-2" [style]="elementStyleActive(element)" [ngStyle]="element.checked
     ? elementStyleActive(element)
     : elementStyle() && hoveredIndex === i
     ? elementStyleHover(element)
     : elementStyle()
-">
-    <nb-icon  [icon]="element.icono"></nb-icon>
-    {{ element.nombre | titlecase }}
-  </div>
-  <div *ngIf="element?.checked" style="padding-left: 30px; padding-right: 5px;">
-    <div *ngFor="let item of element?.elements">
-     <label class="label" style="cursor: pointer;"
-     [ngStyle]="{
-     'color': item?.color ? item?.color : '',
-     'font-weight': item?.font_weight ? item?.font_weight : '',
-     'font-size': item?.font_size ? item?.font_size : ''}" (click)="selectElement(item)">
-     * {{item.titulo}} <br></label>
+    ">
+      <nb-icon [icon]="element.icono"></nb-icon>
+      {{ element.nombre | titlecase }}
     </div>
-  </div>
+    <div *ngIf="element?.checked">
+      <ul class="child-list" *ngFor="let item of element?.elements">
+        <li class="child-list-item" [ngStyle]="{
+          'color': item?.color ? item?.color : '',
+          'font-weight': item?.font_weight ? item?.font_weight : '',
+          'font-size': '14px',
+          'background-color': item?.background,
+          'padding': '5px 15px 5px 30px'}" (click)="selectElement(item)">
+          <span class="me-2">&rsaquo;</span>{{item.titulo}}
+        </li>
+      </ul>
+    </div>
   </li>
 </ul>
 
-  <!-- <div class="p-0"  [nbSpinner]="loading" nbSpinnerStatus="primary"
+<!-- <div class="p-0"  [nbSpinner]="loading" nbSpinnerStatus="primary"
   nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
     <strong class="p-1" *ngFor="let el of listElemtChild; let i = index"
     (click)="recorrerLisElChild(el)"
