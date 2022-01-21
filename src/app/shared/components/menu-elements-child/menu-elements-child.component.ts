@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
@@ -9,8 +9,9 @@ import { END_POINTS } from 'src/app/providers/utils';
 })
 export class MenuElementsChildComponent implements OnInit {
   @Input() topic_id:any;
-  @Input() type_element_id:any = 6;
-  @Input() id_element:any = 26;
+  @Input() type_element_id:any;
+  @Input() id_element:any;
+  @Output() elementSelected: EventEmitter<boolean> = new EventEmitter();
   loading:boolean = false;
   listElemtChild: any = [];
   clickedIndex: number = 0;
@@ -51,8 +52,6 @@ export class MenuElementsChildComponent implements OnInit {
         }
       }
     });
-      console.log(this.listElemtChild, 'oe funciona');
-
   }
   elementStyle() {
     return {
@@ -77,9 +76,6 @@ export class MenuElementsChildComponent implements OnInit {
     };
   }
 
-  selectedElement(element: any) {
-    // this.onSelect.emit(element);
-  }
   recorrerLisElChild(typeEle:any) {
     if (this.listElemtChild.length>0) {
       this.listElemtChild.map((r:any) => {
@@ -104,6 +100,7 @@ export class MenuElementsChildComponent implements OnInit {
           });
         }
       });
+      this.elementSelected.emit(item);
     }
   }
 }

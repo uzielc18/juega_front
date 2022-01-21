@@ -1,7 +1,5 @@
-<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
-  <div class="container m-0">
-    <div class="row">
-      <div class="col-9 p-0">
+<div>
+  <div class="m-0">
         <div class="d-flex align-items-center p-4">
           <!-- <nb-icon [icon]="element?.type_element?.icono" ></nb-icon> -->
           <nb-icon class="me-1" [ngStyle]="{ color: element?.type_element?.color_hover, width: '56px', height: '48px' }"
@@ -56,9 +54,12 @@
                 <nb-icon icon="download-outline"></nb-icon>Descargar Tarea
               </button>
             </div>
-            <div class="d-flex">
-              <h4 class="rubrica-title me-2">Rubrica</h4>
-              <span class="rubrica-title-desc">(Criterios de evaluación)</span>
+            <div>
+              <div class="d-flex">
+                <h4 class="rubrica-title me-2">Rubrica</h4>
+                <span class="rubrica-title-desc">(Criterios de evaluación)</span>
+              </div>
+                <app-rubricas></app-rubricas>
             </div>
             <div class="mt-4">
               <div class="d-flex">
@@ -89,15 +90,11 @@
                 </nb-card>
               </div>
             </div>
-            <div class="d-flex">
+            <div>
               <h4 class="attached-files-title">Archivos adjuntos</h4>
+              <app-list-view-files [arrayFiles]="element?.element_files || []"></app-list-view-files>
             </div>
           </nb-card-body>
         </nb-card>
       </div>
-      <div class="col-3">
-        menu de elementos :v
-      </div>
-    </div>
-  </div>
 </div>
