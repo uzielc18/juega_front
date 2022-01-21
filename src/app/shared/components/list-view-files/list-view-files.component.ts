@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { MViewFilesComponent } from '../view-files/m-view-files/m-view-files.component';
 
@@ -7,14 +7,18 @@ import { MViewFilesComponent } from '../view-files/m-view-files/m-view-files.com
   templateUrl: './list-view-files.component.html',
   styleUrls: ['./list-view-files.component.scss']
 })
-export class ListViewFilesComponent implements OnInit {
+export class ListViewFilesComponent implements OnInit, OnChanges {
   @Input() title: any = 'Archivos adjuntos';
   @Input() arrayFiles: any = [];
   constructor(private dialogService: NbDialogService) { }
 
-  ngOnInit(): void {
+  ngOnChanges():void {
+    this.arrayFiles = this.arrayFiles;
     this.recorrerList();
   }
+  ngOnInit(): void {
+  }
+
   recorrerList() {
     if (this.arrayFiles.length>0) {
       this.arrayFiles.map((r:any) => {

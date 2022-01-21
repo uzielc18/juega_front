@@ -11,7 +11,7 @@ export class NgxViewFilesGoogleComponent implements OnInit {
   // Implement by Cristian
   @Output() loadingsFiles: EventEmitter<boolean> = new EventEmitter();
   doc: any = '';
-  @Input() viewer: any = 'google'; // google, office, mammoth, pdf or url
+  @Input() viewer: any = 'url'; // google, office, mammoth, pdf or url
   @Input() styleWidth: any = '100%';
   @Input() styleHeight: any = '50vh';
   @Input() valueFile: any = '';
@@ -27,20 +27,23 @@ export class NgxViewFilesGoogleComponent implements OnInit {
       case 'png':
       case 'jpg':
       case 'jpeg':
+      case 'pdf':
+      case 'txt':
         this.viewer = 'url';
         break;
+      case 'xls':
+      case 'xlsx':
       case 'doc':
       case 'docx':
       case 'ppt':
       case 'pptx':
-      case 'xls':
-      case 'xlsx':
-      case 'pdf':
-      case 'txt':
-        this.viewer = 'google';
+        this.viewer = 'office';
         break;
+      // case 'txt':
+      //   this.viewer = 'google';
+      //   break;
       default:
-        this.viewer = 'google';
+        this.viewer = 'url';
         break;
     }
     if (this.viewer) {
