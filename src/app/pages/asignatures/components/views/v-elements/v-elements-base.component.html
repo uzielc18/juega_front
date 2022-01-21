@@ -1,0 +1,15 @@
+<div  [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+<div class="row" *ngIf="element">
+  <div class="col-md-9">
+    <app-v-works *ngIf="['TRAB'].includes(element?.type_element?.codigo)" [element]="element"></app-v-works>
+  </div>
+  <div class="col-md-3">
+    <app-menu-elements-child
+    [topic_id]="element?.topic_id"
+    [type_element_id]="element?.type_element_id"
+    [id_element]="element?.id"
+    (elementSelected)="elementSelected($event)"
+    ></app-menu-elements-child>
+  </div>
+</div>
+</div>

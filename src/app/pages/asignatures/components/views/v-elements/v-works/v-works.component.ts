@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
@@ -12,9 +12,7 @@ import { END_POINTS } from '../../../../../../providers/utils';
   styleUrls: ['./v-works.component.scss']
 })
 export class VWorksComponent implements OnInit {
-  elementId: any = this.activatedRoute.snapshot.paramMap.get('id');
-  idCargaCursoDocente: any = this.activatedRoute.snapshot.paramMap.get('id_carga_curso_docente');
-  element: any = [];
+  @Input() element: any;
   userInfo: any = [];
 
   fechaFin: any;
@@ -58,12 +56,7 @@ export class VWorksComponent implements OnInit {
     'other': '# segundos.'
   }
 
-  loading: boolean = false;
-
   constructor(
-    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
-    private generalService: GeneralService,
-    private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: AppService
   ) {
@@ -75,7 +68,6 @@ export class VWorksComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserInfo();
-    this.getElement();
     this.fieldReactive();
   }
 
@@ -110,60 +102,11 @@ export class VWorksComponent implements OnInit {
     }
   }
 
-  getElement() {
-    const serviceName = END_POINTS.base_back.resourse + '/info-element';
-    if (this.elementId) {
-      this.loading = true;
-      this.generalService.nameId$(serviceName, this.elementId).subscribe((data) => {
-        this.element = data.data;
-        if (this.element) {
-          this.updateBreadcrumb();
-          console.log('element content', this.element)
-        }
-      }, () => { this.loading = false; }, () => { this.loading = false; });
-    }
-  }
-
-  titleCase(str: any) {
-    return str
-      .split(' ')
-      .map((word: any) => word[0].toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  }
-
-  updateBreadcrumb(): void {
-    const CE = this.element;
-    const curso = CE && CE.course && CE.course.nombre || 'No existe el curso';
-    const unidad = CE && CE.topic && CE.topic.unit.orden_unidad || 'No existe la unidad';
-    const sesion = CE && CE.topic && CE.topic.orden_tema || 'No existe la sesion'
-    const elemento = CE && CE.type_element && this.titleCase(CE.type_element.nombre) || 'No existe tipo elemento';
-    const elementoTitulo = CE && CE.titulo || 'No existe titulo';
-
-    const breadcrumbs = [
-      {
-        label: 'Asignaturas',
-        url: '/pages/asignaturas'
-      },
-      {
-        label: `${curso}` || 'No se encontró el curso',
-        url: '/pages/asignaturas/course/' + this.idCargaCursoDocente,
-      },
-      {
-        label: `Unidad: ${unidad} \u2013 Sesion: ${sesion} \u2013 ${elemento}: ${elementoTitulo}` || 'No se encontró el elemento',
-        url: ''
-      }
-
-    ];
-    this.ngDynamicBreadcrumbService.updateBreadcrumb(breadcrumbs);
-  }
-
-
   private fieldReactive() {
     const controls = {
       tipo: ['1']
     };
     this.form = this.formBuilder.group(controls);
-    this.updateBreadcrumb();
   }
 
   cambioTypo($event: any) {
