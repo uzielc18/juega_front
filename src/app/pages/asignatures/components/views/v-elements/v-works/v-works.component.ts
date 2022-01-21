@@ -13,7 +13,7 @@ import { END_POINTS } from '../../../../../../providers/utils';
 })
 export class VWorksComponent implements OnInit {
   @Input() element: any;
-  userInfo: any = [];
+  @Input() userInfo: any;
 
   fechaFin: any;
 
@@ -62,18 +62,11 @@ export class VWorksComponent implements OnInit {
   ) {
     setInterval(() => {
       this.countdown(this.element?.fecha_fin)
-      // console.log(this.tiempo_vencido)
     }, 1000);
   }
 
   ngOnInit(): void {
-    this.getUserInfo();
     this.fieldReactive();
-  }
-
-  getUserInfo() {
-    this.userInfo = this.userService.user;
-    // console.log(this.userInfo);
   }
 
   countdown(fecha_fin: any) {
@@ -98,7 +91,7 @@ export class VWorksComponent implements OnInit {
     this.expiredSeconds = Math.floor((expired % minute) / second);
 
     if (this.daysLeft <= 0 && this.hoursLeft <= 0 && this.minutesLeft <= 0 && this.secondsLeft <= 0) {
-      this.tiempo_vencido = true;
+      this.tiempo_vencido = true; // mejorar la logica
     }
   }
 
