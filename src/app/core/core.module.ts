@@ -19,12 +19,15 @@ import { Auth2Guard } from './oauth2/oauth2.guard';
 import { Oauth2CallbackComponent } from './oauth2/oauth2.callback.component';
 import {
   NbActionsModule,
+  NbButtonModule,
+  NbCardModule,
   NbContextMenuModule,
   NbDatepickerModule,
   NbDialogModule,
   NbIconModule,
   NbLayoutModule,
   NbMenuModule,
+  NbPopoverModule,
   NbSelectModule,
   NbSidebarModule,
   NbSpinnerModule,
@@ -80,6 +83,9 @@ registerLocaleData(localePe);
     NbContextMenuModule,
     RouterModule.forChild(routesConfig),
     NbSelectModule,
+    NbButtonModule,
+    NbPopoverModule,
+    NbCardModule
   ],
   // exports: [RouterModule],
   providers: [
