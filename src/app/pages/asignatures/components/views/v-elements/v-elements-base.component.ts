@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
+import { AppService } from '../../../../../core';
 
 @Component({
   selector: 'app-v-elements-base',
@@ -12,22 +13,31 @@ import { END_POINTS } from 'src/app/providers/utils';
 export class VElementsBaseComponent implements OnInit {
   elementId: any = this.activatedRoute.snapshot.paramMap.get('id');
   idCargaCursoDocente: any = this.activatedRoute.snapshot.paramMap.get('id_carga_curso_docente');
+  userInfo: any;
   element: any;
   loading: boolean = false;
-  constructor(private generalService: GeneralService,
+  constructor(
+    private userService: AppService,
+    private generalService: GeneralService,
     private activatedRoute: ActivatedRoute,
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.getUserInfo();
     this.getElement();
+  }
+
+  getUserInfo() {
+    this.userInfo = this.userService.user;
   }
 
   getElement() {
     const serviceName = END_POINTS.base_back.resourse + '/info-element';
     if (this.elementId) {
       this.loading = true;
-      this.generalService.nameId$(serviceName, this.elementId).subscribe((data:any) => {
+      this.generalService.nameId$(serviceName, this.elementId).subscribe((data: any) => {
         this.element = data.data;
         if (this.element) {
           this.updateBreadcrumb();
@@ -67,9 +77,9 @@ export class VElementsBaseComponent implements OnInit {
     ];
     this.ngDynamicBreadcrumbService.updateBreadcrumb(breadcrumbs);
   }
-  elementSelected($event:any) {
+  elementSelected($event: any) {
     this.elementId = $event.id;
-    this.router.navigate([`../asignaturas/course/${this.idCargaCursoDocente}/element/${$event.id}`], { relativeTo: this.activatedRoute.parent});
+    this.router.navigate([`../asignaturas/course/${this.idCargaCursoDocente}/element/${$event.id}`], { relativeTo: this.activatedRoute.parent });
     this.getElement();
   }
 }

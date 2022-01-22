@@ -28,13 +28,12 @@
                           elem.type_element_id === arrayEl[0].type_element_id) ? arrayEl.length : elem.count
                           }}</label><br>
                         <nb-icon nbTooltip="{{ elem.nombre }}" class="me-2" (click)="selectedElement(elem)"
-                          (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null" [ngStyle]="
-                        clickedIndex === elem.check
+                          (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null"
+                          [ngStyle]="clickedIndex === elem.check
                           ? elementStyleActive(elem)
                           : elementStyle() && hoveredIndex === i
                           ? elementStyleHover(elem)
-                          : elementStyle()
-                      " [icon]="elem.icono">
+                          : elementStyle()" [icon]="elem.icono">
                         </nb-icon>
                         <!-- <br>
                     <label class="label" style="font-size: 7px">{{ elem.nombre }}</label> -->

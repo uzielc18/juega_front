@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
@@ -16,6 +16,25 @@ export class MenuElementsChildComponent implements OnInit {
   listElemtChild: any = [];
   clickedIndex: number = 0;
   hoveredIndex: any;
+
+  @ViewChild('stickyMenu') menuElement!: ElementRef;
+
+  sticky: boolean = false;
+  elementPosition: any;
+  ngAfterViewInit(){
+    this.elementPosition = this.menuElement.nativeElement.offsetTop;
+  }
+
+  @HostListener('window:scroll', ['$event'])
+    handleScroll(){
+      const windowScroll = window.pageYOffset;
+      if(windowScroll >= this.elementPosition){
+        this.sticky = true;
+      } else {
+        this.sticky = false;
+      }
+    }
+
   constructor(private generalServi: GeneralService) { }
 
   ngOnInit(): void {
@@ -46,7 +65,7 @@ export class MenuElementsChildComponent implements OnInit {
             if (Number(this.id_element) === Number(a.id)) {
               a.color = r.background;
               a.font_weight = 'bold';
-              a.font_size = '15px';
+              a.font_size = '14px';
             }
           });
         }
@@ -95,7 +114,7 @@ export class MenuElementsChildComponent implements OnInit {
             if (Number(item.id) === Number(a.id)) {
               a.color = r.background;
               a.font_weight = 'bold';
-              a.font_size = '15px';
+              a.font_size = '14px';
             }
           });
         }

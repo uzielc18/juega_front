@@ -1,8 +1,32 @@
+.sticky{
+  position: fixed;
+  top: 104px;
+  overflow: hidden;
+  z-index: 10;
+}
+
 ul {
   list-style: none;
 
   & li {
     cursor: pointer;
     color: #575756;
+  }
+}
+
+.child-list {
+  background-color: #fff;
+  padding: 0px;
+  // margin-left: 30px;
+
+  &:hover {
+    color: #919190;
+  }
+
+  &-item {
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
   }
 }
