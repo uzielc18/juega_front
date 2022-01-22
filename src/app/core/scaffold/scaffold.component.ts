@@ -1,8 +1,9 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   NbMediaBreakpointsService,
   NbMenuItem,
   NbMenuService,
+  NbPopoverDirective,
   NbSidebarService,
   NbThemeService,
 } from '@nebular/theme';
@@ -43,13 +44,48 @@ import { environment } from '../../../environments/environment';
             </nb-action>
           </nb-actions>
           <nb-actions>
-          <!-- <nb-action >
-              <nb-select placeholder="Idioma"  size="small" [selected]="'ES'" formControlName="id_trabajo">
+          <nb-action >
+            <button nbButton outline size="small" ghost [nbPopover]="templateRef" nbPopoverPlacement="bottom" nbPopoverTrigger="noop" (click)="open()">
+              DIRECTOR - 2021-1 - ES
+            </button>
+              <ng-template #templateRef >
+                <nb-card style="padding-bottom: 0px;">
+                  <nb-card-header style="padding-top: 8px; padding-bottom: 8px;">
+                    Cambiar datos
+                  </nb-card-header>
+                  <nb-card-body style="padding-top: 3px; padding-bottom: 0px;">
+                    <div>
+                      <label class="label">Rol</label><br>
+                       <nb-select placeholder="Idioma"  size="small" [selected]="'DOC'">
+                          <nb-option value="DOC">Docente</nb-option>
+                        </nb-select>
+                    </div>
+                    <div>
+                      <label class="label">Semestre</label><br>
+                       <nb-select placeholder="Idioma"  size="small" [selected]="'1'">
+                          <nb-option value="1">2021-1</nb-option>
+                        </nb-select>
+                    </div>
+                    <div>
+                      <label class="label">Lenguaje</label><br>
+                       <nb-select placeholder="Idioma"  size="small" [selected]="'ES'">
                           <nb-option value="EN">Ingles</nb-option>
                           <nb-option value="ES">Español</nb-option>
-              </nb-select>
-
-            </nb-action> -->
+                        </nb-select>
+                    </div>
+                  </nb-card-body>
+                  <br>
+                  <div class="text-center">
+                      <button nbButton outline size="tiny" ghost (click)="close()">
+                        Cerrar
+                      </button>&nbsp;
+                      <button nbButton outline size="tiny" hero status="primary">
+                        Guardar
+                      </button>
+                    </div>
+                </nb-card>
+              </ng-template>
+            </nb-action>
             <nb-action [nbContextMenu]="userMenu">
               <nb-user
                 class="header-user"
@@ -130,7 +166,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   spinner = false;
-
+  @ViewChild(NbPopoverDirective) popover: any = NbPopoverDirective;
   constructor(
     private nbTokenService: NbTokenService,
     private sidebarService: NbSidebarService,
@@ -204,4 +240,11 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+  open() {
+    this.popover.show();
+  }
+  close() {
+    this.popover.hide();
+  }
+
 }
