@@ -3,7 +3,7 @@
     *ngFor="let curso of cursosDocente; let i = index"
     [routerLink]="['../asignaturas', curso.id_carga_curso_docente]"
   >
-    <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
+    <img src="assets/books.jpg" class="card-img-top" alt="..." />
     <div class="card-body">
       <h6 class="course-name mb-0">{{ curso.nombre }}</h6>
       <p class="course-teacher mb-0">{{ curso.persons_teacher_nombre }}</p>
@@ -49,7 +49,7 @@
     *ngFor="let curso of cursosEstudiante; let i = index"
     [routerLink]="['../asignaturas', curso.id_carga_curso_docente]"
   >
-    <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
+    <img src="assets/books.jpg" class="card-img-top" alt="..." />
     <div class="card-body">
       <h6 class="course-name mb-0">{{ curso.course_nombre }}</h6>
       <p class="course-teacher mb-0">{{ curso.person_teacher_nombre }}</p>
