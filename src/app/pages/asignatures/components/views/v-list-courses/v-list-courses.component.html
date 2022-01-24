@@ -27,7 +27,7 @@
           <nb-card class="car-list" *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)">
             <div class="row">
               <div class="col-2 col-sm-2">
-                <img src="../../../../../assets/books.jpg" class="img-fluid" alt=""
+                <img src="assets/books.jpg" class="img-fluid" alt=""
                   style="object-fit: fill; height: 100px; width: 350px" width="250px" />
               </div>
               <div class="col-5 col-sm-5 mt-3">
@@ -64,7 +64,7 @@
                 </div>
               </div>
               <div class="col-1 col-sm-1">
-                <img src="../../../../../assets/play-list.png" class="img-fluid" alt=""
+                <img src="assets/play-list.png" class="img-fluid" alt=""
                   style="object-fit: fill; height: 100px; width: 350px" width="250px" />
               </div>
             </div>
@@ -74,7 +74,7 @@
           <nb-card class="car-list" *ngFor="let curso of cursosEstudiante; let i = index" (click)="navigate(curso)">
             <div class="row">
               <div class="col-2 col-sm-2">
-                <img src="../../../../../assets/books.jpg" class="img-fluid" alt=""
+                <img src="assets/books.jpg" class="img-fluid" alt=""
                   style="object-fit: fill; height: 100px; width: 350px" width="250px" />
               </div>
               <div class="col-5 col-sm-5 mt-3">
@@ -111,7 +111,7 @@
                 </div>
               </div>
               <div class="col-1 col-sm-1">
-                <img src="../../../../../assets/play-list.png" class="img-fluid" alt=""
+                <img src="assets/play-list.png" class="img-fluid" alt=""
                   style="object-fit: fill; height: 100px; width: 350px" width="250px" />
               </div>
             </div>
@@ -132,7 +132,7 @@
         <div *ngIf="theRolSemestre?.rol === 'Docente'" class="row">
           <nb-card *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)"
             class="car-car col-md-2">
-            <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
+            <img src="assets/books.jpg" class="card-img-top" alt="..." />
             <div class="card-body">
               <h6 class="course-name mb-0">{{ curso.nombre }}</h6>
               <p class="course-teacher mb-0">{{ curso.persons_teacher_nombre }}</p>
@@ -170,7 +170,7 @@
         <div *ngIf="theRolSemestre?.rol === 'Estudiante'" class="row">
           <nb-card *ngFor="let curso of cursosEstudiante; let i = index" (click)="navigate(curso)"
             class="car-car col-md-2">
-            <img src="../../../../../assets/books.jpg" class="card-img-top" alt="..." />
+            <img src="assets/books.jpg" class="card-img-top" alt="..." />
             <div class="card-body">
               <h6 class="course-name mb-0">{{ curso.course_nombre }}</h6>
               <p class="course-teacher mb-0">{{ curso.person_teacher_nombre }}</p>

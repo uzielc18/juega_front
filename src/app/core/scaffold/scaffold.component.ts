@@ -37,7 +37,7 @@ import { environment } from '../../../environments/environment';
             <nb-action>
               <img
                 *ngIf="!hidden"
-                src="../../../assets/logo-upeu-blanco.png"
+                src="assets/logo-upeu-blanco.png"
                 alt="Lamb"
                 width="180"
               />
