@@ -45,8 +45,9 @@ import { environment } from '../../../environments/environment';
           </nb-actions>
           <nb-actions>
           <nb-action >
-            <button nbButton outline size="small" ghost [nbPopover]="templateRef" nbPopoverPlacement="bottom" nbPopoverTrigger="noop" (click)="open()">
-              DIRECTOR - 2021-1 - ES
+          <!-- nbPopoverTrigger="noop" -->
+            <button nbButton outline size="small" ghost [nbPopover]="templateRef" nbPopoverPlacement="bottom">
+              DIRECTOR - 2021-1
             </button>
               <ng-template #templateRef >
                 <nb-card style="padding-bottom: 0px;">
@@ -71,6 +72,37 @@ import { environment } from '../../../environments/environment';
                        <nb-select placeholder="Idioma"  size="small" [selected]="'ES'">
                           <nb-option value="EN">Ingles</nb-option>
                           <nb-option value="ES">Español</nb-option>
+                        </nb-select>
+                    </div>
+                  </nb-card-body>
+                  <br>
+                  <div class="text-center">
+                      <button nbButton outline size="tiny" ghost (click)="close()">
+                        Cerrar
+                      </button>&nbsp;
+                      <button nbButton outline size="tiny" hero status="primary">
+                        Guardar
+                      </button>
+                    </div>
+                </nb-card>
+              </ng-template>
+            </nb-action>
+            <nb-action>
+              <div [nbPopover]="templat" nbPopoverPlacement="bottom">
+                <img src="https://image.flaticon.com/icons/png/512/197/197593.png" height="20px" alt="">
+              </div>
+              <ng-template #templat >
+                <nb-card style="padding-bottom: 0px;">
+                  <nb-card-header style="padding-top: 8px; padding-bottom: 8px;">
+                    Cambiar idioma
+                  </nb-card-header>
+                  <nb-card-body style="padding-top: 3px; padding-bottom: 0px;">
+                    <div>
+                      <label class="label">Lenguaje</label><br>
+                       <nb-select placeholder="Idioma"  size="small" [selected]="'ES'">
+                          <nb-option value="EN">Ingles</nb-option>
+                          <nb-option value="ES">Español</nb-option>
+                          <nb-option value="PR">Portugues</nb-option>
                         </nb-select>
                     </div>
                   </nb-card-body>
