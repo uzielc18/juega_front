@@ -67,13 +67,6 @@ import { environment } from '../../../environments/environment';
                           <nb-option value="1">2021-1</nb-option>
                         </nb-select>
                     </div>
-                    <div>
-                      <label class="label">Lenguaje</label><br>
-                       <nb-select placeholder="Idioma"  size="small" [selected]="'ES'">
-                          <nb-option value="EN">Ingles</nb-option>
-                          <nb-option value="ES">Español</nb-option>
-                        </nb-select>
-                    </div>
                   </nb-card-body>
                   <br>
                   <div class="text-center">
@@ -156,40 +149,40 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       link: '/pages/dashboard',
       pathMatch: 'prefix',
     },
-    {
-      title: 'Agenda',
-      icon: 'calendar-outline',
-    },
+    // {
+    //   title: 'Agenda',
+    //   icon: 'calendar-outline',
+    // },
     {
       title: 'Asignaturas',
       icon: 'book-open-outline',
       link: '/pages/asignaturas',
       pathMatch: 'prefix',
     },
-    {
-      title: 'Tareas',
-      icon: 'clipboard-outline',
-    },
+    // {
+    //   title: 'Tareas',
+    //   icon: 'clipboard-outline',
+    // },
     {
       title: 'Evaluaciones',
       icon: 'checkmark-circle-outline',
     },
-    {
-      title: 'Investigacion',
-      icon: 'thermometer-outline',
-    },
-    {
-      title: 'Publicaciones',
-      icon: 'file-text-outline',
-    },
+    // {
+    //   title: 'Investigacion',
+    //   icon: 'thermometer-outline',
+    // },
+    // {
+    //   title: 'Publicaciones',
+    //   icon: 'file-text-outline',
+    // },
     {
       title: 'Biblioteca',
       icon: 'book-outline',
     },
-    {
-      title: 'Anuncios',
-      icon: 'bell-outline',
-    },
+    // {
+    //   title: 'Anuncios',
+    //   icon: 'bell-outline',
+    // },
   ];
   minimum = false;
   hidden = false;
