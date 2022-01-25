@@ -14,18 +14,25 @@
         </div>
       </div>
       <div [ngStyle]="{ height: '5px', 'background-color': element?.type_element?.background }"></div>
+
       <app-v-document *ngIf="['DOC'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-document>
-      <app-v-evaluation *ngIf="['EVAL'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo">
-      </app-v-evaluation>
+
+      <app-v-evaluation *ngIf="['EVAL'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-evaluation>
+
       <app-v-folder *ngIf="['CARP'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-folder>
+
       <app-v-forum *ngIf="['FOR'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-forum>
+
       <app-v-link *ngIf="['ENL'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-link>
-      <app-v-recorded-class *ngIf="['CLGR'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo">
-      </app-v-recorded-class>
+
+      <app-v-recorded-class *ngIf="['CLGR'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-recorded-class>
+
       <app-v-video *ngIf="['VID'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-video>
-      <app-v-video-conference *ngIf="['VICO'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo">
-      </app-v-video-conference>
+
+      <app-v-video-conference *ngIf="['VICO'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-video-conference>
+
       <app-v-works *ngIf="['TRAB'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-works>
+
     </div>
     <div class="col-3 p-5">
       <app-menu-elements-child class="mt-1" [topic_id]="element?.topic_id" [type_element_id]="element?.type_element_id"
