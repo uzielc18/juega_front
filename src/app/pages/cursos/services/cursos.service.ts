@@ -11,7 +11,7 @@ import { tap, throwIfEmpty } from 'rxjs/operators';
 export class CursosService {
   private _base_url = `${this.options.apiAuth}/api`;
 
-  public elementSelected$!: EventEmitter<any>;
+  public elementSelected$ = new EventEmitter<any>();
 
   private emitRoleSource = new Subject<any>();
   // private emitElementSource = new Subject<any>();
@@ -22,7 +22,7 @@ export class CursosService {
     private httpClient: HttpClient,
     @Inject(CORE_OPTIONS) protected options: CoreOptions
   ) {
-    this.elementSelected$ = new EventEmitter();
+    // this.elementSelected$ = new EventEmitter();
   }
 
   getCursos(): Observable<Cursos[]> {

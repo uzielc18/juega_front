@@ -14,7 +14,7 @@
     <label class="label">Orígen</label>
     <div class="d-flex text-center">
         <div *ngFor="let item of listIcons" >
-          <button nbButton  [ghost]="item.checked === false ? true : false" [disabled]="true"
+          <button nbButton  [ghost]="item.checked === false ? true : false"
           [ngStyle]="{'border-color': item.checked === true ? 'brown' : ''}"
           size="small" (click)="valueButtom(item)">
             <img [src]="item.link" height="20px" alt="">&nbsp;{{item.name}}
