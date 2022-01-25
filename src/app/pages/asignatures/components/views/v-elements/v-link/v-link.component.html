@@ -7,8 +7,9 @@
       </div>
     </div>
     <div>
-      <a [href]="element?.url_externa"></a>
-      <p>{{element?.url_externa}}</p>
+      <a [href]="element?.url_externa" target="_blank">{{ element?.url_externa }}</a>
+      <br>
+      <a class="mt-2" nbButton status="primary" [href]="element?.url_externa" size="small" target="_blank">Ir al enlace</a>
     </div>
   </nb-card-body>
 </nb-card>

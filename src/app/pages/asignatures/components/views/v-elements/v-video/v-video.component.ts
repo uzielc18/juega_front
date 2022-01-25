@@ -47,5 +47,4 @@ export class VVideoComponent implements OnInit, OnChanges {
       id: RegExp.$6
     };
   }
-
 }

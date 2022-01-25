@@ -39,3 +39,25 @@
   nb-badge {
     padding: 2px 3.2px 2px 3.2px;
   }
+
+
+.element-nombre {
+  font-size: 10px;
+  // line-height: 25%;
+  // cursor: pointer;
+}
+
+td {
+  // background-color: red;
+  cursor: pointer;
+  border: none;
+}
+
+.play-icon {
+  color: #6dcb96;
+
+  &:hover {
+    background-color: #6dcb96;
+    color: #fff;
+  }
+}
