@@ -1,18 +1,27 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmitEventsService {
-  valuesRolSem$ = new EventEmitter<any>();
-  private rolSemester = new BehaviorSubject<any>({});
+  public valuesRolSem$ = new EventEmitter<any>();
+  public  rolSemester = new BehaviorSubject<any>({});
   castRolSemester = this.rolSemester.asObservable();
 
+  public emitRoleSource$ = new Subject<any>();
+
   constructor() {
+
   }
+  roleEmitted$ = this.emitRoleSource$.asObservable();
+  emitRol(rol: any) {
+    this.emitRoleSource$.next(rol);
+  }
+
   asingDatos(newUser:any){
     this.rolSemester.next(newUser);
   }
+
 
 }

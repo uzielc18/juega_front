@@ -20,14 +20,17 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
   nombreSubscription: any = Subscription;
   theRolSemestre:any;
   valida: boolean = false;
-  constructor( private formBuilder: FormBuilder,   private generalService: GeneralService, private emitEventsService: EmitEventsService,
+  constructor( private formBuilder: FormBuilder,   private generalService: GeneralService, public emitEventsService: EmitEventsService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService) { }
+    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService) {}
+
 
   ngOnInit(): void {
     this.fieldReactive();
-    this.nombreSubscription = this.emitEventsService.valuesRolSem$.subscribe(value => { // para emitir evento desde la cabecera
+    this.nombreSubscription = this.emitEventsService.roleEmitted$.subscribe(value => { // para emitir evento desde la cabecera
+      console.log('Ya cargueeeeeeeeee');
+
       if (value && value.rol && value.semestre) {
         this.theRolSemestre =  value;
         this.valida = true;

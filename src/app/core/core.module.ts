@@ -28,6 +28,7 @@ import {
   NbLayoutModule,
   NbMenuModule,
   NbPopoverModule,
+  NbRadioModule,
   NbSelectModule,
   NbSidebarModule,
   NbSpinnerModule,
@@ -51,9 +52,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { Oauth2GoogleComponent } from './oauth2google/oauth2google.component';
 import { AuthInterceptorService } from './oauth2/interceptor.service';
 import { Oauth2GoogleCallbackComponent } from './oauth2/oauth2google.callback.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GeneralService } from '../providers';
+import { EmitEventsService } from '../shared/services/emit-events.service';
 
 registerLocaleData(localePe);
-
+const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
 @NgModule({
   declarations: [
     // Oauth2Component,
@@ -63,7 +67,7 @@ registerLocaleData(localePe);
     Oauth2GoogleCallbackComponent,
   ], // add
   imports: [
-    CommonModule,
+    ...ANGULAR,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -85,7 +89,8 @@ registerLocaleData(localePe);
     NbSelectModule,
     NbButtonModule,
     NbPopoverModule,
-    NbCardModule
+    NbCardModule,
+    NbRadioModule
   ],
   // exports: [RouterModule],
   providers: [
@@ -117,6 +122,8 @@ registerLocaleData(localePe);
     //   provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
     //   useValue: (value: any) => {},
     // },
+    GeneralService,
+    EmitEventsService
   ],
 })
 export class CoreModule {
