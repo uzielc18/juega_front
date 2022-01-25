@@ -19,11 +19,10 @@
   <hr />
 
   <!-- cursos en tipo lista -->
-
   <div class="container-fluid">
     <div class="col-12" *ngIf="form.value.tipo == '1'">
       <div class="col-12">
-        <div *ngIf="theRolSemestre?.rol === 'Docente'">
+        <div *ngIf="theRolSemestre?.rol?.name=== 'Docente'">
           <nb-card class="car-list" *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)">
             <div class="row">
               <div class="col-2 col-sm-2">
@@ -70,7 +69,7 @@
             </div>
           </nb-card>
         </div>
-        <div *ngIf="theRolSemestre?.rol === 'Estudiante'">
+        <div *ngIf="theRolSemestre?.rol?.name === 'Estudiante'">
           <nb-card class="car-list" *ngFor="let curso of cursosEstudiante; let i = index" (click)="navigate(curso)">
             <div class="row">
               <div class="col-2 col-sm-2">
@@ -129,7 +128,7 @@
 
     <div class="row" *ngIf="form.value.tipo == '2'">
       <div class="col-12">
-        <div *ngIf="theRolSemestre?.rol === 'Docente'" class="row">
+        <div *ngIf="theRolSemestre?.rol?.name === 'Docente'" class="row">
           <nb-card *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)"
             class="car-car col-md-2">
             <img src="assets/books.jpg" class="card-img-top" alt="..." />
@@ -167,7 +166,7 @@
             </ul>
           </nb-card>
         </div>
-        <div *ngIf="theRolSemestre?.rol === 'Estudiante'" class="row">
+        <div *ngIf="theRolSemestre?.rol?.name === 'Estudiante'" class="row">
           <nb-card *ngFor="let curso of cursosEstudiante; let i = index" (click)="navigate(curso)"
             class="car-car col-md-2">
             <img src="assets/books.jpg" class="card-img-top" alt="..." />

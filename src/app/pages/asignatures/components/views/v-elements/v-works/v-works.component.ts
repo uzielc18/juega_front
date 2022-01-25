@@ -1,10 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
-import { AppService } from 'src/app/core';
-import { GeneralService } from '../../../../../../providers';
-import { END_POINTS } from '../../../../../../providers/utils';
+import { NbDialogService } from '@nebular/theme';
+import { CalificarElementEstudentComponent } from '../../../modals/calificar-element-estudent/calificar-element-estudent.component';
 
 @Component({
   selector: 'app-v-works',
@@ -55,10 +52,8 @@ export class VWorksComponent implements OnInit {
     '=1': '1 segundo.',
     'other': '# segundos.'
   }
-
   constructor(
-    private formBuilder: FormBuilder,
-    private userService: AppService
+    private formBuilder: FormBuilder,   private dialogService: NbDialogService
   ) {
     setInterval(() => {
       this.countdown(this.element?.fecha_fin)
@@ -68,7 +63,15 @@ export class VWorksComponent implements OnInit {
   ngOnInit(): void {
     this.fieldReactive();
   }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion){
+      return JSON.parse(sesion);
+    } else {
+      return '';
+    }
 
+  }
   countdown(fecha_fin: any) {
     const countDate = new Date(fecha_fin).getTime();
     const now = new Date().getTime();
@@ -106,5 +109,20 @@ export class VWorksComponent implements OnInit {
     this.form.patchValue({
       tipo: $event,
     });
+  }
+  calificar(element:any) {
+      this.dialogService.open(CalificarElementEstudentComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          element: element,
+          // response: params,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false
+      }).onClose.subscribe(result => {
+        if (result === 'ok') {
+          // this.filtrar();
+        }
+      });
   }
 }

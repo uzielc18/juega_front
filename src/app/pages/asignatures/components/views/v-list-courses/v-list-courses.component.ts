@@ -20,17 +20,18 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
   nombreSubscription: any = Subscription;
   theRolSemestre:any;
   valida: boolean = false;
-  constructor( private formBuilder: FormBuilder,   private generalService: GeneralService, public emitEventsService: EmitEventsService,
+  // public valorEmitido = this.emitEventsService.recibir;
+  constructor( private formBuilder: FormBuilder,   private generalService: GeneralService, private emitEventsService: EmitEventsService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService) {}
+    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService) {
+
+    }
 
 
   ngOnInit(): void {
     this.fieldReactive();
-    this.nombreSubscription = this.emitEventsService.roleEmitted$.subscribe(value => { // para emitir evento desde la cabecera
-      console.log('Ya cargueeeeeeeeee');
-
+    this.nombreSubscription = this.emitEventsService.returns().subscribe(value => { // para emitir evento desde la cabecera
       if (value && value.rol && value.semestre) {
         this.theRolSemestre =  value;
         this.valida = true;
@@ -41,8 +42,7 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
         this.valida = false;
       }
       });
-
-        this.recoveryValues();
+      this.recoveryValues();
   }
   ngOnDestroy(): void {
     this.nombreSubscription.unsubscribe();
@@ -56,6 +56,8 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
   }
   recoveryValues() {
     this.emitEventsService.castRolSemester.subscribe(value => {
+      console.log(value, 'Recovery');
+
       if (value && value.rol && value.semestre && !this.valida) {
         this.theRolSemestre =  value;
         setTimeout(() => {

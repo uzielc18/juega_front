@@ -122,8 +122,7 @@ const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
     //   provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
     //   useValue: (value: any) => {},
     // },
-    GeneralService,
-    EmitEventsService
+    GeneralService
   ],
 })
 export class CoreModule {

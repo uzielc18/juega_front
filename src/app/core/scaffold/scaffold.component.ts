@@ -85,7 +85,7 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
                       <button nbButton outline size="tiny" ghost (click)="close()">
                         Cerrar
                       </button>&nbsp;
-                      <button nbButton outline size="tiny" hero status="primary" (click)="saveChanges()">
+                      <button nbButton outline size="tiny" hero status="primary" (click)="saveChanges()" [disabled]="formHeader.invalid">
                         Guardar
                       </button>
                     </div>
@@ -280,7 +280,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     const controls = {
       id_rol: ['', [Validators.required]],
       id_semestre: ['', [Validators.required]],
-      lenguaje: ['ES', [Validators.required]],
+      lenguaje: ['ES'],
       carga: ['1'],
     };
     this.formHeader = this.formBuilder.group(controls);
@@ -305,6 +305,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   close() {
     this.popover.hide();
   }
+  //////////////////////////////////
   getRoles() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     let val = JSON.parse(sesion);
@@ -317,24 +318,29 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       if (val && val.rol) {
         this.formHeader.get('id_rol').patchValue(val.rol.id);
         this.paramsSessionStorage.rol = val.rol;
-        this.getSemestres(val.rol.id);
+        this.getSemestres(val.rol);
       } else {
-        this.formHeader.get('id_rol').patchValue(this.roles[0].id);
-        this.paramsSessionStorage.rol = this.roles[0];
-        sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
-        this.getSemestres(this.roles[0].id);
+
+        const rol = this.roles.find((r:any )=> r.name === 'Estudiante');
+        if (rol && rol.id) {
+          this.formHeader.get('id_rol').patchValue(rol.id);
+          this.getSemestres(rol);
+        } else {
+          this.formHeader.get('id_rol').patchValue(this.roles[0].id);
+          this.getSemestres(this.roles[0]);
+        }
+        // this.paramsSessionStorage.rol = this.roles[0];
+        // sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
+
       }
 
     }
   }
-  getSemestres(idRol:any) {
+  getSemestres(rol:any) {
     const serviceName = END_POINTS.base_back.user + '/mysemesters';
-    const params: any = {
-      id_rol: idRol,
-    }
-    if (params && params.id_rol) {
+    if (rol && rol.id) {
       this.loading = true;
-      this.generalService.nameAll$(serviceName).subscribe((res:any) => {
+      this.generalService.nameId$(serviceName, rol.id).subscribe((res:any) => {
         this.semestres = res.data || [];
         if (this.semestres.length>0)  {
           const vigent = this.semestres.find((r:any) => r.vigente === '1');
@@ -343,7 +349,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
               id_semestre: vigent.id,
             });
             if (this.formHeader.value.carga === '1') {
-              this.updateSemestre(vigent);
+              this.updateSemestre(vigent, rol);
             } else {
               this.loading = false;
             }
@@ -352,21 +358,24 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
               id_semestre: this.semestres[0].id,
             });
             if (this.formHeader.value.carga === '1') {
-              this.updateSemestre(this.semestres[0]);
+              this.updateSemestre(this.semestres[0], rol);
             } else {
               this.loading = false;
             }
 
           }
+        } else {
+          this.loading = false;
         }
        });
     }
   }
   changeRol($event:any) {
+    const rol = this.roles.find((r:any )=> r.id === $event);
     this.semestres = [];
     this.formHeader.controls['id_semestre'].setValue('');
     this.formHeader.controls['carga'].setValue('2');
-    this.getSemestres($event);
+    this.getSemestres(rol);
   }
 
   // changeSemestre($event:any) {
@@ -374,27 +383,28 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   // }
 
-  updateSemestre(value:any) {
+  updateSemestre(value:any, rol?:any) {
     const id = value.id || '';
     const serviceName = END_POINTS.base_back.user + '/updatesemester';
     if (id) {
       this.loading = true;
       this.generalService.nameId$(serviceName, id).subscribe((data:any) => {
         if (data.success) {
+          this.paramsSessionStorage.rol = rol;
           this.paramsSessionStorage.semestre = value;
           sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
-            this.emitEventsService.emitRol(this.paramsSessionStorage); //Guardar valores en la cabecera
+            // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
+            this.emitEventsService.enviar(this.paramsSessionStorage);
             this.emitEventsService.asingDatos(this.paramsSessionStorage);
-            console.log(this.paramsSessionStorage, 'voy');
-
         }
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
   }
   saveChanges() {
     const object = this.semestres.find((r:any )=> r.id === this.formHeader.value.id_semestre);
-    if (object && object.id) {
-      this.updateSemestre(object);
+    const rol = this.roles.find((r:any )=> r.id === this.formHeader.value.id_rol);
+    if (object && object.id && rol && rol.id) {
+      this.updateSemestre(object, rol);
     }
 
   }

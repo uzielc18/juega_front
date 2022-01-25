@@ -5,6 +5,7 @@ import { CoreModule } from './core';
 import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
 import { STRATEGIES } from '../environments/oauth2.strategies';
+import { EmitEventsService } from './shared/services/emit-events.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +19,7 @@ import { STRATEGIES } from '../environments/oauth2.strategies';
     RouterModule,
     AppRoutingModule,
   ],
-  providers: [STRATEGIES],
+  providers: [STRATEGIES, EmitEventsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
