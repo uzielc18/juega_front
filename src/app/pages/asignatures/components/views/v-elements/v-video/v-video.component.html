@@ -1,3 +1,5 @@
+<div id="fb-root"></div>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
 <nb-card class="instructions-container m-4">
   <nb-card-body class="px-4 py-5">
     <div class="d-flex">
@@ -12,8 +14,16 @@
       </iframe>
       <iframe *ngIf="['Vimeo'].includes(element?.tamano_peso)" [src]="videoEmbedVimeo | safe" frameborder="0"
         allowfullscreen></iframe>
-      <iframe *ngIf="['FECEBOOK'].includes(element?.tamano_peso)" [src]="element?.url_externa" scrolling="no"
-        frameborder="0" allowfullscreen="true"></iframe>
+      <!-- <iframe *ngIf="['FECEBOOK'].includes(element?.tamano_peso)" [src]="element?.url_externa | safe" scrolling="no"
+        frameborder="0" allowfullscreen="true"></iframe> -->
+      <div *ngIf="['FECEBOOK'].includes(element?.tamano_peso)" data-href="element?.url_externa" data-show-text="true">
+        <blockquote cite="element?.url_externa" class="fb-xfbml-parse-ignore">
+          <a href="element?.url_externa"></a>
+          <p>UPeU alcanzó las 205 publicaciones científicas en la base de datos SCOPUS #UPeU #ProfesionalesConPrincipios
+          </p>Posted by <a href="https://www.facebook.com/UPeUOficial/">UPeU - Universidad Peruana Unión</a> on Monday,
+          January 17, 2022
+        </blockquote>
+      </div>
       <iframe *ngIf="['Loom'].includes(element?.tamano_peso)"
         src="https://www.loom.com/embed/27b14355804d46c38264cf6922e99932" frameborder="0" webkitallowfullscreen
         mozallowfullscreen allowfullscreen>
@@ -22,6 +32,10 @@
   </nb-card-body>
 </nb-card>
 
-<!-- https://www.youtube.com/embed/O6GSU24ju8A -->
 
-<!-- https://www.youtube.com/embed/O6GSU24ju8A&ab_channel=BAMTFUTBOL -->
+<!-- <iframe
+  src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FUPeUOficial%2Fvideos%2F3138829823018701%2F&show_text=false&width=560&t=0"
+  width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true"
+  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+
+  https://fb.watch/aLOnsyEgYj/ -->

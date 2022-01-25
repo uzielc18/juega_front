@@ -21,11 +21,10 @@ export class VVideoComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(): void {
-    this.vimeoId = this.getIdVimeo(this.element?.url_externa);
-    this.youtubeId = this.getIdYoutube(this.element?.url_externa);
-    console.log(this.vimeoId)
-    this.videoEmbedYoutube = `https://www.youtube.com/embed/${this.youtubeId}`;
-    this.videoEmbedVimeo = `https://player.vimeo.com/video/${this.vimeoId}?h=47b33a7ed2`;
+    this.vimeoId = this.parseVideo(this.element?.url_externa);
+    this.youtubeId = this.parseVideo(this.element?.url_externa);
+    this.videoEmbedYoutube = `https://www.youtube.com/embed/${this.youtubeId.id}`;
+    this.videoEmbedVimeo = `https://player.vimeo.com/video/${this.vimeoId.id}?h=47b33a7ed2`;
     this.videoEmbedFacebook = ``
     this.videoEmbedLoom = ``
   }
@@ -33,22 +32,17 @@ export class VVideoComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
-  getIdYoutube(url: any) {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
+  parseVideo(url: any) {
+    url.match(/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
+    if (RegExp.$3.indexOf('youtu') > -1) {
+      let type = 'youtube';
+    } else if (RegExp.$3.indexOf('vimeo') > -1) {
+      let type = 'vimeo';
+    }
 
-    return (match && match[2].length === 11)
-      ? match[2]
-      : null;
-  }
-
-  getIdVimeo(url: any) {
-    const regExp = /http:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
-    const match = url.match(regExp);
-
-    return (match && match[2])
-      ? match[2]
-      : null;
+    return {
+      id: RegExp.$6
+    };
   }
 
 }
