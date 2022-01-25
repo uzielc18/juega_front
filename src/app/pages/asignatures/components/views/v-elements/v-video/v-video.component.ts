@@ -7,7 +7,6 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 })
 export class VVideoComponent implements OnInit, OnChanges {
   loomId: any;
-  fbId: any;
   vimeoId: any;
   youtubeId: any;
   videoEmbedYoutube: any;
@@ -23,13 +22,18 @@ export class VVideoComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
     this.vimeoId = this.parseVideo(this.element?.url_externa);
     this.youtubeId = this.parseVideo(this.element?.url_externa);
+    this.loomId = this.parseLoom(this.element?.url_externa);
     this.videoEmbedYoutube = `https://www.youtube.com/embed/${this.youtubeId.id}`;
     this.videoEmbedVimeo = `https://player.vimeo.com/video/${this.vimeoId.id}?h=47b33a7ed2`;
-    this.videoEmbedFacebook = ``
-    this.videoEmbedLoom = ``
+    this.videoEmbedFacebook = `https://www.facebook.com/plugins/video.php?href=${this.element?.url_externa}&show_text=0&width=560`
+    this.videoEmbedLoom = `${this.loomId}`;
   }
 
   ngOnInit(): void {
+  }
+
+  parseLoom(url: any) {
+    return url.replace("share", "embed");
   }
 
   parseVideo(url: any) {
@@ -39,7 +43,6 @@ export class VVideoComponent implements OnInit, OnChanges {
     } else if (RegExp.$3.indexOf('vimeo') > -1) {
       let type = 'vimeo';
     }
-
     return {
       id: RegExp.$6
     };

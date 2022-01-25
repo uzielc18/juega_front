@@ -6,5 +6,9 @@
         <p class="instructions-description">{{ element?.descripcion }}</p>
       </div>
     </div>
+    <div>
+      <a [href]="element?.url_externa"></a>
+      <p>{{element?.url_externa}}</p>
+    </div>
   </nb-card-body>
 </nb-card>
