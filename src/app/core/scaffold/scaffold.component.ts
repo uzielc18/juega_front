@@ -41,9 +41,9 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
             <nb-action>
               <img
                 *ngIf="!hidden"
-                src="assets/logo-upeu-blanco.png"
+                src="assets/logo-lamb-learning-b.svg"
                 alt="Lamb"
-                width="180"
+                width="120px"
               />
             </nb-action>
           </nb-actions>
@@ -161,10 +161,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       link: '/pages/dashboard',
       pathMatch: 'prefix',
     },
-    // {
-    //   title: 'Agenda',
-    //   icon: 'calendar-outline',
-    // },
     {
       title: 'Asignaturas',
       icon: 'book-open-outline',
@@ -179,14 +175,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       title: 'Evaluaciones',
       icon: 'checkmark-circle-outline',
     },
-    // {
-    //   title: 'Investigacion',
-    //   icon: 'thermometer-outline',
-    // },
-    // {
-    //   title: 'Publicaciones',
-    //   icon: 'file-text-outline',
-    // },
     {
       title: 'Biblioteca',
       icon: 'book-outline',

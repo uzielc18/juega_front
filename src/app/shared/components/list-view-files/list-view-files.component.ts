@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { MViewFilesComponent } from '../view-files/m-view-files/m-view-files.component';
 
@@ -9,7 +9,9 @@ import { MViewFilesComponent } from '../view-files/m-view-files/m-view-files.com
 })
 export class ListViewFilesComponent implements OnInit, OnChanges {
   @Input() title: any = 'Archivos adjuntos';
+  @Input() typeView: any = 'MODAL'; // MODAL OR VIEW
   @Input() arrayFiles: any = [];
+  @Output() fileValue: EventEmitter<any> = new EventEmitter();
   constructor(private dialogService: NbDialogService) { }
 
   ngOnChanges():void {
@@ -61,19 +63,23 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
   }
   valueFile(item:any) {
     this.recorrerSelected(item);
-    if (item && item.nombre) {
-      this.dialogService.open(MViewFilesComponent, {
-        dialogClass: 'dialog-limited-height',
-        context: {
-          item: item,
-        },
-        closeOnBackdropClick: false,
-        closeOnEsc: false
-      }).onClose.subscribe(result => {
-        if (result === 'ok') {
-          // this.filtrar();
-        }
-      });
+    if (this.typeView === 'MODAL') {
+      if (item && item.nombre) {
+        this.dialogService.open(MViewFilesComponent, {
+          dialogClass: 'dialog-limited-height',
+          context: {
+            item: item,
+          },
+          closeOnBackdropClick: false,
+          closeOnEsc: false
+        }).onClose.subscribe(result => {
+          if (result === 'ok') {
+            // this.filtrar();
+          }
+        });
+      }
+    } else {
+      this.fileValue.emit(item);
     }
   }
   recorrerSelected(item:any) {
