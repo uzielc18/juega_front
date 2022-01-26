@@ -27,7 +27,7 @@ export class SesionComponent implements OnInit {
     private generalService: GeneralService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
   }
@@ -38,7 +38,7 @@ export class SesionComponent implements OnInit {
     }
     this.open(params);
   }
-  updateElements(el:any) {
+  updateElements(el: any) {
     const params = {
       code: 'UPDATE',
       item: el,
@@ -46,7 +46,7 @@ export class SesionComponent implements OnInit {
     this.open(params);
   }
 
-  open(params:any) {
+  open(params: any) {
     this.dialogService.open(HomeworkFormComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
@@ -62,8 +62,8 @@ export class SesionComponent implements OnInit {
       if (result.value_close === 'ok') {
         // console.log(result.response);
         let valid = false;
-        if (this.sesion.elements.length>0) {
-          valid =  this.sesion.elements.find((r:any) => r.type_element_id === result.response.type_element_id ? true : false);
+        if (this.sesion.elements.length > 0) {
+          valid = this.sesion.elements.find((r: any) => r.type_element_id === result.response.type_element_id ? true : false);
           if (valid) {
             this.setCheck(result.response.type_element_id);
             this.listElements(result.response.topic_id, result.response.type_element_id);
@@ -82,12 +82,12 @@ export class SesionComponent implements OnInit {
             course_id: this.curso.id,
           }
           this.openGroups(params);
-      }
+        }
 
-    }
+      }
     });
   }
-  adminGrupal(el:any) {
+  adminGrupal(el: any) {
     const params = {
       id: el.id, // id del elemento.
       course_id: this.curso.id,
@@ -97,7 +97,7 @@ export class SesionComponent implements OnInit {
     }
   }
 
-  openGroups(params:any) {
+  openGroups(params: any) {
     this.dialogService.open(AdminGroupsComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
@@ -121,13 +121,15 @@ export class SesionComponent implements OnInit {
 
   elementStyleActive(element: any) {
     return {
-      color: element.color_hover,
+      'background-color': element.color_hover,
+      color: element.color_active
     };
   }
 
   elementStyleHover(element: any) {
     return {
-      color: element.color_hover,
+      'background-color': element.color_hover,
+      color: element.color_active
     };
   }
 
@@ -136,15 +138,15 @@ export class SesionComponent implements OnInit {
   }
 
   addCheck() {
-    if (this.sesion.elements.length>0) {
+    if (this.sesion.elements.length > 0) {
       this.sesion.elements.map((el: any) => {
-       el.check = false;
-     });
+        el.check = false;
+      });
     }
   }
 
   revisarCheck(element: any) {
-    if(!element.check) {
+    if (!element.check) {
       this.addCheck();
       element.check = true;
       this.listElements(element.topic_id, element.type_element_id);
@@ -162,27 +164,27 @@ export class SesionComponent implements OnInit {
     this.loading = true;
 
     this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe((data) => {
-          this.arrayEl = data.data || [];
-        },
-        () => {
-          this.loading = false;
-        },
-        () => {
-          this.loading = false;
-        }
-      );
+      this.arrayEl = data.data || [];
+    },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
-  setCheck(type_element_id:any) {
-    if (this.sesion.elements.length>0) {
+  setCheck(type_element_id: any) {
+    if (this.sesion.elements.length > 0) {
       this.sesion.elements.map((el: any) => {
         el.check = false;
         if (Number(el.type_element_id) === Number(type_element_id)) {
           el.check = true;
         }
-     });
+      });
     }
   }
-  deleteElements(el:any) {
+  deleteElements(el: any) {
     const serviceName = END_POINTS.base_back.elements;
     if (el.id) {
       Swal.fire({
@@ -198,25 +200,25 @@ export class SesionComponent implements OnInit {
         confirmButtonText: 'Si',
         cancelButtonText: 'No',
         // timer: 2000,
-      }).then((result:any) => {
-          if (result.isConfirmed) {
-            this.loading = true;
-            this.generalService.deleteNameId$(serviceName, el.id).subscribe(r => {
-              if (r.success) {
-                this.listElements(el.topic_id, el.type_element_id);
-                setTimeout(() => {
-                  if (this.arrayEl.length<=0) {
-                    this.arrayEl = [];
-                    this.validaExist.emit();
-                  }
-                }, 5000);
-              }
-            }, () => { this.loading =false; }, () => { this.loading =false; });
-          }
-        });
-      }
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          this.loading = true;
+          this.generalService.deleteNameId$(serviceName, el.id).subscribe(r => {
+            if (r.success) {
+              this.listElements(el.topic_id, el.type_element_id);
+              setTimeout(() => {
+                if (this.arrayEl.length <= 0) {
+                  this.arrayEl = [];
+                  this.validaExist.emit();
+                }
+              }, 5000);
+            }
+          }, () => { this.loading = false; }, () => { this.loading = false; });
+        }
+      });
+    }
   }
-  navigate(element:any): any {
-    this.router.navigate([`../asignaturas/course/${this.curso.id_carga_curso_docente}/element/${element.id}`], { relativeTo: this.activatedRoute.parent});
+  navigate(element: any): any {
+    this.router.navigate([`../asignaturas/course/${this.curso.id_carga_curso_docente}/element/${element.id}`], { relativeTo: this.activatedRoute.parent });
   }
 }

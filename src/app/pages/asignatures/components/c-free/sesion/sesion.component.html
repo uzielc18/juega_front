@@ -3,8 +3,8 @@
   <nb-card-body class="p-0">
     <div class="ps-0">
       <div class="d-flex align-items-center" style="position: relative;">
-        <div class="d-flex flex-column align-items-center justify-content-center rounded-start"
-          style="background-color: #faf5f6; width: 80px; height: 100%;">
+        <div class="d-flex flex-column align-items-center justify-content-center rounded-start px-4 py-3"
+          style="background-color: #faf5f6;">
           <span class="fw-bold" style="font-size: 24px">{{
             sesion.fecha_tema | date: "dd"
             }}</span><small style="font-size: 14px; color: #898989">{{
@@ -16,34 +16,7 @@
             <small class="fw-bold">
               {{ sesion.orden_tema }} - {{ sesion.tema }}
             </small>
-            <div class="d-flex align-items-center ms-1">
 
-              <div class="table-responsive">
-                <table class="table table-sm">
-                  <tbody>
-                    <tr>
-                      <td *ngFor="let elem of sesion?.elements; let i = index" style="width: 1px; padding-top: 0px;"
-                        class="text-center">
-                        <label class="label" style="font-size: 9px">{{ elem.realizo }}-{{ (arrayEl.length>0 &&
-                          elem.type_element_id === arrayEl[0].type_element_id) ? arrayEl.length : elem.count
-                          }}</label><br>
-                        <nb-icon nbTooltip="{{ elem.nombre }}" class="me-2" (click)="selectedElement(elem)"
-                          (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null"
-                          [ngStyle]="clickedIndex === elem.check
-                          ? elementStyleActive(elem)
-                          : elementStyle() && hoveredIndex === i
-                          ? elementStyleHover(elem)
-                          : elementStyle()" [icon]="elem.icono">
-                        </nb-icon>
-                        <!-- <br>
-                    <label class="label" style="font-size: 7px">{{ elem.nombre }}</label> -->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <nb-icon class="fs-3 me-2" icon="arrow-right" style="color: #6dcb96"></nb-icon>
-            </div>
           </div>
         </div>
         <div class="d-flex align-items-center justify-content-end p-0 ms-auto pe-3">
@@ -60,7 +33,35 @@
     </div>
   </nb-card-body>
 </nb-card>
-<nb-card *ngIf="arrayEl.length > 0" class="list-element">
+<nb-card class="list-element mb-2">
+  <div class="d-flex align-items-center">
+    <div class="table-responsive">
+      <table class="table table-sm m-0">
+        <tbody>
+          <tr>
+            <td *ngFor="let elem of sesion?.elements; let i = index" class="text-center py-3 px-4"
+                (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null" [ngStyle]="clickedIndex === elem.check
+                ? elementStyleActive(elem)
+                : elementStyle() && hoveredIndex === i
+                ? elementStyleHover(elem)
+                : elementStyle()" (click)="selectedElement(elem)">
+              <label style="font-size: 10px">
+                {{ elem.realizo }}-{{ (arrayEl.length>0 &&
+                elem.type_element_id === arrayEl[0].type_element_id) ? arrayEl.length : elem.count }}
+              </label><br>
+              <nb-icon nbTooltip="{{ elem.nombre }}" [icon]="elem.icono">
+              </nb-icon><br>
+              <small class="element-nombre">{{ elem?.nombre }}
+              </small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <nb-icon class="fs-1 mx-4 play-icon" icon="arrow-right"></nb-icon>
+  </div>
+</nb-card>
+<nb-card *ngIf="arrayEl.length > 0" class="list-element mb-2">
   <nb-list>
     <nb-list-item *ngFor="let el of arrayEl; let i = index" class="p-2 ps-3 d-flex justify-content-between list">
       <div>

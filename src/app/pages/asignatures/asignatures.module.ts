@@ -39,6 +39,8 @@ import { VRecordedClassComponent } from './components/views/v-elements/v-recorde
 import { VEvaluationComponent } from './components/views/v-elements/v-evaluation/v-evaluation.component';
 import { VElementsBaseComponent } from './components/views/v-elements/v-elements-base.component';
 import { ListViewFilesModule } from 'src/app/shared/components/list-view-files/list-view-files.module';
+import { SafeUrlModule } from '../../shared/pipes/safe-url/safe-url.module';
+
 import { CalificarElementEstudentComponent } from './components/modals/calificar-element-estudent/calificar-element-estudent.component';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
@@ -96,7 +98,8 @@ const MODULES: any = [
   MenuElementsModule,
   RubricasModule,
   ListViewFilesModule,
-  MenuElementsChildModule
+  MenuElementsChildModule,
+  SafeUrlModule
 ];
 
 @NgModule({
