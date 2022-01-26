@@ -22,19 +22,25 @@
               <input type="text" placeholder="Buscar alumno" nbInput fullWidth>
             </div>
             <hr>
-
+            <div *ngFor="let item of listAlumns">
+              <div style="font-size: 10px;">{{item.nombre}}</div>
+            </div>
           </nb-card-body>
         </nb-card>
       </div>
       <div class="col-md-7 p-1">
+        <div>
+          <strong>
+            {{element?.titulo}}
+          </strong>
+          <p style="text-align: justify; font-size: 11px;">{{element?.descripcion}}</p>
+        </div>
         <nb-card>
           <nb-card-header>
             DOCUMENTOS ADJUNTOS
           </nb-card-header>
           <nb-card-body>
-            <div *ngFor="let item of listAlumns">
-              <div style="font-size: 10px;">{{item.nombre}}</div>
-            </div>
+
           </nb-card-body>
         </nb-card>
       </div>

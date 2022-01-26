@@ -385,10 +385,11 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   updateSemestre(value:any, rol?:any) {
     const id = value.id || '';
+    const id_rol = rol.id || '';
     const serviceName = END_POINTS.base_back.user + '/updatesemester';
     if (id) {
       this.loading = true;
-      this.generalService.nameId$(serviceName, id).subscribe((data:any) => {
+      this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe((data:any) => {
         if (data.success) {
           this.paramsSessionStorage.rol = rol;
           this.paramsSessionStorage.semestre = value;
