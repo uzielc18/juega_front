@@ -1,44 +1,51 @@
-  nb-icon {
-    cursor: pointer;
-  }
+nb-icon {
+  cursor: pointer;
+}
 
-  .cardd:hover {
-    background-color: #faf5f6;
-  }
+.cardd:hover {
+  background-color: #faf5f6;
+}
 
-  li {
-    list-style: none;
-  }
+li {
+  list-style: none;
+}
 
-  h5 {
-    font-size: 12px;
-    font-weight: bold;
-    padding: 5px 0px 5px 0px;
-    margin: 0;
-    color: #934054;
-  }
+.sesion-title {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 0px 5px 0px;
+  margin: 0;
+  color: #934054;
+}
 
-  p {
-    font-size: 12px;
-    padding: 0px 0px 5px 15px;
-    margin: 0;
-  }
+.sesion-description {
+  font-size: 12px;
+  padding: 0px 0px 5px 15px;
+  margin: 0;
+  text-align: justify;
+  display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
-  .list-element {
-    margin-left: 80px;
-    padding: 0;
-  }
+.list-element {
+  // border-radius: 0;
+  // padding: 0;
+  // margin: 0;
+  // margin-left: 80px;
+}
 
-  .list:hover {
-    // background-color: red;
-  }
-  nb-icon {
-    cursor: pointer;
-  }
+.list:hover {
+  // background-color: red;
+}
+nb-icon {
+  cursor: pointer;
+}
 
-  nb-badge {
-    padding: 2px 3.2px 2px 3.2px;
-  }
+nb-badge {
+  padding: 2px 3.2px 2px 3.2px;
+}
 
 
 .element-nombre {
