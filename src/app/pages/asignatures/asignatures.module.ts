@@ -41,6 +41,7 @@ import { VElementsBaseComponent } from './components/views/v-elements/v-elements
 import { ListViewFilesModule } from 'src/app/shared/components/list-view-files/list-view-files.module';
 import { SafeUrlModule } from '../../shared/pipes/safe-url/safe-url.module';
 
+import { CalificarElementEstudentComponent } from './components/modals/calificar-element-estudent/calificar-element-estudent.component';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -67,7 +68,8 @@ const COMPONENTS: any[] = [
   VFolderComponent,
   VRecordedClassComponent,
   VEvaluationComponent,
-  VElementsBaseComponent
+  VElementsBaseComponent,
+  CalificarElementEstudentComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -80,12 +82,12 @@ const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,
 ];
 const SERIVCES: any = [
-  GeneralService,
-  EmitEventsService
+  GeneralService
 ];
 const MODALS: any = [
   HomeworkFormComponent,
-  AdminGroupsComponent
+  AdminGroupsComponent,
+  CalificarElementEstudentComponent
 ];
 const NGX_MODULES: any = [
 

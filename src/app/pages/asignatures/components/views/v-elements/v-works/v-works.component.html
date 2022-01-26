@@ -1,5 +1,5 @@
 <div class="container m-0 p-0">
-  <div class="work work-remember m-4" *ngIf="!tiempo_vencido">
+  <!-- <div class="work work-remember m-4" *ngIf="!tiempo_vencido">
     <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Trabajo: {{ element?.titulo }} está por vencer en {{
       daysLeft |
       i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} {{
@@ -22,35 +22,44 @@
   </div>
   <div class="work work-evaluated m-4">
     <p>Hola {{ userInfo.name }}!,</p><span>Tu Trabajo: {{ element?.titulo }} fué calificado hace 4 días</span>
-  </div>
+  </div>  -->
   <nb-card class="instructions-container m-4">
     <nb-card-body class="px-4 py-5">
-      <div class="d-flex">
-        <div class="instructions">
+      <div class="row">
+        <div class="instructions col-md-10">
           <h4 class="instructions-title">{{ element?.titulo }}</h4>
-          <p class="instructions-description">{{ element?.descripcion }}</p>
+          <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p>
         </div>
-
-        <div class="calification ms-auto">
-          Aún No tiene Calificación
-        </div>
-        <div class="calification calification-evaluated">
-          <p>15</p>
-          <span>Calificación</span>
+        <div class="col-md-2">
+          <div style="cursor: pointer;" class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'" (click)="calificar(element)">
+            <nb-icon icon="edit"></nb-icon>&nbsp;&nbsp;Calificar
+          </div>
+          <div class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
+            Aún No tiene Calificación
+          </div>
+          <div class="calification calification-evaluated" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
+            <p>15</p>
+            <span>Calificación</span>
+          </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center">
+      <!-- <div class="d-flex justify-content-center">
         <button nbButton class="my-4">
           <nb-icon icon="download-outline"></nb-icon>Descargar Tarea
         </button>
-      </div>
+      </div> -->
       <div>
+        <br>
+        <h4 class="attached-files-title">Archivos de apoyo</h4>
+        <app-list-view-files [arrayFiles]="element?.element_files || []"></app-list-view-files>
+      </div>
+      <!-- <div>
         <div class="d-flex">
           <h4 class="rubrica-title me-2">Rubrica</h4>
           <span class="rubrica-title-desc">(Criterios de evaluación)</span>
         </div>
         <app-rubricas></app-rubricas>
-      </div>
+      </div> -->
       <div class="mt-4">
         <div class="d-flex">
           <h4 class="send-work-title">Entrega de trabajo</h4>
@@ -78,10 +87,6 @@
             </nb-card-body>
           </nb-card>
         </div>
-      </div>
-      <div>
-        <h4 class="attached-files-title">Archivos adjuntos</h4>
-        <app-list-view-files [arrayFiles]="element?.element_files || []"></app-list-view-files>
       </div>
     </nb-card-body>
   </nb-card>

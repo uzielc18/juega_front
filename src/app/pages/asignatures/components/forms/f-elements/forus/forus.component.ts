@@ -161,7 +161,7 @@ export class ForusComponent implements OnInit {
       titulo:                   forms.titulo,
       descripcion:              forms.descripcion,
 
-      nota:                     forms.nota,
+      nota:                     forms.nota || 0,
       tipo:                     forms.tipo,
 
       fecha_inicio:             f_inicio,

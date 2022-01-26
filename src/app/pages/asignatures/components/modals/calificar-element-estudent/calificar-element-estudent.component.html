@@ -1,0 +1,64 @@
+<nb-card accent="primary" class="scrollModal"  [nbSpinner]="loading" nbSpinnerStatus="primary"
+  nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        Calificar
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body style="background: #f5f5f5;">
+    <div class="row">
+      <div class="col-md-3 p-1">
+        <nb-card>
+          <nb-card-header>
+            Estudiantes
+          </nb-card-header>
+          <nb-card-body  class="p-2">
+            <div >
+              <input type="text" placeholder="Buscar alumno" nbInput fullWidth>
+            </div>
+            <hr>
+
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-7 p-1">
+        <nb-card>
+          <nb-card-header>
+            DOCUMENTOS ADJUNTOS
+          </nb-card-header>
+          <nb-card-body>
+            <div *ngFor="let item of listAlumns">
+              <div style="font-size: 10px;">{{item.nombre}}</div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-2 p-1">
+        <nb-card>
+          <nb-card-header>
+            Calificar
+          </nb-card-header>
+          <nb-card-body class="p-2">
+            <div>
+              <label class="label">Comentario</label><br>
+              <textarea nbInput fullWidth placeholder="Ingrese un comentario"></textarea>
+            </div>
+            <div>
+              <label class="label">Nota</label><br>
+              <input type="number" nbInput fullWidth placeholder="Ingrese una nota">
+            </div> <br>
+            <div class="text-center">
+              <button nbButton size="small" status="primary" fullWidth>Guardar calificación</button>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+    </nb-card-body>
+    </nb-card>
