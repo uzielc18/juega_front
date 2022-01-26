@@ -1,7 +1,7 @@
 
-  <div class="contenedor-imagenes table-responsive">
-    <div *ngFor="let item of arrayFiles" class="imgs text-center"  (click)="valueFile(item)">
-      <img [src]="item?.icon" class="imgs" alt="" [title]="item?.nombre_original"><br>
-      <label class="label" style="font-size: 9px;" [ngStyle]="{'color': item?.color ? item?.color : ''}">{{item.name_corto}}</label>
+  <div class="d-flex mt-4">
+    <div [ngStyle]="showText ? {'width': '100px'} : {'width': '50px'}" *ngFor="let item of arrayFiles" class="imgs d-flex flex-column align-items-center text-center" (click)="valueFile(item)">
+      <img [src]="item?.icon" [title]="item?.nombre_original" [ngStyle]="showText ? {'width': '40%'} : {'width': '90%'}">
+      <small *ngIf="showText" class="label mt-2" style="font-size: 9px;" [ngStyle]="{'color': item?.color ? item?.color : ''}">{{item.nombre_original}}</small>
     </div>
   </div>
