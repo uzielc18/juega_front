@@ -40,8 +40,10 @@ import { VEvaluationComponent } from './components/views/v-elements/v-evaluation
 import { VElementsBaseComponent } from './components/views/v-elements/v-elements-base.component';
 import { ListViewFilesModule } from 'src/app/shared/components/list-view-files/list-view-files.module';
 import { SafeUrlModule } from '../../shared/pipes/safe-url/safe-url.module';
-
 import { CalificarElementEstudentComponent } from './components/modals/calificar-element-estudent/calificar-element-estudent.component';
+import { CWorksComponent } from './components/c-free/calificar-elements/c-works/c-works.component';
+import { CForumsComponent } from './components/c-free/calificar-elements/c-forums/c-forums.component';
+import { NgxViewFilesGoogleModule } from 'src/app/shared/components/view-files/ngx-view-files-google/ngx-view-files-google.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -69,7 +71,10 @@ const COMPONENTS: any[] = [
   VRecordedClassComponent,
   VEvaluationComponent,
   VElementsBaseComponent,
-  CalificarElementEstudentComponent
+  CalificarElementEstudentComponent,
+  CWorksComponent,
+  CForumsComponent
+
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -99,7 +104,8 @@ const MODULES: any = [
   RubricasModule,
   ListViewFilesModule,
   MenuElementsChildModule,
-  SafeUrlModule
+  SafeUrlModule,
+  NgxViewFilesGoogleModule
 ];
 
 @NgModule({

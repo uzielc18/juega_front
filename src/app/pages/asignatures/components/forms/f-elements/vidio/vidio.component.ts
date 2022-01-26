@@ -208,16 +208,12 @@ settValuesMore:any;
     }
   }
   recopilaKeyVideo(url:any, tamanoPeso: any) {
-    console.log(url, tamanoPeso);
-
     let idKeyVideo = '';
     switch (tamanoPeso) {
       case 'YouTube':
         const re:any = /^(https?:\/\/)?((www\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i;
         const you = url.match(re)[7];
         idKeyVideo = you;
-        console.log(idKeyVideo);
-
         break;
       case 'Vimeo':
         const a = /(videos|video|channels|\.com)\/([\d]+)/;

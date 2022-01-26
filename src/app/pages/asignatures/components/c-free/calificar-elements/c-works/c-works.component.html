@@ -1,0 +1,13 @@
+<nb-card>
+  <nb-card-header>
+    DOCUMENTOS DEL ALUMNO
+  </nb-card-header>
+  <nb-card-body>
+    <div>
+      <app-list-view-files [arrayFiles]="[]" [typeView]="'VIEW'" (fileValue)="fileValues($event)"></app-list-view-files>
+    </div><br>
+    <div>
+      <app-ngx-view-files-google [valueFile]="datosFile" (loadingsFiles)="loadingsFiles($event)"></app-ngx-view-files-google>
+    </div>
+  </nb-card-body>
+</nb-card>

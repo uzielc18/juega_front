@@ -60,7 +60,7 @@
         </div>
         <app-rubricas></app-rubricas>
       </div> -->
-      <div class="mt-4">
+      <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
         <div class="d-flex">
           <h4 class="send-work-title">Entrega de trabajo</h4>
           <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon"

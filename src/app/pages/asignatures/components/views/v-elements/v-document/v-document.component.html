@@ -6,5 +6,9 @@
         <p class="instructions-description">{{ element?.descripcion }}</p>
       </div>
     </div>
+    <div>
+      <h4 class="attached-files-title">Archivos de apoyo</h4>
+      <app-list-view-files [arrayFiles]="element?.element_files || []"></app-list-view-files>
+    </div>
   </nb-card-body>
 </nb-card>
