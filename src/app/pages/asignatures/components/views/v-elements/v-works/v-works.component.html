@@ -25,6 +25,7 @@
   </div>  -->
   <nb-card class="instructions-container m-4">
     <nb-card-body class="px-4 py-5">
+      <form [formGroup]="form">
       <div class="row">
         <div class="instructions col-md-10">
           <h4 class="instructions-title">{{ element?.titulo }}</h4>
@@ -37,17 +38,12 @@
           <div class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
             Aún No tiene Calificación
           </div>
-          <div class="calification calification-evaluated" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
+          <!-- <div class="calification calification-evaluated" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
             <p>15</p>
             <span>Calificación</span>
-          </div>
+          </div> -->
         </div>
       </div>
-      <!-- <div class="d-flex justify-content-center">
-        <button nbButton class="my-4">
-          <nb-icon icon="download-outline"></nb-icon>Descargar Tarea
-        </button>
-      </div> -->
       <div>
         <br>
         <h4 class="attached-files-title">Archivos de apoyo</h4>
@@ -69,25 +65,37 @@
             icon="external-link-outline" (click)="cambioTypo('2')"></nb-icon>
         </div>
         <div *ngIf="form.value.tipo == '1'">
-          <lamb-prepare-file-pro>
+          <lamb-prepare-file-pro
+          [paramsInfo]="{
+            id: element?.id_carga_curso_docente,
+            directory: directorio,
+            type: 'put',
+            tabla: 'pendings',
+            tipo: 'DOCUMENTO_TRABAJO'}"
+          [numFiles]="6"
+          (filterValueChange)="valueFile($event)"
+          >
           </lamb-prepare-file-pro>
         </div>
         <div *ngIf="form.value.tipo == '2'">
           <nb-card>
             <nb-card-body class="send-work-link d-flex">
-              <input type="text" nbInput fullWidth shape="rectangle" placeholder="Ingrese una url válida por favor">
-              <nb-select placeholder="Select Showcase" [(selected)]="selectedItem">
-                <nb-option value="0">YouTube</nb-option>
-                <nb-option value="1">SoundCloud</nb-option>
-                <nb-option value="2">Vimeo</nb-option>
-                <nb-option value="3">Referencia</nb-option>
+              <input type="text" nbInput fullWidth shape="rectangle" placeholder="Ingrese una url válida por favor" formControlName="enlace">
+              <nb-select placeholder="Selecciona enlace" formControlName="ext_enlace">
+                <nb-option value="YOUTUBE">YouTube</nb-option>
+                <nb-option value="SOUNDCLOUD">SoundCloud</nb-option>
+                <nb-option value="VIMEO">Vimeo</nb-option>
+                <nb-option value="REFERENCIA">Referencia</nb-option>
               </nb-select>
-              <button nbButton status="primary">Guardar enlace <nb-icon icon="external-link-outline"></nb-icon>
+              <button nbButton status="primary" [disabled]="!form.value.ext_enlace || !form.value.enlace" (click)="saveEnlace()">Guardar enlace <nb-icon icon="external-link-outline"></nb-icon>
               </button>
             </nb-card-body>
           </nb-card>
         </div>
+        <br>
+        <h4 class="send-work-title">Documentos entregados</h4>
       </div>
+    </form>
     </nb-card-body>
   </nb-card>
 </div>

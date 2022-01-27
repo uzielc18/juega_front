@@ -31,7 +31,7 @@
 
       <app-v-video-conference *ngIf="['VICO'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-video-conference>
 
-      <app-v-works *ngIf="['TRAB'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-works>
+      <app-v-works *ngIf="['TRAB'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo" [pending]="pending"></app-v-works>
 
     </div>
     <div class="col-md-3 p-5">

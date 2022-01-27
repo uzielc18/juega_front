@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 
@@ -22,9 +22,17 @@ export class CalificarElementEstudentComponent implements OnInit {
       nombre: 'Godofredo Empatico en tutados'
     }
   ];
+  formHeader: any = FormGroup;
   constructor(public activeModal: NbDialogRef<CalificarElementEstudentComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService) { }
 
   ngOnInit(): void {
+    this.fieldReactive();
+  }
+  private fieldReactive() {
+    const controls = {
+      ver_trabajo: ['S'],
+    };
+    this.formHeader = this.formBuilder.group(controls);
   }
   closeModal() {
     this.activeModal.close('close');

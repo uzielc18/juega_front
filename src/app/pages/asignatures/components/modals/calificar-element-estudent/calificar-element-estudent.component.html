@@ -11,6 +11,7 @@
     </div>
   </nb-card-header>
   <nb-card-body style="background: #f5f5f5;">
+    <form [formGroup]="formHeader">
     <div class="row">
       <div class="col-md-3 p-1">
         <nb-card>
@@ -18,12 +19,24 @@
             Estudiantes
           </nb-card-header>
           <nb-card-body  class="p-2">
+            <div>
+              <nb-tabset fullWidth>
+                <nb-tab tabTitle="Todos">
+                </nb-tab>
+                <nb-tab tabTitle="Sin calificar">
+                </nb-tab>
+                <nb-tab tabTitle="Calificados">
+                </nb-tab>
+                <nb-tab tabTitle="Pendiéntes">
+                </nb-tab>
+               </nb-tabset>
+            </div>
             <div >
               <input type="text" placeholder="Buscar alumno" nbInput fullWidth>
             </div>
             <hr>
             <nb-list>
-              <nb-list-item *ngFor="let item of listAlumns">
+              <nb-list-item *ngFor="let item of listAlumns" class="p-1">
                 <div style="font-size: 10px;">{{item.nombre}}</div>
               </nb-list-item>
             </nb-list>
@@ -32,13 +45,19 @@
       </div>
       <div class="col-md-7 p-1">
         <div>
-          <strong>
-            {{element?.titulo}}
-          </strong>
-          <p style="text-align: justify; font-size: 11px;">{{element?.descripcion}}</p>
+          <div class=" d-flex align-items-center justify-content-between">
+            <strong>
+              {{element?.titulo}}
+            </strong>
+            <nb-radio-group class="row" formControlName="ver_trabajo">
+              <nb-radio value="S" class="col-md-6">Ver</nb-radio>
+              <nb-radio value="N" class="col-md-6">Ocultar</nb-radio>
+            </nb-radio-group>
+          </div>
+          <p *ngIf="formHeader.value.ver_trabajo === 'S'" style="text-align: justify; font-size: 11px;">{{element?.descripcion}}</p>
         </div>
         <div>
-          <app-c-works></app-c-works>
+          <app-c-works [arrayFile]="element?.element_files"></app-c-works>
         </div>
       </div>
       <div class="col-md-2 p-1">
@@ -62,6 +81,6 @@
         </nb-card>
       </div>
     </div>
-
+  </form>
     </nb-card-body>
     </nb-card>

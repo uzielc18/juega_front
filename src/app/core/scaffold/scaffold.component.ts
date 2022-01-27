@@ -41,7 +41,7 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
             <nb-action>
               <img
                 *ngIf="!hidden"
-                src="assets/logo-lamb-learning-b.svg"
+                src="assets/logo-lamb-learning-blanco.svg"
                 alt="Lamb"
                 width="120px"
               />

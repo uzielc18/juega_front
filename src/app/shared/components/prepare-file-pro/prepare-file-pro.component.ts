@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
+import { AppService } from 'src/app/core';
 import { S3ServiceService } from './services/s3-service.service';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 
@@ -21,7 +22,7 @@ export class PrepareFileProComponent implements OnInit {
   @Input() listArrayFile: any = [];
   loading: boolean = false;
   constructor(private formBuilder: FormBuilder, private modalServiceNebular: NbDialogService,
-    private s3ServiceServ: S3ServiceService) {
+    private appService: AppService) {
 
   }
   ngOnInit(): void {
@@ -40,10 +41,7 @@ export class PrepareFileProComponent implements OnInit {
     this.formHeaders = this.formBuilder.group(controls);
   }
   getUsers() {
-    this.loading = true;
-    this.s3ServiceServ.getUserMe().subscribe(res => {
-      this.userData = res['data'];
-    }, () => { this.loading = false; }, () => { this.loading = false; });
+      this.userData = this.appService;
   }
   typeFileSet(typeFile: string) {
     // Create by Cristian

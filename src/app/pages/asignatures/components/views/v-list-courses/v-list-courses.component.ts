@@ -56,8 +56,6 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
   }
   recoveryValues() {
     this.emitEventsService.castRolSemester.subscribe(value => {
-      console.log(value, 'Recovery');
-
       if (value && value.rol && value.semestre && !this.valida) {
         this.theRolSemestre =  value;
         setTimeout(() => {
