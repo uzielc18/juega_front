@@ -10,7 +10,7 @@ export class EmitEventsService {
   public  rolSemester = new BehaviorSubject<any>({});
   castRolSemester = this.rolSemester.asObservable();
 
-  blockRolSem$ = new Subject<boolean>();
+  blockRolSem$ = new Subject<any>();
 
   constructor() {
   }
