@@ -53,10 +53,14 @@
       </div>
       <hr>
     </div>
-    <div class="d-flex flex-column" style="margin-left: 86px;">
-      <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="giant" rows="5" [formControl]="text"
-        style="font-size: 16px;"></textarea>
-      <button nbButton status="success" class="ms-auto mt-2" (click)="insertComments()">Comentar</button>
+    <div style="width: 100%;">
+      <form class="d-flex flex-column" style="margin-left: 86px;" [formGroup]="formHeader">
+        <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="giant"
+          [status]="(formHeader.hasError('required', ['comentario'])) === true ? 'primary' : 'basic'"
+          formControlName="comentario" style="font-size: 16px;" rows="5"></textarea>
+        <button nbButton status="success" class="ms-auto mt-2" (click)="saveComment()"
+          [disabled]="validCampos">Comentar</button>
+      </form>
     </div>
   </nb-card-body>
 </nb-card>
