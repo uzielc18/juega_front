@@ -30,7 +30,7 @@ export class CalificarElementEstudentComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      ver_trabajo: ['S'],
+      ver_trabajo: ['N'],
     };
     this.formHeader = this.formBuilder.group(controls);
   }

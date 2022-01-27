@@ -50,9 +50,13 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
       }
       });
       this.recoveryValues();
+      /// Para bloquear el rol de la cabecera
+      this.emitEventsService.blockEnviar(true);
   }
   ngOnDestroy(): void {
     this.nombreSubscription.unsubscribe();
+      /// Para bloquear el rol de la cabecera
+    this.emitEventsService.blockEnviar(false);
   }
   recoveryValues() {
     this.emitEventsService.castRolSemester.subscribe(value => {
@@ -87,6 +91,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
   }
   getPendings() {
     const serviceName = END_POINTS.base_back.resourse + '/get-pending-student';
+    // this.userInfo.id
     this.generalService.nameIdAndId$(serviceName, this.elementId, this.userInfo.id).subscribe((res:any) => {
       this.pending = res.data || '';
     });
@@ -131,5 +136,8 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     if (this.theRolSemestre.rol.name === 'Estudiante') {
       this.getPendings();
     }
+  }
+  refreshPending() {
+    this.getPendings();
   }
 }

@@ -1,4 +1,4 @@
-<div class="container m-0 p-0">
+<div class="container m-0 p-0" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
   <!-- <div class="work work-remember m-4" *ngIf="!tiempo_vencido">
     <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Trabajo: {{ element?.titulo }} está por vencer en {{
       daysLeft |
@@ -35,13 +35,14 @@
           <div style="cursor: pointer;" class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'" (click)="calificar(element)">
             <nb-icon icon="edit"></nb-icon>&nbsp;&nbsp;Calificar
           </div>
-          <div class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
-            Aún No tiene Calificación
+
+          <div class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.nota">
+            Aún no tiene calificación
           </div>
-          <!-- <div class="calification calification-evaluated" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
-            <p>15</p>
+          <div class="calification calification-evaluated" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota">
+            <p>{{pending?.student_pending?.nota}}</p>
             <span>Calificación</span>
-          </div> -->
+          </div>
         </div>
       </div>
       <div>
@@ -56,7 +57,7 @@
         </div>
         <app-rubricas></app-rubricas>
       </div> -->
-      <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
+      <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
         <div class="d-flex">
           <h4 class="send-work-title">Entrega de trabajo</h4>
           <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon"
@@ -74,6 +75,8 @@
             tipo: 'DOCUMENTO_TRABAJO'}"
           [numFiles]="6"
           (filterValueChange)="valueFile($event)"
+          [listArrayFile]="arrayFile"
+          [isDisabled]="pending?.student_pending?.pending_files?.length === 6"
           >
           </lamb-prepare-file-pro>
         </div>
@@ -81,19 +84,33 @@
           <nb-card>
             <nb-card-body class="send-work-link d-flex">
               <input type="text" nbInput fullWidth shape="rectangle" placeholder="Ingrese una url válida por favor" formControlName="enlace">
-              <nb-select placeholder="Selecciona enlace" formControlName="ext_enlace">
+              <nb-select placeholder="Selecciona enlace" status="primary" formControlName="ext_enlace">
                 <nb-option value="YOUTUBE">YouTube</nb-option>
                 <nb-option value="SOUNDCLOUD">SoundCloud</nb-option>
                 <nb-option value="VIMEO">Vimeo</nb-option>
                 <nb-option value="REFERENCIA">Referencia</nb-option>
               </nb-select>
-              <button nbButton status="primary" [disabled]="!form.value.ext_enlace || !form.value.enlace" (click)="saveEnlace()">Guardar enlace <nb-icon icon="external-link-outline"></nb-icon>
+              <button nbButton status="primary" [disabled]="validButtons" (click)="saveEnlace()">Guardar enlace <nb-icon icon="external-link-outline"></nb-icon>
               </button>
             </nb-card-body>
           </nb-card>
         </div>
         <br>
-        <h4 class="send-work-title">Documentos entregados</h4>
+        <div>
+          <h4 class="send-work-title">Documentos entregados</h4>
+          <div *ngIf="pending?.student_pending?.pending_files?.length>0">
+            <app-list-view-files
+            [arrayFiles]="pending?.student_pending?.pending_files || []"
+            [deleteFile]="!pending?.student_pending?.nota"
+            (deleteFileEmit)="deleteFile($event)"></app-list-view-files>
+          </div>
+          <div class="mt-4" *ngIf="pending?.student_pending?.pending_files?.length<=0">
+            <nb-alert outline="danger" style="font-size: 12px;">No se encontraron archivos adjuntos</nb-alert>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4" *ngIf="!pending?.student_pending && rolSemestre?.rol?.name === 'Estudiante'">
+        <nb-alert outline="danger" style="font-size: 12px;">No se encontraron pendientes</nb-alert>
       </div>
     </form>
     </nb-card-body>

@@ -1,8 +1,10 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
+import { END_POINTS } from 'src/app/providers/utils';
+import { DIRECTORY } from 'src/app/shared/directorios/directory';
 import { CalificarElementEstudentComponent } from '../../../modals/calificar-element-estudent/calificar-element-estudent.component';
 
 @Component({
@@ -14,6 +16,7 @@ export class VWorksComponent implements OnInit, OnChanges {
   @Input() element: any;
   @Input() userInfo: any;
   @Input() pending: any;
+  loading: boolean = false;
   fechaFin: any;
 
   daysLeft: any;
@@ -52,7 +55,9 @@ export class VWorksComponent implements OnInit, OnChanges {
     '=1': '1 segundo.',
     'other': '# segundos.'
   }
-  directorio: any = 'plantillas/upeu';
+  directorio: any = DIRECTORY.base;
+  arrayFile: any = [];
+  @Output() refreshPending: EventEmitter<any> = new EventEmitter();
   constructor(
     private formBuilder: FormBuilder, private dialogService: NbDialogService, private appService: AppService, private generalServi: GeneralService
   ) {
@@ -133,21 +138,25 @@ export class VWorksComponent implements OnInit, OnChanges {
   }
 
   valueFile($event:any){
-    const serviceName = '';
+    const serviceName = END_POINTS.base_back.resourse + '/save-work-student';
     const params: any = {
-      files: $event,
+      files: $event.arrayFile,
     };
-    if ($event.length>0) {
-      this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
+    if (params && params.files.length === 1) {
+      this.loading = true;
+      this.generalServi.addNameIdData$(serviceName, this.pending.student_pending.id, params).subscribe((res:any) => {
         if (res.success) {
-
-        }
-      });
+          this.arrayFile = [];
+          this.refreshPending.emit();
+        } else {
+          this.arrayFile = [];
+         }
+      }, () => { this.loading = false; }, () => { this.loading = false; });
     }
 
   }
   saveEnlace() {
-    const serviceName = '';
+    const serviceName = END_POINTS.base_back.resourse + '/save-work-student';
     const form = this.form.value;
     const params: any = {
         ext: form.ext_enlace,
@@ -164,14 +173,31 @@ export class VWorksComponent implements OnInit, OnChanges {
       const data = {
         files: [params],
       };
-      console.log(data);
-
-      // this.generalServi.nameParams$(serviceName, data).subscribe((res:any) => {
-      //   if (res.success) {
-
-      //   }
-      // });
+      this.loading = true;
+      this.generalServi.addNameIdData$(serviceName, this.pending.student_pending.id, data).subscribe((res:any) => {
+        if (res.success) {
+          this.fieldReactive();
+          this.refreshPending.emit();
+        }
+      }, () => { this.loading = false; }, () => { this.loading = false; });
       // this.lo
     }
+  }
+  get validButtons() {
+    const forms = this.form.value;
+    if (!forms.ext_enlace || !forms.enlace || this.pending?.student_pending?.pending_files?.length === 6){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  deleteFile($event: any) {
+    const serviceName = 'files';
+    this.loading = true;
+    this.generalServi.deleteNameId$(serviceName, $event.id).subscribe((res:any) => {
+      if (res.success) {
+        this.refreshPending.emit();
+      }
+    }, () => { this.loading = false; }, () => { this.loading = false; });
   }
 }

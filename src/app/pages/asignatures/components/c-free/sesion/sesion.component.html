@@ -64,7 +64,7 @@
           {{ el.descripcion }}</p>
       </div>
       <nb-button-group class="d-flex align-items-center justify-content-end p-0">
-        <button *ngIf="rolSemestre?.rol?.name === 'Docente'" nbButton class="border-0 shadow-sm me-2" [disabled]="true">
+        <button *ngIf="rolSemestre?.rol?.name === 'Docente'" nbButton class="border-0 shadow-sm me-2" >
         {{el?.pendientes_realizados}} - {{el?.course?.total_matriculados}}
       </button>
         <button *ngIf="rolSemestre?.rol?.name === 'Docente' && el?.grupal === '1'" nbButton class="border-0 shadow-sm me-2" nbTooltip="Administrar grupos"

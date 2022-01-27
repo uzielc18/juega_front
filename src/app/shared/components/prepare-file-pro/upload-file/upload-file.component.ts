@@ -124,9 +124,9 @@ export class UploadFileComponent implements OnInit {
                 };
                   this.activeModal.close(parameter);
               }
-            });
+            }, () => { this.loading = false }, () => { this.loading = false });
           }
-        }, () => { this.loading = false }, () => { this.loading = false });
+        });
     }
   } else {
     Swal.fire({
@@ -143,5 +143,38 @@ export class UploadFileComponent implements OnInit {
       // timer: 2000,
     });
   }
+  }
+  fileImg(extension: string) {
+    let icon = '';
+    switch (extension) {
+      case 'png':
+      case 'PNG':
+      case 'jpg':
+      case 'jpeg':
+        icon = 'https://www.shareicon.net/data/2017/03/02/880210_images_512x512.png';
+        break;
+      case 'doc':
+      case 'docx':
+        icon = 'https://www.vhv.rs/dpng/d/109-1098204_microsoft-word-icon-microsoft-word-logo-white-hd.png';
+        break;
+      case 'ppt':
+      case 'pptx':
+        icon = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhvJL7KzXqNt1n3vN89njhjHieCjeovxQkG9CUuNMCp_QP8veIhDtpuktr6HmNUS0n4KY&usqp=CAU';
+        break;
+      case 'xls':
+      case 'xlsx':
+        icon = 'https://www.pinclipart.com/picdir/middle/317-3177716_excel-comments-import-excel-icon-png-clipart.png';
+        break;
+      case 'pdf':
+        icon = 'http://www.lgrrabogados.com/images/icono-pdf.png';
+        break;
+      case 'txt':
+        icon = 'https://cdn-icons-png.flaticon.com/512/104/104647.png';
+        break;
+      default:
+        icon = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Folder_open_alt_font_awesome.svg/512px-Folder_open_alt_font_awesome.svg.png';
+        break;
+    }
+    return icon;
   }
 }
