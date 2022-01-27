@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
@@ -10,7 +10,7 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
   templateUrl: './prepare-file-pro.component.html',
   styleUrls: ['./prepare-file-pro.component.scss'],
 })
-export class PrepareFileProComponent implements OnInit {
+export class PrepareFileProComponent implements OnInit, OnChanges {
   userData: any;
   formHeaders: any = FormGroup;
   @Input() paramsInfo: any;
@@ -23,7 +23,10 @@ export class PrepareFileProComponent implements OnInit {
   loading: boolean = false;
   constructor(private formBuilder: FormBuilder, private modalServiceNebular: NbDialogService,
     private appService: AppService) {
-
+  }
+  ngOnChanges():void {
+    this.listArrayFile = this.listArrayFile;
+    this.isDisabled = this.isDisabled;
   }
   ngOnInit(): void {
     this.getUsers();
@@ -80,7 +83,7 @@ export class PrepareFileProComponent implements OnInit {
     this.formHeaders.controls['name_file'].setValue('');
     this.formHeaders.controls['ext_file'].setValue('');
     this.formHeaders.controls['base64'].setValue('');
-    this.onFilterChange();
+    // this.onFilterChange();
   }
 
   openModal() {

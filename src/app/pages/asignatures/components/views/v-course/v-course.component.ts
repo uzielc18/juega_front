@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
-import { AdminGroupsComponent } from '../../modals/admin-groups/admin-groups.component';
-import { HomeworkFormComponent } from '../../modals/homework-form/homework-form.component';
+import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 
 @Component({
   selector: 'app-v-course',
   templateUrl: './v-course.component.html',
   styleUrls: ['./v-course.component.scss']
 })
-export class VCourseComponent implements OnInit {
+export class VCourseComponent implements OnInit, OnDestroy {
   idCargaCursoDocente: any = this.activatedRoute.snapshot.paramMap.get('id_carga_curso_docente');
   path: number = 0;
   curso: any = [];
@@ -20,14 +19,17 @@ export class VCourseComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private generalService: GeneralService,
-    private dialogService: NbDialogService,
-    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService
+    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
+    public emitEventsService: EmitEventsService
   ) {}
 
   ngOnInit(): void {
     this.getUnidades();
+    this.emitEventsService.blockEnviar(true);
   }
-
+  ngOnDestroy(): void {
+    this.emitEventsService.blockEnviar(false);
+  }
   getUnidades() {
     const serviceName = END_POINTS.base_back.resourse + '/elements-course';
     if (this.idCargaCursoDocente) {

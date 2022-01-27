@@ -8,7 +8,7 @@ import {
   NbThemeService,
 } from '@nebular/theme';
 import { delay, map, startWith, takeUntil } from 'rxjs/operators';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, Subscription } from 'rxjs';
 
 import {
   NbAuthResult,
@@ -51,7 +51,8 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
           <nb-action >
           <!--  -->
           <form [formGroup]="formHeader">
-            <button nbButton outline size="small" ghost [nbPopover]="templateRef" nbPopoverPlacement="bottom" nbPopoverTrigger="noop" (click)="open()">
+            <button nbButton outline size="small" ghost [nbPopover]="templateRef" nbPopoverPlacement="bottom" nbPopoverTrigger="noop" (click)="open()"
+            [disabled]="validBlock">
               {{paramsSessionStorage?.rol?.name || 'Sin rol'}} -  {{paramsSessionStorage?.semestre?.nombre || 'Sin semestre'}}
             </button>
               <ng-template #templateRef >
@@ -66,7 +67,7 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
                        <nb-option
                           *ngFor="let rol of roles; let i = index"
                           [value]="rol.id"
-                          >Cursos - {{ rol.name }}</nb-option>
+                          >{{ rol.name }}</nb-option>
                         </nb-select>
                     </div>
                     <div>
@@ -107,9 +108,9 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
                     <div>
                       <label class="label">Lenguaje</label><br>
                       <nb-radio-group formControlName="lenguaje">
-                        <nb-radio value="EN">EE.UU.&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://cdn-icons-png.flaticon.com/512/323/323310.png" height="20px" alt=""></nb-radio>
-                        <nb-radio value="ES">ESPAÑA&nbsp;&nbsp;<img src="https://image.flaticon.com/icons/png/512/197/197593.png" height="20px" alt=""></nb-radio>
-                        <nb-radio value="PR">BRASIL&nbsp;&nbsp;<img src="https://www.pnguniverse.com/wp-content/uploads/2020/09/Bandera-circular-de-Brasil.png" height="20px" alt=""></nb-radio>
+                        <nb-radio value="EN">Inglés&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://cdn-icons-png.flaticon.com/512/323/323310.png" height="20px" alt=""></nb-radio>
+                        <nb-radio value="ES">Español&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://image.flaticon.com/icons/png/512/197/197593.png" height="20px" alt=""></nb-radio>
+                        <nb-radio value="PR">Portugués&nbsp;&nbsp;<img src="https://www.pnguniverse.com/wp-content/uploads/2020/09/Bandera-circular-de-Brasil.png" height="20px" alt=""></nb-radio>
                       </nb-radio-group>
                     </div>
                   </nb-card-body>
@@ -201,6 +202,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
   loading:boolean = false;
   @ViewChild(NbPopoverDirective) popover: any = NbPopoverDirective;
+  subcript: any = Subscription;
+  validBlock: boolean = false;
   constructor(
     private nbTokenService: NbTokenService,
     private sidebarService: NbSidebarService,
@@ -263,7 +266,20 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
           // window.location.href = '/lamb-patmos/fronts/patmos-upeu-base-front/auth';
         }
       });
+
+      this.subcript = this.emitEventsService.blockReturns().subscribe(value => { // para emitir evento desde la cabecera
+        if (value) {
+          setTimeout(() => {
+            this.validBlock =  value;
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            this.validBlock = false;
+          }, 1000);
+        }
+        });
   }
+
   private fieldReactive() {
     const controls = {
       id_rol: ['', [Validators.required]],
@@ -383,8 +399,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
           this.paramsSessionStorage.semestre = value;
           sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
             // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
-            this.emitEventsService.enviar(this.paramsSessionStorage);
-            this.emitEventsService.asingDatos(this.paramsSessionStorage);
+          this.emitEventsService.enviar(this.paramsSessionStorage);
+          this.emitEventsService.asingDatos(this.paramsSessionStorage);
         }
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
@@ -394,6 +410,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     const rol = this.roles.find((r:any )=> r.id === this.formHeader.value.id_rol);
     if (object && object.id && rol && rol.id) {
       this.updateSemestre(object, rol);
+
+      ////
     }
 
   }

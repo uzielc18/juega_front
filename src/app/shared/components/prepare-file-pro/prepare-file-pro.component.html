@@ -9,7 +9,7 @@
         <label class="label">Dar click para adjuntar, máx ({{numFiles}}) {{numFiles === 1 ? 'archivo' : 'archivos'}}</label><br><br>
         <div   class="text-center">
           <button nbButton  size="small" (click)="openModal();"
-          [disabled]="listArrayFile.length === numFiles" style="font-size: 12px; font-weight: bold; cursor: pointer; background: rgb(213 213 213);">Adjuntar archivo <nb-icon icon="cloud-upload-outline"></nb-icon> </button>
+          [disabled]="listArrayFile.length === numFiles || isDisabled" style="font-size: 12px; font-weight: bold; cursor: pointer; background: rgb(213 213 213);">Adjuntar archivo <nb-icon icon="cloud-upload-outline"></nb-icon> </button>
         </div>
         <br>
       </div>

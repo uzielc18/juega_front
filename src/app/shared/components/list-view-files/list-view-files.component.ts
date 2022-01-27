@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { MViewFilesComponent } from '../view-files/m-view-files/m-view-files.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-view-files',
@@ -12,7 +13,9 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
   @Input() typeView: any = 'MODAL'; // MODAL OR VIEW
   @Input() showText: boolean = true; // mostrar nombre del archivo
   @Input() arrayFiles: any = [];
+  @Input() deleteFile: boolean = false;
   @Output() fileValue: EventEmitter<any> = new EventEmitter();
+  @Output() deleteFileEmit: EventEmitter<any> = new EventEmitter();
   constructor(private dialogService: NbDialogService) { }
 
   ngOnChanges():void {
@@ -56,6 +59,19 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
       case 'txt':
         icon = 'https://cdn-icons-png.flaticon.com/512/104/104647.png';
         break;
+      /// referencias, se abriran en otro enlace del navegador
+      case 'YOUTUBE':
+        icon = 'http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c500.png';
+        break;
+      case 'SOUNDCLOUD':
+        icon = 'https://cdn-icons-png.flaticon.com/512/51/51992.png';
+        break;
+      case 'VIMEO':
+        icon = 'https://e7.pngegg.com/pngimages/499/302/png-clipart-social-media-computer-icons-vimeo-social-media-text-heart.png';
+        break;
+      case 'REFERENCIA':
+        icon = 'https://static.thenounproject.com/png/2472697-200.png';
+      break;
       default:
         icon = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Folder_open_alt_font_awesome.svg/512px-Folder_open_alt_font_awesome.svg.png';
         break;
@@ -64,23 +80,31 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
   }
   valueFile(item:any) {
     this.recorrerSelected(item);
-    if (this.typeView === 'MODAL') {
-      if (item && item.nombre) {
-        this.dialogService.open(MViewFilesComponent, {
-          dialogClass: 'dialog-limited-height',
-          context: {
-            item: item,
-          },
-          closeOnBackdropClick: false,
-          closeOnEsc: false
-        }).onClose.subscribe(result => {
-          if (result === 'ok') {
-            // this.filtrar();
-          }
-        });
-      }
+    if (['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes(item.ext)) {
+
+        window.open(item.url, '_blank');
+
     } else {
-      this.fileValue.emit(item);
+
+      if (this.typeView === 'MODAL') {
+        if (item && item.nombre) {
+          this.dialogService.open(MViewFilesComponent, {
+            dialogClass: 'dialog-limited-height',
+            context: {
+              item: item,
+            },
+            closeOnBackdropClick: false,
+            closeOnEsc: false
+          }).onClose.subscribe(result => {
+            if (result === 'ok') {
+              // this.filtrar();
+            }
+          });
+        }
+      } else {
+        this.fileValue.emit(item);
+      }
+
     }
   }
   recorrerSelected(item:any) {
@@ -90,5 +114,27 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
       });
       item.color = 'brown';
     }
+  }
+  valueDeleteFile(item:any) {
+    if (item.id) {
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿ Desea eliminar ' + item.nombre_original + ' ?',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#7f264a',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+        if (result.isConfirmed) {
+          this.deleteFileEmit.emit(item);
+      }
+   });
+  }
   }
 }

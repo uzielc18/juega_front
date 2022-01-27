@@ -73,7 +73,7 @@ const COMPONENTS: any[] = [
   VElementsBaseComponent,
   CalificarElementEstudentComponent,
   CWorksComponent,
-  CForumsComponent
+  CForumsComponent,
 
 ];
 const NG_MODULES: any = [
