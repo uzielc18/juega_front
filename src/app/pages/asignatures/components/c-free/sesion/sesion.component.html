@@ -24,7 +24,7 @@
             <div class="d-flex align-items-center">
               <div class="d-flex">
                 <div *ngFor="let elem of sesion?.elements; let i = index"
-                  class="d-flex flex-column align-items-center py-2 px-3" (mouseenter)="hoveredIndex = i"
+                  class="d-flex flex-column align-items-center p-3" (mouseenter)="hoveredIndex = i"
                   (mouseleave)="hoveredIndex = null" [ngStyle]="clickedIndex === elem.check
                     ? elementStyleActive(elem)
                     : elementStyle() && hoveredIndex === i
@@ -58,7 +58,7 @@
 <nb-card *ngIf="arrayEl.length > 0" class="list-element mb-2" style="margin-left: 80px;">
   <nb-list>
     <nb-list-item *ngFor="let el of arrayEl; let i = index" class="px-3 py-2 d-flex justify-content-between list">
-      <div style="width: 77%;">
+      <div style="width: 70%;">
         <h5 class="sesion-title">{{ i + 1 }}. {{ el.titulo }}</h5>
         <p class="sesion-description">
           {{ el.descripcion }}</p>
