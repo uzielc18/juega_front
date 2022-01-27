@@ -10,6 +10,7 @@ import { MViewFilesComponent } from '../view-files/m-view-files/m-view-files.com
 export class ListViewFilesComponent implements OnInit, OnChanges {
   @Input() title: any = 'Archivos adjuntos';
   @Input() typeView: any = 'MODAL'; // MODAL OR VIEW
+  @Input() showText: boolean = true; // mostrar nombre del archivo
   @Input() arrayFiles: any = [];
   @Output() fileValue: EventEmitter<any> = new EventEmitter();
   constructor(private dialogService: NbDialogService) { }

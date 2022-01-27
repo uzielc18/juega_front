@@ -1,6 +1,6 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
   <div class="row m-0" *ngIf="element">
-    <div class="col-9 p-0">
+    <div class="col-md-9 p-0">
       <div class="d-flex align-items-center p-4">
         <!-- <nb-icon [icon]="element?.type_element?.icono" ></nb-icon> -->
         <nb-icon class="me-1" [ngStyle]="{ color: element?.type_element?.color_hover, width: '56px', height: '48px' }"
@@ -34,7 +34,7 @@
       <app-v-works *ngIf="['TRAB'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo" [pending]="pending"></app-v-works>
 
     </div>
-    <div class="col-3 p-5">
+    <div class="col-md-3 p-5">
       <app-menu-elements-child class="mt-1" [topic_id]="element?.topic_id" [type_element_id]="element?.type_element_id"
         [id_element]="element?.id" (elementSelected)="elementSelected($event)"></app-menu-elements-child>
     </div>

@@ -1,11 +1,5 @@
 .imgs {
-  width: 55px;
-}
-.contenedor-imagenes {
-  display: flex;
-}
-
-.contenedor-imagenes img:first-child {
-  padding: 12px;
   cursor: pointer;
+  padding: 0 5px;
+  word-break: break-word;
 }
