@@ -24,6 +24,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { END_POINTS } from 'src/app/providers/utils';
 import { GeneralService } from 'src/app/providers';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-scaffold',
@@ -51,8 +52,7 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
           <nb-action >
           <!--  -->
           <form [formGroup]="formHeader">
-            <button nbButton outline size="small" ghost [nbPopover]="templateRef" nbPopoverPlacement="bottom" nbPopoverTrigger="noop" (click)="open()"
-            [disabled]="validBlock">
+            <button nbButton outline size="small" ghost [nbPopover]="templateRef" nbPopoverPlacement="bottom" nbPopoverTrigger="noop" (click)="open()">
               {{paramsSessionStorage?.rol?.name || 'Sin rol'}} -  {{paramsSessionStorage?.semestre?.nombre || 'Sin semestre'}}
             </button>
               <ng-template #templateRef >
@@ -96,7 +96,7 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
             </nb-action>
             <nb-action>
             <form [formGroup]="formHeader">
-              <div [nbPopover]="templat" nbPopoverPlacement="bottom">
+              <div [nbPopover]="templat" nbPopoverPlacement="bottom" style="cursor: pointer;">
                 <img src="https://image.flaticon.com/icons/png/512/197/197593.png" height="20px" alt="">
               </div>
               <ng-template #templat >
@@ -155,7 +155,7 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
-  MENU_ITEMS:  NbMenuItem[] = [
+  MENU_ITEMS: NbMenuItem[] = [
     {
       title: 'Inicio',
       icon: 'home-outline',
@@ -195,15 +195,15 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   formHeader: any = FormGroup;
   roles: any = [];
   semestres: any = [];
-  paramsSessionStorage:any = {
+  paramsSessionStorage: any = {
     rol: '',
     semestre: '',
     lenguaje: '',
   }
-  loading:boolean = false;
+  loading: boolean = false;
   @ViewChild(NbPopoverDirective) popover: any = NbPopoverDirective;
   subcript: any = Subscription;
-  validBlock: boolean = false;
+  validBlock: any = {from: '', status: false};
   constructor(
     private nbTokenService: NbTokenService,
     private sidebarService: NbSidebarService,
@@ -216,8 +216,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     @Inject(CORE_OPTIONS) protected options: CoreOptions,
     private formBuilder: FormBuilder,
     private generalService: GeneralService,
-    public emitEventsService: EmitEventsService
-  ) {}
+    public emitEventsService: EmitEventsService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -262,22 +263,22 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                 this.tokenService.authorizeGoogle();
               }
             });
-            window.location.href = environment.shellApp;
+          window.location.href = environment.shellApp;
           // window.location.href = '/lamb-patmos/fronts/patmos-upeu-base-front/auth';
         }
       });
 
-      this.subcript = this.emitEventsService.blockReturns().subscribe(value => { // para emitir evento desde la cabecera
-        if (value) {
-          setTimeout(() => {
-            this.validBlock =  value;
-          }, 1000);
-        } else {
-          setTimeout(() => {
-            this.validBlock = false;
-          }, 1000);
-        }
-        });
+    this.subcript = this.emitEventsService.blockReturns().subscribe(value => { // para emitir evento desde la cabecera
+      if (value) {
+        setTimeout(() => {
+          this.validBlock = value;
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          this.validBlock = {from: '', status: false};
+        }, 1000);
+      }
+    });
   }
 
   private fieldReactive() {
@@ -317,7 +318,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.roles = this.appService.rol.filter((rol: any) =>
       ['Estudiante', 'Docente'].includes(rol.name)
     );
-    if (this.roles.length>0) {
+    if (this.roles.length > 0) {
 
       if (val && val.rol) {
         this.formHeader.get('id_rol').patchValue(val.rol.id);
@@ -325,7 +326,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         this.getSemestres(val.rol);
       } else {
 
-        const rol = this.roles.find((r:any )=> r.name === 'Estudiante');
+        const rol = this.roles.find((r: any) => r.name === 'Estudiante');
         if (rol && rol.id) {
           this.formHeader.get('id_rol').patchValue(rol.id);
           this.getSemestres(rol);
@@ -340,14 +341,14 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
     }
   }
-  getSemestres(rol:any) {
+  getSemestres(rol: any) {
     const serviceName = END_POINTS.base_back.user + '/mysemesters';
     if (rol && rol.id) {
       this.loading = true;
-      this.generalService.nameId$(serviceName, rol.id).subscribe((res:any) => {
+      this.generalService.nameId$(serviceName, rol.id).subscribe((res: any) => {
         this.semestres = res.data || [];
-        if (this.semestres.length>0)  {
-          const vigent = this.semestres.find((r:any) => r.vigente === '1');
+        if (this.semestres.length > 0) {
+          const vigent = this.semestres.find((r: any) => r.vigente === '1');
           if (vigent) {
             this.formHeader.patchValue({
               id_semestre: vigent.id,
@@ -371,11 +372,11 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         } else {
           this.loading = false;
         }
-       });
+      });
     }
   }
-  changeRol($event:any) {
-    const rol = this.roles.find((r:any )=> r.id === $event);
+  changeRol($event: any) {
+    const rol = this.roles.find((r: any) => r.id === $event);
     this.semestres = [];
     this.formHeader.controls['id_semestre'].setValue('');
     this.formHeader.controls['carga'].setValue('2');
@@ -387,33 +388,35 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   // }
 
-  updateSemestre(value:any, rol?:any) {
+  updateSemestre(value: any, rol?: any) {
     const id = value.id || '';
     const id_rol = rol.id || '';
     const serviceName = END_POINTS.base_back.user + '/updatesemester';
     if (id) {
       this.loading = true;
-      this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe((data:any) => {
+      this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe((data: any) => {
         if (data.success) {
           this.paramsSessionStorage.rol = rol;
           this.paramsSessionStorage.semestre = value;
           sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
-            // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
+          // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
           this.emitEventsService.enviar(this.paramsSessionStorage);
           this.emitEventsService.asingDatos(this.paramsSessionStorage);
+          console.log('desde update semestre')
         }
-      }, () => { this.loading =false; }, () => { this.loading =false; });
+      }, () => { this.loading = false; }, () => { this.loading = false; });
     }
   }
   saveChanges() {
-    const object = this.semestres.find((r:any )=> r.id === this.formHeader.value.id_semestre);
-    const rol = this.roles.find((r:any )=> r.id === this.formHeader.value.id_rol);
+    const object = this.semestres.find((r: any) => r.id === this.formHeader.value.id_semestre);
+    const rol = this.roles.find((r: any) => r.id === this.formHeader.value.id_rol);
     if (object && object.id && rol && rol.id) {
       this.updateSemestre(object, rol);
 
-      ////
+      if (this.validBlock.from === 'Asignaturas' && this.validBlock.status === true) {
+        this.router.navigate(['/pages/asignaturas']);
+      }
+      this.close();
     }
-
   }
-
 }

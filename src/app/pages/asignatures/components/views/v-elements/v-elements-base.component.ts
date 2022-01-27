@@ -51,12 +51,12 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
       });
       this.recoveryValues();
       /// Para bloquear el rol de la cabecera
-      this.emitEventsService.blockEnviar(true);
+      this.emitEventsService.blockEnviar({from: 'Asignaturas', status: true});
   }
   ngOnDestroy(): void {
     this.nombreSubscription.unsubscribe();
       /// Para bloquear el rol de la cabecera
-    this.emitEventsService.blockEnviar(false);
+    this.emitEventsService.blockEnviar({from: 'Asignaturas', status: false});
   }
   recoveryValues() {
     this.emitEventsService.castRolSemester.subscribe(value => {
