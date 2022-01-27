@@ -24,7 +24,7 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
   recorrerList() {
     if (this.arrayFiles.length>0) {
       this.arrayFiles.map((r:any) => {
-        r.name_corto = r.nombre_original.substr(0,12) + '...';
+        r.name_corto = r.nombre_original.substr(0,7) + '...';
         r.icon = this.typeFileImg(r.ext);
       });
     }

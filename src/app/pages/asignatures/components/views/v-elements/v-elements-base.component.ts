@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
+import { Subscription } from 'rxjs';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
+import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 import { AppService } from '../../../../../core';
 
 @Component({
@@ -10,23 +12,61 @@ import { AppService } from '../../../../../core';
   templateUrl: './v-elements-base.component.html',
   styleUrls: ['./v-elements-base.component.scss']
 })
-export class VElementsBaseComponent implements OnInit {
+export class VElementsBaseComponent implements OnInit, OnDestroy {
   elementId: any = this.activatedRoute.snapshot.paramMap.get('id');
   idCargaCursoDocente: any = this.activatedRoute.snapshot.paramMap.get('id_carga_curso_docente');
   userInfo: any;
   element: any;
   loading: boolean = false;
+  pending:any;
+  nombreSubscription: any = Subscription;
+  valida: boolean = false;
+  theRolSemestre:any;
   constructor(
     private userService: AppService,
     private generalService: GeneralService,
     private activatedRoute: ActivatedRoute,
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
-    private router: Router
+    private router: Router,
+    private emitEventsService: EmitEventsService,
   ) { }
 
   ngOnInit(): void {
     this.getUserInfo();
     this.getElement();
+    this.nombreSubscription = this.emitEventsService.returns().subscribe(value => { // para emitir evento desde la cabecera
+      if (value && value.rol && value.semestre) {
+        this.theRolSemestre =  value;
+        this.valida = true;
+        if (value.rol.name === 'Estudiante') {
+          setTimeout(() => {
+            this.getPendings();
+          }, 1000);
+        } else {
+          this.pending = '';
+        }
+      } else {
+        this.valida = false;
+      }
+      });
+      this.recoveryValues();
+  }
+  ngOnDestroy(): void {
+    this.nombreSubscription.unsubscribe();
+  }
+  recoveryValues() {
+    this.emitEventsService.castRolSemester.subscribe(value => {
+      if (value && value.rol && value.semestre && !this.valida) {
+        this.theRolSemestre =  value;
+        if (value.rol.name === 'Estudiante') {
+          setTimeout(() => {
+            this.getPendings();
+          }, 1000);
+        } else {
+          this.pending = '';
+        }
+      }
+    });
   }
 
   getUserInfo() {
@@ -44,6 +84,12 @@ export class VElementsBaseComponent implements OnInit {
         }
       }, () => { this.loading = false; }, () => { this.loading = false; });
     }
+  }
+  getPendings() {
+    const serviceName = END_POINTS.base_back.resourse + '/get-pending-student';
+    this.generalService.nameIdAndId$(serviceName, this.elementId, this.userInfo.id).subscribe((res:any) => {
+      this.pending = res.data || '';
+    });
   }
   titleCase(str: any) {
     return str
@@ -81,5 +127,9 @@ export class VElementsBaseComponent implements OnInit {
     this.elementId = $event.id;
     this.router.navigate([`../asignaturas/course/${this.idCargaCursoDocente}/element/${$event.id}`], { relativeTo: this.activatedRoute.parent });
     this.getElement();
+
+    if (this.theRolSemestre.rol.name === 'Estudiante') {
+      this.getPendings();
+    }
   }
 }

@@ -171,10 +171,7 @@ export class SesionComponent implements OnInit {
     const topic_id = topic;
     const type_element_id = type;
     this.loading = true;
-    const params = {
-      course_id: this.curso.id,
-    }
-    this.generalService.nameIdAndIdParams$(serviceName, topic_id, type_element_id, params).subscribe((data) => {
+    this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe((data) => {
       this.arrayEl = data.data || [];
     },
       () => {

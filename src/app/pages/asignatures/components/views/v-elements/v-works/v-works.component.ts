@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
+import { AppService } from 'src/app/core';
+import { GeneralService } from 'src/app/providers';
 import { CalificarElementEstudentComponent } from '../../../modals/calificar-element-estudent/calificar-element-estudent.component';
 
 @Component({
@@ -8,10 +10,10 @@ import { CalificarElementEstudentComponent } from '../../../modals/calificar-ele
   templateUrl: './v-works.component.html',
   styleUrls: ['./v-works.component.scss']
 })
-export class VWorksComponent implements OnInit {
+export class VWorksComponent implements OnInit, OnChanges {
   @Input() element: any;
   @Input() userInfo: any;
-
+  @Input() pending: any;
   fechaFin: any;
 
   daysLeft: any;
@@ -27,8 +29,6 @@ export class VWorksComponent implements OnInit {
   tiempo_calificado: any;
 
   form: any = FormGroup;
-  selectedItem = '3';
-
   daysMap = {
     '=0': '',
     '=1': '1 dia,',
@@ -52,21 +52,25 @@ export class VWorksComponent implements OnInit {
     '=1': '1 segundo.',
     'other': '# segundos.'
   }
+  directorio: any = 'plantillas/upeu';
   constructor(
-    private formBuilder: FormBuilder,   private dialogService: NbDialogService
+    private formBuilder: FormBuilder, private dialogService: NbDialogService, private appService: AppService, private generalServi: GeneralService
   ) {
     setInterval(() => {
       this.countdown(this.element?.fecha_fin)
     }, 1000);
   }
-
+  ngOnChanges():void {
+    this.pending = this.pending;
+  }
   ngOnInit(): void {
     this.fieldReactive();
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
-    if (sesion){
-      return JSON.parse(sesion);
+    const val = JSON.parse(sesion);
+    if (val && val.rol){
+      return val;
     } else {
       return '';
     }
@@ -100,7 +104,9 @@ export class VWorksComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      tipo: ['1']
+      tipo: ['1'],
+      enlace: [''],
+      ext_enlace: [''],
     };
     this.form = this.formBuilder.group(controls);
   }
@@ -124,5 +130,48 @@ export class VWorksComponent implements OnInit {
           // this.filtrar();
         }
       });
+  }
+
+  valueFile($event:any){
+    const serviceName = '';
+    const params: any = {
+      files: $event,
+    };
+    if ($event.length>0) {
+      this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
+        if (res.success) {
+
+        }
+      });
+    }
+
+  }
+  saveEnlace() {
+    const serviceName = '';
+    const form = this.form.value;
+    const params: any = {
+        ext: form.ext_enlace,
+        nombre: form.ext_enlace,
+        nombre_original: form.ext_enlace,
+        url: form.enlace,
+        peso: 0,
+        tipo: 'REFERENCIA_TRABAJO',
+        person_id: this.appService.user.id,
+        tabla: 'pendings',
+        tabla_id: '',
+    };
+    if (params && params.ext && params.nombre && params.person_id) {
+      const data = {
+        files: [params],
+      };
+      console.log(data);
+
+      // this.generalServi.nameParams$(serviceName, data).subscribe((res:any) => {
+      //   if (res.success) {
+
+      //   }
+      // });
+      // this.lo
+    }
   }
 }

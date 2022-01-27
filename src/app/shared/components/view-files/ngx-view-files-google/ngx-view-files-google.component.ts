@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
@@ -7,7 +7,7 @@ import { END_POINTS } from 'src/app/providers/utils';
   templateUrl: './ngx-view-files-google.component.html',
   styleUrls: ['./ngx-view-files-google.component.scss']
 })
-export class NgxViewFilesGoogleComponent implements OnInit {
+export class NgxViewFilesGoogleComponent implements OnInit, OnChanges {
   // Implement by Cristian
   @Output() loadingsFiles: EventEmitter<boolean> = new EventEmitter();
   doc: any = '';
@@ -17,8 +17,12 @@ export class NgxViewFilesGoogleComponent implements OnInit {
   @Input() valueFile: any = '';
   constructor(private generalServi: GeneralService) { }
 
-  ngOnInit(): void {
+  ngOnChanges():void {
+    this.valueFile = this.valueFile;
     this.extensionFile();
+  }
+  ngOnInit(): void {
+
   }
 
   extensionFile() {
