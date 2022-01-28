@@ -1,66 +1,53 @@
 <nb-card class="instructions-container m-4">
   <nb-card-body class="px-4 py-5">
-    <div class="d-flex">
-      <div class="instructions">
+    <div class="row">
+      <div class="instructions col-md-10">
         <h4 class="instructions-title">{{ element?.titulo }}</h4>
         <p class="instructions-description">{{ element?.descripcion }}</p>
       </div>
-    </div>
-    <hr>
-    <div class="comment">
-      <div class="d-flex">
-        <div class="perfil d-flex flex-column text-center m-2">
-          <img
-            src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"
-            alt="" style="border-radius: 50%; width: 70px;">
-          <p class="m-0 mt-2" style="font-size: 12px;">Sep 15 10:35</p>
+      <div class="col-md-2">
+        <div style="cursor: pointer;" class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'" (click)="calificar(element)">
+          <nb-icon icon="edit"></nb-icon>&nbsp;&nbsp;Calificar
         </div>
-        <div class="d-flex m-2 flex-column">
-          <div style=" width: 100%;">
-            <h3 style="font-size: 16px; font-weight: bold; color: #414141;" class="m-0">Alumno nombre</h3>
-            <small style="font-size: 12px; font-weight: bold; color: #575756;">2000202020</small>
-            <p class="mt-2" style="font-size: 14px; text-align: justify;">Contrary to popular belief, Lorem Ipsum is not
-              simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000
-              years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of
-              the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the
-              word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32
-              and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45
-              BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line
-              of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-              The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections
-              1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact
-              original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
-          </div>
+
+        <div class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.nota">
+          Aún no tiene calificación
+        </div>
+        <div class="calification calification-evaluated" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota">
+          <p>{{pending?.student_pending?.nota}}</p>
+          <span>Calificación</span>
         </div>
       </div>
-      <hr>
     </div>
-    <div class="comment" *ngFor="let comentario of comentarios">
-      <div class="d-flex">
-        <div class="perfil d-flex flex-column text-center m-2">
-          <img
-            src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"
-            alt="" style="border-radius: 50%; width: 70px;">
-          <p class="m-0 mt-2" style="font-size: 12px;">Sep 15 10:35</p>
-        </div>
-        <div class="d-flex m-2 flex-column">
-          <div style=" width: 100%;">
-            <h3 style="font-size: 16px; font-weight: bold; color: #414141;" class="m-0">Alumno nombre</h3>
-            <small style="font-size: 12px; font-weight: bold; color: #575756;">2000202020</small>
-            <p class="mt-2" style="font-size: 14px; text-align: justify;">{{ comentario }}</p>
+    <div *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
+      <hr>
+      <div *ngFor="let comentario of comentarios">
+        <div class="d-flex">
+          <div class="perfil d-flex flex-column text-center m-2">
+            <img
+              src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"
+              alt="" style="border-radius: 50%; width: 70px;">
+            <p class="m-0 mt-2" style="font-size: 12px;">Sep 15 10:35</p>
+          </div>
+          <div class="d-flex m-2 flex-column">
+            <div style=" width: 100%;">
+              <h3 style="font-size: 16px; font-weight: bold; color: #414141;" class="m-0">Alumno nombre</h3>
+              <small style="font-size: 12px; font-weight: bold; color: #575756;">2000202020</small>
+              <p class="mt-2" style="font-size: 14px; text-align: justify;">{{ comentario }}</p>
+            </div>
           </div>
         </div>
+        <hr>
       </div>
-      <hr>
-    </div>
-    <div style="width: 100%;">
-      <form class="d-flex flex-column" style="margin-left: 86px;" [formGroup]="formHeader">
-        <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="giant"
-          [status]="(formHeader.hasError('required', ['comentario'])) === true ? 'primary' : 'basic'"
-          formControlName="comentario" style="font-size: 16px;" rows="5"></textarea>
-        <button nbButton status="success" class="ms-auto mt-2" (click)="saveComment()"
-          [disabled]="validCampos">Comentar</button>
-      </form>
+      <div style="width: 100%;">
+        <form class="d-flex flex-column" style="margin-left: 86px;" [formGroup]="formHeader">
+          <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="giant"
+            [status]="(formHeader.hasError('required', ['comentario'])) === true ? 'primary' : 'basic'"
+            formControlName="comentario" style="font-size: 16px;" rows="5"></textarea>
+          <button nbButton status="success" class="ms-auto mt-2" (click)="saveComment()"
+            [disabled]="validCampos">Comentar</button>
+        </form>
+      </div>
     </div>
   </nb-card-body>
 </nb-card>

@@ -12,35 +12,26 @@ import { END_POINTS } from 'src/app/providers/utils';
 export class CalificarElementEstudentComponent implements OnInit {
   loading:boolean = false;
   @Input() element:any;
-  listAlumns:any = [
-    {
-      nombre: 'Marlo Huarcaya Quilla',
-      checked: false,
-      id: 749,
-    },
-    {
-      nombre: 'Anfres Carlos Slamatea',
-      checked: false,
-      id: 1,
-    },
-    {
-      nombre: 'Godofredo Empatico en tutados',
-      checked: false,
-      id: 2,
-    }
-  ];
+  listAlumns:any = [];
   formHeader: any = FormGroup;
   pending:any;
   formDate: any = FormGroup;
+  headStudent:any;
+  totalAlumnos:any = [];
   constructor(public activeModal: NbDialogRef<CalificarElementEstudentComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService) { }
 
   ngOnInit(): void {
+    console.log(this.element);
+
     this.fieldReactive();
     this.filedMoreDate();
+    this.getListEstudent();
   }
   private fieldReactive() {
     const controls = {
       ver_trabajo: ['N'],
+      comentario: [''],
+      nota: ['', [Validators.required, Validators.maxLength(2), Validators.max(20)]],
     };
     this.formHeader = this.formBuilder.group(controls);
   }
@@ -56,11 +47,13 @@ export class CalificarElementEstudentComponent implements OnInit {
     this.activeModal.close('close');
   }
   getListEstudent() {
-    const serviceName = '';
+    const serviceName = END_POINTS.base_back.resourse + '/get-work-list-students';
     if (this.element?.id) {
       this.loading = true;
         this.generalServi.nameId$(serviceName, this.element.id).subscribe((res:any) => {
-          this.listAlumns = res.data || [];
+          this.headStudent = res && res.data[0] || '';
+          this.totalAlumnos = res.data && res.data[0].total_students || [];
+          this.listAlumns = res && res.data && res.data[0].total_students || [];
         }, () => { this.loading = false; }, () => { this.loading = false; });
     }
   }
@@ -73,7 +66,7 @@ export class CalificarElementEstudentComponent implements OnInit {
       item.checked = true;
       item.background = 'brown';
       item.color = 'white';
-      this.getPendings(item.id);
+      this.getPendings(item.persons_student_id);
       this.formDate.controls['person_id'].setValue(item.id);
   }
   getPendings(id_person_student:any) {
@@ -86,5 +79,49 @@ export class CalificarElementEstudentComponent implements OnInit {
   }
   updateDateStudent() {
 
+  }
+  changeTabSet($event:any) {
+    const idTab = $event.tabId;
+    switch (idTab) {
+      case 'ALL': // Todos
+      this.listAlumns = this.totalAlumnos;
+      break;
+      case 'SC': // Sin calificar
+      case 'C': //Calificados
+      case 'SE': //Sin enviar
+      this.getStudentStatus(idTab);
+        break;
+      default:
+
+        break;
+    }
+  }
+  getStudentStatus(codigo:any) {
+    const serviceName = END_POINTS.base_back.resourse + '/get-list-students-by-code';
+    const params = {
+      codigo: codigo
+    };
+    if (codigo) {
+      this.loading = true;
+      this.generalServi.nameIdParams$(serviceName, this.element.id, params).subscribe((res:any) => {
+        this.listAlumns = res && res.data[0] && res.data[0].total_sin_calificar || [];
+      }, () => { this.loading = false; }, () => { this.loading = false; });
+    }
+  }
+  calificarWork() {
+    const serviceName = END_POINTS.base_back.resourse + '/marking-student-work';
+    const forms= this.formHeader.value;
+    const params: any = {
+      comentario: forms.comentario,
+      nota: forms.nota,
+    }
+    this.loading = true;
+    this.generalServi.addNameIdData$(serviceName, this.pending.student_pending.id, params).subscribe((res:any) => {
+      if (res.success) {
+        this.fieldReactive();
+        this.getListEstudent();
+        this.pending = '';
+      }
+    }, () => { this.loading = false; }, () => { this.loading = false; });
   }
 }
