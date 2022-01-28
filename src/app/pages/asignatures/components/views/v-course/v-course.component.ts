@@ -25,10 +25,10 @@ export class VCourseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUnidades();
-    this.emitEventsService.blockEnviar(true);
+    this.emitEventsService.blockEnviar({from: 'Asignaturas', status: true});
   }
   ngOnDestroy(): void {
-    this.emitEventsService.blockEnviar(false);
+    this.emitEventsService.blockEnviar({from: 'Asignaturas', status: false});
   }
   getUnidades() {
     const serviceName = END_POINTS.base_back.resourse + '/elements-course';

@@ -7,13 +7,8 @@ import { CursosService } from '../../services/cursos.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  constructor(private cursosService: CursosService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.getCourses();
-  }
-
-  getCourses() {
-    this.cursosService.getCursos().subscribe();
   }
 }

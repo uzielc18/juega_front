@@ -19,7 +19,9 @@ export class NgxViewFilesGoogleComponent implements OnInit, OnChanges {
 
   ngOnChanges():void {
     this.valueFile = this.valueFile;
-    this.extensionFile();
+    if (this.valueFile) {
+      this.extensionFile();
+    }
   }
   ngOnInit(): void {
 
