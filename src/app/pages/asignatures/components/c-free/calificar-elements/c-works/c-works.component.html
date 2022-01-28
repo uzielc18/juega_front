@@ -5,9 +5,9 @@ nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
   </nb-card-header>
   <nb-card-body>
     <div>
-      <app-list-view-files [arrayFiles]="arrayFile" [typeView]="'VIEW'" (fileValue)="fileValues($event)"></app-list-view-files>
+      <app-list-view-files [arrayFiles]="pending?.student_pending?.pending_files || []" [typeView]="'VIEW'" (fileValue)="fileValues($event)"></app-list-view-files>
     </div><br>
-    <div>
+    <div *ngIf="datosFile">
       <app-ngx-view-files-google [valueFile]="datosFile" (loadingsFiles)="loadingsFiles($event)"></app-ngx-view-files-google>
     </div>
   </nb-card-body>

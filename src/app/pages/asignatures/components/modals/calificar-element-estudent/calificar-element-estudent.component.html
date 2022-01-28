@@ -36,7 +36,8 @@
             </div>
             <hr>
             <nb-list>
-              <nb-list-item *ngFor="let item of listAlumns" class="p-1">
+              <nb-list-item *ngFor="let item of listAlumns" class="p-1" (click)="selectedStudent(item)"
+              [ngStyle]="{'cursor': 'pointer', 'background': item?.checked ? item?.background : '', 'color': item?.checked ? item?.color : ''}">
                 <div style="font-size: 10px;">{{item.nombre}}</div>
               </nb-list-item>
             </nb-list>
@@ -56,9 +57,35 @@
           </div>
           <p *ngIf="formHeader.value.ver_trabajo === 'S'" style="text-align: justify; font-size: 11px;">{{element?.descripcion}}</p>
         </div>
-        <div>
-          <app-c-works [arrayFile]="element?.element_files"></app-c-works>
+        <div *ngIf="pending?.student_pending?.pending_files?.length > 0 else elseAddDate">
+          <app-c-works [pending]="pending"></app-c-works>
         </div>
+        <ng-template #elseAddDate>
+          <nb-card *ngIf="formDate.value.person_id">
+            <nb-card-header>
+              ¿ Desea extender la fecha para el participante ?
+            </nb-card-header>
+            <nb-card-body>
+              <form [formGroup]="formDate">
+                <div>
+                  <label class="label">Fecha inicio</label>
+                  <input type="text" nbInput fieldSize="small" fullWidth formControlName="fecha_inicio">
+                </div>
+                <br>
+                <div>
+                  <label class="label">Fecha fin</label>
+                  <input type="text" nbInput fieldSize="small" fullWidth formControlName="fecha_fin">
+                </div>
+                <br>
+                <div class="text-center">
+                 <button nbButton size="small" status="primary" (click)="updateDateStudent()">
+                   Actualizar fecha entrega
+                 </button>
+                </div>
+              </form>
+            </nb-card-body>
+          </nb-card>
+        </ng-template>
       </div>
       <div class="col-md-2 p-1">
         <nb-card>
