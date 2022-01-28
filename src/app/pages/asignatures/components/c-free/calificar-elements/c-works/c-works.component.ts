@@ -12,7 +12,7 @@ export class CWorksComponent implements OnInit, OnChanges {
   constructor() { }
   ngOnChanges():void {
     this.pending = this.pending;
-    if (!this.pending?.student_pending?.pending_files?.lrngth) {
+    if (!this.pending?.student_pending?.pending_files?.length) {
       this.datosFile = '';
     }
   }

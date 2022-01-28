@@ -402,6 +402,10 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
           // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
           this.emitEventsService.enviar(this.paramsSessionStorage);
           this.emitEventsService.asingDatos(this.paramsSessionStorage);
+
+          if (this.formHeader.value.carga === '2') {
+            this.close();
+          }
         }
       }, () => { this.loading = false; }, () => { this.loading = false; });
     }
@@ -415,7 +419,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       if (this.validBlock.from === 'Asignaturas' && this.validBlock.status === true) {
         this.router.navigate(['/pages/asignaturas']);
       }
-      this.close();
     }
   }
 }

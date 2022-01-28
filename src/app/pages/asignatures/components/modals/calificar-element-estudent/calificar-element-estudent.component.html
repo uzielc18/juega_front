@@ -19,26 +19,25 @@
             Estudiantes
           </nb-card-header>
           <nb-card-body  class="p-2">
-            <div>
-              <nb-tabset fullWidth>
-                <nb-tab tabTitle="Todos">
+            <div >
+              <nb-tabset (changeTab)="changeTabSet($event)">
+                <nb-tab tabTitle="Todos ({{listAlumns?.length}})" tabId="ALL">
                 </nb-tab>
-                <nb-tab tabTitle="Sin calificar">
+                <nb-tab tabTitle="Sin calificar ({{headStudent?.total_no_calificados}})" tabId="SC">
                 </nb-tab>
-                <nb-tab tabTitle="Calificados">
+                <nb-tab tabTitle="Calificados ({{headStudent?.total_revisados}})" tabId="C">
                 </nb-tab>
-                <nb-tab tabTitle="Pendiéntes">
+                <nb-tab tabTitle="Pendiéntes ({{headStudent?.total_pendientes}})" tabId="SE">
                 </nb-tab>
                </nb-tabset>
             </div>
-            <div >
+            <div style="padding-top: 0px;">
               <input type="text" placeholder="Buscar alumno" nbInput fullWidth>
             </div>
-            <hr>
             <nb-list>
-              <nb-list-item *ngFor="let item of listAlumns" class="p-1" (click)="selectedStudent(item)"
+              <nb-list-item *ngFor="let item of listAlumns; let i = index" class="p-1" (click)="selectedStudent(item)"
               [ngStyle]="{'cursor': 'pointer', 'background': item?.checked ? item?.background : '', 'color': item?.checked ? item?.color : ''}">
-                <div style="font-size: 10px;">{{item.nombre}}</div>
+                {{i + 1}} &nbsp;&nbsp;<div style="font-size: 10px;">{{item.nombres}}</div>
               </nb-list-item>
             </nb-list>
           </nb-card-body>
@@ -57,9 +56,13 @@
           </div>
           <p *ngIf="formHeader.value.ver_trabajo === 'S'" style="text-align: justify; font-size: 11px;">{{element?.descripcion}}</p>
         </div>
-        <div *ngIf="pending?.student_pending?.pending_files?.length > 0 else elseAddDate">
+        <div *ngIf="element?.type_element?.codigo === 'TRAB'">
           <app-c-works [pending]="pending"></app-c-works>
         </div>
+        <div *ngIf="element?.type_element?.codigo === 'FOR'" >
+          <app-c-forums [pending]="pending"></app-c-forums>
+        </div>
+
         <ng-template #elseAddDate>
           <nb-card *ngIf="formDate.value.person_id">
             <nb-card-header>
@@ -93,17 +96,21 @@
             Ingresar nota
           </nb-card-header>
           <nb-card-body class="p-2">
+            <form [formGroup]="formHeader">
             <div>
               <label class="label">Comentario</label><br>
-              <textarea nbInput fullWidth placeholder="Ingrese un comentario"></textarea>
+              <textarea nbInput fullWidth placeholder="Ingrese un comentario" formControlName="comentario"></textarea>
+              <control-messages [control]="formHeader.get('comentario')"></control-messages>
             </div>
             <div>
               <label class="label">Nota</label><br>
-              <input type="number" nbInput fullWidth placeholder="Ingrese una nota">
+              <input type="number" maxlength="2" nbInput fullWidth placeholder="Ingrese una nota" formControlName="nota">
+              <control-messages [control]="formHeader.get('nota')"></control-messages>
             </div> <br>
             <div class="text-center">
-              <button nbButton size="small" status="primary" fullWidth>Calificar</button>
+              <button nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()">Calificar</button>
             </div>
+          </form>
           </nb-card-body>
         </nb-card>
       </div>

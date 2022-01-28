@@ -3,3 +3,13 @@
   max-height: 95vh;
   width: 1224px;
 }
+::ng-deep .tabset{
+  display: flex !important;
+  flex-direction: column !important;
+}
+::ng-deep .tab-text {
+  font-size: 10px !important;
+}
+::ng-deep .tab-link {
+  padding: 10px !important;
+}
