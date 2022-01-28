@@ -1,44 +1,38 @@
 <nb-layout>
-  <nb-layout-column class="d-flex align-items-center justify-content-center">
+  <nb-layout-column class="d-flex align-items-center justify-content-center" [ngStyle]="setBackground() ">
     <nb-card class="col-md-10 col-lg-8 col-xl-6 col-12" status="primary">
       <nb-card-header style="border-top-right-radius: 1rem; border-top-left-radius: 1rem;">
-       <nb-icon  icon="arrow-right-outline"></nb-icon> Patmos
+        <nb-icon icon="arrow-right-outline"></nb-icon> Patmos
       </nb-card-header>
-          <nb-card-body class="d-flex align-items-center" >
-            <div class="row">
-              <div
-                class="
+      <nb-card-body class="d-flex align-items-center">
+        <div class="row">
+          <div class="
                   col-md col-12
                   d-flex
                   justify-content-center
                   align-items-center
-                "
-              >
-                <img
-                  src="https://www.unach.cl/wp-content/uploads/2021/04/Logo-UPeU.png"
-                  alt="UPeU logo"
-                  class="w-75"
-                />
-              </div>
-              <div class="col">
-                <h4 class="mb-5">Hola,</h4>
-                <div class="login-with d-flex flex-column">
-                  <p class="mb-2">Eres Estudiante o Docente?, conectate con</p>
-                  <button nbButton status="primary" (click)="loginLamb()">
-                    <nb-icon icon="layers"></nb-icon>Lamb UPeU
-                  </button>
-                  <p class="mt-3 mb-2">Tambien puedes conectarte con</p>
-                  <!-- <button nbButton status="basic" (click)="clickEmail()">
+                ">
+            <img src="https://www.unach.cl/wp-content/uploads/2021/04/Logo-UPeU.png" alt="UPeU logo" class="w-75" />
+          </div>
+          <div class="col">
+            <h4 class="mb-5">Hola,</h4>
+            <div class="login-with d-flex flex-column">
+              <p class="mb-2">Eres Estudiante o Docente?, conectate con</p>
+              <button nbButton status="primary" (click)="loginLamb()">
+                <nb-icon icon="layers"></nb-icon>Lamb UPeU
+              </button>
+              <p class="mt-3 mb-2">Tambien puedes conectarte con</p>
+              <!-- <button nbButton status="basic" (click)="clickEmail()">
                     <nb-icon icon="email"></nb-icon>Correo electronico
                   </button> -->
-                  <!-- <button nbButton status="info">
+              <!-- <button nbButton status="info">
                     <nb-icon icon="facebook"></nb-icon>Facebook
                   </button> -->
-                  <button nbButton status="danger" (click)="loginGoogle()">
-                    <nb-icon icon="google"></nb-icon>Google
-                  </button>
-                </div>
-                <!-- <ng-template #loginEmail>
+              <button nbButton status="danger" (click)="loginGoogle()">
+                <nb-icon icon="google"></nb-icon>Google
+              </button>
+            </div>
+            <!-- <ng-template #loginEmail>
                   <p>Necesitamos que te autentiques ingresando tu</p>
                   <form>
                     <input
@@ -72,9 +66,9 @@
                     >
                   </form>
                 </ng-template> -->
-              </div>
-            </div>
-          </nb-card-body>
-      </nb-card>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
   </nb-layout-column>
 </nb-layout>

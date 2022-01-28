@@ -17,6 +17,12 @@ import { CoreOptions, CORE_OPTIONS } from '../../../../core/core.options';
 })
 export class LoginComponent implements OnDestroy {
   token!: NbAuthOAuth2Token | null;
+  backgroundImg: string[] = [
+    'https://www.upeu.edu.pe/fia/wp-content/uploads/sites/2/2018/03/upeu-lima.jpg',
+    'https://www.upeu.edu.pe/wp-content/uploads/2018/11/Edificio-Administrativo-Juliaca.jpg',
+    'https://www.upeu.edu.pe/wp-content/uploads/2020/01/EP-de-Medicina-Humana-de-la-UPeU-es-registrada-en-el-directorio-mundial-de-escuelas-de-medicina1-1500x750.jpg',
+    'https://cepre.upeu.edu.pe/wp-content/uploads/2020/06/UPeU-Juliaca-2018.jpg'
+  ]
 
   private destroy$ = new Subject<void>();
 
@@ -40,18 +46,27 @@ export class LoginComponent implements OnDestroy {
     this.authService
       .authenticate(this.options.strategyGoogleName)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((authResult: NbAuthResult) => {});
+      .subscribe((authResult: NbAuthResult) => { });
   }
 
   loginLamb(): void {
     this.authService
       .authenticate(this.options.strategyName)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((authResult: NbAuthResult) => {});
+      .subscribe((authResult: NbAuthResult) => { });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  setBackground() {
+    return {
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+      'background-image': `url(${this.backgroundImg[Math.floor(Math.random() * this.backgroundImg.length)]})`
+    }
   }
 }
