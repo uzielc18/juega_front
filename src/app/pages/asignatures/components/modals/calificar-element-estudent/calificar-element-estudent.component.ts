@@ -18,6 +18,7 @@ export class CalificarElementEstudentComponent implements OnInit {
   formDate: any = FormGroup;
   headStudent:any;
   totalAlumnos:any = [];
+  datosStudent:any;
   constructor(public activeModal: NbDialogRef<CalificarElementEstudentComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService) { }
 
   ngOnInit(): void {
@@ -68,6 +69,7 @@ export class CalificarElementEstudentComponent implements OnInit {
       item.color = 'white';
       this.getPendings(item.persons_student_id);
       this.formDate.controls['person_id'].setValue(item.id);
+      this.datosStudent = item;
   }
   getPendings(id_person_student:any) {
     const serviceName = END_POINTS.base_back.resourse + '/get-pending-student';
