@@ -84,6 +84,8 @@ export class CalificarElementEstudentComponent implements OnInit {
   }
   changeTabSet($event:any) {
     const idTab = $event.tabId;
+    this.pending = '';
+    this.datosStudent = '';
     switch (idTab) {
       case 'ALL': // Todos
       this.listAlumns = this.totalAlumnos;
