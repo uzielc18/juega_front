@@ -97,7 +97,7 @@ import { Router } from '@angular/router';
             <nb-action>
             <form [formGroup]="formHeader">
               <div [nbPopover]="templat" nbPopoverPlacement="bottom" style="cursor: pointer;">
-                <img src="https://image.flaticon.com/icons/png/512/197/197593.png" height="20px" alt="">
+                <img src="assets/spain.svg" height="20px" alt="">
               </div>
               <ng-template #templat >
                 <nb-card style="padding-bottom: 0px;">
@@ -108,9 +108,9 @@ import { Router } from '@angular/router';
                     <div>
                       <label class="label">Lenguaje</label><br>
                       <nb-radio-group formControlName="lenguaje">
-                        <nb-radio value="EN">Inglés&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://cdn-icons-png.flaticon.com/512/323/323310.png" height="20px" alt=""></nb-radio>
-                        <nb-radio value="ES">Español&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://image.flaticon.com/icons/png/512/197/197593.png" height="20px" alt=""></nb-radio>
-                        <nb-radio value="PR">Portugués&nbsp;&nbsp;<img src="https://www.pnguniverse.com/wp-content/uploads/2020/09/Bandera-circular-de-Brasil.png" height="20px" alt=""></nb-radio>
+                        <nb-radio value="EN">Inglés&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/eeuu.svg" height="20px" alt=""></nb-radio>
+                        <nb-radio value="ES">Español&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/spain.svg" height="20px" alt=""></nb-radio>
+                        <nb-radio value="PR">Portugués&nbsp;&nbsp;<img src="assets/brasil.svg" height="20px" alt=""></nb-radio>
                       </nb-radio-group>
                     </div>
                   </nb-card-body>
