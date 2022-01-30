@@ -12,6 +12,8 @@ export class EmitEventsService {
 
   blockRolSem$ = new Subject<any>();
 
+  setLanguages$ = new Subject<any>();
+
   constructor() {
   }
   asingDatos(newUser:any){
@@ -32,6 +34,14 @@ export class EmitEventsService {
 
   blockReturns(): Observable<any> {
     return this.blockRolSem$.asObservable();
+  }
+
+  setLangsEnviar(value: any) {
+    this.setLanguages$.next(value);
+  }
+
+  setLangsReturns(): Observable<any> {
+    return this.setLanguages$.asObservable();
   }
 
 }

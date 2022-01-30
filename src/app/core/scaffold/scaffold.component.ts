@@ -14,7 +14,6 @@ import {
   NbAuthResult,
   NbAuthService,
   NbTokenService,
-  routes,
 } from '@nebular/auth';
 import { CORE_OPTIONS, CoreOptions } from '../core.options';
 import { AppService } from '../state/app.service';
@@ -28,129 +27,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-scaffold',
-  template: `
-    <div
-      [nbSpinner]="spinner || loading"
-      nbSpinnerMessage="Cargando..."
-      nbSpinnerSize="giant"
-      nbSpinnerStatus="primary"
-    >
-      <nb-layout withScroll [windowMode]="false">
-        <nb-layout-header class="header-actions" fixed>
-          <nb-actions>
-            <nb-action icon="menu-2-outline" (click)="toggle()"></nb-action>
-            <nb-action>
-              <img
-                *ngIf="!hidden"
-                src="assets/logo-lamb-learning-blanco.svg"
-                alt="Lamb"
-                width="120px"
-              />
-            </nb-action>
-          </nb-actions>
-          <nb-actions>
-          <nb-action >
-          <!--  -->
-          <form [formGroup]="formHeader">
-            <button nbButton outline size="small" ghost [nbPopover]="templateRef" nbPopoverPlacement="bottom" nbPopoverTrigger="noop" (click)="open()">
-              {{paramsSessionStorage?.rol?.name || 'Sin rol'}} -  {{paramsSessionStorage?.semestre?.nombre || 'Sin semestre'}}
-            </button>
-              <ng-template #templateRef >
-                <nb-card style="padding-bottom: 0px;">
-                  <nb-card-header style="padding-top: 8px; padding-bottom: 8px;">
-                    Cambiar datos
-                  </nb-card-header>
-                  <nb-card-body style="padding-top: 3px; padding-bottom: 0px;">
-                    <div>
-                      <label class="label">Rol</label><br>
-                       <nb-select placeholder="Rol"  size="small" formControlName="id_rol" (selectedChange)="changeRol($event)">
-                       <nb-option
-                          *ngFor="let rol of roles; let i = index"
-                          [value]="rol.id"
-                          >{{ rol.name }}</nb-option>
-                        </nb-select>
-                    </div>
-                    <div>
-                      <label class="label">Semestre</label><br>
-                       <nb-select placeholder="Semestre"  size="small" formControlName="id_semestre">
-                       <nb-option
-                          *ngFor="let semestre of semestres; let i = index"
-                          [value]="semestre.id"
-                          >Semestre - {{ semestre.nombre }}</nb-option
-                        >
-                        </nb-select>
-                    </div>
-                  </nb-card-body>
-                  <br>
-                  <div class="text-center">
-                      <button nbButton outline size="tiny" ghost (click)="close()">
-                        Cerrar
-                      </button>&nbsp;
-                      <button nbButton outline size="tiny" hero status="primary" (click)="saveChanges()" [disabled]="formHeader.invalid">
-                        Guardar
-                      </button>
-                    </div>
-                </nb-card>
-              </ng-template>
-              </form>
-            </nb-action>
-            <nb-action>
-            <form [formGroup]="formHeader">
-              <div [nbPopover]="templat" nbPopoverPlacement="bottom" style="cursor: pointer;">
-                <img src="https://image.flaticon.com/icons/png/512/197/197593.png" height="20px" alt="">
-              </div>
-              <ng-template #templat >
-                <nb-card style="padding-bottom: 0px;">
-                  <nb-card-header style="padding-top: 8px; padding-bottom: 8px;">
-                    Cambiar idioma
-                  </nb-card-header>
-                  <nb-card-body style="padding-top: 3px; padding-bottom: 0px;">
-                    <div>
-                      <label class="label">Lenguaje</label><br>
-                      <nb-radio-group formControlName="lenguaje">
-                        <nb-radio value="EN">Inglés&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://cdn-icons-png.flaticon.com/512/323/323310.png" height="20px" alt=""></nb-radio>
-                        <nb-radio value="ES">Español&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://image.flaticon.com/icons/png/512/197/197593.png" height="20px" alt=""></nb-radio>
-                        <nb-radio value="PR">Portugués&nbsp;&nbsp;<img src="https://www.pnguniverse.com/wp-content/uploads/2020/09/Bandera-circular-de-Brasil.png" height="20px" alt=""></nb-radio>
-                      </nb-radio-group>
-                    </div>
-                  </nb-card-body>
-                  <br>
-                  <div class="text-center">
-                      <button nbButton outline size="tiny" hero status="primary">
-                        Guardar
-                      </button>
-                    </div>
-                </nb-card>
-              </ng-template>
-              </form>
-            </nb-action>
-            <nb-action [nbContextMenu]="userMenu">
-              <nb-user
-                class="header-user"
-                [name]="user?.name"
-                [title]="user?.email"
-                [picture]="user?.profile_photo_url"
-                [onlyPicture]="minimum"
-                size="large"
-              ></nb-user>
-            </nb-action>
-          </nb-actions>
-        </nb-layout-header>
-        <nb-sidebar responsive tag="core-sidebar">
-          <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
-          <nb-sidebar-footer *ngIf="!hidden">
-            <nb-toggle
-              (checkedChange)="changeTheme($event)"
-              *ngIf="!minimum"
-            ></nb-toggle>
-          </nb-sidebar-footer>
-        </nb-sidebar>
-        <nb-layout-column class="p-2">
-          <router-outlet></router-outlet>
-        </nb-layout-column>
-      </nb-layout>
-    </div>
-  `,
+  templateUrl: './scaffold.component.html',
   styleUrls: ['./scaffold.component.scss'],
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
@@ -168,10 +45,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       link: '/pages/asignaturas',
       pathMatch: 'prefix',
     },
-    // {
-    //   title: 'Tareas',
-    //   icon: 'clipboard-outline',
-    // },
     {
       title: 'Evaluaciones',
       icon: 'checkmark-circle-outline',
@@ -180,10 +53,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       title: 'Biblioteca',
       icon: 'book-outline',
     },
-    // {
-    //   title: 'Anuncios',
-    //   icon: 'bell-outline',
-    // },
   ];
   minimum = false;
   hidden = false;
@@ -204,6 +73,29 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   @ViewChild(NbPopoverDirective) popover: any = NbPopoverDirective;
   subcript: any = Subscription;
   validBlock: any = {from: '', status: false};
+
+  logoLangs:any = 'assets/spain.svg';
+
+  listLanguages:any = [
+    {
+      code: 'es',
+      img: 'assets/spain.svg',
+      name: 'Español',
+      id: 1,
+    },
+    {
+      code: 'en',
+      img: 'assets/eeuu.svg',
+      name: 'Inglés',
+      id: 2,
+    },
+    {
+      code: 'pb',
+      img: 'assets/brasil.svg',
+      name: 'Portugués',
+      id: 3,
+    }
+  ]
   constructor(
     private nbTokenService: NbTokenService,
     private sidebarService: NbSidebarService,
@@ -218,7 +110,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private generalService: GeneralService,
     public emitEventsService: EmitEventsService,
     private router: Router,
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -285,11 +179,14 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     const controls = {
       id_rol: ['', [Validators.required]],
       id_semestre: ['', [Validators.required]],
-      lenguaje: ['ES'],
+      lenguaje: [''],
       carga: ['1'],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getRoles();
+    setTimeout(() => {
+      this.getLanguages();
+    }, 100);
   }
   toggle(): void {
     this.hidden = !this.hidden;
@@ -303,6 +200,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    this.subcript.unsubscribe();
   }
   open() {
     this.popover.show();
@@ -419,6 +317,20 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       if (this.validBlock.from === 'Asignaturas' && this.validBlock.status === true) {
         this.router.navigate(['/pages/asignaturas']);
       }
+    }
+  }
+  getLanguages() {
+    this.formHeader.controls['lenguaje'].setValue('es');
+    setTimeout(() => {
+      this.changesLangs();
+    }, 200);
+  }
+  changesLangs() {
+    const forms = this.formHeader.value;
+    this.emitEventsService.setLangsEnviar(forms.lenguaje);
+    const logo = this.listLanguages.find((r:any) => r.code === forms.lenguaje);
+    if (logo && logo.img) {
+      this.logoLangs = logo.img;
     }
   }
 }

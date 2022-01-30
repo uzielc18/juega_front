@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
@@ -19,7 +20,8 @@ export class AsignaturesHomeComponent implements OnInit {
     // private generalService: GeneralService,
     // private formBuilder: FormBuilder,
     // private emitEventsService: EmitEventsService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     // this.fieldReactive();

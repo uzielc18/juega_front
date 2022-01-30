@@ -25,7 +25,6 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService) {
-
     }
 
 
