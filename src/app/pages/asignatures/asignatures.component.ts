@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
@@ -9,15 +9,15 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
   styles: [
   ]
 })
-export class AsignaturesComponent implements OnInit {
-  subscribes: any = Subscription;
+export class AsignaturesComponent implements OnInit, OnDestroy {
+  subscribes$: any = Subscription;
   constructor(public translate: TranslateService, private emitEventsService: EmitEventsService) {
 
   }
 
   ngOnInit(): void {
     this.translate.setDefaultLang('es');
-    this.subscribes = this.emitEventsService.setLangsReturns().subscribe(value => { // para emitir evento desde la cabecera
+    this.subscribes$ = this.emitEventsService.setLangsReturns().subscribe(value => { // para emitir evento desde la cabecera
       if (value) {
         setTimeout(() => {
           this.translate.use(value);
@@ -26,6 +26,9 @@ export class AsignaturesComponent implements OnInit {
       }
       });
 
+  }
+  ngOnDestroy(): void {
+    this.subscribes$.complete();
   }
 
 }
