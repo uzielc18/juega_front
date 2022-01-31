@@ -6,12 +6,12 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
   styleUrls: ['./c-works.component.scss']
 })
 export class CWorksComponent implements OnInit, OnChanges {
-  datosFile:any;
+  datosFile: any;
   datosUrl: any;
   loading: boolean = false;
-  @Input() pending:any = [];
+  @Input() pending: any = [];
   constructor() { }
-  ngOnChanges():void {
+  ngOnChanges(): void {
     this.pending = this.pending;
     if (!this.pending?.student_pending?.pending_files?.length) {
       this.datosFile = '';
@@ -20,13 +20,17 @@ export class CWorksComponent implements OnInit, OnChanges {
   }
   ngOnInit(): void {
   }
-  fileValues($event:any) {
-    this.datosFile = $event;
+  fileValues($event: any) {
+    if (['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes($event.ext)) {
+      this.datosUrl = $event;
+      this.datosFile = '';
+    } else {
+      this.datosFile = $event;
+      this.datosUrl = '';
+    }
+    console.log($event, 'fdsafsfsd')
   }
-  urlValues($event: any) {
-    this.datosUrl = $event
-  }
-  loadingsFiles($event:boolean) {
+  loadingsFiles($event: boolean) {
     setTimeout(() => {
       this.loading = $event;
     }, 200);

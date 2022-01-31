@@ -6,8 +6,9 @@
         <p class="instructions-description">{{ element?.descripcion }}</p>
       </div>
       <div class="col-md-2">
-        <div style="cursor: pointer;" class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'" (click)="calificar(element)">
-          <nb-icon icon="edit"></nb-icon>&nbsp;&nbsp;Calificar
+        <div class="calification calification-evalue ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'" (click)="calificar(element)">
+          <nb-icon icon="edit"></nb-icon>
+          <span>Calificar</span>
         </div>
 
         <div class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.nota">
@@ -47,6 +48,37 @@
           <button nbButton status="success" class="ms-auto mt-2" (click)="saveComment()"
             [disabled]="validCampos">Comentar</button>
         </form>
+      </div>
+    </div>
+    <div *ngIf="rolSemestre?.rol?.name === 'Docente'">
+      <hr>
+      <div *ngFor="let comentario of comentarios">
+        <div class="d-flex">
+          <div class="perfil d-flex flex-column text-center m-2">
+            <img
+              src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"
+              alt="" style="border-radius: 50%; width: 70px;">
+            <p class="m-0 mt-2" style="font-size: 12px;">Sep 15 10:35</p>
+          </div>
+          <div class="d-flex m-2 flex-column">
+            <div style=" width: 100%;">
+              <h3 style="font-size: 16px; font-weight: bold; color: #414141;" class="m-0">Alumno nombre</h3>
+              <small style="font-size: 12px; font-weight: bold; color: #575756;">2000202020</small>
+              <p class="mt-2" style="font-size: 14px; text-align: justify;">{{ comentario.respuesta }}</p>
+            </div>
+            <span class="response mt-auto" (click)="responder()">Responder</span>
+          </div>
+        </div>
+        <hr>
+        <div style="width: 100%;" *ngIf="toggle">
+          <form class="d-flex flex-column" style="margin-left: 86px;" [formGroup]="formHeader">
+            <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="giant"
+              [status]="(formHeader.hasError('required', ['comentario'])) === true ? 'primary' : 'basic'"
+              formControlName="comentario" style="font-size: 16px;" rows="5"></textarea>
+            <button nbButton status="success" class="ms-auto mt-2" (click)="saveComment()"
+              [disabled]="validCampos">Comentar</button>
+          </form>
+        </div>
       </div>
     </div>
   </nb-card-body>
