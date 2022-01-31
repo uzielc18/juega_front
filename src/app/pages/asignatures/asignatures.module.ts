@@ -42,6 +42,7 @@ import { CWorksComponent } from './components/c-free/calificar-elements/c-works/
 import { CForumsComponent } from './components/c-free/calificar-elements/c-forums/c-forums.component';
 import { NgxViewFilesGoogleModule } from 'src/app/shared/components/view-files/ngx-view-files-google/ngx-view-files-google.module';
 import { TranslateLangModule } from 'src/app/shared/moduls/translate-lang/translate-lang.module';
+import { FilterPipe } from 'src/app/shared/pipes/filterPipe/filterPipe';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -93,7 +94,9 @@ const MODALS: any = [
   CalificarElementEstudentComponent
 ];
 const NGX_MODULES: any = [
-
+];
+const PIPES: any = [
+  FilterPipe,
 ];
 const MODULES: any = [
   PrepareFileProModule,
@@ -120,7 +123,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, ...PIPES],
   entryComponents: [...MODALS],
 
 })
