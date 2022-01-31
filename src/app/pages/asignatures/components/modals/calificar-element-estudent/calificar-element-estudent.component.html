@@ -32,12 +32,12 @@
                </nb-tabset>
             </div>
             <div style="padding-top: 0px;">
-              <input type="text" placeholder="Buscar alumno" nbInput fullWidth>
+              <input type="text" placeholder="Buscar alumno" fieldSize="small" nbInput fullWidth  [(ngModel)]="queryString" [ngModelOptions]="{standalone: true}">
             </div>
             <nb-list>
-              <nb-list-item *ngFor="let item of listAlumns; let i = index" class="p-1" (click)="selectedStudent(item)"
+              <nb-list-item *ngFor="let item of listAlumns | FilterPipe: queryString:searchableList as hola; let i = index" class="p-1" (click)="selectedStudent(item)"
               [ngStyle]="{'cursor': 'pointer', 'background': item?.checked ? item?.background : '', 'color': item?.checked ? item?.color : ''}">
-                {{i + 1}} &nbsp;&nbsp;<div style="font-size: 10px;">{{item.nombres + ' ' + item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}</div>
+                {{i + 1}} &nbsp;&nbsp;<div style="font-size: 10px;">{{item?.nombres + ' ' + item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}</div>
               </nb-list-item>
             </nb-list>
           </nb-card-body>

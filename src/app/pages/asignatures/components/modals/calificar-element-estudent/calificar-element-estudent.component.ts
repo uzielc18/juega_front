@@ -19,7 +19,11 @@ export class CalificarElementEstudentComponent implements OnInit {
   headStudent:any;
   totalAlumnos:any = [];
   datosStudent:any;
-  constructor(public activeModal: NbDialogRef<CalificarElementEstudentComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService) { }
+  public searchableList: any[] = [];
+  public queryString:any;
+  constructor(public activeModal: NbDialogRef<CalificarElementEstudentComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService) {
+    this.searchableList = ['nombres', 'apellido_paterno', 'apellido_materno'];
+  }
 
   ngOnInit(): void {
     console.log(this.element);
