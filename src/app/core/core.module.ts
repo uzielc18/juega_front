@@ -9,11 +9,6 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import { CORE_OPTIONS, CoreOptions } from './core.options';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import {
-  NbAuthJWTInterceptor,
-  NbAuthSimpleInterceptor,
-  NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
-} from '@nebular/auth';
 import { Auth2Guard } from './oauth2/oauth2.guard';
 // import { Oauth2Component } from './oauth2/oauth2.component';
 import { Oauth2CallbackComponent } from './oauth2/oauth2.callback.component';
@@ -49,12 +44,10 @@ import { routesConfig, toastConfig } from './state/config';
 import localePe from '@angular/common/locales/es-PE';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { Oauth2GoogleComponent } from './oauth2google/oauth2google.component';
 import { AuthInterceptorService } from './oauth2/interceptor.service';
 import { Oauth2GoogleCallbackComponent } from './oauth2/oauth2google.callback.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GeneralService } from '../providers';
-import { EmitEventsService } from '../shared/services/emit-events.service';
 
 registerLocaleData(localePe);
 const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
@@ -122,7 +115,7 @@ const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
     //   provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
     //   useValue: (value: any) => {},
     // },
-    GeneralService
+    GeneralService,
   ],
 })
 export class CoreModule {

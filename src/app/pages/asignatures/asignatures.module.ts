@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { AsignaturesRoutingModule } from './asignatures-routing.module';
 import { NebularModule } from 'src/app/shared/nebular.module';
 import { ControlMessagesModule } from 'src/app/shared/components/control-messages/control-messages.module';
@@ -8,7 +6,6 @@ import { GeneralService } from 'src/app/providers';
 import { AsignaturesComponent } from './asignatures.component';
 import { AsignaturesHomeComponent } from './containers/asignatures-home.component';
 import { VCourseComponent } from './components/views/v-course/v-course.component';
-import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 import { HomeworkFormComponent } from './components/modals/homework-form/homework-form.component';
 import { AdminGroupsComponent } from './components/modals/admin-groups/admin-groups.component';
 import { PrepareFileProModule } from 'src/app/shared/components/prepare-file-pro/prepare-file-pro.module';
@@ -44,6 +41,7 @@ import { CalificarElementEstudentComponent } from './components/modals/calificar
 import { CWorksComponent } from './components/c-free/calificar-elements/c-works/c-works.component';
 import { CForumsComponent } from './components/c-free/calificar-elements/c-forums/c-forums.component';
 import { NgxViewFilesGoogleModule } from 'src/app/shared/components/view-files/ngx-view-files-google/ngx-view-files-google.module';
+import { TranslateLangModule } from 'src/app/shared/moduls/translate-lang/translate-lang.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -105,8 +103,10 @@ const MODULES: any = [
   ListViewFilesModule,
   MenuElementsChildModule,
   SafeUrlModule,
-  NgxViewFilesGoogleModule
-];
+  NgxViewFilesGoogleModule,
+
+  TranslateLangModule
+]
 
 @NgModule({
   providers: [

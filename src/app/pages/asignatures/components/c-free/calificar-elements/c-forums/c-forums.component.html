@@ -1,1 +1,33 @@
-<p>c-forums works!</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row" *ngIf="datos else coments">
+      <div class="col-md-2">
+        <img
+        src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"
+        alt="" style="border-radius: 50%;" height="50px">
+      </div>
+      <div class="col-md-10">
+        <h3 style="font-size: 16px; font-weight: bold; color: #414141;" class="m-0">{{datos.nombres + ' ' + datos?.apellido_paterno + ' ' + ' ' +datos?.apellido_materno}}</h3>
+        <small style="font-size: 12px; font-weight: bold; color: #575756;">199415359</small>
+      </div>
+    </div>
+    <ng-template #coments>
+      <strong>Comentarios del estudiante:</strong>
+    </ng-template>
+
+
+  </nb-card-header>
+  <nb-card-body *ngIf="pending?.student_pending?.pending_forum">
+    <div *ngFor="let comentario of pending?.student_pending?.pending_forum?.forums_responses">
+      <div class="row">
+        <div class="col-md-3">
+          <p class="m-0 mt-2" style="font-size: 12px;">Sep 15 10:35</p>
+        </div>
+        <div class="col-md-9">
+          <p class="mt-2" style="font-size: 14px; text-align: justify;">{{ comentario?.respuesta }}</p>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </nb-card-body>
+</nb-card>

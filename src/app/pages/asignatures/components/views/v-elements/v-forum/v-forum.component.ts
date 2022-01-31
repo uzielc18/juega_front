@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from '../../../../../../providers';
 import { END_POINTS } from '../../../../../../providers/utils';
+import { CalificarElementEstudentComponent } from '../../../modals/calificar-element-estudent/calificar-element-estudent.component';
 
 @Component({
   selector: 'app-v-forum',
@@ -11,18 +13,28 @@ import { END_POINTS } from '../../../../../../providers/utils';
 export class VForumComponent implements OnInit {
   @Input() element: any;
   @Input() userInfo: any;
+  @Input() pending: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
 
   formHeader: any = FormGroup;
   comentarios: string[] = [];
 
-  constructor(private formBuilder: FormBuilder, private generalService: GeneralService
+  constructor(private formBuilder: FormBuilder, private generalService: GeneralService, private dialogService: NbDialogService
   ) { }
 
   ngOnInit(): void {
     this.fieldReactive()
   }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol){
+      return val;
+    } else {
+      return '';
+    }
 
+  }
   private fieldReactive() {
     const controls = {
       comentario: ['', [Validators.required]],
@@ -59,4 +71,19 @@ export class VForumComponent implements OnInit {
       this.formHeader.reset();
     }
   }
+  calificar(element:any) {
+    this.dialogService.open(CalificarElementEstudentComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        element: element,
+        // response: params,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        // this.filtrar();
+      }
+    });
+}
 }

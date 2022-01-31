@@ -1,10 +1,10 @@
-<nb-card accent="primary" class="scrollModal" style="width: 950px;" [nbSpinner]="loading" nbSpinnerStatus="primary"
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary"
   nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
         Administrar grupo <br>
-        <label class="label">Trabajo grupal - {{curso?.nombre}} 2021222</label>
+        <label class="label">Trabajo grupal - {{curso?.nombre}}</label>
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>

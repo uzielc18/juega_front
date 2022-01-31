@@ -1,4 +1,4 @@
-<nb-card
+<nb-card class="scrollModal"
   [nbSpinner]="loading"
   nbSpinnerStatus="primary"
   nbSpinnerSize="large"
@@ -35,7 +35,7 @@
           </div>
         </div>
 
-        <div class="form mt-4 px-5"  *ngIf="['TRABAJO'].includes(element?.nombre)">
+        <div class="form mt-4 px-5"  *ngIf="['TRAB'].includes(element?.codigo)">
           <app-works
             (saveCloseValue)="saveValue($event)"
             (loadingsForm)="loadingsForm($event)"
@@ -48,7 +48,7 @@
           ></app-works>
         </div>
 
-        <div class="form mt-4 px-5" *ngIf="['FORO'].includes(element?.nombre)">
+        <div class="form mt-4 px-5" *ngIf="['FOR'].includes(element?.codigo)">
           <app-forus
             (saveCloseValue)="saveValue($event)"
             (loadingsForm)="loadingsForm($event)"
@@ -62,9 +62,7 @@
         </div>
 
         <div
-          class="form mt-4 px-5"
-          *ngIf="['ENLACE'].includes(element?.nombre)"
-        >
+          class="form mt-4 px-5" *ngIf="['ENL'].includes(element?.codigo)">
           <app-enlace-external
             (saveCloseValue)="saveValue($event)"
             (loadingsForm)="loadingsForm($event)"
@@ -78,9 +76,7 @@
         </div>
 
         <div
-          class="form mt-4 px-5"
-          *ngIf="['VIDEO CONFERENCIA'].includes(element?.nombre)"
-        >
+          class="form mt-4 px-5" *ngIf="['VICO'].includes(element?.codigo)">
           <app-vidio-conference
             (saveCloseValue)="saveValue($event)"
             (loadingsForm)="loadingsForm($event)"
@@ -94,9 +90,7 @@
         </div>
 
         <div
-          class="form mt-4 px-5"
-          *ngIf="['EVALUACION'].includes(element?.nombre)"
-        >
+          class="form mt-4 px-5" *ngIf="['EVAL'].includes(element?.codigo)">
           <app-evaluations
             (saveCloseValue)="saveValue($event)"
             (loadingsForm)="loadingsForm($event)"
@@ -110,9 +104,7 @@
         </div>
 
         <div
-          class="form mt-4 px-5"
-          *ngIf="['DOCUMENTO'].includes(element?.nombre)"
-        >
+          class="form mt-4 px-5" *ngIf="['DOC'].includes(element?.codigo)">
           <app-documents
             (saveCloseValue)="saveValue($event)"
             (loadingsForm)="loadingsForm($event)"
@@ -125,7 +117,7 @@
           ></app-documents>
         </div>
 
-        <div class="form mt-4 px-5" *ngIf="['VIDEO'].includes(element?.nombre)">
+        <div class="form mt-4 px-5" *ngIf="['VID'].includes(element?.codigo)">
           <app-vidio
             (saveCloseValue)="saveValue($event)"
             (loadingsForm)="loadingsForm($event)"
@@ -138,8 +130,10 @@
           ></app-vidio>
         </div>
 
-        <div  class="form mt-4 px-5" *ngIf="['CARPETA'].includes(element?.nombre)">
-          <app-carpeta (saveCloseValue)="saveValue($event)" (loadingsForm)="loadingsForm($event)"
+        <div  class="form mt-4 px-5" *ngIf="['CARP'].includes(element?.codigo)">
+          <app-carpeta
+          (saveCloseValue)="saveValue($event)"
+          (loadingsForm)="loadingsForm($event)"
           [topics]="topics"
           [unidad]="unidad"
           [curso]="curso"

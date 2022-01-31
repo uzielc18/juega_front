@@ -44,7 +44,7 @@ export class WorksComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    console.log(this.item, this.code, 'hola soy el valor a modificar');
+    // console.log(this.item, this.code, 'hola soy el valor a modificar');
 
     this.fieldReactive();
   }
@@ -102,7 +102,7 @@ export class WorksComponent implements OnInit {
     })
   }
   formsValues($event:any) {
-    console.log($event);
+    // console.log($event);
 
     this.formHeader.patchValue({
       calificable: $event.calificable,

@@ -19,7 +19,7 @@ export class UploadFileComponent implements OnInit {
     private s3ServiceServ: S3ServiceService) { }
 
   ngOnInit(): void {
-    console.log(this.params);
+    // console.log(this.params);
 
     this.formularioFiels();
   }

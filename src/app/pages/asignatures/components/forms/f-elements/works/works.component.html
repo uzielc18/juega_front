@@ -89,13 +89,13 @@
   <div style="padding-top: 4px;" class="row">
     <!-- <label class="label" >Fecha y hora de gracia</label> -->
     <div class="col-md-6">
-      <nb-toggle status="basic" formControlName="grupal">Grupal</nb-toggle>
+      <nb-toggle status="basic" formControlName="grupal"> ¿ Es grupal ?</nb-toggle>
       <control-messages [control]="formHeader.get('grupal')"></control-messages>
     </div>
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
       <nb-toggle status="basic" formControlName="rubrica">Contiene rúbrica</nb-toggle>
       <control-messages [control]="formHeader.get('rubrica')"></control-messages>
-    </div>
+    </div> -->
 
     <!-- <nb-select placeholder="Seleccionar rúbrica"  fullWidth
     [status]="(formHeader.hasError('required', ['id_rubrica'])) === true ? 'primary' : 'basic'" formControlName="id_rubrica">
