@@ -20,11 +20,24 @@
   <nb-card-body *ngIf="pending?.student_pending?.pending_forum">
     <div *ngFor="let comentario of pending?.student_pending?.pending_forum?.forums_responses">
       <div class="row">
-        <div class="col-md-3">
-          <p class="m-0 mt-2" style="font-size: 12px;">Sep 15 10:35</p>
+        <div class="col-md-2">
+          <strong style="font-size: 12px;">Alumno: </strong><br>
+          <p style="font-size: 10px;">Sep 15 10:35</p>
         </div>
-        <div class="col-md-9">
-          <p class="mt-2" style="font-size: 14px; text-align: justify;">{{ comentario?.respuesta }}</p>
+        <div class="col-md-10">
+          <p style="font-size: 14px; text-align: justify;">{{ comentario?.respuesta }}</p>
+
+          <div *ngFor="let item of comentario?.child_forums_responses">
+            <hr>
+            <div class="row">
+              <div class="col-md-2">
+                <strong style="font-size: 12px;">Docente: </strong>
+              </div>
+              <div class="col-md-10">
+                <p style="font-size: 12px; text-align: justify;">{{item?.respuesta}}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <hr>
