@@ -8,27 +8,6 @@
         <p class="instructions-description">{{ element?.descripcion }}</p>
       </div>
     </div>
-    <div class="video-container mt-4">
-      <iframe *ngIf="['YouTube'].includes(element?.tamano_peso)" [src]="videoEmbedYoutube | safe"
-        title="YouTube video player" frameborder="0" allowfullscreen>
-      </iframe>
-      <iframe *ngIf="['Vimeo'].includes(element?.tamano_peso)" [src]="videoEmbedVimeo | safe" frameborder="0"
-        allowfullscreen></iframe>
-      <iframe *ngIf="['FECEBOOK'].includes(element?.tamano_peso)" [src]="videoEmbedFacebook | safe" scrolling="no"
-        frameborder="0" allowfullscreen="true"></iframe>
-      <iframe *ngIf="['LOOM'].includes(element?.tamano_peso)" [src]="videoEmbedLoom | safe" frameborder="0"
-        webkitallowfullscreen mozallowfullscreen allowfullscreen>
-      </iframe>
-    </div>
-    <br>
-    <br>
-    <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-      src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/994488373&color=%23ff0065&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-    <div
-      style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;">
-      <a href="https://soundcloud.com/adorable_trap" title="ADORA" target="_blank"
-        style="color: #cccccc; text-decoration: none;">ADORA</a> · <a
-        href="https://soundcloud.com/adorable_trap/drivers-license" title="drivers license" target="_blank"
-        style="color: #cccccc; text-decoration: none;">drivers license</a></div>
+    <app-video-player [element]="element" (loadingsFiles)="loadingsFiles($event)"></app-video-player>
   </nb-card-body>
 </nb-card>

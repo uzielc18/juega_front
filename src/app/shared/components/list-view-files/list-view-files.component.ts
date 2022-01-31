@@ -15,6 +15,7 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
   @Input() arrayFiles: any = [];
   @Input() deleteFile: boolean = false;
   @Output() fileValue: EventEmitter<any> = new EventEmitter();
+  @Output() urlValue: EventEmitter<any> = new EventEmitter();
   @Output() deleteFileEmit: EventEmitter<any> = new EventEmitter();
   constructor(private dialogService: NbDialogService) { }
 
@@ -82,7 +83,7 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
     this.recorrerSelected(item);
     if (['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes(item.ext)) {
 
-        window.open(item.url, '_blank');
+      this.urlValue.emit(item);
 
     } else {
 

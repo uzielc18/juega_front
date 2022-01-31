@@ -1,4 +1,5 @@
 <div class="video-container mt-4">
+  <!-- For video element -->
   <iframe *ngIf="['YouTube'].includes(element?.tamano_peso)" [src]="videoEmbedYoutube | safe"
     title="YouTube video player" frameborder="0" allowfullscreen>
   </iframe>
@@ -9,4 +10,18 @@
   <iframe *ngIf="['LOOM'].includes(element?.tamano_peso)" [src]="videoEmbedLoom | safe" frameborder="0"
     webkitallowfullscreen mozallowfullscreen allowfullscreen>
   </iframe>
+  <!-- For vizualization on calification -->
+  <iframe *ngIf="['YOUTUBE'].includes(pending?.ext)" [src]="videoEmbedYoutube | safe" title="YouTube video player"
+    frameborder="0" allowfullscreen>
+  </iframe>
+  <iframe *ngIf="['VIMEO'].includes(pending?.ext)" [src]="videoEmbedVimeo | safe" frameborder="0"
+    allowfullscreen></iframe>
+  <iframe *ngIf="['SOUNDCLOUD'].includes(pending?.ext)" style="height: 166px;" scrolling="no" frameborder="no"
+    allow="autoplay" [src]="audioEmbedSoundcloud | safe"></iframe>
+  <div *ngIf="['REFERENCIA'].includes(pending?.ext)">
+    <a [href]="pending?.url" target="_blank">{{ pending?.url }}</a>
+    <br>
+    <a class="mt-2" nbButton status="primary" [href]="pending?.url" size="small" target="_blank">Ir al
+      enlace</a>
+  </div>
 </div>
