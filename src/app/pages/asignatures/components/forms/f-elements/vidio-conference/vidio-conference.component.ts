@@ -78,7 +78,7 @@ settValuesMore:any;
       tipo: ['VIDEO_CONFERENCIA', [Validators.required]],
 
       visibilidad: ['S'],
-      calificable: [true],
+      calificable: [false],
       duracion: ['180', [Validators.required]],
       permitir_comentarios: [false],
 

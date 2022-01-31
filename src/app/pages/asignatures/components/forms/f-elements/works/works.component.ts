@@ -61,8 +61,8 @@ export class WorksComponent implements OnInit {
       hora_inicio: ['', [Validators.required]],
       fecha_fin: ['', [Validators.required]],
       hora_fin: ['', [Validators.required]],
-      fecha_gracia: ['', [Validators.required]],
-      hora_gracia: ['', [Validators.required]],
+      fecha_gracia: [''],
+      hora_gracia: [''],
 
       tipo: ['TRABAJO', [Validators.required]],
 
@@ -78,8 +78,8 @@ export class WorksComponent implements OnInit {
       files: [''],
       grupal: [false],
 
-      rubrica: [false],
-      id_rubrica: [''],
+      // rubrica: [false],
+      // id_rubrica: [''],
       // secuencia_aprendizaje: [''],
 
     };
@@ -100,7 +100,7 @@ export class WorksComponent implements OnInit {
     })
   }
   formsValues($event:any) {
-    console.log($event);
+    // console.log($event);
 
     this.formHeader.patchValue({
       calificable: $event.calificable,
@@ -133,10 +133,8 @@ export class WorksComponent implements OnInit {
        !form.descripcion ||
        !form.fecha_inicio ||
        !form.fecha_fin ||
-       !form.fecha_gracia ||
        !form.hora_inicio ||
-       !form.hora_fin ||
-       !form.hora_gracia) {
+       !form.hora_fin) {
       return true;
     } else {
       return false;
@@ -149,7 +147,10 @@ export class WorksComponent implements OnInit {
 
     const f_inicio = this.datepipe.transform(forms.fecha_inicio, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_inicio, 'HH:mm');
     const f_fin = this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_fin, 'HH:mm');
-    const f_gracia = this.datepipe.transform(forms.fecha_gracia, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_gracia, 'HH:mm');
+    let f_gracia = '';
+    if (forms.fecha_gracia) {
+      f_gracia = this.datepipe.transform(forms.fecha_gracia, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_gracia, 'HH:mm');
+    }
     const params = {
       course_id:                forms.course_id,
       element_id:                0,
@@ -167,7 +168,7 @@ export class WorksComponent implements OnInit {
 
       fecha_inicio:             f_inicio,
       fecha_fin:                f_fin,
-      fecha_gracia:             f_gracia,
+      fecha_gracia:             f_gracia || f_fin,
 
       grupal:                   forms.grupal === true ? '1' : '0',
       // element_id:               forms.element_id,

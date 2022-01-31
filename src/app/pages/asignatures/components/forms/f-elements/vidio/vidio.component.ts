@@ -88,7 +88,7 @@ settValuesMore:any;
       tipo: ['VIDEO', [Validators.required]],
 
       visibilidad: ['S'],
-      calificable: [true],
+      calificable: [false],
       duracion: ['180', [Validators.required]],
       permitir_comentarios: [false],
 

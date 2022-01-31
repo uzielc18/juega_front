@@ -54,7 +54,7 @@ export class EnlaceExternalComponent implements OnInit {
 
       // element_id: [''],
       visibilidad: ['S'],
-      calificable: [true],
+      calificable: [false],
       duracion: ['180', [Validators.required]],
       permitir_comentarios: [false],
 

@@ -207,7 +207,7 @@ export class VidioComponent implements OnInit {
     }
   }
   recopilaKeyVideo(url:any, tamanoPeso: any) {
-    console.log(url, tamanoPeso);
+    // console.log(url, tamanoPeso);
 
     let idKeyVideo = '';
     switch (tamanoPeso) {
