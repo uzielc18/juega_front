@@ -7,6 +7,7 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 })
 export class CWorksComponent implements OnInit, OnChanges {
   datosFile:any;
+  datosUrl: any;
   loading: boolean = false;
   @Input() pending:any = [];
   constructor() { }
@@ -14,12 +15,16 @@ export class CWorksComponent implements OnInit, OnChanges {
     this.pending = this.pending;
     if (!this.pending?.student_pending?.pending_files?.length) {
       this.datosFile = '';
+      this.datosUrl = '';
     }
   }
   ngOnInit(): void {
   }
   fileValues($event:any) {
     this.datosFile = $event;
+  }
+  urlValues($event: any) {
+    this.datosUrl = $event
   }
   loadingsFiles($event:boolean) {
     setTimeout(() => {
