@@ -20,7 +20,7 @@ export class CursoListComponent implements OnInit {
   rolSeleccionado() {
     this.cursosService.roleEmitted$.subscribe((rol) => {
       this.rol = rol;
-      console.log('rol desde curso-list', this.rol);
+      // console.log('rol desde curso-list', this.rol);
     });
   }
 }

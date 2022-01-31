@@ -13,7 +13,7 @@ export class CForumsComponent implements OnInit, OnChanges {
   ngOnChanges():void {
     this.pending = this.pending;
     this.datos = this.datos;
-    console.log(this.datos);
+    // console.log(this.datos);
 
   }
   ngOnInit(): void {

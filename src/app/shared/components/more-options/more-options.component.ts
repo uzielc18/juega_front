@@ -17,14 +17,12 @@ export class MoreOptionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldReactive();
-    console.log(this.setValues, 'si carga');
-
   }
   private fieldReactive() {
     const controls = {
       permitir_comentarios: [false],
       duration: ['180', [Validators.required]],
-      calificable: [true],
+      calificable: [['TRABAJO', 'FORO'].includes(this.tipo) ? true : false],
       visibilidad: ['S', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);

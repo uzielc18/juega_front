@@ -66,7 +66,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
     this.generalService
       .nameAll$(serviceName)
       .subscribe(({ data: semestres }) => {
-        console.log('my semesters', semestres);
+        // console.log('my semesters', semestres);
         this.semestres = semestres;
         this.updateSemestre(this.form.get('semestre')?.value);
       });
