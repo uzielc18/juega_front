@@ -127,7 +127,11 @@
         <div *ngIf="theRolSemestre?.rol?.name === 'Docente'" class="row">
           <nb-card *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)"
             class="curso-card col-md-2">
-            <img src="assets/books.jpg" class="card-img-top" alt="..." />
+            <!-- <div class="contenedor"> -->
+              <img src="assets/books.jpg" class="card-img-top" alt="..." />
+              <!-- <div class="texto-encima">Hola</div>
+              <div class="centrado"><button nbButton >Hoalsasaas</button></div>
+            </div> -->
             <div class="card-body">
               <h6 class="course-name mb-0">{{ curso.nombre }}</h6>
               <p class="course-teacher mb-0">{{ curso.persons_teacher_nombre }}</p>
