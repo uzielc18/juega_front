@@ -43,6 +43,7 @@ import { CForumsComponent } from './components/c-free/calificar-elements/c-forum
 import { NgxViewFilesGoogleModule } from 'src/app/shared/components/view-files/ngx-view-files-google/ngx-view-files-google.module';
 import { TranslateLangModule } from 'src/app/shared/moduls/translate-lang/translate-lang.module';
 import { FilterPipe } from 'src/app/shared/pipes/filterPipe/filterPipe';
+import { VideoPlayerModule } from '../../shared/components/video-player/video-player.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -105,8 +106,8 @@ const MODULES: any = [
   RubricasModule,
   ListViewFilesModule,
   MenuElementsChildModule,
-  SafeUrlModule,
   NgxViewFilesGoogleModule,
+  VideoPlayerModule,
 
   TranslateLangModule
 ]

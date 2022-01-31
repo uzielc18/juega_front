@@ -134,6 +134,23 @@
       margin: 0;
     }
   }
+
+  &-evalue {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #858585;
+    color: #858585;
+    transition: all .2s ease-out;
+
+    &:hover {
+      transform: scale(1.02);
+      border: 1px solid #6b6b6b;
+      color: #6b6b6b;
+    }
+  }
 }
 
 .rubrica {

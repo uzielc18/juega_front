@@ -10,5 +10,8 @@ nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
     <div *ngIf="datosFile">
       <app-ngx-view-files-google [valueFile]="datosFile" (loadingsFiles)="loadingsFiles($event)"></app-ngx-view-files-google>
     </div>
+    <div *ngIf="datosUrl">
+      <app-video-player [pending]="datosUrl" (loadingsFiles)="loadingsFiles($event)"></app-video-player>
+    </div>
   </nb-card-body>
 </nb-card>

@@ -82,7 +82,7 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
     this.recorrerSelected(item);
     if (['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes(item.ext)) {
 
-        window.open(item.url, '_blank');
+      this.fileValue.emit(item);
 
     } else {
 

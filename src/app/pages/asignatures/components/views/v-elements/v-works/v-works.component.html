@@ -32,8 +32,9 @@
           <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p>
         </div>
         <div class="col-md-2">
-          <div style="cursor: pointer;" class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'" (click)="calificar(element)">
-            <nb-icon icon="edit"></nb-icon>&nbsp;&nbsp;Calificar
+          <div class="calification calification-evalue ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'" (click)="calificar(element)">
+            <nb-icon icon="edit"></nb-icon>
+            <span>Calificar</span>
           </div>
 
           <div class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.nota">

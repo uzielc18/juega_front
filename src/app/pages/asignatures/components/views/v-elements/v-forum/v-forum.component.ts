@@ -15,9 +15,25 @@ export class VForumComponent implements OnInit {
   @Input() userInfo: any;
   @Input() pending: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
+  toggle: boolean = false;
 
   formHeader: any = FormGroup;
-  comentarios: string[] = [];
+  comentarios: any[] = [
+    {
+      respuesta: 'hohohohohohohohohhohohohoho',
+      children_respuesta: [{
+        respuesta: 'hohohohohoholalalalalalalala'
+      }],
+      user_id: 1
+    },
+    {
+      respuesta: 'hohohohohohohohohohohohohohohohhohohohohohohohohohohohohohhohohohohohohhohohohoho',
+      children_respuesta: [{
+        respuesta: 'hohohohohohohohohohohohohohohhohohohoholalalalalalalala'
+      }],
+      user_id: 1
+    }
+  ];
 
   constructor(private formBuilder: FormBuilder, private generalService: GeneralService, private dialogService: NbDialogService
   ) { }
@@ -28,7 +44,7 @@ export class VForumComponent implements OnInit {
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     const val = JSON.parse(sesion);
-    if (val && val.rol){
+    if (val && val.rol) {
       return val;
     } else {
       return '';
@@ -67,11 +83,12 @@ export class VForumComponent implements OnInit {
       // this.generalService.addNameData$(serviceName, params).subscribe(r => {
 
       // });
+
       this.comentarios.push(forms.comentario);
       this.formHeader.reset();
     }
   }
-  calificar(element:any) {
+  calificar(element: any) {
     this.dialogService.open(CalificarElementEstudentComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
@@ -85,5 +102,9 @@ export class VForumComponent implements OnInit {
         // this.filtrar();
       }
     });
-}
+  }
+
+  responder() {
+    this.toggle = !this.toggle;
+  }
 }
