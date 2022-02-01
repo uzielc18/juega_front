@@ -63,6 +63,7 @@ export class CalificarElementEstudentComponent implements OnInit {
     }
   }
   selectedStudent(item:any) {
+    this.pending = '';
     this.listAlumns.map((res:any) => {
       res.checked = false;
       res.background = '';

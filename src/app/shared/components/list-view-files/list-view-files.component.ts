@@ -80,11 +80,11 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
   }
   valueFile(item:any) {
     this.recorrerSelected(item);
-    if (['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes(item.ext)) {
+    // if (['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes(item.ext)) {
 
-      this.fileValue.emit(item);
+    //   this.fileValue.emit(item);
 
-    } else {
+    // } else {
 
       if (this.typeView === 'MODAL') {
         if (item && item.nombre) {
@@ -105,7 +105,7 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
         this.fileValue.emit(item);
       }
 
-    }
+    // }
   }
   recorrerSelected(item:any) {
     if (this.arrayFiles.length>0) {
