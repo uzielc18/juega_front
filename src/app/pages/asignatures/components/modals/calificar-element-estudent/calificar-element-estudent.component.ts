@@ -26,7 +26,7 @@ export class CalificarElementEstudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.element);
+    // console.log(this.element);
 
     this.fieldReactive();
     this.filedMoreDate();
@@ -63,6 +63,7 @@ export class CalificarElementEstudentComponent implements OnInit {
     }
   }
   selectedStudent(item:any) {
+    this.pending = '';
     this.listAlumns.map((res:any) => {
       res.checked = false;
       res.background = '';
