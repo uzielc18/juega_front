@@ -26,7 +26,7 @@ export class CalificarElementEstudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.element);
+    // console.log(this.element);
 
     this.fieldReactive();
     this.filedMoreDate();

@@ -28,7 +28,7 @@ export class CWorksComponent implements OnInit, OnChanges {
       this.datosFile = $event;
       this.datosUrl = '';
     }
-    console.log($event, 'fdsafsfsd')
+    // console.log($event, 'fdsafsfsd')
   }
   loadingsFiles($event: boolean) {
     setTimeout(() => {

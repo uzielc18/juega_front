@@ -61,9 +61,9 @@
       <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
         <div class="d-flex">
           <h4 class="send-work-title">Entrega de trabajo</h4>
-          <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon"
+          <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon" style="font-size: 25px;" nbTooltip="Subir archivo" nbTooltipPlacement="top" nbTooltipStatus="primary"
             icon="cloud-upload-outline" (click)="cambioTypo('1')"></nb-icon>
-          <nb-icon [status]="form.value.tipo === '2' ? 'primary' : 'basic'" class="send-work-icon"
+          <nb-icon [status]="form.value.tipo === '2' ? 'primary' : 'basic'" class="send-work-icon" style="font-size: 25px;" nbTooltip="Subir url" nbTooltipPlacement="top" nbTooltipStatus="primary"
             icon="external-link-outline" (click)="cambioTypo('2')"></nb-icon>
         </div>
         <div *ngIf="form.value.tipo == '1'">
