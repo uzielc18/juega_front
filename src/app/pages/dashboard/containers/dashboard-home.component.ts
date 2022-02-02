@@ -6,10 +6,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-home.component.scss']
 })
 export class DashboardHomeComponent implements OnInit {
+  collapseLeft: boolean = false;
+  collapseTop: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  tweakCollapseLeft() {
+    this.collapseLeft = !this.collapseLeft;
+  }
+
+  tweakCollapseTop() {
+    this.collapseTop = !this.collapseTop;
+  }
+
+  marginNegative() {
+    return {
+      'margin-top': '-10px'
+    }
+  }
+
+  normalMargin() {
+    return {
+      'margin-top': '0'
+    }
   }
 
 }
