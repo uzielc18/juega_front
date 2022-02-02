@@ -44,7 +44,8 @@ export class CalificarElementEstudentComponent implements OnInit {
     const controls = {
       fecha_inicio: ['', [Validators.required]],
       fecha_fin: ['', [Validators.required]],
-      person_id: ['']
+      person_student_id: [''],
+      codigo: ['']
     };
     this.formDate = this.formBuilder.group(controls);
   }
@@ -56,13 +57,15 @@ export class CalificarElementEstudentComponent implements OnInit {
     if (this.element?.id) {
       this.loading = true;
         this.generalServi.nameId$(serviceName, this.element.id).subscribe((res:any) => {
-          this.headStudent = res && res.data[0] || '';
-          this.totalAlumnos = res.data && res.data[0].total_students || [];
-          this.listAlumns = res && res.data && res.data[0].total_students || [];
+          this.headStudent = res && res.data || '';
+          // this.totalAlumnos = res.data && res.data[0].total_students || [];
+          // this.listAlumns = res && res.data && res.data[0].total_students || [];
         }, () => { this.loading = false; }, () => { this.loading = false; });
     }
   }
   selectedStudent(item:any) {
+    this.formDate.controls['person_student_id'].setValue('');
+    this.formHeader.controls['nota'].setValue('');
     this.pending = '';
     this.listAlumns.map((res:any) => {
       res.checked = false;
@@ -73,7 +76,8 @@ export class CalificarElementEstudentComponent implements OnInit {
       item.background = 'brown';
       item.color = 'white';
       this.getPendings(item.persons_student_id);
-      this.formDate.controls['person_id'].setValue(item.id);
+      this.formDate.controls['person_student_id'].setValue(item.person_student_id);
+      this.formHeader.controls['nota'].setValue(item.nota || '');
       this.datosStudent = item;
   }
   getPendings(id_person_student:any) {
@@ -88,13 +92,14 @@ export class CalificarElementEstudentComponent implements OnInit {
 
   }
   changeTabSet($event:any) {
+    this.formDate.controls['person_student_id'].setValue('');
+    this.formHeader.controls['nota'].setValue('');
     const idTab = $event.tabId;
+    this.formDate.controls['codigo'].setValue(idTab);
     this.pending = '';
     this.datosStudent = '';
     switch (idTab) {
       case 'ALL': // Todos
-      this.listAlumns = this.totalAlumnos;
-      break;
       case 'SC': // Sin calificar
       case 'C': //Calificados
       case 'SE': //Sin enviar
@@ -113,7 +118,14 @@ export class CalificarElementEstudentComponent implements OnInit {
     if (codigo) {
       this.loading = true;
       this.generalServi.nameIdParams$(serviceName, this.element.id, params).subscribe((res:any) => {
-        this.listAlumns = res && res.data[0] && res.data[0].total_sin_calificar || [];
+        this.listAlumns = res && res.data || [];
+        // if (this.listAlumns.length>0) {
+        //   this.listAlumns.map((re:any) => {
+        //     if (re.persons_student_id === 909) {
+        //       re.realizo = '1';
+        //      }
+        //   })
+        // }
       }, () => { this.loading = false; }, () => { this.loading = false; });
     }
   }
@@ -129,7 +141,9 @@ export class CalificarElementEstudentComponent implements OnInit {
       if (res.success) {
         this.fieldReactive();
         this.getListEstudent();
+        this.getStudentStatus(this.formDate.value.codigo);
         this.pending = '';
+        this.datosStudent = '';
       }
     }, () => { this.loading = false; }, () => { this.loading = false; });
   }
