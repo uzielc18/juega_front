@@ -10,6 +10,7 @@ export class CWorksComponent implements OnInit, OnChanges {
   datosUrl: any;
   loading: boolean = false;
   @Input() pending: any = [];
+  @Input() datos:any;
   constructor() { }
   ngOnChanges(): void {
     this.pending = this.pending;

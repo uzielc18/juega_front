@@ -14,30 +14,46 @@
     <form [formGroup]="formHeader">
     <div class="row">
       <div class="col-md-3 p-1">
-        <nb-card>
+        <nb-card size="giant">
           <nb-card-header>
-            Estudiantes
-          </nb-card-header>
-          <nb-card-body  class="p-2">
+            Estudiantes <br>
             <div >
               <nb-tabset (changeTab)="changeTabSet($event)">
                 <nb-tab tabTitle="Todos" tabId="ALL">
                 </nb-tab>
-                <nb-tab tabTitle="Sin calificar ({{headStudent?.total_no_calificados}})" tabId="SC">
+                <nb-tab tabIcon="checkmark-outline" badgeText="{{(headStudent?.total_entregados - headStudent?.total_revisados )}}"
+                badgeStatus="basic" badgePosition="bottom right" tabTitle="Sin calificar" tabId="SC">
                 </nb-tab>
-                <nb-tab tabTitle="Calificados ({{headStudent?.total_revisados}})" tabId="C">
+                <nb-tab tabIcon="done-all-outline" badgeText="{{headStudent?.total_revisados}}"
+                badgeStatus="success" badgePosition="bottom right" tabTitle="Calificados" tabId="C">
                 </nb-tab>
-                <nb-tab tabTitle="Pendiéntes ({{headStudent?.total_pendientes}})" tabId="SE">
+                <nb-tab tabIcon="close-circle-outline" badgeText="{{(headStudent?.total_pendientes - headStudent?.total_entregados )}}"
+                badgeStatus="danger" badgePosition="bottom right" tabTitle="Pendiéntes" tabId="SE">
                 </nb-tab>
                </nb-tabset>
             </div>
             <div style="padding-top: 0px;">
               <input type="text" placeholder="Buscar alumno" fieldSize="small" nbInput fullWidth  [(ngModel)]="queryString" [ngModelOptions]="{standalone: true}">
             </div>
+          </nb-card-header>
+          <nb-card-body  class="p-2">
+
             <nb-list>
-              <nb-list-item *ngFor="let item of listAlumns | FilterPipe: queryString:searchableList as hola; let i = index" class="p-1" (click)="selectedStudent(item)"
-              [ngStyle]="{'cursor': 'pointer', 'background': item?.checked ? item?.background : '', 'color': item?.checked ? item?.color : ''}">
-                {{i + 1}} &nbsp;&nbsp;<div style="font-size: 10px;">{{item?.nombres + ' ' + item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}</div>
+              <nb-list-item *ngFor="let item of listAlumns | FilterPipe: queryString:searchableList as hola; let i = index"
+              class="p-1 d-flex align-items-center justify-content-between" (click)="selectedStudent(item)"
+              [ngStyle]="{'cursor': 'pointer', 'background': item?.checked ? item?.background : '', 'color': item?.checked ? item?.color : '', 'font-size': '10px'}">
+                <div>
+                  {{i + 1}} &nbsp;&nbsp;{{item?.nombres + ' ' + item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}
+                </div>
+                <div>
+                  {{item?.nota}}
+                  <nb-icon *ngIf="item?.realizo === '0'" icon="close-circle-outline" status="danger"
+                  nbTooltip="Pendiénte" nbTooltipPlacement="top" nbTooltipStatus="danger"></nb-icon>
+                  <nb-icon *ngIf="item?.realizo === '1' && item?.calificado === '0'" icon="checkmark-outline" status="basic"
+                  nbTooltip="Sin calificar" nbTooltipPlacement="top" nbTooltipStatus="basic"></nb-icon>
+                  <nb-icon *ngIf="item?.realizo === '1' && item?.calificado === '1'" icon="done-all-outline" status="success"
+                  nbTooltip="Calificado" nbTooltipPlacement="top" nbTooltipStatus="success"></nb-icon>
+                </div>
               </nb-list-item>
             </nb-list>
           </nb-card-body>
@@ -61,7 +77,7 @@
           <p *ngIf="formHeader.value.ver_trabajo === 'S'" style="text-align: justify; font-size: 11px;">{{element?.descripcion}}</p>
         </div>
         <div *ngIf="element?.type_element?.codigo === 'TRAB'">
-          <app-c-works [pending]="pending"></app-c-works>
+          <app-c-works [pending]="pending" [datos]="datosStudent"></app-c-works>
         </div>
         <div *ngIf="element?.type_element?.codigo === 'FOR'" >
           <app-c-forums [pending]="pending" [datos]="datosStudent"></app-c-forums>

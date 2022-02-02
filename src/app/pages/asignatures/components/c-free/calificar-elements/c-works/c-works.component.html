@@ -1,7 +1,13 @@
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="primary"
 nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
   <nb-card-header>
-    DOCUMENTOS DEL ALUMNO
+    <div *ngIf="datos">
+      <h3 style="font-size: 16px; font-weight: bold; color: #414141;" class="m-0">{{datos?.nombres + ' ' + datos?.apellido_paterno + ' ' + ' ' +datos?.apellido_materno}}</h3>
+      <small style="font-size: 12px; font-weight: bold; color: #575756;">{{datos?.codigo}}</small>
+    </div>
+    <div *ngIf="!datos">
+      DOCUMENTOS DEL ALUMNO
+    </div>
   </nb-card-header>
   <nb-card-body>
     <div>
