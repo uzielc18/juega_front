@@ -37,7 +37,8 @@
       [list]="pending?.student_pending?.pending_forum?.forums_responses || []"
       (changeEmit)="changeEmit()"
       [getValidComent]="getValidComent"
-      [viewRespond]="element?.forums?.permitir_comentarios === 'SI' ? true : false">
+      [viewRespond]="element?.forums?.permitir_comentarios === 'SI' ? true : false"
+      [pending_id]="pending?.student_pending?.id">
       </app-children-comments>
     </div>
     <div *ngIf="rolSemestre?.rol?.name === 'Docente'">

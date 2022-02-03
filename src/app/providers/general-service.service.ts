@@ -28,7 +28,9 @@ export class GeneralService extends EntityDataService<IResponse> {
     public deleteNameId$(serviceName: any, id: any): Observable<IResponse> {
         return this.httpClient.delete<IResponse>(`${this.endPoint}/${serviceName}/${id}`);
     }
-
+    public deleteNameIdParams$(serviceName: any, id: any, params:any): Observable<IResponse> {
+      return this.httpClient.delete<IResponse>(`${this.endPoint}/${serviceName}/${id}`, {params});
+  }
     public updateNameIdData$(serviceName: any, id: any, data: any): Observable<IResponse> {
         return this.httpClient.put<IResponse>(`${this.endPoint}/${serviceName}/${id}`, data);
     }
