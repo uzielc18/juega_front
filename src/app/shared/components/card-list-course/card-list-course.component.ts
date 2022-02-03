@@ -88,4 +88,10 @@ export class CardListCourseComponent implements OnInit {
     ];
     this.ngDynamicBreadcrumbService.updateBreadcrumb(breadcrumbs);
   }
+
+  enterZoom(event: any) {
+    event.stopPropagation();
+    console.log('entrando a zoom');
+  }
+
 }
