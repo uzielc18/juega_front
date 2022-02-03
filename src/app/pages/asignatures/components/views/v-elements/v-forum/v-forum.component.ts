@@ -13,7 +13,6 @@ export class VForumComponent implements OnInit, OnChanges {
   @Input() element: any;
   @Input() userInfo: any;
   @Input() pending: any;
-  @Input() rolSem: any;
   @Output() refreshPending: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
   formHeader: any = FormGroup;
@@ -22,7 +21,6 @@ export class VForumComponent implements OnInit, OnChanges {
   ) { }
   ngOnChanges():void {
     this.pending = this.pending;
-    this.rolSem = this.rolSem;
     this.listResponses = this.listResponses;
   }
   ngOnInit(): void {
