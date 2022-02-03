@@ -21,17 +21,4 @@ export class DashboardHomeComponent implements OnInit {
   tweakCollapseTop() {
     this.collapseTop = !this.collapseTop;
   }
-
-  marginNegative() {
-    return {
-      'margin-top': '-10px'
-    }
-  }
-
-  normalMargin() {
-    return {
-      'margin-top': '0'
-    }
-  }
-
 }

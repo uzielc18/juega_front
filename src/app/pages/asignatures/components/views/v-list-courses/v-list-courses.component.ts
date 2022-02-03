@@ -88,4 +88,9 @@ export class VListCoursesComponent implements OnInit, OnDestroy {
     ];
     this.ngDynamicBreadcrumbService.updateBreadcrumb(breadcrumbs);
   }
+
+  enterZoom(event: any) {
+    event.stopPropagation();
+    console.log('entrando a zoom');
+  }
 }
