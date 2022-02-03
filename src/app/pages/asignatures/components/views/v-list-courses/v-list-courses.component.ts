@@ -11,9 +11,4 @@ export class VListCoursesComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-  enterZoom(event: any) {
-    event.stopPropagation();
-    console.log('entrando a zoom');
-  }
 }

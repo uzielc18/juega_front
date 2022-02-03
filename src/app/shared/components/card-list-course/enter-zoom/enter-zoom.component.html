@@ -1,0 +1,31 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+  nbSpinnerMessage="Procesando información">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <h4 *ngIf="rolSemestre?.rol?.name === 'Docente'" class="fw-bold">{{ item.nombre }}</h4>
+      <h4 *ngIf="rolSemestre?.rol?.name === 'Estudiante'" class="fw-bold">{{ item.course_nombre }}</h4>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-6 d-flex flex-column justify-content-center">
+        <p>¿Estás preparado?</p>
+        <small>Antes de ingresar a la sala, revisa lo siguiente:</small>
+        <ul>
+          <li>Conecta tus audifonos y micrófono.</li>
+          <li>Conecta tu webcam.</li>
+          <li>Recuerda silenciar tu micrófono hasta que el presentador pida tu participacion.</li>
+        </ul>
+        <button nbButton status="primary" style="width: 100%;">INGRESAR A LA CLASE VIRTUAL<nb-icon icon="arrow-right">
+          </nb-icon>
+        </button>
+      </div>
+      <div class="col-md-6">
+        <img src="assets/videoCall.svg" alt="" style="width: 100%;">
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
