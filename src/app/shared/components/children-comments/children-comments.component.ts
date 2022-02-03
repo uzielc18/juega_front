@@ -20,6 +20,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
   formHeader: any = FormGroup;
   @Input() list: any = [];
   @Output() changeEmit: EventEmitter<any> = new EventEmitter();
+  @Input() pending_id: any;
   constructor(private formBuilder: FormBuilder, private generalService: GeneralService, private dialogService: NbDialogService) { }
 
   ngOnChanges():void {
@@ -28,6 +29,9 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
     this.list = this.list;
     this.getValidComent = this.getValidComent;
     this.options = this.options;
+    this.pending_id = this.pending_id;
+    console.log(this.pending_id, 'id');
+
   }
   ngOnInit(): void {
     this.fieldReactive();
@@ -59,8 +63,6 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
   }
 
   saveDocComment(item:any) {
-    console.log(item);
-
     const serviceName = 'forumsResponses';
     // let date = new Date();
     // let fecha = date.toISOString().split('T')[0];
@@ -71,6 +73,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
       person_id: this.userInfo.id,
       forums_response_id: item.id,
       respuesta: item.enviar_comentario,
+      pending_id: '',
     };
     if (params && params.forum_id && params.person_id) {
       this.loading = true;
@@ -131,7 +134,10 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
       }).then((result:any) => {
           if (result.isConfirmed) {
             this.loading = true;
-            this.generalService.deleteNameId$(serviceName, item.id).subscribe(r => {
+            const params = {
+              pending_id: item.forums_response_id === 0 ? this.pending_id : '',
+            }
+            this.generalService.deleteNameIdParams$(serviceName, item.id, params).subscribe(r => {
               if (r.success) {
                 this.changeEmit.emit();
               }
@@ -152,6 +158,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
       person_id: this.userInfo.id,
       forums_response_id: 0,
       respuesta: forms.comentario,
+      pending_id: this.pending_id || '',
     };
     if (params && params.forum_id && params.person_id) {
       this.loading = true;
