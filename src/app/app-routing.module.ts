@@ -22,17 +22,10 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: DashboardComponent,
+        loadChildren: () => import('./pages/dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
-      // {
-      //   path: 'asignaturas',
-      //   data: { breadcrumb: 'Asignaturas' },
-      //   loadChildren: () =>
-      //     import('./pages/cursos/cursos.module').then((m) => m.CursosModule),
-      // },
       {
         path: 'asignaturas',
-        // data: { breadcrumb: 'Asignaturas' },
         loadChildren: () => import('./pages/asignatures/asignatures.module').then((m) => m.AsignaturesModule),
       },
       {
@@ -57,4 +50,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, config)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
