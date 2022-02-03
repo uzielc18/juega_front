@@ -1,0 +1,12 @@
+
+  <div class="d-flex mt-4">
+    <div [ngStyle]="showText ? {'width': '100px'} : {'width': '50px'}" *ngFor="let item of arrayFiles">
+      <div style="text-align: right; cursor: pointer;" *ngIf="deleteFile">
+        <nb-icon icon="close-outline" status="danger" (click)="valueDeleteFile(item)"></nb-icon>
+      </div>
+      <div class="imgs d-flex flex-column align-items-center text-center" (click)="valueFile(item)">
+        <img [src]="item?.icon" [title]="item?.nombre_original" [ngStyle]="showText ? {'width': '40%'} : {'width': '90%'}">
+        <small *ngIf="showText" class="label mt-2" style="font-size: 9px;" [ngStyle]="{'color': item?.color ? item?.color : ''}">{{item.nombre_original}}</small>
+      </div>
+    </div>
+  </div>

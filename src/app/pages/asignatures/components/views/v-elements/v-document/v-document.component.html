@@ -1,0 +1,14 @@
+<nb-card class="instructions-container m-4">
+  <nb-card-body class="px-4 py-5">
+    <div class="d-flex">
+      <div class="instructions">
+        <h4 class="instructions-title">{{ element?.titulo }}</h4>
+        <p class="instructions-description">{{ element?.descripcion }}</p>
+      </div>
+    </div>
+    <div>
+      <h4 class="attached-files-title">Archivos de apoyo</h4>
+      <app-list-view-files [arrayFiles]="element?.element_files || []"></app-list-view-files>
+    </div>
+  </nb-card-body>
+</nb-card>

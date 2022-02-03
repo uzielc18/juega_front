@@ -83,94 +83,32 @@ export class AppService {
 
   init(injector: any): Promise<any> {
     return injector.get(NbAuthService).isAuthenticated().toPromise().then((isAuthent: any) => {
-        if (isAuthent) {
-            return this.httpClient.get(`${this._userInfoUrl}`)
-                .pipe(map((data: any) => data))
-                .toPromise()
-                .then((data: any) => {
-                  console.log(data.data.user);
+      if (isAuthent) {
+        return this.httpClient.get(`${this._userInfoUrl}`)
+          .pipe(map((data: any) => data))
+          .toPromise()
+          .then((data: any) => {
 
-                    if (data.data && data.data.user) {
-                        this._user = data.data.user;
-                        this._semestre = data.data.semestre;
-                        this._rol = data.data.roles;
-                        // this.nbMenuService.addItems(data.data.hasOwnProperty('menu') ? data.data.menu : [], 'core-menu');
-                        return true;
-                    } else {
-                      localStorage.clear();
-                        return false;
-                    }
-                }, () => {
-                  localStorage.clear();
-                    return false;
-                });
-        } else {
-          localStorage.clear();
-          return false;
-        }
+            if (data.data && data.data.user) {
+              this._user = data.data.user;
+              this._semestre = data.data.semestre;
+              this._rol = data.data.roles;
+              return true;
+            } else {
+              localStorage.clear();
+              return false;
+            }
+          }, () => {
+            localStorage.clear();
+            return false;
+          });
+      } else {
+        localStorage.clear();
+        return false;
+      }
 
     });
-}
-/////
-
-// Antes
-
-  // init(injector: Injector): Observable<boolean> {
-  //   const auth: NbAuthService = injector.get(NbAuthService);
-  //   return auth.isAuthenticated().pipe(
-  //     switchMap((status: boolean) =>
-  //       status
-  //         ? this.httpClient.get(this._userInfoUrl).pipe(
-  //             map((data: any) => data.data),
-  //             map((data: any) => {
-  //               console.log(data, 'helllo');
-
-  //               if (data) {
-  //                 if (
-  //                   data.hasOwnProperty('user') &&
-  //                   Object.keys(data.user).length > 0
-  //                 ) {
-  //                   this._user = data.user;
-  //                   this._semestre = data.semestre;
-  //                   console.log('====================>', this._user.roles);
-  //                 }
-  //                 return true;
-  //               } else {
-  //                 return false;
-  //               }
-  //             })
-  //           )
-  //         : of(false)
-  //     )
-  //   );
-  // }
-  // init(injector: Injector): Observable<boolean> {
-  //   return auth.isAuthenticated().pipe(
-  //     switchMap((status: boolean) =>
-  //       status
-  //         ? this.httpClient.get(this._userInfoUrl).pipe(
-  //             map((data: any) => data.data),
-  //             map((data: any) => {
-  //               if (data) {
-  //                 if (
-  //                   data.hasOwnProperty('user') &&
-  //                   Object.keys(data.user).length > 0
-  //                 ) {
-  //                   this._user = data.user;
-  //                   this._semestre = data.semestre;
-  //                   this._rol = data.roles;
-  //                 }
-  //                 return true;
-  //               } else {
-  //                 return false;
-  //               }
-  //             })
-  //           )
-  //         : of(false)
-  //     )
-  //   );
-  // }
-
+  }
   start = (): void => this._loading.next(true);
   stop = (): void => this._loading.next(false);
 

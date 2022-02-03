@@ -1,0 +1,48 @@
+<nb-card style="border-radius: 1rem; height: 100%" class="m-0">
+  <nb-card-header>
+    <div class="d-flex align-items-center">
+      <div class="ms-2 d-flex align-items-center">
+        <nb-icon class="home-icon" icon="home-outline" routerLink="/pages"></nb-icon> &nbsp;
+        <span class="ms-2" style="font-weight: 400;">&rang;</span>
+        <app-ng-dynamic-breadcrumb
+          [bgColor]="'#fff'"
+          [fontColor]="'#969696'"
+          [symbol]="'&rang;'"
+          [lastLinkColor]="'#934054'"
+          [fontSize]="'15px'"
+        ></app-ng-dynamic-breadcrumb>
+      </div>
+      <!-- <div class="ms-auto d-none d-xxl-block">
+        <form [formGroup]="form">
+          <nb-select
+            *ngIf="roles.length > 0"
+            status="primary"
+            class="me-2"
+            formControlName="rol"
+            (selectedChange)="changeRol()"
+          >
+            <nb-option
+              *ngFor="let rol of roles; let i = index"
+              [value]="rol.name"
+              >Cursos - {{ rol.name }}</nb-option
+            >
+          </nb-select>
+          <nb-select
+            status="primary"
+            formControlName="semestre"
+            (selectedChange)="changeSemestre($event)"
+          >
+            <nb-option
+              *ngFor="let semestre of semestres; let i = index"
+              [value]="semestre.id"
+              >Semestre - {{ semestre.nombre }}</nb-option
+            >
+          </nb-select>
+        </form>
+      </div> -->
+    </div>
+  </nb-card-header>
+  <nb-card-body class="p-0" style="height: 100%;">
+    <router-outlet></router-outlet>
+  </nb-card-body>
+</nb-card>

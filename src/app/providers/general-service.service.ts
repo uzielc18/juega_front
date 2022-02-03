@@ -22,7 +22,9 @@ export class GeneralService extends EntityDataService<IResponse> {
     public addNameData$(serviceName: any, data: any): Observable<IResponse> {
         return this.httpClient.post<IResponse>(`${this.endPoint}/${serviceName}`, data);
     }
-
+    public addNameIdData$(serviceName: any, id:any, data: any): Observable<IResponse> {
+      return this.httpClient.post<IResponse>(`${this.endPoint}/${serviceName}/${id}`, data);
+    }
     public deleteNameId$(serviceName: any, id: any): Observable<IResponse> {
         return this.httpClient.delete<IResponse>(`${this.endPoint}/${serviceName}/${id}`);
     }
@@ -38,5 +40,11 @@ export class GeneralService extends EntityDataService<IResponse> {
     }
     public nameIdAndId$(serviceName: any, id: any, id2:any): Observable<IResponse> {
       return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}/${id2}`);
+    }
+    public nameIdAndIdParams$(serviceName: any, id: any, id2:any, params:any): Observable<IResponse> {
+      return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}/${id2}`, {params});
+    }
+    public nameIdParams$(serviceName: any, id: any, params:any): Observable<IResponse> {
+      return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}`, {params});
     }
 }

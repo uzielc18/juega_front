@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
+import { AppService } from 'src/app/core';
 import { S3ServiceService } from './services/s3-service.service';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 
@@ -9,11 +10,11 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
   templateUrl: './prepare-file-pro.component.html',
   styleUrls: ['./prepare-file-pro.component.scss'],
 })
-export class PrepareFileProComponent implements OnInit {
+export class PrepareFileProComponent implements OnInit, OnChanges {
   userData: any;
   formHeaders: any = FormGroup;
   @Input() paramsInfo: any;
-  @Input() typeFile: string = 'img-pdf'; // no modificar
+  @Input() typeFile: string = 'all'; // no modificar
   @Output() filterValueChange: any = new EventEmitter<any>();
   @Input() isDisabled: boolean = false; // no modificar
   @Input() numFiles: number = 10; // no modificar
@@ -21,8 +22,11 @@ export class PrepareFileProComponent implements OnInit {
   @Input() listArrayFile: any = [];
   loading: boolean = false;
   constructor(private formBuilder: FormBuilder, private modalServiceNebular: NbDialogService,
-    private s3ServiceServ: S3ServiceService) {
-
+    private appService: AppService) {
+  }
+  ngOnChanges():void {
+    this.listArrayFile = this.listArrayFile;
+    this.isDisabled = this.isDisabled;
   }
   ngOnInit(): void {
     this.getUsers();
@@ -40,10 +44,7 @@ export class PrepareFileProComponent implements OnInit {
     this.formHeaders = this.formBuilder.group(controls);
   }
   getUsers() {
-    this.loading = true;
-    this.s3ServiceServ.getUserMe().subscribe(res => {
-      this.userData = res['data'];
-    }, () => { this.loading = false; }, () => { this.loading = false; });
+      this.userData = this.appService;
   }
   typeFileSet(typeFile: string) {
     // Create by Cristian
@@ -55,10 +56,10 @@ export class PrepareFileProComponent implements OnInit {
         this.accept = 'application/pdf';
         break;
       case 'excel':
-        this.accept = '.xlsx, .xls, .csv';
+        this.accept = '.xlsx, .xls';
         break;
       case 'doc':
-        this.accept = '.doc, .docx';
+        this.accept = '.doc, .docx, .ppt, .pptx';
         break;
       case 'txt':
         this.accept = 'text/plain';
@@ -69,11 +70,8 @@ export class PrepareFileProComponent implements OnInit {
       case 'audio':
         this.accept = 'audio/mp3';
         break;
-      case 'zip':
-        this.accept = '.zip, .rar, .7zip';
-        break;
       case 'all':
-        this.accept = 'image/png, image/jpg, image/jpeg, application/pdf, .doc, .docx,.xlsx, .xls, .csv, text/plain';
+        this.accept = 'image/png, image/jpg, image/jpeg, application/pdf, .doc, .docx, .ppt, .pptx, .xlsx, .xls, text/plain';
         break;
       default:
         this.accept = 'image/png, image/jpg, image/jpeg, application/pdf';
@@ -85,7 +83,7 @@ export class PrepareFileProComponent implements OnInit {
     this.formHeaders.controls['name_file'].setValue('');
     this.formHeaders.controls['ext_file'].setValue('');
     this.formHeaders.controls['base64'].setValue('');
-    this.onFilterChange();
+    // this.onFilterChange();
   }
 
   openModal() {
@@ -99,8 +97,6 @@ export class PrepareFileProComponent implements OnInit {
         type: this.paramsInfo.type,
       }
     }
-    console.log(param);
-
     this.modalServiceNebular.open(UploadFileComponent, {
       closeOnBackdropClick: false,
       context: param,

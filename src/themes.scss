@@ -5,21 +5,23 @@
 $nb-enable-css-custom-properties: true; // <-- enable css custom properties
 
 $theme1: (
-  header-background-color: color-primary-700,
+  header-background-color: color-primary-800,
   header-text-color: color-basic-100,
   header-shadow: none,
 
-  sidebar-background-color: color-primary-700,
-  sidebar-text-color: color-primary-700,
+  sidebar-background-color: color-primary-800,
+  sidebar-text-color: color-primary-800,
   sidebar-shadow: none,
 
-  menu-background-color: color-primary-700,
+  menu-background-color: color-primary-800,
   menu-text-color: color-basic-100,
   menu-submenu-text-color: color-basic-100,
   menu-group-text-color: color-basic-100,
   menu-item-icon-color: color-basic-100,
-  menu-item-divider-color: color-primary-700,
+  menu-item-divider-color: color-primary-800,
   menu-text-font-weight: 500,
+  menu-item-active-text-color: color-primary-300,
+  menu-item-active-background-color: color-primary-900,
 
   color-primary-100: #F9E1DD,
   color-primary-200: #F4BFBD,
