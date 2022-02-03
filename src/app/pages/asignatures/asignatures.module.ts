@@ -36,7 +36,6 @@ import { VRecordedClassComponent } from './components/views/v-elements/v-recorde
 import { VEvaluationComponent } from './components/views/v-elements/v-evaluation/v-evaluation.component';
 import { VElementsBaseComponent } from './components/views/v-elements/v-elements-base.component';
 import { ListViewFilesModule } from 'src/app/shared/components/list-view-files/list-view-files.module';
-import { SafeUrlModule } from '../../shared/pipes/safe-url/safe-url.module';
 import { CalificarElementEstudentComponent } from './components/modals/calificar-element-estudent/calificar-element-estudent.component';
 import { CWorksComponent } from './components/c-free/calificar-elements/c-works/c-works.component';
 import { CForumsComponent } from './components/c-free/calificar-elements/c-forums/c-forums.component';
@@ -44,6 +43,7 @@ import { NgxViewFilesGoogleModule } from 'src/app/shared/components/view-files/n
 import { TranslateLangModule } from 'src/app/shared/moduls/translate-lang/translate-lang.module';
 import { FilterPipe } from 'src/app/shared/pipes/filterPipe/filterPipe';
 import { VideoPlayerModule } from '../../shared/components/video-player/video-player.module';
+import { ChildrenCommentsModule } from 'src/app/shared/components/children-comments/children-comments.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -74,7 +74,6 @@ const COMPONENTS: any[] = [
   CalificarElementEstudentComponent,
   CWorksComponent,
   CForumsComponent,
-
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -92,7 +91,7 @@ const SERIVCES: any = [
 const MODALS: any = [
   HomeworkFormComponent,
   AdminGroupsComponent,
-  CalificarElementEstudentComponent
+  CalificarElementEstudentComponent,
 ];
 const NGX_MODULES: any = [
 ];
@@ -109,7 +108,8 @@ const MODULES: any = [
   NgxViewFilesGoogleModule,
   VideoPlayerModule,
 
-  TranslateLangModule
+  TranslateLangModule,
+  ChildrenCommentsModule
 ]
 
 @NgModule({

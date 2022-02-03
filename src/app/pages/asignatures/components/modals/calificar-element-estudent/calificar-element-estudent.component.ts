@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
+import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
+import { CForumsComponent } from '../../c-free/calificar-elements/c-forums/c-forums.component';
 
 @Component({
   selector: 'app-calificar-element-estudent',
@@ -21,7 +23,11 @@ export class CalificarElementEstudentComponent implements OnInit {
   datosStudent:any;
   public searchableList: any[] = [];
   public queryString:any;
-  constructor(public activeModal: NbDialogRef<CalificarElementEstudentComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService) {
+  userInfo: any;
+  listResponses:any = [];
+
+  constructor(public activeModal: NbDialogRef<CalificarElementEstudentComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService,
+    private userService: AppService) {
     this.searchableList = ['nombres', 'apellido_paterno', 'apellido_materno'];
   }
 
@@ -67,6 +73,7 @@ export class CalificarElementEstudentComponent implements OnInit {
     this.formDate.controls['person_student_id'].setValue('');
     this.formHeader.controls['nota'].setValue('');
     this.pending = '';
+    this.listResponses = [];
     this.listAlumns.map((res:any) => {
       res.checked = false;
       res.background = '';
@@ -79,6 +86,11 @@ export class CalificarElementEstudentComponent implements OnInit {
       this.formDate.controls['person_student_id'].setValue(item.person_student_id);
       this.formHeader.controls['nota'].setValue(item.nota || '');
       this.datosStudent = item;
+      if (this.element?.type_element?.codigo === 'FOR') { // SI ES FORO
+        setTimeout(() => {
+          this.getResponsesDocen(item.persons_student_id); //envir al hijo
+        }, 1000);
+      }
   }
   getPendings(id_person_student:any) {
     const serviceName = END_POINTS.base_back.resourse + '/get-pending-student';
@@ -98,6 +110,7 @@ export class CalificarElementEstudentComponent implements OnInit {
     this.formDate.controls['codigo'].setValue(idTab);
     this.pending = '';
     this.datosStudent = '';
+    this.listResponses = [];
     switch (idTab) {
       case 'ALL': // Todos
       case 'SC': // Sin calificar
@@ -144,7 +157,28 @@ export class CalificarElementEstudentComponent implements OnInit {
         this.getStudentStatus(this.formDate.value.codigo);
         this.pending = '';
         this.datosStudent = '';
+        this.listResponses = [];
       }
     }, () => { this.loading = false; }, () => { this.loading = false; });
+  }
+  getUserInfo() {
+    this.userInfo = this.userService.user;
+  }
+  getResponsesDocen(persons_student_id:any) {
+    const serviceName = END_POINTS.base_back.resourse + '/list_responses_forum';
+    const params = {
+      person_id: persons_student_id,
+    }
+    if (params && params.person_id) {
+      this.loading = true;
+        this.generalServi.nameIdParams$(serviceName, this.element.forums.id, params).subscribe((res:any) => {
+          this.listResponses = res.data || [];
+          if (this.listResponses.length>0) {
+            this.listResponses.map((re:any) => {
+              re.checked = false;
+            })
+          }
+        }, () => { this.loading = false; }, () => { this.loading = false; });
+    }
   }
 }

@@ -1,6 +1,7 @@
-<nb-card>
+<nb-card [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <nb-card-header>
-    <div class="row" *ngIf="datos else coments">
+    <strong>Comentarios:</strong>
+    <!-- <div class="row" *ngIf="datos else coments">
       <div class="col-md-2">
         <img
         src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"
@@ -13,12 +14,19 @@
     </div>
     <ng-template #coments>
       <strong>Comentarios del estudiante:</strong>
-    </ng-template>
+    </ng-template> -->
 
 
   </nb-card-header>
   <nb-card-body *ngIf="pending?.student_pending?.pending_forum">
-    <div *ngFor="let comentario of pending?.student_pending?.pending_forum?.forums_responses">
+    <app-children-comments
+    [element]="element"
+    [userInfo]="userInfo"
+    [list]="listResponses || []"
+    [options]="false"
+    [viewRespond]="false">
+  </app-children-comments>
+    <!-- <div *ngFor="let comentario of pending?.student_pending?.pending_forum?.forums_responses">
       <div class="row">
         <div class="col-md-2">
           <strong style="font-size: 12px;">Alumno: </strong><br>
@@ -27,7 +35,7 @@
         <div class="col-md-10">
           <p style="font-size: 14px; text-align: justify;">{{ comentario?.respuesta }}</p>
 
-          <div *ngFor="let item of comentario?.child_forums_responses">
+          <div *ngFor="let item of comentario?.child_responses">
             <hr>
             <div class="row">
               <div class="col-md-2">
@@ -41,6 +49,6 @@
         </div>
       </div>
       <hr>
-    </div>
+    </div> -->
   </nb-card-body>
 </nb-card>

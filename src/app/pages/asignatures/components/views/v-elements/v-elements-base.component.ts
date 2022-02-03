@@ -22,6 +22,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
   nombreSubscription: any = Subscription;
   valida: boolean = false;
   theRolSemestre:any;
+  listResponses:any = [];
   constructor(
     private userService: AppService,
     private generalService: GeneralService,
@@ -41,6 +42,11 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
         if (value.rol.name === 'Estudiante') {
           setTimeout(() => {
             this.getPendings();
+          }, 1000);
+        } else if (value.rol.name === 'Docente') {
+          this.pending = '';
+          setTimeout(() => {
+            this.getResponsesDocen();
           }, 1000);
         } else {
           this.pending = '';
@@ -65,6 +71,11 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
         if (value.rol.name === 'Estudiante') {
           setTimeout(() => {
             this.getPendings();
+          }, 1000);
+        } else if (value.rol.name === 'Docente') {
+          this.pending = '';
+          setTimeout(() => {
+            this.getResponsesDocen();
           }, 1000);
         } else {
           this.pending = '';
@@ -92,9 +103,10 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
   getPendings() {
     const serviceName = END_POINTS.base_back.resourse + '/get-pending-student';
     // this.userInfo.id
+    this.loading = true;
     this.generalService.nameIdAndId$(serviceName, this.elementId, this.userInfo.id).subscribe((res:any) => {
       this.pending = res.data || '';
-    });
+    }, () => { this.loading = false; }, () => { this.loading = false; });
   }
   titleCase(str: any) {
     return str
@@ -129,15 +141,40 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     this.ngDynamicBreadcrumbService.updateBreadcrumb(breadcrumbs);
   }
   elementSelected($event: any) {
+    this.pending = '';
     this.elementId = $event.id;
     this.router.navigate([`../asignaturas/course/${this.idCargaCursoDocente}/element/${$event.id}`], { relativeTo: this.activatedRoute.parent });
     this.getElement();
 
-    if (this.theRolSemestre.rol.name === 'Estudiante') {
+    if (this.theRolSemestre?.rol?.name === 'Estudiante') {
       this.getPendings();
+    } else if (this.theRolSemestre?.rol?.name === 'Docente') {
+      this.getResponsesDocen();
     }
   }
+  getResponsesDocen() {
+    const serviceName = END_POINTS.base_back.resourse + '/list_responses_forum';
+    const params = {
+      person_id: ''
+    }
+    this.loading = true;
+    setTimeout(() => {
+      this.generalService.nameIdParams$(serviceName, this.element.forums.id, params).subscribe((res:any) => {
+        this.listResponses = res.data || [];
+        if (this.listResponses.length>0) {
+          this.listResponses.map((re:any) => {
+            re.checked = false;
+          })
+        }
+      }, () => { this.loading = false; }, () => { this.loading = false; });
+    }, 1000);
+
+  }
   refreshPending() {
-    this.getPendings();
+    if (this.theRolSemestre?.rol?.name === 'Estudiante') {
+      this.getPendings();
+    } else if (this.theRolSemestre?.rol?.name === 'Docente') {
+      this.getResponsesDocen();
+    }
   }
 }
