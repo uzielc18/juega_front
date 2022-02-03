@@ -21,7 +21,15 @@
 
       <app-v-folder *ngIf="['CARP'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-folder>
 
-      <app-v-forum *ngIf="['FOR'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-forum>
+      <app-v-forum
+      *ngIf="['FOR'].includes(element?.type_element?.codigo)"
+      [element]="element"
+      [userInfo]="userInfo"
+      [pending]="pending"
+      (refreshPending)="refreshPending()"
+      [rolSem]="theRolSemestre"
+      [listResponses]="listResponses"
+      ></app-v-forum>
 
       <app-v-link *ngIf="['ENL'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"></app-v-link>
 

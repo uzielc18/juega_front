@@ -80,7 +80,13 @@
           <app-c-works [pending]="pending" [datos]="datosStudent"></app-c-works>
         </div>
         <div *ngIf="element?.type_element?.codigo === 'FOR'" >
-          <app-c-forums [pending]="pending" [datos]="datosStudent"></app-c-forums>
+          <app-c-forums
+          [pending]="pending"
+          [element]="element"
+          [datos]="datosStudent"
+          [userInfo]="userInfo"
+          [listResponses]="listResponses"
+          ></app-c-forums>
         </div>
 
         <ng-template #elseAddDate>

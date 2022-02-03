@@ -43,6 +43,8 @@ import { NgxViewFilesGoogleModule } from 'src/app/shared/components/view-files/n
 import { TranslateLangModule } from 'src/app/shared/moduls/translate-lang/translate-lang.module';
 import { FilterPipe } from 'src/app/shared/pipes/filterPipe/filterPipe';
 import { VideoPlayerModule } from '../../shared/components/video-player/video-player.module';
+import { ChildrenCommentsModule } from 'src/app/shared/components/children-comments/children-comments.module';
+import { CardListCourseModule } from 'src/app/shared/components/card-list-course/card-list-course.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -73,7 +75,6 @@ const COMPONENTS: any[] = [
   CalificarElementEstudentComponent,
   CWorksComponent,
   CForumsComponent,
-
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -91,7 +92,7 @@ const SERIVCES: any = [
 const MODALS: any = [
   HomeworkFormComponent,
   AdminGroupsComponent,
-  CalificarElementEstudentComponent
+  CalificarElementEstudentComponent,
 ];
 const NGX_MODULES: any = [
 ];
@@ -108,7 +109,9 @@ const MODULES: any = [
   NgxViewFilesGoogleModule,
   VideoPlayerModule,
 
-  TranslateLangModule
+  TranslateLangModule,
+  ChildrenCommentsModule,
+  CardListCourseModule
 ]
 
 @NgModule({

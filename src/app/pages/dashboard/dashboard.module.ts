@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CardListCourseModule } from 'src/app/shared/components/card-list-course/card-list-course.module';
 import { GeneralService } from '../../providers';
 import { NebularModule } from '../../shared/nebular.module';
 import { PerfilComponent } from './components/perfil/perfil.component';
@@ -29,6 +30,7 @@ const NGX_MODULES: any = [
 const PIPES: any = [
 ];
 const MODULES: any = [
+  CardListCourseModule,
 ]
 
 @NgModule({
