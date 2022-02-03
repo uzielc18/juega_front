@@ -19,9 +19,6 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
   element: any;
   loading: boolean = false;
   pending:any;
-  nombreSubscription: any = Subscription;
-  valida: boolean = false;
-  theRolSemestre:any;
   listResponses:any = [];
   constructor(
     private userService: AppService,
@@ -30,60 +27,27 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
     private router: Router,
     private emitEventsService: EmitEventsService,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.getUserInfo();
     this.getElement();
-    this.nombreSubscription = this.emitEventsService.returns().subscribe(value => { // para emitir evento desde la cabecera
-      if (value && value.rol && value.semestre) {
-        this.theRolSemestre =  value;
-        this.valida = true;
-        if (value.rol.name === 'Estudiante') {
-          setTimeout(() => {
-            this.getPendings();
-          }, 1000);
-        } else if (value.rol.name === 'Docente') {
-          this.pending = '';
-          setTimeout(() => {
-            this.getResponsesDocen();
-          }, 1000);
-        } else {
-          this.pending = '';
-        }
-      } else {
-        this.valida = false;
-      }
-      });
-      this.recoveryValues();
-      /// Para bloquear el rol de la cabecera
+    this.getUserInfo();
       this.emitEventsService.blockEnviar({from: 'Asignaturas', status: true});
   }
   ngOnDestroy(): void {
-    this.nombreSubscription.unsubscribe();
-      /// Para bloquear el rol de la cabecera
     this.emitEventsService.blockEnviar({from: 'Asignaturas', status: false});
   }
-  recoveryValues() {
-    this.emitEventsService.castRolSemester.subscribe(value => {
-      if (value && value.rol && value.semestre && !this.valida) {
-        this.theRolSemestre =  value;
-        if (value.rol.name === 'Estudiante') {
-          setTimeout(() => {
-            this.getPendings();
-          }, 1000);
-        } else if (value.rol.name === 'Docente') {
-          this.pending = '';
-          setTimeout(() => {
-            this.getResponsesDocen();
-          }, 1000);
-        } else {
-          this.pending = '';
-        }
-      }
-    });
-  }
 
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol){
+      return val;
+    } else {
+      return '';
+    }
+
+  }
   getUserInfo() {
     this.userInfo = this.userService.user;
   }
@@ -95,6 +59,18 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
       this.generalService.nameId$(serviceName, this.elementId).subscribe((data: any) => {
         this.element = data.data;
         if (this.element) {
+          if (this.rolSemestre?.rol?.name === 'Estudiante') {
+            setTimeout(() => {
+              this.getPendings();
+            }, 1000);
+          } else if (this.rolSemestre?.rol?.name === 'Docente' && this.element.tipo === 'FORO') {
+            this.pending = '';
+            setTimeout(() => {
+              this.getResponsesDocen();
+            }, 5000);
+          } else {
+            this.pending = '';
+          }
           this.updateBreadcrumb();
         }
       }, () => { this.loading = false; }, () => { this.loading = false; });
@@ -146,9 +122,9 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     this.router.navigate([`../asignaturas/course/${this.idCargaCursoDocente}/element/${$event.id}`], { relativeTo: this.activatedRoute.parent });
     this.getElement();
 
-    if (this.theRolSemestre?.rol?.name === 'Estudiante') {
+    if (this.rolSemestre?.rol?.name === 'Estudiante') {
       this.getPendings();
-    } else if (this.theRolSemestre?.rol?.name === 'Docente') {
+    } else if (this.rolSemestre?.rol?.name === 'Docente' && this.element.tipo === 'FORO') {
       this.getResponsesDocen();
     }
   }
@@ -159,21 +135,22 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     }
     this.loading = true;
     setTimeout(() => {
-      this.generalService.nameIdParams$(serviceName, this.element.forums.id, params).subscribe((res:any) => {
-        this.listResponses = res.data || [];
-        if (this.listResponses.length>0) {
-          this.listResponses.map((re:any) => {
-            re.checked = false;
-          })
-        }
-      }, () => { this.loading = false; }, () => { this.loading = false; });
+    if (this.element?.forums?.id) {
+        this.generalService.nameIdParams$(serviceName, this.element?.forums?.id, params).subscribe((res:any) => {
+          this.listResponses = res.data || [];
+          if (this.listResponses.length>0) {
+            this.listResponses.map((re:any) => {
+              re.checked = false;
+            })
+          }
+        }, () => { this.loading = false; }, () => { this.loading = false; });
+      }
     }, 1000);
-
   }
   refreshPending() {
-    if (this.theRolSemestre?.rol?.name === 'Estudiante') {
+    if (this.rolSemestre?.rol?.name === 'Estudiante') {
       this.getPendings();
-    } else if (this.theRolSemestre?.rol?.name === 'Docente') {
+    } else if (this.rolSemestre?.rol?.name === 'Docente' && this.element.tipo === 'FORO') {
       this.getResponsesDocen();
     }
   }

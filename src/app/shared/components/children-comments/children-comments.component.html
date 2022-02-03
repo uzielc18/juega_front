@@ -1,7 +1,7 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <ng-template #recursiveList let-list>
     <nb-card *ngFor="let item of list">
-    <nb-card-body >
+    <nb-card-body>
       <div class="row">
         <div [class]="options ? 'col-md-1' : 'col-md-2'" class="col-md-1 text-center">
           <img
@@ -29,7 +29,7 @@
           </div>
         </div>
         <div [class]="options ? 'col-md-1' : ''" style="text-align: right;">
-          <div *ngIf="options">
+          <div *ngIf="options && (userInfo?.id === item?.person_id)">
             <button nbButton size="tiny" status="basic" outline (click)="openEditComment(item)" nbTooltip="Editar comentario" nbTooltipPlacement="top" nbTooltipStatus="info">
             <nb-icon icon="edit" status="info"></nb-icon></button>&nbsp;
             <button nbButton size="tiny" status="basic" outline (click)="deleteComment(item)" nbTooltip="Eliminar comentario" nbTooltipPlacement="top" nbTooltipStatus="danger">

@@ -42,7 +42,7 @@ export const status:any = {
         "title": "Inaceptable", "description": "Inaceptable", "icon": "", "status": ""
     },
     "409": {
-        "description": "La operación no pudo completarse debido a un conflicto con el estado actual del recurso.", "icon": "", "status": ""
+      "title": "Error", "description": "La operación no pudo completarse debido a un conflicto con el estado actual del recurso.", "icon": "", "status": "warning"
     },
     "410": {
         "description": "El recurso solicitado ya no está disponible y no estará disponible nuevamente.", "icon": "", "status": ""
