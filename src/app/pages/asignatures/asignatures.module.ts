@@ -44,6 +44,7 @@ import { TranslateLangModule } from 'src/app/shared/moduls/translate-lang/transl
 import { FilterPipe } from 'src/app/shared/pipes/filterPipe/filterPipe';
 import { VideoPlayerModule } from '../../shared/components/video-player/video-player.module';
 import { ChildrenCommentsModule } from 'src/app/shared/components/children-comments/children-comments.module';
+import { CardListCourseModule } from 'src/app/shared/components/card-list-course/card-list-course.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -109,7 +110,8 @@ const MODULES: any = [
   VideoPlayerModule,
 
   TranslateLangModule,
-  ChildrenCommentsModule
+  ChildrenCommentsModule,
+  CardListCourseModule
 ]
 
 @NgModule({
