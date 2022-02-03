@@ -1,56 +1,66 @@
-<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" >
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <ng-template #recursiveList let-list>
-    <nb-card *ngFor="let item of list" >
-    <nb-card-body>
-      <div class="row">
-        <div class="col-md-1 text-center">
-          <img
-          src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"
-          alt="" style="border-radius: 50%;" height="41px" width="42px">
-        <p class="m-0 mt-2" style="font-size: 10px;">{{formatDate(item?.created_at)}}</p>
-        </div>
-        <div class="col-md-11">
-          <div class=" d-flex align-items-center justify-content-between">
-            <h3 style="font-size: 14px; font-weight: bold; color: #414141;" class="m-0">{{item?.nombres + ' ' + item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}</h3>
-
-            <div *ngIf="options && (userInfo?.id === item?.person_id)" style="text-align: right;">
-                <button nbButton size="tiny" status="basic" outline (click)="openEditComment(item)" nbTooltip="Editar comentario" nbTooltipPlacement="top" nbTooltipStatus="info">
-                <nb-icon icon="edit" status="info"></nb-icon></button>&nbsp;
-                <button nbButton size="tiny" status="basic" outline (click)="deleteComment(item)" nbTooltip="Eliminar comentario" nbTooltipPlacement="top" nbTooltipStatus="danger">
-                  <nb-icon icon="trash" status="danger"></nb-icon></button>
+    <nb-card *ngFor="let item of list" class="m-0">
+      <nb-card-body class="p-0 ps-3">
+        <div class="row m-0 mb-2">
+          <div class="text-center col-md-1">
+            <img
+              src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"
+              alt="" style="border-radius: 50%;" height="41px" width="42px">
+            <p class="m-0 mt-2" style="font-size: 10px;">{{formatDate(item?.created_at)}}</p>
+          </div>
+          <div class="col-md-11 d-flex">
+            <div class="pe-4" style="flex: 1">
+              <div class="d-flex justify-content-between">
+                <h3 style="font-size: 14px; font-weight: bold; color: #414141;" class="m-0">{{item?.nombres + ' ' +
+                  item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}</h3>
+                <div *ngIf="options && (userInfo?.id === item?.person_id)" class="d-flex">
+                  <button class="me-2" style="height: 25px;" nbButton size="tiny" status="basic" outline
+                    (click)="openEditComment(item)" nbTooltip="Editar comentario" nbTooltipPlacement="top"
+                    nbTooltipStatus="info">
+                    <nb-icon icon="edit" status="info"></nb-icon>
+                  </button>
+                  <button style="height: 25px;" nbButton size="tiny" status="basic" outline
+                    (click)="deleteComment(item)" nbTooltip="Eliminar comentario" nbTooltipPlacement="top"
+                    nbTooltipStatus="danger">
+                    <nb-icon icon="trash" status="danger"></nb-icon>
+                  </button>
+                </div>
               </div>
-          </div>
-          <small style="font-size: 12px; font-weight: bold; color: #575756;">{{item?.codigo}}</small>
-          <p style="font-size: 12px; text-align: justify;">{{ item?.respuesta }} <br>
-            <span *ngIf="viewRespond"  style="color: brown; font-size: 11px; font-weight: bold; cursor: pointer;"
-            nbTooltip="Responder comentario" nbTooltipPlacement="top" nbTooltipStatus="primary"
-             (click)="responder(item)">Responder</span>
-          </p>
-
-
-          <div *ngIf="item?.checked">
-            <hr>
-            <div class="d-flex flex-column">
-              <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="small" [(ngModel)]="item.enviar_comentario"
-               style="font-size: 16px;" rows="5"></textarea>
-              <button nbButton status="success" class="ms-auto mt-2" [disabled]="!item.enviar_comentario" (click)="saveDocComment(item)">Comentar</button>
+              <small style="font-size: 12px; font-weight: bold; color: #575756;">{{item?.codigo}}</small>
+              <p style="font-size: 12px; text-align: justify;">{{ item?.respuesta }} <br>
+                <span *ngIf="viewRespond" style="color: brown; font-size: 11px; font-weight: bold; cursor: pointer;"
+                  nbTooltip="Responder comentario" nbTooltipPlacement="top" nbTooltipStatus="primary"
+                  (click)="responder(item)">Responder</span>
+              </p>
+              <div *ngIf="item?.checked">
+                <hr>
+                <div class="d-flex flex-column">
+                  <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="small"
+                    [(ngModel)]="item.enviar_comentario" style="font-size: 16px;" rows="5"></textarea>
+                  <button nbButton status="success" class="ms-auto my-2" [disabled]="!item.enviar_comentario"
+                    (click)="saveDocComment(item)">Comentar</button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-      </div>
-      <!-- {{item?.respuesta}}   -->
-      <ul *ngIf="item?.child_responses?.length > 0">
-        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item?.child_responses }"></ng-container>
-      </ul>
-    </nb-card-body>
-  </nb-card>
+          </div>
+          <!-- <div [class]="(options && (userInfo?.id === item?.person_id)) ? 'col-md-1' : ''" style="text-align: right;">
+
+          </div> -->
+        </div>
+        <!-- {{item?.respuesta}}   -->
+        <ul *ngIf="item?.child_responses?.length > 0" class="m-0 p-0">
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item?.child_responses }"></ng-container>
+        </ul>
+      </nb-card-body>
+    </nb-card>
   </ng-template>
   <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: list }"></ng-container>
 
   <div style="width: 100%;" *ngIf="getValidComent">
     <br>
-    <form class="d-flex flex-column"  [formGroup]="formHeader">
+    <form class="d-flex flex-column" [formGroup]="formHeader">
       <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="giant"
         [status]="(formHeader.hasError('required', ['comentario'])) === true ? 'primary' : 'basic'"
         formControlName="comentario" style="font-size: 16px;" rows="5"></textarea>

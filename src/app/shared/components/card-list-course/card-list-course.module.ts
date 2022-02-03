@@ -4,10 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NebularModule } from '../../nebular.module';
 import { CardListCourseComponent } from './card-list-course.component';
 import { TranslateLangModule } from '../../moduls/translate-lang/translate-lang.module';
+import { EnterZoomComponent } from './enter-zoom/enter-zoom.component';
 
 const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
 @NgModule({
-  declarations: [CardListCourseComponent],
+  declarations: [CardListCourseComponent, EnterZoomComponent],
   imports: [NebularModule, ...ANGULAR, TranslateLangModule],
   exports: [CardListCourseComponent],
 })
