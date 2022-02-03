@@ -1,11 +1,11 @@
 <nb-card class="instructions-container m-4" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
   nbSpinnerMessage="Procesando información">
-  <nb-card-body class="px-4 py-5">
+  <nb-card-body class="px-4 py-3">
     <div class="row">
       <div class="instructions col-md-10">
         <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
         <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p> <br>
-        <label class="label">Pregunta: &nbsp;&nbsp;</label><strong>{{element?.forums?.pregunta}}</strong>
+        <strong>Pregunta: &nbsp;&nbsp;</strong><label>{{element?.forums?.pregunta}}</label>
       </div>
       <div class="col-md-2">
         <div class="calification calification-evalue ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'"
@@ -28,7 +28,7 @@
 
     <!-- Permitir comentarios {{pending?.student_pending?.pending_forum?.permitir_comentarios}} <br>
     Ver Respuestas {{pending?.student_pending?.pending_forum?.ver_respuestas}} -->
-    <strong class="mb-2 d-block">Respuestas de foro:</strong>
+    <strong class="mb-2 d-block label">Respuestas de foro:</strong>
 
     <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' &&  pending?.student_pending">
       <app-children-comments
@@ -38,7 +38,7 @@
       (changeEmit)="changeEmit()"
       [getValidComent]="getValidComent"
       [viewRespond]="element?.forums?.permitir_comentarios === 'SI' ? true : false"
-      [pending_id]="pending?.student_pending?.id">
+      [pending]="pending">
       </app-children-comments>
     </div>
     <div *ngIf="rolSemestre?.rol?.name === 'Docente'">
