@@ -1,8 +1,8 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <ng-template #recursiveList let-list>
-    <nb-card *ngFor="let item of list" class="border-end-0 m-0 mb-3">
-      <nb-card-body class="pe-0 ps-3 pb-0">
-        <div class="row m-0">
+    <nb-card *ngFor="let item of list" class="m-0">
+      <nb-card-body class="p-0 ps-3">
+        <div class="row m-0 mb-2">
           <div class="text-center col-md-1">
             <img
               src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"
@@ -11,8 +11,22 @@
           </div>
           <div class="col-md-11 d-flex">
             <div class="pe-4" style="flex: 1">
-              <h3 style="font-size: 14px; font-weight: bold; color: #414141;" class="m-0">{{item?.nombres + ' ' +
-                item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}</h3>
+              <div class="d-flex justify-content-between">
+                <h3 style="font-size: 14px; font-weight: bold; color: #414141;" class="m-0">{{item?.nombres + ' ' +
+                  item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}</h3>
+                <div *ngIf="options && (userInfo?.id === item?.person_id)" class="d-flex">
+                  <button class="me-2" style="height: 25px;" nbButton size="tiny" status="basic" outline
+                    (click)="openEditComment(item)" nbTooltip="Editar comentario" nbTooltipPlacement="top"
+                    nbTooltipStatus="info">
+                    <nb-icon icon="edit" status="info"></nb-icon>
+                  </button>
+                  <button style="height: 25px;" nbButton size="tiny" status="basic" outline
+                    (click)="deleteComment(item)" nbTooltip="Eliminar comentario" nbTooltipPlacement="top"
+                    nbTooltipStatus="danger">
+                    <nb-icon icon="trash" status="danger"></nb-icon>
+                  </button>
+                </div>
+              </div>
               <small style="font-size: 12px; font-weight: bold; color: #575756;">{{item?.codigo}}</small>
               <p style="font-size: 12px; text-align: justify;">{{ item?.respuesta }} <br>
                 <span *ngIf="viewRespond" style="color: brown; font-size: 11px; font-weight: bold; cursor: pointer;"
@@ -29,16 +43,7 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="options && (userInfo?.id === item?.person_id)" class="d-flex">
-              <button class="me-2" style="height: 25px;" nbButton size="tiny" status="basic" outline (click)="openEditComment(item)"
-                nbTooltip="Editar comentario" nbTooltipPlacement="top" nbTooltipStatus="info">
-                <nb-icon icon="edit" status="info"></nb-icon>
-              </button>
-              <button style="height: 25px;" nbButton size="tiny" status="basic" outline (click)="deleteComment(item)"
-                nbTooltip="Eliminar comentario" nbTooltipPlacement="top" nbTooltipStatus="danger">
-                <nb-icon icon="trash" status="danger"></nb-icon>
-              </button>
-            </div>
+
           </div>
           <!-- <div [class]="(options && (userInfo?.id === item?.person_id)) ? 'col-md-1' : ''" style="text-align: right;">
 

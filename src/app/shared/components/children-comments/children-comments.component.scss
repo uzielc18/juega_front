@@ -1,3 +1,9 @@
+nb-card {
+  border: none;
+  border-radius: 0;
+  border-left: 1px solid #dbdde4;
+}
+
 nb-card:hover {
-  border: 1px solid #d3d5da;
+  border-left: 1px solid #d3d5da;
 }

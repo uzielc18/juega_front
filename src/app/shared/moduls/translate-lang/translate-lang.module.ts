@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function createTranslateLoader(https: HttpClient) {
-  return new TranslateHttpLoader(https, '../../assets/languages/i18n/', '.json');
+  return new TranslateHttpLoader(https, 'assets/languages/i18n/', '.json');
 }
 
 const NGX_TRANSLATE: any[] = [
