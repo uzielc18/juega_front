@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogService } from '@nebular/theme';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 import { Subscription } from 'rxjs';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { EmitEventsService } from '../../services/emit-events.service';
+import { EnterZoomComponent } from './enter-zoom/enter-zoom.component';
 
 @Component({
   selector: 'app-card-list-course',
@@ -20,11 +22,13 @@ export class CardListCourseComponent implements OnInit {
   nombreSubscription: any = Subscription;
   theRolSemestre:any;
   valida: boolean = false;
+  @Output() changeEmit: EventEmitter<any> = new EventEmitter();
   // public valorEmitido = this.emitEventsService.recibir;
   constructor( private formBuilder: FormBuilder,   private generalService: GeneralService, private emitEventsService: EmitEventsService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService) {
+    private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
+    private dialogService: NbDialogService) {
     }
 
 
@@ -89,9 +93,21 @@ export class CardListCourseComponent implements OnInit {
     this.ngDynamicBreadcrumbService.updateBreadcrumb(breadcrumbs);
   }
 
-  enterZoom(event: any) {
+  enterZoom(event: any, curso: any) {
+    console.log(curso);
     event.stopPropagation();
-    console.log('entrando a zoom');
+    this.dialogService.open(EnterZoomComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        item: curso,
+      },
+      closeOnBackdropClick: true,
+      closeOnEsc: true
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.changeEmit.emit();
+      }
+    });
   }
 
 }

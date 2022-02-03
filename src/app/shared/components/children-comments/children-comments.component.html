@@ -1,8 +1,8 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <ng-template #recursiveList let-list>
-    <nb-card *ngFor="let item of list">
-    <nb-card-body >
-      <div class="row">
+    <nb-card *ngFor="let item of list" class="border-end-0 m-0 mb-3">
+    <nb-card-body class="pe-0 ps-3 pb-0" >
+      <div class="row m-0">
         <div [class]="options ? 'col-md-1' : 'col-md-2'" class="col-md-1 text-center">
           <img
           src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg"
@@ -17,14 +17,12 @@
             nbTooltip="Responder comentario" nbTooltipPlacement="top" nbTooltipStatus="primary"
              (click)="responder(item)">Responder</span>
           </p>
-
-
           <div *ngIf="item?.checked">
             <hr>
             <div class="d-flex flex-column">
               <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="small" [(ngModel)]="item.enviar_comentario"
                style="font-size: 16px;" rows="5"></textarea>
-              <button nbButton status="success" class="ms-auto mt-2" [disabled]="!item.enviar_comentario" (click)="saveDocComment(item)">Comentar</button>
+              <button nbButton status="success" class="ms-auto my-2" [disabled]="!item.enviar_comentario" (click)="saveDocComment(item)">Comentar</button>
             </div>
           </div>
         </div>
@@ -38,7 +36,7 @@
         </div>
       </div>
       <!-- {{item?.respuesta}}   -->
-      <ul *ngIf="item?.child_responses?.length > 0">
+      <ul *ngIf="item?.child_responses?.length > 0" class="m-0 p-0">
         <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item?.child_responses }"></ng-container>
       </ul>
     </nb-card-body>

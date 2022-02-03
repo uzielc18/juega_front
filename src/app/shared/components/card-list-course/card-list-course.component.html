@@ -29,7 +29,7 @@
           <div class="ms-4">
             <h6 class="course-name m-0">{{ curso.nombre }}</h6>
             <p class="course-teacher m-0">
-              {{ curso.persons_teacher_nombre }}
+              {{ curso.persons_teacher_nombre }} -
               <small class="course-description">Ciclo - {{ curso.ciclo }} -
                 {{ curso.programa_estudio_nombre }}</small>
             </p>
@@ -50,10 +50,10 @@
           <div class="">
             <img src="assets/books.jpg" class="img-fluid" alt="" style="height: 68px; width: 120px;" />
           </div>
-          <div class="ms-4">
+          <div class="ms-4" style="max-width: 500px;">
             <h6 class="course-name m-0">{{ curso.course_nombre }}</h6>
             <p class="course-teacher m-0">
-              {{ curso.person_teacher_nombre }}
+              {{ curso.person_teacher_nombre }} -
               <small class="course-description">Ciclo - {{ curso.ciclo }} -
                 {{ curso.programa_estudio_nombre }}</small>
             </p>
@@ -99,7 +99,7 @@
       <nb-card *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)" class="curso-card">
         <div class="contenedor">
           <img src="assets/books.jpg" class="card-img-top" />
-          <div class="centrado" (click)="enterZoom($event)">
+          <div class="centrado" (click)="enterZoom($event, curso)">
             <nb-icon icon="arrow-right"></nb-icon>
           </div>
         </div>
@@ -120,7 +120,7 @@
       <nb-card *ngFor="let curso of cursosEstudiante; let i = index" (click)="navigate(curso)" class="curso-card">
         <div class="contenedor">
           <img src="assets/books.jpg" class="card-img-top" />
-          <div class="centrado" (click)="enterZoom($event)">
+          <div class="centrado" (click)="enterZoom($event, curso)">
             <nb-icon icon="arrow-right"></nb-icon>
           </div>
         </div>

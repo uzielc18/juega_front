@@ -28,7 +28,7 @@
 
     <!-- Permitir comentarios {{pending?.student_pending?.pending_forum?.permitir_comentarios}} <br>
     Ver Respuestas {{pending?.student_pending?.pending_forum?.ver_respuestas}} -->
-    <strong>Respuestas de foro:</strong>
+    <strong class="mb-2 d-block">Respuestas de foro:</strong>
 
     <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' &&  pending?.student_pending">
       <app-children-comments
