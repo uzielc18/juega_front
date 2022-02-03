@@ -9,7 +9,7 @@
         <div *ngIf="!collapseTop" class="anuncios" [ngStyle]="{'height': collapseLeft ? '380px' : '300px'}">
         </div>
         <nb-card class="curso-container" [ngStyle]="{'margin-top': collapseTop ? '0' : '-10px'}">
-          <nb-card-body style="background-color: #F7F7F7; position: relative;">
+          <nb-card-body style="background-color: #F7F7F7; position: relative;" class="p-0">
             <span class="tweak-button left" (click)="tweakCollapseLeft()">
               <span>&#9830;</span>
               <span>&#9830;</span>
@@ -22,7 +22,6 @@
             <div>
               <app-card-list-course></app-card-list-course>
             </div>
-
           </nb-card-body>
         </nb-card>
       </div>
