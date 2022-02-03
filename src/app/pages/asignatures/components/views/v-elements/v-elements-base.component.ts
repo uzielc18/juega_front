@@ -27,9 +27,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
     private router: Router,
     private emitEventsService: EmitEventsService,
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getElement();
@@ -148,7 +146,6 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
         }, () => { this.loading = false; }, () => { this.loading = false; });
       }
     }, 1000);
-
   }
   refreshPending() {
     if (this.rolSemestre?.rol?.name === 'Estudiante') {
