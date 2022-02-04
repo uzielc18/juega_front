@@ -1,3 +1,10 @@
+@import 'src/app/core/themes';
+@include nb-install-component() {
+.bad {
+  background: nb-theme(color-primary-500);
+  color: white;
+}
+}
 nb-icon {
   cursor: pointer;
 }
@@ -68,4 +75,10 @@ td {
     background-color: #6dcb96;
     color: #fff;
   }
+}
+
+.butonsInfo {
+  font-size: 10px;
+  // cursor: not-allowed !important;
+  pointer-events: none;
 }
