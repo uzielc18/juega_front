@@ -10,3 +10,17 @@
     margin: 0;
   }
 }
+
+.menu {
+  &-container {
+  }
+
+  &-children {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    padding-top: 150px;
+  }
+}

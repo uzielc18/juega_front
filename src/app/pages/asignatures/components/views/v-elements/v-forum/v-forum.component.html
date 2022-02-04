@@ -2,12 +2,12 @@
   nbSpinnerMessage="Procesando información">
   <nb-card-body class="px-4 py-5">
     <div class="row">
-      <div class="instructions col-md-10">
+      <div class="instructions col-md-9 col-xxl-10">
         <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
         <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p> <br>
         <label class="label">Pregunta: &nbsp;&nbsp;</label><strong>{{element?.forums?.pregunta}}</strong>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-3 col-xxl-2 pe-0">
         <div class="calification calification-evalue ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'"
           (click)="calificar(element)">
           <nb-icon icon="edit"></nb-icon>
