@@ -102,11 +102,11 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     const breadcrumbs = [
       {
         label: 'Asignaturas',
-        url: '/pages/asignaturas'
+        url: '/pages/asignatures'
       },
       {
         label: `${curso}` || 'No se encontró el curso',
-        url: '/pages/asignaturas/course/' + this.idCargaCursoDocente,
+        url: '/pages/asignatures/course/' + this.idCargaCursoDocente,
       },
       {
         label: `Unidad: ${unidad} \u2013 Sesion: ${sesion} \u2013 ${elemento}: ${elementoTitulo}` || 'No se encontró el elemento',
@@ -119,7 +119,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
   elementSelected($event: any) {
     this.pending = '';
     this.elementId = $event.id;
-    this.router.navigate([`../asignaturas/course/${this.idCargaCursoDocente}/element/${$event.id}`], { relativeTo: this.activatedRoute.parent });
+    this.router.navigate([`../asignatures/course/${this.idCargaCursoDocente}/element/${$event.id}`], { relativeTo: this.activatedRoute.parent });
     this.getElement();
 
     if (this.rolSemestre?.rol?.name === 'Estudiante') {

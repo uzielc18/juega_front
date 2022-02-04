@@ -1,6 +1,9 @@
+@echo off
+
 git status
 git add .
 git status
-git commit -m "Changes in the project patmos-upeu-base-front"
+set /p message="Ingresa el mensaje del commit: "
+git commit -m "%message%"
 git pull
 git pull origin develop
