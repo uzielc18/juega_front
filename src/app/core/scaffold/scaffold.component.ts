@@ -42,7 +42,13 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     {
       title: 'Asignaturas',
       icon: 'book-open-outline',
-      link: '/pages/asignaturas',
+      link: '/pages/asignatures',
+      pathMatch: 'prefix',
+    },
+    {
+      title: 'Actividades',
+      icon: 'book-open-outline',
+      link: '/pages/activities',
       pathMatch: 'prefix',
     },
     {
@@ -315,7 +321,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.updateSemestre(object, rol);
 
       if (this.validBlock.from === 'Asignaturas' && this.validBlock.status === true) {
-        this.router.navigate(['/pages/asignaturas']);
+        this.router.navigate(['/pages/asignatures']);
       }
     }
   }
