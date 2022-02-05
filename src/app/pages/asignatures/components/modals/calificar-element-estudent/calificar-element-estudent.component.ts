@@ -41,7 +41,7 @@ export class CalificarElementEstudentComponent implements OnInit {
   private fieldReactive() {
     const controls = {
       ver_trabajo: ['N'],
-      comentario: [''],
+      comentario: ['', [Validators.required]],
       nota: ['', [Validators.required, Validators.maxLength(2), Validators.max(20)]],
     };
     this.formHeader = this.formBuilder.group(controls);
@@ -146,7 +146,7 @@ export class CalificarElementEstudentComponent implements OnInit {
     const serviceName = END_POINTS.base_back.resourse + '/marking-student-work';
     const forms= this.formHeader.value;
     const params: any = {
-      comentario: forms.comentario,
+      comentario_docente : forms.comentario,
       nota: forms.nota,
     }
     this.loading = true;

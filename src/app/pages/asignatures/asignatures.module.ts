@@ -45,6 +45,8 @@ import { FilterPipe } from 'src/app/shared/pipes/filterPipe/filterPipe';
 import { VideoPlayerModule } from '../../shared/components/video-player/video-player.module';
 import { ChildrenCommentsModule } from 'src/app/shared/components/children-comments/children-comments.module';
 import { CardListCourseModule } from 'src/app/shared/components/card-list-course/card-list-course.module';
+import { QuestionsConfigComponent } from './components/modals/questions-config/questions-config.component';
+import { QConfigModule } from 'src/app/shared/components/questions/q-config/q-config.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -75,6 +77,7 @@ const COMPONENTS: any[] = [
   CalificarElementEstudentComponent,
   CWorksComponent,
   CForumsComponent,
+  QuestionsConfigComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -93,6 +96,7 @@ const MODALS: any = [
   HomeworkFormComponent,
   AdminGroupsComponent,
   CalificarElementEstudentComponent,
+  QuestionsConfigComponent
 ];
 const NGX_MODULES: any = [
 ];
@@ -111,7 +115,8 @@ const MODULES: any = [
 
   TranslateLangModule,
   ChildrenCommentsModule,
-  CardListCourseModule
+  CardListCourseModule,
+  QConfigModule
 ]
 
 @NgModule({

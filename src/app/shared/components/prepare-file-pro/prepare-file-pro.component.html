@@ -1,8 +1,8 @@
 <!-- El componente esta diseñado solo para imagenes y pdf si desea añadir otras extensiones, cree otro componente -->
-<form [formGroup]="formHeaders">
-  <div [nbSpinner]="loading"
-  nbSpinnerStatus="primary"
-  nbSpinnerSize="large">
+<form [formGroup]="formHeaders" [nbSpinner]="loading"
+nbSpinnerStatus="primary"
+nbSpinnerSize="large">
+  <div *ngIf="viewFile === 'ARRAY'">
     <div style="background: #f7f7f7;">
       <div class="text-center">
         <br>
@@ -32,6 +32,12 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </div>
+
+  <div *ngIf="viewFile === 'UNIQUE'">
+    <div   class="text-center">
+      <button nbButton  size="small" class="p-3" (click)="openModal();" [disabled]="isDisabled"><nb-icon icon="cloud-upload-outline"></nb-icon> </button>
     </div>
   </div>
 </form>

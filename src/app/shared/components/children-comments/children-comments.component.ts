@@ -99,7 +99,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
       const da = fec[0];
       const time = fec[1];
       const fecha = da.split('-');
-      var n = `${fecha[2]}/${fecha[1]}-${fecha[0]} ${time}`;
+      var n = `${fecha[2]}/${fecha[1]}/${fecha[0]} ${time}`;
       if (n) {
         return n;
       } else {

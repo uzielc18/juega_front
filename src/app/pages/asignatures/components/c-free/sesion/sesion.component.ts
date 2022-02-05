@@ -6,6 +6,7 @@ import { AdminGroupsComponent } from '../../modals/admin-groups/admin-groups.com
 import { HomeworkFormComponent } from '../../modals/homework-form/homework-form.component';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
+import { QuestionsConfigComponent } from '../../modals/questions-config/questions-config.component';
 @Component({
   selector: 'app-sesion',
   templateUrl: './sesion.component.html',
@@ -228,5 +229,21 @@ export class SesionComponent implements OnInit {
   }
   navigate(element: any): any {
     this.router.navigate([`../asignaturas/course/${this.curso.id_carga_curso_docente}/element/${element.id}`], { relativeTo: this.activatedRoute.parent });
+  }
+  openQuestionConfig(params: any) {
+    this.dialogService.open(QuestionsConfigComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        item: params,
+        // curso: this.curso,
+        // response: params,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        // this.filtrar();
+      }
+    });
   }
 }
