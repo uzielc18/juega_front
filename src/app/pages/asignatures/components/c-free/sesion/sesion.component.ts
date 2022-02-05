@@ -228,7 +228,7 @@ export class SesionComponent implements OnInit {
     }
   }
   navigate(element: any): any {
-    this.router.navigate([`../asignaturas/course/${this.curso.id_carga_curso_docente}/element/${element.id}`], { relativeTo: this.activatedRoute.parent });
+    this.router.navigate([`../asignatures/course/${this.curso.id_carga_curso_docente}/element/${element.id}`], { relativeTo: this.activatedRoute.parent });
   }
   openQuestionConfig(params: any) {
     this.dialogService.open(QuestionsConfigComponent, {

@@ -95,7 +95,8 @@
 
   <!-- Cursos tipo card -->
   <div class="px-3" *ngIf="form.value.tipo == '2'">
-    <div *ngIf="theRolSemestre?.rol?.name=== 'Docente'" class="d-flex flex-wrap" style="gap: 20px;">
+    <div *ngIf="theRolSemestre?.rol?.name=== 'Docente'"
+      class="d-flex flex-wrap justify-content-center justify-content-lg-start" style="gap: 20px;">
       <nb-card *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)" class="curso-card">
         <div class="contenedor">
           <img src="assets/books.jpg" class="card-img-top" />
@@ -116,7 +117,8 @@
       </nb-card>
     </div>
 
-    <div *ngIf="theRolSemestre?.rol?.name=== 'Estudiante'" class="d-flex flex-wrap" style="gap: 20px;">
+    <div *ngIf="theRolSemestre?.rol?.name=== 'Estudiante'"
+      class="d-flex flex-wrap justify-content-center justify-content-lg-start" style="gap: 20px;">
       <nb-card *ngFor="let curso of cursosEstudiante; let i = index" (click)="navigate(curso)" class="curso-card">
         <div class="contenedor">
           <img src="assets/books.jpg" class="card-img-top" />

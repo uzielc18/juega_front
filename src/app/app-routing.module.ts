@@ -25,8 +25,12 @@ const routes: Routes = [
         loadChildren: () => import('./pages/dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
       {
-        path: 'asignaturas',
+        path: 'asignatures',
         loadChildren: () => import('./pages/asignatures/asignatures.module').then((m) => m.AsignaturesModule),
+      },
+      {
+        path: 'activities',
+        loadChildren: () => import('./pages/activities/activities.module').then((m) => m.ActivitiesModule),
       },
       {
         path: '',

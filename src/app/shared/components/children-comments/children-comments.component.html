@@ -83,8 +83,8 @@
               alt="" style="border-radius: 50%;" height="41px" width="42px">
             <p class="m-0 mt-2" style="font-size: 10px;">{{formatDate(item?.created_at)}}</p>
           </div>
-          <div class="col-md-11 d-flex">
-            <div class="pe-4" style="flex: 1">
+          <div class="col-md-11">
+            <div class="pe-4">
               <div class="d-flex justify-content-between">
                 <h3 style="font-size: 14px; font-weight: bold; color: #414141;" class="m-0">{{item?.nombres + ' ' +
                   item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}</h3>
@@ -101,19 +101,22 @@
                   </button>
                 </div>
               </div>
-              <small style="font-size: 12px; font-weight: bold; color: #575756;">{{item?.codigo}}</small>
-              <p style="font-size: 12px; text-align: justify;">{{ item?.respuesta }} <br>
-                <span *ngIf="viewRespond" style="color: brown; font-size: 11px; font-weight: bold; cursor: pointer;"
-                  nbTooltip="Responder comentario" nbTooltipPlacement="top" nbTooltipStatus="primary"
-                  (click)="responder(item)">Responder</span>
-              </p>
-              <div *ngIf="item?.checked">
-                <hr>
-                <div class="d-flex flex-column">
-                  <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="small"
-                    [(ngModel)]="item.enviar_comentario" style="font-size: 16px;" rows="5"></textarea>
-                  <button nbButton status="success" class="ms-auto my-2" [disabled]="!item.enviar_comentario"
-                    (click)="saveDocComment(item)">Comentar</button>
+              <div class="d-flex flex-column">
+                <small style="font-size: 12px; font-weight: bold; color: #575756;">{{item?.codigo}}</small>
+                <p class="mb-0" style="font-size: 12px; text-align: justify; word-wrap: break-word;">{{ item?.respuesta }} <br>
+                  <span class="d-inline-block mb-2" *ngIf="viewRespond"
+                    style="color: brown; font-size: 11px; font-weight: bold; cursor: pointer;"
+                    nbTooltip="Responder comentario" nbTooltipPlacement="top" nbTooltipStatus="primary"
+                    (click)="responder(item)">Responder</span>
+                </p>
+                <div *ngIf="item?.checked">
+                  <hr>
+                  <div class="d-flex flex-column">
+                    <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="small"
+                      [(ngModel)]="item.enviar_comentario" style="font-size: 16px;" rows="5"></textarea>
+                    <button nbButton status="success" class="ms-auto my-2" [disabled]="!item.enviar_comentario"
+                      (click)="saveDocComment(item)">Comentar</button>
+                  </div>
                 </div>
               </div>
             </div>
