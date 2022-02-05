@@ -21,6 +21,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
   accept: any;
   @Input() listArrayFile: any = [];
   loading: boolean = false;
+  @Input() viewFile: string = 'ARRAY';
   constructor(private formBuilder: FormBuilder, private modalServiceNebular: NbDialogService,
     private appService: AppService) {
   }
@@ -73,6 +74,9 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
       case 'all':
         this.accept = 'image/png, image/jpg, image/jpeg, application/pdf, .doc, .docx, .ppt, .pptx, .xlsx, .xls, text/plain';
         break;
+      case 'audio-img':
+          this.accept = 'audio/mp3, audio/m4a, image/png, image/jpg, image/jpeg';
+         break;
       default:
         this.accept = 'image/png, image/jpg, image/jpeg, application/pdf';
         break;
@@ -119,9 +123,13 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
           tabla: this.paramsInfo.tabla,
           tabla_id: '',
         }
-        this.listArrayFile.push(datos);
+        if (this.viewFile === 'ARRAY') {
+          this.listArrayFile.push(datos);
+        }
         this.onFilterChange();
-        this.limpiarFile();
+        setTimeout(() => {
+          this.limpiarFile();
+        }, 1000);
       } else {
         this.limpiarFile();
       }
@@ -129,7 +137,12 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
   }
   onFilterChange() {
     const archivo = this.formHeaders.value;
-    this.filterValueChange.emit({ value: archivo, arrayFile: this.listArrayFile });
+    if (this.viewFile === 'ARRAY') {
+      this.filterValueChange.emit({ value: archivo, arrayFile: this.listArrayFile });
+    }
+    if (this.viewFile === 'UNIQUE') {
+      this.filterValueChange.emit({ value: archivo, arrayFile: [] });
+    }
   }
   deleteItem(i:any) {
     this.listArrayFile.splice(i, 1);

@@ -8,11 +8,11 @@ import { ActivitiesHomeComponent } from './containers/activities-home.component'
 const routes: Routes = [
   {
     path: '',
-    component: ActivitiesHomeComponent,
+    component: ActivitiesComponent,
     children: [
       {
         path: '',
-        component: ActivitiesComponent,
+        component: ActivitiesHomeComponent,
       }
     ]
   }

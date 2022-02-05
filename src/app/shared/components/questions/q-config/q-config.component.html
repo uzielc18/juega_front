@@ -1,0 +1,38 @@
+<nb-card>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="label">Pregunta:</label>
+        <textarea nbInput fullWidth></textarea>
+      </div>
+      <div class="col-md-2">
+        <div>
+          <lamb-prepare-file-pro
+          [paramsInfo]="{
+            id: item?.id_carga_curso_docente,
+            directory: directorio,
+            type: 'put',
+            tabla: 'pendings',
+            tipo: 'DOCUMENTO_TRABAJO'}"
+          [numFiles]="6"
+          (filterValueChange)="valueFile($event)"
+          [listArrayFile]="arrayFile"
+          [isDisabled]="false"
+          [viewFile]="'UNIQUE'"
+          >
+          </lamb-prepare-file-pro>
+        </div>
+        <img src="{{formHeader?.value?.file?.base64}}" alt="">
+        <audio src=""></audio>
+        {{formHeader?.value?.file | json}}
+      </div>
+    </div>
+    <nb-button-group>
+      <button nbButton>A</button>
+      <button nbButton>B</button>
+      <button nbButton>C</button>
+      <button nbButton>D</button>
+      <button nbButton>E</button>
+    </nb-button-group>
+  </nb-card-body>
+</nb-card>
