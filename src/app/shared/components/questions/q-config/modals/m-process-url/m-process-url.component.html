@@ -1,0 +1,33 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+    nbSpinnerMessage="Procesando información">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div>
+                PROCESAR URL YOUTUBE
+            </div>
+            <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="formHeader">
+            <div>
+              <label class="label">Url del vídeo (Presione el botón, después de añadir el link)</label>
+              <nb-form-field>
+              <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una url" (keyup)="valueLink()"
+              [status]="(formHeader.hasError('required', ['url_externa'])) === true ? 'primary' : 'basic'" formControlName="url_externa"/>
+              <button nbSuffix nbButton status="primary" size="small" [disabled]="!formHeader.value.url_externa" (click)="procesar()">
+                <nb-icon  icon="link-2-outline"  pack="eva"></nb-icon></button>
+              </nb-form-field>
+              <control-messages [control]="formHeader.get('url_externa')"></control-messages>
+            </div>
+            </form>
+            <div *ngIf="['YouTube'].includes(formHeader?.value?.tamano_peso)">
+             <app-video-player [element]="{tamano_peso: formHeader?.value?.tamano_peso, url_externa: formHeader?.value?.url_externa}"></app-video-player>
+            </div>
+    </nb-card-body>
+    <nb-card-footer class="text-center">
+        <button nbButton size="tiny" status="primary" (click)="anadirValues()" [disabled]="formHeader?.value?.tamano_peso != 'YouTube'">Añadir</button>
+    </nb-card-footer>
+</nb-card>

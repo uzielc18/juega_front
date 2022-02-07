@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-video-player',
   templateUrl: './video-player.component.html',
   styleUrls: ['./video-player.component.scss']
 })
-export class VideoPlayerComponent implements OnInit {
+export class VideoPlayerComponent implements OnInit, OnChanges {
 
   @Output() loadingsFiles: EventEmitter<boolean> = new EventEmitter();
 
@@ -21,11 +21,12 @@ export class VideoPlayerComponent implements OnInit {
   @Input() element: any;
   @Input() pending: any;
   @Input() userInfo: any;
-
   constructor(
   ) { }
 
   ngOnChanges(): void {
+    this.element = this.element;
+    this.pending = this.pending;
     if (this.element) {
       this.vimeoId = this.parseVideo(this.element?.url_externa);
       this.youtubeId = this.parseVideo(this.element?.url_externa);

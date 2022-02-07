@@ -1,38 +1,66 @@
 <nb-card>
   <nb-card-body>
     <div class="row">
-      <div class="col-md-10">
+      <div class="col-md-9">
         <label class="label">Pregunta:</label>
-        <textarea nbInput fullWidth></textarea>
+        <textarea nbInput fullWidth style="height: 120px;"></textarea>
       </div>
-      <div class="col-md-2">
-        <div>
-          <lamb-prepare-file-pro
-          [paramsInfo]="{
-            id: item?.id_carga_curso_docente,
-            directory: directorio,
-            type: 'put',
-            tabla: 'pendings',
-            tipo: 'DOCUMENTO_TRABAJO'}"
-          [numFiles]="6"
-          (filterValueChange)="valueFile($event)"
-          [listArrayFile]="arrayFile"
-          [isDisabled]="false"
-          [viewFile]="'UNIQUE'"
-          >
-          </lamb-prepare-file-pro>
+      <div class="col-md-3">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <label class="label">Imagen / Audio</label>
+            <lamb-prepare-file-pro
+            [paramsInfo]="{
+              id: item?.id_carga_curso_docente,
+              directory: directorio,
+              type: 'put',
+              tabla: 'pendings',
+              tipo: 'DOCUMENTO_TRABAJO'}"
+            [numFiles]="6"
+            (filterValueChange)="valueFile($event)"
+            [listArrayFile]="arrayFile"
+            [isDisabled]="false"
+            [viewFile]="'UNIQUE'"
+            [typeFile]="'audio-img'"
+            >
+            </lamb-prepare-file-pro>
+          </div>
+          <div>
+            <label class="label">Link Youtube</label><br>
+            <button nbButton  size="small" fullWidth (click)="openUrlYoutube()">
+              <img src="https://i.pinimg.com/originals/91/c1/cd/91c1cdeacc84d0a5673bb716549ba366.png" height="20px" alt="">
+            </button>
+          </div>
         </div>
-        <img src="{{formHeader?.value?.file?.base64}}" alt="">
+
+          <div *ngIf="formHeader?.value?.tipo_adjunto === 'ARCHIVO'">
+
+            <img src="{{formHeaderFile?.value?.file?.base64}}" width="100%" height="80px" alt="">
+          </div>
+
+          <div *ngIf="formHeader?.value?.tipo_adjunto === 'URL'">
+            <app-video-player [element]="{tamano_peso: formHeaderLink?.value?.tamano_peso, url_externa: formHeaderLink?.value?.url_externa}"></app-video-player>
+          </div>
+
+        
         <audio src=""></audio>
-        {{formHeader?.value?.file | json}}
+        {{formHeaderFile?.value?.file | json}}
       </div>
     </div>
-    <nb-button-group>
-      <button nbButton>A</button>
-      <button nbButton>B</button>
-      <button nbButton>C</button>
-      <button nbButton>D</button>
-      <button nbButton>E</button>
-    </nb-button-group>
+    <br>
+    <div class="d-flex align-items-center justify-content-between">
+      <div></div>
+      <div>
+      <div class="d-flex">
+      <div *ngFor="let item of optionsType" style="padding-left: 3px; padding-right: 3px;">
+        <button nbButton  size="large" [ngStyle]="{'background': item.checked ? item.color : '', 'color': item.checked ? 'white' : ''}" 
+        (click)="changeButtom(item)">
+          <nb-icon [icon]="item.icon"></nb-icon>
+        </button>
+      </div>
+      </div>
+    </div>
+    <div></div>
+    </div>
   </nb-card-body>
 </nb-card>
