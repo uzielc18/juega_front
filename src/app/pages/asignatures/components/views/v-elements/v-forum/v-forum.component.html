@@ -1,13 +1,13 @@
 <nb-card class="instructions-container m-4" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
   nbSpinnerMessage="Procesando información">
-  <nb-card-body class="px-4 py-5">
+  <nb-card-body class="px-4 py-3">
     <div class="row">
-      <div class="instructions col-md-10">
+      <div class="instructions col-md-9 col-xxl-10">
         <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
         <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p> <br>
-        <label class="label">Pregunta: &nbsp;&nbsp;</label><strong>{{element?.forums?.pregunta}}</strong>
+        <label class="label">Pregunta: &nbsp;&nbsp;</label><label style="font-size: 15px; text-align: justify">{{element?.forums?.pregunta}}</label>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-3 col-xxl-2 pe-0">
         <div class="calification calification-evalue ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'"
           (click)="calificar(element)">
           <nb-icon icon="edit"></nb-icon>
@@ -28,9 +28,16 @@
 
     <!-- Permitir comentarios {{pending?.student_pending?.pending_forum?.permitir_comentarios}} <br>
     Ver Respuestas {{pending?.student_pending?.pending_forum?.ver_respuestas}} -->
-    <strong class="mb-2 d-block">Respuestas de foro:</strong>
 
-    <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' &&  pending?.student_pending">
+<nb-card>
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;" class="d-flex align-items-center justify-content-between">
+    <div>
+      Respuestas del foro:
+    </div>
+    <button *ngIf="pending?.student_pending?.pending_forum?.forums_responses?.length > 0 || listResponses?.length > 0"
+      nbButton size="tiny" status="primary" (click)="changeEmit()"><nb-icon icon="refresh-outline"></nb-icon> Actualizar comentarios</button>
+  </nb-card-header>
+  <nb-card-body *ngIf="rolSemestre?.rol?.name === 'Estudiante' &&  pending?.student_pending">
       <app-children-comments
       [element]="element"
       [userInfo]="userInfo"
@@ -38,16 +45,18 @@
       (changeEmit)="changeEmit()"
       [getValidComent]="getValidComent"
       [viewRespond]="element?.forums?.permitir_comentarios === 'SI' ? true : false"
-      [pending_id]="pending?.student_pending?.id">
+      [pending]="pending">
       </app-children-comments>
-    </div>
-    <div *ngIf="rolSemestre?.rol?.name === 'Docente'">
-      <app-children-comments
-      [element]="element"
-      [userInfo]="userInfo"
-      [list]="listResponses"
-      (changeEmit)="changeEmit()">
-    </app-children-comments>
-    </div>
+  </nb-card-body>
+  <nb-card-body *ngIf="rolSemestre?.rol?.name === 'Docente'">
+    <app-children-comments
+    [element]="element"
+    [userInfo]="userInfo"
+    [list]="listResponses"
+    (changeEmit)="changeEmit()">
+  </app-children-comments>
+  </nb-card-body>
+</nb-card>
+
   </nb-card-body>
 </nb-card>

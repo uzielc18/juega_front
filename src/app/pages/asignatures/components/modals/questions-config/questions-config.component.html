@@ -1,0 +1,24 @@
+<nb-card accent="primary" class="scrollModal"[nbSpinner]="loading" nbSpinnerStatus="primary"
+  nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        CONFIGURAR
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-tabset>
+      <nb-tab tabIcon="question-mark-circle-outline" tabTitle="Preguntas" style="padding-left: 0px; padding-right: 0px;">
+        <app-q-config [item]="item"></app-q-config>
+      </nb-tab>
+      <nb-tab tabIcon="settings-2-outline" tabTitle="Configuraciónes">
+        Tab content 2
+      </nb-tab>
+     </nb-tabset>
+    </nb-card-body>
+    </nb-card>
+

@@ -81,7 +81,7 @@ export class CardListCourseComponent implements OnInit {
     }, () => { this.loading =false; }, () => { this.loading =false; });
   }
   navigate(item:any): any {
-    this.router.navigate([`../asignaturas/course/${item.id_carga_curso_docente}`], { relativeTo: this.activatedRoute.parent});
+    this.router.navigate([`../asignatures/course/${item.id_carga_curso_docente}`], { relativeTo: this.activatedRoute.parent});
   }
   updateBreadcrumb(): void {
     const breadcrumbs  =  [

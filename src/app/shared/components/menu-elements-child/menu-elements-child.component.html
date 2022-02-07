@@ -1,4 +1,6 @@
-<ul class="p-0" [class.sticky]="sticky" #stickyMenu [nbSpinner]="loading" nbSpinnerStatus="primary"
+<!-- <ul class="p-0" [class.sticky]="sticky" #stickyMenu [nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="large"> -->
+<ul class="p-0" [nbSpinner]="loading" nbSpinnerStatus="primary"
 nbSpinnerSize="large">
   <div class="text-center mb-1 mt-4">
     <label class="label" style="padding-top: 15px; padding-bottom: 15px;">&ndash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; Navegación de contenido
@@ -23,7 +25,7 @@ nbSpinnerSize="large">
           'font-size': '14px',
           'background-color': item?.background,
           'padding': '5px 15px 5px 30px'}" (click)="selectElement(item)">
-          <span class="me-2">&rsaquo;</span><span>{{item.titulo}}</span>
+          <span class="me-2">&rsaquo;</span><span style="width: 90%; word-wrap: break-word;">{{item.titulo}}</span>
         </li>
       </ul>
     </div>

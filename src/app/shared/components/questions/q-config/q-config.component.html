@@ -1,0 +1,67 @@
+<nb-card>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="label">Pregunta:</label>
+        <textarea nbInput fullWidth style="height: 120px;"></textarea>
+      </div>
+      <div class="col-md-2">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <label class="label">Imagen / Audio</label>
+            <lamb-prepare-file-pro
+            [paramsInfo]="{
+              id: item?.id_carga_curso_docente,
+              directory: directorio,
+              type: 'put',
+              tabla: 'pendings',
+              tipo: 'DOCUMENTO_TRABAJO'}"
+            [numFiles]="6"
+            (filterValueChange)="valueFile($event)"
+            [listArrayFile]="arrayFile"
+            [isDisabled]="false"
+            [viewFile]="'UNIQUE'"
+            [typeFile]="'audio-img'"
+            >
+            </lamb-prepare-file-pro>
+          </div>
+          <div>
+            <label class="label">Link Youtube</label><br>
+            <button nbButton  size="small" fullWidth (click)="openUrlYoutube()">
+              <img src="https://i.pinimg.com/originals/91/c1/cd/91c1cdeacc84d0a5673bb716549ba366.png" height="20px" alt="">
+            </button>
+          </div>
+        </div>
+
+          <div *ngIf="formHeader?.value?.tipo_adjunto === 'ARCHIVO'" class="text-center">
+            <div *ngIf="formHeaderFile?.value?.file?.ext_file !== 'mp3'" style="width: 100%; height: 150px; overflow: hidden;" class="d-flex align-items-center justify-content-center">
+              <img src="{{formHeaderFile?.value?.file?.base64}}" width="100%" alt="">
+            </div>
+            <div *ngIf="formHeaderFile?.value?.file?.ext_file === 'mp3'">
+              <app-video-player  [url]="formHeaderFile?.value?.file?.base64" [videoFormat]="'Audio'"></app-video-player>
+            </div>
+          </div>
+
+          <div *ngIf="formHeader?.value?.tipo_adjunto === 'URL'">
+            <app-video-player  [url]="formHeaderLink?.value?.url_externa" [videoFormat]="formHeaderLink?.value?.tamano_peso"></app-video-player>
+          </div>
+
+      </div>
+    </div>
+    <br>
+    <div class="d-flex align-items-center justify-content-between">
+      <div></div>
+      <div>
+      <div class="d-flex">
+      <div *ngFor="let item of optionsType" style="padding-left: 3px; padding-right: 3px;">
+        <button nbButton  size="large" [ngStyle]="{'background': item.checked ? item.color : '', 'color': item.checked ? 'white' : ''}" 
+        (click)="changeButtom(item)">
+          <nb-icon [icon]="item.icon"></nb-icon>
+        </button>
+      </div>
+      </div>
+    </div>
+    <div></div>
+    </div>
+  </nb-card-body>
+</nb-card>

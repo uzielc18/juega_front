@@ -1,4 +1,4 @@
-<div class="container m-0 p-0" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
   <!-- <div class="work work-remember m-4" *ngIf="!tiempo_vencido">
     <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Trabajo: {{ element?.titulo }} está por vencer en {{
       daysLeft |
@@ -24,14 +24,14 @@
     <p>Hola {{ userInfo.name }}!,</p><span>Tu Trabajo: {{ element?.titulo }} fué calificado hace 4 días</span>
   </div>  -->
   <nb-card class="instructions-container m-4">
-    <nb-card-body class="px-4 py-5">
+    <nb-card-body class="px-4 py-3">
       <form [formGroup]="form">
       <div class="row">
-        <div class="instructions col-md-10">
+        <div class="instructions col-md-9 col-xxl-10">
           <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
           <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3 col-xxl-2 pe-0">
           <div class="calification calification-evalue ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'" (click)="calificar(element)">
             <nb-icon icon="edit"></nb-icon>
             <span>Calificar</span>

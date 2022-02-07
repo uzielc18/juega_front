@@ -11,11 +11,12 @@
     </div>
   </nb-card-header>
   <nb-card-body style="background: #f5f5f5;">
-      <div *ngIf="!['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes(item.ext)">
-        <app-ngx-view-files-google [valueFile]="item"  (loadingsFiles)="loadingsFiles($event)"></app-ngx-view-files-google>
-      </div>
-      <div *ngIf="['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes(item.ext)">
-        <app-video-player [pending]="item" (loadingsFiles)="loadingsFiles($event)"></app-video-player>
-      </div>
-    </nb-card-body>
-    </nb-card>
+    <div *ngIf="!['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes(item.ext)">
+      <app-ngx-view-files-google [valueFile]="item" (loadingsFiles)="loadingsFiles($event)"></app-ngx-view-files-google>
+    </div>
+    <div *ngIf="['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes(item.ext)">
+      <app-video-player [videoFormat]="item?.ext" [url]="item?.url" (loadingsFiles)="loadingsFiles($event)">
+      </app-video-player>
+    </div>
+  </nb-card-body>
+</nb-card>

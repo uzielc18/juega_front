@@ -20,7 +20,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
   formHeader: any = FormGroup;
   @Input() list: any = [];
   @Output() changeEmit: EventEmitter<any> = new EventEmitter();
-  @Input() pending_id: any;
+  @Input() pending: any;
   constructor(private formBuilder: FormBuilder, private generalService: GeneralService, private dialogService: NbDialogService) { }
 
   ngOnChanges():void {
@@ -29,8 +29,8 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
     this.list = this.list;
     this.getValidComent = this.getValidComent;
     this.options = this.options;
-    this.pending_id = this.pending_id;
-    console.log(this.pending_id, 'id');
+    this.pending = this.pending;
+    // console.log(this.pending, 'id');
 
   }
   ngOnInit(): void {
@@ -53,6 +53,14 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
     }
 
   }
+  get valiNota() {
+    if (this.pending?.student_pending?.nota) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   responder(comentario:any) {
     if (comentario.checked) {
       comentario.checked = false;
@@ -91,7 +99,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
       const da = fec[0];
       const time = fec[1];
       const fecha = da.split('-');
-      var n = `${fecha[2]}/${fecha[1]}-${fecha[0]} ${time}`;
+      var n = `${fecha[2]}/${fecha[1]}/${fecha[0]} ${time}`;
       if (n) {
         return n;
       } else {
@@ -135,7 +143,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
           if (result.isConfirmed) {
             this.loading = true;
             const params = {
-              pending_id: item.forums_response_id === 0 ? this.pending_id : '',
+              pending_id: item.forums_response_id === 0 ? this.pending?.student_pending?.id : '',
             }
             this.generalService.deleteNameIdParams$(serviceName, item.id, params).subscribe(r => {
               if (r.success) {
@@ -158,7 +166,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
       person_id: this.userInfo.id,
       forums_response_id: 0,
       respuesta: forms.comentario,
-      pending_id: this.pending_id || '',
+      pending_id: this.pending?.student_pending?.id || '',
     };
     if (params && params.forum_id && params.person_id) {
       this.loading = true;

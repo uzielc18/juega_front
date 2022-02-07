@@ -14,6 +14,7 @@ export class VidioComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
   options: any = 'N';
+  disable: boolean = true;
   @Output() saveCloseValue = new EventEmitter<any>();
   @Input() topics: any;
   @Input() unidad: any;
@@ -24,7 +25,7 @@ export class VidioComponent implements OnInit {
   @Input() valueMenu: any;
   directorio: any = 'plantillas/upeu';
 
-  listIcons:any = [
+  listIcons: any = [
     {
       checked: false,
       name: 'YouTube',
@@ -48,14 +49,14 @@ export class VidioComponent implements OnInit {
     },
     {
       checked: false,
-      name: 'Fecebook',
-      value: 'FECEBOOK',
+      name: 'Facebook',
+      value: 'FACEBOOK',
       link: 'https://www.centroveterinarioalbayda.com/wp-content/uploads/2015/01/facebook-veterinaria.png',
       id: 4
     },
-]
-settValuesMore:any;
-@Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
+  ]
+  settValuesMore: any;
+  @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private generalServi: GeneralService,
     public datepipe: DatePipe) { }
 
@@ -102,7 +103,7 @@ settValuesMore:any;
     this.setValuesPre();
     this.setMenuValues();
     this.setFechaActual();
-    if(this.code === 'UPDATE') {
+    if (this.code === 'UPDATE') {
       this.setObjectUpdate();
     }
   }
@@ -114,7 +115,7 @@ settValuesMore:any;
       id_programa_estudio: this.curso.programa_estudio_id || '',
     })
   }
-  formsValues($event:any) {
+  formsValues($event: any) {
     this.formHeader.patchValue({
       calificable: $event.calificable,
       duracion: $event.duration || '',
@@ -128,14 +129,14 @@ settValuesMore:any;
   //   });
   // }
 
-  valueButtom(item:any) {
-    this.listIcons.forEach((element:any) => {
+  valueButtom(item: any) {
+    this.listIcons.forEach((element: any) => {
       element.checked = false;
     });
     item.checked = true;
-    this.formHeader.controls['tamano_peso'].setValue(item.value);
+    this.formHeader.controls['tamano_peso'].setValue(item.name);
   }
-  moreOptions(value:any){
+  moreOptions(value: any) {
     if (value === 'N') {
       this.options = 'S';
     } else {
@@ -150,17 +151,18 @@ settValuesMore:any;
   get validCampos(): any {
     const form = this.formHeader.value;
     if (
-       !form.url_externa ||
-       !form.tamano_peso ||
-       !form.titulo ||
-       !form.descripcion
-       ) {
+      !form.url_externa ||
+      !form.tamano_peso ||
+      !form.titulo ||
+      !form.descripcion
+    ) {
       return true;
     } else {
       return false;
     }
   }
   procesar() {
+    this.disable = true;
     const serviceName = END_POINTS.base_back.config + '/meta';
     if (this.formHeader.value.url_externa) {
       const params = {
@@ -178,11 +180,13 @@ settValuesMore:any;
             tamano_peso: data['twitter:app:name:googleplay'] || '',
           });
           if (data['twitter:app:name:googleplay']) {
-            this.listIcons.map((r:any) => {
+            this.listIcons.map((r: any) => {
               if (r.name === data['twitter:app:name:googleplay']) {
                 r.checked = true;
               }
             });
+          } else {
+            this.disable = false;
           }
 
         }
@@ -197,9 +201,10 @@ settValuesMore:any;
       titulo: '',
       descripcion: '',
     });
-    this.listIcons.map((r:any) => {
-        r.checked = false;
+    this.listIcons.map((r: any) => {
+      r.checked = false;
     });
+    this.disable = true;
   }
 
   valueLink() {
@@ -207,11 +212,11 @@ settValuesMore:any;
       this.vaciarCamps();
     }
   }
-  recopilaKeyVideo(url:any, tamanoPeso: any) {
+  recopilaKeyVideo(url: any, tamanoPeso: any) {
     let idKeyVideo = '';
     switch (tamanoPeso) {
       case 'YouTube':
-        const re:any = /^(https?:\/\/)?((www\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i;
+        const re: any = /^(https?:\/\/)?((www\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i;
         const you = url.match(re)[7];
         idKeyVideo = you;
         break;
@@ -234,9 +239,9 @@ settValuesMore:any;
   }
   setFechaActual() {
     let date = new Date();
-    let fecha =  date.toISOString().split('T')[0];
+    let fecha = date.toISOString().split('T')[0];
     let hora = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-    const f_h =  fecha + ' ' + hora;
+    const f_h = fecha + ' ' + hora;
     this.formHeader.patchValue({
       fecha: f_h,
     });
@@ -247,64 +252,64 @@ settValuesMore:any;
     const serviceName = END_POINTS.base_back.elements;
 
     const params = {
-      course_id:                forms.course_id,
-      element_id:                0,
-      topic_id:                 forms.topic_id,
-      type_element_id:          forms.type_element_id,
-      id_carga_curso_docente:   forms.id_carga_curso_docente,
-      id_programa_estudio:      forms.id_programa_estudio,
+      course_id: forms.course_id,
+      element_id: 0,
+      topic_id: forms.topic_id,
+      type_element_id: forms.type_element_id,
+      id_carga_curso_docente: forms.id_carga_curso_docente,
+      id_programa_estudio: forms.id_programa_estudio,
 
-      grupal:                   '0',
-      intentos:                 1,
+      grupal: '0',
+      intentos: 1,
 
-      url_externa:              forms.url_externa,
-      tamano_peso:              forms.tamano_peso,
-      titulo:                   forms.titulo,
-      descripcion:              forms.descripcion,
-      key_video:                this.recopilaKeyVideo(forms.url_externa, forms.tamano_peso),
+      url_externa: forms.url_externa,
+      tamano_peso: forms.tamano_peso,
+      titulo: forms.titulo,
+      descripcion: forms.descripcion,
+      key_video: this.recopilaKeyVideo(forms.url_externa, forms.tamano_peso),
 
-      tipo:                     forms.tipo,
+      tipo: forms.tipo,
 
-      fecha_inicio:             forms.fecha,
-      fecha_fin:                forms.fecha,
-      fecha_gracia:             forms.fecha,
+      fecha_inicio: forms.fecha,
+      fecha_fin: forms.fecha,
+      fecha_gracia: forms.fecha,
 
       // element_id:               forms.element_id,
-      visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
-      calificable:              forms.calificable  === true ? '1' : '0',
-      duracion:                 forms.duracion,
-      permitir_comentarios:     forms.permitir_comentarios  === true ? '1' : '0',
+      visibilidad: forms.visibilidad === 'S' ? '1' : '0',
+      calificable: forms.calificable === true ? '1' : '0',
+      duracion: forms.duracion,
+      permitir_comentarios: forms.permitir_comentarios === true ? '1' : '0',
 
-      estado:                   forms.estado,
-      userid:                   1,
+      estado: forms.estado,
+      userid: 1,
 
-      files:                    [],
+      files: [],
     };
     if (!this.validCampos) {
       this.loadingsForm.emit(true);
       if (this.code === 'NEW') {
-      this.generalServi.addNameData$(serviceName, params).subscribe(r => {
-        if (r.success) {
-          const valueClose = {
-            value_close: 'ok',
-            value: params,
-            response: r.data,
+        this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+          if (r.success) {
+            const valueClose = {
+              value_close: 'ok',
+              value: params,
+              response: r.data,
+            }
+            this.saveCloseValue.emit(valueClose);
           }
-          this.saveCloseValue.emit(valueClose);
-        }
-      }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
-    } else {
-      this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
-        if (r.success) {
-          const valueClose = {
-            value_close: 'ok',
-            value: params,
-            response: r.data,
+        }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
+      } else {
+        this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+          if (r.success) {
+            const valueClose = {
+              value_close: 'ok',
+              value: params,
+              response: r.data,
+            }
+            this.saveCloseValue.emit(valueClose);
           }
-          this.saveCloseValue.emit(valueClose);
-        }
-      }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
-    }
+        }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
+      }
     }
   }
   closeModal() {
@@ -317,37 +322,37 @@ settValuesMore:any;
   }
   setObjectUpdate() {
     if (this.item) {
-          this.formHeader.patchValue({
-            titulo:                   this.item.titulo,
-            descripcion:              this.item.descripcion,
+      this.formHeader.patchValue({
+        titulo: this.item.titulo,
+        descripcion: this.item.descripcion,
 
-            url_externa:              this.item.url_externa,
-            tamano_peso:              this.item.tamano_peso,
+        url_externa: this.item.url_externa,
+        tamano_peso: this.item.tamano_peso,
 
-            fecha:                    this.item.fecha_inicio,
-            // element_id:               forms.element_id,
-            visibilidad:              this.item.visibilidad === '1' ? 'S' : 'N',
-            calificable:              this.item.calificable  === '1' ? true : false,
-            duracion:                 this.item.duracion,
-            permitir_comentarios2:    this.item.permitir_comentarios  === '1' ? true : false,
+        fecha: this.item.fecha_inicio,
+        // element_id:               forms.element_id,
+        visibilidad: this.item.visibilidad === '1' ? 'S' : 'N',
+        calificable: this.item.calificable === '1' ? true : false,
+        duracion: this.item.duracion,
+        permitir_comentarios2: this.item.permitir_comentarios === '1' ? true : false,
 
-            estado:                   this.item.estado,
-            userid:                   this.item.userid,
+        estado: this.item.estado,
+        userid: this.item.userid,
 
-            type_element_id:          this.item.type_element.id,
-          });
-          const values = {
-            calificable:            this.item.calificable,
-            duracion:               this.item.duracion,
-            visibilidad:            this.item.visibilidad,
-            permitir_comentarios:   this.item.permitir_comentarios,
-          }
-          this.settValuesMore = values;
-          this.recorreTamanoPeso();
-        }
+        type_element_id: this.item.type_element.id,
+      });
+      const values = {
+        calificable: this.item.calificable,
+        duracion: this.item.duracion,
+        visibilidad: this.item.visibilidad,
+        permitir_comentarios: this.item.permitir_comentarios,
+      }
+      this.settValuesMore = values;
+      this.recorreTamanoPeso();
+    }
   }
   recorreTamanoPeso() {
-    this.listIcons.map((re:any) => {
+    this.listIcons.map((re: any) => {
       if (re.name === this.item.tamano_peso) {
         re.checked = true;
       }

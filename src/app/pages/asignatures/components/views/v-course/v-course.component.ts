@@ -49,7 +49,7 @@ export class VCourseComponent implements OnInit, OnDestroy {
     const breadcrumbs  =  [
       {
         label: 'Asignaturas',
-        url: '/pages/asignaturas'
+        url: '/pages/asignatures'
       },
       {
         label: this.curso.nombre,
