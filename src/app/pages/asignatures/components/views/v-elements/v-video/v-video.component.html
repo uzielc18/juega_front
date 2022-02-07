@@ -8,6 +8,7 @@
         <p class="instructions-description">{{ element?.descripcion }}</p>
       </div>
     </div>
-    <app-video-player [element]="element" (loadingsFiles)="loadingsFiles($event)"></app-video-player>
+    <app-video-player [videoFormat]="element?.tamano_peso" [url]="element?.url_externa"
+      (loadingsFiles)="loadingsFiles($event)"></app-video-player>
   </nb-card-body>
 </nb-card>

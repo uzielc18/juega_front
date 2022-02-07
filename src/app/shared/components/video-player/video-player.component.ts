@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-video-player',
   templateUrl: './video-player.component.html',
   styleUrls: ['./video-player.component.scss']
 })
-export class VideoPlayerComponent implements OnInit {
+export class VideoPlayerComponent implements OnInit, OnChanges {
 
   @Output() loadingsFiles: EventEmitter<boolean> = new EventEmitter();
 
@@ -18,29 +18,44 @@ export class VideoPlayerComponent implements OnInit {
   videoEmbedFacebook: any;
   videoEmbedLoom: any;
   audioEmbedSoundcloud: any;
-  @Input() element: any;
-  @Input() pending: any;
-  @Input() userInfo: any;
+
+  @Input() url: any;
+  @Input() videoFormat: any;
 
   constructor(
   ) { }
 
   ngOnChanges(): void {
-    if (this.element) {
-      this.vimeoId = this.parseVideo(this.element?.url_externa);
-      this.youtubeId = this.parseVideo(this.element?.url_externa);
-      this.loomId = this.parseLoom(this.element?.url_externa);
-      this.videoEmbedYoutube = `https://www.youtube.com/embed/${this.youtubeId.id}`;
-      this.videoEmbedVimeo = `https://player.vimeo.com/video/${this.vimeoId.id}?h=47b33a7ed2`;
-      this.videoEmbedFacebook = `https://www.facebook.com/plugins/video.php?href=${this.element?.url_externa}&show_text=0&width=560`
-      this.videoEmbedLoom = `${this.loomId}`;
-    } else if (this.pending) {
-      this.vimeoId = this.parseVideo(this.pending?.url);
-      this.youtubeId = this.parseVideo(this.pending?.url);
-      this.soundcloudUrl = this.pending?.url;
-      this.videoEmbedYoutube = `https://www.youtube.com/embed/${this.youtubeId.id}`;
-      this.videoEmbedVimeo = `https://player.vimeo.com/video/${this.vimeoId.id}?h=47b33a7ed2`;
-      this.audioEmbedSoundcloud = `https://w.soundcloud.com/player/?url=${this.soundcloudUrl}&color=%23ff0065&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
+    this.url = this.url;
+    this.videoFormat = this.videoFormat;
+    switch (this.videoFormat) {
+      case 'YouTube':
+      case 'YOUTUBE':
+        this.youtubeId = this.parseVideo(this.url);
+        this.videoEmbedYoutube = `https://www.youtube.com/embed/${this.youtubeId.id}`;
+        break;
+      case 'Vimeo':
+      case 'VIMEO':
+        this.vimeoId = this.parseVideo(this.url);
+        this.videoEmbedVimeo = `https://player.vimeo.com/video/${this.vimeoId.id}?h=47b33a7ed2`;
+        break;
+      case 'Facebook':
+      case 'FACEBOOK':
+        this.videoEmbedFacebook = `https://www.facebook.com/plugins/video.php?href=${this.url}&show_text=0&width=560`;
+        break;
+      case 'Loom':
+      case 'LOOM':
+        this.loomId = this.parseLoom(this.url);
+        this.videoEmbedLoom = `${this.loomId}`;
+        break;
+      case 'SoundCloud':
+      case 'SOUNDCLOUD':
+        this.audioEmbedSoundcloud = `https://w.soundcloud.com/player/?url=${this.url}&color=%23ff0065&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
+        break;
+      case 'REFERENCIA':
+      default:
+        this.url = this.url;
+        break;
     }
   }
 
@@ -62,5 +77,4 @@ export class VideoPlayerComponent implements OnInit {
       id: RegExp.$6
     };
   }
-
 }
