@@ -20,7 +20,7 @@
   </div>
   <div *ngIf="['Audio'].includes(videoFormat)">
     <audio controls="controls" autobuffer="autobuffer">
-      <source src="url">
+      <source [src]="url | safe">
     </audio>
   </div>
 </div>
