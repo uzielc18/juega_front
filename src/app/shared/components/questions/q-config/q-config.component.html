@@ -39,7 +39,7 @@
           </div>
 
           <div *ngIf="formHeader?.value?.tipo_adjunto === 'URL'">
-            <app-video-player [element]="{tamano_peso: formHeaderLink?.value?.tamano_peso, url_externa: formHeaderLink?.value?.url_externa}"></app-video-player>
+            <app-video-player [url]="formHeaderLink?.value?.url_externa" [videoFormat]="formHeaderLink?.value?.tamano_peso"></app-video-player>
           </div>
 
         

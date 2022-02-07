@@ -24,7 +24,7 @@
             </div>
             </form>
             <div *ngIf="['YouTube'].includes(formHeader?.value?.tamano_peso)">
-             <app-video-player [element]="{tamano_peso: formHeader?.value?.tamano_peso, url_externa: formHeader?.value?.url_externa}"></app-video-player>
+             <app-video-player  [url]="formHeader?.value?.url_externa" [videoFormat]="formHeader?.value?.tamano_peso"></app-video-player>
             </div>
     </nb-card-body>
     <nb-card-footer class="text-center">
