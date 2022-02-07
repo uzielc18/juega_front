@@ -103,7 +103,6 @@ export class QConfigComponent implements OnInit {
       this.formHeader.controls['tipo_adjunto'].setValue('ARCHIVO');
       this.formHeaderFile.controls['file'].setValue($event.value);
     } else {
-      this.formHeader.controls['tipo_adjunto'].setValue('');
       this.formHeaderFile.controls['file'].setValue('');
     }
   }
@@ -124,7 +123,7 @@ export class QConfigComponent implements OnInit {
     }).onClose.subscribe(result => {
       if (result && result.close === 'ok') {
         this.formHeader.controls['tipo_adjunto'].setValue('URL');
-        
+
         this.formHeaderLink.patchValue({
           url_externa: result.value.url_externa,
           tamano_peso: result.value.tamano_peso,
@@ -132,8 +131,6 @@ export class QConfigComponent implements OnInit {
           descripcion: result.value.descripcion,
           key_video: result.value.key_video,
         });
-      } else {
-        this.formHeader.controls['tipo_adjunto'].setValue('');
       }
     });
   }
