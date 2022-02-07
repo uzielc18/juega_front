@@ -18,4 +18,9 @@
     <a class="mt-2" nbButton status="primary" [href]="url" size="small" target="_blank">Ir al
       enlace</a>
   </div>
+  <div *ngIf="['Audio'].includes(videoFormat)">
+    <audio controls="controls" autobuffer="autobuffer">
+      <source src="url">
+    </audio>
+  </div>
 </div>
