@@ -52,6 +52,8 @@ export class VideoPlayerComponent implements OnInit, OnChanges {
       case 'SOUNDCLOUD':
         this.audioEmbedSoundcloud = `https://w.soundcloud.com/player/?url=${this.url}&color=%23ff0065&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
         break;
+      case 'Audio':
+      case 'AUDIO':
       case 'REFERENCIA':
       default:
         this.url = this.url;
