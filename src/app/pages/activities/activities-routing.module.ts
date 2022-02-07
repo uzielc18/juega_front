@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AsignaturesComponent } from '../asignatures/asignatures.component';
-import { AsignaturesHomeComponent } from '../asignatures/containers/asignatures-home.component';
 import { ActivitiesComponent } from './activities.component';
 import { ActivitiesHomeComponent } from './containers/activities-home.component';
 

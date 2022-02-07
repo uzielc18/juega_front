@@ -1,26 +1,28 @@
 <div class="perfil-container">
-  <div class="profile">
+  <div class="profile mb-1">
     <div class="photo-container">
       <img src="assets/student.jpg" alt="">
     </div>
-    <div class="student">
-      <p class="student-name">
-        Howard Junior
-      </p>
-      <p class="student-lastname">
-        Shica De la Rua
-      </p>
-    </div>
-    <div class="student-info">
-      <p class="ciclo">
-        1º Ciclo
-      </p>
-      <p class="carrera">
-        Ingeniería de Sistemas
-      </p>
-      <p class="codigo">
-        200000001
-      </p>
+    <div class="d-flex flex-column">
+      <div class="student">
+        <p class="student-name">
+          Howard Junior
+        </p>
+        <p class="student-lastname">
+          Shica De la Rua
+        </p>
+      </div>
+      <div class="student-info">
+        <p class="ciclo">
+          1º Ciclo
+        </p>
+        <p class="carrera">
+          Ingeniería de Sistemas
+        </p>
+        <p class="codigo">
+          200000001
+        </p>
+      </div>
     </div>
   </div>
   <div class="stats-ciclo">
@@ -38,6 +40,55 @@
       <nb-icon icon="award"></nb-icon>
       <p>16</p>
       <span>Promedio en este ciclo</span>
+    </div>
+  </div>
+  <div class="trabajos">
+    <div class="completados work">
+      <div class="count">
+        <p>25</p><span>/ 50</span>
+      </div>
+      <div class="description">
+        <div class="text">
+          <p>Trabajos completados</p>
+          <nb-progress-bar [value]="50"></nb-progress-bar>
+        </div>
+      </div>
+    </div>
+    <div class="vencidos work">
+      <div class="count">
+        <p>5</p><span>/ 50</span>
+      </div>
+      <div class="description">
+        <div class="text">
+          <p>Trabajos vencidos</p>
+          <nb-progress-bar [value]="15"></nb-progress-bar>
+        </div>
+      </div>
+    </div>
+    <div class="por-completar work">
+      <div class="count">
+        <p>20</p><span>/ 50</span>
+      </div>
+      <div class="description">
+        <div class="text">
+          <p>Trabajos por completar</p>
+          <nb-progress-bar [value]="60"></nb-progress-bar>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chart-stats">
+    <div class="chart">
+      <!-- chart -->
+    </div>
+    <div class="description">
+      <p>50</p>
+      <span>Trabajos en total</span>
+      <ul>
+        <li><span></span><small>20 Trabajos por completar</small></li>
+        <li><span></span><small>5 Trabajos vencidos</small></li>
+        <li><span></span><small>25 Trabajos completados</small></li>
+      </ul>
     </div>
   </div>
   <div class="stats-percentage">
@@ -66,55 +117,6 @@
       </div>
       <div class="percentage">
         <p>85%</p>
-      </div>
-    </div>
-  </div>
-  <div class="chart-stats">
-    <div class="chart">
-      <!-- chart -->
-    </div>
-    <div class="description">
-      <p>50</p>
-      <span>Trabajos en total</span>
-      <ul>
-        <li><span></span><small>20 Trabajos por completar</small></li>
-        <li><span></span><small>5 Trabajos vencidos</small></li>
-        <li><span></span><small>25 Trabajos completados</small></li>
-      </ul>
-    </div>
-  </div>
-  <div class="trabajos">
-    <div class="completados">
-      <div class="count">
-        <p>25</p><span>/ 50</span>
-      </div>
-      <div class="description">
-        <div class="text">
-          <p>Trabajos completados</p>
-          <nb-progress-bar [value]="50"></nb-progress-bar>
-        </div>
-      </div>
-    </div>
-    <div class="vencidos">
-      <div class="count">
-        <p>5</p><span>/ 50</span>
-      </div>
-      <div class="description">
-        <div class="text">
-          <p>Trabajos vencidos</p>
-          <nb-progress-bar [value]="15"></nb-progress-bar>
-        </div>
-      </div>
-    </div>
-    <div class="por-completar">
-      <div class="count">
-        <p>20</p><span>/ 50</span>
-      </div>
-      <div class="description">
-        <div class="text">
-          <p>Trabajos por completar</p>
-          <nb-progress-bar [value]="60"></nb-progress-bar>
-        </div>
       </div>
     </div>
   </div>
