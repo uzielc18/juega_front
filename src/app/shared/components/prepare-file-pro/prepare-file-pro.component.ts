@@ -40,6 +40,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
       name_file: [''],
       ext_file: [''],
       base64: [''],
+      nombre_s3: ['']
     };
     this.formHeaders = this.formBuilder.group(controls);
   }
@@ -86,6 +87,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
     this.formHeaders.controls['name_file'].setValue('');
     this.formHeaders.controls['ext_file'].setValue('');
     this.formHeaders.controls['base64'].setValue('');
+    this.formHeaders.controls['nombre_s3'].setValue('');
     // this.onFilterChange();
   }
 
@@ -112,6 +114,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
         this.formHeaders.controls['name_file'].setValue(result.name);
         this.formHeaders.controls['ext_file'].setValue(result.ext);
         this.formHeaders.controls['base64'].setValue(result.base64);
+        this.formHeaders.controls['nombre_s3'].setValue(result.nombre);
         const datos = {
           ext: result.ext,
           nombre: result.nombre,
