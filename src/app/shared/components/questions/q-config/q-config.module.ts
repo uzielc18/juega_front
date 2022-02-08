@@ -45,6 +45,6 @@ const MODULOS: any = [
     ...MODULOS,
     CONTROL_MESSAGGE
   ],
-  exports: [QConfigComponent, CRelationComponent]
+  exports: [QConfigComponent, CRelationComponent,CMultiOptionComponent]
 })
 export class QConfigModule { }

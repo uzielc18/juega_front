@@ -33,7 +33,6 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
     this.getUsers();
     this.formularioFiels();
     this.typeFileSet(this.typeFile);
-
   }
   private formularioFiels(): any {
     const controls = {
@@ -94,9 +93,10 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
     const param = {
       accepts: this.accept,
       params: {
-        id: this.paramsInfo.id,
-        codigoEst: this.userData.user && this.userData.user.person.codigo || '',
-        codAleatory: Math.floor(Math.random() * 90000) + 10000,
+        key_file: this.paramsInfo.key_file,
+        // id: this.paramsInfo.id,
+        // codigoEst: this.userData.user && this.userData.user.person.codigo || '',
+        // codAleatory: Math.floor(Math.random() * 90000) + 10000,
         directory: this.paramsInfo.directory,
         type: this.paramsInfo.type,
       }
