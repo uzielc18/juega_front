@@ -1,4 +1,4 @@
-<div class="video-container mt-4">
+<div class="video-container mt-4" *ngIf="!['Audio'].includes(videoFormat)">
   <!-- For video element -->
   <iframe *ngIf="['YOUTUBE','YouTube'].includes(videoFormat)" [src]="videoEmbedYoutube | safe"
     title="YouTube video player" frameborder="0" allowfullscreen>
@@ -18,9 +18,10 @@
     <a class="mt-2" nbButton status="primary" [href]="url" size="small" target="_blank">Ir al
       enlace</a>
   </div>
-  <div *ngIf="['Audio'].includes(videoFormat)">
-    <audio controls="controls" autobuffer="autobuffer">
-      <source [src]="url | safe">
-    </audio>
-  </div>
+</div>
+
+<div *ngIf="['Audio'].includes(videoFormat)" class="p-0">
+  <audio controls="controls" autobuffer="autobuffer" style="padding-top: 0px;">
+    <source [src]="url | safe">
+  </audio>
 </div>
