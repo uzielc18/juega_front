@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./c-multi-option.component.scss']
 })
 export class CMultiOptionComponent implements OnInit {
+  arrayMultiple = [];
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  
 }
