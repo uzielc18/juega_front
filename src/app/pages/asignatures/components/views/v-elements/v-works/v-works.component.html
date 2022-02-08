@@ -69,7 +69,7 @@
         <div *ngIf="form.value.tipo == '1'">
           <lamb-prepare-file-pro
           [paramsInfo]="{
-            id: element?.id_carga_curso_docente,
+            key_file: key_file,
             directory: directorio,
             type: 'put',
             tabla: 'pendings',

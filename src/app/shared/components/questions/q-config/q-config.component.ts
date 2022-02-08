@@ -11,6 +11,7 @@ import { MProcessUrlComponent } from './modals/m-process-url/m-process-url.compo
 })
 export class QConfigComponent implements OnInit {
   @Input() item:any
+  @Input() userInfo:any
   directorio: any = DIRECTORY.base;
   arrayFile: any = [];
   formHeader: any = FormGroup;
@@ -66,6 +67,7 @@ export class QConfigComponent implements OnInit {
       checked: false,
     }
   ]
+  key_file:any;
   constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
@@ -95,13 +97,14 @@ export class QConfigComponent implements OnInit {
       tipo_adjunto: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
+    this.key_file = this.item?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo + '_' + Math.floor(Math.random() * 90000) + 10000;
   }
   valueFile($event:any) {
-    console.log($event);
-
     if ($event && $event.value) {
       this.formHeader.controls['tipo_adjunto'].setValue('ARCHIVO');
       this.formHeaderFile.controls['file'].setValue($event.value);
+
+      this.fieldReactiveLink();
     } else {
       this.formHeaderFile.controls['file'].setValue('');
     }
@@ -131,7 +134,17 @@ export class QConfigComponent implements OnInit {
           descripcion: result.value.descripcion,
           key_video: result.value.key_video,
         });
+
+        this.fieldReactiveFile();
       }
     });
+  }
+  deleteFile() {
+    this.fieldReactiveFile();
+    this.formHeader.controls['tipo_adjunto'].setValue('');
+  }
+  deleteLink() {
+    this.fieldReactiveLink();
+    this.formHeader.controls['tipo_adjunto'].setValue('');
   }
 }

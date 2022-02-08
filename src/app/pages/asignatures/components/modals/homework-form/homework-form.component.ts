@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
+import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
@@ -19,13 +20,15 @@ export class HomeworkFormComponent {
   loading: boolean = false;
   element:any;
   itemsValue: any;
-  constructor(public activeModal: NbDialogRef<HomeworkFormComponent>,  private generalServi: GeneralService) {
+  userInfo: any;
+  constructor(private userService: AppService, public activeModal: NbDialogRef<HomeworkFormComponent>,  private generalServi: GeneralService) {
 
   }
   ngOnInit(): void {
     if (this.code === 'UPDATE') {
       this.setValueElementUpdate();
     }
+    this.getUserInfo();
   }
   closeModal() {
     const valueClose = {
@@ -33,6 +36,9 @@ export class HomeworkFormComponent {
       value: '',
     }
     this.activeModal.close(valueClose);
+  }
+  getUserInfo() {
+    this.userInfo = this.userService.user;
   }
   saveValue($event: any){
     if ($event.value_close === 'ok') {
