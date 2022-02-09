@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-c-open',
@@ -8,19 +7,37 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class COpenComponent implements OnInit, OnChanges {
   @Input() headParams:any;
-  formHeader: any = FormGroup;
-  constructor(private formBuilder: FormBuilder) { }
+  arrayOpen:any = [
+    {
+        id: 0,
+        question_id: 0,
+        option: '',
+        puntos: 0,
+        correcto: 0,
+        checked: false,
+        orden: 1,
+        estado: 1,
+        imagen: '',
+        base64: '',
+    },
+  ]
+  constructor() { }
   ngOnChanges():void {
     this.headParams = this.headParams;
   }
   ngOnInit(): void {
-    this.fieldReactive();
   }
-  private fieldReactive() {
-    const controls = {
-      respuesta: ['', [Validators.required]],
-    };
-    this.formHeader = this.formBuilder.group(controls);
+  get validButom() {
+    if (this.arrayOpen.length>0) {
+      const array = this.arrayOpen.filter((r:any) => !r.option || r.puntos < 0 || r.puntos === null || r.puntos === '');
+      if (array.length>0) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
   }
   saveQuestion() {
 
