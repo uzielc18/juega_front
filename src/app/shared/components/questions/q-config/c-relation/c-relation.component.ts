@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { DIRECTORY } from 'src/app/shared/directorios/directory';
-import Swal from 'sweetalert2';
+import { END_POINTS } from 'src/app/providers/utils';
 
 @Component({
   selector: 'app-c-relation',
@@ -41,6 +41,7 @@ export class CRelationComponent implements OnInit {
   constructor(private generalServi: GeneralService) { }
   ngOnChanges(): void {
     this.headParams = this.headParams;
+    this.item = this.item;
   }
   ngOnInit(): void {
     this.valueKey();
@@ -107,20 +108,17 @@ export class CRelationComponent implements OnInit {
       },
     ]
 
-    const serviceName = '';
+    const serviceName = END_POINTS.base_back.quiz + '/questions';
     const params: any = {
-      section_id: 0,
-      type_alternative_id: 0,
-      exam_id: 0,
+      section_id: this.item.section_id,
+      type_alternative_id: this.headParams.type_alternative.id,
+      exam_id: this.item.exam_id,
       pregunta: this.headParams.pregunta,
       help: '',
       url_video: this.headParams.url_video || '',
       key_video: this.headParams.key_video || '',
       adjunto: this.headParams.adjunto || '',
-      codigo: '01',
-      nombre: 'Relacionar',
-      component: 'multiple-choice',
-      componentEdit: false,
+      codigo: this.headParams.type_alternative.codigo,
       alternatives: alternativas || {},
     };
     if (params && params.pregunta && Object.keys(params.alternatives).length > 0) {

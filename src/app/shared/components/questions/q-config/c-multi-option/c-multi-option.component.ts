@@ -9,7 +9,6 @@ import Swal from 'sweetalert2';
 })
 export class CMultiOptionComponent implements OnInit, OnChanges {
   @Input() headParams:any;
-  @Input() item:any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   arrayMultiple:any = [
     {
@@ -42,9 +41,6 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
     this.headParams = this.headParams;
-    this.item = this.item;
-    console.log(this.headParams, this.item);
-    
   }
   ngOnInit(): void {
     this.valueKey();
@@ -99,7 +95,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
       nombre: 'Opcion unica',
       component: 'multiple-choice',
       componentEdit: false,
-      alternatives: this.arrayMultiple || [], 
+      alternatives: this.arrayMultiple || [],
     };
     if (params && params.pregunta && params.alternatives.length>0) {
       this.loadings.emit(true);

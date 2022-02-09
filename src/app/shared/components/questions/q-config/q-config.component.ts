@@ -57,6 +57,10 @@ export class QConfigComponent implements OnInit {
         if (this.questions.length> 0) {
           this.questions.map((r:any) => {
             r.checked = false;
+            r.pluss = false;
+            if (r.nivel === '1') {
+              r.section_id = r.id;
+            }
           });
         }
       }, () => { this.loading = false; }, () => { this.loading  = false; });
@@ -67,7 +71,14 @@ export class QConfigComponent implements OnInit {
     this.questions.map((r:any) => {
       r.checked = false;
     });
-    item.checked = true;
+      item.checked = true;
+  }
+
+  changePluss(item:any) {
+    this.questions.map((r:any) => {
+      r.pluss = false;
+    });
+      item.pluss = true;
   }
 
   getTypeAlternative() {
@@ -106,7 +117,7 @@ export class QConfigComponent implements OnInit {
       });
       item.checked = true;
       this.formHeader.controls['type_alternative'].setValue(item);
-      
+
     }
   }
   openUrlYoutube() {
@@ -144,5 +155,13 @@ export class QConfigComponent implements OnInit {
     setTimeout(() => {
       this.loading = $event;
     }, 1000);
+  }
+  changeSuccess($event:any) {
+    setTimeout(() => {
+      if ($event === 'ok') {
+        this.getQuestions();
+        this.fieldReactive();
+      }
+    }, 100);
   }
 }

@@ -1,9 +1,9 @@
 <div *ngFor="let quiz of questions; let i = index">
   <div class="row m-0">
-    <div class="col-md-11">
-      <nb-card>
+    <div [class]="quiz?.pluss ? 'col-md-11' : 'col-md-12'">
+      <nb-card (click)="changePluss(quiz)" style="cursor: pointer;">
         <nb-card-body>
-          {{i+1}} &nbsp;)&nbsp; {{quiz.titulo}}
+          {{i+1}} &nbsp;)&nbsp; {{quiz?.titulo || quiz?.pregunta}} {{quiz?.pluss}}
         </nb-card-body>
       </nb-card>
       <nb-card *ngIf="quiz.checked" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
@@ -31,7 +31,8 @@
                 </div>
                 <div class="col-md-6">
                   <label class="label">Link de Youtube</label><br>
-                  <button nbButton size="small" status="info" outline fullWidth (click)="openUrlYoutube()" style="padding: 5px;">
+                  <button nbButton size="small" status="info" outline fullWidth (click)="openUrlYoutube()"
+                    style="padding: 5px;">
                     <img src="https://i.pinimg.com/originals/91/c1/cd/91c1cdeacc84d0a5673bb716549ba366.png"
                       height="20px" alt="">
                   </button>
@@ -93,8 +94,8 @@
           <ng-container class="container">
             <div *ngIf="['07'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-multi-option [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)">
-              </app-c-multi-option>
+              <app-c-multi-option [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+                (changeSuccess)="changeSuccess($event)"></app-c-multi-option>
 
             </div>
 
@@ -137,8 +138,8 @@
       </nb-card>
 
     </div>
-    <div class="col-md-1">
-      <nb-card class="m-0">
+    <div [class]="quiz.pluss ? 'col-md-1' : ''">
+      <nb-card *ngIf="quiz.pluss" class="m-0 mb-4">
         <nb-card-body class="p-0">
           <!-- <div class="d-flex flex-column" style="max-width: 80px;"> -->
           <button nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz)">
