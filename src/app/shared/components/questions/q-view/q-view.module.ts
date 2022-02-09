@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VRelationComponent } from './v-relation/v-relation.component';
+import { NebularModule } from '../../../nebular.module';
 
 
 
@@ -9,7 +10,11 @@ import { VRelationComponent } from './v-relation/v-relation.component';
     VRelationComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NebularModule
+  ],
+  exports: [
+    VRelationComponent
   ]
 })
 export class QViewModule { }

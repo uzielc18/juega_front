@@ -1,25 +1,27 @@
 <div style="max-width: 800px;">
-  <div *ngFor="let item of relationList; let i = index;" class="row align-items-center mb-2">
+  <div *ngFor="let item of relationList; let i = index;" class="row m-0 align-items-center mb-3">
     <div class="col-md-5 d-flex align-items-center">
-      <input type="text" nbInput fullWidth placeholder="Opcion {{ i + 1 }}" class="me-2" [(ngModel)]="item.clave">
+      <input type="text" nbInput fullWidth placeholder="Opción {{ abecedario[i] | titlecase }}" class="me-2"
+        [(ngModel)]="item.relacion">
       <lamb-prepare-file-pro [paramsInfo]="{
-        id: item?.id_carga_curso_docente,
+        key_file: key_file,
         directory: directorio,
         type: 'put',
         tabla: 'pendings',
-        tipo: 'DOCUMENTO_TRABAJO'}" [numFiles]="6" (filterValueChange)="valueFile($event, item)" [listArrayFile]="arrayFile"
-        [isDisabled]="false" [viewFile]="'UNIQUE'" [typeFile]="'img'">
+        tipo: 'DOCUMENTO_TRABAJO'}" [numFiles]="6" (filterValueChange)="valueFile($event, item)"
+        [listArrayFile]="arrayFile" [isDisabled]="false" [viewFile]="'UNIQUE'" [typeFile]="'img'">
       </lamb-prepare-file-pro>
     </div>
     <div class="col-md-7 d-flex align-items-center">
-      <input type="text" nbInput fullWidth placeholder="Opcion A1" class="me-2" [(ngModel)]="item.resp">
+      <input type="text" nbInput fullWidth placeholder="Opción {{ abecedario[i] | titlecase }}1" class="me-2"
+        [(ngModel)]="item.resp">
       <lamb-prepare-file-pro [paramsInfo]="{
-        id: item?.id_carga_curso_docente,
+        key_file: key_file,
         directory: directorio,
         type: 'put',
         tabla: 'pendings',
-        tipo: 'DOCUMENTO_TRABAJO'}" [numFiles]="6" (filterValueChange)="valueFile($event, item)" [listArrayFile]="arrayFile"
-        [isDisabled]="false" [viewFile]="'UNIQUE'" [typeFile]="'img'">
+        tipo: 'DOCUMENTO_TRABAJO'}" [numFiles]="6" (filterValueChange)="valueFile($event, item)"
+        [listArrayFile]="arrayFile" [isDisabled]="false" [viewFile]="'UNIQUE'" [typeFile]="'img'">
       </lamb-prepare-file-pro>
       <input style="width: 100px;" type="number" nbInput placeholder="Puntos" class="ms-4 me-3"
         [(ngModel)]="item.puntos">
@@ -29,7 +31,7 @@
   <div class="d-flex align-items-center">
     <button nbButton ghost status="info" size="tiny" (click)="addRelation()">Añadir otra relación</button>
     <button class="ms-auto" nbButton outline status="basic" size="small" (click)="cancel()">Cancelar</button>
-    <button class="ms-2" nbButton status="primary" (click)="saveRelation()" [disabled]="validArray"
+    <button class="mx-2" nbButton status="primary" (click)="saveRelation()" [disabled]="validArray"
       size="small">Guardar</button>
   </div>
 </div>
