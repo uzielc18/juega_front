@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExamComponent } from './exam.component';
+
 import { ExamRoutingModule } from './exam-routing.module';
-const ANGULAR: any[] = [CommonModule];
-const COMPONENTS: any = [
-  ExamComponent
-];
-const NEBULAR: any = [
-];
+import { ExamHomeComponent } from './containers/exam-home.component';
+import { ExamComponent } from './exam.component';
+import { NebularModule } from '../../shared/nebular.module';
+
+
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [
+    ExamHomeComponent,
+    ExamComponent
+  ],
   imports: [
-    ...ANGULAR,
-    ...NEBULAR,
-    ExamRoutingModule
-  ], 
-  exports: [...COMPONENTS]
+    CommonModule,
+    ExamRoutingModule,
+    NebularModule
+  ]
 })
 export class ExamModule { }

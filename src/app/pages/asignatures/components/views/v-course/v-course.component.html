@@ -9,7 +9,7 @@
           </div>
         </div>
         <div style="margin-top: -180px;" class="mx-4">
-          <div class="row">
+          <div class="row" style="min-height: 100%;">
             <div class="col">
               <div class="row px-4">
                 <h2 class="fs-2 text-white mx-1">{{ curso?.nombre }}</h2>
@@ -25,7 +25,7 @@
                 </small>
               </div>
               <div class="row px-2 mt-3">
-                <nb-card class="p-0 m-0 border-0">
+                <nb-card class="p-0 m-0 border-0" style="min-height: 50vh;">
                   <nb-card-body class="p-3">
                     <div class="row justify-content-between mb-3">
                       <div class="col-sm-12 col-xl-6">
@@ -58,7 +58,7 @@
                         </div>
                       </div>
                     </div>
-                    <nb-accordion class="mb-3" *ngFor="let unidad of curso?.units" >
+                    <nb-accordion class="mb-3" *ngFor="let unidad of curso?.units">
                       <nb-accordion-item>
                         <nb-accordion-item-header>
                           <div class="container p-0 pe-4">
@@ -67,7 +67,8 @@
                                 <nb-icon icon="pricetags-outline" class="fs-2"></nb-icon>
                               </div>
                               <div class="ps-2">
-                                <h6 class="fs-6 lh-1 fw-bold">Unidad {{unidad.orden_unidad}}: {{ unidad.nombre | titlecase }}</h6>
+                                <h6 class="fs-6 lh-1 fw-bold">Unidad {{unidad.orden_unidad}}: {{ unidad.nombre |
+                                  titlecase }}</h6>
                                 <!-- <small>{{ unidad.fecha_inicio }} al {{ unidad.fecha_fin }}</small> -->
                                 <small>01 marzo al 04 abril</small>
                               </div>
@@ -96,12 +97,8 @@
                               de informacion
                             </small>
                             <div *ngFor="let sesion of unidad?.topics">
-                              <app-sesion
-                              [sesion]="sesion"
-                              [unidad]="unidad"
-                              [curso]="curso"
-                              (validaExist)="validaExist()"
-                            ></app-sesion>
+                              <app-sesion [sesion]="sesion" [unidad]="unidad" [curso]="curso"
+                                (validaExist)="validaExist()"></app-sesion>
                             </div>
                           </div>
                         </nb-accordion-item-body>
