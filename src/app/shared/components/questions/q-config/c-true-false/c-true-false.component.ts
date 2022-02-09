@@ -8,6 +8,7 @@ import { DIRECTORY } from 'src/app/shared/directorios/directory';
 })
 export class CTrueFalseComponent implements OnInit, OnChanges {
   @Input() headParams:any;
+  @Input() item:any;
   arrayTrueFalse:any = [
     {
       nombre: 'VERDADERO',

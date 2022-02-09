@@ -84,37 +84,37 @@
     <ng-container class="container">
       <div *ngIf="['07'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-        <app-c-multi-option [headParams]="formHeader.value" (loadings)="changeLoadings($event)"></app-c-multi-option>
+        <app-c-multi-option [headParams]="formHeader.value" [item]="item" (loadings)="changeLoadings($event)"></app-c-multi-option>
 
       </div>
 
       <div *ngIf="['01'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-        <app-c-unique-option [headParams]="formHeader.value" (loadings)="changeLoadings($event)"></app-c-unique-option>
+        <app-c-unique-option [headParams]="formHeader.value" [item]="item" (loadings)="changeLoadings($event)"></app-c-unique-option>
 
       </div>
 
       <div *ngIf="['05'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-        <app-c-relation [headParams]="formHeader.value" (loadings)="changeLoadings($event)"></app-c-relation>
+        <app-c-relation [headParams]="formHeader.value" [item]="item" (loadings)="changeLoadings($event)"></app-c-relation>
 
       </div>
 
       <div *ngIf="['02'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-        <app-c-true-false [headParams]="formHeader.value"></app-c-true-false>
+        <app-c-true-false [headParams]="formHeader.value" [item]="item"></app-c-true-false>
 
       </div>
 
       <div *ngIf="['03'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-        <app-c-open [headParams]="formHeader.value"></app-c-open>
+        <app-c-open [headParams]="formHeader.value" [item]="item"></app-c-open>
 
       </div>
 
       <div *ngIf="['04'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-        <app-c-closed [headParams]="formHeader.value"></app-c-closed>
+        <app-c-closed [headParams]="formHeader.value" [item]="item"></app-c-closed>
 
       </div>
 

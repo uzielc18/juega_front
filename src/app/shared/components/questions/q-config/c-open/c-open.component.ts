@@ -7,6 +7,7 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 })
 export class COpenComponent implements OnInit, OnChanges {
   @Input() headParams:any;
+  @Input() item:any;
   arrayOpen:any = [
     {
         id: 0,
