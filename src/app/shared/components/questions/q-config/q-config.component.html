@@ -72,7 +72,7 @@ nbSpinnerSize="large">
       <div class="d-flex">
       <div *ngFor="let item of optionsType" style="padding-left: 3px; padding-right: 3px;">
         <button nbButton  size="large" [ngStyle]="{'background': item.checked ? item.color : '', 'color': item.checked ? 'white' : ''}" 
-        (click)="changeButtom(item)" [disabled]="formHeader.invalid" nbTooltip="{{item.nombre}}" nbTooltipPlacement="top" nbTooltipStatus="basic">
+        (click)="changeButtom(item)" [disabled]="formHeader.invalid" nbTooltip="{{item.nombre}}" nbTooltipPlacement="top" nbTooltipStatus="basic" nbTooltipStatus="primary">
           <nb-icon [icon]="item.icon"></nb-icon>
         </button>
       </div>

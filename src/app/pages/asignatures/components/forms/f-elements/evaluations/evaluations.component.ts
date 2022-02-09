@@ -59,6 +59,10 @@ export class EvaluationsComponent implements OnInit {
       duracion: ['180', [Validators.required]],
       permitir_comentarios: [false],
 
+      aleatorio:  [0],
+      paginado:    ['none'],
+      mostrar_respuestas:   ['No'],
+
       estado: ['1', [Validators.required]],
       userid: [''],
 
@@ -147,9 +151,12 @@ export class EvaluationsComponent implements OnInit {
       estado:                   forms.estado,
       userid:                   forms.userid || 1,
 
-      // foro: {
-      //   pregunta:                forms.pregunta,
-      // }
+      evaluacion: {
+        aleatorio:              forms.aleatorio,
+        paginado:               forms.paginado,
+        mostrar_respuestas:     forms.mostrar_respuestas,
+
+      }
     };
     if (!this.validCampos) {
       this.loadingsForm.emit(true);
@@ -209,6 +216,10 @@ export class EvaluationsComponent implements OnInit {
             calificable:              this.item.calificable  === '1' ? true : false,
             duracion:                 this.item.duracion,
             permitir_comentarios2:    this.item.permitir_comentarios  === '1' ? true : false,
+
+            aleatorio:                this.item.aleatorio,
+            paginado:                 this.item.paginado,
+            mostrar_respuestas:       this.item.mostrar_respuestas,
 
             estado:                   this.item.estado,
             userid:                   this.item.userid,

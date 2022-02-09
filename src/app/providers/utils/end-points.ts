@@ -9,5 +9,6 @@ export const END_POINTS = {
     elements: 'elements',
     user: 'user',
     config: 'config',
+    quiz: 'quiz',
   },
 };
