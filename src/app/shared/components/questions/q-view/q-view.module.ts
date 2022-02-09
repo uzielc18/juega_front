@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VRelationComponent } from './v-relation/v-relation.component';
-import { NebularModule } from '../../../nebular.module';
+import { VDocMultiOptionComponent } from './v-docente/v-doc-multi-option/v-doc-multi-option.component';
+import { VDocUniqueOptionComponent } from './v-docente/v-doc-unique-option/v-doc-unique-option.component';
+import { QViewComponent } from './q-view.component';
 
-
+const COMPONENTS: any = [
+  QViewComponent,
+  VDocMultiOptionComponent,
+  VDocUniqueOptionComponent,
+];
 
 @NgModule({
-  declarations: [
-    VRelationComponent
-  ],
+  declarations: [...COMPONENTS],
   imports: [
-    CommonModule,
-    NebularModule
+    CommonModule
   ],
-  exports: [
-    VRelationComponent
-  ]
+  exports: [...COMPONENTS]
 })
 export class QViewModule { }
