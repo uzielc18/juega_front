@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 })
 export class CUniqueOptionComponent implements OnInit, OnChanges {
   @Input() headParams:any;
+  @Input() item:any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   arrayUnique:any = [
     {

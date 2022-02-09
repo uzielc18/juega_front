@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class CRelationComponent implements OnInit {
   @Input() headParams: any;
+  @Input() item:any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   directorio: any = DIRECTORY.base;
   key_file: any;

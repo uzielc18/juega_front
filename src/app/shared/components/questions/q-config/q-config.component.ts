@@ -12,8 +12,8 @@ import { MProcessUrlComponent } from './modals/m-process-url/m-process-url.compo
   styleUrls: ['./q-config.component.scss']
 })
 export class QConfigComponent implements OnInit {
-  @Input() item:any
-  @Input() userInfo:any
+  @Input() item:any;
+  @Input() userInfo:any;
   directorio: any = DIRECTORY.base;
   arrayFile: any = [];
   formHeader: any = FormGroup;

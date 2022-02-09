@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./c-closed.component.scss']
 })
 export class CClosedComponent implements OnInit, OnChanges {
+  @Input() item:any;
   @Input() headParams:any;
   arrayClose:any = [
     {
