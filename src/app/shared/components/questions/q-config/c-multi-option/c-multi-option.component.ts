@@ -42,7 +42,8 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
     this.headParams = this.headParams;
-    console.log(this.headParams);
+    this.item = this.item;
+    console.log(this.headParams, this.item);
     
   }
   ngOnInit(): void {

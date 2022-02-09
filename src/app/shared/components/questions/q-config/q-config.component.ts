@@ -20,10 +20,12 @@ export class QConfigComponent implements OnInit {
   loading: boolean = false;
   optionsType:any = [];
   key_file:any;
+  questions:any = [];
   constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService, private generalServi: GeneralService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
+    this.getQuestions();
   }
 
   private fieldReactive() {
@@ -45,6 +47,27 @@ export class QConfigComponent implements OnInit {
     this.formHeader = this.formBuilder.group(controls);
     this.key_file = this.item?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo + '_' + Math.floor(Math.random() * 90000) + 10000;
     this.getTypeAlternative();
+  }
+  getQuestions() {
+    const serviceName = END_POINTS.base_back.quiz + '/get-questions';
+    if (this.item && this.item.exam && this.item.exam.id) {
+      this.loading = true;
+      this.generalServi.nameId$(serviceName, this.item.exam.id).subscribe(r => {
+        this.questions = r.data || [];
+        if (this.questions.length> 0) {
+          this.questions.map((r:any) => {
+            r.checked = false;
+          });
+        }
+      }, () => { this.loading = false; }, () => { this.loading  = false; });
+      }
+  }
+
+  changeValueCheck(item:any) {
+    this.questions.map((r:any) => {
+      r.checked = false;
+    });
+    item.checked = true;
   }
 
   getTypeAlternative() {
