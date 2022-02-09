@@ -55,11 +55,19 @@ export class QConfigComponent implements OnInit {
       this.generalServi.nameId$(serviceName, this.item.exam.id).subscribe(r => {
         this.questions = r.data || [];
         if (this.questions.length> 0) {
+          const ultimoRegistro = this.questions[this.questions.length - 1];
+          console.log(ultimoRegistro);
+          
           this.questions.map((r:any) => {
             r.checked = false;
             r.pluss = false;
+            r.ultimo = false;
             if (r.nivel === '1') {
               r.section_id = r.id;
+            }
+
+            if (ultimoRegistro && r.id === ultimoRegistro.id) {
+              r.ultimo = true;
             }
           });
         }

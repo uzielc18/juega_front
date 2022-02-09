@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-v-doc-multi-option',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./v-doc-multi-option.component.scss']
 })
 export class VDocMultiOptionComponent implements OnInit {
-
+  @Input() alternativas:any = [];
   constructor() { }
 
   ngOnInit(): void {
