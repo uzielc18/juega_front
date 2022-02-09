@@ -1,4 +1,4 @@
-<div class="video-container mt-4" *ngIf="!['Audio'].includes(videoFormat)">
+<div class="video-container mt-3" *ngIf="!['Audio'].includes(videoFormat)">
   <!-- For video element -->
   <iframe *ngIf="['YOUTUBE','YouTube'].includes(videoFormat)" [src]="videoEmbedYoutube | safe"
     title="YouTube video player" frameborder="0" allowfullscreen>

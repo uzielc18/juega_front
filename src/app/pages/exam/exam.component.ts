@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-exam',
-  templateUrl: './exam.component.html',
-  styleUrls: ['./exam.component.scss']
+  template: '<router-outlet></router-outlet>',
+  styles: [``]
 })
 export class ExamComponent implements OnInit {
 

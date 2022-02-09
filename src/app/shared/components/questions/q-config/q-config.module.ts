@@ -22,7 +22,7 @@ const COMPONENTS: any = [
   CRelationComponent,
   COpenComponent,
   CClosedComponent,
-  MProcessUrlComponent
+  MProcessUrlComponent,
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -37,21 +37,22 @@ const MODULOS: any = [
   PrepareFileProModule,
   VideoPlayerModule
 ];
-const EXPORTS_COMPONENTS:any = [
+const EXPORTS_COMPONENTS: any = [
   QConfigComponent,
   CMultiOptionComponent,
   CUniqueOptionComponent,
   CTrueFalseComponent,
   COpenComponent,
   CClosedComponent,
+  CRelationComponent
 ];
 const SERVICES: any = [
   GeneralService
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS, ],
-  entryComponents:[...MODALS],
+  declarations: [...COMPONENTS,],
+  entryComponents: [...MODALS],
   imports: [
     CommonModule,
     ...NG_MODULES,

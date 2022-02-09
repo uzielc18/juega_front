@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { Auth2Guard, ScaffoldComponent } from './core';
-import { DashboardModule } from './pages/dashboard/dashboard.module';
-import { NotfoundModule } from './pages/notfound/notfound.module';
-import { NotfoundComponent } from './pages/notfound/notfound.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const config: ExtraOptions = {
   useHash: false,
@@ -12,8 +8,7 @@ const config: ExtraOptions = {
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () =>
-      import('../app/core/auth/auth.module').then((m) => m.AuthModule),
+    loadChildren: () => import('../app/core/auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'pages',
@@ -39,17 +34,18 @@ const routes: Routes = [
       },
       {
         path: '**',
-        component: NotfoundComponent,
+        loadChildren: () => import('./pages/notfound/notfound.module').then((m) => m.NotfoundModule)
       },
     ],
   },
   {
     path: 'exam',
+    canActivate: [Auth2Guard],
     loadChildren: () => import('./pages/exam/exam.module').then((m) => m.ExamModule),
   },
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'pages',
     pathMatch: 'full',
   },
 ];
