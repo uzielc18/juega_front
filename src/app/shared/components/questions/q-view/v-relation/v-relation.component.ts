@@ -12,7 +12,7 @@ export class VRelationComponent implements OnInit {
   relationList: any[] = [
     {
       relacion: 'Lima',
-      relacionImg: 'https://www.vmlyr.com/sites/www/files/2020-01/AdobeStock_295560273-Lima-C_0.jpg',
+      imagen: 'https://www.vmlyr.com/sites/www/files/2020-01/AdobeStock_295560273-Lima-C_0.jpg',
       resp: 'Peru',
       respImg: 'peru.jpg',
       puntos: 2,
@@ -56,16 +56,6 @@ export class VRelationComponent implements OnInit {
       correcto: 0
     }
   ]
-
-  // colors = [
-  //   '#BB6464',
-  //   '#54BAB9',
-  //   '#655D8A',
-  //   '#D885A3',
-  //   '#28666E',
-  //   '#EB5E55',
-  //   '#033F63',
-  // ]
 
   constructor() { }
 
