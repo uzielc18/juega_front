@@ -67,7 +67,7 @@
             <button nbButton size="large"
               [ngStyle]="{'background': item.checked ? item.color : '', 'color': item.checked ? 'white' : ''}"
               (click)="changeButtom(item)" [disabled]="formHeader.invalid" nbTooltip="{{item.nombre}}"
-              nbTooltipPlacement="top" nbTooltipStatus="basic">
+              nbTooltipPlacement="top" nbTooltipStatus="primary">
               <nb-icon [icon]="item.icon"></nb-icon>
             </button>
           </div>

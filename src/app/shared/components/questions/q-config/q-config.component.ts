@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
+import { GeneralService } from 'src/app/providers';
+import { END_POINTS } from 'src/app/providers/utils';
 import { DIRECTORY } from 'src/app/shared/directorios/directory';
 import { MProcessUrlComponent } from './modals/m-process-url/m-process-url.component';
 
@@ -16,58 +18,9 @@ export class QConfigComponent implements OnInit {
   arrayFile: any = [];
   formHeader: any = FormGroup;
   loading: boolean = false;
-  optionsType:any = [
-    {
-      nombre: 'Pregunta cerrada',
-      id: 1,
-      codigo: '04',
-      color: '#934054',
-      icon: 'arrow-left-outline',
-      checked: false,
-    },
-    {
-      nombre: 'Pregunta abierta',
-      id: 1,
-      codigo: '03',
-      color: '#934054',
-      icon: 'mic-outline',
-      checked: false,
-    },
-    {
-      nombre: 'Pregunta multiple opción',
-      id: 1,
-      codigo: '07',
-      color: '#934054',
-      icon: 'gift-outline',
-      checked: false,
-    },
-    {
-      nombre: 'Pregunta relación',
-      id: 1,
-      codigo: '05',
-      color: '#934054',
-      icon: 'clipboard-outline',
-      checked: false,
-    },
-    {
-      nombre: 'Pregunta verdadero o falso',
-      id: 1,
-      codigo: '02',
-      color: '#934054',
-      icon: 'award-outline',
-      checked: false,
-    },
-    {
-      nombre: 'Pregunta única opción',
-      id: 1,
-      codigo: '01',
-      color: '#934054',
-      icon: 'activity-outline',
-      checked: false,
-    }
-  ]
+  optionsType:any = [];
   key_file:any;
-  constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService) { }
+  constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService, private generalServi: GeneralService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -91,7 +44,24 @@ export class QConfigComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.key_file = this.item?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo + '_' + Math.floor(Math.random() * 90000) + 10000;
+    this.getTypeAlternative();
   }
+
+  getTypeAlternative() {
+    const serviceName = END_POINTS.base_back.quiz + '/typeAlternatives';
+      this.loading = true;
+      this.generalServi.nameAll$(serviceName).subscribe(r => {
+        this.optionsType = r.data || [];
+        if (this.optionsType.length > 0) {
+          this.optionsType.map((r:any) => {
+            r.icon = 'keypad-outline';
+            r.checked = false;
+            r.color = '#934054'
+          })
+        }
+      }, () => { this.loading = false; }, () => { this.loading  = false; });
+  }
+
   valueFile($event:any) {
     if ($event && $event.value) {
       this.formHeader.controls['tipo_adjunto'].setValue('ARCHIVO');
