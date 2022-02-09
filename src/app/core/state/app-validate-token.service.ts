@@ -55,13 +55,24 @@ export class AppValidateTokenService {
       this.document.location.href = `${environment.authGoogleStrategy.endpoint}/accounts/logout?${next}${encodeParamRequest}`;
     }
 
-  // private static params(): string {
-  //   const redirectUri = encodeURIComponent(
-  //     environment.authStrategy.redirectUri
-  //   );
-  //   const scope = 'read introspection';
-  //   return `?response_type=token&client_id=${environment.authStrategy.clientId}&scope=${scope}&redirect_uri=${redirectUri}`;
+    // authorize(): void {
+    //   const next = 'next=' +  '/oauth/authorize/';
+    //   this.document.location.href = `${environment.authStrategy.baseEndpoint}/accounts/logout?${next}`;
+    //   // window.location.href = environment.shellApp;
+    // }
+  //   authorize(): void {
+  //     const paramRequest = AppValidateTokenService.params();
+  //     const next = 'next=/oauth/authorize/';
+  //     const encodeParamRequest = encodeURIComponent(`${paramRequest}`);
+  //     this.document.location.href = `${environment.authStrategy.baseEndpoint}/accounts/logout?${next}${encodeParamRequest}`;
   // }
+
+  // private static params(): string {
+  //     const redirectUri = encodeURIComponent(environment.authStrategy.redirectUri);
+  //     const scope = 'read introspection';
+  //     return `?response_type=token&client_id=${environment.authStrategy.clientId}&scope=${scope}&redirect_uri=${redirectUri}`;
+  // }
+
 
   private static paramsLamb(): string {
     const redirectUri = encodeURIComponent(
