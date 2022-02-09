@@ -1,13 +1,26 @@
-<div>
-    <form [formGroup]="formHeader">
-        <label class="label">Respuesta esperada:</label>
-        <input type="text" nbInput fullWidth formControlName="respuesta">
-        <control-messages [control]="formHeader.get('respuesta')"></control-messages>
-      </form>
-      <div class="d-flex align-items-center justify-content-between">
-        <div></div>
-        <div>
-            <button nbButton size="small" status="primary" (click)="saveQuestion()" [disabled]="formHeader.invalid">Guardar</button>
-        </div>
-    </div>
+<div class="table-responsive">
+    <table class="table table-sm">
+        <tbody>
+            <tr *ngFor="let item of arrayClose; let i = index">
+                <td style="width: 150px;">
+                    <input type="text" fullWidth placeholder="Palabra" nbInput fieldSize="small" [(ngModel)]="item.option">
+                </td>
+                <td style="width: 55px;">
+                    <input type="number" fullWidth placeholder="Puntos" nbInput fieldSize="small" [(ngModel)]="item.puntos">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                          
+                        </div>
+                        <div>
+                            <button nbButton size="small" status="primary" (click)="saveQuestion()" [disabled]="validButom">Guardar</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

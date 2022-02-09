@@ -44,6 +44,10 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'exam',
+    loadChildren: () => import('./pages/exam/exam.module').then((m) => m.ExamModule),
+  },
+  {
     path: '',
     redirectTo: 'auth',
     pathMatch: 'full',
