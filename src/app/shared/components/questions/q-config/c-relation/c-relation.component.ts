@@ -12,12 +12,13 @@ export class CRelationComponent implements OnInit {
   @Input() headParams: any;
   @Input() item: any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
+  @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
   directorio: any = DIRECTORY.base;
   key_file: any;
   key_file_resp: any;
 
   abecedario: any = [
-         "a", "b", "c", "d",
+    "a", "b", "c", "d",
     "e", "f", "g", "h", "i",
     "j", "k", "l", "m", "n",
     "o", "p", "q", "r", "s",
@@ -95,19 +96,6 @@ export class CRelationComponent implements OnInit {
       'arrayB': this.secondList
     };
 
-    console.log(alternativas);
-    this.relationList = [
-      {
-        relacion: '',
-        imagen: '',
-        base64: '',
-        resp: '',
-        resp_imagen: '',
-        resp_imagen_base64: '',
-        puntos: 0,
-      },
-    ]
-
     const serviceName = END_POINTS.base_back.quiz + '/questions';
     const params: any = {
       section_id: this.item.section_id,
@@ -119,14 +107,15 @@ export class CRelationComponent implements OnInit {
       key_video: this.headParams.key_video || '',
       adjunto: this.headParams.adjunto || '',
       codigo: this.headParams.type_alternative.codigo,
-      alternatives: alternativas || {},
+      alternativas: alternativas || {},
     };
-    if (params && params.pregunta && Object.keys(params.alternatives).length > 0) {
+    if (params && params.pregunta && Object.keys(params.alternativas).length > 0) {
       this.loadings.emit(true);
       this.generalServi.addNameData$(serviceName, params).subscribe(r => {
         if (r.success) {
+          this.changeSuccess.emit('ok');
         }
-      }, () => { this.loadings.emit(true); }, () => { this.loadings.emit(true); });
+      }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
     }
 
   }

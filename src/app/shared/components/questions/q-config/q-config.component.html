@@ -108,7 +108,8 @@
 
             <div *ngIf="['05'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-relation [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)">
+              <app-c-relation [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+                (changeSuccess)="changeSuccess($event)">
               </app-c-relation>
 
             </div>
