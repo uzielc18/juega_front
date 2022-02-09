@@ -37,7 +37,7 @@ nbSpinnerSize="large">
 
   <div *ngIf="viewFile === 'UNIQUE'">
     <div  class="text-center">
-      <button nbButton  size="small" fullWidth (click)="openModal();" [disabled]="isDisabled"><nb-icon style="font-size: 20px;" icon="cloud-upload-outline"></nb-icon> </button>
+      <button nbButton  size="small" [fullWidth]="fullWidth" status="basic" outline (click)="openModal();" [disabled]="isDisabled"><nb-icon style="font-size: 20px;" icon="cloud-upload-outline"></nb-icon> </button>
     </div>
   </div>
 </form>

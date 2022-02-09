@@ -15,13 +15,12 @@ export class QConfigComponent implements OnInit {
   directorio: any = DIRECTORY.base;
   arrayFile: any = [];
   formHeader: any = FormGroup;
-  formHeaderLink: any = FormGroup;
-  formHeaderFile: any = FormGroup;
+  loading: boolean = false;
   optionsType:any = [
     {
       nombre: 'Pregunta cerrada',
       id: 1,
-      typex: 'PC',
+      codigo: '04',
       color: 'red',
       icon: 'arrow-left-outline',
       checked: false,
@@ -29,7 +28,7 @@ export class QConfigComponent implements OnInit {
     {
       nombre: 'Pregunta abierta',
       id: 1,
-      typex: 'PA',
+      codigo: '03',
       color: 'blue',
       icon: 'mic-outline',
       checked: false,
@@ -37,7 +36,7 @@ export class QConfigComponent implements OnInit {
     {
       nombre: 'Pregunta multiple opción',
       id: 1,
-      typex: 'PMO',
+      codigo: '07',
       color: 'black',
       icon: 'gift-outline',
       checked: false,
@@ -45,7 +44,7 @@ export class QConfigComponent implements OnInit {
     {
       nombre: 'Pregunta relación',
       id: 1,
-      typex: 'PR',
+      codigo: '05',
       color: 'yellow',
       icon: 'clipboard-outline',
       checked: false,
@@ -53,7 +52,7 @@ export class QConfigComponent implements OnInit {
     {
       nombre: 'Pregunta verdadero o falso',
       id: 1,
-      typex: 'PVF',
+      codigo: '02',
       color: 'green',
       icon: 'award-outline',
       checked: false,
@@ -61,7 +60,7 @@ export class QConfigComponent implements OnInit {
     {
       nombre: 'Pregunta única opción',
       id: 1,
-      typex: 'PUO',
+      codigo: '01',
       color: 'red',
       icon: 'activity-outline',
       checked: false,
@@ -72,29 +71,23 @@ export class QConfigComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldReactive();
-    this.fieldReactiveLink();
-    this.fieldReactiveFile();
   }
-  private fieldReactiveLink() {
-    const controls = {
-      url_externa: ['', [Validators.required]],
-      tamano_peso: ['', [Validators.required]],
-      titulo: ['', [Validators.required]],
-      descripcion: ['', [Validators.required]],
-      key_video: ['', [Validators.required]],
-    };
-    this.formHeaderLink = this.formBuilder.group(controls);
-  }
-  private fieldReactiveFile() {
-    const controls = {
-      file: ['', [Validators.required]],
-    };
-    this.formHeaderFile = this.formBuilder.group(controls);
-  }
+
   private fieldReactive() {
     const controls = {
       pregunta: ['', [Validators.required]],
-      tipo_adjunto: ['']
+      tipo_adjunto: [''],
+      help: [''],
+      orden: [''],
+
+      url_video: [''],
+      key_video: [''],
+
+      adjunto: [''],
+      file: [''],
+
+      estado: ['1'],
+      type_alternative: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
     this.key_file = this.item?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo + '_' + Math.floor(Math.random() * 90000) + 10000;
@@ -102,11 +95,15 @@ export class QConfigComponent implements OnInit {
   valueFile($event:any) {
     if ($event && $event.value) {
       this.formHeader.controls['tipo_adjunto'].setValue('ARCHIVO');
-      this.formHeaderFile.controls['file'].setValue($event.value);
+      this.formHeader.controls['adjunto'].setValue($event.value.nombre_s3);
+      this.formHeader.controls['file'].setValue($event.value);
 
-      this.fieldReactiveLink();
+      this.formHeader.controls['url_video'].setValue('');
+      this.formHeader.controls['key_video'].setValue('');
+
     } else {
-      this.formHeaderFile.controls['file'].setValue('');
+      this.formHeader.controls['file'].setValue('');
+      this.formHeader.controls['adjunto'].setValue('');
     }
   }
   changeButtom(item:any) {
@@ -115,6 +112,8 @@ export class QConfigComponent implements OnInit {
         res.checked = false;
       });
       item.checked = true;
+      this.formHeader.controls['type_alternative'].setValue(item);
+      
     }
   }
   openUrlYoutube() {
@@ -127,24 +126,30 @@ export class QConfigComponent implements OnInit {
       if (result && result.close === 'ok') {
         this.formHeader.controls['tipo_adjunto'].setValue('URL');
 
-        this.formHeaderLink.patchValue({
-          url_externa: result.value.url_externa,
-          tamano_peso: result.value.tamano_peso,
-          titulo: result.value.titulo,
-          descripcion: result.value.descripcion,
-          key_video: result.value.key_video,
-        });
+        this.formHeader.controls['url_video'].setValue(result.value.url_externa);
+        this.formHeader.controls['key_video'].setValue(result.value.key_video);
 
-        this.fieldReactiveFile();
+        this.formHeader.controls['adjunto'].setValue('');
+        this.formHeader.controls['file'].setValue('');
       }
     });
   }
   deleteFile() {
-    this.fieldReactiveFile();
+    this.formHeader.controls['adjunto'].setValue('');
+    this.formHeader.controls['file'].setValue('');
+
     this.formHeader.controls['tipo_adjunto'].setValue('');
   }
   deleteLink() {
-    this.fieldReactiveLink();
+    this.formHeader.controls['url_video'].setValue('');
+    this.formHeader.controls['key_video'].setValue('');
+
     this.formHeader.controls['tipo_adjunto'].setValue('');
+  }
+
+  changeLoadings($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 1000);
   }
 }

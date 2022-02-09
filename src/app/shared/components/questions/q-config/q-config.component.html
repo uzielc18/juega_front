@@ -1,4 +1,6 @@
-<nb-card>
+<nb-card [nbSpinner]="loading"
+nbSpinnerStatus="primary"
+nbSpinnerSize="large">
   <nb-card-body>
     <div class="row">
       <div class="col-md-9">
@@ -30,27 +32,27 @@
           </div>
           <div class="col-md-6">
             <label class="label">Link de Youtube</label><br>
-            <button nbButton  size="small" fullWidth (click)="openUrlYoutube()">
+            <button nbButton  size="small" status="info" outline fullWidth (click)="openUrlYoutube()">
               <img src="https://i.pinimg.com/originals/91/c1/cd/91c1cdeacc84d0a5673bb716549ba366.png" height="20px" alt="">
             </button>
           </div>
         </div>
         <br>
           <div *ngIf="formHeader?.value?.tipo_adjunto === 'ARCHIVO'" class="text-center">
-            <div *ngIf="formHeaderFile?.value?.file?.ext_file !== 'mp3'" >
+            <div *ngIf="formHeader?.value?.file?.ext_file !== 'mp3'" >
               <div style="text-align: right; cursor: pointer;">
                 <nb-icon icon="close-circle-outline" status="danger" (click)="deleteFile()"></nb-icon>
               </div>
               <div>
-                <img src="{{formHeaderFile?.value?.file?.base64}}" style="width: 100%; height: 100%;max-height: 170px;margin: 0 auto;" alt="">
+                <img src="{{formHeader?.value?.file?.base64}}" style="width: 100%; height: 100%;max-height: 170px;margin: 0 auto;" alt="">
               </div>
             </div>
-            <div *ngIf="formHeaderFile?.value?.file?.ext_file === 'mp3'">
+            <div *ngIf="formHeader?.value?.file?.ext_file === 'mp3'">
               <div style="text-align: right; cursor: pointer;">
                 <nb-icon icon="close-circle-outline" status="danger" (click)="deleteFile()"></nb-icon>
               </div>
               <div style="padding-top: 0px;">
-                <app-video-player  [url]="formHeaderFile?.value?.file?.base64" [videoFormat]="'Audio'"></app-video-player>
+                <app-video-player  [url]="formHeader?.value?.file?.base64" [videoFormat]="'Audio'"></app-video-player>
               </div>
             </div>
           </div>
@@ -59,7 +61,7 @@
               <nb-icon icon="close-circle-outline" status="danger" (click)="deleteLink()"></nb-icon>
             </div>
             <div>
-              <app-video-player  [url]="formHeaderLink?.value?.url_externa" [videoFormat]="formHeaderLink?.value?.tamano_peso"></app-video-player>
+              <app-video-player  [url]="formHeader?.value?.url_externa" [videoFormat]="'Youtube'"></app-video-player>
             </div>
           </div>
       </div>
@@ -70,7 +72,7 @@
       <div class="d-flex">
       <div *ngFor="let item of optionsType" style="padding-left: 3px; padding-right: 3px;">
         <button nbButton  size="large" [ngStyle]="{'background': item.checked ? item.color : '', 'color': item.checked ? 'white' : ''}" 
-        (click)="changeButtom(item)" [disabled]="formHeader.invalid">
+        (click)="changeButtom(item)" [disabled]="formHeader.invalid" nbTooltip="{{item.nombre}}" nbTooltipPlacement="top" nbTooltipStatus="basic">
           <nb-icon [icon]="item.icon"></nb-icon>
         </button>
       </div>
@@ -78,5 +80,45 @@
     </div>
     <div></div>
     </div>
+
+    <strong *ngIf="formHeader?.value?.type_alternative?.nombre">
+      <br>
+      {{formHeader?.value?.type_alternative?.nombre}}
+      <hr>
+    </strong>
+    <ng-container class="container">
+      <div *ngIf="['07'].includes(formHeader?.value?.type_alternative?.codigo)">
+
+          <app-c-multi-option [headParams]="formHeader.value" (loadings)="changeLoadings($event)"></app-c-multi-option>
+
+      </div>
+
+      <div *ngIf="['01'].includes(formHeader?.value?.type_alternative?.codigo)">
+
+          <app-c-unique-option [headParams]="formHeader.value" (loadings)="changeLoadings($event)"></app-c-unique-option>
+
+      </div>
+
+      <div *ngIf="['02'].includes(formHeader?.value?.type_alternative?.codigo)">
+
+          <app-c-true-false [headParams]="formHeader.value"></app-c-true-false>
+
+      </div>
+
+      <div *ngIf="['03'].includes(formHeader?.value?.type_alternative?.codigo)">
+
+          <app-c-open [headParams]="formHeader.value"></app-c-open>
+
+      </div>
+
+      <div *ngIf="['04'].includes(formHeader?.value?.type_alternative?.codigo)">
+
+          <app-c-closed [headParams]="formHeader.value"></app-c-closed>
+
+      </div>
+
+    </ng-container>
+    
+    
   </nb-card-body>
 </nb-card>
