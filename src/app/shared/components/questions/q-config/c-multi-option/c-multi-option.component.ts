@@ -40,7 +40,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
     this.headParams = this.headParams;
     this.item = this.item;
     console.log(this.headParams, this.item);
-    
+
   }
   ngOnInit(): void {
     this.valueKey();
@@ -88,7 +88,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
       adjunto: this.headParams.adjunto || '',
       // estado: this.headParams.estado,
       codigo: this.headParams.type_alternative.codigo,
-      alternativas: this.arrayMultiple || [], 
+      alternativas: this.arrayMultiple || [],
     };
     if (params && params.pregunta && params.alternativas.length>0) {
       this.loadings.emit(true);

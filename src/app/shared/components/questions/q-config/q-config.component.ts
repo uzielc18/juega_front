@@ -125,7 +125,7 @@ export class QConfigComponent implements OnInit {
       });
       item.checked = true;
       this.formHeader.controls['type_alternative'].setValue(item);
-      
+
     }
   }
   openUrlYoutube() {

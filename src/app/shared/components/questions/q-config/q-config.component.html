@@ -1,12 +1,12 @@
-<div *ngFor="let quiz of questions; let i = index" >
-  <div class="row">
-    <div  [class]="quiz?.pluss ? 'col-md-10' : 'col-md-12'">
+<div *ngFor="let quiz of questions; let i = index">
+  <div class="row m-0">
+    <div [class]="quiz?.pluss ? 'col-md-11' : 'col-md-12'">
       <nb-card (click)="changePluss(quiz)" style="cursor: pointer;">
         <nb-card-body>
           {{i+1}} &nbsp;)&nbsp; {{quiz?.titulo || quiz?.pregunta}} {{quiz?.pluss}}
         </nb-card-body>
       </nb-card>
-      <nb-card *ngIf="quiz.checked" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" >
+      <nb-card *ngIf="quiz.checked" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
         <nb-card-body>
           <div class="row">
             <div class="col-md-9">
@@ -31,9 +31,10 @@
                 </div>
                 <div class="col-md-6">
                   <label class="label">Link de Youtube</label><br>
-                  <button nbButton size="small" status="info" outline fullWidth (click)="openUrlYoutube()">
-                    <img src="https://i.pinimg.com/originals/91/c1/cd/91c1cdeacc84d0a5673bb716549ba366.png" height="20px"
-                      alt="">
+                  <button nbButton size="small" status="info" outline fullWidth (click)="openUrlYoutube()"
+                    style="padding: 5px;">
+                    <img src="https://i.pinimg.com/originals/91/c1/cd/91c1cdeacc84d0a5673bb716549ba366.png"
+                      height="20px" alt="">
                   </button>
                 </div>
               </div>
@@ -53,7 +54,8 @@
                     <nb-icon icon="close-circle-outline" status="danger" (click)="deleteFile()"></nb-icon>
                   </div>
                   <div style="padding-top: 0px;">
-                    <app-video-player [url]="formHeader?.value?.file?.base64" [videoFormat]="'Audio'"></app-video-player>
+                    <app-video-player [url]="formHeader?.value?.file?.base64" [videoFormat]="'Audio'">
+                    </app-video-player>
                   </div>
                 </div>
               </div>
@@ -83,7 +85,7 @@
             </div>
             <div></div>
           </div>
-      
+
           <strong *ngIf="formHeader?.value?.type_alternative?.nombre">
             <br>
             {{formHeader?.value?.type_alternative?.nombre}}
@@ -91,73 +93,68 @@
           </strong>
           <ng-container class="container">
             <div *ngIf="['07'].includes(formHeader?.value?.type_alternative?.codigo)">
-      
-              <app-c-multi-option 
-              [headParams]="formHeader.value"
-              [item]="quiz"
-              (loadings)="changeLoadings($event)"
-              (changeSuccess)="changeSuccess($event)"
-              ></app-c-multi-option>
-      
+
+              <app-c-multi-option [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+                (changeSuccess)="changeSuccess($event)"></app-c-multi-option>
+
             </div>
-      
+
             <div *ngIf="['01'].includes(formHeader?.value?.type_alternative?.codigo)">
-      
-              <app-c-unique-option [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"></app-c-unique-option>
-      
+
+              <app-c-unique-option [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)">
+              </app-c-unique-option>
+
             </div>
-      
+
             <div *ngIf="['05'].includes(formHeader?.value?.type_alternative?.codigo)">
-      
-              <app-c-relation [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"></app-c-relation>
-      
+
+              <app-c-relation [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+                (changeSuccess)="changeSuccess($event)">
+              </app-c-relation>
+
             </div>
-      
+
             <div *ngIf="['02'].includes(formHeader?.value?.type_alternative?.codigo)">
-      
+
               <app-c-true-false [headParams]="formHeader.value" [item]="quiz"></app-c-true-false>
-      
+
             </div>
-      
+
             <div *ngIf="['03'].includes(formHeader?.value?.type_alternative?.codigo)">
-      
+
               <app-c-open [headParams]="formHeader.value" [item]="quiz"></app-c-open>
-      
+
             </div>
-      
+
             <div *ngIf="['04'].includes(formHeader?.value?.type_alternative?.codigo)">
-      
+
               <app-c-closed [headParams]="formHeader.value" [item]="quiz"></app-c-closed>
-      
+
             </div>
-      
+
           </ng-container>
-      
-      
+
+
         </nb-card-body>
       </nb-card>
 
     </div>
-   <div  [class]="quiz.pluss ? 'col-md-2' : ''">
-     <nb-card *ngIf="quiz.pluss">
-       <nb-card-body>
-        <!-- <div class="d-flex flex-column" style="max-width: 80px;"> -->
+    <div [class]="quiz.pluss ? 'col-md-1' : ''">
+      <nb-card *ngIf="quiz.pluss" class="m-0 mb-4">
+        <nb-card-body class="p-0">
+          <!-- <div class="d-flex flex-column" style="max-width: 80px;"> -->
           <button nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz)">
             <nb-icon class="m-0 mb-2" icon="plus-outline" style="height: 24px; width: 24px;"></nb-icon>
-            <span class="text-center">Añadir</span>
+            <span style="font-size: 10px;" class="text-center">Añadir</span>
           </button> <br>
           <button *ngIf="quiz?.ultimo" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz)">
             <nb-icon class="m-0 mb-2" icon="npm-outline" style="height: 24px; width: 24px;"></nb-icon>
-            <span class="text-center" style="line-height: 1.5;">Añadir<br>sección</span>
+            <span class="text-center" style="line-height: 1.5; font-size: 10px;">Añadir<br>sección</span>
           </button>
-        <!-- </div> -->
-       </nb-card-body>
-     </nb-card>
-   </div>
+          <!-- </div> -->
+        </nb-card-body>
+      </nb-card>
+    </div>
   </div>
 
- 
-
 </div>
-
-
