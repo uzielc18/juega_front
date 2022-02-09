@@ -1,1 +1,13 @@
-<p>c-closed works!</p>
+<div>
+    <form [formGroup]="formHeader">
+        <label class="label">Respuesta esperada:</label>
+        <input type="text" nbInput fullWidth formControlName="respuesta">
+        <control-messages [control]="formHeader.get('respuesta')"></control-messages>
+      </form>
+      <div class="d-flex align-items-center justify-content-between">
+        <div></div>
+        <div>
+            <button nbButton size="small" status="primary" (click)="saveQuestion()" [disabled]="formHeader.invalid">Guardar</button>
+        </div>
+    </div>
+</div>

@@ -12,6 +12,7 @@ import { PrepareFileProModule } from '../../prepare-file-pro/prepare-file-pro.mo
 import { MProcessUrlComponent } from './modals/m-process-url/m-process-url.component';
 import { ControlMessagesModule } from '../../control-messages/control-messages.module';
 import { VideoPlayerModule } from '../../video-player/video-player.module';
+import { GeneralService } from 'src/app/providers';
 
 const COMPONENTS: any = [
   QConfigComponent,
@@ -36,6 +37,18 @@ const MODULOS: any = [
   PrepareFileProModule,
   VideoPlayerModule
 ];
+const EXPORTS_COMPONENTS:any = [
+  QConfigComponent,
+  CMultiOptionComponent,
+  CUniqueOptionComponent,
+  CTrueFalseComponent,
+  COpenComponent,
+  CClosedComponent,
+];
+const SERVICES: any = [
+  GeneralService
+];
+
 @NgModule({
   declarations: [...COMPONENTS, ],
   entryComponents:[...MODALS],
@@ -45,6 +58,7 @@ const MODULOS: any = [
     ...MODULOS,
     CONTROL_MESSAGGE
   ],
-  exports: [QConfigComponent, CMultiOptionComponent]
+  exports: [...EXPORTS_COMPONENTS],
+  providers: [...SERVICES]
 })
 export class QConfigModule { }
