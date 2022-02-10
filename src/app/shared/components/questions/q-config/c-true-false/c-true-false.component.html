@@ -3,13 +3,13 @@
         <tbody>
             <tr *ngFor="let item of arrayTrueFalse; let i = index">
                 <td style="width: 1px;" class="text-center">
-                    <button nbButton size="tiny" status="info" outline nbTooltip="Subir alternativa" nbTooltipStatus="info" (click)="shift(i - 1, i)">
+                    <button nbButton size="tiny" status="info" outline (click)="shift(i - 1, i)">
                         <nb-icon icon="arrowhead-up-outline"></nb-icon></button>&nbsp;
-                    <button nbButton size="tiny" status="info" outline nbTooltip="Bajar alternativa" nbTooltipStatus="info" (click)="shift(i, i + 1)">
+                    <button nbButton size="tiny" status="info" outline (click)="shift(i, i + 1)">
                         <nb-icon icon="arrowhead-down-outline"></nb-icon></button>
                 </td>
                 <td style="width: 1px;" class="text-center">
-                    <nb-radio   [value]="item.checked" (valueChange)="valueChange(item)" status="primary" style="padding-right: 0px;"></nb-radio>
+                    <nb-radio  [checked]="item.checked" [value]="item.checked" (valueChange)="valueChange(item)" status="primary" style="padding-right: 0px;"></nb-radio>
                 </td>
                 <td style="width: 150px;">
                     <button *ngIf="item.option === 'VERDADERO'" nbButton outline fullWidth status="success" size="small">{{item.option}}</button>
