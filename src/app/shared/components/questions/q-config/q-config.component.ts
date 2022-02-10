@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
@@ -21,13 +22,31 @@ export class QConfigComponent implements OnInit {
   optionsType:any = [];
   key_file:any;
   questions:any = [];
+  movies = [
+    'Episode I - The Phantom Menace',
+    'Episode II - Attack of the Clones',
+    'Episode III - Revenge of the Sith',
+    'Episode IV - A New Hope',
+    'Episode V - The Empire Strikes Back',
+    'Episode VI - Return of the Jedi',
+    'Episode VII - The Force Awakens',
+    'Episode VIII - The Last Jedi',
+    'Episode IX – The Rise of Skywalker',
+  ];
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
+  }
   constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService, private generalServi: GeneralService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
     this.getQuestions();
+    this.getTypeAlternative();
   }
-
+  // drop(event: CdkDragDrop<string[]>) {
+  //   moveItemInArray(this.questions, event.previousIndex, event.currentIndex);
+  // }
   private fieldReactive() {
     const controls = {
       pregunta: ['', [Validators.required]],
@@ -45,8 +64,7 @@ export class QConfigComponent implements OnInit {
       type_alternative: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.key_file = this.item?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo + '_' + Math.floor(Math.random() * 90000) + 10000;
-    this.getTypeAlternative();
+    this.key_file = this.item?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo;
   }
   getQuestions() {
     const serviceName = END_POINTS.base_back.quiz + '/get-questions';
@@ -75,11 +93,29 @@ export class QConfigComponent implements OnInit {
       }
   }
 
-  changeValueCheck(item:any) {
+  changeValueCheck(item:any, i:any) {
     this.questions.map((r:any) => {
       r.checked = false;
     });
-      item.checked = true;
+    this.fieldReactive();
+    item.checked = true;
+    this.formHeader.controls['orden'].setValue(i + 2);
+    if (this.optionsType.length>0) {
+      this.optionsType.map((res:any) => {
+        res.checked = false;
+      });
+    }
+  }
+  changeCancel(item:any) {
+    item.checked = false;
+    item.pluss = false;
+
+    this.fieldReactive();
+    if (this.optionsType.length>0) {
+      this.optionsType.map((res:any) => {
+        res.checked = false;
+      });
+    }
   }
 
   changePluss(item:any) {

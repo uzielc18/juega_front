@@ -48,6 +48,7 @@ import { CardListCourseModule } from 'src/app/shared/components/card-list-course
 import { QuestionsConfigComponent } from './components/modals/questions-config/questions-config.component';
 import { QConfigModule } from 'src/app/shared/components/questions/q-config/q-config.module';
 import { QViewModule } from '../../shared/components/questions/q-view/q-view.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -83,6 +84,7 @@ const COMPONENTS: any[] = [
 const NG_MODULES: any = [
   NebularModule,
   NgDynamicBreadcrumbModule,
+  DragDropModule
 ];
 const NGB_MODULES: any = [
   // NgbModule

@@ -3,11 +3,17 @@
         <tbody>
             <tr *ngFor="let item of arrayTrueFalse; let i = index">
                 <td style="width: 1px;" class="text-center">
+                    <button nbButton size="tiny" status="info" outline nbTooltip="Subir alternativa" nbTooltipStatus="info" (click)="shift(i - 1, i)">
+                        <nb-icon icon="arrowhead-up-outline"></nb-icon></button>&nbsp;
+                    <button nbButton size="tiny" status="info" outline nbTooltip="Bajar alternativa" nbTooltipStatus="info" (click)="shift(i, i + 1)">
+                        <nb-icon icon="arrowhead-down-outline"></nb-icon></button>
+                </td>
+                <td style="width: 1px;" class="text-center">
                     <nb-radio   [value]="item.checked" (valueChange)="valueChange(item)" status="primary" style="padding-right: 0px;"></nb-radio>
                 </td>
                 <td style="width: 150px;">
-                    <button *ngIf="item.value === 'V'" nbButton outline fullWidth status="success" size="small">{{item.nombre}}</button>
-                    <button *ngIf="item.value === 'F'" nbButton outline fullWidth status="danger" size="small">{{item.nombre}}</button>
+                    <button *ngIf="item.option === 'VERDADERO'" nbButton outline fullWidth status="success" size="small">{{item.option}}</button>
+                    <button *ngIf="item.option === 'FALSO'" nbButton outline fullWidth status="danger" size="small">{{item.option}}</button>
                     <!-- <input type="text" fullWidth placeholder="Alternativa {{i +1}}" nbInput fieldSize="small" [(ngModel)]="item.nombre"> -->
                 </td>
                 <td style="width: 55px;">
@@ -40,7 +46,7 @@
                     </div>
             </tr>
             <tr>
-                <td colspan="4">
+                <td colspan="5">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
                           

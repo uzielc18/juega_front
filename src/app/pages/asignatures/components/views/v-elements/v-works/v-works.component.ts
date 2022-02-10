@@ -115,7 +115,7 @@ export class VWorksComponent implements OnInit, OnChanges {
       ext_enlace: [''],
     };
     this.form = this.formBuilder.group(controls);
-    this.key_file = this.element?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo + '_' + Math.floor(Math.random() * 90000) + 10000;
+    this.key_file = this.element?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo;
     // console.log(this.key_file, 'Key file');
   }
 
