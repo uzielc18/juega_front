@@ -9,7 +9,7 @@
                         <nb-icon icon="arrowhead-down-outline"></nb-icon></button>
                 </td>
                 <td style="width: 1px;" class="text-center">
-                    <nb-checkbox status="primary" [(ngModel)]="item.checked" style="padding-right: 0px;"></nb-checkbox>
+                    <nb-checkbox [checked]="item.checked" status="primary" [(ngModel)]="item.checked" style="padding-right: 0px;"></nb-checkbox>
                 </td>
                 <td style="width: 150px;">
                     <input type="text" fullWidth placeholder="Alternativa {{i +1}}" nbInput fieldSize="small" [(ngModel)]="item.option">
@@ -58,7 +58,7 @@
                             </button>
                         </div>
                         <div>
-                            <button nbButton size="small" status="basic" (click)="cancel()" *ngIf="arrayMultiple?.length>0">Cancelar</button>&nbsp;&nbsp;
+                            <button nbButton size="small" status="basic" (click)="cancel()" *ngIf="arrayMultiple?.length>0 && headParams?.code === 'NEW'">Cancelar</button>&nbsp;&nbsp;
                             <button nbButton size="small" status="primary" (click)="saveQuestion()" [disabled]="validButom">Guardar</button>
                         </div>
                     </div>

@@ -39,6 +39,9 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
   ngOnChanges():void {
     this.headParams = this.headParams;
     this.item = this.item;
+    if (this.headParams?.code === 'UPDATE') {
+      this.setUpdate();
+    }
   }
   ngOnInit(): void {
     this.valueKey();
@@ -90,12 +93,21 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
         alternativas: this.arrayUnique || [], 
       };
       if (params && params.pregunta && params.alternativas.length>0) {
-        this.loadings.emit(true);
-            this.generalServi.addNameData$(serviceName, params).subscribe(r => {
-              if (r.success) {
-                this.changeSuccess.emit('ok');
-              }
-            }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+        if (this.headParams.code === 'NEW') {
+          this.loadings.emit(true);
+              this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+                if (r.success) {
+                  this.changeSuccess.emit('ok');
+                }
+              }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+        } else {
+          this.loadings.emit(true);
+              this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+                if (r.success) {
+                  this.changeSuccess.emit('ok');
+                }
+              }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+        }
       }
     
     } else {
@@ -147,6 +159,18 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
     if (index2 > 0 && index1 < data.length - 1) {
         [data[index1], data[index2]] = [data[index2], data[index1]];
         this.arrayUnique = data;
+    }
+  }
+  setUpdate() {
+    this.arrayUnique = [];
+    this.arrayUnique = this.item.alternativas;
+    if (this.arrayUnique.length>0) {
+      this.arrayUnique.map((r:any) => {
+          r.checked = false;
+        if (r.correcto === 1) {
+          r.checked = true;
+        }
+      });
     }
   }
 }

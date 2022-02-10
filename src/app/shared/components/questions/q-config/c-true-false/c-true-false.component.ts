@@ -41,6 +41,11 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
   ngOnChanges():void {
     this.headParams = this.headParams;
     this.item = this.item;
+    console.log(this.headParams);
+    
+    if (this.headParams?.code === 'UPDATE') {
+      this.setUpdate();
+    }
   }
   ngOnInit(): void {
     this.valueKey();
@@ -81,12 +86,21 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
         alternativas: this.arrayTrueFalse || [], 
       };
       if (params && params.pregunta && params.alternativas.length>0) {
-        this.loadings.emit(true);
-            this.generalServi.addNameData$(serviceName, params).subscribe(r => {
-              if (r.success) {
-                this.changeSuccess.emit('ok');
-              }
-            }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+        if (this.headParams.code === 'NEW') {
+          this.loadings.emit(true);
+              this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+                if (r.success) {
+                  this.changeSuccess.emit('ok');
+                }
+              }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+        } else {
+          this.loadings.emit(true);
+              this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+                if (r.success) {
+                  this.changeSuccess.emit('ok');
+                }
+              }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+        }
       }
     
     } else {
@@ -132,6 +146,26 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
     if (index2 > 0 && index1 < data.length - 1) {
         [data[index1], data[index2]] = [data[index2], data[index1]];
         this.arrayTrueFalse = data;
+    }
+  }
+  setUpdate() {
+    this.arrayTrueFalse = [];
+    this.arrayTrueFalse = this.item.alternativas;
+    if (this.arrayTrueFalse.length>0) {
+      this.arrayTrueFalse.map((r:any) => {
+          r.checked = false;
+        if (r.correcto === 1) {
+          r.checked = true;
+        }
+
+        if (r.option === 'VERDADERO') {
+          r.color = 'rgb(155, 247, 151)';
+        }
+        if (r.option === 'FALSO') {
+          r.color = 'rgb(248, 193, 176)';
+        }
+
+      })
     }
   }
 }
