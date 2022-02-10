@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class CMultiOptionComponent implements OnInit, OnChanges {
   @Input() headParams:any;
-  @Input() item:any;
+  @Input() itemQuiz:any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
   arrayMultiple:any = [
@@ -37,8 +37,8 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   directorio = DIRECTORY.base;
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
-    this.headParams = this.headParams;
-    this.item = this.item;
+    this.headParams = JSON.parse(JSON.stringify(this.headParams));
+    this.itemQuiz = JSON.parse(JSON.stringify(this.itemQuiz));
     if (this.headParams?.code === 'UPDATE') {
       this.setUpdate();
     }
@@ -80,9 +80,9 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
       });
     const serviceName = END_POINTS.base_back.quiz + '/questions';
     const params:any = {
-      section_id: this.item.section_id,
+      section_id: this.itemQuiz.section_id,
       type_alternative_id: this.headParams.type_alternative.id,
-      exam_id: this.item.exam_id,
+      exam_id: this.itemQuiz.exam_id,
       pregunta: this.headParams.pregunta,
       help: '',
       orden: this.headParams.orden || '',
@@ -103,7 +103,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
             }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
       } else {
         this.loadings.emit(true);
-            this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+            this.generalServi.updateNameIdData$(serviceName, this.itemQuiz.id, params).subscribe(r => {
               if (r.success) {
                 this.changeSuccess.emit('ok');
               }
@@ -157,7 +157,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   }
   setUpdate() {
     this.arrayMultiple = [];
-    this.arrayMultiple = this.item.alternativas;
+    this.arrayMultiple = this.itemQuiz.alternativas  || [];
     if (this.arrayMultiple.length>0) {
       this.arrayMultiple.map((r:any) => {
           r.checked = false;

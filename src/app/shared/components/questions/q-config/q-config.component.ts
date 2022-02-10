@@ -6,6 +6,7 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { DIRECTORY } from 'src/app/shared/directorios/directory';
 import { MProcessUrlComponent } from './modals/m-process-url/m-process-url.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-q-config',
@@ -76,8 +77,6 @@ export class QConfigComponent implements OnInit {
         this.questions = r.data || [];
         if (this.questions.length> 0) {
           const ultimoRegistro = this.questions[this.questions.length - 1];
-          console.log(ultimoRegistro);
-
           this.questions.map((r:any) => {
             r.checked = false;
             r.pluss = false;
@@ -241,5 +240,63 @@ export class QConfigComponent implements OnInit {
         this.fieldReactive();
       }
     }, 100);
+  }
+  deleteQuestion(event:any, el: any) {
+    event.stopPropagation();
+    const serviceName = END_POINTS.base_back.quiz + '/questions';
+    if (el.id) {
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿ Desea eliminar ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          this.loading = true;
+          this.generalServi.deleteNameId$(serviceName, el.id).subscribe(r => {
+            if (r.success) {
+              this.getQuestions();
+              this.fieldReactive();
+              if (this.optionsType.length>0) {
+                this.optionsType.map((res:any) => {
+                  res.checked = false;
+                });
+              }
+            }
+          }, () => { this.loading = false; }, () => { this.loading = false; });
+        }
+      });
+    }
+  }
+  reloadList() {
+    this.getQuestions();
+    this.fieldReactive();
+    if (this.optionsType.length>0) {
+      this.optionsType.map((res:any) => {
+        res.checked = false;
+      });
+    }
+  }
+  changeOrden() {
+    if (this.questions.length>0) {
+      this.questions.map((item:any, index:any) => {
+        item.orden = index + 1;
+      });
+      const val = this.questions[0];
+      let valid = false;
+      if (val.nivel === 1) {
+        valid = true;
+      }
+      console.log(valid, this.questions, 'jejejejjejej');
+      
+    }
   }
 }
