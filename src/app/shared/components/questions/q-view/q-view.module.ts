@@ -5,12 +5,18 @@ import { VDocUniqueOptionComponent } from './v-docente/v-doc-unique-option/v-doc
 import { QViewComponent } from './q-view.component';
 import { VRelationComponent } from './v-relation/v-relation.component';
 import { NebularModule } from '../../../nebular.module';
+import { VDocTrueFalseComponent } from './v-docente/v-doc-true-false/v-doc-true-false.component';
+import { VDocClosedComponent } from './v-docente/v-doc-closed/v-doc-closed.component';
+import { VDocOpenComponent } from './v-docente/v-doc-open/v-doc-open.component';
 
 const COMPONENTS: any = [
   VRelationComponent,
   QViewComponent,
   VDocMultiOptionComponent,
   VDocUniqueOptionComponent,
+  VDocTrueFalseComponent,
+  VDocClosedComponent,
+  VDocOpenComponent
 ];
 
 const NEBULAR: any = [

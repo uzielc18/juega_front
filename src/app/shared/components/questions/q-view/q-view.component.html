@@ -4,3 +4,6 @@
 <div *ngIf="['01'].includes(object?.codigo)">
     <app-v-doc-unique-option [alternativas]="object?.alternativas || []"></app-v-doc-unique-option>
 </div>
+<div *ngIf="['02'].includes(object?.codigo)">
+    <app-v-doc-true-false [alternativas]="object?.alternativas || []"></app-v-doc-true-false>
+</div>
