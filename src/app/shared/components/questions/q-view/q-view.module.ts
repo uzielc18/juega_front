@@ -21,7 +21,7 @@ const NEBULAR: any = [
   declarations: [...COMPONENTS],
   imports: [
     NEBULAR,
-    CommonModule
+    CommonModule,
   ],
   exports: [...COMPONENTS]
 })

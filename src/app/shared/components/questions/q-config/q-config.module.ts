@@ -13,7 +13,8 @@ import { MProcessUrlComponent } from './modals/m-process-url/m-process-url.compo
 import { ControlMessagesModule } from '../../control-messages/control-messages.module';
 import { VideoPlayerModule } from '../../video-player/video-player.module';
 import { GeneralService } from 'src/app/providers';
-
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { QViewModule } from '../q-view/q-view.module';
 const COMPONENTS: any = [
   QConfigComponent,
   CUniqueOptionComponent,
@@ -35,7 +36,9 @@ const CONTROL_MESSAGGE: any = [
 ];
 const MODULOS: any = [
   PrepareFileProModule,
-  VideoPlayerModule
+  VideoPlayerModule,
+  DragDropModule,
+  QViewModule
 ];
 const EXPORTS_COMPONENTS: any = [
   QConfigComponent,
@@ -57,7 +60,7 @@ const SERVICES: any = [
     CommonModule,
     ...NG_MODULES,
     ...MODULOS,
-    CONTROL_MESSAGGE
+    CONTROL_MESSAGGE,
   ],
   exports: [...EXPORTS_COMPONENTS],
   providers: [...SERVICES]

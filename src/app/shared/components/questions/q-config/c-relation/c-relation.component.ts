@@ -48,8 +48,8 @@ export class CRelationComponent implements OnInit {
     this.valueKey();
   }
   valueKey() {
-    this.key_file = 'rrrr' + '_' + '00000000001' + '_' + Math.floor(Math.random() * 90000) + 10000;
-    this.key_file_resp = 'rsrs' + '_' + '00000000001' + '_' + Math.floor(Math.random() * 90000) + 10000;
+    this.key_file = 'rrrr' + '_' + '00000000001';
+    this.key_file_resp = 'rsrs' + '_' + '00000000001';
   }
 
   valueFile($event: any, item: any) {
@@ -103,6 +103,7 @@ export class CRelationComponent implements OnInit {
       exam_id: this.item.exam_id,
       pregunta: this.headParams.pregunta,
       help: '',
+      orden: this.headParams.orden || '',
       url_video: this.headParams.url_video || '',
       key_video: this.headParams.key_video || '',
       adjunto: this.headParams.adjunto || '',

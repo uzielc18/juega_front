@@ -1,4 +1,6 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { GeneralService } from 'src/app/providers';
+import { END_POINTS } from 'src/app/providers/utils';
 
 @Component({
   selector: 'app-c-open',
@@ -8,23 +10,23 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 export class COpenComponent implements OnInit, OnChanges {
   @Input() headParams:any;
   @Input() item:any;
+  @Output() loadings: EventEmitter<boolean> = new EventEmitter();
+  @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
   arrayOpen:any = [
     {
-        id: 0,
-        question_id: 0,
-        option: '',
-        puntos: 0,
-        correcto: 0,
-        checked: false,
-        orden: 1,
-        estado: 1,
-        imagen: '',
-        base64: '',
+      option: '',
+      puntos: 0,
+      correcto: 0,
+      checked: false,
+      orden: '',
+      imagen: '',
+      base64: '',
     },
   ]
-  constructor() { }
+  constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
     this.headParams = this.headParams;
+    this.item = this.item;
   }
   ngOnInit(): void {
   }
@@ -41,6 +43,32 @@ export class COpenComponent implements OnInit, OnChanges {
     }
   }
   saveQuestion() {
+    this.arrayOpen.map((r:any, index:any) => {
+        r.orden = index + 1;
+    });
+    const serviceName = END_POINTS.base_back.quiz + '/questions';
+    const params:any = {
+      section_id: this.item.section_id,
+      type_alternative_id: this.headParams.type_alternative.id,
+      exam_id: this.item.exam_id,
+      pregunta: this.headParams.pregunta,
+      help: '',
+      orden: this.headParams.orden || '',
+      url_video: this.headParams.url_video || '',
+      key_video: this.headParams.key_video || '',
+      adjunto: this.headParams.adjunto || '',
+      // estado: this.headParams.estado,
+      codigo: this.headParams.type_alternative.codigo,
+      alternativas: this.arrayOpen || [],
+    };
+    if (params && params.pregunta && params.alternativas.length>0) {
+      this.loadings.emit(true);
+          this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+            if (r.success) {
+              this.changeSuccess.emit('ok');
+            }
+          }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+    }
 
   }
 }
