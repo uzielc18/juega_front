@@ -9,7 +9,7 @@
                         <nb-icon icon="arrowhead-down-outline"></nb-icon></button>
                 </td>
                 <td style="width: 1px;" class="text-center">
-                    <nb-radio   [checked]="item.checked" [value]="item.checked" (valueChange)="valueChange(item)" status="primary" style="padding-right: 0px;"></nb-radio>
+                    <nb-radio   [checked]="item.correcto === 1"  (valueChange)="valueChange(item)" status="primary" style="padding-right: 0px;"></nb-radio>
                 </td>
                 <td style="width: 150px;">
                     <input type="text" fullWidth placeholder="Alternativa {{i +1}}" nbInput fieldSize="small" [(ngModel)]="item.option">
