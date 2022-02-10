@@ -9,7 +9,7 @@ import { END_POINTS } from 'src/app/providers/utils';
   styleUrls: ['./c-closed.component.scss']
 })
 export class CClosedComponent implements OnInit, OnChanges {
-  @Input() item:any;
+  @Input() itemQuiz:any;
   @Input() headParams:any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
@@ -26,8 +26,8 @@ export class CClosedComponent implements OnInit, OnChanges {
   ]
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
-    this.headParams = this.headParams;
-    this.item = this.item;
+    this.headParams = JSON.parse(JSON.stringify(this.headParams));
+    this.itemQuiz = JSON.parse(JSON.stringify(this.itemQuiz));
     if (this.headParams?.code === 'UPDATE') {
       this.setUpdate();
     }
@@ -53,9 +53,9 @@ export class CClosedComponent implements OnInit, OnChanges {
     });
     const serviceName = END_POINTS.base_back.quiz + '/questions';
     const params:any = {
-      section_id: this.item.section_id,
+      section_id: this.itemQuiz.section_id,
       type_alternative_id: this.headParams.type_alternative.id,
-      exam_id: this.item.exam_id,
+      exam_id: this.itemQuiz.exam_id,
       pregunta: this.headParams.pregunta,
       help: '',
       orden: this.headParams.orden || '',
@@ -76,7 +76,7 @@ export class CClosedComponent implements OnInit, OnChanges {
             }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
       } else {
         this.loadings.emit(true);
-            this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+            this.generalServi.updateNameIdData$(serviceName, this.itemQuiz.id, params).subscribe(r => {
               if (r.success) {
                 this.changeSuccess.emit('ok');
               }
@@ -87,6 +87,6 @@ export class CClosedComponent implements OnInit, OnChanges {
   }
   setUpdate() {
     this.arrayClose = [];
-    this.arrayClose = this.item.alternativas;
+    this.arrayClose = this.itemQuiz.alternativas  || [];
   }
 }

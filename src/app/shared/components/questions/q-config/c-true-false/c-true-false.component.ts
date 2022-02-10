@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class CTrueFalseComponent implements OnInit, OnChanges {
   @Input() headParams:any;
-  @Input() item:any;
+  @Input() itemQuiz:any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
   arrayTrueFalse:any = [
@@ -39,10 +39,8 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
   directorio = DIRECTORY.base;
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
-    this.headParams = this.headParams;
-    this.item = this.item;
-    console.log(this.headParams);
-    
+    this.headParams = JSON.parse(JSON.stringify(this.headParams));
+    this.itemQuiz = JSON.parse(JSON.stringify(this.itemQuiz));
     if (this.headParams?.code === 'UPDATE') {
       this.setUpdate();
     }
@@ -64,17 +62,12 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
     if (array.length>0) {
       this.arrayTrueFalse.map((r:any, index:any) => {
         r.orden = index + 1;
-        if (r.checked === true) {
-          r.correcto = 1;
-        } else {
-          r.correcto = 0;
-        }
       });
       const serviceName = END_POINTS.base_back.quiz + '/questions';
       const params:any = {
-        section_id: this.item.section_id,
+        section_id: this.itemQuiz.section_id,
         type_alternative_id: this.headParams.type_alternative.id,
-        exam_id: this.item.exam_id,
+        exam_id: this.itemQuiz.exam_id,
         pregunta: this.headParams.pregunta,
         help: '',
         orden: this.headParams.orden || '',
@@ -95,7 +88,7 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
               }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
         } else {
           this.loadings.emit(true);
-              this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+              this.generalServi.updateNameIdData$(serviceName, this.itemQuiz.id, params).subscribe(r => {
                 if (r.success) {
                   this.changeSuccess.emit('ok');
                 }
@@ -137,9 +130,11 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
   }
   valueChange(item:any) {
     this.arrayTrueFalse.map((res:any) => {
+      res.correcto = 0;
       res.checked = false;
     });
     item.checked = true;
+    item.correcto = 1;
   }
   shift(index1: number, index2: number): void {
     const data = [...this.arrayTrueFalse];
@@ -150,7 +145,7 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
   }
   setUpdate() {
     this.arrayTrueFalse = [];
-    this.arrayTrueFalse = this.item.alternativas;
+    this.arrayTrueFalse = this.itemQuiz.alternativas  || [];
     if (this.arrayTrueFalse.length>0) {
       this.arrayTrueFalse.map((r:any) => {
           r.checked = false;

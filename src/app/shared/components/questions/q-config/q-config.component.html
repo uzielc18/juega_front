@@ -4,9 +4,12 @@
     <div>
     </div>
     <div class="d-flex">
+      <div style="padding-bottom: 0px;">
+        <button  nbButton size="tiny" status="basic" (click)="reloadList()">Refrescar lista</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
       <nb-toggle status="primary" formControlName="drag_drop">Cambiar orden</nb-toggle> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <div *ngIf="formHeader.value.drag_drop" style="padding-bottom: 0px;">
-        <button  nbButton size="tiny" status="primary" >Guardar orden</button>
+        <button  nbButton size="tiny" status="primary" (click)="changeOrden()">Guardar orden</button>
       </div>
     </div>
   </form>
@@ -41,7 +44,7 @@
 
 <!-- /////// -->
 
-<div *ngIf="!formHeader.value.drag_drop">
+<div *ngIf="!formHeader.value.drag_drop" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" style="margin-left: 20px;">
 
 <div  *ngFor="let quiz of questions; let i = index">
   <div class="row m-0">
@@ -70,12 +73,12 @@
         </nb-card-body>
         <nb-card-footer style="text-align: right;" *ngIf="quiz?.nivel === 2">
           <div >
-            <button nbButton size="small"><nb-icon icon="trash" status="danger"></nb-icon></button>
+            <button nbButton size="small"  (click)="deleteQuestion($event, quiz)"><nb-icon icon="trash" status="danger"></nb-icon></button>
           </div>
         </nb-card-footer>
       </nb-card>
 
-      <nb-card *ngIf="quiz?.checked" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" style="margin-left: 20px;">
+      <nb-card *ngIf="quiz?.checked">
         <nb-card-body>
           <div class="row">
             <div class="col-md-9">
@@ -168,14 +171,14 @@
           <ng-container class="container">
             <div *ngIf="['07'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-multi-option [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              <app-c-multi-option [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
                 (changeSuccess)="changeSuccess($event)"></app-c-multi-option>
 
             </div>
 
             <div *ngIf="['01'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-unique-option [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              <app-c-unique-option [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
               (changeSuccess)="changeSuccess($event)"></app-c-unique-option>
 
             </div>
@@ -190,21 +193,21 @@
 
             <div *ngIf="['02'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-true-false [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              <app-c-true-false [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
               (changeSuccess)="changeSuccess($event)"></app-c-true-false>
 
             </div>
 
             <div *ngIf="['03'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-open [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              <app-c-open [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
               (changeSuccess)="changeSuccess($event)"></app-c-open>
 
             </div>
 
             <div *ngIf="['04'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-closed [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              <app-c-closed [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
               (changeSuccess)="changeSuccess($event)"></app-c-closed>
 
             </div>
