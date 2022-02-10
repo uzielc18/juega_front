@@ -1,0 +1,22 @@
+<div class="table-responsive row">
+  <div class="col-md-6">
+    <table class="table table-sm">
+      <tbody>
+        <tr *ngFor="let rel of relationList; let i = index;">
+          <td>{{ rel.relacion }}</td>
+          <!-- <td><img [src]="rel.imagen" alt="" style="height: 100%; max-height: 150px; margin: 0 auto;"></td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <table class="table table-sm">
+      <tbody>
+        <tr *ngFor="let item of randomList; let i = index">
+          <td>{{ item.relacion }}</td>
+          <!-- <td><img [src]="item.imagen" alt="" style="height: 100%; max-height: 150px; margin: 0 auto;"></td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

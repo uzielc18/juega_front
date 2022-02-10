@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { VDocMultiOptionComponent } from './v-docente/v-doc-multi-option/v-doc-multi-option.component';
 import { VDocUniqueOptionComponent } from './v-docente/v-doc-unique-option/v-doc-unique-option.component';
 import { QViewComponent } from './q-view.component';
-import { VRelationComponent } from './v-relation/v-relation.component';
 import { NebularModule } from '../../../nebular.module';
+import { VDocRelationComponent } from './v-docente/v-doc-relation/v-doc-relation.component';
 
 const COMPONENTS: any = [
-  VRelationComponent,
   QViewComponent,
   VDocMultiOptionComponent,
   VDocUniqueOptionComponent,
+  VDocRelationComponent
 ];
 
 const NEBULAR: any = [
