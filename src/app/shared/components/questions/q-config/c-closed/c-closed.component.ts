@@ -28,6 +28,9 @@ export class CClosedComponent implements OnInit, OnChanges {
   ngOnChanges():void {
     this.headParams = this.headParams;
     this.item = this.item;
+    if (this.headParams?.code === 'UPDATE') {
+      this.setUpdate();
+    }
   }
   ngOnInit(): void {
 
@@ -64,13 +67,26 @@ export class CClosedComponent implements OnInit, OnChanges {
       alternativas: this.arrayClose || [],
     };
     if (params && params.pregunta && params.alternativas.length>0) {
-      this.loadings.emit(true);
-          this.generalServi.addNameData$(serviceName, params).subscribe(r => {
-            if (r.success) {
-              this.changeSuccess.emit('ok');
-            }
-          }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+      if (this.headParams.code === 'NEW') {
+        this.loadings.emit(true);
+            this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+              if (r.success) {
+                this.changeSuccess.emit('ok');
+              }
+            }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+      } else {
+        this.loadings.emit(true);
+            this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+              if (r.success) {
+                this.changeSuccess.emit('ok');
+              }
+            }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+      }
     }
 
+  }
+  setUpdate() {
+    this.arrayClose = [];
+    this.arrayClose = this.item.alternativas;
   }
 }

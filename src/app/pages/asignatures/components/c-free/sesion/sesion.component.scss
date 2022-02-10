@@ -30,10 +30,17 @@ li {
 }
 
 .list-element {
-  // border-radius: 0;
-  // padding: 0;
-  // margin: 0;
-  // margin-left: 80px;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  margin-left: 80px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1200px){
+  .list-element {
+    margin-left: 0;
+  }
 }
 
 .list:hover {

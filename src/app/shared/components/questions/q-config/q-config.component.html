@@ -1,5 +1,48 @@
-<!-- <div cdkDropList  (cdkDropListDropped)="drop($event)"> -->
-  <!-- cdkDrag -->
+<!-- drag-and-drop -->
+<div *ngIf="questions?.length>2" style="padding-top: 0px; padding-bottom: 8px;">
+  <form [formGroup]="formHeader" class=" d-flex align-items-center justify-content-between">
+    <div>
+    </div>
+    <div class="d-flex">
+      <nb-toggle status="primary" formControlName="drag_drop">Cambiar orden</nb-toggle> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div *ngIf="formHeader.value.drag_drop" style="padding-bottom: 0px;">
+        <button  nbButton size="tiny" status="primary" >Guardar orden</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="formHeader.value.drag_drop" cdkDropList  (cdkDropListDropped)="drop($event)">
+  <div class="example-box" *ngFor="let quiz of questions; let i = index" cdkDrag>
+    <nb-card 
+        [ngStyle]="{
+        'cursor': 'pointer',
+        'margin-left': quiz?.nivel === 2 ? '25px' : '',
+        'font-size':  quiz?.nivel === 1 ? '18px' : '13px',
+        'font-weight':  quiz?.nivel === 1 ? 'bold' : '',
+        'border-left': '6px solid #934054'
+        }">
+        <nb-card-body>
+          <div class="d-flex">
+            <div>
+              {{i+1}})&nbsp;&nbsp;
+            </div>
+            <div>
+              {{quiz?.titulo || quiz?.pregunta}}
+            </div>
+          </div><br>
+          <div style="margin-left: 25px;">
+            <app-q-view [object]="quiz"></app-q-view>
+          </div>
+        </nb-card-body>
+      </nb-card>
+  </div>
+</div>
+
+<!-- /////// -->
+
+<div *ngIf="!formHeader.value.drag_drop">
+
 <div  *ngFor="let quiz of questions; let i = index">
   <div class="row m-0">
     <div [class]="quiz?.pluss ? 'col-md-11' : 'col-md-12'">
@@ -179,6 +222,10 @@
             <nb-icon class="m-0 mb-2" icon="plus-outline" style="height: 24px; width: 24px;"></nb-icon>
             <span style="font-size: 10px;" class="text-center">Añadir</span>
           </button>
+          <button nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueEdit(quiz)">
+            <nb-icon class="m-0 mb-2" icon="edit-outline" style="height: 24px; width: 24px;"></nb-icon>
+            <span style="font-size: 10px;" class="text-center">Editar</span>
+          </button>
           <button *ngIf="quiz?.checked" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeCancel(quiz)">
             <nb-icon class="m-0 mb-2" icon="close-outline" style="height: 24px; width: 24px;"></nb-icon>
             <span style="font-size: 10px;" class="text-center">Cancel</span>
@@ -192,9 +239,9 @@
       </nb-card>
     </div>
   </div>
+</div>
+</div>
 
-</div>
-<!-- </div> -->
-<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" >
+<!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" >
   <div class="example-box" *ngFor="let movie of movies" cdkDrag>{{movie}}</div>
-</div>
+</div> -->

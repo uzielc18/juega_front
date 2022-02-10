@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { el } from 'date-fns/locale';
 
 @Component({
   selector: 'app-v-doc-relation',
@@ -10,16 +9,17 @@ export class VDocRelationComponent implements OnInit, OnChanges {
   @Input() alternativas: any = [];
 
   colors: any = [
-    '#79FFF2',
-    '#F1F1F6',
-    '#97F198',
-    '#FFF7AE',
-    '#FFC0D3',
-    '#90E0EF',
-    '#28FFBF',
-    '#CAF7E3',
-    '#A5D5D5',
-    '#CA9A35'
+
+    '#62257C',
+    '#DE4A5D',
+    '#222831',
+    '#E39800',
+    '#2BADD3',
+    '#F6ACC8',
+    '#246C75',
+    '#94124E',
+    '#F1D00A',
+    '#002885',
   ]
 
 

@@ -22,20 +22,20 @@ export class QConfigComponent implements OnInit {
   optionsType:any = [];
   key_file:any;
   questions:any = [];
-  movies = [
-    'Episode I - The Phantom Menace',
-    'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith',
-    'Episode IV - A New Hope',
-    'Episode V - The Empire Strikes Back',
-    'Episode VI - Return of the Jedi',
-    'Episode VII - The Force Awakens',
-    'Episode VIII - The Last Jedi',
-    'Episode IX – The Rise of Skywalker',
-  ];
+  // movies = [
+  //   'Episode I - The Phantom Menace',
+  //   'Episode II - Attack of the Clones',
+  //   'Episode III - Revenge of the Sith',
+  //   'Episode IV - A New Hope',
+  //   'Episode V - The Empire Strikes Back',
+  //   'Episode VI - Return of the Jedi',
+  //   'Episode VII - The Force Awakens',
+  //   'Episode VIII - The Last Jedi',
+  //   'Episode IX – The Rise of Skywalker',
+  // ];
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.questions, event.previousIndex, event.currentIndex);
   }
   constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService, private generalServi: GeneralService) { }
 
@@ -61,7 +61,9 @@ export class QConfigComponent implements OnInit {
       file: [''],
 
       estado: ['1'],
-      type_alternative: ['']
+      type_alternative: [''],
+      drag_drop: [false],
+      code:['NEW'],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.key_file = this.item?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo;
@@ -106,6 +108,31 @@ export class QConfigComponent implements OnInit {
       });
     }
   }
+  changeValueEdit(item:any) {
+    this.questions.map((r:any) => {
+      r.checked = false;
+    });
+    this.fieldReactive();
+    item.checked = true;
+    this.formHeader.patchValue({
+      pregunta: item.pregunta,
+      help: item.help,
+      orden:item.orden,
+      url_video: item.url_video,
+      key_video: item.key_video,
+      adjunto: item.adjunto,
+      code: 'UPDATE',
+    });
+    if (this.optionsType.length>0) {
+      this.optionsType.map((res:any) => {
+        res.checked = false;
+        if (item.type_alternative_id === res.id) {
+          res.checked = true;
+          this.formHeader.controls['type_alternative'].setValue(res);
+        }
+      });
+    }
+  }
   changeCancel(item:any) {
     item.checked = false;
     item.pluss = false;
@@ -121,8 +148,15 @@ export class QConfigComponent implements OnInit {
   changePluss(item:any) {
     this.questions.map((r:any) => {
       r.pluss = false;
+      r.checked = false;
     });
+      this.fieldReactive();
       item.pluss = true;
+      if (this.optionsType.length>0) {
+        this.optionsType.map((res:any) => {
+          res.checked = false;
+        });
+      }
   }
 
   getTypeAlternative() {
