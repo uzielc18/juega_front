@@ -11,6 +11,20 @@ import { END_POINTS } from 'src/app/providers/utils';
 export class CRelationComponent implements OnInit {
   @Input() headParams: any;
   @Input() item: any;
+  @Input() relationList: any = [
+    {
+      relacion: '',
+      imagen: '',
+      base64: '',
+      resp: '',
+      resp_imagen: '',
+      resp_imagen_base64: '',
+      puntos: 0,
+      orden: '',
+    },
+  ]
+  secondList: any[] = [];
+  @Input() code: any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
   directorio: any = DIRECTORY.base;
@@ -25,19 +39,6 @@ export class CRelationComponent implements OnInit {
     "t", "u", "v", "w", "x",
     "y", "z"
   ];
-
-  secondList: any[] = [];
-  relationList: any = [
-    {
-      relacion: '',
-      imagen: '',
-      base64: '',
-      resp: '',
-      resp_imagen: '',
-      resp_imagen_base64: '',
-      puntos: 0,
-    },
-  ]
 
   constructor(private generalServi: GeneralService) { }
   ngOnChanges(): void {
@@ -71,10 +72,18 @@ export class CRelationComponent implements OnInit {
       resp_imagen: '',
       resp_imagen_base64: '',
       puntos: 0,
+      orden: '',
     }
     this.relationList.push(option);
   }
   saveQuestion() {
+
+    if (this.relationList.length > 0) {
+      this.relationList.map((r: any, index: any) => {
+        r.orden = index + 1;
+      });
+    }
+
     this.secondList = JSON.parse(JSON.stringify(this.relationList));
     this.secondList.forEach((object: any) => {
       object.relacion = object.resp;
@@ -143,5 +152,13 @@ export class CRelationComponent implements OnInit {
   }
   cancel() {
     this.relationList = [];
+  }
+
+  shift(index1: number, index2: number): void {
+    const data = [...this.relationList];
+    if (index2 > 0 && index1 < data.length - 1) {
+      [data[index1], data[index2]] = [data[index2], data[index1]];
+      this.relationList = data;
+    }
   }
 }

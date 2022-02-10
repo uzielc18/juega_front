@@ -1,55 +1,74 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { el } from 'date-fns/locale';
 
 @Component({
   selector: 'app-v-doc-relation',
   templateUrl: './v-doc-relation.component.html',
   styleUrls: ['./v-doc-relation.component.scss']
 })
-export class VDocRelationComponent implements OnInit {
+export class VDocRelationComponent implements OnInit, OnChanges {
+  @Input() alternativas: any = [];
 
+  colors: any = [
+    '#79FFF2',
+    '#F1F1F6',
+    '#97F198',
+    '#FFF7AE',
+    '#FFC0D3',
+    '#90E0EF',
+    '#28FFBF',
+    '#CAF7E3',
+    '#A5D5D5',
+    '#CA9A35'
+  ]
+
+
+  relationList: any[] = [];
+  secondList: any[] = [];
   randomList: any[] = [];
-
-  relationList: any[] = [
-    {
-      relacion: 'Lima',
-      imagen: 'https://www.vmlyr.com/sites/www/files/2020-01/AdobeStock_295560273-Lima-C_0.jpg',
-      puntos: 2,
-    },
-    {
-      relacion: 'Quito',
-      imagen: 'https://www.efetur.com/files/2018/10/Quito-moderno-1.jpg',
-      puntos: 3,
-    },
-    {
-      relacion: 'Montevideo',
-      imagen: 'https://aldianews.com/sites/default/files/articles/montevideo_grande.jpg',
-      puntos: 3,
-    }
-  ]
-
-  secondList: any[] = [
-    {
-      relacion: 'Peru',
-      imagen: 'https://i.natgeofe.com/k/04ff1ab5-b28f-433a-ad99-4225c8966859/peru-flag_4x3.gif',
-      puntos: 2,
-    },
-    {
-      relacion: 'Ecuador',
-      imagen: 'https://cdn11.bigcommerce.com/s-ey7tq/images/stencil/1280x1280/products/3199/18856/ecuador-flag__16789.1639690365.jpg?c=2',
-      puntos: 3,
-    },
-    {
-      relacion: 'Uruguay',
-      imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7LFhcwG4fGW1q-fiM0ZIQGQOfGk8Qz4Zf65QeWnOJzPk78I4-xxfHn0k67E0WKAhsgbs',
-      puntos: 3,
-    }
-  ]
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
+    this.alternativas = this.alternativas;
+    this.relationList = this.alternativas.arrayA;
+    this.secondList = this.alternativas.arrayB;
+    this.addOrder();
     this.getShuffledArr(this.secondList);
   }
+  // this.addOrder()
+
+  ngOnInit(): void {
+  }
+
+  // randomNoRepeats(array: any) {
+  //   let copy = array.slice(0);
+  //   return function () {
+  //     if (copy.length < 1) { copy = array.slice(0); }
+  //     let index = Math.floor(Math.random() * copy.length);
+  //     let item = copy[index];
+  //     copy.splice(index, 1);
+  //     return item;
+  //   };
+  // }
+
+  // getRandomColor() {
+  //   return {
+  //     'background-color': this.randomNoRepeats(this.colors)
+  //   }
+  // }
+
+  color(i: any) {
+    return {
+      'background-color': this.colors[i]
+    }
+  }
+
+  // defColor() {
+  // return {
+  // 'background-color': '#fff',
+  // }
+  // }
 
   getShuffledArr(arr: any) {
     const newArr = arr.slice()
@@ -60,30 +79,40 @@ export class VDocRelationComponent implements OnInit {
     this.randomList = newArr;
   };
 
-  addCheck() {
+  addOrder() {
     if (this.secondList.length > 0) {
-      this.secondList.map((el: any) => {
-        el.check = false;
+      this.secondList.map((el: any, i: any) => {
+        el.order = i
       });
     }
   }
 
-  revisarCheck(item: any) {
-    if (!item.check) {
-      this.addCheck();
-      item.check = true;
-    } else {
-      item.check = false;
-    }
-  }
 
-  setValue(item: any) {
+  // addCheck() {
+  //   if (this.secondList.length > 0) {
+  //     this.secondList.map((el: any) => {
+  //       el.check = false;
+  //       el.color = '';
+  //     });
+  //   }
+  // }
+
+  // revisarCheck(item: any, i: any) {
+  //   if (!item.check) {
+  //     this.addCheck();
+  //     item.check = true;
+  //     item.color = this.colors[i];
+  //   } else {
+  //     item.check = false;
+  //     item.color = '';
+  //   }
+  // }
+
+  setValue(item: any, i: any) {
     console.log(item);
   }
 
-  value(item: any) {
-    this.revisarCheck(item);
+  value(item: any, i: any) {
     console.log(item);
   }
-
 }
