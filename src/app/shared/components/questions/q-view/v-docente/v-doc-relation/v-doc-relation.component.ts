@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-v-relation',
-  templateUrl: './v-relation.component.html',
-  styleUrls: ['./v-relation.component.scss']
+  selector: 'app-v-doc-relation',
+  templateUrl: './v-doc-relation.component.html',
+  styleUrls: ['./v-doc-relation.component.scss']
 })
-export class VRelationComponent implements OnInit {
+export class VDocRelationComponent implements OnInit {
 
   randomList: any[] = [];
 
@@ -13,47 +13,35 @@ export class VRelationComponent implements OnInit {
     {
       relacion: 'Lima',
       imagen: 'https://www.vmlyr.com/sites/www/files/2020-01/AdobeStock_295560273-Lima-C_0.jpg',
-      resp: 'Peru',
-      respImg: 'peru.jpg',
       puntos: 2,
-      correcto: 0
     },
     {
       relacion: 'Quito',
-      relacionImg: 'https://www.efetur.com/files/2018/10/Quito-moderno-1.jpg',
-      resp: 'Ecuador',
-      respImg: 'ecuador.jpg',
+      imagen: 'https://www.efetur.com/files/2018/10/Quito-moderno-1.jpg',
       puntos: 3,
-      correcto: 0
     },
     {
       relacion: 'Montevideo',
-      relacionImg: 'https://aldianews.com/sites/default/files/articles/montevideo_grande.jpg',
-      resp: 'Uruguay',
-      respImg: 'uruguay.jpg',
+      imagen: 'https://aldianews.com/sites/default/files/articles/montevideo_grande.jpg',
       puntos: 3,
-      correcto: 0
     }
   ]
 
   secondList: any[] = [
     {
       relacion: 'Peru',
-      relacionImg: 'https://i.natgeofe.com/k/04ff1ab5-b28f-433a-ad99-4225c8966859/peru-flag_4x3.gif',
+      imagen: 'https://i.natgeofe.com/k/04ff1ab5-b28f-433a-ad99-4225c8966859/peru-flag_4x3.gif',
       puntos: 2,
-      correcto: 0
     },
     {
       relacion: 'Ecuador',
-      relacionImg: 'https://cdn11.bigcommerce.com/s-ey7tq/images/stencil/1280x1280/products/3199/18856/ecuador-flag__16789.1639690365.jpg?c=2',
+      imagen: 'https://cdn11.bigcommerce.com/s-ey7tq/images/stencil/1280x1280/products/3199/18856/ecuador-flag__16789.1639690365.jpg?c=2',
       puntos: 3,
-      correcto: 0
     },
     {
       relacion: 'Uruguay',
-      relacionImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7LFhcwG4fGW1q-fiM0ZIQGQOfGk8Qz4Zf65QeWnOJzPk78I4-xxfHn0k67E0WKAhsgbs',
+      imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7LFhcwG4fGW1q-fiM0ZIQGQOfGk8Qz4Zf65QeWnOJzPk78I4-xxfHn0k67E0WKAhsgbs',
       puntos: 3,
-      correcto: 0
     }
   ]
 
@@ -89,12 +77,13 @@ export class VRelationComponent implements OnInit {
     }
   }
 
-  setValue(item: any, i: any) {
-    console.log(item, i);
+  setValue(item: any) {
+    console.log(item);
   }
 
-  value(item: any, i: any) {
+  value(item: any) {
     this.revisarCheck(item);
     console.log(item);
   }
+
 }

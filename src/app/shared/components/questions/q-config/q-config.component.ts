@@ -75,7 +75,7 @@ export class QConfigComponent implements OnInit {
         if (this.questions.length> 0) {
           const ultimoRegistro = this.questions[this.questions.length - 1];
           console.log(ultimoRegistro);
-          
+
           this.questions.map((r:any) => {
             r.checked = false;
             r.pluss = false;
