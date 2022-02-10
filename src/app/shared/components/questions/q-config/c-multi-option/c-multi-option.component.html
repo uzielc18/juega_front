@@ -3,6 +3,12 @@
         <tbody>
             <tr *ngFor="let item of arrayMultiple; let i = index">
                 <td style="width: 1px;" class="text-center">
+                    <button nbButton size="tiny" status="info" outline nbTooltip="Subir alternativa" nbTooltipStatus="info" (click)="shift(i - 1, i)">
+                        <nb-icon icon="arrowhead-up-outline"></nb-icon></button>&nbsp;
+                    <button nbButton size="tiny" status="info" outline nbTooltip="Bajar alternativa" nbTooltipStatus="info" (click)="shift(i, i + 1)">
+                        <nb-icon icon="arrowhead-down-outline"></nb-icon></button>
+                </td>
+                <td style="width: 1px;" class="text-center">
                     <nb-checkbox status="primary" [(ngModel)]="item.checked" style="padding-right: 0px;"></nb-checkbox>
                 </td>
                 <td style="width: 150px;">
@@ -44,7 +50,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="5">
+                <td colspan="6">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
                             <button nbButton ghost size="small" status="info" (click)="pushedObject()">

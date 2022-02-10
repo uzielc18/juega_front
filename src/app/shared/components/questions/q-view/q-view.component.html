@@ -1,1 +1,6 @@
-<p>q-view works!</p>
+<div *ngIf="['07'].includes(object?.codigo)">
+    <app-v-doc-multi-option [alternativas]="object?.alternativas || []"></app-v-doc-multi-option>
+</div>
+<div *ngIf="['01'].includes(object?.codigo)">
+    <app-v-doc-unique-option [alternativas]="object?.alternativas || []"></app-v-doc-unique-option>
+</div>

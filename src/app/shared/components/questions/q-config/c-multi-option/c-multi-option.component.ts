@@ -19,7 +19,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
       puntos: 0,
       correcto: 0,
       checked: false,
-      orden: '1',
+      orden: '',
       imagen: '',
       base64: '',
   },
@@ -28,7 +28,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
       puntos: 0,
       correcto: 0,
       checked: false,
-      orden: 1,
+      orden: '',
       imagen: '',
       base64: '',
   }
@@ -39,14 +39,14 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   ngOnChanges():void {
     this.headParams = this.headParams;
     this.item = this.item;
-    console.log(this.headParams, this.item);
-
+    console.log(this.headParams);
+    
   }
   ngOnInit(): void {
     this.valueKey();
   }
   valueKey() {
-    this.key_file = 'ssss' + '_' + '00000000001' + '_' + Math.floor(Math.random() * 90000) + 10000;
+    this.key_file = 'ssss' + '_' + '00000000001';
   }
 
   valueFile($event: any, item:any) {
@@ -59,7 +59,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
       puntos: 0,
       correcto: 0,
       checked: false,
-      orden: '1',
+      orden: '',
       imagen: '',
       base64: '',
     };
@@ -68,7 +68,8 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   saveQuestion() {
     const array = this.arrayMultiple.filter((re:any) => re.checked === true);
     if (array.length>0) {
-      this.arrayMultiple.map((r:any) => {
+      this.arrayMultiple.map((r:any, index:any) => {
+        r.orden = index + 1;
         if (r.checked === true) {
           r.correcto = 1;
         } else {
@@ -82,7 +83,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
       exam_id: this.item.exam_id,
       pregunta: this.headParams.pregunta,
       help: '',
-      // orden: this.headParams.orden || '',
+      orden: this.headParams.orden || '',
       url_video: this.headParams.url_video || '',
       key_video: this.headParams.key_video || '',
       adjunto: this.headParams.adjunto || '',
@@ -135,5 +136,12 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   }
   cancel() {
     this.arrayMultiple = [];
+  }
+  shift(index1: number, index2: number): void {
+    const data = [...this.arrayMultiple];
+    if (index2 > 0 && index1 < data.length - 1) {
+        [data[index1], data[index2]] = [data[index2], data[index1]];
+        this.arrayMultiple = data;
+    }
   }
 }

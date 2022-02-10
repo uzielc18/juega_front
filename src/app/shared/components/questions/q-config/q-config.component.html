@@ -1,12 +1,38 @@
-<div *ngFor="let quiz of questions; let i = index">
+<!-- <div cdkDropList  (cdkDropListDropped)="drop($event)"> -->
+  <!-- cdkDrag -->
+<div  *ngFor="let quiz of questions; let i = index">
   <div class="row m-0">
     <div [class]="quiz?.pluss ? 'col-md-11' : 'col-md-12'">
-      <nb-card (click)="changePluss(quiz)" style="cursor: pointer;">
+      <nb-card (click)="changePluss(quiz)"
+        [ngStyle]="{
+        'cursor': 'pointer',
+        'margin-left': quiz?.nivel === 2 ? '25px' : '',
+        'font-size':  quiz?.nivel === 1 ? '18px' : '13px',
+        'font-weight':  quiz?.nivel === 1 ? 'bold' : '',
+        'border-left': '6px solid #934054'
+        }">
         <nb-card-body>
-          {{i+1}} &nbsp;)&nbsp; {{quiz?.titulo || quiz?.pregunta}} {{quiz?.pluss}}
+          <div class="d-flex">
+            <div>
+              {{i+1}})&nbsp;&nbsp;
+            </div>
+            <div>
+              {{quiz?.titulo || quiz?.pregunta}} 
+            </div>
+          </div><br>
+          
+          <div style="margin-left: 25px;">
+            <app-q-view [object]="quiz"></app-q-view>
+          </div>
         </nb-card-body>
+        <nb-card-footer style="text-align: right;" *ngIf="quiz?.nivel === 2">
+          <div >
+            <button nbButton size="small"><nb-icon icon="trash" status="danger"></nb-icon></button>
+          </div>
+        </nb-card-footer>
       </nb-card>
-      <nb-card *ngIf="quiz.checked" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+
+      <nb-card *ngIf="quiz?.checked" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" style="margin-left: 20px;">
         <nb-card-body>
           <div class="row">
             <div class="col-md-9">
@@ -30,7 +56,7 @@
                   </lamb-prepare-file-pro>
                 </div>
                 <div class="col-md-6">
-                  <label class="label">Link de Youtube</label><br>
+                  <label class="label">Link Youtube</label><br>
                   <button nbButton size="small" status="info" outline fullWidth (click)="openUrlYoutube()"
                     style="padding: 5px;">
                     <img src="https://i.pinimg.com/originals/91/c1/cd/91c1cdeacc84d0a5673bb716549ba366.png"
@@ -70,7 +96,12 @@
             </div>
           </div>
           <div class="d-flex align-items-center justify-content-between">
-            <div></div>
+            <div>
+              <form [formGroup]="formHeader">
+              <label class="label">Orden</label><br>
+              <input type="number" nbInput fieldSize="tiny" style="width: 100px;" formControlName="orden" class="text-center">
+              </form>
+            </div>
             <div>
               <div class="d-flex">
                 <div *ngFor="let opts of optionsType" style="padding-left: 3px; padding-right: 3px;">
@@ -101,8 +132,8 @@
 
             <div *ngIf="['01'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-unique-option [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)">
-              </app-c-unique-option>
+              <app-c-unique-option [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              (changeSuccess)="changeSuccess($event)"></app-c-unique-option>
 
             </div>
 
@@ -116,25 +147,26 @@
 
             <div *ngIf="['02'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-true-false [headParams]="formHeader.value" [item]="quiz"></app-c-true-false>
+              <app-c-true-false [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              (changeSuccess)="changeSuccess($event)"></app-c-true-false>
 
             </div>
 
             <div *ngIf="['03'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-open [headParams]="formHeader.value" [item]="quiz"></app-c-open>
+              <app-c-open [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              (changeSuccess)="changeSuccess($event)"></app-c-open>
 
             </div>
 
             <div *ngIf="['04'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-closed [headParams]="formHeader.value" [item]="quiz"></app-c-closed>
+              <app-c-closed [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              (changeSuccess)="changeSuccess($event)"></app-c-closed>
 
             </div>
 
           </ng-container>
-
-
         </nb-card-body>
       </nb-card>
 
@@ -143,11 +175,15 @@
       <nb-card *ngIf="quiz.pluss" class="m-0 mb-4">
         <nb-card-body class="p-0">
           <!-- <div class="d-flex flex-column" style="max-width: 80px;"> -->
-          <button nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz)">
+          <button nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz, i)">
             <nb-icon class="m-0 mb-2" icon="plus-outline" style="height: 24px; width: 24px;"></nb-icon>
             <span style="font-size: 10px;" class="text-center">Añadir</span>
           </button>
-          <button *ngIf="quiz?.ultimo" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz)">
+          <button *ngIf="quiz?.checked" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeCancel(quiz)">
+            <nb-icon class="m-0 mb-2" icon="close-outline" style="height: 24px; width: 24px;"></nb-icon>
+            <span style="font-size: 10px;" class="text-center">Cancel</span>
+          </button>
+          <button *ngIf="quiz?.ultimo" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz, i)">
             <nb-icon class="m-0 mb-2" icon="npm-outline" style="height: 24px; width: 24px;"></nb-icon>
             <span class="text-center" style="line-height: 1.5; font-size: 10px;">Añadir<br>sección</span>
           </button>
@@ -157,4 +193,8 @@
     </div>
   </div>
 
+</div>
+<!-- </div> -->
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" >
+  <div class="example-box" *ngFor="let movie of movies" cdkDrag>{{movie}}</div>
 </div>
