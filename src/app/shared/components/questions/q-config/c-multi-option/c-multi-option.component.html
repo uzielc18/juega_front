@@ -1,11 +1,11 @@
-<div class="table-responsive">
+<div class="table-responsive"  [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
     <table class="table table-sm">
         <tbody>
             <tr *ngFor="let item of arrayMultiple; let i = index">
                 <td style="width: 1px;" class="text-center">
-                    <button nbButton size="tiny" status="info" outline nbTooltip="Subir alternativa" nbTooltipStatus="info" (click)="shift(i - 1, i)">
+                    <button nbButton size="tiny" status="info" outline nbTooltipStatus="info" (click)="shift(i - 1, i)">
                         <nb-icon icon="arrowhead-up-outline"></nb-icon></button>&nbsp;
-                    <button nbButton size="tiny" status="info" outline nbTooltip="Bajar alternativa" nbTooltipStatus="info" (click)="shift(i, i + 1)">
+                    <button nbButton size="tiny" status="info" outline nbTooltipStatus="info" (click)="shift(i, i + 1)">
                         <nb-icon icon="arrowhead-down-outline"></nb-icon></button>
                 </td>
                 <td style="width: 1px;" class="text-center">
@@ -43,7 +43,7 @@
                           </div>
                     </div>
                 <td style="width: 1px;" class="text-center">
-                    <button nbButton  size="small" status="danger" outline (click)="deleteOption(i)">
+                    <button nbButton  size="small" status="danger" outline (click)="deleteOption(i, item)">
                         <nb-icon icon="close-outline"></nb-icon>
                     </button>
 
@@ -58,7 +58,7 @@
                             </button>
                         </div>
                         <div>
-                            <button nbButton size="small" status="basic" (click)="cancel()" *ngIf="arrayMultiple?.length>0 && headParams?.code === 'NEW'">Cancelar</button>&nbsp;&nbsp;
+                            <button nbButton size="small" status="basic" (click)="cancel()" *ngIf="arrayMultiple?.length>0 && headParams?.code === 'NEW'">Limpiar</button>&nbsp;&nbsp;
                             <button nbButton size="small" status="primary" (click)="saveQuestion()" [disabled]="validButom">Guardar</button>
                         </div>
                     </div>
