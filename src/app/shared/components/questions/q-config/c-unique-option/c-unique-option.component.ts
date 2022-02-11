@@ -35,6 +35,7 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
   ];
   key_file:any;
   directorio = DIRECTORY.base;
+  loading: boolean = false;
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
     // JSON.parse(JSON.stringify(this.headParams))
@@ -73,6 +74,13 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
       this.arrayUnique.map((r:any, index:any) => {
         r.orden = index + 1;
       });
+      const newArray = JSON.parse(JSON.stringify(this.arrayUnique));
+      newArray.forEach((r:any, index:any) => {
+        r.orden = index + 1;
+        delete r['base64'];
+        delete r['checked'];
+        delete r['nivel'];
+      });
       const serviceName = END_POINTS.base_back.quiz + '/questions';
       const params:any = {
         section_id: this.itemQuiz.section_id,
@@ -86,7 +94,7 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
         adjunto: this.headParams.adjunto || '',
         // estado: this.headParams.estado,
         codigo: this.headParams.type_alternative.codigo,
-        alternativas: this.arrayUnique || [], 
+        alternativas: newArray || [], 
       };
       if (params && params.pregunta && params.alternativas.length>0) {
         if (this.headParams.code === 'NEW') {
@@ -126,8 +134,35 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
   deleteItemFile(item:any) {
     item.base64 = '';
   }
-  deleteOption(i:any) {
-    this.arrayUnique.splice(i, 1);
+  deleteOption(i:any, item:any) {
+    const serviceName = END_POINTS.base_back.quiz + '/options';
+    if (item && item.id) {
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿ Desea eliminar ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          this.loading = true;
+          this.generalServi.deleteNameId$(serviceName, item.id).subscribe(r => {
+            if (r.success) {
+              this.arrayUnique.splice(i, 1);
+            }
+          }, () => { this.loading = false; }, () => { this.loading = false; });
+        }
+      });
+    } else {
+      this.arrayUnique.splice(i, 1);
+    }
   }
   get validButom() {
     if (this.arrayUnique.length>0) {

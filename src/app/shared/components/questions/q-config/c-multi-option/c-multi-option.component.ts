@@ -35,10 +35,13 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   ];
   key_file:any;
   directorio = DIRECTORY.base;
+  loading: boolean = false;
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
     this.headParams = JSON.parse(JSON.stringify(this.headParams));
     this.itemQuiz = JSON.parse(JSON.stringify(this.itemQuiz));
+    console.log(this.itemQuiz);
+    
     if (this.headParams?.code === 'UPDATE') {
       this.setUpdate();
     }
@@ -70,13 +73,17 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   saveQuestion() {
     const array = this.arrayMultiple.filter((re:any) => re.checked === true);
     if (array.length>0) {
-      this.arrayMultiple.map((r:any, index:any) => {
+      const newArray = JSON.parse(JSON.stringify(this.arrayMultiple));
+      newArray.forEach((r:any, index:any) => {
         r.orden = index + 1;
         if (r.checked === true) {
           r.correcto = 1;
         } else {
           r.correcto = 0;
         }
+        delete r['base64'];
+        delete r['checked'];
+        delete r['nivel'];
       });
     const serviceName = END_POINTS.base_back.quiz + '/questions';
     const params:any = {
@@ -91,7 +98,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
       adjunto: this.headParams.adjunto || '',
       // estado: this.headParams.estado,
       codigo: this.headParams.type_alternative.codigo,
-      alternativas: this.arrayMultiple || [],
+      alternativas: newArray || [],
     };
     if (params && params.pregunta && params.alternativas.length>0) {
       if (this.headParams.code === 'NEW') {
@@ -130,8 +137,35 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   deleteItemFile(item:any) {
     item.base64 = '';
   }
-  deleteOption(i:any) {
-    this.arrayMultiple.splice(i, 1);
+  deleteOption(i:any, item:any) {
+    const serviceName = END_POINTS.base_back.quiz + '/options';
+    if (item && item.id) {
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿ Desea eliminar ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          this.loading = true;
+          this.generalServi.deleteNameId$(serviceName, item.id).subscribe(r => {
+            if (r.success) {
+              this.arrayMultiple.splice(i, 1);
+            }
+          }, () => { this.loading = false; }, () => { this.loading = false; });
+        }
+      });
+    } else {
+      this.arrayMultiple.splice(i, 1);
+    }
   }
   get validButom() {
     if (this.arrayMultiple.length>0) {

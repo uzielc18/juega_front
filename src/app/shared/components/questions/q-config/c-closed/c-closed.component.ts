@@ -48,9 +48,13 @@ export class CClosedComponent implements OnInit, OnChanges {
     }
   }
   saveQuestion() {
-    this.arrayClose.map((r:any, index:any) => {
+    const newArray = JSON.parse(JSON.stringify(this.arrayClose));
+      newArray.forEach((r:any, index:any) => {
         r.orden = index + 1;
-    });
+        delete r['base64'];
+        delete r['checked'];
+        delete r['nivel'];
+      });
     const serviceName = END_POINTS.base_back.quiz + '/questions';
     const params:any = {
       section_id: this.itemQuiz.section_id,
@@ -64,7 +68,7 @@ export class CClosedComponent implements OnInit, OnChanges {
       adjunto: this.headParams.adjunto || '',
       // estado: this.headParams.estado,
       codigo: this.headParams.type_alternative.codigo,
-      alternativas: this.arrayClose || [],
+      alternativas: newArray || [],
     };
     if (params && params.pregunta && params.alternativas.length>0) {
       if (this.headParams.code === 'NEW') {
