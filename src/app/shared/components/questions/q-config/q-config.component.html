@@ -17,7 +17,7 @@
 
 <div *ngIf="formHeader.value.drag_drop" cdkDropList  (cdkDropListDropped)="drop($event)">
   <div class="example-box" *ngFor="let quiz of questions; let i = index" cdkDrag>
-    <nb-card 
+    <nb-card
         [ngStyle]="{
         'cursor': 'pointer',
         'margin-left': quiz?.nivel === 2 ? '25px' : '',
@@ -185,7 +185,7 @@
 
             <div *ngIf="['05'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-relation [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              <app-c-relation [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
                 (changeSuccess)="changeSuccess($event)">
               </app-c-relation>
 
