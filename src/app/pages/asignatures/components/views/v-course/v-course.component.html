@@ -1,7 +1,7 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-12 col-xxl-9">
+      <div class="col-sm-12 col-xxl-9 cont-1">
         <!-- <div class="col-12 col-sm-9 col-md-6 col-lg-3 col-xl-3"> -->
         <div class="row">
           <div class="col mt-0 p-0" style="height: 350px; overflow: hidden">
@@ -61,7 +61,7 @@
                     <nb-accordion class="mb-3" *ngFor="let unidad of curso?.units">
                       <nb-accordion-item>
                         <nb-accordion-item-header>
-                          <div class="container p-0 pe-4">
+                          <div class="p-0 pe-4">
                             <div class="d-flex align-items-center">
                               <div class="p-2">
                                 <nb-icon icon="pricetags-outline" class="fs-2"></nb-icon>
@@ -85,7 +85,7 @@
                           </div>
                         </nb-accordion-item-header>
                         <nb-accordion-item-body>
-                          <div class="container d-flex flex-column">
+                          <div class="d-flex flex-column">
                             <small class="fw-bold another-color">Descripcion</small>
                             <small class="description">
                               Conceptos fundamentales, recopilacion de informacion. Modelo
