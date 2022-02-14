@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/activities/activities.module').then((m) => m.ActivitiesModule),
       },
       {
+        path: 'manage',
+        loadChildren: () => import('./pages/manage/manage.module').then((m) => m.ManageModule),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

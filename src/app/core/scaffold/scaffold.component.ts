@@ -65,6 +65,32 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       link: '/exam',
       pathMatch: 'prefix',
     },
+    {
+      title: 'Administrar',
+      icon: 'clipboard-outline',
+      link: '/pages/manage',
+      pathMatch: 'prefix',
+      children: [
+        {
+          title: 'Sincronización',
+          icon: 'clipboard-outline',
+          link: '/pages/manage/lamb-sync',
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Zoom',
+          icon: 'clipboard-outline',
+          link: '/pages/manage/zoom',
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Cursos',
+          icon: 'clipboard-outline',
+          link: '/pages/manage/course',
+          pathMatch: 'prefix',
+        }
+      ]
+    },
   ];
   minimum = false;
   hidden = false;
