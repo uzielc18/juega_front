@@ -1,4 +1,6 @@
 <!-- drag-and-drop -->
+<div [nbSpinner]="loading || loadingQuestion" nbSpinnerStatus="primary" nbSpinnerSize="large" >
+
 <div *ngIf="questions?.length>2" style="padding-top: 0px; padding-bottom: 8px;">
   <form [formGroup]="formHeader" class=" d-flex align-items-center justify-content-between">
     <div>
@@ -48,7 +50,7 @@
 
 <!-- /////// -->
 
-<div *ngIf="!formHeader.value.drag_drop" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" style="margin-left: 20px;">
+<div *ngIf="!formHeader.value.drag_drop" style="margin-left: 20px;">
 
 <div  *ngFor="let quiz of questions; let i = index">
   <div class="row m-0">
@@ -262,7 +264,7 @@
   </div>
 </div>
 </div>
-
+</div>
 <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" >
   <div class="example-box" *ngFor="let movie of movies" cdkDrag>{{movie}}</div>
 </div> -->
