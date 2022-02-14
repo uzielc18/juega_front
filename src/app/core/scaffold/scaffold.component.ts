@@ -66,7 +66,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       pathMatch: 'prefix',
     },
     {
-      title: 'Adminitrar',
+      title: 'Administrar',
       icon: 'clipboard-outline',
       link: '/pages/manage',
       pathMatch: 'prefix',
