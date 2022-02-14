@@ -60,8 +60,13 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
   saveQuestion() {
     const array = this.arrayTrueFalse.filter((re:any) => re.checked === true);
     if (array.length>0) {
-      this.arrayTrueFalse.map((r:any, index:any) => {
+      const newArray = JSON.parse(JSON.stringify(this.arrayTrueFalse));
+      newArray.forEach((r:any, index:any) => {
         r.orden = index + 1;
+        delete r['base64'];
+        delete r['checked'];
+        delete r['nivel'];
+        delete r['color'];
       });
       const serviceName = END_POINTS.base_back.quiz + '/questions';
       const params:any = {
@@ -76,7 +81,7 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
         adjunto: this.headParams.adjunto || '',
         // estado: this.headParams.estado,
         codigo: this.headParams.type_alternative.codigo,
-        alternativas: this.arrayTrueFalse || [], 
+        alternativas: newArray || [], 
       };
       if (params && params.pregunta && params.alternativas.length>0) {
         if (this.headParams.code === 'NEW') {

@@ -15,6 +15,7 @@ import { VideoPlayerModule } from '../../video-player/video-player.module';
 import { GeneralService } from 'src/app/providers';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { QViewModule } from '../q-view/q-view.module';
+import { MSectionComponent } from './modals/m-section/m-section.component';
 const COMPONENTS: any = [
   QConfigComponent,
   CUniqueOptionComponent,
@@ -24,12 +25,14 @@ const COMPONENTS: any = [
   COpenComponent,
   CClosedComponent,
   MProcessUrlComponent,
+  MSectionComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
 ];
 const MODALS: any = [
   MProcessUrlComponent,
+  MSectionComponent
 ];
 const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,
@@ -40,15 +43,7 @@ const MODULOS: any = [
   DragDropModule,
   QViewModule
 ];
-const EXPORTS_COMPONENTS: any = [
-  QConfigComponent,
-  CMultiOptionComponent,
-  CUniqueOptionComponent,
-  CTrueFalseComponent,
-  COpenComponent,
-  CClosedComponent,
-  CRelationComponent
-];
+
 const SERVICES: any = [
   GeneralService
 ];
@@ -62,7 +57,7 @@ const SERVICES: any = [
     ...MODULOS,
     CONTROL_MESSAGGE,
   ],
-  exports: [...EXPORTS_COMPONENTS],
+  exports: [...COMPONENTS],
   providers: [...SERVICES]
 })
 export class QConfigModule { }
