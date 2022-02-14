@@ -21,6 +21,7 @@ export class QConfigComponent implements OnInit {
   arrayFile: any = [];
   formHeader: any = FormGroup;
   loading: boolean = false;
+  loadingQuestion: boolean = false;
   optionsType:any = [];
   key_file:any;
   questions:any = [];
@@ -74,7 +75,7 @@ export class QConfigComponent implements OnInit {
   getQuestions() {
     const serviceName = END_POINTS.base_back.quiz + '/get-questions';
     if (this.item && this.item.exam && this.item.exam.id) {
-      this.loading = true;
+      this.loadingQuestion = true;
       this.generalServi.nameId$(serviceName, this.item.exam.id).subscribe(r => {
         this.questions = r.data || [];
         if (this.questions.length> 0) {
@@ -93,7 +94,7 @@ export class QConfigComponent implements OnInit {
             }
           });
         }
-      }, () => { this.loading = false; }, () => { this.loading  = false; });
+      }, () => { this.loadingQuestion = false; }, () => { this.loadingQuestion  = false; });
       }
   }
 
@@ -170,21 +171,27 @@ export class QConfigComponent implements OnInit {
     item.checked = false;
     item.pluss = false;
     item.editValid = false;
+
+    if (this.formHeader.value.code === 'UPDATE') {
+      const serviceName = END_POINTS.base_back.quiz + '/questions';
+      this.generalServi.nameId$(serviceName, item.id).subscribe((res:any) => {
+        if (res.success) {
+          const items = res.data;
+          if (items.codigo === '05') {
+            item.alternativas = {
+              arrayA: items.arrayA,
+              arrayB: items.arrayB,
+            }
+          } else {
+            item.alternativas = items.options;
+          }
+        }
+      });
+    }
     this.fieldReactive();
     if (this.optionsType.length>0) {
       this.optionsType.map((res:any) => {
         res.checked = false;
-      });
-    }
-    if (this.formHeader.value.code === 'UPDATE') {
-      const serviceName = END_POINTS.base_back.quiz + '/questions';
-      this.generalServi.nameId$(serviceName, item.id).subscribe((res:any) => {
-        const items = res.data || item;
-        if (items) {
-          console.log(items);
-          
-          // items.alternativas = items.options;
-        }
       });
     }
   }
@@ -285,6 +292,24 @@ export class QConfigComponent implements OnInit {
         this.getQuestions();
         this.fieldReactive();
       }
+      // if ($event.close === 'ok') {
+      //   if (this.formHeader.value.code === 'UPDATE') {
+      //         this.questions.map((re:any) => {
+      //           if (re.nivel === 2 && re.id === $event.question.id) {
+      //             re = $event.question;
+      //             re.checked = false;
+      //             re.pluss = false;
+      //             re.editValid = false;
+      //             re.alternativas = $event.question.options;
+      //           }
+      //         });
+      //         this.fieldReactive();
+      //       }
+      //   } else {
+      //     this.getQuestions();
+      //     this.fieldReactive();
+      //   }
+      //   console.log(this.questions);
     }, 100);
   }
   deleteQuestion(event:any, el: any) {
@@ -367,11 +392,28 @@ export class QConfigComponent implements OnInit {
             };
             arrayOrder.push(object);
           }
-        })
+        });
+        const serviceName = END_POINTS.base_back.quiz + 'question-orden'
+        const params = {
+          drag_and_drop: arrayOrder
+        }
+        this.loading = true;
+        this.generalServi.updateNameData$(serviceName, params).subscribe((res:any) => {
+          if (res.success) {
+            this.getQuestions();
+            this.fieldReactive();
+            if (this.optionsType.length>0) {
+              this.optionsType.map((res:any) => {
+                res.checked = false;
+              });
+            }
+          }
+        }, () => { this.loading = false; }, () => { this.loading = false; });
         console.log(valid, 'Plopppppppp', arrayOrder, this.dragQuestions);
       }
       
     }
+
   }
   deleteSection(event:any, el: any) {
     event.stopPropagation();
