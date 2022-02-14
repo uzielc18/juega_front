@@ -2,7 +2,7 @@
   <table class="table table-sm">
     <tbody>
       <tr *ngFor="let item of relationList; let i = index;">
-        <td style="width: 38px;" class="text-center">
+        <!-- <td style="width: 38px;" class="text-center">
           <button nbButton size="tiny" status="info" outline nbTooltip="Subir alternativa" nbTooltipStatus="info"
             (click)="shift(i - 1, i)">
             <nb-icon icon="arrowhead-up-outline"></nb-icon>
@@ -11,7 +11,7 @@
             (click)="shift(i, i + 1)">
             <nb-icon icon="arrowhead-down-outline"></nb-icon>
           </button>
-        </td>
+        </td> -->
         <td style="width: 120px;">
           <input type="text" fullWidth placeholder="Opción {{ abecedario[i] | titlecase }}" nbInput fieldSize="small"
             [(ngModel)]="item.relacion">
@@ -69,7 +69,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="7">
+        <td colspan="6">
           <div class="d-flex align-items-center justify-content-between">
             <div>
               <button nbButton ghost size="small" status="info" (click)="pushedObject()">

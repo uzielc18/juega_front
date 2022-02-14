@@ -20,7 +20,6 @@ export class CRelationComponent implements OnInit {
       resp_imagen: '',
       resp_imagen_base64: '',
       puntos: 0,
-      orden: '',
     },
   ]
   secondList: any[] = [];
@@ -75,17 +74,16 @@ export class CRelationComponent implements OnInit {
       resp_imagen: '',
       resp_imagen_base64: '',
       puntos: 0,
-      orden: '',
     }
     this.relationList.push(option);
   }
   saveQuestion() {
 
-    if (this.relationList.length > 0) {
-      this.relationList.map((r: any, index: any) => {
-        r.orden = index + 1;
-      });
-    }
+    // if (this.relationList.length > 0) {
+    //   this.relationList.map((r: any, index: any) => {
+    //     r.orden = index + 1;
+    //   });
+    // }
 
     this.secondList = JSON.parse(JSON.stringify(this.relationList));
     this.secondList.forEach((object: any) => {
@@ -123,14 +121,24 @@ export class CRelationComponent implements OnInit {
       alternativas: alternativas || {},
     };
     if (params && params.pregunta && Object.keys(params.alternativas).length > 0) {
-      this.loadings.emit(true);
-      this.generalServi.addNameData$(serviceName, params).subscribe(r => {
-        if (r.success) {
-          this.changeSuccess.emit('ok');
-        }
-      }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+      if (this.headParams.code === 'NEW') {
+        this.loadings.emit(true);
+        this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+          if (r.success) {
+            this.changeSuccess.emit('ok');
+          }
+        }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+      } else {
+        this.loadings.emit(true);
+        this.generalServi.updateNameIdData$(serviceName, this.itemQuiz.id, params).subscribe(r => {
+          if (r.success) {
+            this.changeSuccess.emit('ok');
+          }
+        }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
+      }
     }
 
+    this.relationList = [];
   }
   deleteItemFile(item: any) {
     item.base64 = '';
@@ -154,7 +162,7 @@ export class CRelationComponent implements OnInit {
     }
   }
   cancel() {
-    this.relationList = [];
+    this.relationList = {};
   }
 
   shift(index1: number, index2: number): void {
@@ -171,15 +179,12 @@ export class CRelationComponent implements OnInit {
     this.relationList = this.itemQuiz.alternativas.arrayA || [];
     this.secondList = this.itemQuiz.alternativas.arrayB || [];
 
-
     this.secondList.forEach((object: any) => {
       object.resp = object.relacion;
       object.resp_imagen = object.imagen;
       delete object['relacion'];
       delete object['imagen'];
     });
-
-    console.log(this.secondList);
 
     this.relationList.forEach((object: any, i: any) => {
       object.resp = this.secondList[i].resp;
