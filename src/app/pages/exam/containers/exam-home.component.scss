@@ -1,14 +1,16 @@
 .exam-card {
   width: 100%;
-  min-height: 100vh;
+  min-height: 92vh;
   max-width: 768px;
-  margin-top: 74px;
-  margin-bottom: 40px;
+  margin-top: 71px;
+  margin-bottom: 0;
 }
 
 @media screen and (max-width: 768px){
   .exam-card {
-    margin-top: 50px;
+    min-height: 94vh;
+    margin-top: 46px;
+    margin-bottom: 50px;
   }
 
   nb-card {
@@ -27,9 +29,9 @@ nb-layout-column {
   top: 0;
   left: 0;
   background: #FFFFFF;
+  border-bottom: 1px solid #F1F3F5;
   position: fixed;
   z-index: 1;
-  overflow-x: hidden;
 }
 
 .time {
@@ -53,7 +55,7 @@ nb-layout-column {
   border: 2px solid #E8833A;
 }
 
-.questions span {
+.questions-header span {
   color: #293845;
   font-size: 16px;
   font-weight: bold;
@@ -65,17 +67,19 @@ nb-layout-column {
   right: 0;
   width: 50%;
   height: 100%;
-  background-color: yellow;
   z-index: 999;
 
   &-button {
+    // padding: 5px;
+    // background-color: #c06573;
     position: fixed;
     top: 50%;
     cursor: pointer;
     z-index: 9999;
 
     nb-icon {
-      color: #D3455B;
+      // color: #fff;
+      color: #c06573;
       height: 30px;
       width: 30px;
     }
@@ -95,4 +99,36 @@ nb-layout-column {
   .settings {
     top: 50px;
   }
+}
+
+.questions {
+  height: 100%;
+  border: 1px solid #F0F3F6;
+}
+
+@media screen and (max-width: 768px) {
+  .questions {
+    // padding-right: 40px;
+  }
+}
+
+.question-container {
+  border-top: 1px solid #F0F3F6;
+  // border-bottom: 1px solid #F0F3F6;
+  text-align: justify;
+
+  &:not(:last-child) {
+    // margin-bottom: 20px;
+  }
+}
+
+.movil-buttons {
+  padding: 10px 15px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background: #FFFFFF;
+  position: fixed;
+  z-index: 99999;
+  border-top: 1px solid #F1F3F5;
 }

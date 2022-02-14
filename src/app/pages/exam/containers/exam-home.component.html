@@ -9,8 +9,8 @@
         </div>
       </div>
       <div class="col-md-4 d-flex align-items-center justify-content-center">
-        <div class="questions">
-          <span>Nombre del examen</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="questions-header">
+          <span>Nombre del exámen</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span>Preguntas ( 5/10 )</span>
         </div>
       </div>
@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="settings-button me-2" (click)="collapse()" [ngStyle]="{'right': collapsed ? '50%': '0'}">
+    <div class="settings-button" (click)="collapse()" [ngStyle]="{'right': collapsed ? '50%': '0'}">
       <nb-icon icon="settings-2-outline"></nb-icon>
     </div>
     <div class="settings" *ngIf="collapsed">
@@ -38,15 +38,66 @@
         </nb-card>
       </div>
     </div>
-    <nb-card class="exam-card">
-      <nb-card-body>
-        <div class="questions px-lg-4 py-lg-4">
-          <h3>Exámen de prueba</h3>
-          <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
-            donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-            is appreciated - click here to donate using PayPal. Thank you for your support.</p>
+    <nb-card class="exam-card border-0">
+      <nb-card-body class="p-0">
+        <div class="questions">
+          <h3 class="fw-bold px-4 py-3 m-0">Sección 1</h3>
+          <div class="question-container p-3 px-lg-4 py-lg-4">
+            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+              is appreciated - click here to donate using PayPal. Thank you for your support.</p> <br>
+            <ul>
+              <li>Test 1</li>
+              <li>Test 2</li>
+              <li>Test 3</li>
+              <li>Test 4</li>
+              <li>Test 5</li>
+            </ul>
+          </div>
+          <div class="question-container p-2 p-md-3 px-lg-4 py-lg-4">
+            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+              is appreciated - click here to donate using PayPal. Thank you for your support.</p> <br>
+            <ul>
+              <li>Test 1</li>
+              <li>Test 2</li>
+              <li>Test 3</li>
+              <li>Test 4</li>
+              <li>Test 5</li>
+            </ul>
+          </div>
+          <div class="question-container p-2 p-md-3 px-lg-4 py-lg-4">
+            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+              is appreciated - click here to donate using PayPal. Thank you for your support.</p> <br>
+            <ul>
+              <li>Test 1</li>
+              <li>Test 2</li>
+              <li>Test 3</li>
+              <li>Test 4</li>
+              <li>Test 5</li>
+            </ul>
+          </div>
+          <div class="question-container p-2 p-md-3 px-lg-4 py-lg-4">
+            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+              is appreciated - click here to donate using PayPal. Thank you for your support.</p> <br>
+            <ul>
+              <li>Test 1</li>
+              <li>Test 2</li>
+              <li>Test 3</li>
+              <li>Test 4</li>
+              <li>Test 5</li>
+            </ul>
+          </div>
         </div>
       </nb-card-body>
     </nb-card>
+    <div class="movil-buttons d-md-none d-block">
+      <div class="buttons d-flex justify-content-end" style="gap: 20px">
+        <button nbButton status="danger" size="small">Act. Preguntas</button>
+        <button nbButton status="success" size="small">Terminar</button>
+      </div>
+    </div>
   </nb-layout-column>
 </nb-layout>
