@@ -235,7 +235,7 @@
       <nb-card *ngIf="quiz.pluss" class="m-0 mb-4">
         <nb-card-body class="p-0">
           <!-- <div class="d-flex flex-column" style="max-width: 80px;"> -->
-          <button nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz, i)">
+          <button *ngIf="!quiz?.editValid" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz, i)">
             <nb-icon class="m-0 mb-2" icon="plus-outline" style="height: 24px; width: 24px;"></nb-icon>
             <span style="font-size: 10px;" class="text-center">Añadir<br>pregunta</span>
           </button>

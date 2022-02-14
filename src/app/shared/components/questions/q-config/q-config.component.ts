@@ -176,6 +176,15 @@ export class QConfigComponent implements OnInit {
         res.checked = false;
       });
     }
+    const serviceName = END_POINTS.base_back.quiz + '/options';
+    this.generalServi.nameId$(serviceName, item.id).subscribe((res:any) => {
+      const items = res.data || item;
+      if (items) {
+        console.log(items);
+        
+        // items.alternativas = items.options;
+      }
+    });
   }
 
   changePluss(item:any) {
