@@ -1,11 +1,50 @@
 <nb-layout withScroll [windowMode]="false">
-  <nb-layout-column class="d-flex align-items-center justify-content-center">
-    <nb-card class="col-md-10 col-lg-8 col-xl-6 col-12" status="primary">
-      <nb-card-body class="d-flex align-items-center">
-        <div class="row">
-          <div class="col-md col-12 d-flex justify-content-center align-items-center">
-            <h1>EXÁMEN SORPRESA :D</h1>
-          </div>
+  <nb-layout-column class="d-flex align-items-center justify-content-center p-0 h-100">
+    <div class="row header m-0">
+      <div class="col-md-4 d-flex align-items-center">
+        <div class="count d-md-block d-none d-md-flex" style="gap: 5px">
+          <span class="time hour">01</span>
+          <span class="time minute">00</span>
+          <span class="time second">00</span>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex align-items-center justify-content-center">
+        <div class="questions">
+          <span>Nombre del examen</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span>Preguntas ( 5/10 )</span>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex align-items-center">
+        <div class="buttons d-md-block d-none ms-auto d-md-flex flex-md-wrap" style="gap: 10px">
+          <button nbButton status="danger" size="small">Act. Preguntas</button>
+          <button nbButton status="success" size="small">Terminar</button>
+        </div>
+      </div>
+    </div>
+    <div class="settings-button me-2" (click)="collapse()" [ngStyle]="{'right': collapsed ? '50%': '0'}">
+      <nb-icon icon="settings-2-outline"></nb-icon>
+    </div>
+    <div class="settings" *ngIf="collapsed">
+      <div class="settings-container">
+        <nb-card class="m-0">
+          <nb-card-body class="d-flex flex-column px-lg-4 py-lg-4 px-xl-5 py-xl-4">
+            <h5 class="fw-bold">Secciones</h5>
+            <button class="mb-2" nbButton outline status="info">Sección 1</button>
+            <button class="mb-2" nbButton outline status="info">Sección 2</button>
+            <h5 class="fw-bold mt-5">Preguntas sin responder</h5>
+            <button class="mb-2" nbButton outline status="success">Pregunta 1</button>
+            <button class="mb-2" nbButton outline status="success">Pregunta 2</button>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+    <nb-card class="exam-card">
+      <nb-card-body>
+        <div class="questions px-lg-4 py-lg-4">
+          <h3>Exámen de prueba</h3>
+          <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+            donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+            is appreciated - click here to donate using PayPal. Thank you for your support.</p>
         </div>
       </nb-card-body>
     </nb-card>
