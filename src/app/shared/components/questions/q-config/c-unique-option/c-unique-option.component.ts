@@ -80,6 +80,9 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
         delete r['base64'];
         delete r['checked'];
         delete r['nivel'];
+        if (this.headParams.code === 'UPDATE') {
+          r.question_id = this.itemQuiz.id;
+        }
       });
       const serviceName = END_POINTS.base_back.quiz + '/questions';
       const params:any = {
