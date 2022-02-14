@@ -59,12 +59,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       title: 'Biblioteca',
       icon: 'book-outline',
     },
-    {
-      title: 'Exámen',
-      icon: 'clipboard-outline',
-      link: '/exam',
-      pathMatch: 'prefix',
-    },
   ];
   minimum = false;
   hidden = false;
@@ -84,11 +78,11 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   @ViewChild(NbPopoverDirective) popover: any = NbPopoverDirective;
   subcript: any = Subscription;
-  validBlock: any = { from: '', status: false };
+  validBlock: any = {from: '', status: false};
 
-  logoLangs: any = 'assets/spain.svg';
+  logoLangs:any = 'assets/spain.svg';
 
-  listLanguages: any = [
+  listLanguages:any = [
     {
       code: 'es',
       img: 'assets/spain.svg',
@@ -181,7 +175,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         }, 1000);
       } else {
         setTimeout(() => {
-          this.validBlock = { from: '', status: false };
+          this.validBlock = {from: '', status: false};
         }, 1000);
       }
     });
@@ -340,7 +334,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   changesLangs() {
     const forms = this.formHeader.value;
     this.emitEventsService.setLangsEnviar(forms.lenguaje);
-    const logo = this.listLanguages.find((r: any) => r.code === forms.lenguaje);
+    const logo = this.listLanguages.find((r:any) => r.code === forms.lenguaje);
     if (logo && logo.img) {
       this.logoLangs = logo.img;
     }

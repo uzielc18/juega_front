@@ -7,6 +7,7 @@ import { END_POINTS } from 'src/app/providers/utils';
 import { DIRECTORY } from 'src/app/shared/directorios/directory';
 import { MProcessUrlComponent } from './modals/m-process-url/m-process-url.component';
 import Swal from 'sweetalert2';
+import { MSectionComponent } from './modals/m-section/m-section.component';
 
 @Component({
   selector: 'app-q-config',
@@ -23,6 +24,7 @@ export class QConfigComponent implements OnInit {
   optionsType:any = [];
   key_file:any;
   questions:any = [];
+  dragQuestions:any = [];
   // movies = [
   //   'Episode I - The Phantom Menace',
   //   'Episode II - Attack of the Clones',
@@ -36,7 +38,7 @@ export class QConfigComponent implements OnInit {
   // ];
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.questions, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.dragQuestions, event.previousIndex, event.currentIndex);
   }
   constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService, private generalServi: GeneralService) { }
 
@@ -81,7 +83,8 @@ export class QConfigComponent implements OnInit {
             r.checked = false;
             r.pluss = false;
             r.ultimo = false;
-            if (r.nivel === '1') {
+            r.editValid = false;
+            if (r.nivel === 1) {
               r.section_id = r.id;
             }
 
@@ -97,6 +100,7 @@ export class QConfigComponent implements OnInit {
   changeValueCheck(item:any, i:any) {
     this.questions.map((r:any) => {
       r.checked = false;
+      r.editValid = false;
     });
     this.fieldReactive();
     item.checked = true;
@@ -108,34 +112,64 @@ export class QConfigComponent implements OnInit {
     }
   }
   changeValueEdit(item:any) {
-    this.questions.map((r:any) => {
-      r.checked = false;
-    });
+      this.questions.map((r:any) => {
+        r.checked = false;
+        r.editValid = false;
+      });
+      this.fieldReactive();
+      item.checked = true;
+      item.editValid = true;
+      this.formHeader.patchValue({
+        pregunta: item.pregunta,
+        help: item.help,
+        orden:item.orden,
+        url_video: item.url_video,
+        key_video: item.key_video,
+        adjunto: item.adjunto,
+        code: 'UPDATE',
+      });
+      if (this.optionsType.length>0) {
+        this.optionsType.map((res:any) => {
+          res.checked = false;
+          if (item.type_alternative_id === res.id) {
+            res.checked = true;
+            this.formHeader.controls['type_alternative'].setValue(res);
+          }
+        });
+      }
+  }
+  changeSection(quiz:any, codes: any, i:any) {
     this.fieldReactive();
-    item.checked = true;
-    this.formHeader.patchValue({
-      pregunta: item.pregunta,
-      help: item.help,
-      orden:item.orden,
-      url_video: item.url_video,
-      key_video: item.key_video,
-      adjunto: item.adjunto,
-      code: 'UPDATE',
-    });
     if (this.optionsType.length>0) {
       this.optionsType.map((res:any) => {
         res.checked = false;
-        if (item.type_alternative_id === res.id) {
-          res.checked = true;
-          this.formHeader.controls['type_alternative'].setValue(res);
-        }
       });
     }
+    this.dialogService.open(MSectionComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        quiz: quiz,
+        codes: codes,
+        index: i,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.getQuestions();
+        this.fieldReactive();
+        if (this.optionsType.length>0) {
+          this.optionsType.map((res:any) => {
+            res.checked = false;
+          });
+        }
+      }
+    });
   }
   changeCancel(item:any) {
     item.checked = false;
     item.pluss = false;
-
+    item.editValid = false;
     this.fieldReactive();
     if (this.optionsType.length>0) {
       this.optionsType.map((res:any) => {
@@ -148,6 +182,7 @@ export class QConfigComponent implements OnInit {
     this.questions.map((r:any) => {
       r.pluss = false;
       r.checked = false;
+      r.editValid = false;
     });
       this.fieldReactive();
       item.pluss = true;
@@ -285,18 +320,81 @@ export class QConfigComponent implements OnInit {
       });
     }
   }
+  toogleValue($event:any) {
+    console.log($event);
+    if ($event) {
+      this.dragQuestions = JSON.parse(JSON.stringify(this.questions));
+    }
+  }
+
   changeOrden() {
-    if (this.questions.length>0) {
-      this.questions.map((item:any, index:any) => {
+    if (this.dragQuestions.length>1) {
+      let idSection = 0;
+      this.dragQuestions.map((item:any, index:any) => {
         item.orden = index + 1;
+        if (item.nivel === 1) {
+          idSection = item.id;
+        } else {
+          item.id_section = idSection;
+        }
       });
-      const val = this.questions[0];
+      const val = this.dragQuestions[0];
       let valid = false;
       if (val.nivel === 1) {
         valid = true;
       }
-      console.log(valid, this.questions, 'jejejejjejej');
+
+      if (valid) {
+        const array = JSON.parse(JSON.stringify(this.dragQuestions));
+        const arrayOrder:any = [];
+        array.forEach((re:any) => {
+          if (re.nivel === 2) {
+            const object = {
+              id_question: re.id,
+              id_section: re.id_section,
+              orden: re.orden,
+            };
+            arrayOrder.push(object);
+          }
+        })
+        console.log(valid, 'Plopppppppp', arrayOrder, this.dragQuestions);
+      }
       
+    }
+  }
+  deleteSection(event:any, el: any) {
+    event.stopPropagation();
+    const serviceName = END_POINTS.base_back.quiz + '/sections';
+    if (el.id) {
+      Swal.fire({
+        title: 'Eliminar',
+        text: 'Recuerda que al eliminar la sección tambien eliminará las preguntas de la sección.  ¿ Desea eliminar ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          this.loading = true;
+          this.generalServi.deleteNameId$(serviceName, el.id).subscribe(r => {
+            if (r.success) {
+              this.getQuestions();
+              this.fieldReactive();
+              if (this.optionsType.length>0) {
+                this.optionsType.map((res:any) => {
+                  res.checked = false;
+                });
+              }
+            }
+          }, () => { this.loading = false; }, () => { this.loading = false; });
+        }
+      });
     }
   }
 }

@@ -7,7 +7,7 @@
       <div style="padding-bottom: 0px;">
         <button  nbButton size="tiny" status="basic" (click)="reloadList()">Refrescar lista</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
-      <nb-toggle status="primary" formControlName="drag_drop">Cambiar orden</nb-toggle> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <nb-toggle status="primary" formControlName="drag_drop" (checkedChange)="toogleValue($event)">Cambiar orden</nb-toggle> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <div *ngIf="formHeader.value.drag_drop" style="padding-bottom: 0px;">
         <button  nbButton size="tiny" status="primary" (click)="changeOrden()">Guardar orden</button>
       </div>
@@ -16,8 +16,8 @@
 </div>
 
 <div *ngIf="formHeader.value.drag_drop" cdkDropList  (cdkDropListDropped)="drop($event)">
-  <div class="example-box" *ngFor="let quiz of questions; let i = index" cdkDrag>
-    <nb-card
+  <div class="example-box" *ngFor="let quiz of dragQuestions; let i = index" cdkDrag>
+    <nb-card class="hobered"
         [ngStyle]="{
         'cursor': 'pointer',
         'margin-left': quiz?.nivel === 2 ? '25px' : '',
@@ -32,6 +32,10 @@
             </div>
             <div>
               {{quiz?.titulo || quiz?.pregunta}}
+              <span *ngIf="quiz?.nivel === 1" style="font-size: 13px;">
+                <br>
+                {{quiz?.descripcion}}
+              </span>
             </div>
           </div><br>
           <div style="margin-left: 25px;">
@@ -57,13 +61,17 @@
         'font-weight':  quiz?.nivel === 1 ? 'bold' : '',
         'border-left': '6px solid #934054'
         }">
-        <nb-card-body>
+        <nb-card-body *ngIf="!quiz?.editValid">
           <div class="d-flex">
             <div>
               {{i+1}})&nbsp;&nbsp;
             </div>
             <div>
               {{quiz?.titulo || quiz?.pregunta}}
+              <span *ngIf="quiz?.nivel === 1" style="font-size: 13px;">
+                <br>
+                {{quiz?.descripcion}}
+              </span>
             </div>
           </div><br>
 
@@ -71,9 +79,15 @@
             <app-q-view [object]="quiz"></app-q-view>
           </div>
         </nb-card-body>
-        <nb-card-footer style="text-align: right;" *ngIf="quiz?.nivel === 2">
-          <div >
+        <nb-card-footer style="text-align: right; padding-top: 1px; padding-bottom: 1px;">
+          <div *ngIf="quiz?.nivel === 2 && !quiz?.editValid">
             <button nbButton size="small"  (click)="deleteQuestion($event, quiz)"><nb-icon icon="trash" status="danger"></nb-icon></button>
+          </div>
+          <div *ngIf="quiz?.nivel === 2 && quiz?.editValid">
+            MODIFIFICANDO
+          </div>
+          <div *ngIf="quiz?.nivel === 1">
+            <button nbButton size="small"  (click)="deleteSection($event, quiz)"><nb-icon icon="trash" status="danger"></nb-icon>Eliminar sección</button>
           </div>
         </nb-card-footer>
       </nb-card>
@@ -223,17 +237,21 @@
           <!-- <div class="d-flex flex-column" style="max-width: 80px;"> -->
           <button nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz, i)">
             <nb-icon class="m-0 mb-2" icon="plus-outline" style="height: 24px; width: 24px;"></nb-icon>
-            <span style="font-size: 10px;" class="text-center">Añadir</span>
+            <span style="font-size: 10px;" class="text-center">Añadir<br>pregunta</span>
           </button>
-          <button nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueEdit(quiz)">
+          <button *ngIf="quiz?.nivel === 2" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueEdit(quiz)">
             <nb-icon class="m-0 mb-2" icon="edit-outline" style="height: 24px; width: 24px;"></nb-icon>
-            <span style="font-size: 10px;" class="text-center">Editar</span>
+            <span style="font-size: 10px;" class="text-center">Editar<br>pregunta</span>
+          </button>
+          <button *ngIf="quiz?.nivel === 1" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeSection(quiz, 'UPDATE', i)">
+            <nb-icon class="m-0 mb-2" icon="edit-outline" style="height: 24px; width: 24px;"></nb-icon>
+            <span style="font-size: 10px;" class="text-center">Editar<br>sección</span>
           </button>
           <button *ngIf="quiz?.checked" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeCancel(quiz)">
             <nb-icon class="m-0 mb-2" icon="close-outline" style="height: 24px; width: 24px;"></nb-icon>
             <span style="font-size: 10px;" class="text-center">Cancel</span>
           </button>
-          <button *ngIf="quiz?.ultimo" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz, i)">
+          <button *ngIf="quiz?.ultimo" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeSection(quiz, 'NEW', i)">
             <nb-icon class="m-0 mb-2" icon="npm-outline" style="height: 24px; width: 24px;"></nb-icon>
             <span class="text-center" style="line-height: 1.5; font-size: 10px;">Añadir<br>sección</span>
           </button>
