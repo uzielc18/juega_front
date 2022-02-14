@@ -132,3 +132,14 @@ nb-layout-column {
   z-index: 99999;
   border-top: 1px solid #F1F3F5;
 }
+
+.alternatives-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
