@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-sm-4 col-5">
+    <ul style="display: inline-block;">
+      <li *ngFor="let rel of relationList; let i = index;" [ngStyle]="{'background-color': colors[i]}">
+        <label class="label" style="color: '#fff'">{{ rel?.relacion }}</label>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-8 col-7">
+    <div class="d-flex justify-content-between">
+      <ul>
+        <li *ngFor="let item of randomList; let i = index;" [ngStyle]="{'background-color': colors[item.order]}">
+          <label class="label" style="color: '#fff'">{{ item?.relacion }}</label>
+        </li>
+      </ul>
+      <ul>
+        <li *ngFor="let rel of relationList; let i = index;">
+          <label class="label">{{ rel?.puntos }} pts.</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

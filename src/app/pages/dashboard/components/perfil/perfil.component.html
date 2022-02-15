@@ -1,15 +1,16 @@
 <div class="perfil-container">
   <div class="profile mb-1">
     <div class="photo-container">
-      <img src="assets/student.jpg" alt="">
+      <!-- <img src="assets/student.jpg" alt=""> -->
+      <img src="https://files-erp.upeu.edu.pe/media/lamb-academic/fotodb/0380200110121.jpg" alt="">
     </div>
     <div class="d-flex flex-column">
       <div class="student">
         <p class="student-name">
-          Howard Junior
+         {{userInfo?.user?.person?.nombres}}
         </p>
         <p class="student-lastname">
-          Shica De la Rua
+          {{userInfo?.user?.person?.apellido_paterno}} &nbsp; {{userInfo?.user?.person?.apellido_materno}}
         </p>
       </div>
       <div class="student-info">

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDateService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
@@ -10,7 +10,7 @@ import { END_POINTS } from 'src/app/providers/utils';
   templateUrl: './works.component.html',
   styleUrls: ['./works.component.scss']
 })
-export class WorksComponent implements OnInit {
+export class WorksComponent implements OnInit, OnChanges {
   loading: boolean = false;
   formHeader: any = FormGroup;
   options: any = 'N';
@@ -27,6 +27,8 @@ export class WorksComponent implements OnInit {
   // minDateActual: any = '';
   min: any = Date;
   settValuesMore:any;
+  key_file:any;
+  @Input() userInfo: any;
   constructor(private formBuilder: FormBuilder, private generalServi: GeneralService, dateService: NbDateService<Date>,
     public datepipe: DatePipe) {
       let date:any = Date;
@@ -42,7 +44,9 @@ export class WorksComponent implements OnInit {
       // console.log(this.minDateActual);
 
      }
-
+  ngOnChanges():void {
+    this.userInfo = this.userInfo;
+  }
   ngOnInit(): void {
     this.fieldReactive();
   }
@@ -84,6 +88,9 @@ export class WorksComponent implements OnInit {
 
     };
     this.formHeader = this.formBuilder.group(controls);
+
+    this.key_file = this.topics?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo;
+
     this.setValuesPre();
     this.setMenuValues();
 

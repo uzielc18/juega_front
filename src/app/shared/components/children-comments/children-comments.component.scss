@@ -68,17 +68,17 @@ body {
 }
 
 .comments-list:after {
- content: '';
- position: absolute;
- background: #c7cacb;
- bottom: 0;
- left: 27px;
- width: 7px;
- height: 7px;
- border: 4px solid #dee1e3;
- -webkit-border-radius: 50%;
- -moz-border-radius: 50%;
- border-radius: 50%;
+//  content: '';
+//  position: absolute;
+//  background: #c7cacb;
+//  bottom: 0;
+//  left: 27px;
+//  width: 7px;
+//  height: 7px;
+//  border: 4px solid #dee1e3;
+//  -webkit-border-radius: 50%;
+//  -moz-border-radius: 50%;
+//  border-radius: 50%;
 }
 
 .reply-list:before, .reply-list:after {display: none;}
@@ -87,7 +87,7 @@ body {
  width: 60px;
  height: 2px;
  background: #c7cacb;
- border: 4px solid #dee1e3;
+//  border: 2px solid #c7cacb;
  position: absolute;
  top: 25px;
  left: -25px;

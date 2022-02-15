@@ -1,11 +1,11 @@
 <nb-card class="m-0 border-0 h-100" style="border-radius: 15px; overflow: hidden;">
   <nb-card-body class="p-0">
     <div class="row h-100 m-0">
-      <div *ngIf="!collapseLeft" class="col-md-3 p-0">
+      <div *ngIf="!collapseLeft" class="col-md-6 col-lg-5 col-xl-4 col-xxl-3 p-0">
         <app-perfil></app-perfil>
       </div>
       <!-- [ngStyle]="{'border-color': item.checked === true ? 'brown' : ''}" -->
-      <div class="col-md p-0 d-flex flex-column" style="background-color: #EEEEEE;">
+      <div class="col-md-6 col-lg-7 col-xl-8 col-xxl-9 p-0 d-flex flex-column" style="background-color: #EEEEEE;">
         <div *ngIf="!collapseTop" class="anuncios" [ngStyle]="{'height': collapseLeft ? '380px' : '300px'}">
         </div>
         <nb-card class="curso-container" [ngStyle]="{'margin-top': collapseTop ? '0' : '-10px'}">

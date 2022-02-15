@@ -1,1 +1,18 @@
-<p>q-view works!</p>
+<div *ngIf="['07'].includes(object?.codigo)">
+    <app-v-doc-multi-option [alternativas]="object?.alternativas || []"></app-v-doc-multi-option>
+</div>
+<div *ngIf="['01'].includes(object?.codigo)">
+    <app-v-doc-unique-option [alternativas]="object?.alternativas || []"></app-v-doc-unique-option>
+</div>
+<div *ngIf="['05'].includes(object?.codigo)">
+    <app-v-doc-relation [alternativas]="object?.alternativas || []"></app-v-doc-relation>
+</div>
+<div *ngIf="['02'].includes(object?.codigo)">
+    <app-v-doc-true-false [alternativas]="object?.alternativas || []"></app-v-doc-true-false>
+</div>
+<div *ngIf="['03'].includes(object?.codigo)">
+    <app-v-doc-open [alternativas]="object?.alternativas || []"></app-v-doc-open>
+</div>
+<div *ngIf="['04'].includes(object?.codigo)">
+    <app-v-doc-closed [alternativas]="object?.alternativas || []"></app-v-doc-closed>
+</div>

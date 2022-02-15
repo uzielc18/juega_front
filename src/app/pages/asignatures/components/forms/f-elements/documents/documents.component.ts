@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
@@ -9,7 +9,7 @@ import { END_POINTS } from 'src/app/providers/utils';
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss']
 })
-export class DocumentsComponent implements OnInit {
+export class DocumentsComponent implements OnInit, OnChanges {
   loading: boolean = false;
   formHeader: any = FormGroup;
   options: any = 'N';
@@ -24,9 +24,13 @@ export class DocumentsComponent implements OnInit {
   @Input() valueMenu: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   settValuesMore:any;
+  key_file:any;
+  @Input() userInfo: any;
   constructor(private formBuilder: FormBuilder, private generalServi: GeneralService,
     public datepipe: DatePipe) { }
-
+  ngOnChanges():void {
+    this.userInfo = this.userInfo;
+  }
   ngOnInit(): void {
     this.fieldReactive();
   }
@@ -63,6 +67,9 @@ export class DocumentsComponent implements OnInit {
 
     };
     this.formHeader = this.formBuilder.group(controls);
+    
+    this.key_file = this.topics?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo;
+
     this.setValuesPre();
     this.setMenuValues();
     this.setFechaActual();

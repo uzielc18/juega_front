@@ -1,1 +1,68 @@
-<p>c-unique-option works!</p>
+<div class="table-responsive" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+    <table class="table table-sm">
+        <tbody>
+            <tr *ngFor="let item of arrayUnique; let i = index">
+                <td style="width: 1px;" class="text-center">
+                    <button nbButton size="tiny" status="info" outline (click)="shift(i - 1, i)">
+                        <nb-icon icon="arrowhead-up-outline"></nb-icon></button>&nbsp;
+                    <button nbButton size="tiny" status="info" outline (click)="shift(i, i + 1)">
+                        <nb-icon icon="arrowhead-down-outline"></nb-icon></button>
+                </td>
+                <td style="width: 1px;" class="text-center">
+                    <nb-radio   [checked]="item.correcto === 1"  (valueChange)="valueChange(item)" status="primary" style="padding-right: 0px;"></nb-radio>
+                </td>
+                <td style="width: 150px;">
+                    <input type="text" fullWidth placeholder="Alternativa {{i +1}}" nbInput fieldSize="small" [(ngModel)]="item.option">
+                </td>
+                <td style="width: 55px;">
+                    <input type="number" fullWidth placeholder="Puntos" nbInput fieldSize="small" [(ngModel)]="item.puntos">
+                </td>
+                <td style="width: 75px;">
+                    <lamb-prepare-file-pro
+                        [paramsInfo]="{
+                        key_file: key_file,
+                        directory: directorio,
+                        type: 'put',
+                        tabla: 'pendings',
+                        tipo: 'DOCUMENTO_TRABAJO'}"
+                        [numFiles]="6"
+                        (filterValueChange)="valueFile($event, item)"
+                        [isDisabled]="false"
+                        [viewFile]="'UNIQUE'"
+                        [typeFile]="'img'"
+                        [fullWidth]="true"
+                        >
+                    </lamb-prepare-file-pro>
+                    <div *ngIf="item?.base64">
+                        <br>
+                        <div style="text-align: right; cursor: pointer;">
+                            <nb-icon icon="close-circle-outline" status="danger" (click)="deleteItemFile(item)"></nb-icon>
+                          </div>
+                          <div>
+                            <img src="{{item?.base64}}" style="width: 100%; height: 100%;max-height: 150px;margin: 0 auto;" alt="">
+                          </div>
+                    </div>
+                <td style="width: 1px;" class="text-center">
+                    <button nbButton size="small" status="danger" outline (click)="deleteOption(i, item)">
+                        <nb-icon icon="close-outline"></nb-icon>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <button nbButton ghost size="small" status="info" (click)="pushedObject()">
+                                Añadir otra opción
+                            </button>
+                        </div>
+                        <div>
+                            <button nbButton size="small" status="basic" (click)="cancel()" *ngIf="arrayUnique?.length>0 && headParams?.code === 'NEW'">Limpiar</button>&nbsp;&nbsp;
+                            <button nbButton size="small" status="primary" (click)="saveQuestion()" [disabled]="validButom">Guardar</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

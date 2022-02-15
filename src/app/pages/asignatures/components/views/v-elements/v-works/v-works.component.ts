@@ -58,6 +58,7 @@ export class VWorksComponent implements OnInit, OnChanges {
   directorio: any = DIRECTORY.base;
   arrayFile: any = [];
   @Output() refreshPending: EventEmitter<any> = new EventEmitter();
+  key_file:any;
   constructor(
     private formBuilder: FormBuilder, private dialogService: NbDialogService, private appService: AppService, private generalServi: GeneralService
   ) {
@@ -114,6 +115,8 @@ export class VWorksComponent implements OnInit, OnChanges {
       ext_enlace: [''],
     };
     this.form = this.formBuilder.group(controls);
+    this.key_file = this.element?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo;
+    // console.log(this.key_file, 'Key file');
   }
 
   cambioTypo($event: any) {

@@ -1,0 +1,70 @@
+<nb-card class="m-0 h-100 border-0" style="border-radius: 15px;">
+    <nb-card-header>
+       <nb-icon icon="arrow-right-outline" status="primary"></nb-icon>&nbsp; CURSOS
+       <hr>
+       <form [formGroup]="formHeader">
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+                <label class="label">Escuela</label>
+                <input type="text" nbInput fullWidth placeholder="Escuela" formControlName="id_escuela">
+            </div>
+            <div class="col-md-3">
+                <label class="label">Ciclo</label>
+                <nb-select size="small" fullWidth placeholder="Ciclo" formControlName="ciclo">
+                    <nb-option value="1">
+                        1
+                    </nb-option>
+                </nb-select>
+            </div>
+        </div>
+    </form>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead>
+                    <tr style="font-size: 12px;">
+                        <th>Id carga docente</th>
+                        <th>Nombre</th>
+                        <th>Docente</th>
+                        <th>Cod. anfitrión</th>
+                        <th>>oom</th>
+                        <th style="width: 1px;"><nb-icon icon="people" style="font-size: 25px;"></nb-icon></th>
+                        <th class="text-center" style="width: 1px;" colspan="5">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="font-size: 12px; vertical-align: middle;">
+                        <td>21321</td>
+                        <td>Armando cristian Huarcay Quillla</td>
+                        <td>asddasdasdsad</td>
+                        <td>231321</td>
+                        <td>link del zoom</td>
+                        <td>100</td>
+                        <td class="text-center">
+                            <nb-icon icon="settings-2-outline" status="warning" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
+                            Configurar
+                        </td>
+                        <td class="text-center">
+                            <nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
+                            Unidades
+                        </td>
+                        <td class="text-center">
+                            <nb-icon icon="tv-outline" status="warning" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
+                            Portada
+                        </td>
+                        <td class="text-center">
+                            <nb-icon icon="edit-outline" status="info" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
+                            Editar
+                        </td>
+                        <td class="text-center">
+                            <nb-icon icon="trash-outline" status="danger" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
+                            Eliminar
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </nb-card-body>
+</nb-card>

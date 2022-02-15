@@ -47,6 +47,7 @@ import { ChildrenCommentsModule } from 'src/app/shared/components/children-comme
 import { CardListCourseModule } from 'src/app/shared/components/card-list-course/card-list-course.module';
 import { QuestionsConfigComponent } from './components/modals/questions-config/questions-config.component';
 import { QConfigModule } from 'src/app/shared/components/questions/q-config/q-config.module';
+import { QViewModule } from '../../shared/components/questions/q-view/q-view.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -116,7 +117,8 @@ const MODULES: any = [
   TranslateLangModule,
   ChildrenCommentsModule,
   CardListCourseModule,
-  QConfigModule
+  QConfigModule,
+  QViewModule,
 ]
 
 @NgModule({

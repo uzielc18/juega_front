@@ -6,12 +6,12 @@
     <li *ngFor="let item of list">
       <div class="comment-main-level">
         <!-- Avatar -->
-        <div class="comment-avatar"><img src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg" alt=""></div>
+        <div class="comment-avatar ms-1"><img src="https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg" alt=""></div>
         <!-- Contenedor del Comentario -->
         <div class="comment-box" style="padding-left: 70px !important;">
           <div class="comment-head"  style="padding-bottom: 0px;">
             <!-- <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6> -->
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-center">
               <div >
                 <p style="font-size: 14px; font-weight: bold;" class="comment-name m-0">{{item?.nombres + ' ' +
                   item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}} <label class="label" style="font-size: 11px;">&nbsp;&nbsp;&nbsp;&nbsp;Fecha {{formatDate(item?.created_at)}}</label> </p>

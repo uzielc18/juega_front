@@ -61,3 +61,13 @@ p {
   font-size: 14px;
 }
 
+@media screen and (max-width: 1000px){
+  .container-fluid {
+    padding: 0 !important;
+  }
+
+  .cont-1 {
+    padding: 0 !important;
+  }
+
+}

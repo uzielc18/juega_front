@@ -12,7 +12,10 @@ import { PrepareFileProModule } from '../../prepare-file-pro/prepare-file-pro.mo
 import { MProcessUrlComponent } from './modals/m-process-url/m-process-url.component';
 import { ControlMessagesModule } from '../../control-messages/control-messages.module';
 import { VideoPlayerModule } from '../../video-player/video-player.module';
-
+import { GeneralService } from 'src/app/providers';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { QViewModule } from '../q-view/q-view.module';
+import { MSectionComponent } from './modals/m-section/m-section.component';
 const COMPONENTS: any = [
   QConfigComponent,
   CUniqueOptionComponent,
@@ -21,30 +24,40 @@ const COMPONENTS: any = [
   CRelationComponent,
   COpenComponent,
   CClosedComponent,
-  MProcessUrlComponent
+  MProcessUrlComponent,
+  MSectionComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
 ];
 const MODALS: any = [
   MProcessUrlComponent,
+  MSectionComponent
 ];
 const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,
 ];
 const MODULOS: any = [
   PrepareFileProModule,
-  VideoPlayerModule
+  VideoPlayerModule,
+  DragDropModule,
+  QViewModule
 ];
+
+const SERVICES: any = [
+  GeneralService
+];
+
 @NgModule({
-  declarations: [...COMPONENTS, ],
-  entryComponents:[...MODALS],
+  declarations: [...COMPONENTS,],
+  entryComponents: [...MODALS],
   imports: [
     CommonModule,
     ...NG_MODULES,
     ...MODULOS,
-    CONTROL_MESSAGGE
+    CONTROL_MESSAGGE,
   ],
-  exports: [QConfigComponent]
+  exports: [...COMPONENTS],
+  providers: [...SERVICES]
 })
 export class QConfigModule { }

@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   NbMediaBreakpointsService,
   NbMenuItem,
@@ -7,23 +7,23 @@ import {
   NbSidebarService,
   NbThemeService,
 } from '@nebular/theme';
-import { delay, map, startWith, takeUntil } from 'rxjs/operators';
-import { Observable, of, Subject, Subscription } from 'rxjs';
+import {delay, map, startWith, takeUntil} from 'rxjs/operators';
+import {forkJoin, Observable, of, Subject, Subscription} from 'rxjs';
 
 import {
   NbAuthResult,
-  NbAuthService,
+  NbAuthService, NbAuthToken,
   NbTokenService,
 } from '@nebular/auth';
-import { CORE_OPTIONS, CoreOptions } from '../core.options';
-import { AppService } from '../state/app.service';
-import { AppValidateTokenService } from '../state/app-validate-token.service';
-import { environment } from '../../../environments/environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { END_POINTS } from 'src/app/providers/utils';
-import { GeneralService } from 'src/app/providers';
-import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
-import { Router } from '@angular/router';
+import {CORE_OPTIONS, CoreOptions} from '../core.options';
+import {AppService} from '../state/app.service';
+import {AppValidateTokenService} from '../state/app-validate-token.service';
+import {environment} from '../../../environments/environment';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {END_POINTS} from 'src/app/providers/utils';
+import {GeneralService} from 'src/app/providers';
+import {EmitEventsService} from 'src/app/shared/services/emit-events.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-scaffold',
@@ -59,6 +59,38 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       title: 'Biblioteca',
       icon: 'book-outline',
     },
+    {
+      title: 'Exámen',
+      icon: 'clipboard-outline',
+      link: '/exam',
+      pathMatch: 'prefix',
+    },
+    {
+      title: 'Administrar',
+      icon: 'clipboard-outline',
+      link: '/pages/manage',
+      pathMatch: 'prefix',
+      children: [
+        {
+          title: 'Sincronización',
+          icon: 'clipboard-outline',
+          link: '/pages/manage/lamb-sync',
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Zoom',
+          icon: 'clipboard-outline',
+          link: '/pages/manage/zoom',
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Cursos',
+          icon: 'clipboard-outline',
+          link: '/pages/manage/course',
+          pathMatch: 'prefix',
+        }
+      ]
+    },
   ];
   minimum = false;
   hidden = false;
@@ -80,9 +112,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   subcript: any = Subscription;
   validBlock: any = {from: '', status: false};
 
-  logoLangs:any = 'assets/spain.svg';
+  logoLangs: any = 'assets/spain.svg';
 
-  listLanguages:any = [
+  listLanguages: any = [
     {
       code: 'es',
       img: 'assets/spain.svg',
@@ -102,6 +134,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       id: 3,
     }
   ]
+
   constructor(
     private nbTokenService: NbTokenService,
     private sidebarService: NbSidebarService,
@@ -129,7 +162,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
     this.user = this.appService.user;
     this.userMenu = this.appService.usernameMenu;
-    const { xl } = this.breakpointService.getBreakpointsMap();
+    const {xl} = this.breakpointService.getBreakpointsMap();
     this.themeService
       .onMediaQueryChange()
       .pipe(
@@ -143,28 +176,60 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         if (data.item.subtag === 'logout') {
-          this.nbTokenService.clear();
-          // lamb
-          this.nbAuthService
-            .logout(this.options.strategyName)
+          this.appService.start();
+
+          this.nbAuthService.getToken()
             .pipe(takeUntil(this.destroy$))
-            .subscribe((authResult: NbAuthResult) => {
-              if (authResult.isSuccess()) {
-                this.tokenService.authorizeLamb();
+            .subscribe((value: NbAuthToken) => {
+
+              if (['lamb'].includes(value.getOwnerStrategyName())) {
+
+                // lamb
+                this.tokenService.logout()
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe((result: any) => {
+                    if (result && result.hasOwnProperty('logout') && result.logout) {
+                      this.nbAuthService
+                        .logout(this.options.strategyName)
+                        .pipe(takeUntil(this.destroy$))
+                        .subscribe((authResult: NbAuthResult) => {
+                          if (authResult.isSuccess()) {
+                            this.appService.stop();
+                            window.location.href = environment.shellApp;
+                          }
+                        });
+                    } else {
+                      this.appService.stop();
+                    }
+                  }, () => {
+                    this.nbAuthService
+                      .logout(this.options.strategyName)
+                      .pipe(takeUntil(this.destroy$))
+                      .subscribe((authResult: NbAuthResult) => {
+                        if (authResult.isSuccess()) {
+                          this.appService.stop();
+                          window.location.href = environment.shellApp;
+                        }
+                      });
+                  })
+
               }
+
+              if (['google'].includes(value.getOwnerStrategyName())) {
+                // google
+                this.nbAuthService
+                  .logout(this.options.strategyGoogleName)
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe((authResult: NbAuthResult) => {
+                    if (authResult.isSuccess()) {
+                      this.appService.stop();
+                      window.location.href = environment.shellApp;
+                    }
+                  });
+              }
+
             });
 
-          // google
-          this.nbAuthService
-            .logout(this.options.strategyGoogleName)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((authResult: NbAuthResult) => {
-              if (authResult.isSuccess()) {
-                this.tokenService.authorizeGoogle();
-              }
-            });
-          window.location.href = environment.shellApp;
-          // window.location.href = '/lamb-patmos/fronts/patmos-upeu-base-front/auth';
         }
       });
 
@@ -194,6 +259,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.getLanguages();
     }, 100);
   }
+
   toggle(): void {
     this.hidden = !this.hidden;
     this.sidebarService.toggle(true, 'core-sidebar');
@@ -208,12 +274,15 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
     this.subcript.unsubscribe();
   }
+
   open() {
     this.popover.show();
   }
+
   close() {
     this.popover.hide();
   }
+
   //////////////////////////////////
   getRoles() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -245,6 +314,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
     }
   }
+
   getSemestres(rol: any) {
     const serviceName = END_POINTS.base_back.user + '/mysemesters';
     if (rol && rol.id) {
@@ -279,6 +349,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   changeRol($event: any) {
     const rol = this.roles.find((r: any) => r.id === $event);
     this.semestres = [];
@@ -311,9 +382,14 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
             this.close();
           }
         }
-      }, () => { this.loading = false; }, () => { this.loading = false; });
+      }, () => {
+        this.loading = false;
+      }, () => {
+        this.loading = false;
+      });
     }
   }
+
   saveChanges() {
     const object = this.semestres.find((r: any) => r.id === this.formHeader.value.id_semestre);
     const rol = this.roles.find((r: any) => r.id === this.formHeader.value.id_rol);
@@ -325,16 +401,18 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   getLanguages() {
     this.formHeader.controls['lenguaje'].setValue('es');
     setTimeout(() => {
       this.changesLangs();
     }, 200);
   }
+
   changesLangs() {
     const forms = this.formHeader.value;
     this.emitEventsService.setLangsEnviar(forms.lenguaje);
-    const logo = this.listLanguages.find((r:any) => r.code === forms.lenguaje);
+    const logo = this.listLanguages.find((r: any) => r.code === forms.lenguaje);
     if (logo && logo.img) {
       this.logoLangs = logo.img;
     }

@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
-import { S3ServiceService } from './services/s3-service.service';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 
 @Component({
@@ -22,6 +21,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
   @Input() listArrayFile: any = [];
   loading: boolean = false;
   @Input() viewFile: string = 'ARRAY';
+  @Input() fullWidth: boolean = true;
   constructor(private formBuilder: FormBuilder, private modalServiceNebular: NbDialogService,
     private appService: AppService) {
   }
@@ -33,7 +33,6 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
     this.getUsers();
     this.formularioFiels();
     this.typeFileSet(this.typeFile);
-
   }
   private formularioFiels(): any {
     const controls = {
@@ -41,6 +40,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
       name_file: [''],
       ext_file: [''],
       base64: [''],
+      nombre_s3: ['']
     };
     this.formHeaders = this.formBuilder.group(controls);
   }
@@ -87,6 +87,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
     this.formHeaders.controls['name_file'].setValue('');
     this.formHeaders.controls['ext_file'].setValue('');
     this.formHeaders.controls['base64'].setValue('');
+    this.formHeaders.controls['nombre_s3'].setValue('');
     // this.onFilterChange();
   }
 
@@ -94,9 +95,10 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
     const param = {
       accepts: this.accept,
       params: {
-        id: this.paramsInfo.id,
-        codigoEst: this.userData.user && this.userData.user.person.codigo || '',
-        codAleatory: Math.floor(Math.random() * 90000) + 10000,
+        key_file: this.paramsInfo.key_file,
+        // id: this.paramsInfo.id,
+        // codigoEst: this.userData.user && this.userData.user.person.codigo || '',
+        // codAleatory: Math.floor(Math.random() * 90000) + 10000,
         directory: this.paramsInfo.directory,
         type: this.paramsInfo.type,
       }
@@ -112,6 +114,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
         this.formHeaders.controls['name_file'].setValue(result.name);
         this.formHeaders.controls['ext_file'].setValue(result.ext);
         this.formHeaders.controls['base64'].setValue(result.base64);
+        this.formHeaders.controls['nombre_s3'].setValue(result.nombre);
         const datos = {
           ext: result.ext,
           nombre: result.nombre,

@@ -91,7 +91,7 @@ export class UploadFileComponent implements OnInit {
   anadirFile() {
     const form = this.formHeaders.value;
     if (form && (form.size <= 26214400) ) { // 25MB
-    const key = this.params.id + '_' + this.params.codigoEst + '_' + this.params.codAleatory + '.' + form.ext;
+    const key = this.params.key_file + '_' + Math.floor(Math.random() * 90000) + 10000 + '.' + form.ext;
     const prams = {
       type: this.params.type,
       directory: this.params.directory,
@@ -106,8 +106,6 @@ export class UploadFileComponent implements OnInit {
             const valore = data;
             const u = r.data.url.split('?');
             const urls = u[0];
-
-            // console.log(form.file.type, 'content Type');
             this.s3ServiceServ.addS3$(r.data.url, form.file.type, form.file).subscribe(r => {
 
               if (r.status === 200) {
