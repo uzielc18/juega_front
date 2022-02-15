@@ -2,7 +2,17 @@
   <table class="table table-sm">
     <tbody>
       <tr *ngFor="let item of relationList; let i = index;">
-        <td style="width: 150px;">
+        <!-- <td style="width: 38px;" class="text-center">
+          <button nbButton size="tiny" status="info" outline nbTooltip="Subir alternativa" nbTooltipStatus="info"
+            (click)="shift(i - 1, i)">
+            <nb-icon icon="arrowhead-up-outline"></nb-icon>
+          </button>&nbsp;
+          <button nbButton size="tiny" status="info" outline nbTooltip="Bajar alternativa" nbTooltipStatus="info"
+            (click)="shift(i, i + 1)">
+            <nb-icon icon="arrowhead-down-outline"></nb-icon>
+          </button>
+        </td> -->
+        <td style="width: 120px;">
           <input type="text" fullWidth placeholder="Opción {{ abecedario[i] | titlecase }}" nbInput fieldSize="small"
             [(ngModel)]="item.relacion">
         </td>
@@ -25,7 +35,7 @@
             </div>
           </div>
         </td>
-        <td style="width: 150px;">
+        <td style="width: 120px;">
           <input type="text" fullWidth placeholder="Opción {{ abecedario[i] | titlecase }}1" nbInput fieldSize="small"
             [(ngModel)]="item.resp">
         </td>
@@ -49,7 +59,7 @@
             </div>
           </div>
         </td>
-        <td style="width: 70px;">
+        <td style="width: 55px;">
           <input type="number" fullWidth placeholder="Puntos" nbInput fieldSize="small" [(ngModel)]="item.puntos">
         </td>
         <td style="width: 1px;" class="text-center">

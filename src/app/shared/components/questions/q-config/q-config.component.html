@@ -1,4 +1,6 @@
 <!-- drag-and-drop -->
+<div [nbSpinner]="loading || loadingQuestion" nbSpinnerStatus="primary" nbSpinnerSize="large" >
+
 <div *ngIf="questions?.length>2" style="padding-top: 0px; padding-bottom: 8px;">
   <form [formGroup]="formHeader" class=" d-flex align-items-center justify-content-between">
     <div>
@@ -48,7 +50,7 @@
 
 <!-- /////// -->
 
-<div *ngIf="!formHeader.value.drag_drop" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" style="margin-left: 20px;">
+<div *ngIf="!formHeader.value.drag_drop" style="margin-left: 20px;">
 
 <div  *ngFor="let quiz of questions; let i = index">
   <div class="row m-0">
@@ -199,7 +201,7 @@
 
             <div *ngIf="['05'].includes(formHeader?.value?.type_alternative?.codigo)">
 
-              <app-c-relation [headParams]="formHeader.value" [item]="quiz" (loadings)="changeLoadings($event)"
+              <app-c-relation [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
                 (changeSuccess)="changeSuccess($event)">
               </app-c-relation>
 
@@ -235,7 +237,7 @@
       <nb-card *ngIf="quiz.pluss" class="m-0 mb-4">
         <nb-card-body class="p-0">
           <!-- <div class="d-flex flex-column" style="max-width: 80px;"> -->
-          <button nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz, i)">
+          <button *ngIf="!quiz?.editValid" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueCheck(quiz, i)">
             <nb-icon class="m-0 mb-2" icon="plus-outline" style="height: 24px; width: 24px;"></nb-icon>
             <span style="font-size: 10px;" class="text-center">Añadir<br>pregunta</span>
           </button>
@@ -262,7 +264,7 @@
   </div>
 </div>
 </div>
-
+</div>
 <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" >
   <div class="example-box" *ngFor="let movie of movies" cdkDrag>{{movie}}</div>
 </div> -->

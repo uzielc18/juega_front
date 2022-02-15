@@ -80,6 +80,9 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
         delete r['base64'];
         delete r['checked'];
         delete r['nivel'];
+        if (this.headParams.code === 'UPDATE') {
+          r.question_id = this.itemQuiz.id;
+        }
       });
       const serviceName = END_POINTS.base_back.quiz + '/questions';
       const params:any = {
@@ -101,6 +104,11 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
           this.loadings.emit(true);
               this.generalServi.addNameData$(serviceName, params).subscribe(r => {
                 if (r.success) {
+                  // const retorna = {
+                  //   close: 'ok',
+                  //   question: '', 
+                  // }
+                  // this.changeSuccess.emit(retorna);
                   this.changeSuccess.emit('ok');
                 }
               }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
@@ -108,6 +116,11 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
           this.loadings.emit(true);
               this.generalServi.updateNameIdData$(serviceName, this.itemQuiz.id, params).subscribe(r => {
                 if (r.success) {
+                  // const retorna = {
+                  //   close: 'ok',
+                  //   question: r.data, 
+                  // }
+                  // this.changeSuccess.emit(retorna);
                   this.changeSuccess.emit('ok');
                 }
               }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });

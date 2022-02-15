@@ -13,8 +13,7 @@
           <form [formGroup]="formHeader">
             <button nbButton outline size="small" ghost [nbPopover]="templateRef" nbPopoverPlacement="bottom"
               nbPopoverTrigger="noop" (click)="open()">
-              {{paramsSessionStorage?.rol?.name || 'Sin rol'}} - {{paramsSessionStorage?.semestre?.nombre || 'Sin
-              semestre'}}
+              {{paramsSessionStorage?.rol?.name || 'Sin rol'}} - {{paramsSessionStorage?.semestre?.nombre || 'Sin semestre'}}
             </button>
             <ng-template #templateRef>
               <nb-card style="padding-bottom: 0px;">

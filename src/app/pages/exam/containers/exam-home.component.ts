@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./exam-home.component.scss']
 })
 export class ExamHomeComponent implements OnInit {
+  collapsed: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  collapse() {
+    this.collapsed = !this.collapsed;
   }
 
 }
