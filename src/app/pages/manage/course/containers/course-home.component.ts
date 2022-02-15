@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { GeneralService } from 'src/app/providers';
 
 @Component({
   selector: 'app-course-home',
@@ -6,10 +8,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./course-home.component.scss']
 })
 export class CourseHomeComponent implements OnInit {
-
-  constructor() { }
+  loading: boolean = false;
+  formHeader: any = FormGroup;
+  constructor(private generalServi: GeneralService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.fieldReactive();
+  }
+  private fieldReactive() {
+    const controls = {
+      id_escuela: [''],
+      ciclo: [''],
+    };
+    this.formHeader = this.formBuilder.group(controls);
   }
 
 }
