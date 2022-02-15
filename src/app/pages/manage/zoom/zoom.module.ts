@@ -6,10 +6,14 @@ import { ZoomHomeComponent } from './containers/zoom-home.component';
 
 import { ZoomRoutingModule } from './zoom-routing.module';
 import { ZoomComponent } from './zoom.component';
+import { UpZoomComponent } from './components/modals/up-zoom/up-zoom.component';
+import { ZoomCourseComponent } from './components/modals/zoom-course/zoom-course.component';
 
 const COMPONENTS: any[] = [
   ZoomComponent,
-  ZoomHomeComponent
+  ZoomHomeComponent,
+  UpZoomComponent,
+  ZoomCourseComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -24,6 +28,8 @@ const SERIVCES: any = [
   GeneralService,
 ];
 const MODALS: any = [
+  UpZoomComponent,
+  ZoomCourseComponent
 ];
 const NGX_MODULES: any = [
 ];
