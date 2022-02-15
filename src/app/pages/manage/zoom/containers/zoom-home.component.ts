@@ -4,7 +4,7 @@ import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { UpZoomComponent } from '../components/modals/up-zoom/up-zoom.component';
 import { ZoomCourseComponent } from '../components/modals/zoom-course/zoom-course.component';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-zoom-home',
   templateUrl: './zoom-home.component.html',
@@ -106,6 +106,25 @@ export class ZoomHomeComponent implements OnInit {
     this.getZoom();
   }
   vincular(){
-    
+    Swal.fire({
+      title: 'Vincular',
+      text: '¿ Desea vincular datos ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#7f264a',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+        if (result.isConfirmed) {
+          console.log('ok');
+          
+        }
+      
+    });
   }
 }
