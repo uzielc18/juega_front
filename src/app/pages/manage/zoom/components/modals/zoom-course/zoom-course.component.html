@@ -1,8 +1,16 @@
-<nb-card class="m-0 h-100 border-0" style="border-radius: 15px;">
-    <nb-card-header>
-       <nb-icon icon="arrow-right-outline" status="primary"></nb-icon>&nbsp; CURSOS
-       <hr>
-       <form [formGroup]="formHeader">
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+    nbSpinnerMessage="Procesando información">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div>
+                Cursos por zoom
+            </div>
+            <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <hr>
+        <form [formGroup]="formHeader">
         <div class="row">
             <div class="col-md-6"></div>
             <div class="col-md-3">
