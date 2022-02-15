@@ -43,6 +43,12 @@ export class GeneralService extends EntityDataService<IResponse> {
     public nameIdAndId$(serviceName: any, id: any, id2:any): Observable<IResponse> {
       return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}/${id2}`);
     }
+    public nameIdAndIdAndId$(serviceName: any, id: any, id2:any, id3:any): Observable<IResponse> {
+      return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}/${id2}/${id3}`);
+    }
+    public nameIdAndIdAndIdAndId$(serviceName: any, id: any, id2: any, id3: any, id4: any): Observable<IResponse> {
+      return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}/${id2}/${id3}/${id4}`);
+    }
     public nameIdAndIdParams$(serviceName: any, id: any, id2:any, params:any): Observable<IResponse> {
       return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}/${id2}`, {params});
     }

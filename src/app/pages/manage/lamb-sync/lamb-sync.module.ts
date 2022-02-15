@@ -5,6 +5,8 @@ import { ControlMessagesModule } from 'src/app/shared/components/control-message
 import { GeneralService } from 'src/app/providers';
 import { LambSyncComponent } from './lamb-sync.component';
 import { LambSyncHomeComponent } from './containers/lamb-sync-home.component';
+import { ListDocenteComponent } from './components/modals/list-docente/list-docente.component';
+import { ListCursosComponent } from './components/modals/list-cursos/list-cursos.component';
 
 const COMPONENTS: any[] = [
   LambSyncComponent,
@@ -42,7 +44,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, ListDocenteComponent, ListCursosComponent],
   entryComponents: [...MODALS],
 })
 export class LambSyncModule { }
