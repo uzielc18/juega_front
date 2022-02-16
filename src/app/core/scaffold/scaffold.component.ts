@@ -177,20 +177,52 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       .subscribe((data: any) => {
         if (data.item.subtag === 'logout') {
           this.appService.start();
-
-          this.nbAuthService.getToken()
+          this.tokenService.logout()
             .pipe(takeUntil(this.destroy$))
-            .subscribe((value: NbAuthToken) => {
+            .subscribe((value: any) => {
+              if (value.hasOwnProperty('success') && value.success) {
 
-              if (['lamb'].includes(value.getOwnerStrategyName())) {
-
-                // lamb
-                this.tokenService.logout()
+                this.nbAuthService.getToken()
                   .pipe(takeUntil(this.destroy$))
-                  .subscribe((result: any) => {
-                    if (result && result.hasOwnProperty('logout') && result.logout) {
+                  .subscribe((value: NbAuthToken) => {
+
+                    if (['lamb'].includes(value.getOwnerStrategyName())) {
+
+                      // lamb
+                      this.tokenService.logoutLamb()
+                        .pipe(takeUntil(this.destroy$))
+                        .subscribe((result: any) => {
+                          if (result && result.hasOwnProperty('logout') && result.logout) {
+                            this.nbAuthService
+                              .logout(this.options.strategyName)
+                              .pipe(takeUntil(this.destroy$))
+                              .subscribe((authResult: NbAuthResult) => {
+                                if (authResult.isSuccess()) {
+                                  this.appService.stop();
+                                  window.location.href = environment.shellApp;
+                                }
+                              });
+                          } else {
+                            this.appService.stop();
+                          }
+                        }, () => {
+                          this.nbAuthService
+                            .logout(this.options.strategyName)
+                            .pipe(takeUntil(this.destroy$))
+                            .subscribe((authResult: NbAuthResult) => {
+                              if (authResult.isSuccess()) {
+                                this.appService.stop();
+                                window.location.href = environment.shellApp;
+                              }
+                            });
+                        })
+
+                    }
+
+                    if (['google'].includes(value.getOwnerStrategyName())) {
+                      // google
                       this.nbAuthService
-                        .logout(this.options.strategyName)
+                        .logout(this.options.strategyGoogleName)
                         .pipe(takeUntil(this.destroy$))
                         .subscribe((authResult: NbAuthResult) => {
                           if (authResult.isSuccess()) {
@@ -198,37 +230,21 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                             window.location.href = environment.shellApp;
                           }
                         });
-                    } else {
-                      this.appService.stop();
                     }
-                  }, () => {
-                    this.nbAuthService
-                      .logout(this.options.strategyName)
-                      .pipe(takeUntil(this.destroy$))
-                      .subscribe((authResult: NbAuthResult) => {
-                        if (authResult.isSuccess()) {
-                          this.appService.stop();
-                          window.location.href = environment.shellApp;
-                        }
-                      });
-                  })
 
-              }
-
-              if (['google'].includes(value.getOwnerStrategyName())) {
-                // google
-                this.nbAuthService
-                  .logout(this.options.strategyGoogleName)
-                  .pipe(takeUntil(this.destroy$))
-                  .subscribe((authResult: NbAuthResult) => {
-                    if (authResult.isSuccess()) {
-                      this.appService.stop();
-                      window.location.href = environment.shellApp;
-                    }
                   });
+
+
+              } else {
+                this.appService.stop();
               }
 
+            }, () => {
+              this.appService.stop();
+            }, () => {
+              this.appService.stop();
             });
+
 
         }
       });
