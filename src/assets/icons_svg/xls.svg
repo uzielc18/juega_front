@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2021 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="31.7357mm" height="35.2212mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 1138.95 1264.04"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:black;stroke-width:48.62;stroke-miterlimit:22.9256}
+    .fil2 {fill:none}
+    .fil0 {fill:black}
+    .fil1 {fill:black}
+    .fil3 {fill:black;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g id="Capa_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_3036644839664">
+   <path class="fil0" d="M215.23 1157.7l0 -148.09 -48.61 0 0 166.33c0,42.19 45.93,88.12 88.12,88.12l796.11 0c22.71,0 48.1,-15.94 60.14,-27.98 12.04,-12.04 27.98,-37.43 27.98,-60.14l0 -914.61c0,-10.2 -119.14,-123.7 -128.38,-132.94 -8.94,-8.94 -122.88,-128.38 -132.94,-128.38l-622.91 0c-42.19,0 -88.12,45.93 -88.12,88.12l0 351.99 48.61 0 0 -333.76c0,-38.22 19.51,-57.73 57.73,-57.73l574.29 0 0 154.96c0,42.19 45.93,88.12 88.12,88.12l154.97 0 0 865.99c0,38.22 -19.51,57.73 -57.73,57.73l-759.64 0c-38.22,0 -57.73,-19.51 -57.73,-57.73zm680.64 -1072.62l158.76 157.25c-173.98,0.75 -158.76,15.97 -158.76,-157.25z"/>
+   <path class="fil1" d="M594.32 918.57l137.26 0 0 -96.99 -137.26 0 0 -48.61 137.26 0 0 -96.99 -137.26 0 0 -48.61 137.26 0 0 -96.99 -137.26 0 0 -48.61 332.07 0c2.86,0 5.39,0.67 7.58,1.85 6.96,2.3 12.13,6.76 12.13,13.38l0 451.09c0,7.26 -3.96,12.46 -9.61,15.58 -2.7,2.2 -6.07,3.53 -10.1,3.53l-4.6 0 -327.48 0 0 -48.61zm185.88 -291.2l117.29 0 0 -96.99 -117.29 0 0 96.99zm117.29 48.61l-117.29 0 0 96.99 117.29 0 0 -96.99zm0 242.59l0 -96.99 -117.29 0 0 96.99 117.29 0z"/>
+  </g>
+  <g id="_3036644837888">
+   <rect class="fil2 str0" x="24.31" y="440.11" width="570.01" height="569.49" rx="40.69" ry="40.92"/>
+   <polygon class="fil3" points="162.95,882.45 271.75,718.11 173.07,567.25 247.4,567.25 309.47,661.1 371.53,567.25 446.01,567.25 347.11,718.18 455.69,882.45 379.24,882.45 309.39,775.7 239.47,882.45 "/>
+  </g>
+ </g>
+</svg>

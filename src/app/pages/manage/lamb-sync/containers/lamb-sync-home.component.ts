@@ -4,6 +4,8 @@ import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils/end-points';
 import { ListCursosComponent } from '../components/modals/list-cursos/list-cursos.component';
+import { ListEstudiantesComponent } from '../components/modals/list-estudiantes/list-estudiantes.component';
+import { ListSilabusComponent } from '../components/modals/list-silabus/list-silabus.component';
 
 @Component({
   selector: 'app-lamb-sync-home',
@@ -159,7 +161,7 @@ export class LambSyncHomeComponent implements OnInit {
         this.dialogService.open(ListCursosComponent, {
           dialogClass: 'dialog-limited-height',
           context: {
-            cursos: this.cursos,
+            item: this.cursos,
           },
           closeOnBackdropClick: true,
           closeOnEsc: true
@@ -178,7 +180,18 @@ export class LambSyncHomeComponent implements OnInit {
     if (this.actualProg) {
       this.generalService.nameIdAndIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.id_carga_curso, this.actualProg.id).subscribe((res: any) => {
         this.silabus = res.data || [];
-        console.log(this.silabus);
+        this.dialogService.open(ListSilabusComponent, {
+          dialogClass: 'dialog-limited-height',
+          context: {
+            item: this.silabus,
+          },
+          closeOnBackdropClick: true,
+          closeOnEsc: true
+        }).onClose.subscribe(result => {
+          if (result === 'ok') {
+            this.changeEmit.emit();
+          }
+        });
       }, () => { this.loadingSync = false; }, () => { this.loadingSync = false; });
     }
   }
@@ -189,7 +202,18 @@ export class LambSyncHomeComponent implements OnInit {
     if (this.actualProg) {
       this.generalService.nameIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.actualProg.id).subscribe((res: any) => {
         this.estudiantes = res.data || [];
-        console.log(this.estudiantes);
+        this.dialogService.open(ListEstudiantesComponent, {
+          dialogClass: 'dialog-limited-height',
+          context: {
+            item: this.estudiantes,
+          },
+          closeOnBackdropClick: true,
+          closeOnEsc: true
+        }).onClose.subscribe(result => {
+          if (result === 'ok') {
+            this.changeEmit.emit();
+          }
+        });
       }, () => { this.loadingSync = false; }, () => { this.loadingSync = false; });
     }
   }

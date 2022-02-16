@@ -8,6 +8,8 @@ import { LambSyncHomeComponent } from './containers/lamb-sync-home.component';
 import { ListDocenteComponent } from './components/modals/list-docente/list-docente.component';
 import { ListCursosComponent } from './components/modals/list-cursos/list-cursos.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { ListSilabusComponent } from './components/modals/list-silabus/list-silabus.component';
+import { ListEstudiantesComponent } from './components/modals/list-estudiantes/list-estudiantes.component';
 
 const COMPONENTS: any[] = [
   LambSyncComponent,
@@ -46,7 +48,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS, ListDocenteComponent, ListCursosComponent],
+  declarations: [...COMPONENTS, ListDocenteComponent, ListCursosComponent, ListSilabusComponent, ListEstudiantesComponent],
   entryComponents: [...MODALS],
 })
 export class LambSyncModule { }
