@@ -37,8 +37,12 @@ export class AppValidateTokenService {
     );
   }
 
-
   logout() {
+    return this.httpClient.get(`${environment.apiUrls.auth}/api/logout`);
+  }
+
+
+  logoutLamb() {
     const token = this.appService.user.hasOwnProperty('access_token') ? this.appService.user.access_token : '';
     return this.httpClientForLogout.post(`${environment.authStrategy.baseEndpoint}/api/logout_all/`, {}, {headers: new HttpHeaders({'Authorization': `Bearer ${token}`})})
   };
