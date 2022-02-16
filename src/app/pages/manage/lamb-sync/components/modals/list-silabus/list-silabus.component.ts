@@ -2,17 +2,17 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 
 @Component({
-  selector: 'app-list-cursos',
-  templateUrl: './list-cursos.component.html',
-  styleUrls: ['./list-cursos.component.scss']
+  selector: 'app-list-silabus',
+  templateUrl: './list-silabus.component.html',
+  styleUrls: ['./list-silabus.component.scss']
 })
-export class ListCursosComponent implements OnInit {
+export class ListSilabusComponent implements OnInit {
 
   @Input() item: any = [];
   loading: boolean = false;
   page = 4;
 
-  constructor(public activeModal: NbDialogRef<ListCursosComponent>) { }
+  constructor(public activeModal: NbDialogRef<ListSilabusComponent>) { }
 
   ngOnInit(): void {
     console.log(this.item);
@@ -21,5 +21,6 @@ export class ListCursosComponent implements OnInit {
   closeModal() {
     this.activeModal.close('close');
   }
+
 
 }

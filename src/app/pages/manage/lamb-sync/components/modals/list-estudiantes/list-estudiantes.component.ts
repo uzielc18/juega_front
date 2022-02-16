@@ -2,17 +2,17 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 
 @Component({
-  selector: 'app-list-cursos',
-  templateUrl: './list-cursos.component.html',
-  styleUrls: ['./list-cursos.component.scss']
+  selector: 'app-list-estudiantes',
+  templateUrl: './list-estudiantes.component.html',
+  styleUrls: ['./list-estudiantes.component.scss']
 })
-export class ListCursosComponent implements OnInit {
+export class ListEstudiantesComponent implements OnInit {
 
   @Input() item: any = [];
   loading: boolean = false;
   page = 4;
 
-  constructor(public activeModal: NbDialogRef<ListCursosComponent>) { }
+  constructor(public activeModal: NbDialogRef<ListEstudiantesComponent>) { }
 
   ngOnInit(): void {
     console.log(this.item);
