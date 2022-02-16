@@ -10,6 +10,7 @@ export class ListCursosComponent implements OnInit {
 
   @Input() cursos: any = [];
   loading: boolean = false;
+  page = 4;
 
   constructor(public activeModal: NbDialogRef<ListCursosComponent>) { }
 

@@ -7,6 +7,7 @@ import { LambSyncComponent } from './lamb-sync.component';
 import { LambSyncHomeComponent } from './containers/lamb-sync-home.component';
 import { ListDocenteComponent } from './components/modals/list-docente/list-docente.component';
 import { ListCursosComponent } from './components/modals/list-cursos/list-cursos.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 const COMPONENTS: any[] = [
   LambSyncComponent,
@@ -15,6 +16,7 @@ const COMPONENTS: any[] = [
 ];
 const NG_MODULES: any = [
   NebularModule,
+  NgbPaginationModule
 ];
 const NGB_MODULES: any = [
   // NgbModule

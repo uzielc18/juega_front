@@ -9,12 +9,7 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-    <div class="row">
-      <nb-list>
-        <nb-list-item *ngFor="let curso of cursos">
-          {{ curso?.programa_estudio_nombre }}
-        </nb-list-item>
-      </nb-list>
-    </div>
+    <ngb-pagination [collectionSize]="70" [(page)]="page" [boundaryLinks]="true">
+    </ngb-pagination>
   </nb-card-body>
 </nb-card>
