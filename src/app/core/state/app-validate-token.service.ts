@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {HttpBackend, HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpBackend, HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {CORE_OPTIONS, CoreOptions} from '../core.options';
 import {DOCUMENT} from '@angular/common';
 import {environment} from 'src/environments/environment';
