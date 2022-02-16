@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2021 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="31.7357mm" height="35.2212mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 644.03 714.76"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:black;stroke-width:27.49;stroke-miterlimit:22.9256}
+    .fil2 {fill:none}
+    .fil0 {fill:black}
+    .fil1 {fill:black;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g id="Capa_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_3036656966144">
+   <path class="fil0" d="M121.7 654.63l0 -83.74 -27.49 0 0 94.05c0,23.86 25.97,49.83 49.83,49.83l450.16 0c12.84,0 27.2,-9.01 34,-15.82 6.81,-6.81 15.82,-21.16 15.82,-34l0 -517.17c0,-5.77 -67.37,-69.95 -72.59,-75.17 -5.06,-5.06 -69.48,-72.59 -75.17,-72.59l-352.23 0c-23.86,0 -49.83,25.97 -49.83,49.83l0 199.03 27.49 0 0 -188.73c0,-21.61 11.03,-32.64 32.65,-32.64l324.74 0 0 87.63c0,23.86 25.97,49.83 49.83,49.83l87.63 0 0 489.68c0,21.61 -11.03,32.65 -32.65,32.65l-429.54 0c-21.61,0 -32.65,-11.03 -32.65,-32.65zm384.87 -606.52l89.77 88.92c-98.38,0.43 -89.77,9.03 -89.77,-88.92z"/>
+   <g>
+    <path class="fil0" d="M336.06 457.98l187.69 0c13.84,0 13.84,27.49 0,27.49l-187.69 0 0 -27.49z"/>
+    <path class="fil0" d="M336.06 396.12l187.69 0c13.84,0 13.84,27.49 0,27.49l-187.69 0 0 -27.49z"/>
+    <path class="fil0" d="M336.06 519.84l187.69 0c13.84,0 13.84,27.49 0,27.49l-187.69 0 0 -27.49z"/>
+    <path class="fil0" d="M336.06 334.27l182.53 0c20.72,0 20.72,27.49 0,27.49l-182.53 0 0 -27.49z"/>
+    <path class="fil0" d="M336.06 272.42l182.53 0c20.72,0 20.72,27.49 0,27.49l-182.53 0 0 -27.49z"/>
+   </g>
+  </g>
+  <g id="_3036656966336">
+   <polygon class="fil1" points="100.06,498.99 58.16,320.76 95.25,320.76 121.76,443.19 154.29,320.76 197.18,320.76 228.3,445.26 255.43,320.76 291.65,320.76 248.71,498.99 210.17,498.99 175.03,365.73 139.64,498.99 "/>
+   <rect class="fil2 str0" x="13.75" y="248.86" width="322.32" height="322.02" rx="23.01" ry="23.14"/>
+  </g>
+ </g>
+</svg>
