@@ -1,5 +1,135 @@
 <nb-card class="m-0 h-100 border-0" style="border-radius: 15px;">
-    <nb-card-header>
-        <nb-icon icon="arrow-right-outline" status="primary"></nb-icon>&nbsp;SINCRONIZAR CON LAMB
-    </nb-card-header>
+  <nb-card-header>
+    <nb-icon icon="arrow-right-outline" status="primary"></nb-icon>&nbsp;SINCRONIZAR CON LAMB
+    <hr>
+    <div class="row" [formGroup]="formHeader" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+      <div class="col-md-4 mb-2 mb-md-0">
+        <label class="label">Filial</label>
+        <nb-select placeholder="Filial" size="small" status="primary" fullWidth formControlName="id_sede">
+          <nb-option *ngFor="let sede of sedes" [value]="sede?.id" (click)="selectedSede(sede)">{{ sede?.nombre }}
+          </nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-4 mb-2 mb-md-0">
+        <label class="label">Nivel enseñanza</label>
+        <nb-select placeholder="Nivel enseñanza" size="small" status="primary" fullWidth
+          formControlName="id_nivel_ensenanza">
+          <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel?.id" (click)="selectedNivel(nivel)">{{
+            nivel?.nombre }}
+          </nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-4">
+        <label class="label">Facultades</label>
+        <nb-select placeholder="Facultades" size="small" status="primary" fullWidth formControlName="id_facultad">
+          <nb-option *ngFor="let fac of facultades" [value]="fac?.id" (click)="selectedFacultad(fac)">{{ fac?.nombre }}
+          </nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-8">
+        <label class="label">Programa / Estudio</label>
+        <nb-select placeholder="Programa / Estudio" size="small" status="primary" fullWidth
+          formControlName="id_programa_estudio">
+          <nb-option *ngFor="let prog of programa_estudios" [value]="prog?.id" (click)="selectedProgramaEstudio(prog)">
+            {{ prog?.nombre }}</nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-4">
+        <label class="label">Semestre</label>
+        <nb-select placeholder="Semestre" size="small" status="primary" fullWidth formControlName="id_semestre">
+          <nb-option *ngFor="let semester of semestres" [value]="semester?.nombre">Semestre - {{ semester?.nombre }}
+          </nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-4 col-xxl-3">
+        <nb-card>
+          <nb-card-body>
+            <p class="fw-bold mb-0">Sicronizar datos por estudiante</p>
+            <div class="my-4">
+              <nb-form-field>
+                <input type="text" nbInput fullWidth status="primary" placeholder="Nombre / Código" fieldSize="small">
+                <button nbSuffix nbButton ghost>
+                  <nb-icon icon="search-outline" pack="eva">
+                  </nb-icon>
+                </button>
+              </nb-form-field>
+              <button class="mt-2" nbButton status="primary" size="small" fullWidth>Matriculas</button>
+              <button class="mt-2" nbButton status="primary" size="small" fullWidth>Datos</button>
+              <button class="mt-2" nbButton status="primary" size="small" fullWidth>Cursos</button>
+            </div>
+            <hr>
+            <div class="my-4">
+              <input type="text" nbInput fullWidth status="primary" placeholder="Código" fieldSize="small">
+              <button class="mt-2" nbButton status="primary" size="small" fullWidth>Matriculas</button>
+            </div>
+            <hr>
+            <div class="my-4">
+              <input type="text" nbInput fullWidth status="primary" placeholder="Nombre de usuario" fieldSize="small">
+              <button class="mt-2" nbButton status="primary" size="small" fullWidth>Datos</button>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-8 col-xxl-9">
+        <nb-card class="mb-0">
+          <nb-card-body style="min-height: 60vh;" [nbSpinner]="loadingSync" nbSpinnerStatus="primary"
+            nbSpinnerSize="small">
+            <p class="fw-bold">Sincronizar por programa de estudio</p>
+            <div *ngIf="actualProg" class="row">
+              <div class="col-xl-6 col-xxl-4">
+                <nb-card class="mb-3">
+                  <nb-card-body>
+                    <h6 class="fw-bold">Docentes</h6>
+                    <p>Este método retorna todos los docentes del programa seleccionado ({{ actualProg?.nombre }}) en el
+                      periodo seleccionado {{ rolSemestre?.semestre?.nombre }}
+                    </p>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth>Docentes</button>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+              <div class="col-xl-6 col-xxl-4">
+                <nb-card class="mb-3">
+                  <nb-card-body>
+                    <h6 class="fw-bold">Cursos</h6>
+                    <p>Este método retorna todos los cursos del programa seleccionado ({{ actualProg?.nombre }}) en el
+                      periodo seleccionado {{ rolSemestre?.semestre?.nombre }}
+                    </p>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth
+                      (click)="showCursos()">Cursos</button>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+              <div class="col-xl-6 col-xxl-4">
+                <nb-card class="mb-3">
+                  <nb-card-body>
+                    <h6 class="fw-bold">Silabus</h6>
+                    <p>Este método retorna todos los docentes del programa seleccionado ({{ actualProg?.nombre }}) en el
+                      periodo seleccionado {{ rolSemestre?.semestre?.nombre }}
+                    </p>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth
+                      (click)="showSilabus()">Silabus</button>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+              <div class="col-xl-6 col-xxl-4">
+                <nb-card class="mb-3">
+                  <nb-card-body>
+                    <h6 class="fw-bold">Estudiantes</h6>
+                    <p>Este método retorna todos los docentes del programa seleccionado ({{ actualProg?.nombre }}) en el
+                      periodo seleccionado {{ rolSemestre?.semestre?.nombre }}
+                    </p>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showEstudiantes()">Estudiantes</button>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </nb-card-body>
 </nb-card>

@@ -94,11 +94,17 @@ export class CRelationComponent implements OnInit {
       delete object['resp'];
       delete object['resp_imagen'];
       delete object['resp_imagen_base64'];
+      if (this.headParams.code === 'UPDATE') {
+        object.question_id = this.itemQuiz.id;
+      }
     });
     this.relationList.forEach((object: any) => {
       delete object['resp'];
       delete object['resp_imagen'];
       delete object['resp_imagen_base64'];
+      if (this.headParams.code === 'UPDATE') {
+        object.question_id = this.itemQuiz.id;
+      }
     });
 
     const alternativas = {
