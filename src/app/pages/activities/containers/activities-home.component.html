@@ -1,22 +1,124 @@
-<nb-card class="h-100 border-0" style="border-radius: 15px;">
-  <nb-card-body>
-    <div class="p-4">
-      <div class="d-flex align-items-center mb-4">
-        <div class="ms-2">
-          <div class="d-flex align-items-center">
-            <nb-icon style="width: 52px; height: 48px; color: #E89A00" icon="edit-2-outline"></nb-icon>
-            <p class="d-flex flex-column mb-0">
-              <span class="mb-1" style="font-size: 24px; font-weight: bold">Mis Actividades</span>
-              <span style="font-size: 12px">2021-1 INGENIERÍA DE SISTEMAS</span>
-            </p>
+<nb-card class="h-100 border-0" style="border-radius: 15px">
+  <nb-card-header>
+    <div class="d-flex flex-wrap align-items-end mt-3 mx-2">
+      <div class="d-flex align-items-center">
+        <nb-icon style="width: 52px; height: 48px; color: #e89a00" icon="edit-2-outline"></nb-icon>
+        <p class="d-flex flex-column mb-0">
+          <span class="mb-1" style="font-size: 24px; font-weight: bold">Mis Actividades</span>
+          <span style="font-size: 12px">2021-1 INGENIERÍA DE SISTEMAS</span>
+        </p>
+      </div>
+      <div class="filters d-flex align-items-end gap-2 ms-3">
+        <nb-form-field>
+          <nb-icon nbPrefix icon="list-outline"></nb-icon>
+          <nb-select placeholder="50" shape="semi-round" size="small" status="primary" fullWidth
+            [(selected)]="selectedItem">
+            <nb-option value="1">50</nb-option>
+          </nb-select>
+        </nb-form-field>
+        <nb-select shape="semi-round" size="small" status="primary" fullWidth [(selected)]="selectedItem">
+          <nb-select-label>
+            Curso: {{ option }}
+          </nb-select-label>
+          <nb-option value="1">Todos</nb-option>
+        </nb-select>
+        <nb-select shape="semi-round" size="small" status="primary" fullWidth [(selected)]="selectedItem">
+          <nb-select-label>
+            Tipo: {{ tipo }}
+          </nb-select-label>
+          <nb-option value="1">Videos</nb-option>
+        </nb-select>
+      </div>
+      <div class="status d-flex gap-3 ms-auto">
+        <div class="status-button pendiente active d-flex flex-column align-items-center">
+          <div class="icon-container">
+            <nb-icon icon="flag-outline"></nb-icon>
           </div>
+          <span>PENDIENTE</span>
+        </div>
+        <div class="status-button pendiente d-flex flex-column align-items-center">
+          <div class="icon-container">
+            <nb-icon icon="close-circle-outline"></nb-icon>
+          </div>
+          <span>VENCIDO</span>
+        </div>
+        <div class="status-button pendiente d-flex flex-column align-items-center">
+          <div class="icon-container">
+            <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
+          </div>
+          <span>COMPLETADO</span>
+        </div>
+        <div class="status-button pendiente d-flex flex-column align-items-center">
+          <div class="icon-container">
+            <nb-icon icon="trending-up-outline"></nb-icon>
+          </div>
+          <span>PRÓXIMO</span>
+        </div>
+        <div class="status-button pendiente d-flex flex-column align-items-center">
+          <div class="icon-container">
+            <nb-icon icon="clock-outline"></nb-icon>
+          </div>
+          <span>RE-APERTURA</span>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <app-v-doc-relation></app-v-doc-relation>
-      </div>
-    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ICONO</th>
+          <th scope="col">NOMBRE ACTIVIDAD</th>
+          <th scope="col">DESCRIPCIÓN</th>
+          <th scope="col">PER./GRUP.</th>
+          <th scope="col">FINALIZA</th>
+          <th scope="col">FECHA ENTREGA</th>
+          <th scope="col">RE-APERTURA</th>
+          <th scope="col">VISTO</th>
+          <th scope="col">ACCIÓN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let element of elements">
+          <td class="p-0 align-middle" style="width: 40px;" [ngStyle]="iconStyle(element)">
+            <div class="d-flex align-items-center justify-content-center" style="height: 60px;">
+              <nb-icon style="color: #fff; font-size: 24px;" icon="{{ element?.type_element?.icono }}"></nb-icon>
+            </div>
+          </td>
+          <td class="align-middle">{{ element?.titulo }}</td>
+          <td class="align-middle">{{ element?.descripcion }}</td>
+          <td class="align-middle">
+            <nb-icon icon="{{ element?.grupal === '1' ? 'people-outline' : 'person-outline' }}"></nb-icon> {{
+            element?.grupal === '1' ? 'Grupal' : 'Personal' }}
+          </td>
+          <td class="align-middle">
+            <div class="d-flex align-items-center">
+              <div class="d-flex flex-column">
+                <span>{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</span>
+                <span class="fw-bold">Faltan 6 días</span>
+              </div>
+              <div class="status-end ms-3"></div>
+            </div>
+          </td>
+          <td class="align-middle">{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</td>
+          <td class="align-middle">
+            <nb-icon icon="clock-outline"></nb-icon><button nbButton ghost size="small">Solicitar</button>
+          </td>
+          <td class="align-middle">
+            <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
+          </td>
+          <td class="align-middle">
+            <nb-icon icon="eye-outline" style="cursor: pointer;"></nb-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </nb-card-body>
+  <nb-card-footer>
+    <div class="d-flex justify-content-center p-2">
+      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+        (pageChange)="refreshCountries()">
+      </ngb-pagination>
+    </div>
+  </nb-card-footer>
 </nb-card>
