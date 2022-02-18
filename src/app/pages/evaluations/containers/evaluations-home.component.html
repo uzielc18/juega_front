@@ -2,9 +2,9 @@
   <nb-card-header>
     <div class="d-flex flex-wrap align-items-end m-2">
       <div class="d-flex align-items-center">
-        <nb-icon style="width: 52px; height: 48px; color: #e89a00" icon="edit-2-outline"></nb-icon>
+        <nb-icon style="width: 52px; height: 48px; color: #4CB8D8" icon="checkmark-circle-outline"></nb-icon>
         <p class="d-flex flex-column mb-0">
-          <span class="mb-1" style="font-size: 24px; font-weight: bold">Mis Actividades</span>
+          <span class="mb-1" style="font-size: 24px; font-weight: bold">Mis Evaluaciones</span>
           <span style="font-size: 12px">2021-1 INGENIERÍA DE SISTEMAS</span>
         </p>
       </div>
@@ -32,21 +32,15 @@
       <div class="status d-flex gap-3 ms-auto">
         <div class="status-button pendiente active d-flex flex-column align-items-center">
           <div class="icon-container">
+            <nb-icon icon="done-all-outline"></nb-icon>
+          </div>
+          <span>CALIFICADOS</span>
+        </div>
+        <div class="status-button pendiente d-flex flex-column align-items-center">
+          <div class="icon-container">
             <nb-icon icon="flag-outline"></nb-icon>
           </div>
-          <span>PENDIENTE</span>
-        </div>
-        <div class="status-button pendiente d-flex flex-column align-items-center">
-          <div class="icon-container">
-            <nb-icon icon="close-circle-outline"></nb-icon>
-          </div>
-          <span>VENCIDO</span>
-        </div>
-        <div class="status-button pendiente d-flex flex-column align-items-center">
-          <div class="icon-container">
-            <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
-          </div>
-          <span>COMPLETADO</span>
+          <span>PENDIENTES</span>
         </div>
         <div class="status-button pendiente d-flex flex-column align-items-center">
           <div class="icon-container">
@@ -69,11 +63,11 @@
         <tr style="font-size: 14px;" class="fw-bold text-center">
           <th scope="col">ICONO</th>
           <th scope="col">NOMBRE ACTIVIDAD</th>
-          <th scope="col">DESCRIPCIÓN</th>
-          <th scope="col">PER./GRUP.</th>
           <th scope="col">FINALIZA</th>
-          <th scope="col">FECHA ENTREGA</th>
+          <th scope="col">FECHA DE ENTREGA</th>
+          <th scope="col">ESTADO</th>
           <th scope="col">RE-APERTURA</th>
+          <th scope="col">CALIFICACIÓN</th>
           <th scope="col">VISTO</th>
           <th scope="col">ACCIÓN</th>
         </tr>
@@ -86,25 +80,17 @@
             </div>
           </td>
           <td>{{ element?.titulo }}</td>
-          <td>{{ element?.descripcion }}</td>
-          <td>
-            <nb-icon icon="{{ element?.grupal === '1' ? 'people-outline' : 'person-outline' }}"></nb-icon> {{
-            element?.grupal === '1' ? 'Grupal' : 'Personal' }}
-          </td>
-          <td>
-            <div class="d-flex align-items-center justify-content-center">
-              <div class="d-flex flex-column text-start">
-                <span>{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</span>
-                <span class="fw-bold">Faltan 6 días</span>
-              </div>
-              <div class="status-end ms-3"></div>
-            </div>
-          </td>
           <td>{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</td>
+          <td>{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</td>
+          <td>Calificado</td>
           <td>
             <div class="d-flex align-items-center justify-content-center">
               <nb-icon icon="clock-outline"></nb-icon>
               <button nbButton ghost size="small">Solicitar</button>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center justify-content-center"><span class="calification">10 / 100</span>
             </div>
           </td>
           <td>
