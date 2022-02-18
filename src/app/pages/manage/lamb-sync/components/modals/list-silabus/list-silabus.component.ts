@@ -4,23 +4,25 @@ import { NbDialogRef } from '@nebular/theme';
 @Component({
   selector: 'app-list-silabus',
   templateUrl: './list-silabus.component.html',
-  styleUrls: ['./list-silabus.component.scss']
+  styleUrls: ['./list-silabus.component.scss'],
 })
 export class ListSilabusComponent implements OnInit {
-
   @Input() item: any = [];
-  loading: boolean = false;
-  page = 4;
+  @Input() pagination: any;
 
-  constructor(public activeModal: NbDialogRef<ListSilabusComponent>) { }
+  loading: boolean = false;
+
+  constructor(public activeModal: NbDialogRef<ListSilabusComponent>) {}
 
   ngOnInit(): void {
     console.log(this.item);
   }
 
+  loadPage($event: any): any {
+    this.pagination.page = $event;
+  }
+
   closeModal() {
     this.activeModal.close('close');
   }
-
-
 }

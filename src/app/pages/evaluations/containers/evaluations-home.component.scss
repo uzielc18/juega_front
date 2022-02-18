@@ -69,8 +69,14 @@ nb-select ::ng-deep {
 
 ngb-pagination ::ng-deep {
   .page-item.active .page-link {
-    color: #551436 !important;
     border-color: #551436 !important;
-    background-color: #E5C4CF !important;
+    background-color: #551436 !important;
   }
+}
+
+.calification {
+  background-color: #EB0000;
+  padding: 5px 25px;
+  border-radius: 20px;
+  color: #fff;
 }

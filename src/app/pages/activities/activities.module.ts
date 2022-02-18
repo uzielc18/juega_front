@@ -4,7 +4,7 @@ import { ActivitiesComponent } from './activities.component';
 import { ActivitiesHomeComponent } from './containers/activities-home.component';
 import { ActivitiesRoutingModule } from './activities-routing.module';
 import { NebularModule } from '../../shared/nebular.module';
-import { QViewModule } from '../../shared/components/questions/q-view/q-view.module';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const COMPONENTS: any = [
@@ -13,7 +13,7 @@ const COMPONENTS: any = [
 ]
 
 const MODULES: any = [
-  QViewModule
+  NgbPaginationModule
 ]
 
 const NEBULAR: any = [
