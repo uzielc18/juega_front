@@ -81,7 +81,8 @@
 
                         </td>
                         <td class="text-center">
-                            <nb-icon *ngIf="item.estado === '1'" icon="radio-button-off-outline" status="primary" style="font-size: 25px;"></nb-icon>
+                            <div *ngIf="item.estado === '1'" class="status ms-3"></div>
+                            <div *ngIf="item.estado !== '1'" class="status-end ms-3"></div>
                         </td>
                         <td class="text-center" style="width: 70px;">
                             <nb-icon icon="edit" status="info" style="cursor: pointer; font-size: 25px;" (click)="updateZoom(item)"></nb-icon> <br>
