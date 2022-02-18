@@ -47,13 +47,15 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     },
     {
       title: 'Actividades',
-      icon: 'book-open-outline',
+      icon: 'edit-2-outline',
       link: '/pages/activities',
       pathMatch: 'prefix',
     },
     {
       title: 'Evaluaciones',
       icon: 'checkmark-circle-outline',
+      link: '/pages/evaluations',
+      pathMatch: 'prefix'
     },
     {
       title: 'Biblioteca',
@@ -67,25 +69,25 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     },
     {
       title: 'Administrar',
-      icon: 'clipboard-outline',
+      icon: 'settings-outline',
       link: '/pages/manage',
       pathMatch: 'prefix',
       children: [
         {
           title: 'Sincronización',
-          icon: 'clipboard-outline',
+          icon: 'sync-outline',
           link: '/pages/manage/lamb-sync',
           pathMatch: 'prefix',
         },
         {
           title: 'Zoom',
-          icon: 'clipboard-outline',
+          icon: 'video-outline',
           link: '/pages/manage/zoom',
           pathMatch: 'prefix',
         },
         {
           title: 'Cursos',
-          icon: 'clipboard-outline',
+          icon: 'shopping-bag-outline',
           link: '/pages/manage/course',
           pathMatch: 'prefix',
         }
