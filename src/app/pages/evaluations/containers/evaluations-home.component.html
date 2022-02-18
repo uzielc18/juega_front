@@ -1,6 +1,6 @@
 <nb-card class="h-100 border-0" style="border-radius: 15px">
   <nb-card-header>
-    <div class="d-flex flex-wrap align-items-end mt-3 mx-2">
+    <div class="d-flex flex-wrap align-items-end m-2">
       <div class="d-flex align-items-center">
         <nb-icon style="width: 52px; height: 48px; color: #4CB8D8" icon="checkmark-circle-outline"></nb-icon>
         <p class="d-flex flex-column mb-0">
@@ -73,30 +73,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let element of elements" style="font-size: 12px;" class="text-center">
-          <td class="p-0 align-middle" style="width: 50px;" [ngStyle]="iconStyle(element)">
+        <tr *ngFor="let element of elements" style="font-size: 12px;" class="text-center align-middle">
+          <td class="p-0" style="width: 50px;" [ngStyle]="iconStyle(element)">
             <div class="d-flex align-items-center justify-content-center" style="height: 60px;">
               <nb-icon style="color: #fff; font-size: 20px;" icon="{{ element?.type_element?.icono }}"></nb-icon>
             </div>
           </td>
-          <td class="align-middle">{{ element?.titulo }}</td>
-          <td class="align-middle">{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</td>
-          <td class="align-middle">{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</td>
-          <td class="align-middle">Calificado</td>
-          <td class="align-middle">
+          <td>{{ element?.titulo }}</td>
+          <td>{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</td>
+          <td>{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</td>
+          <td>Calificado</td>
+          <td>
             <div class="d-flex align-items-center justify-content-center">
               <nb-icon icon="clock-outline"></nb-icon>
               <button nbButton ghost size="small">Solicitar</button>
             </div>
           </td>
-          <td class="align-middle">
+          <td>
             <div class="d-flex align-items-center justify-content-center"><span class="calification">10 / 100</span>
             </div>
           </td>
-          <td class="align-middle">
+          <td>
             <nb-icon style="color: #47DA82;" icon="checkmark-circle-2-outline"></nb-icon>
           </td>
-          <td class="align-middle">
+          <td>
             <nb-icon icon="eye-outline" style="cursor: pointer;"></nb-icon>
           </td>
         </tr>
