@@ -109,6 +109,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     semestre: '',
     lenguaje: '',
   }
+  date = new Date();
   loading: boolean = false;
   @ViewChild(NbPopoverDirective) popover: any = NbPopoverDirective;
   subcript: any = Subscription;
