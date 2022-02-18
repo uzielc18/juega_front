@@ -2,31 +2,28 @@
   <nb-card-header>
     <div class="d-flex flex-wrap align-items-end m-2">
       <div class="d-flex align-items-center">
-        <nb-icon style="width: 52px; height: 48px; color: #4CB8D8" icon="checkmark-circle-outline"></nb-icon>
+        <nb-icon style="width: 52px; height: 48px; color: #4cb8d8" icon="checkmark-circle-outline"></nb-icon>
         <p class="d-flex flex-column mb-0">
           <span class="mb-1" style="font-size: 24px; font-weight: bold">Mis Evaluaciones</span>
           <span style="font-size: 12px">2021-1 INGENIERÍA DE SISTEMAS</span>
         </p>
       </div>
-      <div class="filters d-flex align-items-end gap-2 ms-3">
+      <div class="filters d-flex align-items-end gap-2 ms-3" [formGroup]="formHeader">
         <nb-form-field>
           <nb-icon nbPrefix icon="list-outline"></nb-icon>
-          <nb-select placeholder="50" shape="semi-round" size="small" status="primary" fullWidth
-            [(selected)]="selectedItem">
-            <nb-option value="1">50</nb-option>
+          <nb-select shape="semi-round" size="small" status="primary" fullWidth formControlName="id_per_page">
+            <nb-option *ngFor="let per of pagination.per_page" [value]="per">{{ per }}</nb-option>
           </nb-select>
         </nb-form-field>
-        <nb-select shape="semi-round" size="small" status="primary" fullWidth [(selected)]="selectedItem">
-          <nb-select-label>
-            Curso: {{ option }}
-          </nb-select-label>
-          <nb-option value="1">Todos</nb-option>
+        <nb-select shape="semi-round" size="small" status="primary" fullWidth formControlName="id_curso">
+          <nb-option *ngFor="let curso of cursos" [value]="curso?.id" (click)="selectedCourse(curso)">
+            Curso: {{ curso?.nombre | titlecase }}
+          </nb-option>
         </nb-select>
-        <nb-select shape="semi-round" size="small" status="primary" fullWidth [(selected)]="selectedItem">
-          <nb-select-label>
-            Tipo: {{ tipo }}
-          </nb-select-label>
-          <nb-option value="1">Videos</nb-option>
+        <nb-select shape="semi-round" size="small" status="primary" fullWidth formControlName="id_tipo_elemento">
+          <nb-option *ngFor="let elemento of tipo_elementos" [value]="elemento?.id" (click)="selectedElement(elemento)">
+            Tipo: {{ elemento?.nombre | titlecase }}
+          </nb-option>
         </nb-select>
       </div>
       <div class="status d-flex gap-3 ms-auto">
@@ -57,10 +54,10 @@
       </div>
     </div>
   </nb-card-header>
-  <nb-card-body>
-    <table class="table table-sm">
+  <nb-card-body class="pb-0">
+    <table class="table table-sm mb-0">
       <thead>
-        <tr style="font-size: 14px;" class="fw-bold text-center">
+        <tr style="font-size: 14px" class="fw-bold text-center">
           <th scope="col">ICONO</th>
           <th scope="col">NOMBRE ACTIVIDAD</th>
           <th scope="col">FINALIZA</th>
@@ -72,17 +69,23 @@
           <th scope="col">ACCIÓN</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let element of elements" style="font-size: 12px;" class="text-center align-middle">
-          <td class="p-0" style="width: 50px;" [ngStyle]="iconStyle(element)">
-            <div class="d-flex align-items-center justify-content-center" style="height: 60px;">
-              <nb-icon style="color: #fff; font-size: 20px;" icon="{{ element?.type_element?.icono }}"></nb-icon>
+      <tbody [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+        <tr *ngFor="let element of elements" style="font-size: 12px" class="text-center align-middle">
+          <td class="p-0" style="width: 50px" [ngStyle]="iconStyle(element)">
+            <div class="d-flex align-items-center justify-content-center" style="height: 50px">
+              <nb-icon style="color: #fff; font-size: 20px" icon="{{ element?.icono }}"></nb-icon>
             </div>
           </td>
-          <td>{{ element?.titulo }}</td>
-          <td>{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</td>
-          <td>{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</td>
-          <td>Calificado</td>
+          <td style="width: 200px;">
+            <div class="d-flex flex-column text-start">
+              <span>{{ element?.titulo }}</span>
+              <span class="fw-bold">{{ element?.curso }}</span>
+            </div>
+          </td>
+          <td>{{ element?.fecha_fin | date: "dd/MM/yyyy, h:mm a" }}</td>
+          <td>{{ element?.fecha_fin | date: "dd/MM/yyyy, h:mm a" }}</td>
+          <!-- <td>{{ element?.fecha_entrega | date: "dd/MM/yyyy, h:mm a" }}</td> -->
+          <td>{{ element?.estado }}</td>
           <td>
             <div class="d-flex align-items-center justify-content-center">
               <nb-icon icon="clock-outline"></nb-icon>
@@ -90,14 +93,13 @@
             </div>
           </td>
           <td>
-            <div class="d-flex align-items-center justify-content-center"><span class="calification">10 / 100</span>
-            </div>
+            <div class="d-flex align-items-center justify-content-center"><span class="calification">10 / 100</span></div>
           </td>
           <td>
-            <nb-icon style="color: #47DA82;" icon="checkmark-circle-2-outline"></nb-icon>
+            <nb-icon style="color: #47da82" icon="checkmark-circle-2-outline"></nb-icon>
           </td>
           <td>
-            <nb-icon icon="eye-outline" style="cursor: pointer;"></nb-icon>
+            <nb-icon icon="eye-outline" style="cursor: pointer" (click)="navigate(element)"></nb-icon>
           </td>
         </tr>
       </tbody>
@@ -105,8 +107,17 @@
   </nb-card-body>
   <nb-card-footer>
     <div class="d-flex justify-content-center p-2">
-      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
-        (pageChange)="refreshCountries()">
+      <ngb-pagination
+        [collectionSize]="pagination?.sizeListData"
+        [(page)]="pagination.page"
+        [maxSize]="20"
+        [disabled]="pagination?.isDisabledPage"
+        [pageSize]="pagination?.sizePage"
+        class="d-flex justify-content-center"
+        size="sm"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      >
       </ngb-pagination>
     </div>
   </nb-card-footer>
