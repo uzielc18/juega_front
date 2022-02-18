@@ -1,0 +1,74 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+    nbSpinnerMessage="Procesando información">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                CONFIGURACIÓNES
+            </div>
+            <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <nb-tabset fullWidth>
+            <nb-tab tabTitle="Configurar" tabIcon="settings-outline" responsive>
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <nb-icon icon="video-outline" status="danger" style="font-size: 35px;"></nb-icon><br>
+                        <label class="label" style="color: brown;">En Vivo</label>
+                    </div>
+                    <div class="col-md-3" style="text-align: right;">
+                         <nb-icon icon="phone-call-outline" status="success" style="font-size: 35px;"></nb-icon><br>
+                         <label class="label">Unirte</label>
+                    </div>
+                    <div class="col-md-3" style="text-align: left;">
+                        <nb-icon icon="phone-call-outline" status="basic" style="font-size: 35px;"></nb-icon><br>
+                        <label class="label">Iniciar</label>
+                    </div>
+                    <div class="col-md-3" style="text-align: right;">
+                        <nb-icon icon="activity-outline" status="info" style="font-size: 35px;"></nb-icon><br>
+                        <label class="label">Estado</label>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-between">
+                    <p>En el curso hay 35 matriculados y en la sala hay 30 matriculados</p>
+                    <nb-icon icon="person-add-outline" status="danger" style="font-size: 35px;"></nb-icon>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label class="label">Bloquear sala</label>
+                            <nb-toggle status="primary"></nb-toggle>
+                        </div>
+                        <hr>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label class="label">Grabación automática</label>
+                            <nb-toggle status="primary"></nb-toggle>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label class="label">Acceder sin anfitrión</label>
+                            <nb-toggle status="primary"></nb-toggle>
+                        </div>
+                        <hr>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label class="label">Forzar descarga</label>
+                            <nb-icon icon="cloud-download-outline" status="basic" style="font-size: 35px;"></nb-icon>
+                        </div>
+                    </div>
+                </div>
+            </nb-tab>
+            <nb-tab tabTitle="Unidades" tabIcon="list-outline" responsive>
+              <p>List of <strong>orders</strong>.</p>
+            </nb-tab>
+            <nb-tab tabTitle="Portada" tabIcon="monitor" responsive>
+              <p>List of <strong>transactions</strong>.</p>
+            </nb-tab>
+          </nb-tabset>
+    </nb-card-body>
+</nb-card>
