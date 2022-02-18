@@ -99,12 +99,7 @@ const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
       // useClass: NbAuthSimpleInterceptor,
       multi: true,
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: CatchErrorInterceptor,
-      multi: true,
-      deps: [NbToastrService],
-    },
+    {provide: HTTP_INTERCEPTORS, useClass: CatchErrorInterceptor, multi: true, deps: [NbToastrService]},
     {
       provide: APP_INITIALIZER,
       useFactory: init_app,

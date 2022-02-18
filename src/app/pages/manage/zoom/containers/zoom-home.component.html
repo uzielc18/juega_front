@@ -1,6 +1,9 @@
 <nb-card class="m-0 h-100 border-0" style="border-radius: 15px;" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
     <nb-card-header>
-        <nb-icon icon="arrow-right-outline" status="primary"></nb-icon>&nbsp;CUENTAS ZOOM POR ESCUELA
+        <div class="d-flex">
+            <nb-icon icon="video-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+            <strong style="padding-top: 7px;">CUENTAS ZOOM POR ESCUELA</strong>
+         </div>
         <hr>
         <form [formGroup]="formHeader">
         <div class="row">

@@ -12,7 +12,7 @@ import { EmitEventsService } from './shared/services/emit-events.service';
     CoreModule.forRoot({
       strategyName: environment.authStrategy.name,
       strategyGoogleName: environment.authGoogleStrategy.name,
-      apiAuth: environment.apiUrls.auth,
+      apiAuth: environment.apiUrls.base,
       moduleId: environment.module_id,
     }),
     RouterModule,
