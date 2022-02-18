@@ -3,4 +3,14 @@
     max-height: 95vh;
     width: 1050px;
   }
-  
+  thead tr th { 
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #ffffff;
+    color: black;
+}
+.table-responsive { 
+  max-height: 60vh;
+  overflow-y:scroll;
+}
