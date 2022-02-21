@@ -3,16 +3,15 @@
   <div class="d-flex align-items-center mb-4">
     <div class="ms-2">
       <div class="d-flex align-items-center">
-        <nb-icon style="width: 62px; height: 62px; color: #b37987" icon="book-open-outline"></nb-icon>
+        <nb-icon style="width: 62px; height: 62px;" icon="book-open-outline" status="primary"></nb-icon>
         <p class="d-flex flex-column mb-0">
           <span class="mb-1" style="font-size: 24px; font-weight: bold">{{'MIS_ASIGNATURAS' | translate}}</span>
-          <span style="font-size: 12px">2021-1 INGENIERÍA DE SISTEMAS</span>
         </p>
       </div>
     </div>
     <div class="ms-auto d-none d-xxl-block p-3">
       <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" style="cursor: pointer; font-size: 24px;"
-        icon="list-outline" (click)="cambioTypo('1')"></nb-icon>
+        icon="list-outline" (click)="cambioTypo('1')" class="me-1"></nb-icon>
       <nb-icon [status]="form.value.tipo === '2' ? 'primary' : 'basic'" style="cursor: pointer; font-size: 24px"
         icon="grid-outline" (click)="cambioTypo('2')"></nb-icon>
     </div>

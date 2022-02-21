@@ -90,14 +90,13 @@
     <nb-sidebar responsive tag="core-sidebar">
       <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
       <nb-sidebar-footer *ngIf="!hidden">
-
         <!-- <nb-toggle
               (checkedChange)="changeTheme($event)"
               *ngIf="!minimum"
             ></nb-toggle> -->
       </nb-sidebar-footer>
     </nb-sidebar>
-    <nb-layout-column class="p-2" style="background-color: #551436;">
+    <nb-layout-column class="p-2 ps-0" style="background-color: #551436;">
       <router-outlet></router-outlet>
     </nb-layout-column>
     <nb-layout-footer class="d-block d-md-none header-actions fixed">
