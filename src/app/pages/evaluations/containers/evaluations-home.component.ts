@@ -17,13 +17,17 @@ export class EvaluationsHomeComponent implements OnInit {
 
   curso_id: any;
   elemento_id: any;
+  pagesCount: any[] = [20, 50, 100, 300, 500];
+  estados: any[] = ["Calificados", "Pendientes", "Próximo", "Re-apertura"];
 
   formHeader: any = FormGroup;
   loading: boolean = false;
+  loadingFilters: boolean = false;
+  selectedItem: any;
 
   pagination: any = {
     page: 1,
-    per_page: [12],
+    per_page: this.pagesCount[0],
     sizePage: 0,
     sizeListData: 0,
     isDisabledPage: false,
@@ -44,9 +48,10 @@ export class EvaluationsHomeComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      id_per_page: [this.pagination.per_page[0] || "", [Validators.required]],
+      id_per_page: [this.pagination.per_page || "", [Validators.required]],
       id_curso: ["", [Validators.required]],
       id_tipo_elemento: ["", [Validators.required]],
+      id_estado: [this.estados[0] || "", [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listCursos();
@@ -61,17 +66,26 @@ export class EvaluationsHomeComponent implements OnInit {
   listCursos() {
     this.listTypeElements();
     const serviceName = END_POINTS.base_back.activities_evaluations + "/get-courses-list";
-    this.generalService.nameAll$(serviceName).subscribe((res: any) => {
-      this.cursos = res.data || [];
-      // this.cursos.unshift({ id: "ALL", nombre: "TODOS" });
-      if (this.cursos.length > 0) {
-        this.formHeader.patchValue({
-          id_curso: this.cursos[0].id,
-        });
-        this.curso_id = this.cursos[0];
-        this.listElements();
+    this.loadingFilters = true;
+    this.generalService.nameAll$(serviceName).subscribe(
+      (res: any) => {
+        this.cursos = res.data || [];
+        this.cursos.unshift({ id: "ALL", nombre: "TODOS" });
+        if (this.cursos.length > 0) {
+          this.formHeader.patchValue({
+            id_curso: this.cursos[0].id,
+          });
+          this.curso_id = this.cursos[0];
+          this.listElements();
+        }
+      },
+      () => {
+        this.loadingFilters = false;
+      },
+      () => {
+        this.loadingFilters = false;
       }
-    });
+    );
   }
 
   listTypeElements() {
@@ -86,6 +100,11 @@ export class EvaluationsHomeComponent implements OnInit {
         this.elemento_id = this.tipo_elementos[0];
       }
     });
+  }
+
+  selectedPerPage(pages: any) {
+    this.pagination.per_page = pages;
+    this.listElements();
   }
 
   selectedCourse(curso: any) {
@@ -105,11 +124,9 @@ export class EvaluationsHomeComponent implements OnInit {
       calificable: 1,
       course_id: this.curso_id.id,
       page: this.pagination.page,
-      per_page: this.pagination.per_page[0],
+      per_page: this.pagination.per_page,
       type_element_id: this.elemento_id.id,
     };
-    console.log(params);
-
     const serviceName = END_POINTS.base_back.activities_evaluations + "/get-my-activities";
     this.loading = true;
     this.generalService.nameParams$(serviceName, params).subscribe(
@@ -138,8 +155,12 @@ export class EvaluationsHomeComponent implements OnInit {
   }
 
   navigate(element: any): any {
-    this.router.navigate([`../asignatures/course/${this.curso_id.id_carga_curso_docente}/element/${element.id}`], {
+    this.router.navigate([`../asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`], {
       relativeTo: this.activatedRoute.parent,
     });
+  }
+
+  refresh() {
+    this.listElements();
   }
 }

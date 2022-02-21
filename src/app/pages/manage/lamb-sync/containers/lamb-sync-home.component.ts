@@ -46,7 +46,11 @@ export class LambSyncHomeComponent implements OnInit {
     isDisabledPage: false,
   };
 
-  constructor(private generalService: GeneralService, private formBuilder: FormBuilder, private dialogService: NbDialogService) {}
+  constructor(
+    private generalService: GeneralService,
+    private formBuilder: FormBuilder,
+    private dialogService: NbDialogService
+  ) {}
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -205,7 +209,13 @@ export class LambSyncHomeComponent implements OnInit {
     this.loadingSync = true;
     if (this.actualProg) {
       this.generalService
-        .nameIdAndIdAndIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.actualProg.id, this.id_unidad_academica, this.usuario)
+        .nameIdAndIdAndIdAndId$(
+          serviceName,
+          this.rolSemestre.semestre.nombre,
+          this.actualProg.id,
+          this.id_unidad_academica,
+          this.usuario
+        )
         .subscribe(
           (res: any) => {
             this.cursos = res.data || [];
@@ -243,7 +253,13 @@ export class LambSyncHomeComponent implements OnInit {
     this.loadingSync = true;
     if (this.actualProg) {
       this.generalService
-        .nameIdAndIdAndIdParams$(serviceName, this.rolSemestre.semestre.nombre, this.id_carga_curso, this.actualProg.id, params)
+        .nameIdAndIdAndIdParams$(
+          serviceName,
+          this.rolSemestre.semestre.nombre,
+          this.id_carga_curso,
+          this.actualProg.id,
+          params
+        )
         .subscribe(
           (res: any) => {
             this.silabus = res.data || [];
