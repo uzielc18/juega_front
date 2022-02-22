@@ -1,117 +1,116 @@
 <nb-card class="h-100 border-0" style="border-radius: 15px">
   <nb-card-header>
-    <div class="d-flex flex-wrap align-items-end m-2">
-      <div class="d-flex align-items-center">
-        <nb-icon style="width: 52px; height: 48px; color: #e89a00" icon="edit-2-outline"></nb-icon>
-        <p class="d-flex flex-column mb-0">
-          <span class="mb-1" style="font-size: 24px; font-weight: bold">Mis Actividades</span>
-          <span style="font-size: 12px">2021-1 INGENIERÍA DE SISTEMAS</span>
-        </p>
-      </div>
-      <div class="filters d-flex align-items-end gap-2 ms-3">
+    <div class="d-flex">
+      <nb-icon icon="edit-2-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px">MIS EVALUACIONES</strong>
+    </div>
+    <hr />
+    <div class="row" [formGroup]="formHeader" [nbSpinner]="loadingFilters" nbSpinnerStatus="primary" nbSpinnerSize="small">
+      <div class="col-md-2">
+        <label class="label">Items por página</label>
         <nb-form-field>
           <nb-icon nbPrefix icon="list-outline"></nb-icon>
-          <nb-select placeholder="50" shape="semi-round" size="small" status="primary" fullWidth
-            [(selected)]="selectedItem">
-            <nb-option value="1">50</nb-option>
+          <nb-select placeholder="Curso" size="small" status="primary" formControlName="id_per_page" fullWidth>
+            <nb-option *ngFor="let per of pagesCount" [value]="per" (click)="selectedPerPage(per)">{{ per }}</nb-option>
           </nb-select>
         </nb-form-field>
-        <nb-select shape="semi-round" size="small" status="primary" fullWidth [(selected)]="selectedItem">
-          <nb-select-label>
-            Curso: {{ option }}
-          </nb-select-label>
-          <nb-option value="1">Todos</nb-option>
-        </nb-select>
-        <nb-select shape="semi-round" size="small" status="primary" fullWidth [(selected)]="selectedItem">
-          <nb-select-label>
-            Tipo: {{ tipo }}
-          </nb-select-label>
-          <nb-option value="1">Videos</nb-option>
+      </div>
+      <div class="col-md-3">
+        <label class="label">Curso</label>
+        <nb-select placeholder="Curso" size="small" status="primary" formControlName="id_curso" fullWidth>
+          <nb-option *ngFor="let curso of cursos" [value]="curso?.id" (click)="selectedCourse(curso)">
+            {{ curso?.nombre | titlecase }}
+          </nb-option>
         </nb-select>
       </div>
-      <div class="status d-flex gap-3 ms-auto">
-        <div class="status-button pendiente active d-flex flex-column align-items-center">
-          <div class="icon-container">
-            <nb-icon icon="flag-outline"></nb-icon>
-          </div>
-          <span>PENDIENTE</span>
-        </div>
-        <div class="status-button pendiente d-flex flex-column align-items-center">
-          <div class="icon-container">
-            <nb-icon icon="close-circle-outline"></nb-icon>
-          </div>
-          <span>VENCIDO</span>
-        </div>
-        <div class="status-button pendiente d-flex flex-column align-items-center">
-          <div class="icon-container">
-            <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
-          </div>
-          <span>COMPLETADO</span>
-        </div>
-        <div class="status-button pendiente d-flex flex-column align-items-center">
-          <div class="icon-container">
-            <nb-icon icon="trending-up-outline"></nb-icon>
-          </div>
-          <span>PRÓXIMO</span>
-        </div>
-        <div class="status-button pendiente d-flex flex-column align-items-center">
-          <div class="icon-container">
-            <nb-icon icon="clock-outline"></nb-icon>
-          </div>
-          <span>RE-APERTURA</span>
-        </div>
+      <div class="col-md-3">
+        <label class="label">Tipo Elemento</label>
+        <nb-select
+          placeholder="Tipo Elemento"
+          size="small"
+          status="primary"
+          formControlName="id_tipo_elemento"
+          fullWidth
+        >
+          <nb-option *ngFor="let elemento of tipo_elementos" [value]="elemento?.id" (click)="selectedElement(elemento)">
+            {{ elemento?.nombre | titlecase }}
+          </nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-3">
+        <label class="label">Estado</label>
+        <nb-select placeholder="Estado" size="small" status="primary" fullWidth formControlName="id_estado">
+          <nb-option *ngFor="let estado of estados" [value]="estado">{{ estado }}</nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-1">
+        <label class="label" style="visibility: hidden">Filtrar</label><br />
+        <button nbButton fullWidth size="small" status="warning" (click)="refresh()">
+          <nb-icon icon="funnel"></nb-icon>Filtrar
+        </button>
       </div>
     </div>
   </nb-card-header>
-  <nb-card-body>
-    <table class="table table-sm">
+  <nb-card-body class="pb-0" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+    <table class="table table-sm mb-0">
       <thead>
-        <tr style="font-size: 14px;" class="fw-bold text-center">
-          <th scope="col">ICONO</th>
-          <th scope="col">NOMBRE ACTIVIDAD</th>
-          <th scope="col">DESCRIPCIÓN</th>
-          <th scope="col">PER./GRUP.</th>
-          <th scope="col">FINALIZA</th>
-          <th scope="col">FECHA ENTREGA</th>
-          <th scope="col">RE-APERTURA</th>
-          <th scope="col">VISTO</th>
-          <th scope="col">ACCIÓN</th>
+        <tr style="font-size: 14px" class="fw-bold text-center">
+          <th style="width: 50px">ICONO</th>
+          <th>NOMBRE ACTIVIDAD</th>
+          <th>DESCRIPCIÓN</th>
+          <th style="width: 150px">PER./GRUP.</th>
+          <th style="width: 200px">FINALIZA</th>
+          <th style="width: 185px">FECHA DE ENTREGA</th>
+          <th style="width: 150px">RE-APERTURA</th>
+          <th style="width: 100px">VISTO</th>
+          <th style="width: 100px">ACCIÓN</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let element of elements" style="font-size: 12px;" class="text-center align-middle">
-          <td class="p-0" style="width: 50px;" [ngStyle]="iconStyle(element)">
-            <div class="d-flex align-items-center justify-content-center" style="height: 60px;">
-              <nb-icon style="color: #fff; font-size: 20px;" icon="{{ element?.type_element?.icono }}"></nb-icon>
+        <tr *ngFor="let element of elements" style="font-size: 12px" class="text-center align-middle">
+          <td class="p-0" [ngStyle]="iconStyle(element)">
+            <div class="d-flex align-items-center justify-content-center" style="height: 60px">
+              <nb-icon style="color: #fff; font-size: 20px" icon="{{ element?.icono }}"></nb-icon>
             </div>
           </td>
-          <td>{{ element?.titulo }}</td>
-          <td>{{ element?.descripcion }}</td>
           <td>
-            <nb-icon icon="{{ element?.grupal === '1' ? 'people-outline' : 'person-outline' }}"></nb-icon> {{
-            element?.grupal === '1' ? 'Grupal' : 'Personal' }}
+            <div class="d-flex flex-column text-start" style="width: 250px; word-break: break-all">
+              <span class="fw-bold" style="font-size: 13px">{{ element?.titulo }}</span>
+              <span>{{ element?.curso }}</span>
+            </div>
+          </td>
+          <td class="text-start">{{ element?.descripcion }}</td>
+          <td>
+            <nb-icon icon="{{ element?.grupal === '1' ? 'people-outline' : 'person-outline' }}"></nb-icon>
+            {{ element?.grupal === "1" ? "Grupal" : "Personal" }}
           </td>
           <td>
             <div class="d-flex align-items-center justify-content-center">
               <div class="d-flex flex-column text-start">
-                <span>{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</span>
+                <span>{{ element?.fecha_fin | date: "dd/MM/yyyy, h:mm a" }}</span>
                 <span class="fw-bold">Faltan 6 días</span>
               </div>
               <div class="status-end ms-3"></div>
             </div>
           </td>
-          <td>{{ element?.fecha_fin | date:'dd/MM/yyyy, h:mm a' }}</td>
+          <td>
+            <div *ngIf="element?.fecha_entrega; else noEntregado">
+              {{ element?.fecha_entrega | date: "dd/MM/yyyy, h:mm a" }}
+            </div>
+            <ng-template #noEntregado>
+              <span style="color: red" class="fw-bold">{{ "No entregó" | uppercase }}</span>
+            </ng-template>
+          </td>
           <td>
             <div class="d-flex align-items-center justify-content-center">
-              <nb-icon icon="clock-outline"></nb-icon>
-              <button nbButton ghost size="small">Solicitar</button>
+              <button nbButton ghost size="small"><nb-icon icon="clock-outline"></nb-icon>Solicitar</button>
             </div>
           </td>
           <td>
-            <nb-icon style="color: #47DA82;" icon="checkmark-circle-2-outline"></nb-icon>
+            <nb-icon style="color: #47da82" icon="checkmark-circle-2-outline"></nb-icon>
           </td>
           <td>
-            <nb-icon icon="eye-outline" style="cursor: pointer;"></nb-icon>
+            <nb-icon icon="eye-outline" style="cursor: pointer" (click)="navigate(element)"></nb-icon>
           </td>
         </tr>
       </tbody>
@@ -119,8 +118,17 @@
   </nb-card-body>
   <nb-card-footer>
     <div class="d-flex justify-content-center p-2">
-      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
-        (pageChange)="refreshCountries()">
+      <ngb-pagination
+        [collectionSize]="pagination?.sizeListData"
+        [(page)]="pagination.page"
+        [maxSize]="20"
+        [disabled]="pagination?.isDisabledPage"
+        [pageSize]="pagination?.sizePage"
+        class="d-flex justify-content-center"
+        size="sm"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      >
       </ngb-pagination>
     </div>
   </nb-card-footer>

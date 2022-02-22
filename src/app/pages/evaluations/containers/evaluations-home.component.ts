@@ -1,148 +1,166 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { GeneralService } from "../../../providers";
+import { END_POINTS } from "../../../providers/utils";
 
 @Component({
-  selector: 'app-evaluations-home',
-  templateUrl: './evaluations-home.component.html',
-  styleUrls: ['./evaluations-home.component.scss'],
+  selector: "app-evaluations-home",
+  templateUrl: "./evaluations-home.component.html",
+  styleUrls: ["./evaluations-home.component.scss"],
 })
 export class EvaluationsHomeComponent implements OnInit {
-  elements = [
-    {
-      id: 57,
-      element_id: 0,
-      course_id: 22,
-      topic_id: 37,
-      type_element_id: 1,
-      evaluation_id: 0,
-      id_carga_curso_docente: '127805',
-      id_programa_estudio: 412,
-      titulo: 'Trabajo prueba 10',
-      descripcion: 'Nuevo trabajo',
-      tipo: 'TRABAJO',
-      orden: null,
-      nota: '0',
-      url_externa: null,
-      documento_ayuda: null,
-      tamano_peso: null,
-      fecha_inicio: '2022-01-19 05:00:00',
-      fecha_fin: '2022-01-19 06:00:00',
-      fecha_gracia: '2022-01-19 00:00:00',
-      grupal: '1',
-      visibilidad: '1',
-      intentos: '1',
-      permitir_comentarios: null,
-      calificable: '1',
-      duracion: '180',
-      total_pendientes: 4,
-      total_vistos: 0,
-      total_entregados: 0,
-      total_revisados: 0,
-      total_satisfaccion: 0,
-      estado: '1',
-      userid: 749,
-      created_at: '2022-01-19 09:08:26',
-      updated_at: '2022-01-19 09:08:28',
-      deleted_at: null,
-      files: [
-        {
-          id: 47,
-          person_id: 749,
-          nombre: '127805_200110121_30991.pdf',
-          nombre_original: 'Cristo es la peña de Horeb.pdf',
-          url: 'https://s3.amazonaws.com/files.patmos.upeu.edu.pe/plantillas/upeu/127805_200110121_30991.pdf',
-          tabla: 'elements',
-          tabla_id: '57',
-          peso: '333098',
-          ext: 'pdf',
-          tipo: 'DOCUMENTO_AYUDA',
-          estado: '1',
-          userid: 749,
-          created_at: '2022-01-19 09:08:26',
-          updated_at: '2022-01-19 17:51:44',
-          deleted_at: null,
-        },
-        {
-          id: 71,
-          person_id: 749,
-          nombre: '127805_200110121_40192.pdf',
-          nombre_original: 'Cristo es la peña de Horeb.pdf',
-          url: 'https://s3.amazonaws.com/files.patmos.upeu.edu.pe/plantillas/upeu/127805_200110121_40192.pdf',
-          tabla: 'elements',
-          tabla_id: '57',
-          peso: '333098',
-          ext: 'pdf',
-          tipo: 'DOCUMENTO_AYUDA',
-          estado: '1',
-          userid: 749,
-          created_at: '2022-01-19 17:15:59',
-          updated_at: '2022-01-19 17:51:44',
-          deleted_at: null,
-        },
-        {
-          id: 97,
-          person_id: 749,
-          nombre: '127805_200110121_22099.xlsx',
-          nombre_original: 'Lista de participantes (14).xlsx',
-          url: 'https://s3.amazonaws.com/files.patmos.upeu.edu.pe/plantillas/upeu/127805_200110121_22099.xlsx',
-          tabla: 'elements',
-          tabla_id: '57',
-          peso: '7802',
-          ext: 'xlsx',
-          tipo: 'DOCUMENTO_AYUDA',
-          estado: '1',
-          userid: 749,
-          created_at: '2022-01-19 17:51:44',
-          updated_at: '2022-01-19 17:51:44',
-          deleted_at: null,
-        },
-      ],
-      forums: null,
-      type_element: {
-        id: 1,
-        nombre: 'TRABAJO',
-        estado: '1',
-        userid: 1,
-        created_at: null,
-        updated_at: null,
-        deleted_at: null,
-        background: '#246C75',
-        color_hover: '#246C75',
-        color_active: '#FFFFFF',
-        color_border: '#246C75',
-        icono: 'list-outline',
-        icono_font_size: null,
-        codigo: 'TRAB',
-      },
-    },
-  ];
+  cursos: any[] = [];
+  tipo_elementos: any[] = [];
 
-  selectedItem = '1';
-  option = 'TODOS';
-  tipo = 'VIDEOS';
+  elements: any[] = [];
 
-  page = 1;
-  pageSize = 4;
+  curso_id: any;
+  elemento_id: any;
+  pagesCount: any[] = [20, 50, 100, 300, 500];
+  estados: any[] = ["Calificados", "Pendientes", "Próximo", "Re-apertura"];
+
+  formHeader: any = FormGroup;
+  loading: boolean = false;
+  loadingFilters: boolean = false;
+  selectedItem: any;
+
+  pagination: any = {
+    page: 1,
+    per_page: this.pagesCount[0],
+    sizePage: 0,
+    sizeListData: 0,
+    isDisabledPage: false,
+  };
+
   collectionSize = this.elements.length;
 
-  constructor() {
-    this.refreshCountries();
+  constructor(
+    private generalService: GeneralService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.fieldReactive();
   }
 
-  ngOnInit(): void {}
-
-  refreshCountries() {
-    // this.elements.map((country, i) => ({
-    //   id: i + 1,
-    //   ...country,
-    // })).slice(
-    //   (this.page - 1) * this.pageSize,
-    //   (this.page - 1) * this.pageSize + this.pageSize
-    // );
+  private fieldReactive() {
+    const controls = {
+      id_per_page: [this.pagination.per_page || "", [Validators.required]],
+      id_curso: ["", [Validators.required]],
+      id_tipo_elemento: ["", [Validators.required]],
+      id_estado: [this.estados[0] || "", [Validators.required]],
+    };
+    this.formHeader = this.formBuilder.group(controls);
+    this.listCursos();
   }
 
   iconStyle(element: any) {
     return {
-      'background-color': element?.type_element?.background,
+      "background-color": element?.background,
     };
+  }
+
+  listCursos() {
+    this.listTypeElements();
+    const serviceName = END_POINTS.base_back.activities_evaluations + "/get-courses-list";
+    this.loadingFilters = true;
+    this.generalService.nameAll$(serviceName).subscribe(
+      (res: any) => {
+        this.cursos = res.data || [];
+        this.cursos.unshift({ id: "ALL", nombre: "TODOS" });
+        if (this.cursos.length > 0) {
+          this.formHeader.patchValue({
+            id_curso: this.cursos[0].id,
+          });
+          this.curso_id = this.cursos[0];
+          this.listElements();
+        }
+      },
+      () => {
+        this.loadingFilters = false;
+      },
+      () => {
+        this.loadingFilters = false;
+      }
+    );
+  }
+
+  listTypeElements() {
+    const serviceName = END_POINTS.base_back.activities_evaluations + "/get-elements-types";
+    this.generalService.nameAll$(serviceName).subscribe((res: any) => {
+      this.tipo_elementos = res.data || [];
+      this.tipo_elementos.unshift({ id: "ALL", nombre: "TODOS" });
+      if (this.tipo_elementos.length > 0) {
+        this.formHeader.patchValue({
+          id_tipo_elemento: this.tipo_elementos[0].id,
+        });
+        this.elemento_id = this.tipo_elementos[0];
+      }
+    });
+  }
+
+  selectedPerPage(pages: any) {
+    this.pagination.per_page = pages;
+    this.listElements();
+  }
+
+  selectedCourse(curso: any) {
+    this.curso_id = curso;
+    this.listElements();
+  }
+
+  selectedElement(element: any) {
+    this.elemento_id = element;
+    this.listElements();
+  }
+
+  // table
+  listElements() {
+    this.elements = [];
+    const params = {
+      calificable: 1,
+      course_id: this.curso_id.id,
+      page: this.pagination.page,
+      per_page: this.pagination.per_page,
+      type_element_id: this.elemento_id.id,
+    };
+    const serviceName = END_POINTS.base_back.activities_evaluations + "/get-my-activities";
+    this.loading = true;
+    this.generalService.nameParams$(serviceName, params).subscribe(
+      (res: any) => {
+        this.elements = res.data.data || [];
+        this.pagination.sizeListData = (res.data && res.data.total) || 0;
+        this.pagination.sizePage = (res.data && res.data.per_page) || 0;
+        if (this.pagination.sizeListData < this.elements.length) {
+          this.pagination.isDisabledPage = true;
+        } else {
+          this.pagination.isDisabledPage = false;
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+
+  loadPage($event: any): any {
+    this.pagination.page = $event;
+    this.listElements();
+  }
+
+  navigate(element: any): any {
+    this.router.navigate([`../asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`], {
+      relativeTo: this.activatedRoute.parent,
+    });
+  }
+
+  refresh() {
+    this.listElements();
   }
 }
