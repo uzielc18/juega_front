@@ -1,0 +1,119 @@
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+  <!-- <div class="work work-remember m-4" *ngIf="!tiempo_vencido">
+    <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Trabajo: {{ element?.titulo }} está por vencer en {{
+      daysLeft |
+      i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} {{
+      secondsLeft | i18nPlural:secondsMap }}</span>
+  </div>
+  <div class="work work-expired m-4" *ngIf="tiempo_vencido">
+    <span>
+      <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu Trabajo: {{ element?.titulo }} acaba de caducar hace {{
+      expiredDays |
+      i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
+      expiredSeconds | i18nPlural:secondsMap }}
+    </span>
+    <div class="ms-auto d-flex align-items-center">
+      <button class="d-flex align-items-center mx-3 py-1 work-expired-button">
+        <nb-icon class="me-2" icon="info"></nb-icon>
+        <span>Solicitar apertura</span>
+      </button>
+      <nb-icon class="work-expired-close" icon="close-outline"></nb-icon>
+    </div>
+  </div>
+  <div class="work work-evaluated m-4">
+    <p>Hola {{ userInfo.name }}!,</p><span>Tu Trabajo: {{ element?.titulo }} fué calificado hace 4 días</span>
+  </div>  -->
+  <nb-card class="instructions-container m-4">
+    <nb-card-body class="px-4 py-3">
+      <form [formGroup]="form">
+      <div class="row">
+        <div class="instructions col-md-9 col-xxl-10">
+          <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
+          <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p>
+        </div>
+        <div class="col-md-3 col-xxl-2 pe-0">
+          <div class="calification calification-evalue ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'" (click)="calificar(element)">
+            <nb-icon icon="edit"></nb-icon>
+            <span>Calificar</span>
+          </div>
+
+          <div class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.nota">
+            Aún no tiene calificación
+          </div>
+          <div class="calification calification-evaluated" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota">
+            <p>{{pending?.student_pending?.nota}}</p>
+            <span>Calificación</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <br>
+        <h4 class="attached-files-title">Archivos de apoyo</h4>
+        <app-list-view-files [arrayFiles]="element?.element_files || []"></app-list-view-files>
+      </div>
+      <!-- <div>
+        <div class="d-flex">
+          <h4 class="rubrica-title me-2">Rubrica</h4>
+          <span class="rubrica-title-desc">(Criterios de evaluación)</span>
+        </div>
+        <app-rubricas></app-rubricas>
+      </div> -->
+      <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
+        <div class="d-flex">
+          <h4 class="send-work-title">Entrega de trabajo</h4>
+          <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon" style="font-size: 25px;" nbTooltip="Subir archivo" nbTooltipPlacement="top" nbTooltipStatus="primary"
+            icon="cloud-upload-outline" (click)="cambioTypo('1')"></nb-icon>
+          <nb-icon [status]="form.value.tipo === '2' ? 'primary' : 'basic'" class="send-work-icon" style="font-size: 25px;" nbTooltip="Subir url" nbTooltipPlacement="top" nbTooltipStatus="primary"
+            icon="external-link-outline" (click)="cambioTypo('2')"></nb-icon>
+        </div>
+        <div *ngIf="form.value.tipo == '1'">
+          <lamb-prepare-file-pro
+          [paramsInfo]="{
+            key_file: key_file,
+            directory: directorio,
+            type: 'put',
+            tabla: 'pendings',
+            tipo: 'DOCUMENTO_TRABAJO'}"
+          [numFiles]="6"
+          (filterValueChange)="valueFile($event)"
+          [listArrayFile]="arrayFile"
+          [isDisabled]="pending?.student_pending?.pending_files?.length === 6"
+          >
+          </lamb-prepare-file-pro>
+        </div>
+        <div *ngIf="form.value.tipo == '2'">
+          <nb-card>
+            <nb-card-body class="send-work-link d-flex">
+              <input type="text" nbInput fullWidth shape="rectangle" placeholder="Ingrese una url válida por favor" formControlName="enlace">
+              <nb-select placeholder="Selecciona enlace" status="primary" formControlName="ext_enlace">
+                <nb-option value="YOUTUBE">YouTube</nb-option>
+                <nb-option value="SOUNDCLOUD">SoundCloud</nb-option>
+                <nb-option value="VIMEO">Vimeo</nb-option>
+                <nb-option value="REFERENCIA">Referencia</nb-option>
+              </nb-select>
+              <button nbButton status="primary" [disabled]="validButtons" (click)="saveEnlace()">Guardar enlace <nb-icon icon="external-link-outline"></nb-icon>
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <br>
+        <div>
+          <h4 class="send-work-title">Documentos entregados</h4>
+          <div *ngIf="pending?.student_pending?.pending_files?.length>0">
+            <app-list-view-files
+            [arrayFiles]="pending?.student_pending?.pending_files || []"
+            [deleteFile]="!pending?.student_pending?.nota"
+            (deleteFileEmit)="deleteFile($event)"></app-list-view-files>
+          </div>
+          <div class="mt-4" *ngIf="pending?.student_pending?.pending_files?.length<=0">
+            <nb-alert outline="danger" style="font-size: 12px;">No se encontraron archivos adjuntos</nb-alert>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4" *ngIf="!pending?.student_pending && rolSemestre?.rol?.name === 'Estudiante'">
+        <nb-alert outline="danger" style="font-size: 12px;">No se encontraron pendientes</nb-alert>
+      </div>
+    </form>
+    </nb-card-body>
+  </nb-card>
+</div>

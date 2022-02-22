@@ -5,20 +5,21 @@ import { CoreModule } from './core';
 import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
 import { STRATEGIES } from '../environments/oauth2.strategies';
-
+import { EmitEventsService } from './shared/services/emit-events.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [
     CoreModule.forRoot({
       strategyName: environment.authStrategy.name,
       strategyGoogleName: environment.authGoogleStrategy.name,
-      apiAuth: environment.apiUrls.auth,
+      apiAuth: environment.apiUrls.base,
       moduleId: environment.module_id,
     }),
     RouterModule,
     AppRoutingModule,
   ],
-  providers: [STRATEGIES],
+  providers: [STRATEGIES, EmitEventsService],
   bootstrap: [AppComponent],
+  exports: []
 })
 export class AppModule {}

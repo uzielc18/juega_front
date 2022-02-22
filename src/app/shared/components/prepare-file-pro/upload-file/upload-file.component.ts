@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NbDialogRef } from '@nebular/theme';
 import { S3ServiceService } from '../services/s3-service.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'lamb-upload-file',
   templateUrl: './upload-file.component.html',
@@ -19,7 +19,7 @@ export class UploadFileComponent implements OnInit {
     private s3ServiceServ: S3ServiceService) { }
 
   ngOnInit(): void {
-    console.log(this.params);
+    // console.log(this.params);
 
     this.formularioFiels();
   }
@@ -90,8 +90,8 @@ export class UploadFileComponent implements OnInit {
   }
   anadirFile() {
     const form = this.formHeaders.value;
-    const key = this.params.id + '_' + this.params.codigoEst + '_' + this.params.codAleatory + '.' + form.ext;
-
+    if (form && (form.size <= 26214400) ) { // 25MB
+    const key = this.params.key_file + '_' + Math.floor(Math.random() * 90000) + 10000 + '.' + form.ext;
     const prams = {
       type: this.params.type,
       directory: this.params.directory,
@@ -104,12 +104,9 @@ export class UploadFileComponent implements OnInit {
             const data = new FormData();
             data.append('file', form.file);
             const valore = data;
-
             const u = r.data.url.split('?');
             const urls = u[0];
-
-            this.s3ServiceServ.addS3$(r.data.url, form.file.type, valore).subscribe(r => {
-              console.log(r.status);
+            this.s3ServiceServ.addS3$(r.data.url, form.file.type, form.file).subscribe(r => {
 
               if (r.status === 200) {
                 const parameter:any = {
@@ -125,10 +122,57 @@ export class UploadFileComponent implements OnInit {
                 };
                   this.activeModal.close(parameter);
               }
-            });
+            }, () => { this.loading = false }, () => { this.loading = false });
           }
-        }, () => { this.loading = false }, () => { this.loading = false });
+        });
     }
-
+  } else {
+    Swal.fire({
+      title: 'No permitido',
+      text: ' El tamaño del archivo supera los ' + '24 mb',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonColor: '#7f264a',
+      confirmButtonText: 'Ok',
+      // timer: 2000,
+    });
+  }
+  }
+  fileImg(extension: string) {
+    let icon = '';
+    switch (extension) {
+      case 'png':
+      case 'PNG':
+      case 'jpg':
+      case 'jpeg':
+        icon = 'assets/icons_svg/png.svg';
+        break;
+      case 'doc':
+      case 'docx':
+        icon = 'assets/icons_svg/dox.svg';
+        break;
+      case 'ppt':
+      case 'pptx':
+        icon = 'assets/icons_svg/ppt.svg';
+        break;
+      case 'xls':
+      case 'xlsx':
+        icon = 'assets/icons_svg/xls.svg';
+        break;
+      case 'pdf':
+        icon = 'assets/icons_svg/pdf.svg';
+        break;
+      case 'txt':
+        icon = 'assets/icons_svg/txt.svg';
+        break;
+      default:
+        icon = 'assets/icons_svg/default.svg';
+        break;
+    }
+    return icon;
   }
 }

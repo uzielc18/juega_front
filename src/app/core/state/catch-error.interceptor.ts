@@ -7,28 +7,77 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { NbToastrService } from '@nebular/theme';
+import { catchError, tap } from 'rxjs/operators';
+import { NbIconConfig, NbToastrService } from '@nebular/theme';
+import { status } from './status-messages';
 
 const showStatusCodes = [400, 500, 403, 404, 202, 422];
 
 @Injectable()
 export class CatchErrorInterceptor implements HttpInterceptor {
-  constructor(private service: NbToastrService) {}
+  constructor(public service: NbToastrService) {}
+
+//   intercept(
+//     req: HttpRequest<any>,
+//     next: HttpHandler
+//   ): Observable<HttpEvent<any>> {
+//     return next.handle(req).pipe(
+//       catchError((err: HttpErrorResponse) => {
+//         this.throwErrorToast(err);
+//         return throwError(err);
+//       })
+//     );
+//   }
+
+//   private throwErrorToast(err: any): void {
+//     if (showStatusCodes.includes(err.status)) {
+//       const errorMsg = err.error.message || err.statusText;
+//       this.toast(`${err.status} ${errorMsg}`, err.statusText);
+//     }
+//   }
+
+//   private toast(msg: any, title: any): void {
+//     this.service.danger(msg, title, {
+//       duration: 4000,
+//       icon: 'alert-circle-outline',
+//     });
+//   }
+// }
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
+      tap(
+          (res: HttpEvent<any>) => {
+              if (res && req.method !== 'GET') {
+                this.interceptResponse(res, req.method);
+              }    
+          },
+       ),
       catchError((err: HttpErrorResponse) => {
         this.throwErrorToast(err);
         return throwError(err);
       })
     );
   }
-
+  private interceptResponse(event: HttpEvent<any>, method: any): any {
+      const $event:any =  event;
+      if (event && $event['status']) {
+        var data: any = status[$event['status']];
+          let msg = data.description;
+          if ($event && $event.body && $event.body.message) {
+            msg = $event.body.message;
+            setTimeout(() => {
+              this.showMessage(msg, data.title, data.icon, data.status);
+            }, 100);
+          }
+      }
+  }
   private throwErrorToast(err: any): void {
+    console.log(err);
+    
     if (showStatusCodes.includes(err.status)) {
       const errorMsg = err.error.message || err.statusText;
       this.toast(`${err.status} ${errorMsg}`, err.statusText);
@@ -41,6 +90,12 @@ export class CatchErrorInterceptor implements HttpInterceptor {
       icon: 'alert-circle-outline',
     });
   }
+  showMessage(msg: any, title: any, iconName: string, status: any): any {
+    const iconConfig: NbIconConfig = { icon: iconName, pack: 'eva', status: status };
+    this.service.show(msg, title, iconConfig);
+  }
+
+  
 }
 // import { environment } from 'src/environments/environment';
 // import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';

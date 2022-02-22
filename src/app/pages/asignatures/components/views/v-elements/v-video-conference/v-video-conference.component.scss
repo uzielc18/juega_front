@@ -1,0 +1,58 @@
+.work {
+  display: flex;
+  font-size: 16px;
+  border-radius: 6px;
+
+  &-remember {
+    padding: 10px 15px;
+    border: 1px solid #58CE84;
+
+    p {
+      color: #2EA361;
+      font-weight: bold;
+      margin: 0;
+      margin-right: 5px;
+    }
+
+    span {
+      color: #2EA361;
+    }
+  }
+
+  &-evaluated {
+    padding: 10px 15px;
+    border: 1px solid #4D7BC7;
+    background-color: #EFF3F8;
+
+    p {
+      color: #3F76CE;
+      font-weight: bold;
+      margin: 0;
+      margin-right: 5px;
+    }
+
+    span {
+      color: #3F76CE;
+    }
+  }
+}
+
+.instructions {
+
+  &-container {
+    border: none;
+    box-shadow: 0px 3px 10px #0000000D;
+  }
+
+  &-title {
+    color: #414141;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  &-description {
+    font-size: 14px;
+    color: #898989;
+  }
+}

@@ -1,0 +1,100 @@
+.status {
+  &-button {
+    cursor: pointer;
+
+    .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #eceff6;
+      padding: 15px;
+      border-radius: 50%;
+
+      nb-icon {
+        color: #3b3b3d;
+      }
+    }
+
+    span {
+      color: #979797;
+      font-size: 8px;
+      font-weight: bold;
+      margin-top: 10px;
+      line-height: 0;
+    }
+
+    &:hover,
+    &:active {
+      .icon-container {
+        background-color: #fbe6e6;
+
+        nb-icon {
+          color: #930735;
+        }
+      }
+
+      span {
+        color: #930735;
+      }
+    }
+  }
+
+  .active {
+    .icon-container {
+      background-color: #fbe6e6;
+
+      nb-icon {
+        color: #930735;
+      }
+    }
+
+    span {
+      color: #930735;
+    }
+  }
+}
+
+.status-end {
+  width: 20px;
+  height: 20px;
+  background-color: #44da80;
+  border-radius: 50%;
+}
+
+nb-select ::ng-deep {
+  .select-button {
+    min-width: 0;
+  }
+}
+
+ngb-pagination ::ng-deep {
+  .page-item.active .page-link {
+    border-color: #551436 !important;
+    background-color: #e5c4cf !important;
+  }
+
+  .page-item .page-link {
+    border-color: #551436 !important;
+    color: #551436 !important;
+  }
+}
+
+.calification {
+  background-color: #eceff6;
+  padding: 5px 25px;
+  border-radius: 20px;
+  color: #000000;
+
+  &-good {
+    background-color: #44da80;
+  }
+
+  &-regular {
+    background-color: #ecdc41;
+  }
+
+  &-bad {
+    background-color: #eb0000;
+    color: #ffffff;
+  }
+}

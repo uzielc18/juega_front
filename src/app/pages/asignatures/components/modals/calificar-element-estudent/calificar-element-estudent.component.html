@@ -1,0 +1,146 @@
+<nb-card accent="primary" class="scrollModal"[nbSpinner]="loading" nbSpinnerStatus="primary"
+  nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        {{element?.tipo}}
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body style="background: #f5f5f5;">
+    <form [formGroup]="formHeader">
+    <div class="row">
+      <div class="col-md-3 p-1">
+        <nb-card size="giant">
+          <nb-card-header>
+            Estudiantes <br>
+            <div >
+              <nb-tabset (changeTab)="changeTabSet($event)">
+                <nb-tab tabTitle="Todos" tabId="ALL">
+                </nb-tab>
+                <nb-tab tabIcon="checkmark-outline" badgeText="{{(headStudent?.total_entregados - headStudent?.total_revisados )}}"
+                badgeStatus="basic" badgePosition="bottom right" tabTitle="Sin calificar" tabId="SC">
+                </nb-tab>
+                <nb-tab tabIcon="done-all-outline" badgeText="{{headStudent?.total_revisados}}"
+                badgeStatus="success" badgePosition="bottom right" tabTitle="Calificados" tabId="C">
+                </nb-tab>
+                <nb-tab tabIcon="close-circle-outline" badgeText="{{(headStudent?.total_pendientes - headStudent?.total_entregados )}}"
+                badgeStatus="danger" badgePosition="bottom right" tabTitle="Sin entregar" tabId="SE">
+                </nb-tab>
+               </nb-tabset>
+            </div>
+            <div style="padding-top: 0px;">
+              <input type="text" placeholder="Buscar alumno" fieldSize="small" nbInput fullWidth  [(ngModel)]="queryString" [ngModelOptions]="{standalone: true}">
+            </div>
+          </nb-card-header>
+          <nb-card-body  class="p-2">
+
+            <nb-list>
+              <nb-list-item *ngFor="let item of listAlumns | FilterPipe: queryString:searchableList as hola; let i = index"
+              class="p-1 d-flex align-items-center justify-content-between" (click)="selectedStudent(item)"
+              [ngStyle]="{'cursor': 'pointer', 'background': item?.checked ? item?.background : '', 'color': item?.checked ? item?.color : '', 'font-size': '10px'}">
+                <div>
+                  {{i + 1}} &nbsp;&nbsp;{{item?.nombres + ' ' + item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}
+                </div>
+                <div>
+                  {{item?.nota}}
+                  <nb-icon *ngIf="item?.realizo === '0'" icon="close-circle-outline" status="danger"
+                  nbTooltip="Pendiénte" nbTooltipPlacement="top" nbTooltipStatus="danger"></nb-icon>
+                  <nb-icon *ngIf="item?.realizo === '1' && item?.calificado === '0'" icon="checkmark-outline" status="basic"
+                  nbTooltip="Sin calificar" nbTooltipPlacement="top" nbTooltipStatus="basic"></nb-icon>
+                  <nb-icon *ngIf="item?.realizo === '1' && item?.calificado === '1'" icon="done-all-outline" status="success"
+                  nbTooltip="Calificado" nbTooltipPlacement="top" nbTooltipStatus="success"></nb-icon>
+                </div>
+              </nb-list-item>
+            </nb-list>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-7 p-1">
+        <div>
+          <div class="row">
+            <div class="col-md-6">
+              <strong>
+                {{element?.titulo}}
+              </strong>
+            </div>
+            <div class="col-md-6">
+            <nb-radio-group class="row" formControlName="ver_trabajo">
+              <nb-radio value="S" class="col-md-6">Ver contenido</nb-radio>
+              <nb-radio value="N" class="col-md-6">Ocultar contenido</nb-radio>
+            </nb-radio-group>
+            </div>
+          </div>
+          <p *ngIf="formHeader.value.ver_trabajo === 'S'" style="text-align: justify; font-size: 11px;">{{element?.descripcion}}</p>
+        </div>
+        <div *ngIf="element?.type_element?.codigo === 'TRAB'">
+          <app-c-works [pending]="pending" [datos]="datosStudent"></app-c-works>
+        </div>
+        <div *ngIf="element?.type_element?.codigo === 'FOR'" >
+          <app-c-forums
+          [pending]="pending"
+          [element]="element"
+          [datos]="datosStudent"
+          [userInfo]="userInfo"
+          [listResponses]="listResponses"
+          ></app-c-forums>
+        </div>
+
+        <ng-template #elseAddDate>
+          <nb-card *ngIf="formDate.value.person_id">
+            <nb-card-header>
+              ¿ Desea extender la fecha para el participante ?
+            </nb-card-header>
+            <nb-card-body>
+              <form [formGroup]="formDate">
+                <div>
+                  <label class="label">Fecha inicio</label>
+                  <input type="text" nbInput fieldSize="small" fullWidth formControlName="fecha_inicio">
+                </div>
+                <br>
+                <div>
+                  <label class="label">Fecha fin</label>
+                  <input type="text" nbInput fieldSize="small" fullWidth formControlName="fecha_fin">
+                </div>
+                <br>
+                <div class="text-center">
+                 <button nbButton size="small" status="primary" (click)="updateDateStudent()">
+                   Actualizar fecha entrega
+                 </button>
+                </div>
+              </form>
+            </nb-card-body>
+          </nb-card>
+        </ng-template>
+      </div>
+      <div class="col-md-2 p-1">
+        <nb-card>
+          <nb-card-header>
+            Ingresar nota
+          </nb-card-header>
+          <nb-card-body class="p-2">
+            <form [formGroup]="formHeader">
+            <div>
+              <label class="label">Comentario</label><br>
+              <textarea nbInput fullWidth placeholder="Ingrese un comentario" formControlName="comentario"></textarea>
+              <control-messages [control]="formHeader.get('comentario')"></control-messages>
+            </div>
+            <div>
+              <label class="label">Nota</label><br>
+              <input type="number" maxlength="2" nbInput fullWidth placeholder="Ingrese una nota" formControlName="nota">
+              <control-messages [control]="formHeader.get('nota')"></control-messages>
+            </div> <br>
+            <div class="text-center">
+              <button nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()">Calificar</button>
+            </div>
+          </form>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </form>
+    </nb-card-body>
+    </nb-card>

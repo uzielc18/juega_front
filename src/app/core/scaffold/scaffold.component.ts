@@ -1,82 +1,33 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   NbMediaBreakpointsService,
   NbMenuItem,
   NbMenuService,
+  NbPopoverDirective,
   NbSidebarService,
   NbThemeService,
 } from '@nebular/theme';
-import { delay, map, startWith, takeUntil } from 'rxjs/operators';
-import { Observable, of, Subject } from 'rxjs';
+import {delay, map, startWith, takeUntil} from 'rxjs/operators';
+import {forkJoin, Observable, of, Subject, Subscription} from 'rxjs';
 
 import {
   NbAuthResult,
-  NbAuthService,
+  NbAuthService, NbAuthToken,
   NbTokenService,
-  routes,
 } from '@nebular/auth';
-import { CORE_OPTIONS, CoreOptions } from '../core.options';
-import { AppService } from '../state/app.service';
-import { AppValidateTokenService } from '../state/app-validate-token.service';
-import { environment } from '../../../environments/environment';
+import {CORE_OPTIONS, CoreOptions} from '../core.options';
+import {AppService} from '../state/app.service';
+import {AppValidateTokenService} from '../state/app-validate-token.service';
+import {environment} from '../../../environments/environment';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {END_POINTS} from 'src/app/providers/utils';
+import {GeneralService} from 'src/app/providers';
+import {EmitEventsService} from 'src/app/shared/services/emit-events.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-scaffold',
-  template: `
-    <div
-      [nbSpinner]="spinner"
-      nbSpinnerMessage="Cargando..."
-      nbSpinnerSize="giant"
-      nbSpinnerStatus="primary"
-    >
-      <nb-layout withScroll [windowMode]="false">
-        <nb-layout-header class="header-actions" fixed>
-          <nb-actions>
-            <nb-action icon="menu-2-outline" (click)="toggle()"></nb-action>
-            <nb-action>
-              <img
-                *ngIf="!hidden"
-                src="../../../assets/logo-upeu-blanco.png"
-                alt="Lamb"
-                width="180"
-              />
-            </nb-action>
-          </nb-actions>
-          <nb-actions>
-          <!-- <nb-action >
-              <nb-select placeholder="Idioma"  size="small" [selected]="'ES'" formControlName="id_trabajo">
-                          <nb-option value="EN">Ingles</nb-option>
-                          <nb-option value="ES">Español</nb-option>
-              </nb-select>
-
-            </nb-action> -->
-            <nb-action [nbContextMenu]="userMenu">
-              <nb-user
-                class="header-user"
-                [name]="user?.name"
-                [title]="user?.email"
-                [picture]="user?.profile_photo_url"
-                [onlyPicture]="minimum"
-                size="large"
-              ></nb-user>
-            </nb-action>
-          </nb-actions>
-        </nb-layout-header>
-        <nb-sidebar responsive tag="core-sidebar">
-          <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
-          <nb-sidebar-footer *ngIf="!hidden">
-            <nb-toggle
-              (checkedChange)="changeTheme($event)"
-              *ngIf="!minimum"
-            ></nb-toggle>
-          </nb-sidebar-footer>
-        </nb-sidebar>
-        <nb-layout-column class="p-2">
-          <router-outlet></router-outlet>
-        </nb-layout-column>
-      </nb-layout>
-    </div>
-  `,
+  templateUrl: './scaffold.component.html',
   styleUrls: ['./scaffold.component.scss'],
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
@@ -85,40 +36,62 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     {
       title: 'Inicio',
       icon: 'home-outline',
-      link: 'dashboard',
-    },
-    {
-      title: 'Agenda',
-      icon: 'calendar-outline',
+      link: '/pages/dashboard',
+      pathMatch: 'prefix',
     },
     {
       title: 'Asignaturas',
       icon: 'book-open-outline',
-      link: 'asignaturas',
+      link: '/pages/asignatures',
+      pathMatch: 'prefix',
     },
     {
-      title: 'Tareas',
-      icon: 'clipboard-outline',
+      title: 'Actividades',
+      icon: 'edit-2-outline',
+      link: '/pages/activities',
+      pathMatch: 'prefix',
     },
     {
       title: 'Evaluaciones',
       icon: 'checkmark-circle-outline',
-    },
-    {
-      title: 'Investigacion',
-      icon: 'thermometer-outline',
-    },
-    {
-      title: 'Publicaciones',
-      icon: 'file-text-outline',
+      link: '/pages/evaluations',
+      pathMatch: 'prefix'
     },
     {
       title: 'Biblioteca',
       icon: 'book-outline',
     },
     {
-      title: 'Anuncios',
-      icon: 'bell-outline',
+      title: 'Exámen',
+      icon: 'clipboard-outline',
+      link: '/exam',
+      pathMatch: 'prefix',
+    },
+    {
+      title: 'Administrar',
+      icon: 'settings-outline',
+      link: '/pages/manage',
+      pathMatch: 'prefix',
+      children: [
+        {
+          title: 'Sincronización',
+          icon: 'sync-outline',
+          link: '/pages/manage/lamb-sync',
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Zoom',
+          icon: 'video-outline',
+          link: '/pages/manage/zoom',
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Cursos',
+          icon: 'shopping-bag-outline',
+          link: '/pages/manage/course',
+          pathMatch: 'prefix',
+        }
+      ]
     },
   ];
   minimum = false;
@@ -128,6 +101,42 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   spinner = false;
+  formHeader: any = FormGroup;
+  roles: any = [];
+  semestres: any = [];
+  paramsSessionStorage: any = {
+    rol: '',
+    semestre: '',
+    lenguaje: '',
+  }
+  date = new Date();
+  loading: boolean = false;
+  @ViewChild(NbPopoverDirective) popover: any = NbPopoverDirective;
+  subcript: any = Subscription;
+  validBlock: any = {from: '', status: false};
+
+  logoLangs: any = 'assets/spain.svg';
+
+  listLanguages: any = [
+    {
+      code: 'es',
+      img: 'assets/spain.svg',
+      name: 'Español',
+      id: 1,
+    },
+    {
+      code: 'en',
+      img: 'assets/eeuu.svg',
+      name: 'Inglés',
+      id: 2,
+    },
+    {
+      code: 'pb',
+      img: 'assets/brasil.svg',
+      name: 'Portugués',
+      id: 3,
+    }
+  ]
 
   constructor(
     private nbTokenService: NbTokenService,
@@ -138,10 +147,17 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private breakpointService: NbMediaBreakpointsService,
     private appService: AppService,
     private tokenService: AppValidateTokenService,
-    @Inject(CORE_OPTIONS) protected options: CoreOptions
-  ) {}
+    @Inject(CORE_OPTIONS) protected options: CoreOptions,
+    private formBuilder: FormBuilder,
+    private generalService: GeneralService,
+    public emitEventsService: EmitEventsService,
+    private router: Router,
+  ) {
+
+  }
 
   ngOnInit(): void {
+    this.fieldReactive();
     this.appService
       .onLoader()
       .pipe(takeUntil(this.destroy$))
@@ -149,7 +165,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
     this.user = this.appService.user;
     this.userMenu = this.appService.usernameMenu;
-    const { xl } = this.breakpointService.getBreakpointsMap();
+    const {xl} = this.breakpointService.getBreakpointsMap();
     this.themeService
       .onMediaQueryChange()
       .pipe(
@@ -163,30 +179,104 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         if (data.item.subtag === 'logout') {
-          this.nbTokenService.clear();
-          // lamb
-          this.nbAuthService
-            .logout(this.options.strategyName)
+          this.appService.start();
+          this.tokenService.logout()
             .pipe(takeUntil(this.destroy$))
-            .subscribe((authResult: NbAuthResult) => {
-              if (authResult.isSuccess()) {
-                this.tokenService.authorizeLamb();
+            .subscribe((value: any) => {
+              if (value.hasOwnProperty('success') && value.success) {
+
+                this.nbAuthService.getToken()
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe((value: NbAuthToken) => {
+
+                    if (['lamb'].includes(value.getOwnerStrategyName())) {
+
+                      // lamb
+                      this.tokenService.logoutLamb()
+                        .pipe(takeUntil(this.destroy$))
+                        .subscribe((result: any) => {
+                          if (result && result.hasOwnProperty('logout') && result.logout) {
+                            this.nbAuthService
+                              .logout(this.options.strategyName)
+                              .pipe(takeUntil(this.destroy$))
+                              .subscribe((authResult: NbAuthResult) => {
+                                if (authResult.isSuccess()) {
+                                  this.appService.stop();
+                                  window.location.href = environment.shellApp;
+                                }
+                              });
+                          } else {
+                            this.appService.stop();
+                          }
+                        }, () => {
+                          this.nbAuthService
+                            .logout(this.options.strategyName)
+                            .pipe(takeUntil(this.destroy$))
+                            .subscribe((authResult: NbAuthResult) => {
+                              if (authResult.isSuccess()) {
+                                this.appService.stop();
+                                window.location.href = environment.shellApp;
+                              }
+                            });
+                        })
+
+                    }
+
+                    if (['google'].includes(value.getOwnerStrategyName())) {
+                      // google
+                      this.nbAuthService
+                        .logout(this.options.strategyGoogleName)
+                        .pipe(takeUntil(this.destroy$))
+                        .subscribe((authResult: NbAuthResult) => {
+                          if (authResult.isSuccess()) {
+                            this.appService.stop();
+                            window.location.href = environment.shellApp;
+                          }
+                        });
+                    }
+
+                  });
+
+
+              } else {
+                this.appService.stop();
               }
+
+            }, () => {
+              this.appService.stop();
+            }, () => {
+              this.appService.stop();
             });
 
-          // google
-          this.nbAuthService
-            .logout(this.options.strategyGoogleName)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((authResult: NbAuthResult) => {
-              if (authResult.isSuccess()) {
-                this.tokenService.authorizeGoogle();
-              }
-            });
-            window.location.href = environment.shellApp;
-          // window.location.href = '/lamb-patmos/fronts/patmos-upeu-base-front/auth';
+
         }
       });
+
+    this.subcript = this.emitEventsService.blockReturns().subscribe(value => { // para emitir evento desde la cabecera
+      if (value) {
+        setTimeout(() => {
+          this.validBlock = value;
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          this.validBlock = {from: '', status: false};
+        }, 1000);
+      }
+    });
+  }
+
+  private fieldReactive() {
+    const controls = {
+      id_rol: ['', [Validators.required]],
+      id_semestre: ['', [Validators.required]],
+      lenguaje: [''],
+      carga: ['1'],
+    };
+    this.formHeader = this.formBuilder.group(controls);
+    this.getRoles();
+    setTimeout(() => {
+      this.getLanguages();
+    }, 100);
   }
 
   toggle(): void {
@@ -201,5 +291,149 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    this.subcript.unsubscribe();
+  }
+
+  open() {
+    this.popover.show();
+  }
+
+  close() {
+    this.popover.hide();
+  }
+
+  //////////////////////////////////
+  getRoles() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    let val = JSON.parse(sesion);
+
+    this.roles = this.appService.rol.filter((rol: any) =>
+      ['Estudiante', 'Docente'].includes(rol.name)
+    );
+    if (this.roles.length > 0) {
+
+      if (val && val.rol) {
+        this.formHeader.get('id_rol').patchValue(val.rol.id);
+        this.paramsSessionStorage.rol = val.rol;
+        this.getSemestres(val.rol);
+      } else {
+
+        const rol = this.roles.find((r: any) => r.name === 'Estudiante');
+        if (rol && rol.id) {
+          this.formHeader.get('id_rol').patchValue(rol.id);
+          this.getSemestres(rol);
+        } else {
+          this.formHeader.get('id_rol').patchValue(this.roles[0].id);
+          this.getSemestres(this.roles[0]);
+        }
+        // this.paramsSessionStorage.rol = this.roles[0];
+        // sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
+
+      }
+
+    }
+  }
+
+  getSemestres(rol: any) {
+    const serviceName = END_POINTS.base_back.user + '/mysemesters';
+    if (rol && rol.id) {
+      this.loading = true;
+      this.generalService.nameId$(serviceName, rol.id).subscribe((res: any) => {
+        this.semestres = res.data || [];
+        if (this.semestres.length > 0) {
+          const vigent = this.semestres.find((r: any) => r.vigente === '1');
+          if (vigent) {
+            this.formHeader.patchValue({
+              id_semestre: vigent.id,
+            });
+            if (this.formHeader.value.carga === '1') {
+              this.updateSemestre(vigent, rol);
+            } else {
+              this.loading = false;
+            }
+          } else {
+            this.formHeader.patchValue({
+              id_semestre: this.semestres[0].id,
+            });
+            if (this.formHeader.value.carga === '1') {
+              this.updateSemestre(this.semestres[0], rol);
+            } else {
+              this.loading = false;
+            }
+
+          }
+        } else {
+          this.loading = false;
+        }
+      });
+    }
+  }
+
+  changeRol($event: any) {
+    const rol = this.roles.find((r: any) => r.id === $event);
+    this.semestres = [];
+    this.formHeader.controls['id_semestre'].setValue('');
+    this.formHeader.controls['carga'].setValue('2');
+    this.getSemestres(rol);
+  }
+
+  // changeSemestre($event:any) {
+  //   this.updateSemestre($event);
+
+  // }
+
+  updateSemestre(value: any, rol?: any) {
+    const id = value.id || '';
+    const id_rol = rol.id || '';
+    const serviceName = END_POINTS.base_back.user + '/updatesemester';
+    if (id) {
+      this.loading = true;
+      this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe((data: any) => {
+        if (data.success) {
+          this.paramsSessionStorage.rol = rol;
+          this.paramsSessionStorage.semestre = value;
+          sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
+          // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
+          this.emitEventsService.enviar(this.paramsSessionStorage);
+          this.emitEventsService.asingDatos(this.paramsSessionStorage);
+
+          if (this.formHeader.value.carga === '2') {
+            this.close();
+          }
+        }
+      }, () => {
+        this.loading = false;
+      }, () => {
+        this.loading = false;
+      });
+    }
+  }
+
+  saveChanges() {
+    const object = this.semestres.find((r: any) => r.id === this.formHeader.value.id_semestre);
+    const rol = this.roles.find((r: any) => r.id === this.formHeader.value.id_rol);
+    if (object && object.id && rol && rol.id) {
+      this.updateSemestre(object, rol);
+
+      if (this.validBlock.from === 'Asignaturas' && this.validBlock.status === true) {
+        this.router.navigate(['/pages/asignatures']);
+      }
+    }
+  }
+
+  getLanguages() {
+    this.formHeader.controls['lenguaje'].setValue('es');
+    setTimeout(() => {
+      this.changesLangs();
+    }, 200);
+  }
+
+  changesLangs() {
+    const forms = this.formHeader.value;
+    this.emitEventsService.setLangsEnviar(forms.lenguaje);
+    const logo = this.listLanguages.find((r: any) => r.code === forms.lenguaje);
+    if (logo && logo.img) {
+      this.logoLangs = logo.img;
+    }
   }
 }

@@ -1,0 +1,286 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary"
+  nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        Administrar grupo <br>
+        <label class="label">Trabajo grupal - {{curso?.nombre}}</label>
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body style="background: #f5f5f5;">
+    <div class="row">
+      <div class="col-md-5">
+        <nb-card>
+          <nb-card-header style="padding-top: 1px; padding-bottom: 1px;">
+              <label class="label">
+                Nuevo grupo
+              </label>
+          </nb-card-header>
+          <nb-card-body style="padding-top: 0px;">
+            <div>
+              <nb-tabset (changeTab)="selectTabChange($event)">
+                <nb-tab tabTitle="Manual" tabId="GM" class="reducir" #item1>
+                  <form [formGroup]="formGroupManual">
+                  <strong>Grupo manual</strong><br>
+                  <div>
+                    <label class="label">Nombre del grupo</label>
+                    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingrese nombre del grupo" fieldSize="small"
+                    [status]="(formGroupManual.hasError('required', ['nombre_grupo'])) === true ? 'primary' : 'basic'" formControlName="nombre_grupo"/>
+                    <control-messages [control]="formGroupManual.get('nombre_grupo')"></control-messages>
+                  </div>
+                  <br>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div></div>
+                    <div>
+                      <button *ngIf="formGroupManual.value.opc === 'U'" nbButton status="basic" size="small" (click)="cancelSave()">Cancelar</button>&nbsp;
+                      <button nbButton status="primary" size="small" [disabled]="formGroupManual.invalid" (click)="saveGM()">
+                        <nb-icon [icon]="formGroupManual.value.opc === 'NEWS' ? 'plus' : 'edit-2-outline'"></nb-icon>
+                        {{formGroupManual.value.opc === 'NEWS' ? 'Añadir' : 'Editar'}}
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                </nb-tab>
+                <nb-tab tabTitle="Generar" tabId="G" class="reducir" [disabled]="listGroups?.length > 0" #item2>
+                  <form [formGroup]="formGenerar">
+                    <strong>Generar grupos</strong><br>
+                    <strong style="font-size: 10px; color: brown;">N° alumnos {{listMiembros?.length}}</strong> <br>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label class="label">Miembros</label>
+                        <input class="w-100" type="number" nbInput fullWidth placeholder="Ingrese" fieldSize="small" (keyup)="valueMembers()"
+                        [status]="(formGenerar.hasError('required', ['n_miembros'])) === true ? 'primary' : 'basic'" formControlName="n_miembros"/>
+                        <control-messages [control]="formGenerar.get('n_miembros')"></control-messages>
+                      </div>
+                      <div class="col-md-3">
+                        <label class="label">Aleatorio</label>
+                        <nb-toggle status="primary" formControlName="aleatorio" (change)="changeAleatorio()"></nb-toggle>
+                      </div>
+                      <div class="col-md-3">
+                        <label class="label">Procesar</label>
+                        <button nbButton status="warning" size="small" fullWidth [disabled]="disabledGenerate"
+                        (click)="formarGrupos()"><nb-icon icon="settings-2-outline"></nb-icon></button>
+                      </div>
+                    </div>
+                    <!-- {{datosGrup | json}} -->
+                    <div *ngIf="arregloDeArreglos.length > 0 && formGenerar.value.n_miembros">
+                      <br>
+                      <label class="label">Usted va a generar &nbsp; </label>
+
+                        <label class="label" *ngIf="datosGrup.g_completos > 0">
+                          {{datosGrup?.g_completos}} grupo(s) de {{formGenerar.value.n_miembros}}
+                          alumno(s)
+                        </label>
+
+                        <label class="label" *ngIf="datosGrup.g_completos > 0 && datosGrup.g_imcompletos > 0">&nbsp;y&nbsp;</label>
+
+                        <label class="label" *ngIf="datosGrup.g_imcompletos > 0">
+                          {{datosGrup?.g_imcompletos}} grupo(s) de {{datosGrup?.n_imc}} alumno(s),
+                        </label><br>
+
+                        <label class="label" style="color: brown;">
+                         Total de grupos a crear {{arregloDeArreglos?.length}}.
+                        </label>
+                        <nb-icon (click)="open(dialog)" icon="eye" style="cursor: pointer;" status="info"></nb-icon>
+
+                    </div>
+                    <br>
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div></div>
+                        <button nbButton status="primary" size="small" [disabled]="arregloDeArreglos?.length <= 0"
+                        (click)="saveGenerate()"><nb-icon icon="plus"></nb-icon>Añadir</button>
+                    </div>
+                  </form>
+                </nb-tab>
+                <nb-tab tabTitle="Importar" tabId="I" class="reducir" [disabled]="listGroups?.length > 0" #item3>
+                  <form [formGroup]="formImportar">
+                    <strong>Importar grupos</strong><br>
+                    <div>
+                      <label class="label">Selecciona el trabajo referencial para importar sus grupos</label>
+                       <nb-select placeholder="Seleccionar trabajo"  fullWidth size="small"
+                        [status]="(formImportar.hasError('required', ['selected_element_id'])) === true ? 'primary' : 'basic'" formControlName="selected_element_id">
+                          <nb-option *ngFor="let item of listTrabajos" [value]="item.id">{{item.titulo}}</nb-option>
+                        </nb-select>
+                      <control-messages [control]="formImportar.get('selected_element_id')"></control-messages>
+                    </div>
+                    <br>
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div></div>
+                        <button nbButton status="primary" size="small" [disabled]="formImportar.invalid"
+                        (click)="saveImportar()"><nb-icon icon="plus"></nb-icon>Importar</button>
+                    </div>
+                  </form>
+                </nb-tab>
+              </nb-tabset>
+            </div>
+          </nb-card-body>
+        </nb-card>
+        <nb-card>
+          <nb-card-header style="padding-top: 1px; padding-bottom: 1px;">
+            <label class="label">
+              Lista de grupos
+            </label>
+          </nb-card-header>
+          <nb-card-body>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr style="font-size: 11px;">
+                    <th style="width: 1px;">N°</th>
+                    <th>Nombre</th>
+                    <th style="width: 1px;" class="text-center" ><nb-icon size="tiny" icon="people-outline"></nb-icon></th>
+                    <th class="text-center" colspan="3">Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of listGroups; let i = index" [ngStyle]="{'background': item?.color, 'font-size': '10px'}">
+                    <td>{{i+1}}</td>
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.group_members_count}}</td>
+                    <td class="text-center" style="width: 1px;">
+                      <nb-icon icon="person-add-outline" size="tiny" status="success" (click)="viewMembers(item)" style="cursor: pointer; font-size: 15px;"
+                      nbTooltip="Ver" nbTooltipPlacement="top" nbTooltipStatus="success"></nb-icon>
+                    </td>
+                    <td class="text-center" style="width: 1px;">
+                      <nb-icon icon="edit-2-outline" size="tiny" status="info" (click)="updateGruop(item)" style="cursor: pointer; font-size: 15px;"
+                      nbTooltip="Editar" nbTooltipPlacement="top" nbTooltipStatus="info"></nb-icon>
+                    </td>
+                    <td *ngIf="!item?.checks" class="text-center" style="width: 1px;">
+                      <nb-icon  icon="trash" size="tiny" status="danger" (click)="deleteGroup(item)" style="cursor: pointer; font-size: 15px;"
+                      nbTooltip="Eliminar" nbTooltipPlacement="top" nbTooltipStatus="danger"></nb-icon>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-center">
+                <nb-alert *ngIf="listGroups?.length<=0" outline="basic" style="font-size: 10px;">No se encontraron grupos.</nb-alert>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-7">
+        <nb-card>
+          <nb-card-header style="padding-top: 1px; padding-bottom: 1px;">
+            <label class="label">
+              Nombre del grupo: {{formGroup.value.nombre_grupo}}
+            </label>
+          </nb-card-header>
+          <nb-card-body>
+          <div *ngIf="!validPending">
+            <label class="label">Lista de alumnos pendientes</label>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr style="font-size: 11px;">
+                        <th style="width: 1px;">Elija</th>
+                        <th>Nombre</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of partidos?.array_B" style="font-size: 10px;">
+                        <td> <nb-checkbox status="primary"  [(ngModel)]="item.checked"></nb-checkbox></td>
+                        <td>{{item?.apellido_paterno + ' ' + item?.apellido_materno + ' ' + item?.nombres}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr style="font-size: 11px;">
+                        <th style="width: 1px;">Elija</th>
+                        <th>Nombre</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of partidos?.array_A" style="font-size: 10px;">
+                      <td><nb-checkbox status="primary" [(ngModel)]="item.checked"></nb-checkbox></td>
+                      <td>{{item?.apellido_paterno + ' ' + item?.apellido_materno + ' ' + item?.nombres}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <div></div>
+                <button nbButton status="primary" size="small" (click)="anadirPending()" [disabled]="validPAna"><nb-icon icon="plus"></nb-icon>Añadir</button>
+            </div>
+          </div>
+            <hr *ngIf="!validPending"/>
+            <div>
+            <label class="label">Lista de alumnos asignados al grupo</label>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr style="font-size: 11px;">
+                    <th style="width: 1px;">N°</th>
+                    <th>Código</th>
+                    <th>Nombres</th>
+                    <th>Opc.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of memberGroup; let i = index" style="font-size: 10px;">
+                    <td>{{i+1}}</td>
+                    <td>{{item.codigo}}</td>
+                    <td>{{item?.apellido_paterno + ' ' + item?.apellido_materno + ' ' + item?.nombres}}</td>
+                    <td style="width: 2px;">
+                      <nb-icon  icon="trash" size="tiny" status="danger" (click)="deleteMembersGroup(item)" style="cursor: pointer; font-size: 15px;"
+                      nbTooltip="Eliminar" nbTooltipPlacement="top" nbTooltipStatus="danger"></nb-icon>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-center">
+                <nb-alert *ngIf="memberGroup.length<=0" outline="basic" style="font-size: 10px;">No se encontraron miembros.</nb-alert>
+              </div>
+            </div>
+          </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </nb-card-body>
+  </nb-card>
+
+  <!-- <ng-template #templateRef>
+    <div *ngFor="let item of arregloDeArreglos; let i = index">
+      <label class="label">Grupo {{i+1}}</label>
+      <div *ngFor="let ite of item; let ind = index">
+        {{ite?.nombre}}
+      </div>
+    </div>
+  </ng-template> -->
+
+  <ng-template #dialog let-data let-ref="dialogRef">
+    <nb-card accent="primary" style="width: 400px;">
+      <nb-card-header>Grupos generados</nb-card-header>
+      <nb-card-body>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <tbody *ngFor="let item of arregloDeArreglos; let i = index"  style="font-size: 10px;">
+              <tr>
+                <td style="font-weight: bold;">Grupo {{i+1}}</td>
+              </tr>
+              <tr *ngFor="let ite of item; let ind = index">
+                 <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ite?.apellido_paterno + ' ' + ite?.apellido_materno + ' ' + ite?.nombres}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
+      <nb-card-footer class="text-center">
+        <button nbButton size="tiny" status="basic" (click)="ref.close()">Cerrar</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>

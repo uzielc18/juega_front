@@ -1,0 +1,95 @@
+.element-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #575756;
+  margin: 0;
+
+  &-description {
+    font-size: 12px;
+    color: #898989;
+    margin: 0;
+  }
+}
+
+.main-container {
+  display: flex;
+  width: 100%;
+}
+
+.content {
+  width: 75%;
+}
+
+.menu {
+  &-container-top {
+    display: none;
+  }
+
+  &-children {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    padding-top: 150px;
+  }
+}
+.butonsInfo {
+  font-size: 14px;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 1600px) {
+  .content {
+    width: 72%;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .content {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .content {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .content {
+    width: 69%;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .content {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .menu {
+    &-container-top {
+      display: block;
+    }
+
+    &-container {
+      display: none;
+    }
+
+    &-children {
+      position: relative;
+    }
+  }
+}

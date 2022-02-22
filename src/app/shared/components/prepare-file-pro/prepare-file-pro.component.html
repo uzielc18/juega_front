@@ -1,15 +1,15 @@
 <!-- El componente esta diseñado solo para imagenes y pdf si desea añadir otras extensiones, cree otro componente -->
-<form [formGroup]="formHeaders">
-  <div [nbSpinner]="loading"
-  nbSpinnerStatus="primary"
-  nbSpinnerSize="large">
+<form [formGroup]="formHeaders" [nbSpinner]="loading"
+nbSpinnerStatus="primary"
+nbSpinnerSize="large">
+  <div *ngIf="viewFile === 'ARRAY'">
     <div style="background: #f7f7f7;">
       <div class="text-center">
         <br>
         <label class="label">Dar click para adjuntar, máx ({{numFiles}}) {{numFiles === 1 ? 'archivo' : 'archivos'}}</label><br><br>
         <div   class="text-center">
           <button nbButton  size="small" (click)="openModal();"
-          [disabled]="listArrayFile.length === numFiles" style="font-size: 12px; font-weight: bold; cursor: pointer; background: rgb(213 213 213);">Adjuntar archivo <nb-icon icon="cloud-upload-outline"></nb-icon> </button>
+          [disabled]="listArrayFile.length === numFiles || isDisabled" style="font-size: 12px; font-weight: bold; cursor: pointer; background: rgb(213 213 213);">Adjuntar archivo <nb-icon icon="cloud-upload-outline"></nb-icon> </button>
         </div>
         <br>
       </div>
@@ -32,6 +32,12 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </div>
+
+  <div *ngIf="viewFile === 'UNIQUE'">
+    <div  class="text-center">
+      <button nbButton  size="small" [fullWidth]="fullWidth" status="basic" outline (click)="openModal();" [disabled]="isDisabled"><nb-icon style="font-size: 20px;" icon="cloud-upload-outline"></nb-icon> </button>
     </div>
   </div>
 </form>

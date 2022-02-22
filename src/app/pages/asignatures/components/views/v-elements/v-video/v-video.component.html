@@ -1,0 +1,14 @@
+<div id="fb-root"></div>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+<nb-card class="instructions-container m-4">
+  <nb-card-body class="px-4 py-3">
+    <div class="d-flex">
+      <div class="instructions">
+        <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
+        <p class="instructions-description">{{ element?.descripcion }}</p>
+      </div>
+    </div>
+    <app-video-player [videoFormat]="element?.tamano_peso" [url]="element?.url_externa"
+      (loadingsFiles)="loadingsFiles($event)"></app-video-player>
+  </nb-card-body>
+</nb-card>

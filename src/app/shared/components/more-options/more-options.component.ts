@@ -12,6 +12,7 @@ export class MoreOptionsComponent implements OnInit {
   @Input() tipo:any;
   @Output() formsValues = new EventEmitter<any>();
   @Input() setValues:any;
+  @Input() code:any;
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -19,18 +20,30 @@ export class MoreOptionsComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      element_id: [''],
       permitir_comentarios: [false],
       duration: ['180', [Validators.required]],
-      calificable: [true],
+      calificable: [['TRABAJO', 'FORO'].includes(this.tipo) ? true : false],
       visibilidad: ['S', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.formsValues.emit(this.formHeader.value);
+    if (this.code === 'UPDATE') {
+      this.updateValues();
+    }
+    setTimeout(() => {
+      this.formsValues.emit(this.formHeader.value);
+    }, 200);
   }
   setEmiter() {
     if (this.formHeader.valid) {
       this.formsValues.emit(this.formHeader.value);
     }
+  }
+  updateValues() {
+    this.formHeader.patchValue({
+      permitir_comentarios: this.setValues.permitir_comentarios  === '1' ? true : false,
+      duration: this.setValues.duracion,
+      calificable: this.setValues.calificable  === '1' ? true : false,
+      visibilidad: this.setValues.visibilidad   === '1' ? 'S' : 'N',
+    });
   }
 }

@@ -1,0 +1,27 @@
+<div class="video-container mt-3" *ngIf="!['Audio'].includes(videoFormat)">
+  <!-- For video element -->
+  <iframe *ngIf="['YOUTUBE','YouTube'].includes(videoFormat)" [src]="videoEmbedYoutube | safe"
+    title="YouTube video player" frameborder="0" allowfullscreen>
+  </iframe>
+  <iframe *ngIf="['VIMEO','Vimeo'].includes(videoFormat)" [src]="videoEmbedVimeo | safe" frameborder="0"
+    allowfullscreen></iframe>
+  <iframe *ngIf="['FACEBOOK', 'Facebook'].includes(videoFormat)" [src]="videoEmbedFacebook | safe" scrolling="no"
+    frameborder="0" allowfullscreen="true"></iframe>
+  <iframe *ngIf="['LOOM', 'Loom'].includes(videoFormat)" [src]="videoEmbedLoom | safe" frameborder="0"
+    webkitallowfullscreen mozallowfullscreen allowfullscreen>
+  </iframe>
+  <iframe *ngIf="['SOUNDCLOUD', 'SoundCloud'].includes(videoFormat)" style="height: 166px;" scrolling="no"
+    frameborder="no" allow="autoplay" [src]="audioEmbedSoundcloud | safe"></iframe>
+  <div *ngIf="['REFERENCIA'].includes(videoFormat)">
+    <a [href]="url" target="_blank">{{ url }}</a>
+    <br>
+    <a class="mt-2" nbButton status="primary" [href]="url" size="small" target="_blank">Ir al
+      enlace</a>
+  </div>
+</div>
+
+<div *ngIf="['Audio'].includes(videoFormat)" class="p-0">
+  <audio controls="controls" autobuffer="autobuffer" style="padding-top: 0px;">
+    <source [src]="url | safe">
+  </audio>
+</div>

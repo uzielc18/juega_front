@@ -11,27 +11,10 @@
 
 /* You can add global styles to this file, and also import other style files */
 
-.mi-estilo-global {
-  background-color: #0f483f;
-  color: white;
-}
-
-.xng-breadcrumb-trail {
-  color: var(--text-primary-color) !important;
-}
-
-.xng-breadcrumb-link:hover {
-  color: var(--text-primary-color) !important;
-  text-decoration: none !important;
-}
-
 .select-button {
   color: var(--text-primary-color) !important;
 }
 
-// .progress-container {
-//   height: 10px !important;
-// }
 .progress-container {
   height: 100% !important;
 }
@@ -40,18 +23,12 @@
   background-color: #E39800 !important;
 }
 
-.dialog-limited-height {
-  max-height: 90vh;
-  max-width: 850px;
-}
-
 .custom-bread-crumb {
   margin-bottom: 0;
 }
 
 .ng-star-inserted:hover {
   text-decoration: none !important;
-  // color: #A76575 !important;
 }
 
 .line {

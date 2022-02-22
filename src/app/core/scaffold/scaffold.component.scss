@@ -1,20 +1,47 @@
 :host {
+  ::ng-deep nb-layout-header.header-actions nav {
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
 
-    ::ng-deep nb-layout-header.header-actions nav {
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-    }
+  ::ng-deep nb-layout-footer.header-actions nav {
+    background-color: var(--header-background-color) !important;
+    border: none !important;
+  }
 
-    h4 {
-        color: white;
+  ::ng-deep nb-layout-footer.header-actions {
+    &.fixed {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1040;
     }
+  }
 
-    ::ng-deep nb-user.header-user div {
-        color: white;
-    }
+  h4 {
+    color: white;
+  }
 
-    ::ng-deep nb-action nb-icon {
-        color: white;
-    }
+  ::ng-deep nb-user.header-user div {
+    color: white;
+  }
+
+  ::ng-deep nb-action nb-icon {
+    color: white;
+  }
 }
 
+.logo {
+  width: 120px;
+}
+
+@media screen and (max-width: 768px) {
+  .logo {
+    width: 80px;
+  }
+
+  nb-layout-column {
+    margin-bottom: 62px;
+  }
+}

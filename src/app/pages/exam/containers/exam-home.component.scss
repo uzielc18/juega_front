@@ -1,0 +1,152 @@
+.exam-card {
+  width: 100%;
+  min-height: 92vh;
+  max-width: 768px;
+  margin-top: 71px;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px){
+  .exam-card {
+    min-height: 94vh;
+    margin-top: 46px;
+    margin-bottom: 50px;
+  }
+
+  nb-card {
+    margin-top: 70px;
+    margin-bottom: 20px;
+  };
+}
+
+nb-layout-column {
+  position: relative;
+}
+
+.header {
+  padding: 15px 20px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: #EDF1F7;
+  border-bottom: 1px solid #C3CFD9;
+  position: fixed;
+  z-index: 1;
+}
+
+.time {
+  padding: 10px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.hour {
+  background-color: #8DD7CF;
+  border: 2px solid #1AAE9F;
+}
+
+.minute {
+  background-color: #B2ACFA;
+  border: 2px solid #7165F6;
+}
+
+.second {
+  background-color: #F3C19D;
+  border: 2px solid #E8833A;
+}
+
+.questions-header span {
+  color: #293845;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.settings {
+  position: fixed;
+  top: 74px;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 999;
+
+  &-button {
+    // padding: 5px;
+    // background-color: #c06573;
+    position: fixed;
+    top: 50%;
+    cursor: pointer;
+    z-index: 9999;
+
+    nb-icon {
+      // color: #fff;
+      color: #9e3343;
+      height: 36px;
+      width: 36px;
+    }
+  }
+
+  nb-card {
+    height: 100%;
+    border-radius: 0;
+  }
+
+  &-container {
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .settings {
+    top: 50px;
+  }
+}
+
+.questions {
+  height: 100%;
+  background-color: #EDF1F7;
+  // border: 1px solid #C3CFD9;
+}
+
+@media screen and (max-width: 768px) {
+  .questions {
+    // padding-right: 40px;
+  }
+}
+
+.section-container {
+  background-color: #fff;
+  border: 1px solid #C3CFD9;
+  margin-bottom: 15px;
+}
+
+.question-container {
+  background-color: #fff;
+  border: 1px solid #C3CFD9;
+  text-align: justify;
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.movil-buttons {
+  padding: 10px 15px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background: #EDF1F7;
+  position: fixed;
+  z-index: 99999;
+  border-top: 1px solid #C3CFD9;
+}
+
+.alternatives-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

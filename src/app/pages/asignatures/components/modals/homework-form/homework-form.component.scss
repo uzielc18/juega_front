@@ -1,0 +1,31 @@
+nb-card {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  width: 850px;
+  & nb-card-body {
+    padding: 0;
+  }
+}
+
+.menu-container {
+  background-color: #f5f5f5;
+}
+
+.menu-title {
+  font-size: 11px;
+}
+
+.date-input {
+  width: 55%;
+}
+
+.hour-input {
+  width: 43%;
+}
+.scrollModal {
+  max-width: 95vw;
+  max-height: 95vh;
+  width: 850px;
+}

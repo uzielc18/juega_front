@@ -1,0 +1,10 @@
+<div class="table-responsive">
+    <div *ngFor="let item of alternativas" class=" d-flex align-items-center justify-content-between">
+        <div>
+            <input type="text" fullWidth placeholder="Respuesta" nbInput fieldSize="small" style="width: 380px;" [value]="item?.option" [readOnly]="true">  
+        </div>
+        <div>
+            <nb-icon *ngIf="item?.correcto === 1" icon="done-all-outline" status="success"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.puntos}} pts.</label> 
+        </div>
+    </div>
+</div>

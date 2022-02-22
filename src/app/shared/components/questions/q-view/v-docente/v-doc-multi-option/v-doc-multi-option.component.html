@@ -1,0 +1,31 @@
+<div class="table-responsive">
+    <div *ngFor="let item of alternativas" class=" d-flex align-items-center justify-content-between">
+        <div>
+            <span *ngIf="item?.correcto !== 1">
+                <nb-icon icon="square-outline"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.option}}</label> 
+            </span>
+            <span *ngIf="item?.correcto === 1">
+                <nb-icon icon="checkmark-square-2-outline" status="primary"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.option}}</label> 
+            </span>    
+            </div>
+        <div>
+            <nb-icon *ngIf="item?.correcto === 1" icon="done-all-outline" status="success"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.puntos}} pts.</label> 
+        </div>
+    </div>
+    <!-- <table class="table table-sm">
+        <tbody>
+            <tr *ngFor="let item of alternativas">
+                <td style="width: 1px;">
+                    <nb-icon *ngIf="item?.correcto !== 1" icon="square-outline"></nb-icon>
+                    <nb-icon *ngIf="item?.correcto === 1" icon="checkmark-square-2-outline" status="primary"></nb-icon>
+                </td>
+                <td style="width: 150px;">
+                    {{item?.option}}
+                </td>
+                <td style="width: 55px;" class="text-center">
+                    {{item?.puntos}}
+                </td>
+            </tr>
+        </tbody>
+    </table> -->
+</div>

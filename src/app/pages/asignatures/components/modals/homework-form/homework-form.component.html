@@ -1,0 +1,150 @@
+<nb-card class="scrollModal"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Preparando información"
+>
+  <nb-card-body>
+    <div class="row container p-0 m-0">
+      <div *ngIf="code === 'NEW'" class="col-4 menu-container p-4 pe-0">
+        <p class="fw-bold menu-title pe-2" style="font-size: 12px">
+          ¿ Que recurso o actividad deseas añadir al curso?
+        </p>
+        <app-menu-elements
+          (onSelect)="selectedElement($event)"
+          (loadingsMenu)="loadingsMenu($event)"
+        ></app-menu-elements>
+      </div>
+      <div class="{{code === 'NEW' ? 'col-8' : 'col-12'}} p-3">
+        <div *ngIf="element" class="col-md-12 px-0 d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <nb-icon
+              [icon]="element?.icono"
+              [ngStyle]="{ color: element?.background }"
+              class="fs-1 me-2"
+            ></nb-icon>
+            <div>
+              <p class="fw-bold fs-6 mb-0">{{ element?.nombre }}</p>
+              <small>Completa los datos a continuación</small>
+            </div>
+          </div>
+          <div>
+            <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form mt-4 px-5"  *ngIf="['TRAB'].includes(element?.codigo)">
+          <app-works
+            (saveCloseValue)="saveValue($event)"
+            (loadingsForm)="loadingsForm($event)"
+            [topics]="topics"
+            [unidad]="unidad"
+            [curso]="curso"
+            [item]="itemsValue"
+            [code]="code"
+            [valueMenu]="element"
+            [userInfo]="userInfo"
+          ></app-works>
+        </div>
+
+        <div class="form mt-4 px-5" *ngIf="['FOR'].includes(element?.codigo)">
+          <app-forus
+            (saveCloseValue)="saveValue($event)"
+            (loadingsForm)="loadingsForm($event)"
+            [topics]="topics"
+            [unidad]="unidad"
+            [curso]="curso"
+            [item]="itemsValue"
+            [code]="code"
+            [valueMenu]="element"
+          ></app-forus>
+        </div>
+
+        <div
+          class="form mt-4 px-5" *ngIf="['ENL'].includes(element?.codigo)">
+          <app-enlace-external
+            (saveCloseValue)="saveValue($event)"
+            (loadingsForm)="loadingsForm($event)"
+            [topics]="topics"
+            [unidad]="unidad"
+            [curso]="curso"
+            [item]="itemsValue"
+            [code]="code"
+            [valueMenu]="element"
+          ></app-enlace-external>
+        </div>
+
+        <div
+          class="form mt-4 px-5" *ngIf="['VICO'].includes(element?.codigo)">
+          <app-vidio-conference
+            (saveCloseValue)="saveValue($event)"
+            (loadingsForm)="loadingsForm($event)"
+            [topics]="topics"
+            [unidad]="unidad"
+            [curso]="curso"
+            [item]="itemsValue"
+            [code]="code"
+            [valueMenu]="element"
+          ></app-vidio-conference>
+        </div>
+
+        <div
+          class="form mt-4 px-5" *ngIf="['EVAL'].includes(element?.codigo)">
+          <app-evaluations
+            (saveCloseValue)="saveValue($event)"
+            (loadingsForm)="loadingsForm($event)"
+            [topics]="topics"
+            [unidad]="unidad"
+            [curso]="curso"
+            [item]="itemsValue"
+            [code]="code"
+            [valueMenu]="element"
+          ></app-evaluations>
+        </div>
+
+        <div
+          class="form mt-4 px-5" *ngIf="['DOC'].includes(element?.codigo)">
+          <app-documents
+            (saveCloseValue)="saveValue($event)"
+            (loadingsForm)="loadingsForm($event)"
+            [topics]="topics"
+            [unidad]="unidad"
+            [curso]="curso"
+            [item]="itemsValue"
+            [code]="code"
+            [valueMenu]="element"
+            [userInfo]="userInfo"
+          ></app-documents>
+        </div>
+
+        <div class="form mt-4 px-5" *ngIf="['VID'].includes(element?.codigo)">
+          <app-vidio
+            (saveCloseValue)="saveValue($event)"
+            (loadingsForm)="loadingsForm($event)"
+            [topics]="topics"
+            [unidad]="unidad"
+            [curso]="curso"
+            [item]="itemsValue"
+            [code]="code"
+            [valueMenu]="element"
+          ></app-vidio>
+        </div>
+
+        <div  class="form mt-4 px-5" *ngIf="['CARP'].includes(element?.codigo)">
+          <app-carpeta
+          (saveCloseValue)="saveValue($event)"
+          (loadingsForm)="loadingsForm($event)"
+          [topics]="topics"
+          [unidad]="unidad"
+          [curso]="curso"
+          [item]="itemsValue"
+          [code]="code"
+          [valueMenu]="element"></app-carpeta>
+        </div>
+
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
