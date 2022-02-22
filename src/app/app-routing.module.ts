@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/activities/activities.module').then((m) => m.ActivitiesModule),
       },
       {
+        path: 'evaluations',
+        loadChildren: () => import('./pages/evaluations/evaluations.module').then((m) => m.EvaluationsModule),
+      },
+      {
         path: 'manage',
         loadChildren: () => import('./pages/manage/manage.module').then((m) => m.ManageModule),
       },

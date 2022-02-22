@@ -39,41 +39,41 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
       case 'png':
       case 'jpg':
       case 'jpeg':
-        icon = 'https://www.shareicon.net/data/2017/03/02/880210_images_512x512.png';
+        icon = 'assets/icons_svg/png.svg';
         break;
       case 'doc':
       case 'docx':
-        icon = 'https://www.vhv.rs/dpng/d/109-1098204_microsoft-word-icon-microsoft-word-logo-white-hd.png';
+        icon = 'assets/icons_svg/dox.svg';
         break;
       case 'ppt':
       case 'pptx':
-        icon = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhvJL7KzXqNt1n3vN89njhjHieCjeovxQkG9CUuNMCp_QP8veIhDtpuktr6HmNUS0n4KY&usqp=CAU';
+        icon = 'assets/icons_svg/ppt.svg';
         break;
       case 'xls':
       case 'xlsx':
-        icon = 'https://www.pinclipart.com/picdir/middle/317-3177716_excel-comments-import-excel-icon-png-clipart.png';
+        icon = 'assets/icons_svg/xls.svg';
         break;
       case 'pdf':
-        icon = 'http://www.lgrrabogados.com/images/icono-pdf.png';
+        icon = 'assets/icons_svg/pdf.svg';
         break;
       case 'txt':
-        icon = 'https://cdn-icons-png.flaticon.com/512/104/104647.png';
+        icon = 'assets/icons_svg/txt.svg';
         break;
       /// referencias, se abriran en otro enlace del navegador
       case 'YOUTUBE':
-        icon = 'http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c500.png';
+        icon = 'assets/icons_svg/youtube.svg';
         break;
       case 'SOUNDCLOUD':
-        icon = 'https://cdn-icons-png.flaticon.com/512/51/51992.png';
+        icon = 'assets/icons_svg/soundcloud.svg';
         break;
       case 'VIMEO':
-        icon = 'https://e7.pngegg.com/pngimages/499/302/png-clipart-social-media-computer-icons-vimeo-social-media-text-heart.png';
+        icon = 'assets/icons_svg/vimeo.svg';
         break;
       case 'REFERENCIA':
-        icon = 'https://static.thenounproject.com/png/2472697-200.png';
+        icon = 'assets/icons_svg/referencia.svg';
       break;
       default:
-        icon = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Folder_open_alt_font_awesome.svg/512px-Folder_open_alt_font_awesome.svg.png';
+        icon = 'assets/icons_svg/default.svg';
         break;
     }
     return icon;

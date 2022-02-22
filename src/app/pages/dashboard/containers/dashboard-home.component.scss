@@ -60,3 +60,33 @@
     color: #BCBCBB;
   }
 }
+
+.main-container {
+  display: flex;
+  height: 100%;
+
+  .perfil {
+    width: 410px;
+  }
+
+  .cursos {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
+    .card-list {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+
+@media screen and (max-width: 768px){
+  .main-container {
+    flex-direction: column;
+
+    .perfil {
+      width: 100%;
+    }
+  }
+}

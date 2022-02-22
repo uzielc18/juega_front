@@ -5,6 +5,11 @@ import { ControlMessagesModule } from 'src/app/shared/components/control-message
 import { GeneralService } from 'src/app/providers';
 import { LambSyncComponent } from './lamb-sync.component';
 import { LambSyncHomeComponent } from './containers/lamb-sync-home.component';
+import { ListDocenteComponent } from './components/modals/list-docente/list-docente.component';
+import { ListCursosComponent } from './components/modals/list-cursos/list-cursos.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { ListSilabusComponent } from './components/modals/list-silabus/list-silabus.component';
+import { ListEstudiantesComponent } from './components/modals/list-estudiantes/list-estudiantes.component';
 
 const COMPONENTS: any[] = [
   LambSyncComponent,
@@ -13,6 +18,7 @@ const COMPONENTS: any[] = [
 ];
 const NG_MODULES: any = [
   NebularModule,
+  NgbPaginationModule
 ];
 const NGB_MODULES: any = [
   // NgbModule
@@ -42,7 +48,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, ListDocenteComponent, ListCursosComponent, ListSilabusComponent, ListEstudiantesComponent],
   entryComponents: [...MODALS],
 })
 export class LambSyncModule { }

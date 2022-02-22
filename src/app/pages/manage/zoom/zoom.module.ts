@@ -8,12 +8,16 @@ import { ZoomRoutingModule } from './zoom-routing.module';
 import { ZoomComponent } from './zoom.component';
 import { UpZoomComponent } from './components/modals/up-zoom/up-zoom.component';
 import { ZoomCourseComponent } from './components/modals/zoom-course/zoom-course.component';
-
+import { ConfigZoomComponent } from './components/modals/zoom-course/config-zoom/config-zoom.component';
+import { FilterPipeModule } from 'src/app/shared/pipes/filterPipe/filterPipe.module';
+import { VZoomValidateComponent } from './components/views/v-zoom-validate/v-zoom-validate.component';
 const COMPONENTS: any[] = [
   ZoomComponent,
   ZoomHomeComponent,
   UpZoomComponent,
-  ZoomCourseComponent
+  ZoomCourseComponent,
+  ConfigZoomComponent,
+  VZoomValidateComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -29,13 +33,16 @@ const SERIVCES: any = [
 ];
 const MODALS: any = [
   UpZoomComponent,
-  ZoomCourseComponent
+  ZoomCourseComponent,
+  ConfigZoomComponent
 ];
 const NGX_MODULES: any = [
 ];
 const MODULES: any = [
 ];
-
+const PIPES: any = [
+  FilterPipeModule,
+];
 @NgModule({
   providers: [
     ...SERIVCES,
@@ -47,6 +54,7 @@ const MODULES: any = [
     ...CONTROL_MESSAGGE,
     ...NGX_MODULES,
     ...MODULES,
+    ...PIPES
   ],
   declarations: [...COMPONENTS],
   entryComponents: [...MODALS],

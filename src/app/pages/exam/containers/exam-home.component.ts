@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExamHomeComponent implements OnInit {
   collapsed: boolean = false;
+  loading: boolean = false;
 
   constructor() { }
 
@@ -17,4 +18,9 @@ export class ExamHomeComponent implements OnInit {
     this.collapsed = !this.collapsed;
   }
 
+  loadingsFiles($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 200);
+  }
 }

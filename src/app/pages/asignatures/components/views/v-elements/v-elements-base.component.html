@@ -1,8 +1,12 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
-  <div class="row m-0" *ngIf="element">
-    <div class="col-lg-8 col-xl-9 p-0 pe-xl-4">
+  <div class="main-container" *ngIf="element">
+    <div class="content">
+      <div class="menu-container-top">
+        <app-menu-elements-child class="menu-children mt-1 pe-2 pe-xl-4 pe-xxl-5" [topic_id]="element?.topic_id"
+          [type_element_id]="element?.type_element_id" [id_element]="element?.id"
+          (elementSelected)="elementSelected($event)"></app-menu-elements-child>
+      </div>
       <div class="d-flex align-items-center p-4">
-        <!-- <nb-icon [icon]="element?.type_element?.icono" ></nb-icon> -->
         <nb-icon class="me-1" [ngStyle]="{ color: element?.type_element?.color_hover, width: '56px', height: '48px' }"
           [icon]="element?.type_element?.icono">
         </nb-icon>
@@ -59,7 +63,7 @@
       <app-v-works *ngIf="['TRAB'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"
         [pending]="pending" (refreshPending)="refreshPending()"></app-v-works>
     </div>
-    <div class="col-lg-4 col-xl-3 d-none d-lg-block menu-container">
+    <div class="menu-container">
       <app-menu-elements-child class="menu-children mt-1 pe-2 pe-xl-4 pe-xxl-5" [topic_id]="element?.topic_id"
         [type_element_id]="element?.type_element_id" [id_element]="element?.id"
         (elementSelected)="elementSelected($event)"></app-menu-elements-child>

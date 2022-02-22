@@ -41,13 +41,13 @@ import { CWorksComponent } from './components/c-free/calificar-elements/c-works/
 import { CForumsComponent } from './components/c-free/calificar-elements/c-forums/c-forums.component';
 import { NgxViewFilesGoogleModule } from 'src/app/shared/components/view-files/ngx-view-files-google/ngx-view-files-google.module';
 import { TranslateLangModule } from 'src/app/shared/moduls/translate-lang/translate-lang.module';
-import { FilterPipe } from 'src/app/shared/pipes/filterPipe/filterPipe';
 import { VideoPlayerModule } from '../../shared/components/video-player/video-player.module';
 import { ChildrenCommentsModule } from 'src/app/shared/components/children-comments/children-comments.module';
 import { CardListCourseModule } from 'src/app/shared/components/card-list-course/card-list-course.module';
 import { QuestionsConfigComponent } from './components/modals/questions-config/questions-config.component';
 import { QConfigModule } from 'src/app/shared/components/questions/q-config/q-config.module';
 import { QViewModule } from '../../shared/components/questions/q-view/q-view.module';
+import { FilterPipeModule } from 'src/app/shared/pipes/filterPipe/filterPipe.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -102,7 +102,7 @@ const MODALS: any = [
 const NGX_MODULES: any = [
 ];
 const PIPES: any = [
-  FilterPipe,
+  FilterPipeModule,
 ];
 const MODULES: any = [
   PrepareFileProModule,
@@ -132,8 +132,9 @@ const MODULES: any = [
     ...CONTROL_MESSAGGE,
     ...NGX_MODULES,
     ...MODULES,
+    ...PIPES
   ],
-  declarations: [...COMPONENTS, ...PIPES],
+  declarations: [...COMPONENTS],
   entryComponents: [...MODALS],
 
 })

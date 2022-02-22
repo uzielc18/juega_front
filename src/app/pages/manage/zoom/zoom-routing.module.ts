@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { VZoomValidateComponent } from './components/views/v-zoom-validate/v-zoom-validate.component';
 import { ZoomHomeComponent } from './containers/zoom-home.component';
 import { ZoomComponent } from './zoom.component';
 
@@ -10,7 +11,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ZoomHomeComponent
+        component: ZoomHomeComponent,
+      },
+      {
+        path: 'validate',
+        component: VZoomValidateComponent
       }
     ]
   }
