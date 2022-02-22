@@ -5,6 +5,7 @@ import { GeneralService } from 'src/app/providers';
 import { UpZoomComponent } from '../components/modals/up-zoom/up-zoom.component';
 import { ZoomCourseComponent } from '../components/modals/zoom-course/zoom-course.component';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-zoom-home',
   templateUrl: './zoom-home.component.html',
@@ -15,7 +16,11 @@ export class ZoomHomeComponent implements OnInit {
   listZoom:any = [];
   formHeader: any = FormGroup;
   listProgramStudy:any = [];
-  constructor(private dialogService: NbDialogService, private generalServi: GeneralService, private formBuilder: FormBuilder) { }
+  public searchableList: any[] = [];
+  public queryString:any;
+  constructor(private dialogService: NbDialogService, private generalServi: GeneralService, private formBuilder: FormBuilder, private router: Router) {
+    this.searchableList = ['correo', 'programa_estudio_nombre'];
+  }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -23,8 +28,7 @@ export class ZoomHomeComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      account: [''],
-      id: [''],
+      programa_estudio_id: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
@@ -83,23 +87,12 @@ export class ZoomHomeComponent implements OnInit {
   getZoom() {
     const serviceName = 'zoomAcounts';
     this.loading = true;
-    const params:any = {};
+    const forms = this.formHeader.value;
+    const params:any = {
+      programa_estudio_id: forms.programa_estudio_id,
+    };
     this.generalServi.nameParams$(serviceName, params).subscribe((re:any) => {
       this.listZoom = re.data || [];
-      if (this.listZoom.length>0) {
-        this.listZoom.map((re:any) => {
-          re.escuela = 'Medicina',
-          re.n_salas = 10,
-          re.salas_activas = [
-            {
-              nombre: 'Nofddfmbre del curso',
-            },
-            {
-              nombre: 'Curso en el sistema',
-            }
-          ];
-        })
-      }
     }, () => { this.loading =false; }, () => { this.loading =false; });
   }
   refresh() {
@@ -121,7 +114,11 @@ export class ZoomHomeComponent implements OnInit {
       // timer: 2000,
     }).then((result:any) => {
         if (result.isConfirmed) {
-          console.log('ok');
+          location.href = 'https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate';
+          // this.router.navigate([`https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate`]);
+          // const url = 'https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate';
+          // window.open(url, '_blank');
+          // console.log('ok');
           
         }
       

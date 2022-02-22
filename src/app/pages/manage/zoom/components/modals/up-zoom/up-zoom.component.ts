@@ -23,7 +23,7 @@ export class UpZoomComponent implements OnInit {
   private fieldReactive() {
     const controls = {
       id: ['', [Validators.required]],
-      ciclo: ['', [Validators.required]],
+      ciclo: ['', [Validators.required, Validators.max(12), Validators.maxLength(2)]],
       correo: ['', [Validators.required, Validators.email]],
       clave: ['', [Validators.required]],
     };

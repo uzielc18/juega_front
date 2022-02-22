@@ -9,11 +9,12 @@
         <div class="row">
             <div class="col-md-6">
                 <label class="label">Buscar cuenta</label>
-                <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar cuenta por correo" formControlName="account">
+                <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar cuenta por correo" [(ngModel)]="queryString" [ngModelOptions]="{standalone: true}" >
             </div>
             <div class="col-md-4">
                 <label class="label">Programa estudio</label>
-                    <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="id">
+                    <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
+                        <nb-option value="">Todos</nb-option>
                         <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.nombre_corto}}</nb-option>
                     </nb-select>
             </div>
@@ -41,22 +42,22 @@
                         <th style="width: 120px;" class="text-center">Código</th>
                         <th>Información</th>
                         <th style="width: 100px;" class="text-center">N° salas</th>
-                        <th style="width: 300px;">Salas activas</th>
-                        <th style="width: 1px;">Estado</th>
+                        <th style="width: 300px;">Salas en línea</th>
+                        <!-- <th style="width: 1px;">Estado</th> -->
                         <th colspan="3" class="text-center" style="width: 10px;">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of listZoom; let i = index" style="font-size: 12px; vertical-align: middle;">
+                    <tr *ngFor="let item of listZoom | FilterPipe: queryString:searchableList; let i = index" style="font-size: 12px; vertical-align: middle;">
                         <!-- <td>{{i+1}}</td> -->
                         <td class="text-center">{{item.id}}</td>
                         <td>
                            <label class="label">Correo: </label>&nbsp;&nbsp;{{item.correo}} <br>
                            <label class="label">Clave: </label>&nbsp;&nbsp;{{item.clave}} <br>
-                           <label class="label">Escuela: </label>&nbsp;&nbsp;{{item.escuela}} <br>
+                           <label class="label">Escuela: </label>&nbsp;&nbsp;{{item.programa_estudio_nombre}} <br>
                            <label class="label">Ciclo: </label>&nbsp;&nbsp;{{item.ciclo}}
                         </td>
-                        <td class="text-center" style="color: brown; font-weight: bold;">{{item.n_salas}}</td>
+                        <td class="text-center" style="color: brown; font-weight: bold;">{{item.salas}}</td>
                         <td style="vertical-align: middle;">
                             <!-- <div class="table-responsive" *ngIf="item?.salas_activas?.length>0">
                                 <table class="table table-sm">
@@ -71,7 +72,7 @@
                             </div> -->
                             <div *ngFor="let det of item?.salas_activas">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <strong>{{det.nombre}}</strong>
+                                    <strong>{{det.course_nombre}}</strong>
                                     <div>
                                         <nb-icon style="cursor: pointer;" icon="phone-call-outline" status="success"></nb-icon>&nbsp;
                                         <nb-icon style="cursor: pointer;" icon="phone-off-outline" status="danger"></nb-icon>
@@ -80,10 +81,10 @@
                             </div>
 
                         </td>
-                        <td class="text-center">
+                        <!-- <td class="text-center">
                             <div *ngIf="item.estado === '1'" class="status ms-3"></div>
                             <div *ngIf="item.estado !== '1'" class="status-end ms-3"></div>
-                        </td>
+                        </td> -->
                         <td class="text-center" style="width: 70px;">
                             <nb-icon icon="edit" status="info" style="cursor: pointer; font-size: 25px;" (click)="updateZoom(item)"></nb-icon> <br>
                             Editar

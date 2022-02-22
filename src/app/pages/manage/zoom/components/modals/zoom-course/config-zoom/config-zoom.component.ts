@@ -21,8 +21,13 @@ export class ConfigZoomComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      id: ['', [Validators.required]],
-      clave: ['', [Validators.required]],
+      en_vivo: ['', [Validators.required]],
+      unirte: ['', [Validators.required]],
+      iniciar: ['', [Validators.required]],
+      sala_estado: ['', [Validators.required]],
+      bloquear_sala: ['', [Validators.required]],
+      acceder_sin_anfitrion: ['', [Validators.required]],
+      grabacion_automatica: ['', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
   }
