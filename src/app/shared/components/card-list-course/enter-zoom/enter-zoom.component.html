@@ -2,8 +2,8 @@
   nbSpinnerMessage="Procesando información">
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
-      <h4 *ngIf="rolSemestre?.rol?.name === 'Docente'" class="fw-bold">{{ item.nombre }}</h4>
-      <h4 *ngIf="rolSemestre?.rol?.name === 'Estudiante'" class="fw-bold">{{ item.course_nombre }}</h4>
+      <h4 *ngIf="rolSemestre?.rol?.name === 'Docente'" class="fw-bold py-2">{{ item.nombre }}</h4>
+      <h4 *ngIf="rolSemestre?.rol?.name === 'Estudiante'" class="fw-bold py-2">{{ item.course_nombre }}</h4>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -11,15 +11,15 @@
   </nb-card-header>
   <nb-card-body>
     <div class="row">
-      <div class="col-md-6 d-flex flex-column justify-content-center">
-        <p>¿Estás preparado?</p>
-        <small>Antes de ingresar a la sala, revisa lo siguiente:</small>
-        <ul>
+      <div class="col-md-6 d-flex flex-column">
+        <p style="font-size: 18px;">¿Estás preparado?</p>
+        <span style="font-size: 14px;" class="mb-3 fw-bold">Antes de ingresar a la sala, revisa lo siguiente:</span>
+        <ul style="font-size: 16px;">
           <li>Conecta tus audifonos y micrófono.</li>
           <li>Conecta tu webcam.</li>
           <li>Recuerda silenciar tu micrófono hasta que el presentador pida tu participacion.</li>
         </ul>
-        <button nbButton status="primary" style="width: 100%;">INGRESAR A LA CLASE VIRTUAL<nb-icon icon="arrow-right">
+        <button nbButton status="primary" style="width: 100%;" class="my-auto">INGRESAR A LA CLASE VIRTUAL<nb-icon icon="arrow-right">
           </nb-icon>
         </button>
       </div>

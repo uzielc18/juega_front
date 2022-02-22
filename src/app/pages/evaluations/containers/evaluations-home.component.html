@@ -5,17 +5,14 @@
       <strong style="padding-top: 7px">MIS EVALUACIONES</strong>
     </div>
     <hr />
-    <div class="row" [formGroup]="formHeader" [nbSpinner]="loadingFilters" nbSpinnerStatus="primary" nbSpinnerSize="small">
-      <div class="col-md-2">
-        <label class="label">Items por página</label>
-        <nb-form-field>
-          <nb-icon nbPrefix icon="list-outline"></nb-icon>
-          <nb-select placeholder="Curso" size="small" status="primary" formControlName="id_per_page" fullWidth>
-            <nb-option *ngFor="let per of pagesCount" [value]="per" (click)="selectedPerPage(per)">{{ per }}</nb-option>
-          </nb-select>
-        </nb-form-field>
-      </div>
-      <div class="col-md-3">
+    <div
+      class="row"
+      [formGroup]="formHeader"
+      [nbSpinner]="loadingFilters"
+      nbSpinnerStatus="primary"
+      nbSpinnerSize="small"
+    >
+      <div class="col-md-4">
         <label class="label">Curso</label>
         <nb-select placeholder="Curso" size="small" status="primary" formControlName="id_curso" fullWidth>
           <nb-option *ngFor="let curso of cursos" [value]="curso?.id" (click)="selectedCourse(curso)">
@@ -23,7 +20,7 @@
           </nb-option>
         </nb-select>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <label class="label">Tipo Elemento</label>
         <nb-select
           placeholder="Tipo Elemento"
@@ -52,69 +49,74 @@
     </div>
   </nb-card-header>
   <nb-card-body class="pb-0" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
-    <table class="table table-sm mb-0">
-      <thead>
-        <tr style="font-size: 14px" class="fw-bold text-center">
-          <th style="width: 50px">ICONO</th>
-          <th>NOMBRE ACTIVIDAD</th>
-          <th style="width: 170px">FINALIZA</th>
-          <th style="width: 170px">FECHA DE ENTREGA</th>
-          <th style="width: 150px">ESTADO</th>
-          <th style="width: 150px">RE-APERTURA</th>
-          <th style="width: 170px">CALIFICACIÓN</th>
-          <th style="width: 100px">VISTO</th>
-          <th style="width: 100px">ACCIÓN</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let element of elements" style="font-size: 12px" class="text-center align-middle">
-          <td class="p-0" [ngStyle]="iconStyle(element)">
-            <div class="d-flex align-items-center justify-content-center" style="height: 60px">
-              <nb-icon style="color: #fff; font-size: 20px" icon="{{ element?.icono }}"></nb-icon>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex flex-column text-start">
-              <span class="fw-bold" style="font-size: 13px">{{ element?.titulo }}</span>
-              <span>{{ element?.curso }}</span>
-            </div>
-          </td>
-          <td>{{ element?.fecha_fin | date: "dd/MM/yyyy, h:mm a" }}</td>
-          <td>
-            <div *ngIf="element?.fecha_entrega; else noEntregado">
-              {{ element?.fecha_entrega | date: "dd/MM/yyyy, h:mm a" }}
-            </div>
-            <ng-template #noEntregado>
-              <span style="color: red" class="fw-bold">{{ "No entregó" | uppercase }}</span>
-            </ng-template>
-          </td>
-          <td>{{ element?.estado }}</td>
-          <td>
-            <div class="d-flex align-items-center justify-content-center">
-              <button nbButton ghost size="small"><nb-icon icon="clock-outline"></nb-icon>Solicitar</button>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center justify-content-center fw-bold">
-              <span *ngIf="element?.nota && element?.nota_max" class="calification">
-                {{ element?.nota }} / {{ element?.nota_max }}
-              </span>
-              <span *ngIf="!element?.nota && element?.nota_max" class="calification">-- / {{ element?.nota_max }}</span>
-              <span *ngIf="!element?.nota && !element?.nota_max" class="calification">-- / --</span>
-            </div>
-          </td>
-          <td>
-            <nb-icon style="color: #47da82" icon="checkmark-circle-2-outline"></nb-icon>
-          </td>
-          <td>
-            <nb-icon icon="eye-outline" style="cursor: pointer" (click)="navigate(element)"></nb-icon>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-sm mb-0">
+        <thead>
+          <tr style="font-size: 14px" class="fw-bold text-center">
+            <th style="width: 50px">ICONO</th>
+            <th>NOMBRE ACTIVIDAD</th>
+            <th style="width: 170px">FINALIZA</th>
+            <th style="width: 170px">FECHA DE ENTREGA</th>
+            <th style="width: 150px">ESTADO</th>
+            <th style="width: 150px">RE-APERTURA</th>
+            <th style="width: 170px">CALIFICACIÓN</th>
+            <th style="width: 100px">VISTO</th>
+            <th style="width: 100px">ACCIÓN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of elements" style="font-size: 12px" class="text-center align-middle">
+            <td class="p-0" [ngStyle]="iconStyle(element)">
+              <div class="d-flex align-items-center justify-content-center" style="height: 60px">
+                <nb-icon style="color: #fff; font-size: 20px" icon="{{ element?.icono }}"></nb-icon>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex flex-column text-start">
+                <span class="fw-bold" style="font-size: 13px">{{ element?.titulo }}</span>
+                <span>{{ element?.curso }}</span>
+              </div>
+            </td>
+            <td>{{ element?.fecha_fin | date: "dd/MM/yyyy, h:mm a" }}</td>
+            <td>
+              <div *ngIf="element?.fecha_entrega; else noEntregado">
+                {{ element?.fecha_entrega | date: "dd/MM/yyyy, h:mm a" }}
+              </div>
+              <ng-template #noEntregado>
+                <span style="color: red" class="fw-bold">{{ "No entregó" | uppercase }}</span>
+              </ng-template>
+            </td>
+            <td>{{ element?.estado }}</td>
+            <td>
+              <div class="d-flex align-items-center justify-content-center">
+                <button nbButton ghost size="small"><nb-icon icon="clock-outline"></nb-icon>Solicitar</button>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-center fw-bold">
+                <span *ngIf="element?.nota && element?.nota_max" class="calification">
+                  {{ element?.nota }} / {{ element?.nota_max }}
+                </span>
+                <span *ngIf="!element?.nota && element?.nota_max" class="calification"
+                  >-- / {{ element?.nota_max }}</span
+                >
+                <span *ngIf="!element?.nota && !element?.nota_max" class="calification">-- / --</span>
+              </div>
+            </td>
+            <td>
+              <nb-icon style="color: #47da82" icon="checkmark-circle-2-outline"></nb-icon>
+            </td>
+            <td>
+              <nb-icon icon="eye-outline" style="cursor: pointer" (click)="navigate(element)"></nb-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </nb-card-body>
   <nb-card-footer>
-    <div class="d-flex justify-content-center p-2">
+    <div class="d-flex justify-content-between align-items-center p-2">
+      <div></div>
       <ngb-pagination
         [collectionSize]="pagination?.sizeListData"
         [(page)]="pagination.page"
@@ -127,6 +129,14 @@
         (pageChange)="loadPage($event)"
       >
       </ngb-pagination>
+      <div class="">
+        <nb-form-field [formGroup]="formHeader">
+          <nb-icon nbPrefix icon="list-outline"></nb-icon>
+          <nb-select size="small" status="primary" formControlName="id_per_page" fullWidth>
+            <nb-option *ngFor="let per of pagesCount" [value]="per" (click)="selectedPerPage(per)">{{ per }}</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
     </div>
   </nb-card-footer>
 </nb-card>
