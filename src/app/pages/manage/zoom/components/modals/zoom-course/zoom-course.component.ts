@@ -14,19 +14,23 @@ export class ZoomCourseComponent implements OnInit {
   @Input() item:any;
   formHeader: any = FormGroup;
   listCourseZoom:any = [];
+  listProgramStudy:any = [];
+  ciclos = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}];
   constructor(public activeModal: NbDialogRef<ZoomCourseComponent>, private generalServi: GeneralService, private formBuilder: FormBuilder,
     private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
+    console.log(this.item.programa_estudio_id);
+    
     this.fieldReactive();
-    this.getCourseZoom();
   }
   private fieldReactive() {
     const controls = {
-      id_escuela: [''],
-      ciclo: [''],
+      programa_estudio_id: [this.item && this.item.programa_estudio_id || ''],
+      ciclo: [this.item && this.item.ciclo || ''],
     };
     this.formHeader = this.formBuilder.group(controls);
+    this.getProgramStudy();
   }
   closeModal() {
     this.activeModal.close('close');
@@ -46,10 +50,29 @@ export class ZoomCourseComponent implements OnInit {
       }
     });
   }
-  getCourseZoom() {
-    const serviceName = 'zoomMeetings';
-    this.loading = true;
+  getProgramStudy() {
+    const serviceName = 'programaEstudios';
     this.generalServi.nameAll$(serviceName).subscribe((res:any) => {
+      this.listProgramStudy = res.data || [];
+      if (this.listProgramStudy.length>0) {
+        this.getCourseZoom();
+      }
+    });
+  }
+  changeProgramStudy() {
+    this.getCourseZoom();
+  }
+  changeCiclo() {
+    this.getCourseZoom();
+  }
+  getCourseZoom() {
+    const serviceName = 'courses';
+    const params = {
+      programa_estudio_id: this.formHeader.value.programa_estudio_id || '',
+      // ciclo: this.formHeader.value.ciclo || '',
+    }
+    this.loading = true;
+    this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
       this.listCourseZoom = res.data || [];
     }, () => {this.loading = false}, () => {this.loading = false});
   }

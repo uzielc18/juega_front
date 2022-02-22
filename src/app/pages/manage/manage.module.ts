@@ -9,7 +9,7 @@ import { ManageComponent } from './manage.component';
   declarations: [ManageComponent],
   imports: [
     CommonModule,
-    ManageRoutingModule
+    ManageRoutingModule,
   ]
 })
 export class ManageModule { }
