@@ -38,14 +38,6 @@ export class LambSyncHomeComponent implements OnInit {
   formHeader: any = FormGroup;
   @Output() changeEmit: EventEmitter<any> = new EventEmitter();
 
-  pagination: any = {
-    page: 1,
-    per_page: 15,
-    sizePage: 0,
-    sizeListData: 0,
-    isDisabledPage: false,
-  };
-
   constructor(
     private generalService: GeneralService,
     private formBuilder: FormBuilder,
@@ -224,9 +216,10 @@ export class LambSyncHomeComponent implements OnInit {
                 dialogClass: "dialog-limited-height",
                 context: {
                   item: this.cursos,
+                  prog: this.actualProg,
                 },
-                closeOnBackdropClick: true,
-                closeOnEsc: true,
+                closeOnBackdropClick: false,
+                closeOnEsc: false,
               })
               .onClose.subscribe((result) => {
                 if (result === "ok") {
@@ -245,40 +238,23 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   showSilabus() {
-    const params = {
-      per_page: this.pagination.per_page,
-      page: this.pagination.page,
-    };
     const serviceName = END_POINTS.base_back.config + "/silabus";
     this.loadingSync = true;
     if (this.actualProg) {
       this.generalService
-        .nameIdAndIdAndIdParams$(
-          serviceName,
-          this.rolSemestre.semestre.nombre,
-          this.id_carga_curso,
-          this.actualProg.id,
-          params
-        )
+        .nameIdAndIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.id_carga_curso, this.actualProg.id)
         .subscribe(
           (res: any) => {
             this.silabus = res.data || [];
-            this.pagination.sizeListData = (res.meta && res.meta.total) || 0;
-            this.pagination.sizePage = (res.meta && res.meta.per_page) || 0;
-            if (this.pagination.sizeListData < this.silabus.length) {
-              this.pagination.isDisabledPage = true;
-            } else {
-              this.pagination.isDisabledPage = false;
-            }
             this.dialogService
               .open(ListSilabusComponent, {
                 dialogClass: "dialog-limited-height",
                 context: {
                   item: this.silabus,
-                  pagination: this.pagination,
+                  prog: this.actualProg,
                 },
-                closeOnBackdropClick: true,
-                closeOnEsc: true,
+                closeOnBackdropClick: false,
+                closeOnEsc: false,
               })
               .onClose.subscribe((result) => {
                 if (result === "ok") {
@@ -308,9 +284,10 @@ export class LambSyncHomeComponent implements OnInit {
               dialogClass: "dialog-limited-height",
               context: {
                 item: this.estudiantes,
+                prog: this.actualProg,
               },
-              closeOnBackdropClick: true,
-              closeOnEsc: true,
+              closeOnBackdropClick: false,
+              closeOnEsc: false,
             })
             .onClose.subscribe((result) => {
               if (result === "ok") {
