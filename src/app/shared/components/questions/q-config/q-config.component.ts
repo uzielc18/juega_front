@@ -357,7 +357,7 @@ export class QConfigComponent implements OnInit {
     }
   }
   toogleValue($event:any) {
-    console.log($event);
+    // console.log($event);
     if ($event) {
       this.dragQuestions = JSON.parse(JSON.stringify(this.questions));
     }
@@ -409,7 +409,7 @@ export class QConfigComponent implements OnInit {
             }
           }
         }, () => { this.loading = false; }, () => { this.loading = false; });
-        console.log(valid, 'Plopppppppp', arrayOrder, this.dragQuestions);
+        // console.log(valid, 'Plopppppppp', arrayOrder, this.dragQuestions);
       }
       
     }

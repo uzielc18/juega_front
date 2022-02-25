@@ -94,7 +94,7 @@ export class CardListCourseComponent implements OnInit {
   }
 
   enterZoom(event: any, curso: any) {
-    console.log(curso);
+    // console.log(curso);
     event.stopPropagation();
     this.dialogService.open(EnterZoomComponent, {
       dialogClass: 'dialog-limited-height',
