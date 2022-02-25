@@ -1,0 +1,7 @@
+<form [formGroup]="formHeaders">
+<div class="response w-100 d-flex flex-column">
+    <label class="label">Respuesta: </label><br><br>
+    <input type="text" nbInput fullWidth status="basic" fieldSize="small" formControlName="respuesta">
+    <button nbButton outline status="primary" class="ms-auto mt-2" size="small" [disabled]="formHeaders.invalid">Guardar</button>
+  </div>
+</form>
