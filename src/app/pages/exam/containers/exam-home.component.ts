@@ -8,7 +8,117 @@ import { Component, OnInit } from '@angular/core';
 export class ExamHomeComponent implements OnInit {
   collapsed: boolean = false;
   loading: boolean = false;
-
+  textImg = [
+    {
+      nombre: 'Comprensivo',
+      id: 1,
+      selected: 0,
+      checked: false,
+      adjunto: 'https://imagenes.20minutos.es/files/article_amp/uploads/imagenes/2022/01/12/vaca.jpeg',
+    },
+    {
+      nombre: 'Pasivo',
+      id: 2,
+      selected: 0,
+      checked: false,
+      adjunto: 'https://cdn.pixabay.com/photo/2018/05/03/22/34/lion-3372720_1280.jpg',
+    },
+    {
+      nombre: 'Sentimental',
+      id: 3,
+      selected: 0,
+      checked: false,
+      adjunto: 'https://definicion.de/wp-content/uploads/2015/02/ganado.jpg',
+    },
+    {
+      nombre: 'Dinámico',
+      id: 4,
+      selected: 0,
+      checked: false,
+      adjunto: 'https://www.lavanguardia.com/files/og_thumbnail/uploads/2021/04/26/60868c00d04fc.jpeg',
+    },
+    {
+      nombre: 'Adaptativo',
+      id: 5,
+      selected: 0,
+      checked: false,
+      adjunto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7MjEcbf2UEaJlkunkvFYf3Xm6d61Gcabluw&usqp=CAU',
+    }
+  ];
+  images = [
+    {
+      nombre: '',
+      id: 1,
+      selected: 0,
+      checked: false,
+      adjunto: 'https://imagenes.20minutos.es/files/article_amp/uploads/imagenes/2022/01/12/vaca.jpeg',
+    },
+    {
+      nombre: '',
+      id: 2,
+      selected: 0,
+      checked: false,
+      adjunto: 'https://cdn.pixabay.com/photo/2018/05/03/22/34/lion-3372720_1280.jpg',
+    },
+    {
+      nombre: '',
+      id: 3,
+      selected: 0,
+      checked: false,
+      adjunto: 'https://definicion.de/wp-content/uploads/2015/02/ganado.jpg',
+    },
+    {
+      nombre: '',
+      id: 4,
+      selected: 0,
+      checked: false,
+      adjunto: 'https://www.lavanguardia.com/files/og_thumbnail/uploads/2021/04/26/60868c00d04fc.jpeg',
+    },
+    {
+      nombre: '',
+      id: 5,
+      selected: 0,
+      checked: false,
+      adjunto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7MjEcbf2UEaJlkunkvFYf3Xm6d61Gcabluw&usqp=CAU',
+    }
+  ];
+  texts = [
+    {
+      nombre: 'Comprensivo',
+      id: 1,
+      selected: 0,
+      checked: false,
+      adjunto: '',
+    },
+    {
+      nombre: 'Pasivo',
+      id: 2,
+      selected: 0,
+      checked: false,
+      adjunto: '',
+    },
+    {
+      nombre: 'Sentimental',
+      id: 3,
+      selected: 0,
+      checked: false,
+      adjunto: '',
+    },
+    {
+      nombre: 'Dinámico',
+      id: 4,
+      selected: 0,
+      checked: false,
+      adjunto: '',
+    },
+    {
+      nombre: 'Adaptativo',
+      id: 5,
+      selected: 0,
+      checked: false,
+      adjunto: '',
+    }
+  ]
   constructor() { }
 
   ngOnInit(): void {

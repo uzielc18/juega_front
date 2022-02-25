@@ -1,3 +1,7 @@
+// .shadow:hover {
+//   transform: scale(1.01);
+// }
+
 .exam-card {
   width: 100%;
   min-height: 92vh;
@@ -60,7 +64,9 @@ nb-layout-column {
   font-size: 16px;
   font-weight: bold;
 }
-
+p {
+  font-size: 12px;
+}
 .settings {
   position: fixed;
   top: 74px;
@@ -123,7 +129,6 @@ nb-layout-column {
   background-color: #fff;
   border: 1px solid #C3CFD9;
   text-align: justify;
-
   &:not(:last-child) {
     margin-bottom: 10px;
   }
