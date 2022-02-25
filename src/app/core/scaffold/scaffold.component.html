@@ -13,8 +13,7 @@
           <form [formGroup]="formHeader">
             <button nbButton outline size="small" ghost [nbPopover]="templateRef" nbPopoverPlacement="bottom"
               nbPopoverTrigger="noop" (click)="open()">
-              {{paramsSessionStorage?.rol?.name || 'Sin rol'}} - {{paramsSessionStorage?.semestre?.nombre || 'Sin
-              semestre'}}
+              {{paramsSessionStorage?.rol?.name || 'Sin rol'}} - {{paramsSessionStorage?.semestre?.nombre || 'Sin semestre'}}
             </button>
             <ng-template #templateRef>
               <nb-card style="padding-bottom: 0px;">
@@ -90,13 +89,14 @@
     <nb-sidebar responsive tag="core-sidebar">
       <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
       <nb-sidebar-footer *ngIf="!hidden">
-        <!-- <nb-toggle
+        <nb-toggle
               (checkedChange)="changeTheme($event)"
               *ngIf="!minimum"
-            ></nb-toggle> -->
+              style="color: white;"
+            >TEMA</nb-toggle>
       </nb-sidebar-footer>
     </nb-sidebar>
-    <nb-layout-column class="p-2 ps-0" style="background-color: #551436;">
+    <nb-layout-column class="p-2 ps-0 background">
       <router-outlet></router-outlet>
     </nb-layout-column>
     <nb-layout-footer class="d-block d-md-none header-actions fixed">

@@ -76,8 +76,6 @@ export class CatchErrorInterceptor implements HttpInterceptor {
       }
   }
   private throwErrorToast(err: any): void {
-    console.log(err);
-    
     if (showStatusCodes.includes(err.status)) {
       const errorMsg = err.error.message || err.statusText;
       this.toast(`${err.status} ${errorMsg}`, err.statusText);

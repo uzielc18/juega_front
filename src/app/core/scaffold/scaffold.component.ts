@@ -108,6 +108,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     rol: '',
     semestre: '',
     lenguaje: '',
+    persons_student: '',
+    persons_teacher: '',
+    area_id: '',
   }
   date = new Date();
   loading: boolean = false;
@@ -179,7 +182,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         if (data.item.subtag === 'logout') {
-          this.appService.start();
+          this.loading = true;
+          // this.appService.start();
           this.tokenService.logout()
             .pipe(takeUntil(this.destroy$))
             .subscribe((value: any) => {
@@ -201,12 +205,14 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                               .pipe(takeUntil(this.destroy$))
                               .subscribe((authResult: NbAuthResult) => {
                                 if (authResult.isSuccess()) {
-                                  this.appService.stop();
-                                  window.location.href = environment.shellApp;
+                                  // this.appService.stop();
+                                  this.router.navigate([`/auth`]);
+                                  // window.location.href = environment.shellApp;
                                 }
                               });
                           } else {
-                            this.appService.stop();
+                            this.loading = false;
+                            // this.appService.stop();
                           }
                         }, () => {
                           this.nbAuthService
@@ -214,11 +220,13 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                             .pipe(takeUntil(this.destroy$))
                             .subscribe((authResult: NbAuthResult) => {
                               if (authResult.isSuccess()) {
-                                this.appService.stop();
-                                window.location.href = environment.shellApp;
+                                // this.appService.stop();
+                                this.router.navigate([`/auth`]);
+                                // window.location.href = environment.shellApp;
                               }
                             });
-                        })
+                            this.loading = false;
+                        }, () => {this.loading = false;})
 
                     }
 
@@ -230,22 +238,26 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                         .subscribe((authResult: NbAuthResult) => {
                           if (authResult.isSuccess()) {
                             this.appService.stop();
-                            window.location.href = environment.shellApp;
+                            this.router.navigate([`/auth`]);
+                            // window.location.href = environment.shellApp;
                           }
-                        });
+                        }, () => {this.loading = false;}, () => {this.loading = false;});
                     }
 
                   });
 
 
               } else {
-                this.appService.stop();
+                this.loading = false;
+                // this.appService.stop();
               }
 
             }, () => {
-              this.appService.stop();
+              // this.loading = false;
+              // this.appService.stop();
             }, () => {
-              this.appService.stop();
+              // this.loading = false;
+              // this.appService.stop();
             });
 
 
@@ -285,7 +297,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   changeTheme(status: boolean): void {
-    this.themeService.changeTheme(status ? 'theme-1-dark' : 'theme-1-default');
+    this.themeService.changeTheme(status ? 'theme-2-default' : 'theme-1-default');
   }
 
   ngOnDestroy(): void {
@@ -311,24 +323,32 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       ['Estudiante', 'Docente'].includes(rol.name)
     );
     if (this.roles.length > 0) {
+      const rolDefault = this.appService.user.person.role_id || '';
+      const rolDef = this.roles.find((r: any) => r.id === rolDefault);
+      if (rolDef && rolDef.id) {
 
-      if (val && val.rol) {
-        this.formHeader.get('id_rol').patchValue(val.rol.id);
-        this.paramsSessionStorage.rol = val.rol;
-        this.getSemestres(val.rol);
+        this.formHeader.get('id_rol').patchValue(rolDef.id);
+        this.paramsSessionStorage.rol = rolDef;
+        this.getSemestres(rolDef);
       } else {
-
-        const rol = this.roles.find((r: any) => r.name === 'Estudiante');
-        if (rol && rol.id) {
-          this.formHeader.get('id_rol').patchValue(rol.id);
-          this.getSemestres(rol);
+        if (val && val.rol) {
+          this.formHeader.get('id_rol').patchValue(val.rol.id);
+          this.paramsSessionStorage.rol = val.rol;
+          this.getSemestres(val.rol);
         } else {
-          this.formHeader.get('id_rol').patchValue(this.roles[0].id);
-          this.getSemestres(this.roles[0]);
+  
+          const rol = this.roles.find((r: any) => r.name === 'Estudiante');
+          if (rol && rol.id) {
+            this.formHeader.get('id_rol').patchValue(rol.id);
+            this.getSemestres(rol);
+          } else {
+            this.formHeader.get('id_rol').patchValue(this.roles[0].id);
+            this.getSemestres(this.roles[0]);
+          }
+          // this.paramsSessionStorage.rol = this.roles[0];
+          // sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
+  
         }
-        // this.paramsSessionStorage.rol = this.roles[0];
-        // sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
-
       }
 
     }
@@ -341,13 +361,13 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.generalService.nameId$(serviceName, rol.id).subscribe((res: any) => {
         this.semestres = res.data || [];
         if (this.semestres.length > 0) {
-          const vigent = this.semestres.find((r: any) => r.vigente === '1');
-          if (vigent) {
+          const semester = this.semestres.find((r: any) => r.vigente === '1');
+          if (semester) {
             this.formHeader.patchValue({
-              id_semestre: vigent.id,
+              id_semestre: semester.id,
             });
             if (this.formHeader.value.carga === '1') {
-              this.updateSemestre(vigent, rol);
+              this.updateSemestre(semester, rol);
             } else {
               this.loading = false;
             }
@@ -392,6 +412,10 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         if (data.success) {
           this.paramsSessionStorage.rol = rol;
           this.paramsSessionStorage.semestre = value;
+          this.paramsSessionStorage.lenguaje = this.appService.user && this.appService.user.lang || '';
+          this.paramsSessionStorage.persons_student = this.appService.user.person && this.appService.user.person.persons_student || '';
+          this.paramsSessionStorage.persons_teacher = this.appService.user.person && this.appService.user.person.persons_teacher || '';
+          this.paramsSessionStorage.area_id = this.appService.area;
           sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
           // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
           this.emitEventsService.enviar(this.paramsSessionStorage);
@@ -422,7 +446,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   getLanguages() {
-    this.formHeader.controls['lenguaje'].setValue('es');
+    this.formHeader.controls['lenguaje'].setValue(this.appService.user.lang || 'es');
     setTimeout(() => {
       this.changesLangs();
     }, 200);

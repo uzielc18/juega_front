@@ -40,7 +40,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   ngOnChanges():void {
     this.headParams = JSON.parse(JSON.stringify(this.headParams));
     this.itemQuiz = JSON.parse(JSON.stringify(this.itemQuiz));
-    console.log(this.itemQuiz);
+    // console.log(this.itemQuiz);
     
     if (this.headParams?.code === 'UPDATE') {
       this.setUpdate();

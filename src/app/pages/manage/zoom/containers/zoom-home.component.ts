@@ -6,6 +6,7 @@ import { UpZoomComponent } from '../components/modals/up-zoom/up-zoom.component'
 import { ZoomCourseComponent } from '../components/modals/zoom-course/zoom-course.component';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { AppService } from 'src/app/core';
 @Component({
   selector: 'app-zoom-home',
   templateUrl: './zoom-home.component.html',
@@ -18,7 +19,9 @@ export class ZoomHomeComponent implements OnInit {
   listProgramStudy:any = [];
   public searchableList: any[] = [];
   public queryString:any;
-  constructor(private dialogService: NbDialogService, private generalServi: GeneralService, private formBuilder: FormBuilder, private router: Router) {
+  datosMe = this.appService;
+  constructor(private dialogService: NbDialogService, private generalServi: GeneralService, private formBuilder: FormBuilder, private router: Router,
+    private appService: AppService) {
     this.searchableList = ['correo', 'programa_estudio_nombre'];
   }
 
@@ -33,11 +36,31 @@ export class ZoomHomeComponent implements OnInit {
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
   }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol){
+      return val;
+    } else {
+      return '';
+    }
+
+  }
   getProgramStudy() {
     const serviceName = 'programaEstudios';
-    this.generalServi.nameAll$(serviceName).subscribe((res:any) => {
-      this.listProgramStudy = res.data || [];
-    });
+    const params = {
+      area_id: this.rolSemestre.area_id,
+      // area_id: this.rolSemestre.area.area_id,
+      // sede_id: this.rolSemestre.area.sede_id,
+      
+    };
+    console.log(params);
+    
+    if (params && params.area_id) {
+      this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
+        this.listProgramStudy = res.data || [];
+      });
+    }
   }
   updateZoom(params: any) {
     const prams:any = {
@@ -89,7 +112,8 @@ export class ZoomHomeComponent implements OnInit {
     this.loading = true;
     const forms = this.formHeader.value;
     const params:any = {
-      programa_estudio_id: forms.programa_estudio_id,
+      programa_estudio_id: forms.programa_estudio_id || '',
+      person_id: this.datosMe.user.id || ''
     };
     this.generalServi.nameParams$(serviceName, params).subscribe((re:any) => {
       this.listZoom = re.data || [];
