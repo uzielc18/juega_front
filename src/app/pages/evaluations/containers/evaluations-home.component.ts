@@ -155,9 +155,10 @@ export class EvaluationsHomeComponent implements OnInit {
   }
 
   navigate(element: any): any {
-    this.router.navigate([`../asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`], {
-      relativeTo: this.activatedRoute.parent,
-    });
+    // this.router.navigate([`../asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`], {
+    // relativeTo: this.activatedRoute.parent,
+    // });
+    window.open(`../pages/asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`, "_blank");
   }
 
   refresh() {
