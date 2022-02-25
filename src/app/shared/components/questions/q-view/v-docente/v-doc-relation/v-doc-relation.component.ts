@@ -109,10 +109,10 @@ export class VDocRelationComponent implements OnInit, OnChanges {
   // }
 
   setValue(item: any, i: any) {
-    console.log(item);
+    // console.log(item);
   }
 
   value(item: any, i: any) {
-    console.log(item);
+    // console.log(item);
   }
 }

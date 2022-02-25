@@ -3,31 +3,34 @@
     <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
         <div class=" d-flex align-items-center justify-content-between">
             <div>
-                Cursos por zoom
+                CURSOS POR CUENTA ZOOM
             </div>
             <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <hr>
+        <label class="label">Programa estudio: </label>&nbsp;&nbsp;<strong style="font-size: 12px;">{{item?.programa_estudio_nombre}}</strong><br>
+        <label class="label">Ciclo: </label>&nbsp;&nbsp;<strong style="font-size: 12px;">{{item?.ciclo}}</strong>
+
+        <!-- <hr>
         <form [formGroup]="formHeader">
         <div class="row">
             <div class="col-md-6"></div>
             <div class="col-md-3">
                 <label class="label">Programa estudio</label>
                 <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id" (selectedChange)="changeProgramStudy()">
-                    <nb-option value="">Todos</nb-option>
                     <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.nombre_corto}}</nb-option>
                 </nb-select>
             </div>
             <div class="col-md-3">
                 <label class="label">Ciclo</label>
-                <nb-select size="small" fullWidth placeholder="Ciclo" formControlName="ciclo" (selectedChange)="changeCiclo()">
+                <nb-select size="small" fullWidth placeholder="Ciclo" formControlName="ciclo" (selectedChange)="changeCiclo()" [disabled]="true">
                     <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{item.ciclo}}</nb-option>
                 </nb-select>
             </div>
         </div>
-    </form>
+    </form> -->
     </nb-card-header>
     <nb-card-body>
         <div class="table-responsive">
