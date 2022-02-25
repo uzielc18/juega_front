@@ -13,10 +13,10 @@
     margin-bottom: 50px;
   }
 
-  nb-card {
-    margin-top: 70px;
-    margin-bottom: 20px;
-  };
+  // nb-card {
+  //   margin-top: 70px;
+  //   margin-bottom: 20px;
+  // };
 }
 
 nb-layout-column {
@@ -68,6 +68,10 @@ nb-layout-column {
   width: 50%;
   height: 100%;
   z-index: 999;
+
+  nb-card-body {
+    padding-bottom: 100px !important;
+  }
 
   &-button {
     // padding: 5px;
