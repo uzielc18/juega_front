@@ -125,44 +125,47 @@ export class ExamHomeComponent implements OnInit {
       {
         id: 119,
         relacion: "happy",
-        imagen: null,
+        imagen: "https://www.livehappy.com/wp-content/uploads/2018/02/happy.jpg",
       },
       {
         id: 121,
         relacion: "down",
-        imagen: null,
+        imagen: "https://www.pngitem.com/pimgs/m/71-715425_down-arrow-png-transparent-icon-transparent-arrow-down.png",
       },
       {
         id: 123,
-        relacion: "low",
-        imagen: null,
+        relacion: "day",
+        imagen:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmvz-l_AQzoRZ7wihLlDZBE-uEw3KqgydDc_WRA5yVi4ja1j8KsXu7JOJ3hdxywT4DxtM&usqp=CAU",
       },
       {
         id: 125,
-        relacion: "light",
-        imagen: null,
+        relacion: "kid",
+        imagen: "https://en.pimg.jp/040/904/171/1/40904171.jpg",
       },
     ],
     arrayB: [
       {
         id: 120,
         relacion: "sad",
-        imagen: null,
+        imagen: "https://whatemoji.org/wp-content/uploads/2020/07/Frowning-Face-Emoji-1024x1024.png",
       },
       {
         id: 122,
         relacion: "up",
-        imagen: null,
+        imagen: "https://www.pngitem.com/pimgs/m/512-5126598_transparent-arrow-pointing-up-png-png-download.png",
       },
       {
         id: 124,
-        relacion: "fast",
-        imagen: null,
+        relacion: "night",
+        imagen:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/%D0%A1%D0%B2%D0%B5%D1%82_%D0%BE%D1%82_%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BD%D0%B8_-_panoramio.jpg/640px-%D0%A1%D0%B2%D0%B5%D1%82_%D0%BE%D1%82_%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BD%D0%B8_-_panoramio.jpg",
       },
       {
         id: 126,
-        relacion: "dark",
-        imagen: null,
+        relacion: "old",
+        imagen:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT02-1XKSVkVIGKmyI9CDt9IvSgkJFIxI2DSxJsBV4CBX2f6Se9f80fne861jV3kO5awvE&usqp=CAU",
       },
     ],
   };
