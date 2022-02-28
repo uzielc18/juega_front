@@ -61,7 +61,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       title: "Evaluaciones (Docente)",
       icon: "checkmark-circle-outline",
       link: "/pages/evaluations-teacher",
-      hidden: this.rolSemestre.rol.name === "Docente" ? false : true,
+      // hidden: this.rolSemestre.rol.name === "Docente" ? false : true,
       pathMatch: "prefix",
     },
     {

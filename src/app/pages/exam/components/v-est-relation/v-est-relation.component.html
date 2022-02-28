@@ -1,1 +1,30 @@
-<p>v-est-relation works!</p>
+<label class="label">Relacionar: </label><br /><br />
+
+<div class="row">
+  <div class="col-sm-4 col-5">
+    <ul style="display: inline-block">
+      <li
+        *ngFor="let rel of relationList; let i = index"
+        [ngStyle]="{ 'background-color': colors[i] }"
+        style="cursor: pointer"
+        (click)="revisarCheckA(rel, i)"
+      >
+        <label class="label" style="color: '#fff'; cursor: pointer">{{ rel?.relacion }}</label>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-8 col-7">
+    <div class="d-flex justify-content-between">
+      <ul>
+        <li
+          *ngFor="let item of randomList; let i = index"
+          [ngStyle]="{ 'background-color': colors[item.order] }"
+          style="cursor: pointer"
+          (click)="revisarCheckB(item, i)"
+        >
+          <label class="label" style="color: '#fff'; cursor: pointer">{{ item?.relacion }}</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
