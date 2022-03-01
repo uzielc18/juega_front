@@ -11,13 +11,7 @@
       <strong style="padding-top: 7px">MIS EVALUACIONES</strong>
     </div>
     <hr />
-    <div
-      class="row"
-      [formGroup]="formHeader"
-      [nbSpinner]="loadingFilters"
-      nbSpinnerStatus="primary"
-      nbSpinnerSize="small"
-    >
+    <div class="row" [formGroup]="formHeader">
       <div class="col-md-4">
         <label class="label">Curso</label>
         <nb-select placeholder="Curso" size="small" status="primary" formControlName="id_curso" fullWidth>

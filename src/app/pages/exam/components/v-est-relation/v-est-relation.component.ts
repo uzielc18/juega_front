@@ -11,7 +11,7 @@ export class VEstRelationComponent implements OnInit {
   colors: any = [
     "#1AAE9F",
     "#D3455B",
-    "#222831",
+    "#5D1787",
     "#E39800",
     "#2BADD3",
     "#F6ACC8",
@@ -20,7 +20,7 @@ export class VEstRelationComponent implements OnInit {
     "#F1D00A",
     "#002885",
   ];
-
+  randomListColor: any = [];
   relationList: any[] = [];
   secondList: any[] = [];
   randomList: any[] = [];
@@ -33,8 +33,9 @@ export class VEstRelationComponent implements OnInit {
     this.alternativas = JSON.parse(JSON.stringify(this.alternativas));
     this.relationList = this.alternativas.arrayA;
     this.secondList = this.alternativas.arrayB;
-    this.addOrder();
+    // this.addOrder();
     this.addCheck();
+    this.getShuffledColor(this.colors);
     this.getShuffledArr(this.secondList);
   }
 
@@ -47,6 +48,16 @@ export class VEstRelationComponent implements OnInit {
       [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
     }
     this.randomList = newArr;
+  }
+
+  getShuffledColor(arr: any) {
+    const newArr = arr.slice();
+    for (let i = newArr.length - 1; i > 0; i--) {
+      const rand = Math.floor(Math.random() * (i + 1));
+      [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+    }
+    this.randomListColor = newArr;
+    console.log(this.randomListColor, "randomListColor");
   }
 
   addOrder() {
@@ -76,7 +87,7 @@ export class VEstRelationComponent implements OnInit {
     this.tempPos = null;
     if (!item.selected) {
       item.selected = true;
-      item.bgcolor = this.colors[i];
+      item.bgcolor = this.randomListColor[i];
       item.color = "#fff";
       this.tempPos = i;
       this.pares[i] = new Object();
@@ -92,7 +103,7 @@ export class VEstRelationComponent implements OnInit {
   revisarCheckB(item: any, i: any) {
     if (this.tempPos !== null && !item.selected) {
       item.selected = true;
-      item.bgcolor = this.colors[this.tempPos];
+      item.bgcolor = this.randomListColor[this.tempPos];
       item.color = "#fff";
       this.pares[this.tempPos].second_item = item;
       this.tempPos = null;
@@ -100,9 +111,13 @@ export class VEstRelationComponent implements OnInit {
       item.selected = false;
       item.bgcolor = "#EDF1F7";
       item.color = "#000";
+      // this.pares[this.tempPos].second_item = {};
+      // console.log(this.tempPos, "tempPos");
+      // this.pares[this.tempPos]["second_item"] = 0;
+      // this.pares.splice(this.tempPos, 1);
       this.tempPos = null;
     }
-    console.log(this.pares, "bbbbbbbbb O.o");
+    console.log(this.pares, "bbbbbbbbb o.O");
   }
 
   style(item: any) {
@@ -112,10 +127,18 @@ export class VEstRelationComponent implements OnInit {
     };
   }
 
+  imgStyleDef() {
+    return {
+      "background-color": "#fff",
+    };
+  }
+
   imgStyle(item: any) {
     return {
-      padding: "5px",
+      "padding-bottom": "20px",
       "background-color": item.bgcolor,
+      "border-radius": "0.25rem",
+      overflow: "hidden",
     };
   }
 }

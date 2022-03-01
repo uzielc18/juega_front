@@ -170,6 +170,53 @@ export class ExamHomeComponent implements OnInit {
     ],
   };
 
+  relationText = {
+    arrayA: [
+      {
+        id: 119,
+        relacion: "happy",
+        imagen: null,
+      },
+      {
+        id: 121,
+        relacion: "down",
+        imagen: null,
+      },
+      {
+        id: 123,
+        relacion: "day",
+        imagen: null,
+      },
+      {
+        id: 125,
+        relacion: "kid",
+        imagen: null,
+      },
+    ],
+    arrayB: [
+      {
+        id: 120,
+        relacion: "sad",
+        imagen: null,
+      },
+      {
+        id: 122,
+        relacion: "up",
+        imagen: null,
+      },
+      {
+        id: 124,
+        relacion: "night",
+        imagen: null,
+      },
+      {
+        id: 126,
+        relacion: "old",
+        imagen: null,
+      },
+    ],
+  };
+
   constructor() {}
 
   ngOnInit(): void {}
