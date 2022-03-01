@@ -34,7 +34,6 @@ export class LambSyncHomeComponent implements OnInit {
   estudiantes: any = [];
 
   loading: boolean = false;
-  loadingSync: boolean = false;
   formHeader: any = FormGroup;
   @Output() changeEmit: EventEmitter<any> = new EventEmitter();
 
@@ -198,7 +197,7 @@ export class LambSyncHomeComponent implements OnInit {
 
   showCursos() {
     const serviceName = END_POINTS.base_back.config + "/cursos";
-    this.loadingSync = true;
+    this.loading = true;
     if (this.actualProg) {
       this.generalService
         .nameIdAndIdAndIdAndId$(
@@ -228,10 +227,10 @@ export class LambSyncHomeComponent implements OnInit {
               });
           },
           () => {
-            this.loadingSync = false;
+            this.loading = false;
           },
           () => {
-            this.loadingSync = false;
+            this.loading = false;
           }
         );
     }
@@ -239,7 +238,7 @@ export class LambSyncHomeComponent implements OnInit {
 
   showSilabus() {
     const serviceName = END_POINTS.base_back.config + "/silabus";
-    this.loadingSync = true;
+    this.loading = true;
     if (this.actualProg) {
       this.generalService
         .nameIdAndIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.id_carga_curso, this.actualProg.id)
@@ -263,10 +262,10 @@ export class LambSyncHomeComponent implements OnInit {
               });
           },
           () => {
-            this.loadingSync = false;
+            this.loading = false;
           },
           () => {
-            this.loadingSync = false;
+            this.loading = false;
           }
         );
     }
@@ -274,7 +273,7 @@ export class LambSyncHomeComponent implements OnInit {
 
   showEstudiantes() {
     const serviceName = END_POINTS.base_back.config + "/estudiantes";
-    this.loadingSync = true;
+    this.loading = true;
     if (this.actualProg) {
       this.generalService.nameIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.actualProg.id).subscribe(
         (res: any) => {
@@ -296,10 +295,10 @@ export class LambSyncHomeComponent implements OnInit {
             });
         },
         () => {
-          this.loadingSync = false;
+          this.loading = false;
         },
         () => {
-          this.loadingSync = false;
+          this.loading = false;
         }
       );
     }

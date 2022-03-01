@@ -1,1 +1,60 @@
-<p>v-est-relation works!</p>
+<label class="label">Relacionar: </label><br /><br />
+<div class="row">
+  <div class="col-md-5">
+    <ul *ngFor="let rel of relationList; let i = index">
+      <li>
+        <div
+          (click)="revisarCheckA(rel, i)"
+          [ngClass]="{ 'mb-4': rel.imagen !== null }"
+          style="cursor: pointer; text-align: center"
+          [ngStyle]="rel.imagen !== null ? imgStyle(rel) : imgStyleDef()"
+        >
+          <!-- [class.mb-0]="rel.imagen !== null" -->
+          <button
+            nbButton
+            size="small"
+            fullWidth
+            [ngStyle]="style(rel)"
+            [ngClass]="{
+              'mb-0': rel.imagen !== null,
+              'border-0': rel.imagen !== null,
+              'rounded-0': rel.imagen !== null
+            }"
+          >
+            {{ rel?.relacion }}
+          </button>
+          <img *ngIf="rel.imagen !== null" [src]="rel?.imagen" alt="" style="height: 100%; max-height: 120px" />
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-2"></div>
+  <hr class="d-md-none" />
+  <div class="col-md-5">
+    <ul *ngFor="let item of randomList; let i = index">
+      <li>
+        <div
+          (click)="revisarCheckB(item, i)"
+          [ngClass]="{ 'mb-4': item.imagen !== null }"
+          style="cursor: pointer; text-align: center"
+          [ngStyle]="item.imagen !== null ? imgStyle(item) : imgStyleDef()"
+        >
+          <button
+            nbButton
+            size="small"
+            fullWidth
+            [ngStyle]="style(item)"
+            [ngClass]="{
+              'mb-0': item.imagen !== null,
+              'border-0': item.imagen !== null,
+              'rounded-0': item.imagen !== null
+            }"
+          >
+            {{ item?.relacion }}
+          </button>
+          <img *ngIf="item.imagen !== null" [src]="item?.imagen" alt="" style="height: 100%; max-height: 120px" />
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

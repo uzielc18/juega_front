@@ -1,11 +1,16 @@
-<nb-card class="m-0 h-100 border-0" style="border-radius: 15px;">
+<nb-card class="m-0 h-100 border-0" style="border-radius: 15px">
   <nb-card-header>
     <div class="d-flex align-items-center">
       <div class="ms-2 d-flex align-items-center">
         <nb-icon class="home-icon" icon="home-outline" routerLink="/pages"></nb-icon> &nbsp;
-        <span class="ms-2" style="font-weight: 400;">&rang;</span>
-        <app-ng-dynamic-breadcrumb [bgColor]="'#fff'" [fontColor]="'#969696'" [symbol]="'&rang;'"
-          [lastLinkColor]="'#934054'" [fontSize]="'15px'"></app-ng-dynamic-breadcrumb>
+        <span class="ms-2" style="font-weight: 400">&rang;</span>
+        <app-ng-dynamic-breadcrumb
+          [bgColor]="'#fff'"
+          [fontColor]="'#575756'"
+          [symbol]="'&rang;'"
+          [lastLinkColor]="'var(--color-primary-500)'"
+          [fontSize]="'15px'"
+        ></app-ng-dynamic-breadcrumb>
       </div>
       <!-- <div class="ms-auto d-none d-xxl-block">
         <form [formGroup]="form">
@@ -37,7 +42,7 @@
       </div> -->
     </div>
   </nb-card-header>
-  <nb-card-body class="p-0" style="height: 100%;">
+  <nb-card-body class="p-0" style="height: 100%">
     <router-outlet></router-outlet>
   </nb-card-body>
 </nb-card>

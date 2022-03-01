@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { GeneralService } from "../../../providers";
-import { END_POINTS } from "../../../providers/utils";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GeneralService } from '../../../providers';
+import { END_POINTS } from '../../../providers/utils';
 
 @Component({
-  selector: "app-evaluations-home",
-  templateUrl: "./evaluations-home.component.html",
-  styleUrls: ["./evaluations-home.component.scss"],
+  selector: 'app-evaluations-teacher-home',
+  templateUrl: './evaluations-teacher-home.component.html',
+  styleUrls: ['./evaluations-teacher-home.component.scss']
 })
-export class EvaluationsHomeComponent implements OnInit {
+export class EvaluationsTeacherHomeComponent implements OnInit {
   cursos: any[] = [];
   tipo_elementos: any[] = [];
 
@@ -22,6 +22,7 @@ export class EvaluationsHomeComponent implements OnInit {
 
   formHeader: any = FormGroup;
   loading: boolean = false;
+  loadingFilters: boolean = false;
   selectedItem: any;
 
   pagination: any = {
@@ -65,6 +66,7 @@ export class EvaluationsHomeComponent implements OnInit {
   listCursos() {
     this.listTypeElements();
     const serviceName = END_POINTS.base_back.activities_evaluations + "/get-courses-list";
+    this.loadingFilters = true;
     this.generalService.nameAll$(serviceName).subscribe(
       (res: any) => {
         this.cursos = res.data || [];
@@ -77,8 +79,12 @@ export class EvaluationsHomeComponent implements OnInit {
           this.listElements();
         }
       },
-      () => {},
-      () => {}
+      () => {
+        this.loadingFilters = false;
+      },
+      () => {
+        this.loadingFilters = false;
+      }
     );
   }
 

@@ -1,11 +1,11 @@
-<nb-card class="m-0 h-100 border-0" style="border-radius: 15px">
+<nb-card class="m-0 h-100 border-0" style="border-radius: 15px" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
   <nb-card-header>
     <div class="d-flex">
       <nb-icon icon="shake-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
       <strong style="padding-top: 7px">SINCRONIZAR CON LAMB</strong>
     </div>
     <hr />
-    <div class="row" [formGroup]="formHeader" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+    <div class="row" [formGroup]="formHeader">
       <div class="col-md-4 mb-2 mb-md-0">
         <label class="label">Filial</label>
         <nb-select placeholder="Filial" size="small" status="primary" fullWidth formControlName="id_sede">
@@ -92,12 +92,7 @@
       </div>
       <div class="col-md-8 col-xxl-9">
         <nb-card class="mb-0">
-          <nb-card-body
-            style="min-height: 60vh"
-            [nbSpinner]="loadingSync"
-            nbSpinnerStatus="primary"
-            nbSpinnerSize="small"
-          >
+          <nb-card-body style="min-height: 60vh">
             <p class="fw-bold">Sincronizar por programa de estudio</p>
             <div *ngIf="actualProg" class="row">
               <div class="col-xl-6 col-xxl-4">

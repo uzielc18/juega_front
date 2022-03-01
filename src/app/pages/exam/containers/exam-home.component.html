@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="settings-button" (click)="collapse()" [ngStyle]="{'right': collapsed ? '50%': '0'}">
+    <div class="settings-button" (click)="collapse()" [ngStyle]="{ right: collapsed ? '50%' : '0' }">
       <nb-icon icon="settings-2-outline"></nb-icon>
     </div>
     <div class="settings" *ngIf="collapsed">
@@ -34,6 +34,7 @@
             <h5 class="fw-bold mt-5">Preguntas sin responder</h5>
             <button class="mb-2" nbButton outline status="success">Pregunta 1</button>
             <button class="mb-2" nbButton outline status="success">Pregunta 2</button>
+            <p>Hola</p>
           </nb-card-body>
         </nb-card>
       </div>
@@ -45,17 +46,21 @@
             <h3 class="fw-bold px-4 py-3 m-0">Sección 1</h3>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. ¿Sabías que hay animales que perciben el sonido a través de la piel,
-              como el topo dorado del Desierto del Sahara? Así que se podría decir que sus sentidos del tacto y del oído están “fusionados”.
-              ¿Que ya conocías esa información? Pues…¡Prueba suerte y demuestra cuánto sabes con el resto de preguntas!.</p>
+            <p>
+              1. ¿Sabías que hay animales que perciben el sonido a través de la piel, como el topo dorado del Desierto
+              del Sahara? Así que se podría decir que sus sentidos del tacto y del oído están “fusionados”. ¿Que ya
+              conocías esa información? Pues…¡Prueba suerte y demuestra cuánto sabes con el resto de preguntas!.
+            </p>
             <div>
               <app-v-est-unique-option [alternativas]="texts"></app-v-est-unique-option>
             </div>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
               donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-              is appreciated - click here to donate using PayPal. Thank you for your support.</p>
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
             <div>
               <app-v-est-multi-option [alternativas]="images"></app-v-est-multi-option>
             </div>
@@ -63,8 +68,11 @@
           <div class="question-container p-4 p-lg-5">
             <p>1. ¿Qué especie es la más pequeña de entre todos los cérvidos?</p>
             <div class="image-container w-100 d-flex justify-content-center mb-4">
-              <img src="https://cdn.pixabay.com/photo/2018/05/03/22/34/lion-3372720_1280.jpg" alt=""
-                style="max-width: 100%; height: 100%; max-height: 375px; margin: 0 auto;">
+              <img
+                src="https://cdn.pixabay.com/photo/2018/05/03/22/34/lion-3372720_1280.jpg"
+                alt=""
+                style="max-width: 100%; height: 100%; max-height: 375px; margin: 0 auto"
+              />
               <!-- <img src="https://dearsam.com/img/600/744/resize/m/a/male-lion-50x70_d8c47.jpg" alt=""
                 style="max-width: 100%; height: 100%; max-height: 375px; margin: 0 auto;"> -->
             </div>
@@ -73,39 +81,70 @@
             </div>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
               donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-              is appreciated - click here to donate using PayPal. Thank you for your support.</p>
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
             <div class="video-container w-100 mb-4">
-              <app-video-player [videoFormat]="'YouTube'" [url]="'https://www.youtube.com/watch?v=vgLco8K7Ki4'"
-                (loadingsFiles)="loadingsFiles($event)"></app-video-player>
+              <app-video-player
+                [videoFormat]="'YouTube'"
+                [url]="'https://www.youtube.com/watch?v=vgLco8K7Ki4'"
+                (loadingsFiles)="loadingsFiles($event)"
+              ></app-video-player>
             </div>
             <div>
               <app-v-est-unique-option [alternativas]="images"></app-v-est-unique-option>
             </div>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
               donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-              is appreciated - click here to donate using PayPal. Thank you for your support.</p>
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
             <div>
               <app-v-est-multi-option [alternativas]="texts"></app-v-est-multi-option>
             </div>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
               donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-              is appreciated - click here to donate using PayPal. Thank you for your support.</p>
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
             <div>
               <app-v-est-closed></app-v-est-closed>
             </div>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
               donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-              is appreciated - click here to donate using PayPal. Thank you for your support.</p>
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
             <div>
               <app-v-est-open></app-v-est-open>
+            </div>
+          </div>
+          <div class="question-container p-4 p-lg-5">
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
+            <div>
+              <app-v-est-relation [alternativas]="relation"></app-v-est-relation>
+            </div>
+          </div>
+          <div class="question-container p-4 p-lg-5">
+            <p>
+              2. If you use this site regularly and would like to help keep the site on the Internet, please consider
+              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
+            <div>
+              <app-v-est-relation [alternativas]="relationText"></app-v-est-relation>
             </div>
           </div>
         </div>
