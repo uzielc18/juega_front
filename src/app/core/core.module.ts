@@ -64,7 +64,7 @@ const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NbThemeModule.forRoot({ name: 'theme-1-default' }),
+    NbThemeModule.forRoot({ name: 'theme-2-default' }),
     NbLayoutModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
