@@ -323,7 +323,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   changeTheme(status: boolean): void {
-    this.themeService.changeTheme(status ? "theme-2-default" : "theme-1-default");
+    this.themeService.changeTheme(status ? "theme-1-default" : "theme-2-default");
   }
 
   ngOnDestroy(): void {

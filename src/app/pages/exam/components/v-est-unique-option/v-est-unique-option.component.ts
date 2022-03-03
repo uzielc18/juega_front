@@ -23,7 +23,7 @@ export class VEstUniqueOptionComponent implements OnInit, OnChanges {
   }
   get alternativesMov() {
     if (this.alternativas.length>0) {
-      const array = this.alternativas.filter((r:any) => r.nombre);
+      const array = this.alternativas.filter((r:any) => r.nombre && !r.adjunto);
       if (array.length>0) {
         return true;
       } else {
