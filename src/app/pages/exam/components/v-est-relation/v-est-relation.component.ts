@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { el } from "date-fns/locale";
 
 @Component({
   selector: "app-v-est-relation",
@@ -24,6 +25,8 @@ export class VEstRelationComponent implements OnInit {
   relationList: any[] = [];
   secondList: any[] = [];
   randomList: any[] = [];
+  currentA: any = null;
+  currentB: any = null;
   pares: any[] = [];
   tempPos: any = null;
 
@@ -33,10 +36,10 @@ export class VEstRelationComponent implements OnInit {
     this.alternativas = JSON.parse(JSON.stringify(this.alternativas));
     this.relationList = this.alternativas.arrayA;
     this.secondList = this.alternativas.arrayB;
-    // this.addOrder();
-    this.addCheck();
     this.getShuffledColor(this.colors);
     this.getShuffledArr(this.secondList);
+    this.addCheckA();
+    this.addCheckB();
   }
 
   ngOnInit(): void {}
@@ -57,24 +60,10 @@ export class VEstRelationComponent implements OnInit {
       [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
     }
     this.randomListColor = newArr;
-    console.log(this.randomListColor, "randomListColor");
   }
 
-  addOrder() {
-    if (this.secondList.length > 0) {
-      this.secondList.map((el: any, i: any) => {
-        el.order = i;
-      });
-    }
-  }
-
-  addCheck() {
-    if (this.secondList.length > 0 && this.relationList.length > 0) {
-      this.secondList.map((el: any) => {
-        el.selected = false;
-        el.bgcolor = "#EDF1F7";
-        el.color = "#000";
-      });
+  addCheckA() {
+    if (this.relationList.length > 0) {
       this.relationList.map((el: any) => {
         el.selected = false;
         el.bgcolor = "#EDF1F7";
@@ -83,41 +72,76 @@ export class VEstRelationComponent implements OnInit {
     }
   }
 
+  addCheckB() {
+    if (this.randomList.length > 0) {
+      this.randomList.map((el: any) => {
+        el.selected = false;
+        el.bgcolor = "#EDF1F7";
+        el.color = "#000";
+        el.padre = null;
+      });
+    }
+  }
+
   revisarCheckA(item: any, i: any) {
-    this.tempPos = null;
     if (!item.selected) {
       item.selected = true;
       item.bgcolor = this.randomListColor[i];
       item.color = "#fff";
-      this.tempPos = i;
-      this.pares[i] = new Object();
-      this.pares[i].first_item = item;
+      this.currentA = item;
     } else {
-      item.selected = false;
-      item.bgcolor = "#EDF1F7";
-      item.color = "#000";
+      this.randomList.map((el: any) => {
+        if (el.padre !== null) {
+          if (el.padre.id === item.id) {
+            el.selected = false;
+            el.color = "#000";
+            el.bgcolor = "#EDF1F7";
+            el.padre = null;
+            this.currentA = null;
+          } else {
+            item.selected = false;
+            item.bgcolor = "#EDF1F7";
+            item.color = "#000";
+            this.currentA = null;
+          }
+        } else {
+          item.selected = false;
+          item.bgcolor = "#EDF1F7";
+          item.color = "#000";
+          this.currentA = null;
+        }
+      });
     }
-    console.log(this.pares, "aaaaaaaaa :v/");
+    console.log(item, "item");
+    console.table(this.randomList);
+    console.table(this.relationList);
   }
 
   revisarCheckB(item: any, i: any) {
-    if (this.tempPos !== null && !item.selected) {
-      item.selected = true;
-      item.bgcolor = this.randomListColor[this.tempPos];
-      item.color = "#fff";
-      this.pares[this.tempPos].second_item = item;
-      this.tempPos = null;
+    if (!item.selected) {
+      item.padre = this.currentA;
+      if (item.padre !== null) {
+        item.selected = item.padre.selected;
+        item.color = item.padre.color;
+        item.bgcolor = item.padre.bgcolor;
+        this.currentA = null;
+      } else {
+        item.selected = false;
+        item.color = "#000";
+        item.bgcolor = "#EDF1F7";
+      }
     } else {
       item.selected = false;
-      item.bgcolor = "#EDF1F7";
       item.color = "#000";
-      // this.pares[this.tempPos].second_item = {};
-      // console.log(this.tempPos, "tempPos");
-      // this.pares[this.tempPos]["second_item"] = 0;
-      // this.pares.splice(this.tempPos, 1);
-      this.tempPos = null;
+      item.bgcolor = "#EDF1F7";
+      item.padre.color = "#000";
+      item.padre.bgcolor = "#EDF1F7";
+      item.padre.selected = false;
+      item.padre = null;
     }
-    console.log(this.pares, "bbbbbbbbb o.O");
+    console.log(item, "item");
+    console.table(this.randomList);
+    console.table(this.relationList);
   }
 
   style(item: any) {
@@ -129,15 +153,16 @@ export class VEstRelationComponent implements OnInit {
 
   imgStyleDef() {
     return {
-      "background-color": "#fff",
+      "background-color": "#EDF1F7",
+      "border-radius": "var(--border-radius)",
+      overflow: "hidden",
     };
   }
 
   imgStyle(item: any) {
     return {
-      "padding-bottom": "20px",
       "background-color": item.bgcolor,
-      "border-radius": "0.25rem",
+      "border-radius": "var(--border-radius)",
       overflow: "hidden",
     };
   }

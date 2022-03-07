@@ -1,60 +1,55 @@
 <label class="label">Relacionar: </label><br /><br />
 <div class="row">
   <div class="col-md-5">
-    <ul *ngFor="let rel of relationList; let i = index">
-      <li>
-        <div
+    <nb-card class="mb-3" style="background-color: #f8fffe">
+      <nb-card-header class="text-center">Grupo A</nb-card-header>
+      <nb-card-body class="pb-0">
+        <nb-card
+          *ngFor="let rel of relationList; let i = index"
           (click)="revisarCheckA(rel, i)"
           [ngClass]="{ 'mb-4': rel.imagen !== null }"
           style="cursor: pointer; text-align: center"
-          [ngStyle]="rel.imagen !== null ? imgStyle(rel) : imgStyleDef()"
+          [ngStyle]="rel ? imgStyle(rel) : imgStyleDef()"
         >
-          <!-- [class.mb-0]="rel.imagen !== null" -->
-          <button
-            nbButton
-            size="small"
-            fullWidth
-            [ngStyle]="style(rel)"
-            [ngClass]="{
-              'mb-0': rel.imagen !== null,
-              'border-0': rel.imagen !== null,
-              'rounded-0': rel.imagen !== null
-            }"
-          >
-            {{ rel?.relacion }}
-          </button>
-          <img *ngIf="rel.imagen !== null" [src]="rel?.imagen" alt="" style="height: 100%; max-height: 120px" />
-        </div>
-      </li>
-    </ul>
+          <nb-card-header class="p-0 border-bottom-0">
+            <span [ngStyle]="style(rel)" class="d-block py-2">
+              {{ rel?.relacion | titlecase }}
+            </span>
+          </nb-card-header>
+          <nb-card-body class="p-3 pt-1" *ngIf="rel.imagen !== null">
+            <div style="height: 100px">
+              <img *ngIf="rel.imagen !== null" [src]="rel?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
   </div>
   <div class="col-md-2"></div>
   <hr class="d-md-none" />
   <div class="col-md-5">
-    <ul *ngFor="let item of randomList; let i = index">
-      <li>
-        <div
+    <nb-card class="mb-3" style="background-color: #f8fffe">
+      <nb-card-header class="text-center">Grupo A</nb-card-header>
+      <nb-card-body class="pb-0">
+        <nb-card
+          *ngFor="let item of randomList; let i = index"
           (click)="revisarCheckB(item, i)"
           [ngClass]="{ 'mb-4': item.imagen !== null }"
           style="cursor: pointer; text-align: center"
-          [ngStyle]="item.imagen !== null ? imgStyle(item) : imgStyleDef()"
+          [ngStyle]="item ? imgStyle(item) : imgStyleDef()"
         >
-          <button
-            nbButton
-            size="small"
-            fullWidth
-            [ngStyle]="style(item)"
-            [ngClass]="{
-              'mb-0': item.imagen !== null,
-              'border-0': item.imagen !== null,
-              'rounded-0': item.imagen !== null
-            }"
-          >
-            {{ item?.relacion }}
-          </button>
-          <img *ngIf="item.imagen !== null" [src]="item?.imagen" alt="" style="height: 100%; max-height: 120px" />
-        </div>
-      </li>
-    </ul>
+          <nb-card-header class="p-0 border-bottom-0">
+            <span [ngStyle]="style(item)" class="d-block py-2">
+              {{ item?.relacion | titlecase }}
+            </span>
+          </nb-card-header>
+          <nb-card-body class="p-3 pt-1" *ngIf="item.imagen !== null">
+            <div style="height: 100px">
+              <img *ngIf="item.imagen !== null" [src]="item?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
   </div>
 </div>
