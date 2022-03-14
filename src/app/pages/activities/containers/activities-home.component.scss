@@ -69,8 +69,34 @@ nb-select ::ng-deep {
 
 ngb-pagination ::ng-deep {
   .page-item.active .page-link {
-    color: #551436 !important;
-    border-color: #551436 !important;
-    background-color: #E5C4CF !important;
+    border-color: var(--color-primary-500) !important;
+    // background-color: #e5c4cf !important;
+    background-color: var(--color-primary-300) !important;
   }
+
+  .page-item .page-link {
+    border-color: var(--color-primary-500) !important;
+    color: var(--color-primary-500) !important;
+  }
+
+  .page-link:focus {
+    box-shadow: none;
+  }
+
+  .pagination {
+    margin-bottom: 0 !important;
+  }
+}
+
+.table-responsive {
+  max-height: 58vh;
+  // overflow-y: scroll;
+}
+
+thead tr th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #ffffff;
+  color: black;
 }

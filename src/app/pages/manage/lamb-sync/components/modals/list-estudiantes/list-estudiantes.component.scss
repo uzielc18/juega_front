@@ -2,5 +2,25 @@
   max-width: 95vw;
   max-height: 95vh;
   width: 800px;
-  height: 700px;
+  height: 800px;
+}
+
+ngb-pagination ::ng-deep {
+  .page-item.active .page-link {
+    border-color: var(--color-primary-500) !important;
+    background-color: var(--color-primary-300) !important;
+  }
+
+  .page-item .page-link {
+    border-color: var(--color-primary-500) !important;
+    color: var(--color-primary-500) !important;
+  }
+
+  .page-link:focus {
+    box-shadow: none;
+  }
+
+  .pagination {
+    margin-bottom: 0 !important;
+  }
 }

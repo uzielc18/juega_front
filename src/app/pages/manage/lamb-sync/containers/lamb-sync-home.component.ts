@@ -34,17 +34,8 @@ export class LambSyncHomeComponent implements OnInit {
   estudiantes: any = [];
 
   loading: boolean = false;
-  loadingSync: boolean = false;
   formHeader: any = FormGroup;
   @Output() changeEmit: EventEmitter<any> = new EventEmitter();
-
-  pagination: any = {
-    page: 1,
-    per_page: 15,
-    sizePage: 0,
-    sizeListData: 0,
-    isDisabledPage: false,
-  };
 
   constructor(
     private generalService: GeneralService,
@@ -206,7 +197,7 @@ export class LambSyncHomeComponent implements OnInit {
 
   showCursos() {
     const serviceName = END_POINTS.base_back.config + "/cursos";
-    this.loadingSync = true;
+    this.loading = true;
     if (this.actualProg) {
       this.generalService
         .nameIdAndIdAndIdAndId$(
@@ -224,9 +215,10 @@ export class LambSyncHomeComponent implements OnInit {
                 dialogClass: "dialog-limited-height",
                 context: {
                   item: this.cursos,
+                  prog: this.actualProg,
                 },
-                closeOnBackdropClick: true,
-                closeOnEsc: true,
+                closeOnBackdropClick: false,
+                closeOnEsc: false,
               })
               .onClose.subscribe((result) => {
                 if (result === "ok") {
@@ -235,50 +227,33 @@ export class LambSyncHomeComponent implements OnInit {
               });
           },
           () => {
-            this.loadingSync = false;
+            this.loading = false;
           },
           () => {
-            this.loadingSync = false;
+            this.loading = false;
           }
         );
     }
   }
 
   showSilabus() {
-    const params = {
-      per_page: this.pagination.per_page,
-      page: this.pagination.page,
-    };
     const serviceName = END_POINTS.base_back.config + "/silabus";
-    this.loadingSync = true;
+    this.loading = true;
     if (this.actualProg) {
       this.generalService
-        .nameIdAndIdAndIdParams$(
-          serviceName,
-          this.rolSemestre.semestre.nombre,
-          this.id_carga_curso,
-          this.actualProg.id,
-          params
-        )
+        .nameIdAndIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.id_carga_curso, this.actualProg.id)
         .subscribe(
           (res: any) => {
             this.silabus = res.data || [];
-            this.pagination.sizeListData = (res.meta && res.meta.total) || 0;
-            this.pagination.sizePage = (res.meta && res.meta.per_page) || 0;
-            if (this.pagination.sizeListData < this.silabus.length) {
-              this.pagination.isDisabledPage = true;
-            } else {
-              this.pagination.isDisabledPage = false;
-            }
             this.dialogService
               .open(ListSilabusComponent, {
                 dialogClass: "dialog-limited-height",
                 context: {
                   item: this.silabus,
-                  pagination: this.pagination,
+                  prog: this.actualProg,
                 },
-                closeOnBackdropClick: true,
-                closeOnEsc: true,
+                closeOnBackdropClick: false,
+                closeOnEsc: false,
               })
               .onClose.subscribe((result) => {
                 if (result === "ok") {
@@ -287,10 +262,10 @@ export class LambSyncHomeComponent implements OnInit {
               });
           },
           () => {
-            this.loadingSync = false;
+            this.loading = false;
           },
           () => {
-            this.loadingSync = false;
+            this.loading = false;
           }
         );
     }
@@ -298,7 +273,7 @@ export class LambSyncHomeComponent implements OnInit {
 
   showEstudiantes() {
     const serviceName = END_POINTS.base_back.config + "/estudiantes";
-    this.loadingSync = true;
+    this.loading = true;
     if (this.actualProg) {
       this.generalService.nameIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.actualProg.id).subscribe(
         (res: any) => {
@@ -308,9 +283,10 @@ export class LambSyncHomeComponent implements OnInit {
               dialogClass: "dialog-limited-height",
               context: {
                 item: this.estudiantes,
+                prog: this.actualProg,
               },
-              closeOnBackdropClick: true,
-              closeOnEsc: true,
+              closeOnBackdropClick: false,
+              closeOnEsc: false,
             })
             .onClose.subscribe((result) => {
               if (result === "ok") {
@@ -319,10 +295,10 @@ export class LambSyncHomeComponent implements OnInit {
             });
         },
         () => {
-          this.loadingSync = false;
+          this.loading = false;
         },
         () => {
-          this.loadingSync = false;
+          this.loading = false;
         }
       );
     }

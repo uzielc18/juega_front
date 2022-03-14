@@ -7,7 +7,7 @@
   @include nb-theme-global();
 }
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -20,15 +20,11 @@
 }
 
 .progress-value {
-  background-color: #E39800 !important;
+  background-color: #e39800 !important;
 }
 
 .custom-bread-crumb {
   margin-bottom: 0;
-}
-
-.ng-star-inserted:hover {
-  text-decoration: none !important;
 }
 
 .line {

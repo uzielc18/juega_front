@@ -6,6 +6,7 @@ import { UpZoomComponent } from '../components/modals/up-zoom/up-zoom.component'
 import { ZoomCourseComponent } from '../components/modals/zoom-course/zoom-course.component';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { AppService } from 'src/app/core';
 @Component({
   selector: 'app-zoom-home',
   templateUrl: './zoom-home.component.html',
@@ -18,26 +19,49 @@ export class ZoomHomeComponent implements OnInit {
   listProgramStudy:any = [];
   public searchableList: any[] = [];
   public queryString:any;
-  constructor(private dialogService: NbDialogService, private generalServi: GeneralService, private formBuilder: FormBuilder, private router: Router) {
+  public searchProgramList: any[] = [];
+  public querySearch:any;
+  datosMe = this.appService;
+  constructor(private dialogService: NbDialogService, private generalServi: GeneralService, private formBuilder: FormBuilder, private router: Router,
+    private appService: AppService) {
     this.searchableList = ['correo', 'programa_estudio_nombre'];
+    this.searchProgramList = ['nombre_corto', 'sede_nombre'];
   }
 
   ngOnInit(): void {
     this.fieldReactive();
-    this.getZoom();
+    this.getProgramStudy();
+    // this.getZoom();
   }
   private fieldReactive() {
     const controls = {
       programa_estudio_id: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.getProgramStudy();
+  }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol){
+      return val;
+    } else {
+      return '';
+    }
+
   }
   getProgramStudy() {
-    const serviceName = 'programaEstudios';
-    this.generalServi.nameAll$(serviceName).subscribe((res:any) => {
-      this.listProgramStudy = res.data || [];
-    });
+    const serviceName = 'mis-programas';
+    const ids = {
+      person_id: this.datosMe.user.id || '',
+    };
+    if (ids && ids.person_id) {
+      this.generalServi.nameId$(serviceName, ids.person_id).subscribe((res:any) => {
+        this.listProgramStudy = res.data || [];
+        if (this.listProgramStudy.length>0) {
+          this.getZoom();
+        }
+      });
+    }
   }
   updateZoom(params: any) {
     const prams:any = {
@@ -59,6 +83,7 @@ export class ZoomHomeComponent implements OnInit {
       context: {
         item: prams.item,
         code: prams.code,
+        datosMe: this.datosMe,
       },
       closeOnBackdropClick: false,
       closeOnEsc: false
@@ -89,11 +114,14 @@ export class ZoomHomeComponent implements OnInit {
     this.loading = true;
     const forms = this.formHeader.value;
     const params:any = {
-      programa_estudio_id: forms.programa_estudio_id,
+      programa_estudio_id: forms.programa_estudio_id || '',
+      person_id: this.datosMe.user.id || '',
     };
-    this.generalServi.nameParams$(serviceName, params).subscribe((re:any) => {
-      this.listZoom = re.data || [];
-    }, () => { this.loading =false; }, () => { this.loading =false; });
+    if (params && params.person_id) {
+      this.generalServi.nameParams$(serviceName, params).subscribe((re:any) => {
+        this.listZoom = re.data || [];
+      }, () => { this.loading =false; }, () => { this.loading =false; });
+    }
   }
   refresh() {
     this.getZoom();
@@ -124,4 +152,11 @@ export class ZoomHomeComponent implements OnInit {
       
     });
   }
+  // toggleWithGreeting(popover:any) {
+  //   if (popover.isOpen()) {
+  //     popover.close();
+  //   } else {
+  //     popover.open();
+  //   }
+  // }
 }

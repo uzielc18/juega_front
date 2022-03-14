@@ -1,11 +1,10 @@
 .perfil-container {
   padding: 25px 15px 5px 15px;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   height: 100%;
 }
 
-
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
   .perfil-container {
     padding: 30px 25px;
   }
@@ -19,7 +18,7 @@
 
 .photo-container {
   border-radius: 50%;
-  border: 5px solid #C8C504;
+  border: 5px solid #c8c504;
   overflow: hidden;
   width: 120px;
   height: 120px;
@@ -52,14 +51,14 @@
 
   .ciclo {
     font-weight: bold;
-    color: #934054;
+    color: var(--color-primary-500);
     font-size: 16px;
     margin: 0;
   }
 
   .carrera {
     font-size: 14px;
-    color: #934054;
+    color: var(--color-primary-500);
     margin: 0;
   }
 
@@ -73,13 +72,13 @@
 .stats-ciclo {
   display: flex;
   text-align: center;
-  border-top: 1px solid #E5E5E5;
-  border-bottom: 1px solid #E5E5E5;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
 
   nb-icon {
     width: 30px;
     height: 30px;
-    color: #934054;
+    color: var(--color-primary-500);
   }
 
   p {
@@ -105,7 +104,6 @@
 }
 
 .stats-percentage {
-
   p {
     margin: 0;
     font-size: 16px;
@@ -122,7 +120,7 @@
   .asistencia,
   .evaluacion {
     display: flex;
-    background-color: #FEFCF7;
+    background-color: #fefcf7;
     margin-bottom: 10px;
     border-radius: 7px;
     padding: 10px 20px;
@@ -137,7 +135,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-left: 1px solid #F1F1F0;
+    border-left: 1px solid #f1f1f0;
 
     p {
       font-size: 24px;
@@ -148,7 +146,7 @@
 
 .chart-stats {
   display: flex;
-  background-color: #F7FAFC;
+  background-color: #f7fafc;
   border-radius: 7px;
   margin-bottom: 10px;
 
@@ -156,12 +154,12 @@
     width: 110px;
     height: 110px;
     border-radius: 50%;
-    border: 10px solid #E9CB62;
+    border: 10px solid #e9cb62;
     margin: 20px;
   }
 
   .description {
-    border-left: 1px solid #E6EAEE;
+    border-left: 1px solid #e6eaee;
     padding: 20px;
     flex: 1;
 
@@ -195,7 +193,7 @@
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: #E9CB62;
+        background-color: #e9cb62;
         margin-right: 10px;
         margin-bottom: 0;
       }
@@ -209,14 +207,13 @@
 }
 
 .trabajos {
-
   .count {
     display: flex;
     flex: 1;
     align-items: center;
     justify-content: center;
     padding: 15px 20px;
-    border-right: 1px solid #E6EAEE;;
+    border-right: 1px solid #e6eaee;
 
     p {
       font-size: 24px;
@@ -253,7 +250,7 @@
   .completados,
   .vencidos,
   .por-completar {
-    background-color: #F7FAFC;
+    background-color: #f7fafc;
     border-radius: 7px;
     cursor: pointer;
     display: flex;
@@ -262,7 +259,7 @@
 
   .work:hover {
     transform: translateY(-1px);
-    background-color: #FEFCF7;
+    background-color: #fefcf7;
   }
 }
 
@@ -271,11 +268,10 @@ nb-progress-bar {
   width: 162px;
 
   ::ng-deep .progress-container {
-    background-color: #F6EAC0 !important;
+    background-color: #f6eac0 !important;
   }
 
   ::ng-deep .progress-value {
-    background-color: #9AACBA !important;
+    background-color: #9aacba !important;
   }
 }
-

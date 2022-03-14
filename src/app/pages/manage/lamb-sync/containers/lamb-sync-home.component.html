@@ -1,20 +1,28 @@
-<nb-card class="m-0 h-100 border-0" style="border-radius: 15px">
+<nb-card class="m-0 h-100 border-0" style="border-radius: 15px" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
   <nb-card-header>
     <div class="d-flex">
-      <nb-icon icon="shake-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
-      <strong style="padding-top: 7px;">SINCRONIZAR CON LAMB</strong>
-   </div>
-    <hr>
-    <div class="row" [formGroup]="formHeader" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+      <nb-icon icon="shake-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px">SINCRONIZAR CON LAMB</strong>
+    </div>
+    <hr />
+    <div class="row" [formGroup]="formHeader">
       <div class="col-md-4 mb-2 mb-md-0">
         <label class="label">Filial</label>
         <nb-select placeholder="Filial" size="small" status="primary" fullWidth formControlName="id_sede">
-          <nb-option *ngFor="let sede of sedes" [value]="sede?.id" (click)="selectedSede(sede)">{{ sede?.nombre }} </nb-option>
+          <nb-option *ngFor="let sede of sedes" [value]="sede?.id" (click)="selectedSede(sede)"
+            >{{ sede?.nombre }}
+          </nb-option>
         </nb-select>
       </div>
       <div class="col-md-4 mb-2 mb-md-0">
         <label class="label">Nivel enseñanza</label>
-        <nb-select placeholder="Nivel enseñanza" size="small" status="primary" fullWidth formControlName="id_nivel_ensenanza">
+        <nb-select
+          placeholder="Nivel enseñanza"
+          size="small"
+          status="primary"
+          fullWidth
+          formControlName="id_nivel_ensenanza"
+        >
           <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel?.id" (click)="selectedNivel(nivel)"
             >{{ nivel?.nombre }}
           </nb-option>
@@ -23,12 +31,20 @@
       <div class="col-md-4">
         <label class="label">Facultades</label>
         <nb-select placeholder="Facultades" size="small" status="primary" fullWidth formControlName="id_facultad">
-          <nb-option *ngFor="let fac of facultades" [value]="fac?.id" (click)="selectedFacultad(fac)">{{ fac?.nombre }} </nb-option>
+          <nb-option *ngFor="let fac of facultades" [value]="fac?.id" (click)="selectedFacultad(fac)"
+            >{{ fac?.nombre }}
+          </nb-option>
         </nb-select>
       </div>
       <div class="col-md-8">
         <label class="label">Programa / Estudio</label>
-        <nb-select placeholder="Programa / Estudio" size="small" status="primary" fullWidth formControlName="id_programa_estudio">
+        <nb-select
+          placeholder="Programa / Estudio"
+          size="small"
+          status="primary"
+          fullWidth
+          formControlName="id_programa_estudio"
+        >
           <nb-option *ngFor="let prog of programa_estudios" [value]="prog?.id" (click)="selectedProgramaEstudio(prog)">
             {{ prog?.nombre }}</nb-option
           >
@@ -37,7 +53,9 @@
       <div class="col-md-4">
         <label class="label">Semestre</label>
         <nb-select placeholder="Semestre" size="small" status="primary" fullWidth formControlName="id_semestre">
-          <nb-option *ngFor="let semester of semestres" [value]="semester?.nombre">Semestre - {{ semester?.nombre }} </nb-option>
+          <nb-option *ngFor="let semester of semestres" [value]="semester?.nombre"
+            >Semestre - {{ semester?.nombre }}
+          </nb-option>
         </nb-select>
       </div>
     </div>
@@ -74,7 +92,7 @@
       </div>
       <div class="col-md-8 col-xxl-9">
         <nb-card class="mb-0">
-          <nb-card-body style="min-height: 60vh" [nbSpinner]="loadingSync" nbSpinnerStatus="primary" nbSpinnerSize="small">
+          <nb-card-body style="min-height: 60vh">
             <p class="fw-bold">Sincronizar por programa de estudio</p>
             <div *ngIf="actualProg" class="row">
               <div class="col-xl-6 col-xxl-4">
@@ -82,7 +100,8 @@
                   <nb-card-body>
                     <h6 class="fw-bold">Docentes</h6>
                     <p>
-                      Este método retorna todos los docentes del programa seleccionado ({{ actualProg?.nombre }}) en el periodo seleccionado
+                      Este método retorna todos los docentes del programa seleccionado ({{ actualProg?.nombre }}) en el
+                      periodo seleccionado
                       {{ rolSemestre?.semestre?.nombre }}
                     </p>
                     <button class="mt-2" nbButton status="primary" size="small" fullWidth>Docentes</button>
@@ -94,10 +113,13 @@
                   <nb-card-body>
                     <h6 class="fw-bold">Cursos</h6>
                     <p>
-                      Este método retorna todos los cursos del programa seleccionado ({{ actualProg?.nombre }}) en el periodo seleccionado
+                      Este método retorna todos los cursos del programa seleccionado ({{ actualProg?.nombre }}) en el
+                      periodo seleccionado
                       {{ rolSemestre?.semestre?.nombre }}
                     </p>
-                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showCursos()">Cursos</button>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showCursos()">
+                      Cursos
+                    </button>
                   </nb-card-body>
                 </nb-card>
               </div>
@@ -106,10 +128,13 @@
                   <nb-card-body>
                     <h6 class="fw-bold">Silabus</h6>
                     <p>
-                      Este método retorna todos los docentes del programa seleccionado ({{ actualProg?.nombre }}) en el periodo seleccionado
+                      Este método retorna todos los silabus del programa seleccionado ({{ actualProg?.nombre }}) en el
+                      periodo seleccionado
                       {{ rolSemestre?.semestre?.nombre }}
                     </p>
-                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showSilabus()">Silabus</button>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showSilabus()">
+                      Silabus
+                    </button>
                   </nb-card-body>
                 </nb-card>
               </div>
@@ -118,10 +143,13 @@
                   <nb-card-body>
                     <h6 class="fw-bold">Estudiantes</h6>
                     <p>
-                      Este método retorna todos los docentes del programa seleccionado ({{ actualProg?.nombre }}) en el periodo seleccionado
+                      Este método retorna todos los estudiantes del programa seleccionado ({{ actualProg?.nombre }}) en
+                      el periodo seleccionado
                       {{ rolSemestre?.semestre?.nombre }}
                     </p>
-                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showEstudiantes()">Estudiantes</button>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showEstudiantes()">
+                      Estudiantes
+                    </button>
                   </nb-card-body>
                 </nb-card>
               </div>

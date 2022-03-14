@@ -25,6 +25,7 @@ export class AppService {
   private _user: any = null;
   private _semestre: any = null;
   private _rol: any = null;
+  private _area: any = null;
   private _menu: any[] = [];
   private _usernameMenu: any[] = [];
   private _userInfoUrl = `${this.options.apiAuth}/api/user/me`;
@@ -80,6 +81,13 @@ export class AppService {
   set rol(value: any) {
     this._rol = value;
   }
+  get area(): any {
+    return this._area;
+  }
+
+  set area(value: any) {
+    this._area = value;
+  }
 
   init(injector: any): Promise<any> {
     return injector.get(NbAuthService).isAuthenticated().toPromise().then((isAuthent: any) => {
@@ -93,6 +101,7 @@ export class AppService {
               this._user = data.data.user;
               this._semestre = data.data.semestre;
               this._rol = data.data.roles;
+              this._area = data.data.area;
               return true;
             } else {
               localStorage.clear();
