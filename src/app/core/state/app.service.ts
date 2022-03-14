@@ -101,7 +101,7 @@ export class AppService {
               this._user = data.data.user;
               this._semestre = data.data.semestre;
               this._rol = data.data.roles;
-              this._area = data.data.area_id;
+              this._area = data.data.area;
               return true;
             } else {
               localStorage.clear();

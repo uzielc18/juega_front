@@ -19,22 +19,25 @@ export class ZoomHomeComponent implements OnInit {
   listProgramStudy:any = [];
   public searchableList: any[] = [];
   public queryString:any;
+  public searchProgramList: any[] = [];
+  public querySearch:any;
   datosMe = this.appService;
   constructor(private dialogService: NbDialogService, private generalServi: GeneralService, private formBuilder: FormBuilder, private router: Router,
     private appService: AppService) {
     this.searchableList = ['correo', 'programa_estudio_nombre'];
+    this.searchProgramList = ['nombre_corto', 'sede_nombre'];
   }
 
   ngOnInit(): void {
     this.fieldReactive();
-    this.getZoom();
+    this.getProgramStudy();
+    // this.getZoom();
   }
   private fieldReactive() {
     const controls = {
       programa_estudio_id: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.getProgramStudy();
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -47,18 +50,16 @@ export class ZoomHomeComponent implements OnInit {
 
   }
   getProgramStudy() {
-    const serviceName = 'programaEstudios';
-    const params = {
-      area_id: this.rolSemestre.area_id,
-      // area_id: this.rolSemestre.area.area_id,
-      // sede_id: this.rolSemestre.area.sede_id,
-      
+    const serviceName = 'mis-programas';
+    const ids = {
+      person_id: this.datosMe.user.id || '',
     };
-    console.log(params);
-    
-    if (params && params.area_id) {
-      this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
+    if (ids && ids.person_id) {
+      this.generalServi.nameId$(serviceName, ids.person_id).subscribe((res:any) => {
         this.listProgramStudy = res.data || [];
+        if (this.listProgramStudy.length>0) {
+          this.getZoom();
+        }
       });
     }
   }
@@ -82,6 +83,7 @@ export class ZoomHomeComponent implements OnInit {
       context: {
         item: prams.item,
         code: prams.code,
+        datosMe: this.datosMe,
       },
       closeOnBackdropClick: false,
       closeOnEsc: false
@@ -113,11 +115,13 @@ export class ZoomHomeComponent implements OnInit {
     const forms = this.formHeader.value;
     const params:any = {
       programa_estudio_id: forms.programa_estudio_id || '',
-      person_id: this.datosMe.user.id || ''
+      person_id: this.datosMe.user.id || '',
     };
-    this.generalServi.nameParams$(serviceName, params).subscribe((re:any) => {
-      this.listZoom = re.data || [];
-    }, () => { this.loading =false; }, () => { this.loading =false; });
+    if (params && params.person_id) {
+      this.generalServi.nameParams$(serviceName, params).subscribe((re:any) => {
+        this.listZoom = re.data || [];
+      }, () => { this.loading =false; }, () => { this.loading =false; });
+    }
   }
   refresh() {
     this.getZoom();
@@ -148,4 +152,11 @@ export class ZoomHomeComponent implements OnInit {
       
     });
   }
+  // toggleWithGreeting(popover:any) {
+  //   if (popover.isOpen()) {
+  //     popover.close();
+  //   } else {
+  //     popover.open();
+  //   }
+  // }
 }
