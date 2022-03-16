@@ -28,7 +28,8 @@ export class UpZoomComponent implements OnInit {
       ciclo: ['', [Validators.required, Validators.max(12), Validators.maxLength(2)]],
       correo: ['', [Validators.required, Validators.email]],
       clave: ['', [Validators.required]],
-      grupo: ['UNICO', [Validators.required]],
+      grupo: ['unico', [Validators.required]],
+      host_key: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
     if (this.code === 'UPDATE') {
@@ -60,6 +61,7 @@ export class UpZoomComponent implements OnInit {
       correo: forms.correo,
       clave: forms.clave,
       grupo: forms.grupo,
+      host_key: forms.host_key || '',
     };
     if (params && params.programa_estudio_id && params.id_programa_estudio) {
       this.loading = true;
@@ -86,11 +88,12 @@ export class UpZoomComponent implements OnInit {
         if (re.success) {
           const items = re.data || '';
             this.formHeader.patchValue({
-              id: items.id,
+              id: items.programa_estudio_id,
               ciclo: items.ciclo,
               correo: items.correo,
               clave: items.clave,
               grupo: items.grupo,
+              host_key: items.host_key,
             })
         }
       }, () => { this.loading =false; }, () => { this.loading =false; });
