@@ -96,7 +96,7 @@
                             Salas
                         </td>
                         <td class="text-center" style="width: 70px;">
-                            <nb-icon icon="flip-2-outline" status="success" style="cursor: pointer; font-size: 25px;" (click)="vincular()"></nb-icon> <br>
+                            <nb-icon *ngIf="!item?.host_key" icon="flip-2-outline" status="success" style="cursor: pointer; font-size: 25px;" (click)="vincular()"></nb-icon> <br>
                             Vincular
                         </td>
                     </tr>
