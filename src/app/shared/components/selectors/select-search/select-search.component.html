@@ -1,23 +1,18 @@
 <nb-form-field>
-    <input type="button" nbInput fullWidth style="text-align: left;" [value]="formHeader.value.programa_estudio_id?.name_programa_estudio || 'Todos'" [nbPopover]="templateRef" nbPopoverPlacement="bottom" fieldSize="small">
+    <input type="button" nbInput fullWidth style="text-align: left;" [value]="formHeader.value.name_programa_estudio" [nbPopover]="templateRef" nbPopoverPlacement="bottom" fieldSize="small">
     <nb-icon icon="arrow-ios-downward-outline" nbSuffix></nb-icon>
     </nb-form-field>
-    <ng-template #templateRef >
-        <nb-card>
-            <nb-card-header>
-                <input type="text" nbInput fullWidth  [(ngModel)]="querySearch" [ngModelOptions]="{standalone: true}" placeholder="Buscar por nombre" fieldSize="small">
+    <ng-template #templateRef>
+        <nb-card >
+            <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+                <input type="text" nbInput fullWidth  [(ngModel)]="querySearch" [ngModelOptions]="{standalone: true}" placeholder="Buscar por nombre" fieldSize="small" [autofocus]="true">
             </nb-card-header>
-            <nb-card-body style="max-height: 450px; max-width: 100%;">
+            <nb-card-body style="max-height: 450px; max-width: 100%; padding-top: 5px;">
                 <nb-list class="seled" style="cursor: pointer;">
-                    <!-- <nb-list-item style="font-size: 12px; padding-top: 2px; padding-bottom: 2px;" (click)="selecteItem('')">
-                        Todos
-                    </nb-list-item> -->
-                    <nb-list-item *ngFor="let item of listProgramStudy | FilterPipe: querySearch:searchProgramList" 
+                    <nb-list-item *ngFor="let item of listProgStud | FilterPipe: querySearch:searchProgramList" 
                     style="font-size: 12px; padding-top: 2px; padding-bottom: 2px;" (click)="selecteItem(item)" 
                     [ngStyle]="{'background': item?.background, 'color': item?.color}">
-                        <!-- <label class="label"> -->
                             {{item?.name_programa_estudio}}
-                        <!-- </label> -->
                     </nb-list-item>
                   </nb-list>
             </nb-card-body>

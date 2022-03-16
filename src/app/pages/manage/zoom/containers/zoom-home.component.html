@@ -12,12 +12,12 @@
                 <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar cuenta por correo" [(ngModel)]="queryString" [ngModelOptions]="{standalone: true}" >
             </div>
             <div class="col-md-6">
-                <label class="label">Programa estudio</label>
-               
+                <label class="label">Programa estudio {{formHeader.value.programa_estudio_id}}</label>
+                <!-- <app-input-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-input-select-search>-->
+                <!-- <app-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-select-search>  -->
                     <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
                         <nb-option value="">Todos</nb-option>
-                        <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.nombre_corto}} &nbsp; ( {{item.sede_nombre}}
-                            {{item.semiprecencial_nombre ? ('- ' + item.semiprecencial_nombre) : ''}} )</nb-option>
+                        <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.name_programa_estudio}}</nb-option>
                     </nb-select>
             </div>
             <div class="col-md-2">

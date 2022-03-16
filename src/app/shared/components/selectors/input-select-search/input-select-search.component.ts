@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbPopoverDirective } from '@nebular/theme';
 
 @Component({
-  selector: 'app-select-search',
-  templateUrl: './select-search.component.html',
-  styleUrls: ['./select-search.component.scss']
+  selector: 'app-input-select-search',
+  templateUrl: './input-select-search.component.html',
+  styleUrls: ['./input-select-search.component.scss']
 })
-export class SelectSearchComponent implements OnInit, OnChanges {
+export class InputSelectSearchComponent implements OnInit, OnChanges {
   formHeader: any = FormGroup;
   @Input() listProgStud:any = [];
   public searchProgramList: any[] = [];
@@ -42,7 +42,6 @@ export class SelectSearchComponent implements OnInit, OnChanges {
       });
       this.popover.hide();
       this.changeSelected.emit(this.formHeader);
-      this.selected();
     }
   }
   selected() {
