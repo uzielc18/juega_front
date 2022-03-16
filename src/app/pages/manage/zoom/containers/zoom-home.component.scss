@@ -10,3 +10,9 @@
     background-color: red;
     border-radius: 50%;
   }
+  .seled {
+    :hover {
+      background: var(--color-primary-500) !important;
+      color: white;
+    }
+  }
