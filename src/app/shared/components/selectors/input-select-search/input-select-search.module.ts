@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FilterPipeModule } from 'src/app/shared/pipes/filterPipe/filterPipe.module';
-import { SelectSearchComponent } from './select-search.component';
+import { InputSelectSearchComponent } from './input-select-search.component';
 import { NebularModule } from 'src/app/shared/nebular.module';
+import { FilterPipeModule } from 'src/app/shared/pipes/filterPipe/filterPipe.module';
 
 const COMPONENTS: any[] = [
-  SelectSearchComponent
+  InputSelectSearchComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -19,6 +19,6 @@ const PIPES: any = [
     ...NG_MODULES,
     ...PIPES,
   ],
-  exports: [SelectSearchComponent]
+  exports: [InputSelectSearchComponent]
 })
-export class SelectSearchModule { }
+export class InputSelectSearchModule { }
