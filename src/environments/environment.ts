@@ -24,5 +24,8 @@ export const environment = {
     base: API.base.dev,
   },
   shellApp: `${window.location.origin}/auth`,
-  uri: `${window.location.origin}/pages/manage/zoom/validate`,
+  uri: {
+    client_id: 'vARG7XA1TQuAodHuaU8NuQ',
+    url: `${window.location.origin}/pages/manage/zoom/validate`,
+  } ,
 };

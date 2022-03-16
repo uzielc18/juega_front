@@ -17,7 +17,10 @@ export class ZoomHomeComponent implements OnInit {
   loading:boolean = false;
   listZoom:any = [];
   formHeader: any = FormGroup;
-  listProgramStudy:any = [];
+  listProgramStudy:any = [{
+    id: '',
+    nombre_corto: 'Todos',
+  }];
   public searchableList: any[] = [];
   public queryString:any;
 
@@ -57,7 +60,7 @@ export class ZoomHomeComponent implements OnInit {
     };
     if (ids && ids.person_id) {
       this.generalServi.nameId$(serviceName, ids.person_id).subscribe((res:any) => {
-        this.listProgramStudy = res.data || [];
+        this.listProgramStudy = [...this.listProgramStudy, ...res.data];
         if (this.listProgramStudy.length>0) {
           this.listProgramStudy.map((r:any) => {
             r.name_programa_estudio = r.nombre_corto + ' ' + (r.sede_nombre ? r.sede_nombre : '');
@@ -149,14 +152,16 @@ export class ZoomHomeComponent implements OnInit {
       // timer: 2000,
     }).then((result:any) => {
         if (result.isConfirmed) {
-          location.href = 'https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=' + environment.uri;
-          // this.router.navigate([`https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate`]);
-          // const url = 'https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate';
-          // window.open(url, '_blank');
-          // console.log('ok');
-          
+          location.href = `https://zoom.us/oauth/authorize?response_type=code&client_id=${environment.uri.client_id}&redirect_uri=${environment.uri.url}`;
+          // location.href = 'https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate'
+
         }
       
+    });
+  }
+  changeSelected(event:any) {
+    this.formHeader.patchValue({
+      programa_estudio_id: event.value.programa_estudio_id,
     });
   }
  
