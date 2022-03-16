@@ -112,9 +112,9 @@ export class VEstRelationComponent implements OnInit {
         }
       });
     }
-    console.log(item, "item");
-    console.table(this.randomList);
-    console.table(this.relationList);
+    // console.log(item, "item");
+    // console.table(this.randomList);
+    // console.table(this.relationList);
   }
 
   revisarCheckB(item: any, i: any) {
@@ -139,9 +139,9 @@ export class VEstRelationComponent implements OnInit {
       item.padre.selected = false;
       item.padre = null;
     }
-    console.log(item, "item");
-    console.table(this.randomList);
-    console.table(this.relationList);
+    // console.log(item, "item");
+    // console.table(this.randomList);
+    // console.table(this.relationList);
   }
 
   style(item: any) {

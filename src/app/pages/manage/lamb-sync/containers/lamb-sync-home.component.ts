@@ -203,7 +203,7 @@ export class LambSyncHomeComponent implements OnInit {
         .nameIdAndIdAndIdAndId$(
           serviceName,
           this.rolSemestre.semestre.nombre,
-          this.actualProg.id,
+          this.actualProg.id_programa_estudio,
           this.id_unidad_academica,
           this.usuario
         )
@@ -241,7 +241,7 @@ export class LambSyncHomeComponent implements OnInit {
     this.loading = true;
     if (this.actualProg) {
       this.generalService
-        .nameIdAndIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.id_carga_curso, this.actualProg.id)
+        .nameIdAndIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.id_carga_curso, this.actualProg.id_programa_estudio)
         .subscribe(
           (res: any) => {
             this.silabus = res.data || [];
@@ -275,7 +275,7 @@ export class LambSyncHomeComponent implements OnInit {
     const serviceName = END_POINTS.base_back.config + "/estudiantes";
     this.loading = true;
     if (this.actualProg) {
-      this.generalService.nameIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.actualProg.id).subscribe(
+      this.generalService.nameIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.actualProg.id_programa_estudio).subscribe(
         (res: any) => {
           this.estudiantes = res.data || [];
           this.dialogService
