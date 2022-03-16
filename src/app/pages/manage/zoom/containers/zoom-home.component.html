@@ -13,21 +13,7 @@
             </div>
             <div class="col-md-6">
                 <label class="label">Programa estudio</label>
-                <!-- <button
-                type="button" class="btn btn-outline-secondary me-2"
-                [ngbPopover]="popContent" [popoverTitle]="'popTitle'"
-                triggers="manual" #p1="ngbPopover" (click)="toggleWithGreeting(p1)"
-              >
-                French
-              </button>
-                <ng-template #popContent>
-                    <div *ngFor="let item of listProgramStudy | FilterPipe: querySearch:searchProgramList">
-                        <label class="label">
-                            {{item.nombre_corto}} &nbsp; ( {{item.sede_nombre}}
-                            {{item.semiprecencial_nombre ? ('- ' + item.semiprecencial_nombre) : ''}} )
-                        </label>
-                    </div>
-                </ng-template> -->
+               
                     <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
                         <nb-option value="">Todos</nb-option>
                         <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.nombre_corto}} &nbsp; ( {{item.sede_nombre}}

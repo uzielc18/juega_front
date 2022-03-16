@@ -41,4 +41,5 @@ export const environment = {
     base: API.base.dev,
   },
   shellApp: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/auth`,
+  uri: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/pages/manage/zoom/validate`,
 };
