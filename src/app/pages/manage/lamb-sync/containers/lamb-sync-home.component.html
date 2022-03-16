@@ -1,4 +1,10 @@
-<nb-card class="m-0 h-100 border-0" style="border-radius: 15px" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+<nb-card
+  class="m-0 h-100 border-0"
+  style="border-radius: 15px"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="small"
+>
   <nb-card-header>
     <div class="d-flex">
       <nb-icon icon="shake-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
@@ -46,7 +52,7 @@
           formControlName="id_programa_estudio"
         >
           <nb-option *ngFor="let prog of programa_estudios" [value]="prog?.id" (click)="selectedProgramaEstudio(prog)">
-            {{ prog?.nombre }}</nb-option
+            {{ prog?.name_programa_estudio }}</nb-option
           >
         </nb-select>
       </div>
@@ -94,13 +100,13 @@
         <nb-card class="mb-0">
           <nb-card-body style="min-height: 60vh">
             <p class="fw-bold">Sincronizar por programa de estudio</p>
-            <div *ngIf="actualProg" class="row">
+            <div *ngIf="this.formHeader.get('id_programa_estudio').value as programa" class="row">
               <div class="col-xl-6 col-xxl-4">
                 <nb-card class="mb-3">
                   <nb-card-body>
                     <h6 class="fw-bold">Docentes</h6>
                     <p>
-                      Este método retorna todos los docentes del programa seleccionado ({{ actualProg?.nombre }}) en el
+                      Este método retorna todos los docentes del programa seleccionado ({{ programa?.nombre }}) en el
                       periodo seleccionado
                       {{ rolSemestre?.semestre?.nombre }}
                     </p>
@@ -113,7 +119,7 @@
                   <nb-card-body>
                     <h6 class="fw-bold">Cursos</h6>
                     <p>
-                      Este método retorna todos los cursos del programa seleccionado ({{ actualProg?.nombre }}) en el
+                      Este método retorna todos los cursos del programa seleccionado ({{ programa?.nombre }}) en el
                       periodo seleccionado
                       {{ rolSemestre?.semestre?.nombre }}
                     </p>
@@ -128,7 +134,7 @@
                   <nb-card-body>
                     <h6 class="fw-bold">Silabus</h6>
                     <p>
-                      Este método retorna todos los silabus del programa seleccionado ({{ actualProg?.nombre }}) en el
+                      Este método retorna todos los silabus del programa seleccionado ({{ programa?.nombre }}) en el
                       periodo seleccionado
                       {{ rolSemestre?.semestre?.nombre }}
                     </p>
@@ -143,7 +149,7 @@
                   <nb-card-body>
                     <h6 class="fw-bold">Estudiantes</h6>
                     <p>
-                      Este método retorna todos los estudiantes del programa seleccionado ({{ actualProg?.nombre }}) en
+                      Este método retorna todos los estudiantes del programa seleccionado ({{ programa?.nombre }}) en
                       el periodo seleccionado
                       {{ rolSemestre?.semestre?.nombre }}
                     </p>
