@@ -126,7 +126,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     lenguaje: "",
     persons_student: "",
     persons_teacher: "",
-    area_id: "",
+    area: "",
   };
   date = new Date();
   loading: boolean = false;
@@ -437,7 +437,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
               (this.appService.user.person && this.appService.user.person.persons_student) || "";
             this.paramsSessionStorage.persons_teacher =
               (this.appService.user.person && this.appService.user.person.persons_teacher) || "";
-            this.paramsSessionStorage.area_id = this.appService.area;
+            this.paramsSessionStorage.area = this.appService.area;
             sessionStorage.setItem("rolSemesterLeng", JSON.stringify(this.paramsSessionStorage));
             // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
             this.emitEventsService.enviar(this.paramsSessionStorage);

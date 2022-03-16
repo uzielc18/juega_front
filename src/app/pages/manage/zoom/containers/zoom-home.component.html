@@ -7,15 +7,17 @@
         <hr>
         <form [formGroup]="formHeader">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label class="label">Buscar cuenta</label>
                 <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar cuenta por correo" [(ngModel)]="queryString" [ngModelOptions]="{standalone: true}" >
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label class="label">Programa estudio</label>
+               
                     <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
                         <nb-option value="">Todos</nb-option>
-                        <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.nombre_corto}}</nb-option>
+                        <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.nombre_corto}} &nbsp; ( {{item.sede_nombre}}
+                            {{item.semiprecencial_nombre ? ('- ' + item.semiprecencial_nombre) : ''}} )</nb-option>
                     </nb-select>
             </div>
             <div class="col-md-2">

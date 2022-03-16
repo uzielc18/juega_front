@@ -11,6 +11,7 @@ import { ZoomCourseComponent } from './components/modals/zoom-course/zoom-course
 import { ConfigZoomComponent } from './components/modals/zoom-course/config-zoom/config-zoom.component';
 import { FilterPipeModule } from 'src/app/shared/pipes/filterPipe/filterPipe.module';
 import { VZoomValidateComponent } from './components/views/v-zoom-validate/v-zoom-validate.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 const COMPONENTS: any[] = [
   ZoomComponent,
   ZoomHomeComponent,
@@ -23,7 +24,7 @@ const NG_MODULES: any = [
   NebularModule,
 ];
 const NGB_MODULES: any = [
-  // NgbModule
+  NgbModule,
 ];
 const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,
