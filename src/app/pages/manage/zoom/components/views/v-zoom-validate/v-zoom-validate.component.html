@@ -5,4 +5,10 @@
             <strong style="padding-top: 7px;">VALIDAR ZOOM</strong>
          </div>
     </nb-card-header>
+    <nb-card-body *ngIf="valida">
+        <div class="text-center">
+            <strong style="color: brown; font-size: 25px;">La vinculación no se proceso.</strong><br><br>
+            <button nbButton size="small" status="primary" (click)="backs()">Salir</button>
+        </div>
+    </nb-card-body>
 </nb-card>
