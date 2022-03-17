@@ -14,8 +14,8 @@
     <div class="row" [formGroup]="formHeader">
       <div class="col-md-4 mb-2 mb-md-0">
         <label class="label">Filial</label>
-        <nb-select placeholder="Filial" size="small" status="primary" fullWidth formControlName="id_sede">
-          <nb-option *ngFor="let sede of sedes" [value]="sede?.id" (click)="selectedSede(sede)"
+        <nb-select placeholder="Filial" size="small" status="primary" fullWidth formControlName="sede">
+          <nb-option *ngFor="let sede of sedes" [value]="sede" (click)="selectedSede(sede)"
             >{{ sede?.nombre }}
           </nb-option>
         </nb-select>
@@ -27,17 +27,17 @@
           size="small"
           status="primary"
           fullWidth
-          formControlName="id_nivel_ensenanza"
+          formControlName="nivel_ensenanza"
         >
-          <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel?.id" (click)="selectedNivel(nivel)"
+          <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel" (click)="selectedNivel(nivel)"
             >{{ nivel?.nombre }}
           </nb-option>
         </nb-select>
       </div>
       <div class="col-md-4">
         <label class="label">Facultades</label>
-        <nb-select placeholder="Facultades" size="small" status="primary" fullWidth formControlName="id_facultad">
-          <nb-option *ngFor="let fac of facultades" [value]="fac?.id" (click)="selectedFacultad(fac)"
+        <nb-select placeholder="Facultades" size="small" status="primary" fullWidth formControlName="facultad">
+          <nb-option *ngFor="let fac of facultades" [value]="fac" (click)="selectedFacultad(fac)"
             >{{ fac?.nombre }}
           </nb-option>
         </nb-select>
@@ -49,16 +49,16 @@
           size="small"
           status="primary"
           fullWidth
-          formControlName="id_programa_estudio"
+          formControlName="programa_estudio"
         >
-          <nb-option *ngFor="let prog of programa_estudios" [value]="prog?.id" (click)="selectedProgramaEstudio(prog)">
+          <nb-option *ngFor="let prog of programa_estudios" [value]="prog" (click)="selectedProgramaEstudio(prog)">
             {{ prog?.name_programa_estudio }}</nb-option
           >
         </nb-select>
       </div>
       <div class="col-md-4">
         <label class="label">Semestre</label>
-        <nb-select placeholder="Semestre" size="small" status="primary" fullWidth formControlName="id_semestre">
+        <nb-select placeholder="Semestre" size="small" status="primary" fullWidth formControlName="semestre">
           <nb-option *ngFor="let semester of semestres" [value]="semester?.nombre"
             >Semestre - {{ semester?.nombre }}
           </nb-option>
@@ -100,7 +100,7 @@
         <nb-card class="mb-0">
           <nb-card-body style="min-height: 60vh">
             <p class="fw-bold">Sincronizar por programa de estudio</p>
-            <div *ngIf="this.formHeader.get('id_programa_estudio').value as programa" class="row">
+            <div *ngIf="this.formHeader.get('programa_estudio').value as programa" class="row">
               <div class="col-xl-6 col-xxl-4">
                 <nb-card class="mb-3">
                   <nb-card-body>
