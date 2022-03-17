@@ -10,6 +10,7 @@ import { GeneralService } from 'src/app/providers';
 export class VZoomValidateComponent implements OnInit {
   code:any;
   loading: boolean = false;
+  valida: boolean = false;
   constructor(private activatedRoute: ActivatedRoute, private generalServi: GeneralService, private router: Router) { }
 
   ngOnInit(): void {
@@ -25,16 +26,22 @@ export class VZoomValidateComponent implements OnInit {
   }
   zoom() {
     const serviceName = 'zoom';
-    this.loading = true;
     const params:any = {
       code: this.code || '',
     };
     if (this.code) {
+      this.loading = true;
       this.generalServi.nameParams$(serviceName, params).subscribe((re:any) => {
         if (re.success) {
+          this.valida = false;
           this.router.navigate([`/pages/manage/zoom`]);
+        } else {
+          this.valida = true;
         }
-      }, () => { this.loading =false; }, () => { this.loading =false; });
+      }, () => { this.loading =false;  this.valida = true; }, () => { this.loading =false; });
     }
+  }
+  backs() {
+    this.router.navigate([`/pages/manage/zoom`]);
   }
 }
