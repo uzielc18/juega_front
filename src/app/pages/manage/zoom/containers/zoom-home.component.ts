@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/core';
 import { environment } from 'src/environments/environment';
+import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-zoom-home',
   templateUrl: './zoom-home.component.html',
@@ -20,14 +22,17 @@ export class ZoomHomeComponent implements OnInit {
   listProgramStudy:any = [{
     id: '',
     nombre_corto: 'Todos',
+    name_programa_estudio: 'Todos'
   }];
   public searchableList: any[] = [];
   public queryString:any;
 
   datosMe = this.appService;
-
+  nombreSubscription: any = Subscription;
+  // theRolSemestre:any;
+  valida: boolean = false;
   constructor(private dialogService: NbDialogService, private generalServi: GeneralService, private formBuilder: FormBuilder, private router: Router,
-    private appService: AppService) {
+    private appService: AppService,  private emitEventsService: EmitEventsService) {
     this.searchableList = ['correo', 'programa_estudio_nombre'];
 
   }
@@ -35,7 +40,29 @@ export class ZoomHomeComponent implements OnInit {
   ngOnInit(): void {
     this.fieldReactive();
     this.getProgramStudy();
+    this.nombreSubscription = this.emitEventsService.returns().subscribe(value => { // para emitir evento desde la cabecera
+      if (value && value.rol && value.semestre) {
+        // this.theRolSemestre =  value;
+        this.valida = true;
+        setTimeout(() => {
+          this.getZoom();
+        }, 1000);
+      } else {
+        this.valida = false;
+      }
+      });
+      this.recoveryValues();
     // this.getZoom();
+  }
+  recoveryValues() {
+    this.emitEventsService.castRolSemester.subscribe(value => {
+      if (value && value.rol && value.semestre && !this.valida) {
+        // this.theRolSemestre =  value;
+        setTimeout(() => {
+          this.getZoom();
+        }, 1000);
+      }
+    });
   }
   private fieldReactive() {
     const controls = {
@@ -68,7 +95,7 @@ export class ZoomHomeComponent implements OnInit {
               r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
             }
           })
-          this.getZoom();
+          // this.getZoom();
         }
       });
     }
@@ -163,6 +190,33 @@ export class ZoomHomeComponent implements OnInit {
     this.formHeader.patchValue({
       programa_estudio_id: event.value.programa_estudio_id,
     });
+  }
+  actualizar(item:any) {
+    const serviceName = 'actualizar-cursos';
+    this.loading = true;
+    if (item && item.id) {
+      Swal.fire({
+        title: 'Actualizar',
+        text: '¿ Desea actualizar cursos ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+        if (result.isConfirmed) {
+          this.generalServi.nameId$(serviceName, item.id).subscribe((re:any) => {
+            console.log(re);
+            
+          }, () => { this.loading =false; }, () => { this.loading =false; });
+        }
+      });
+    }
   }
  
 }
