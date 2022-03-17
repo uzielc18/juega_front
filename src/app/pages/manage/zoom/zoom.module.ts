@@ -12,7 +12,8 @@ import { ConfigZoomComponent } from './components/modals/zoom-course/config-zoom
 import { FilterPipeModule } from 'src/app/shared/pipes/filterPipe/filterPipe.module';
 import { VZoomValidateComponent } from './components/views/v-zoom-validate/v-zoom-validate.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SelectSearchModule } from 'src/app/shared/components/selectors/select-search/select-search.module';
+// import { SelectSearchModule } from 'src/app/shared/components/selectors/select-search/select-search.module';
+// import { InputSelectSearchModule } from 'src/app/shared/components/selectors/input-select-search/input-select-search.module';
 const COMPONENTS: any[] = [
   ZoomComponent,
   ZoomHomeComponent,
@@ -41,7 +42,8 @@ const MODALS: any = [
 const NGX_MODULES: any = [
 ];
 const MODULES: any = [
-  SelectSearchModule,
+  // SelectSearchModule,
+  // InputSelectSearchModule
 ];
 const PIPES: any = [
   FilterPipeModule,

@@ -416,10 +416,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.getSemestres(rol);
   }
 
-  // changeSemestre($event:any) {
-  //   this.updateSemestre($event);
-
-  // }
+  changeSemestre() {
+    this.formHeader.controls["carga"].setValue("2");
+  }
 
   updateSemestre(value: any, rol?: any) {
     const id = value.id || "";
@@ -446,6 +445,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
             if (this.formHeader.value.carga === "2") {
               this.close();
             }
+            // location.reload();
           }
         },
         () => {
