@@ -193,7 +193,6 @@ export class ZoomHomeComponent implements OnInit {
   }
   actualizar(item:any) {
     const serviceName = 'actualizar-cursos';
-    this.loading = true;
     if (item && item.id) {
       Swal.fire({
         title: 'Actualizar',
@@ -210,6 +209,7 @@ export class ZoomHomeComponent implements OnInit {
         // timer: 2000,
       }).then((result:any) => {
         if (result.isConfirmed) {
+          this.loading = true;
           this.generalServi.nameId$(serviceName, item.id).subscribe((re:any) => {
             console.log(re);
             
