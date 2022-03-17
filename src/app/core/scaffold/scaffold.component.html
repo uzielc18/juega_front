@@ -41,7 +41,7 @@
                   </div>
                   <div>
                     <label class="label">Semestre</label><br />
-                    <nb-select placeholder="Semestre" size="small" formControlName="id_semestre">
+                    <nb-select placeholder="Semestre" size="small" formControlName="id_semestre" (selectedChange)="changeSemestre()">
                       <nb-option *ngFor="let semestre of semestres; let i = index" [value]="semestre.id"
                         >Semestre - {{ semestre.nombre }}</nb-option
                       >
