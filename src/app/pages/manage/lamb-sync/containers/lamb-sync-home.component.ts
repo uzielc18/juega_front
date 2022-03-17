@@ -1,16 +1,16 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NbDialogService } from "@nebular/theme";
-import { GeneralService } from "../../../../providers";
-import { END_POINTS } from "../../../../providers/utils/end-points";
-import { ListCursosComponent } from "../components/modals/list-cursos/list-cursos.component";
-import { ListEstudiantesComponent } from "../components/modals/list-estudiantes/list-estudiantes.component";
-import { ListSilabusComponent } from "../components/modals/list-silabus/list-silabus.component";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDialogService } from '@nebular/theme';
+import { GeneralService } from '../../../../providers';
+import { END_POINTS } from '../../../../providers/utils/end-points';
+import { ListCursosComponent } from '../components/modals/list-cursos/list-cursos.component';
+import { ListEstudiantesComponent } from '../components/modals/list-estudiantes/list-estudiantes.component';
+import { ListSilabusComponent } from '../components/modals/list-silabus/list-silabus.component';
 
 @Component({
-  selector: "app-lamb-sync-home",
-  templateUrl: "./lamb-sync-home.component.html",
-  styleUrls: ["./lamb-sync-home.component.scss"],
+  selector: 'app-lamb-sync-home',
+  templateUrl: './lamb-sync-home.component.html',
+  styleUrls: ['./lamb-sync-home.component.scss'],
 })
 export class LambSyncHomeComponent implements OnInit {
   actualSede: any;
@@ -18,9 +18,9 @@ export class LambSyncHomeComponent implements OnInit {
   actualFacu: any;
   actualProg: any;
 
-  id_unidad_academica: any = "0";
-  id_carga_curso: any = "0";
-  usuario: any = "0";
+  id_unidad_academica: any = '0';
+  id_carga_curso: any = '0';
+  usuario: any = '0';
 
   sedes: any = [];
   nivelEnsenanza: any = [];
@@ -49,11 +49,11 @@ export class LambSyncHomeComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      id_sede: ["", [Validators.required]],
-      id_nivel_ensenanza: ["", [Validators.required]],
-      id_facultad: ["", [Validators.required]],
-      id_programa_estudio: ["", [Validators.required]],
-      id_semestre: [this.rolSemestre.semestre.nombre || "", [Validators.required]],
+      id_sede: ['', [Validators.required]],
+      id_nivel_ensenanza: ['', [Validators.required]],
+      id_facultad: ['', [Validators.required]],
+      id_programa_estudio: ['', [Validators.required]],
+      id_semestre: [this.rolSemestre.semestre.nombre || '', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listSedes();
@@ -61,17 +61,17 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   get rolSemestre() {
-    const sesion: any = sessionStorage.getItem("rolSemesterLeng");
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     const val = JSON.parse(sesion);
     if (val && val.rol) {
       return val;
     } else {
-      return "";
+      return '';
     }
   }
 
   listSedes() {
-    const serviceName = END_POINTS.base_back.config + "/sedes";
+    const serviceName = END_POINTS.base_back.config + '/sedes';
     this.loading = true;
     this.generalService.nameAll$(serviceName).subscribe(
       (res: any) => {
@@ -135,6 +135,15 @@ export class LambSyncHomeComponent implements OnInit {
       this.generalService.nameIdAndIdAndId$(serviceName, nivel_ense_id, sede_id, fac_id).subscribe(
         (res: any) => {
           this.programa_estudios = res.data || [];
+          if (this.programa_estudios.length > 0) {
+            this.programa_estudios.map((r: any) => {
+              r.name_programa_estudio = r.nombre_corto + ' ' + (r.sede_nombre ? r.sede_nombre : '');
+              if (r.semiprecencial_nombre) {
+                r.name_programa_estudio =
+                  r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+              }
+            });
+          }
         },
         () => {
           this.loading = false;
@@ -163,47 +172,49 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   selectedSede(sede: any) {
-    this.actualSede = sede;
+    this.formHeader.controls['id_sede'].setValue(sede.id);
     this.nivelEnsenanza = [];
     this.facultades = [];
     this.programa_estudios = [];
-    this.actualProg = "";
-    this.formHeader.controls["id_nivel_ensenanza"].setValue("");
-    this.formHeader.controls["id_facultad"].setValue("");
-    this.formHeader.controls["id_programa_estudio"].setValue("");
+    this.formHeader.controls['id_nivel_ensenanza'].setValue('');
+    this.formHeader.controls['id_facultad'].setValue('');
+    this.formHeader.controls['id_programa_estudio'].setValue('');
     this.listNivelEnsenanza(sede.id);
   }
 
   selectedNivel(nivel: any) {
-    this.actualNivel = nivel;
+    this.formHeader.controls['id_nivel_ensenanza'].setValue(nivel.id);
     this.facultades = [];
     this.programa_estudios = [];
-    this.actualProg = "";
-    this.formHeader.controls["id_facultad"].setValue("");
-    this.formHeader.controls["id_programa_estudio"].setValue("");
-    this.listFacultades(nivel.id, this.actualSede.id);
+    this.formHeader.controls['id_facultad'].setValue('');
+    this.formHeader.controls['id_programa_estudio'].setValue('');
+    this.listFacultades(nivel.id_nivel_ensenanza, this.formHeader.get('id_sede').value);
   }
 
   selectedFacultad(fac: any) {
+    this.formHeader.controls['id_facultad'].setValue(fac.id);
     this.programa_estudios = [];
-    this.actualProg = "";
-    this.formHeader.controls["id_programa_estudio"].setValue("");
-    this.listProgramaEstudios(this.actualNivel.id, this.actualSede.id, fac.id);
+    this.formHeader.controls['id_programa_estudio'].setValue('');
+    this.listProgramaEstudios(
+      this.formHeader.get('id_nivel_ensenanza').value,
+      this.formHeader.get('id_sede').value,
+      fac.id
+    );
   }
 
   selectedProgramaEstudio(prog: any) {
-    this.actualProg = prog;
+    this.formHeader.controls['id_programa_estudio'].setValue(prog.id);
   }
 
   showCursos() {
-    const serviceName = END_POINTS.base_back.config + "/cursos";
+    const serviceName = END_POINTS.base_back.config + '/cursos';
     this.loading = true;
-    if (this.actualProg) {
+    if (this.formHeader.get('id_programa_estudio').value) {
       this.generalService
         .nameIdAndIdAndIdAndId$(
           serviceName,
           this.rolSemestre.semestre.nombre,
-          this.actualProg.id_programa_estudio,
+          this.formHeader.get('id_programa_estudio').value,
           this.id_unidad_academica,
           this.usuario
         )
@@ -212,16 +223,16 @@ export class LambSyncHomeComponent implements OnInit {
             this.cursos = res.data || [];
             this.dialogService
               .open(ListCursosComponent, {
-                dialogClass: "dialog-limited-height",
+                dialogClass: 'dialog-limited-height',
                 context: {
                   item: this.cursos,
-                  prog: this.actualProg,
+                  prog: this.formHeader.get('id_programa_estudio').value,
                 },
                 closeOnBackdropClick: false,
                 closeOnEsc: false,
               })
               .onClose.subscribe((result) => {
-                if (result === "ok") {
+                if (result === 'ok') {
                   this.changeEmit.emit();
                 }
               });
@@ -237,26 +248,31 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   showSilabus() {
-    const serviceName = END_POINTS.base_back.config + "/silabus";
+    const serviceName = END_POINTS.base_back.config + '/silabus';
     this.loading = true;
-    if (this.actualProg) {
+    if (this.formHeader.get('id_programa_estudio').value) {
       this.generalService
-        .nameIdAndIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.id_carga_curso, this.actualProg.id_programa_estudio)
+        .nameIdAndIdAndId$(
+          serviceName,
+          this.rolSemestre.semestre.nombre,
+          this.id_carga_curso,
+          this.formHeader.get('id_programa_estudio').value
+        )
         .subscribe(
           (res: any) => {
             this.silabus = res.data || [];
             this.dialogService
               .open(ListSilabusComponent, {
-                dialogClass: "dialog-limited-height",
+                dialogClass: 'dialog-limited-height',
                 context: {
                   item: this.silabus,
-                  prog: this.actualProg,
+                  prog: this.formHeader.get('id_programa_estudio').value,
                 },
                 closeOnBackdropClick: false,
                 closeOnEsc: false,
               })
               .onClose.subscribe((result) => {
-                if (result === "ok") {
+                if (result === 'ok') {
                   this.changeEmit.emit();
                 }
               });
@@ -272,35 +288,37 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   showEstudiantes() {
-    const serviceName = END_POINTS.base_back.config + "/estudiantes";
+    const serviceName = END_POINTS.base_back.config + '/estudiantes';
     this.loading = true;
-    if (this.actualProg) {
-      this.generalService.nameIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.actualProg.id_programa_estudio).subscribe(
-        (res: any) => {
-          this.estudiantes = res.data || [];
-          this.dialogService
-            .open(ListEstudiantesComponent, {
-              dialogClass: "dialog-limited-height",
-              context: {
-                item: this.estudiantes,
-                prog: this.actualProg,
-              },
-              closeOnBackdropClick: false,
-              closeOnEsc: false,
-            })
-            .onClose.subscribe((result) => {
-              if (result === "ok") {
-                this.changeEmit.emit();
-              }
-            });
-        },
-        () => {
-          this.loading = false;
-        },
-        () => {
-          this.loading = false;
-        }
-      );
+    if (this.formHeader.get('id_programa_estudio').value) {
+      this.generalService
+        .nameIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.formHeader.get('id_programa_estudio').value)
+        .subscribe(
+          (res: any) => {
+            this.estudiantes = res.data || [];
+            this.dialogService
+              .open(ListEstudiantesComponent, {
+                dialogClass: 'dialog-limited-height',
+                context: {
+                  item: this.estudiantes,
+                  prog: this.formHeader.get('id_programa_estudio').value,
+                },
+                closeOnBackdropClick: false,
+                closeOnEsc: false,
+              })
+              .onClose.subscribe((result) => {
+                if (result === 'ok') {
+                  this.changeEmit.emit();
+                }
+              });
+          },
+          () => {
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
     }
   }
 }

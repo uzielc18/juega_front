@@ -28,6 +28,7 @@ export class ListCursosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.prog);
     this.refreshItems();
     this.fieldReactive();
   }
