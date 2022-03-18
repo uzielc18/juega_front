@@ -28,6 +28,7 @@ export class ZoomCourseComponent implements OnInit {
     const controls = {
       programa_estudio_id: [this.item && this.item.programa_estudio_id || ''],
       ciclo: [this.item && this.item.ciclo || ''],
+      grupo: [this.item && this.item.grupo || ''],
     };
     this.formHeader = this.formBuilder.group(controls);
     // this.getProgramStudy();
@@ -68,12 +69,14 @@ export class ZoomCourseComponent implements OnInit {
   // }
   getCourseZoom() {
     const serviceName = 'courses';
+    const forms =  this.formHeader.value;
     const params = {
-      programa_estudio_id: this.formHeader.value.programa_estudio_id || '',
-      ciclo: this.formHeader.value.ciclo || '',
+      programa_estudio_id: forms.programa_estudio_id || '',
+      ciclo: forms.ciclo || '',
+      grupo: forms.grupo || '',
       paginate: 'N',
     }
-    if (params && params.programa_estudio_id && params.ciclo) {
+    if (params && params.programa_estudio_id && params.ciclo && params.grupo) {
       this.loading = true;
       this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
         this.listCourseZoom = res.data || [];
