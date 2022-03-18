@@ -211,7 +211,7 @@ export class ZoomHomeComponent implements OnInit {
         if (result.isConfirmed) {
           this.loading = true;
           this.generalServi.nameId$(serviceName, item.id).subscribe((re:any) => {
-            console.log(re);
+            this.getZoom();
             
           }, () => { this.loading =false; }, () => { this.loading =false; });
         }

@@ -13,11 +13,6 @@ import { ListSilabusComponent } from '../components/modals/list-silabus/list-sil
   styleUrls: ['./lamb-sync-home.component.scss'],
 })
 export class LambSyncHomeComponent implements OnInit {
-  actualSede: any;
-  actualNivel: any;
-  actualFacu: any;
-  actualProg: any;
-
   id_unidad_academica: any = '0';
   id_carga_curso: any = '0';
   usuario: any = '0';
@@ -49,11 +44,11 @@ export class LambSyncHomeComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      id_sede: ['', [Validators.required]],
-      id_nivel_ensenanza: ['', [Validators.required]],
-      id_facultad: ['', [Validators.required]],
-      id_programa_estudio: ['', [Validators.required]],
-      id_semestre: [this.rolSemestre.semestre.nombre || '', [Validators.required]],
+      sede: ['', [Validators.required]],
+      nivel_ensenanza: ['', [Validators.required]],
+      facultad: ['', [Validators.required]],
+      programa_estudio: ['', [Validators.required]],
+      semestre: [this.rolSemestre.semestre.nombre || '', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listSedes();
@@ -78,7 +73,7 @@ export class LambSyncHomeComponent implements OnInit {
         this.sedes = res.data || [];
         if (this.sedes.length > 0) {
           this.formHeader.patchValue({
-            id_sede: this.sedes[0].id,
+            sede: this.sedes[0],
           });
           this.listNivelEnsenanza(this.sedes[0].id);
         }
@@ -172,49 +167,49 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   selectedSede(sede: any) {
-    this.formHeader.controls['id_sede'].setValue(sede.id);
+    this.formHeader.controls['sede'].setValue(sede);
     this.nivelEnsenanza = [];
     this.facultades = [];
     this.programa_estudios = [];
-    this.formHeader.controls['id_nivel_ensenanza'].setValue('');
-    this.formHeader.controls['id_facultad'].setValue('');
-    this.formHeader.controls['id_programa_estudio'].setValue('');
+    this.formHeader.controls['nivel_ensenanza'].setValue('');
+    this.formHeader.controls['facultad'].setValue('');
+    this.formHeader.controls['programa_estudio'].setValue('');
     this.listNivelEnsenanza(sede.id);
   }
 
   selectedNivel(nivel: any) {
-    this.formHeader.controls['id_nivel_ensenanza'].setValue(nivel.id);
+    this.formHeader.controls['nivel_ensenanza'].setValue(nivel);
     this.facultades = [];
     this.programa_estudios = [];
-    this.formHeader.controls['id_facultad'].setValue('');
-    this.formHeader.controls['id_programa_estudio'].setValue('');
-    this.listFacultades(nivel.id_nivel_ensenanza, this.formHeader.get('id_sede').value);
+    this.formHeader.controls['facultad'].setValue('');
+    this.formHeader.controls['programa_estudio'].setValue('');
+    this.listFacultades(nivel.id, this.formHeader.get('sede').value.id);
   }
 
   selectedFacultad(fac: any) {
-    this.formHeader.controls['id_facultad'].setValue(fac.id);
+    this.formHeader.controls['facultad'].setValue(fac);
     this.programa_estudios = [];
-    this.formHeader.controls['id_programa_estudio'].setValue('');
+    this.formHeader.controls['programa_estudio'].setValue('');
     this.listProgramaEstudios(
-      this.formHeader.get('id_nivel_ensenanza').value,
-      this.formHeader.get('id_sede').value,
+      this.formHeader.get('nivel_ensenanza').value.id,
+      this.formHeader.get('sede').value.id,
       fac.id
     );
   }
 
   selectedProgramaEstudio(prog: any) {
-    this.formHeader.controls['id_programa_estudio'].setValue(prog.id);
+    this.formHeader.controls['programa_estudio'].setValue(prog);
   }
 
   showCursos() {
     const serviceName = END_POINTS.base_back.config + '/cursos';
     this.loading = true;
-    if (this.formHeader.get('id_programa_estudio').value) {
+    if (this.formHeader.get('programa_estudio').value) {
       this.generalService
         .nameIdAndIdAndIdAndId$(
           serviceName,
           this.rolSemestre.semestre.nombre,
-          this.formHeader.get('id_programa_estudio').value,
+          this.formHeader.get('programa_estudio').value.id_programa_estudio,
           this.id_unidad_academica,
           this.usuario
         )
@@ -226,7 +221,7 @@ export class LambSyncHomeComponent implements OnInit {
                 dialogClass: 'dialog-limited-height',
                 context: {
                   item: this.cursos,
-                  prog: this.formHeader.get('id_programa_estudio').value,
+                  prog: this.formHeader.get('programa_estudio').value,
                 },
                 closeOnBackdropClick: false,
                 closeOnEsc: false,
@@ -250,13 +245,13 @@ export class LambSyncHomeComponent implements OnInit {
   showSilabus() {
     const serviceName = END_POINTS.base_back.config + '/silabus';
     this.loading = true;
-    if (this.formHeader.get('id_programa_estudio').value) {
+    if (this.formHeader.get('programa_estudio').value) {
       this.generalService
         .nameIdAndIdAndId$(
           serviceName,
           this.rolSemestre.semestre.nombre,
           this.id_carga_curso,
-          this.formHeader.get('id_programa_estudio').value
+          this.formHeader.get('programa_estudio').value.id_programa_estudio
         )
         .subscribe(
           (res: any) => {
@@ -266,7 +261,7 @@ export class LambSyncHomeComponent implements OnInit {
                 dialogClass: 'dialog-limited-height',
                 context: {
                   item: this.silabus,
-                  prog: this.formHeader.get('id_programa_estudio').value,
+                  prog: this.formHeader.get('programa_estudio').value,
                 },
                 closeOnBackdropClick: false,
                 closeOnEsc: false,
@@ -290,9 +285,13 @@ export class LambSyncHomeComponent implements OnInit {
   showEstudiantes() {
     const serviceName = END_POINTS.base_back.config + '/estudiantes';
     this.loading = true;
-    if (this.formHeader.get('id_programa_estudio').value) {
+    if (this.formHeader.get('programa_estudio').value) {
       this.generalService
-        .nameIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.formHeader.get('id_programa_estudio').value)
+        .nameIdAndId$(
+          serviceName,
+          this.rolSemestre.semestre.nombre,
+          this.formHeader.get('programa_estudio').value.id_programa_estudio
+        )
         .subscribe(
           (res: any) => {
             this.estudiantes = res.data || [];
@@ -301,7 +300,7 @@ export class LambSyncHomeComponent implements OnInit {
                 dialogClass: 'dialog-limited-height',
                 context: {
                   item: this.estudiantes,
-                  prog: this.formHeader.get('id_programa_estudio').value,
+                  prog: this.formHeader.get('programa_estudio').value,
                 },
                 closeOnBackdropClick: false,
                 closeOnEsc: false,
