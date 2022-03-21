@@ -5,6 +5,7 @@ import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils/end-points';
 import { ListCursosComponent } from '../components/modals/list-cursos/list-cursos.component';
 import { ListEstudiantesComponent } from '../components/modals/list-estudiantes/list-estudiantes.component';
+import { ListMatriculasComponent } from '../components/modals/list-matriculas/list-matriculas.component';
 import { ListSilabusComponent } from '../components/modals/list-silabus/list-silabus.component';
 
 @Component({
@@ -15,6 +16,7 @@ import { ListSilabusComponent } from '../components/modals/list-silabus/list-sil
 export class LambSyncHomeComponent implements OnInit {
   id_unidad_academica: any = '0';
   id_carga_curso: any = '0';
+  codigo: any = '0';
   usuario: any = '0';
 
   sedes: any = [];
@@ -27,6 +29,7 @@ export class LambSyncHomeComponent implements OnInit {
   cursos: any = [];
   silabus: any = [];
   estudiantes: any = [];
+  matriculas: any = [];
 
   loading: boolean = false;
   formHeader: any = FormGroup;
@@ -300,6 +303,47 @@ export class LambSyncHomeComponent implements OnInit {
                 dialogClass: 'dialog-limited-height',
                 context: {
                   item: this.estudiantes,
+                  prog: this.formHeader.get('programa_estudio').value,
+                },
+                closeOnBackdropClick: false,
+                closeOnEsc: false,
+              })
+              .onClose.subscribe((result) => {
+                if (result === 'ok') {
+                  this.changeEmit.emit();
+                }
+              });
+          },
+          () => {
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
+    }
+  }
+
+  showMatriculas() {
+    const serviceName = END_POINTS.base_back.config + '/get-enrollments';
+    this.loading = true;
+    if (this.formHeader.get('programa_estudio').value) {
+      this.generalService
+        .nameIdAndIdAndIdAndId$(
+          serviceName,
+          this.rolSemestre.semestre.nombre,
+          this.id_carga_curso,
+          this.codigo,
+          this.formHeader.get('programa_estudio').value.id_programa_estudio
+        )
+        .subscribe(
+          (res: any) => {
+            this.matriculas = res.data || [];
+            this.dialogService
+              .open(ListMatriculasComponent, {
+                dialogClass: 'dialog-limited-height',
+                context: {
+                  item: this.matriculas,
                   prog: this.formHeader.get('programa_estudio').value,
                 },
                 closeOnBackdropClick: false,

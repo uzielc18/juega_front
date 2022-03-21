@@ -8,7 +8,7 @@
 >
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
     <div class="d-flex align-items-center justify-content-between">
-      <h4>Cursos - {{ prog?.nombre }}</h4>
+      <h4>Matriculas - {{ prog?.nombre }}</h4>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -18,12 +18,14 @@
     <table class="table table-sm table-striped">
       <thead>
         <tr style="font-size: 14px" class="fw-bold text-center">
-          <th>Nombre del Curso</th>
+          <th>Código</th>
+          <th>Sede</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let curso of items" style="font-size: 12px" class="align-middle">
-          <td>{{ curso?.nombre_curso | titlecase }}</td>
+        <tr *ngFor="let matricula of items; let i = index" style="font-size: 12px" class="align-middle text-center">
+          <td>{{ matricula?.codigo }}</td>
+          <td>{{ matricula?.sede }}</td>
         </tr>
       </tbody>
     </table>
