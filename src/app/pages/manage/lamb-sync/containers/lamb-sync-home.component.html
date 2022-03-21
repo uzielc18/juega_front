@@ -149,12 +149,27 @@
                   <nb-card-body>
                     <h6 class="fw-bold">Estudiantes</h6>
                     <p>
-                      Este método retorna todos los estudiantes del programa seleccionado ({{ programa?.nombre }}) en
-                      el periodo seleccionado
+                      Este método retorna todos los estudiantes del programa seleccionado ({{ programa?.nombre }}) en el
+                      periodo seleccionado
                       {{ rolSemestre?.semestre?.nombre }}
                     </p>
                     <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showEstudiantes()">
                       Estudiantes
+                    </button>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+              <div class="col-xl-6 col-xxl-4">
+                <nb-card class="mb-3">
+                  <nb-card-body>
+                    <h6 class="fw-bold">Matriculas</h6>
+                    <p>
+                      Este método retorna todos las matriculas del programa seleccionado ({{ programa?.nombre }}) en el
+                      periodo seleccionado
+                      {{ rolSemestre?.semestre?.nombre }}
+                    </p>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showMatriculas()">
+                      Matriculas
                     </button>
                   </nb-card-body>
                 </nb-card>
