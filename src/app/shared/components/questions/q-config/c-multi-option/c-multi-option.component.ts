@@ -35,8 +35,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   }
   ];
   key_file:any;
-  // directorio = DIRECTORY_ELEMENTS.base;
-  directorio: any = DIRECTORY_ELEMENTS.base + `/${this.item.id_carga_curso_docente}` + '/exam'
+  directorio = DIRECTORY.base;
   loading: boolean = false;
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
@@ -51,9 +50,6 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   }
   ngOnInit(): void {
     this.valueKey();
-    // console.log(this.headParams, 'sss')
-    // console.log(this.itemQuiz, 'ppp')
-    console.log(this.item);
   }
   valueKey() {
     this.key_file = 'ssss' + '_' + '00000000001';
