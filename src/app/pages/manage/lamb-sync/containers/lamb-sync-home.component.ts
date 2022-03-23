@@ -25,6 +25,8 @@ export class LambSyncHomeComponent implements OnInit {
   programa_estudios: any = [];
   semestres: any = [];
 
+  listEstudiantes: any = [];
+
   docentes: any = [];
   cursos: any = [];
   silabus: any = [];
@@ -52,6 +54,7 @@ export class LambSyncHomeComponent implements OnInit {
       facultad: ['', [Validators.required]],
       programa_estudio: ['', [Validators.required]],
       semestre: [this.rolSemestre.semestre.nombre || '', [Validators.required]],
+      termino: ['', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listSedes();
@@ -363,5 +366,23 @@ export class LambSyncHomeComponent implements OnInit {
           }
         );
     }
+  }
+
+  searchStudent() {
+    // const serviceName = END_POINTS.base_back.default + '/person-search';
+    // this.loading = true;
+    console.log(this.formHeader.get('termino').value);
+    // this.generalService.nameAll$(serviceName).subscribe(
+      // (res: any) => {
+        // this.listEstudiantes = res.data || [];
+        // console.log(this.listEstudiantes);
+      // },
+      // () => {
+        // this.loading = false;
+      // },
+      // () => {
+        // this.loading = false;
+      // }
+    // );
   }
 }

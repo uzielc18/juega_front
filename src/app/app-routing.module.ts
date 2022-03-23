@@ -37,6 +37,10 @@ const routes: Routes = [
           import("./pages/evaluations-teacher/evaluations-teacher.module").then((m) => m.EvaluationsTeacherModule),
       },
       {
+        path: "rubrics",
+        loadChildren: () => import("./pages/rubrics/rubrics.module").then((m) => m.RubricsModule),
+      },
+      {
         path: "manage",
         loadChildren: () => import("./pages/manage/manage.module").then((m) => m.ManageModule),
       },
