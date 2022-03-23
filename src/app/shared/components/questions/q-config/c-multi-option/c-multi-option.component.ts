@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
-import { DIRECTORY } from 'src/app/shared/directorios/directory';
+import { DIRECTORY, DIRECTORY_ELEMENTS } from 'src/app/shared/directorios/directory';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-c-multi-option',
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 export class CMultiOptionComponent implements OnInit, OnChanges {
   @Input() headParams:any;
   @Input() itemQuiz:any;
+  @Input() item: any = [];
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
   arrayMultiple:any = [
@@ -34,21 +35,25 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   }
   ];
   key_file:any;
-  directorio = DIRECTORY.base;
+  // directorio = DIRECTORY_ELEMENTS.base;
+  directorio: any = DIRECTORY_ELEMENTS.base + `/${this.item.id_carga_curso_docente}` + '/exam'
   loading: boolean = false;
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
     this.headParams = JSON.parse(JSON.stringify(this.headParams));
     this.itemQuiz = JSON.parse(JSON.stringify(this.itemQuiz));
     // console.log(this.itemQuiz);
-    
+
     if (this.headParams?.code === 'UPDATE') {
       this.setUpdate();
     }
-    
+
   }
   ngOnInit(): void {
     this.valueKey();
+    // console.log(this.headParams, 'sss')
+    // console.log(this.itemQuiz, 'ppp')
+    console.log(this.item);
   }
   valueKey() {
     this.key_file = 'ssss' + '_' + '00000000001';

@@ -65,6 +65,12 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       pathMatch: "prefix",
     },
     {
+      title: "Rúbricas",
+      icon: "file-text-outline",
+      link: "/pages/rubrics",
+      pathMatch: "prefix",
+    },
+    {
       title: "Biblioteca",
       icon: "book-outline",
     },
