@@ -49,7 +49,6 @@ export class QConfigComponent implements OnInit {
     this.fieldReactive();
     this.getQuestions();
     this.getTypeAlternative();
-    console.log(this.id_carga_curso_docente);
   }
   // drop(event: CdkDragDrop<string[]>) {
   //   moveItemInArray(this.questions, event.previousIndex, event.currentIndex);
@@ -79,7 +78,7 @@ export class QConfigComponent implements OnInit {
     const serviceName = END_POINTS.base_back.quiz + '/get-questions';
     if (this.item && this.item.exam && this.item.exam.id) {
       this.id_carga_curso_docente = this.item.id_carga_curso_docente;
-      this.directorio = DIRECTORY_ELEMENTS.base + `/${this.id_carga_curso_docente}` + '/exam';
+      this.directorio = DIRECTORY_ELEMENTS.base + `/${this.id_carga_curso_docente}` + '/exam'; // directory
       this.loadingQuestion = true;
       this.generalServi.nameId$(serviceName, this.item.exam.id).subscribe(r => {
         this.questions = r.data || [];
