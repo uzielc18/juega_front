@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
@@ -41,6 +41,7 @@ export class QConfigComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.dragQuestions, event.previousIndex, event.currentIndex);
   }
+  @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService, private generalServi: GeneralService) { }
 
   ngOnInit(): void {
@@ -71,11 +72,12 @@ export class QConfigComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.key_file = this.item?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo;
+    console.log(this.item, 'Itttttt');
   }
   getQuestions() {
     const serviceName = END_POINTS.base_back.quiz + '/get-questions';
     if (this.item && this.item.exam && this.item.exam.id) {
-      this.loadingQuestion = true;
+      this.loadings.emit(true);
       this.generalServi.nameId$(serviceName, this.item.exam.id).subscribe(r => {
         this.questions = r.data || [];
         if (this.questions.length> 0) {
@@ -93,8 +95,13 @@ export class QConfigComponent implements OnInit {
               r.ultimo = true;
             }
           });
+
+          if (this.item && this.item?.pendientes_realizados !== 0) { // Solo para no editar cuando es mayor a cero (0)
+            this.formHeader.controls['drag_drop'].setValue(true);
+            this.dragQuestions = JSON.parse(JSON.stringify(this.questions));
+          }
         }
-      }, () => { this.loadingQuestion = false; }, () => { this.loadingQuestion  = false; });
+      }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
       }
   }
 
@@ -393,12 +400,12 @@ export class QConfigComponent implements OnInit {
             arrayOrder.push(object);
           }
         });
-        const serviceName = END_POINTS.base_back.quiz + 'question-orden'
+        const serviceName = END_POINTS.base_back.quiz + '/save-order'
         const params = {
           drag_and_drop: arrayOrder
         }
         this.loading = true;
-        this.generalServi.updateNameData$(serviceName, params).subscribe((res:any) => {
+        this.generalServi.addNameData$(serviceName, params).subscribe((res:any) => {
           if (res.success) {
             this.getQuestions();
             this.fieldReactive();

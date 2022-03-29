@@ -241,7 +241,20 @@ export class SesionComponent implements OnInit {
       closeOnBackdropClick: false,
       closeOnEsc: false
     }).onClose.subscribe(result => {
-      if (result === 'ok') {
+      console.log(result);
+      if (result  && result.save_close === 'ok') {
+        
+        let valid = false;
+        if (this.sesion.elements.length > 0) {
+          valid = this.sesion.elements.find((r: any) => r.type_element_id === result.values.type_element_id ? true : false);
+          if (valid) {
+            this.setCheck(result.values.type_element_id);
+            this.listElements(result.values.topic_id, result.values.type_element_id);
+          } else {
+            this.arrayEl = [];
+            this.validaExist.emit();
+          }
+        }
         // this.filtrar();
       }
     });

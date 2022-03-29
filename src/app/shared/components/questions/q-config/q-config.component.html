@@ -1,7 +1,7 @@
 <!-- drag-and-drop -->
 <div [nbSpinner]="loading || loadingQuestion" nbSpinnerStatus="primary" nbSpinnerSize="large" >
 
-<div *ngIf="questions?.length>2" style="padding-top: 0px; padding-bottom: 8px;">
+<div *ngIf="questions?.length>2 && item?.pendientes_realizados === 0" style="padding-top: 0px; padding-bottom: 8px;">
   <form [formGroup]="formHeader" class=" d-flex align-items-center justify-content-between">
     <div>
     </div>

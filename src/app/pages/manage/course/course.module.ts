@@ -6,6 +6,7 @@ import { ControlMessagesModule } from 'src/app/shared/components/control-message
 import { GeneralService } from 'src/app/providers';
 import { CourseComponent } from './course.component';
 import { CourseHomeComponent } from './containers/course-home.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 const COMPONENTS: any[] = [
   CourseComponent,
@@ -15,7 +16,7 @@ const NG_MODULES: any = [
   NebularModule,
 ];
 const NGB_MODULES: any = [
-  // NgbModule
+  NgbPaginationModule
 ];
 const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,
