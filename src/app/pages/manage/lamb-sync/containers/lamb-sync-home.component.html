@@ -68,13 +68,22 @@
   </nb-card-header>
   <nb-card-body>
     <div class="row">
-      <div class="col-md-4 col-xxl-3">
+      <div class="col-md-4 col-xxl-3" [formGroup]="formHeader">
         <nb-card>
           <nb-card-body>
             <p class="fw-bold mb-0">Sicronizar datos por estudiante</p>
             <div class="my-4">
               <nb-form-field>
-                <input type="text" nbInput fullWidth status="primary" placeholder="Nombre / Código" fieldSize="small" />
+                <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  status="primary"
+                  formControlName="termino"
+                  placeholder="Nombre / Código"
+                  fieldSize="small"
+                  (keyup.enter)="searchStudent()"
+                />
                 <button nbSuffix nbButton ghost>
                   <nb-icon icon="search-outline" pack="eva"> </nb-icon>
                 </button>
@@ -149,12 +158,27 @@
                   <nb-card-body>
                     <h6 class="fw-bold">Estudiantes</h6>
                     <p>
-                      Este método retorna todos los estudiantes del programa seleccionado ({{ programa?.nombre }}) en
-                      el periodo seleccionado
+                      Este método retorna todos los estudiantes del programa seleccionado ({{ programa?.nombre }}) en el
+                      periodo seleccionado
                       {{ rolSemestre?.semestre?.nombre }}
                     </p>
                     <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showEstudiantes()">
                       Estudiantes
+                    </button>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+              <div class="col-xl-6 col-xxl-4">
+                <nb-card class="mb-3">
+                  <nb-card-body>
+                    <h6 class="fw-bold">Matriculas</h6>
+                    <p>
+                      Este método retorna todos las matriculas del programa seleccionado ({{ programa?.nombre }}) en el
+                      periodo seleccionado
+                      {{ rolSemestre?.semestre?.nombre }}
+                    </p>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showMatriculas()">
+                      Matriculas
                     </button>
                   </nb-card-body>
                 </nb-card>

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { DIRECTORY } from 'src/app/shared/directorios/directory';
 import { END_POINTS } from 'src/app/providers/utils';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-c-relation',
@@ -27,6 +28,7 @@ export class CRelationComponent implements OnInit {
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
   directorio: any = DIRECTORY.base;
+  loading: boolean = false;
   key_file: any;
   key_file_resp: any;
 
@@ -78,13 +80,6 @@ export class CRelationComponent implements OnInit {
     this.relationList.push(option);
   }
   saveQuestion() {
-
-    // if (this.relationList.length > 0) {
-    //   this.relationList.map((r: any, index: any) => {
-    //     r.orden = index + 1;
-    //   });
-    // }
-
     this.secondList = JSON.parse(JSON.stringify(this.relationList));
     this.secondList.forEach((object: any) => {
       object.relacion = object.resp;
@@ -152,9 +147,36 @@ export class CRelationComponent implements OnInit {
   deleteSecondItemFIle(itema: any) {
     itema.resp_imagen_base64 = '';
   }
-  deleteOption(i: any) {
-    this.relationList.splice(i, 1);
+  deleteOption(i: any, item: any) {
+    const serviceName = END_POINTS.base_back.quiz + '/options';
+    if (item && item.id) {
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿ Desea eliminar ? ',
+        backdrop: true,
+        icon: 'question',
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          this.loading = true;
+          // console.log(item, 'hihjo');
+          this.generalServi.deleteNameId$(serviceName, item.id).subscribe(r => {
+            if (r.success) {
+              this.relationList.splice(i, 1);
+            }
+          }, () => { this.loading = false; }, () => { this.loading = false; });
+        }
+      });
+    } else {
+      this.relationList.splice(i, 1);
+    }
   }
+
   get validButom() {
     if (this.relationList.length > 0) {
       const array = this.relationList.filter((r: any) => !r.relacion || !r.resp || r.puntos < 0 || r.puntos === null);
@@ -167,6 +189,7 @@ export class CRelationComponent implements OnInit {
       return true;
     }
   }
+
   cancel() {
     this.relationList = {};
   }

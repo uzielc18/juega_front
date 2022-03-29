@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
-import { DIRECTORY } from 'src/app/shared/directorios/directory';
+import { DIRECTORY, DIRECTORY_ELEMENTS } from 'src/app/shared/directorios/directory';
 import { MProcessUrlComponent } from './modals/m-process-url/m-process-url.component';
 import Swal from 'sweetalert2';
 import { MSectionComponent } from './modals/m-section/m-section.component';
@@ -15,9 +15,11 @@ import { MSectionComponent } from './modals/m-section/m-section.component';
   styleUrls: ['./q-config.component.scss']
 })
 export class QConfigComponent implements OnInit {
-  @Input() item:any;
-  @Input() userInfo:any;
-  directorio: any = DIRECTORY.base;
+  @Input() item: any = [];
+  id_carga_curso_docente: any = '';
+  @Input() userInfo: any;
+  // directorio: any = DIRECTORY.base;
+  directorio: any;
   arrayFile: any = [];
   formHeader: any = FormGroup;
   loading: boolean = false;
@@ -78,6 +80,8 @@ export class QConfigComponent implements OnInit {
     const serviceName = END_POINTS.base_back.quiz + '/get-questions';
     if (this.item && this.item.exam && this.item.exam.id) {
       this.loadings.emit(true);
+      this.id_carga_curso_docente = this.item.id_carga_curso_docente;
+      this.directorio = DIRECTORY_ELEMENTS.base + `/${this.id_carga_curso_docente}` + '/exam'; // directory
       this.generalServi.nameId$(serviceName, this.item.exam.id).subscribe(r => {
         this.questions = r.data || [];
         if (this.questions.length> 0) {
@@ -418,7 +422,7 @@ export class QConfigComponent implements OnInit {
         }, () => { this.loading = false; }, () => { this.loading = false; });
         // console.log(valid, 'Plopppppppp', arrayOrder, this.dragQuestions);
       }
-      
+
     }
 
   }

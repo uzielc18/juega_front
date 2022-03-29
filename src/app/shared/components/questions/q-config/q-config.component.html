@@ -188,7 +188,7 @@
             <div *ngIf="['07'].includes(formHeader?.value?.type_alternative?.codigo)">
 
               <app-c-multi-option [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
-                (changeSuccess)="changeSuccess($event)"></app-c-multi-option>
+                (changeSuccess)="changeSuccess($event)" [item]="item"></app-c-multi-option>
 
             </div>
 

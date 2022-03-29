@@ -63,7 +63,7 @@
           <input type="number" fullWidth placeholder="Puntos" nbInput fieldSize="small" [(ngModel)]="item.puntos">
         </td>
         <td style="width: 1px;" class="text-center">
-          <button nbButton size="small" status="danger" outline (click)="deleteOption(i)">
+          <button nbButton size="small" status="danger" outline (click)="deleteOption(i, item)">
             <nb-icon icon="close-outline"></nb-icon>
           </button>
         </td>

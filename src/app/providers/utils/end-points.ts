@@ -6,6 +6,7 @@ export const END_POINTS = {
   base: '/api',
   base_back: {
     // Proyecto
+    default: '',
     resourse: 'resources-person',
     elements: 'elements',
     user: 'user',
