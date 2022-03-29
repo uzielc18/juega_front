@@ -39,8 +39,8 @@
       <app-v-document *ngIf="['DOC'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo">
       </app-v-document>
 
-      <app-v-evaluation *ngIf="['EVAL'].includes(element?.type_element?.codigo)" [element]="element"
-        [userInfo]="userInfo"></app-v-evaluation>
+      <app-v-evaluation *ngIf="['EVAL'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"
+      [pending]="pending"></app-v-evaluation>
 
       <app-v-folder *ngIf="['CARP'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo">
       </app-v-folder>

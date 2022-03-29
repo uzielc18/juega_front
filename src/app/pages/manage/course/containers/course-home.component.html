@@ -1,4 +1,4 @@
-<nb-card class="m-0 h-100 border-0" style="border-radius: 15px;">
+<nb-card class="m-0 h-100 border-0" style="border-radius: 15px;" [nbSpinner]="loading">
     <nb-card-header>
         <div class="d-flex">
             <nb-icon icon="book-open-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
@@ -7,18 +7,25 @@
        <hr>
        <form [formGroup]="formHeader">
         <div class="row">
-            <div class="col-md-6"></div>
+            <!-- <div class="col-md-6"></div> -->
             <div class="col-md-3">
-                <label class="label">Escuela</label>
-                <input type="text" nbInput fullWidth placeholder="Escuela" formControlName="id_escuela">
+                <label class="label">Programa estudio</label>
+                <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
+                    <nb-option value="">Todos</nb-option>
+                    <nb-option *ngFor="let item of litProgramStudy" [value]="item.id">{{item.name_programa_estudio}}</nb-option>
+                </nb-select>
             </div>
             <div class="col-md-3">
                 <label class="label">Ciclo</label>
-                <nb-select size="small" fullWidth placeholder="Ciclo" formControlName="ciclo">
-                    <nb-option value="1">
-                        1
-                    </nb-option>
+                <nb-select fullWidth size="small" formControlName="ciclo">
+                    <nb-option value="">Todos</nb-option>
+                    <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{item.ciclo}}</nb-option>
                 </nb-select>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-2">
+                <label class="label" style="visibility: hidden;">Filtrar</label><br>
+                        <button nbButton fullWidth size="small" status="warning" (click)="refresh()"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
             </div>
         </div>
     </form>
@@ -32,42 +39,59 @@
                         <th>Nombre</th>
                         <th>Docente</th>
                         <th>Cod. anfitrión</th>
-                        <th>>oom</th>
+                        <th>Zoom</th>
                         <th style="width: 1px;"><nb-icon icon="people" style="font-size: 20px;"></nb-icon></th>
-                        <th class="text-center" style="width: 1px;" colspan="5">Opciones</th>
+                        <th class="text-center" style="width: 1px;">Zoom</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="font-size: 12px; vertical-align: middle;">
-                        <td>21321</td>
-                        <td>Armando cristian Huarcay Quillla</td>
-                        <td>asddasdasdsad</td>
-                        <td>231321</td>
-                        <td>link del zoom</td>
-                        <td>100</td>
+                    <tr *ngFor="let item of listCourseZoom; let i = index" style="font-size: 10px; vertical-align: middle;">
+                        <td>{{item.id_carga_curso_docente}}</td>
+                        <td>{{item.nombre}}</td>
+                        <td>{{item.persons_teacher_nombre}}</td>
+                        <td>{{item.meeting_id}}</td>
+                        <td style="color: brown;">{{item.join_url}}</td>
+                        <td>{{item?.matriculados}}</td>
                         <td class="text-center">
-                            <nb-icon icon="settings-2-outline" status="warning" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
-                            Configurar
+                            <nb-icon *ngIf="item?.id_zoom_meetings" icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon> <br>
                         </td>
-                        <td class="text-center">
+                        <!-- <td class="text-center">
                             <nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Unidades
                         </td>
                         <td class="text-center">
                             <nb-icon icon="tv-outline" status="warning" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Portada
-                        </td>
-                        <td class="text-center">
+                        </td> -->
+                        <!-- <td class="text-center">
                             <nb-icon icon="edit-outline" status="info" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Editar
                         </td>
                         <td class="text-center">
                             <nb-icon icon="trash-outline" status="danger" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Eliminar
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
             </table>
         </div>
     </nb-card-body>
+    <nb-card-footer>
+        <div class="d-flex justify-content-between align-items-center p-2">
+            <div style="color: brown; font-weight: bold;">Total: {{pagination.sizeListData}}</div>
+            <ngb-pagination [collectionSize]="pagination?.sizeListData" [(page)]="pagination.page" [maxSize]="20"
+                [disabled]="pagination?.isDisabledPage" [pageSize]="pagination?.sizePage"
+                class="d-flex justify-content-center" size="sm" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+            </ngb-pagination>
+            <div>
+                <nb-form-field>
+                    <nb-icon nbPrefix icon="list-outline"></nb-icon>
+                        <nb-select placeholder="Paginación" status="success" size="tiny" fullWidth
+                        [(selected)]="selectedItem" (selectedChange)="sizeTable($event)">
+                        <nb-option *ngFor="let per of pagesCount" [value]="per">Paginar de {{per}} en {{per}}</nb-option>
+                        </nb-select>
+            </nb-form-field>
+            </div>
+        </div>
+    </nb-card-footer>
 </nb-card>

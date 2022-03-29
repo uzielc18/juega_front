@@ -15,11 +15,24 @@ export class QuestionsConfigComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserInfo();
+    console.log(this.item, 'itemsss');
+    
   }
   closeModal() {
     this.activeModal.close('close');
   }
   getUserInfo() {
     this.userInfo = this.userService.user;
+  }
+  saveValues($event:any) {
+    if ($event && $event.save_close === 'ok') {
+      this.activeModal.close($event);
+    }
+
+  }
+  loadingsss($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
   }
 }

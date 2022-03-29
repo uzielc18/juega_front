@@ -27,11 +27,11 @@
           </nb-card-body>
         </nb-card>
         <div style="padding-top: 0px;">
-          <app-q-config [item]="item" [userInfo]="userInfo"></app-q-config>
+          <app-q-config [item]="item" [userInfo]="userInfo"  (loadings)="loadingsss($event)"></app-q-config>
         </div>
       </nb-tab>
-      <nb-tab tabIcon="settings-2-outline" tabTitle="Configuraciónes">
-        Tab content 2
+      <nb-tab tabIcon="settings-2-outline" tabTitle="Publicar examen" *ngIf="item?.pendientes_realizados === 0">
+        <app-public-config-question [item]="item" [userInfo]="userInfo" (saveValues)="saveValues($event)" (loadings)="loadingsss($event)"></app-public-config-question>
       </nb-tab>
     </nb-tabset>
   </nb-card-body>

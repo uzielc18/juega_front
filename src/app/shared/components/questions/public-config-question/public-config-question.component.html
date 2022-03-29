@@ -1,0 +1,106 @@
+
+<form [formGroup]="formHeader">
+    <div>
+        <label class="label">Título</label>
+        <input type="text" nbInput fullWidth formControlName="titulo" fieldSize="small">
+        <control-messages [control]="formHeader.get('titulo')"></control-messages>
+    </div>
+    <div>
+        <label class="label">Intervención inicial</label>
+        <textarea type="text" nbInput fullWidth formControlName="descripcion" fieldSize="small"></textarea>
+        <control-messages [control]="formHeader.get('descripcion')"></control-messages>
+    </div>
+    <div>
+        <label class="label">Fecha y hora de inicio</label>
+        <div class="d-flex">
+          <nb-form-field  class="date-input">
+          <input nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="fechaInicio"
+          [status]="(formHeader.hasError('required', ['fecha_inicio'])) === true ? 'primary' : 'basic'" formControlName="fecha_inicio"/>
+          <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+          <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min"></nb-datepicker>
+          <control-messages [control]="formHeader.get('fecha_inicio')"></control-messages>
+          </nb-form-field>
+          <nb-form-field class="hour-input ms-auto">
+          <input nbInput placeholder="Hora Inicio" [nbTimepicker]="horaInicio" type="text"
+          [status]="(formHeader.hasError('required', ['hora_inicio'])) === true ? 'primary' : 'basic'" formControlName="hora_inicio"/>
+          <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
+          <nb-timepicker #horaInicio></nb-timepicker>
+          </nb-form-field>
+        </div>
+    </div>
+    <div>
+        <label class="label">Fecha y hora de fin</label>
+        <div class="d-flex">
+          <nb-form-field  class="date-input">
+          <input nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="fechaFin"
+          [status]="(formHeader.hasError('required', ['fecha_fin'])) === true ? 'primary' : 'basic'" formControlName="fecha_fin"/>
+          <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+          <nb-datepicker #fechaFin format="dd/MM/yyyy" [min]="formHeader.value.fecha_inicio"></nb-datepicker>
+          <control-messages [control]="formHeader.get('fecha_fin')"></control-messages>
+          </nb-form-field>
+          <nb-form-field class="hour-input ms-auto">
+          <input nbInput placeholder="Hora Inicio" [nbTimepicker]="horaFin" type="text"
+          [status]="(formHeader.hasError('required', ['hora_fin'])) === true ? 'primary' : 'basic'" formControlName="hora_fin"/>
+          <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
+          <nb-timepicker #horaFin></nb-timepicker>
+          </nb-form-field>
+        </div>
+    </div>
+    <div>
+        <label class="label">Duración</label>
+        <input type="number" nbInput fullWidth formControlName="duracion" fieldSize="small">
+        <control-messages [control]="formHeader.get('duracion')"></control-messages>
+    </div>
+    <br>
+    <div>
+        <label class="label">Preguntas a mostrar</label>
+        <nb-select fullWidth size="small" formControlName="aleatorio">
+            <nb-option value="0">No</nb-option>
+            <nb-option value="1">SI</nb-option>
+        </nb-select>
+        <control-messages [control]="formHeader.get('aleatorio')"></control-messages>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <nb-toggle status="basic" formControlName="mostrar_respuestas">Mostrar respuestas</nb-toggle>
+        </div>
+        <div class="col-md-4">
+            <nb-toggle status="basic" formControlName="mostrar_nota">Mostrar nota</nb-toggle>
+        </div>
+        <div class="col-md-4">
+            <nb-toggle status="basic" formControlName="supervisado" (checkedChange)="valueToogle($event)">Supervisado</nb-toggle>
+        </div>
+    </div>
+    <div>
+        <label class="label">Tipo de supervisión</label>
+        <nb-select fullWidth size="small" formControlName="tipo_supervisado" [disabled]="!formHeader.value.supervisado">
+            <nb-option value="0">Sin supervisión</nb-option>
+            <nb-option value="1">Examen de admisión</nb-option>
+            <nb-option value="2">Examen</nb-option>
+        </nb-select>
+        <control-messages [control]="formHeader.get('tipo_supervisado')"></control-messages>
+    </div>
+    <div>
+        <label class="label">Paginado</label>
+        <nb-select fullWidth size="small" formControlName="paginado">
+            <nb-option value="none">No</nb-option>
+            <nb-option value="section">Sección</nb-option>
+            <nb-option value="one">Uno a uno</nb-option>
+        </nb-select>
+        <control-messages [control]="formHeader.get('paginado')"></control-messages>
+    </div>
+    <div>
+        <label class="label">Intentos</label>
+        <nb-select fullWidth size="small" formControlName="intentos">
+            <nb-option value="" disabled>Ingrese</nb-option>
+            <nb-option *ngFor="let item of listIntentos" [value]="item">{{item}}</nb-option>
+        </nb-select>
+        <control-messages [control]="formHeader.get('intentos')"></control-messages>
+    </div>
+    <hr>
+    <div style="text-align: right;">
+        <button nbButton size="small" status="primary" [disabled]="validCampos" (click)="saveInfos('1')">Guardar configuración</button> &nbsp;&nbsp;
+        <button nbButton size="small" status="info" (click)="saveInfos('2')">Publicar examen</button>
+    </div>
+</form>

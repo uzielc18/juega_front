@@ -43,7 +43,7 @@
                         <th>Cod. anfitrión</th>
                         <th>Zoom</th>
                         <th style="width: 1px;"><nb-icon icon="people" style="font-size: 20px;"></nb-icon></th>
-                        <th class="text-center" style="width: 1px;" colspan="5">Opciones</th>
+                        <th class="text-center" style="width: 1px;">Zoom</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,10 +53,9 @@
                         <td>{{item.persons_teacher_nombre}}</td>
                         <td>{{item.meeting_id}}</td>
                         <td style="color: brown;">{{item.join_url}}</td>
-                        <td>100</td>
+                        <td>{{item?.matriculados}}</td>
                         <td class="text-center">
                             <nb-icon icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon> <br>
-                            Zoom
                         </td>
                         <!-- <td class="text-center">
                             <nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
@@ -66,14 +65,14 @@
                             <nb-icon icon="tv-outline" status="warning" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Portada
                         </td> -->
-                        <td class="text-center">
+                        <!-- <td class="text-center">
                             <nb-icon icon="edit-outline" status="info" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Editar
                         </td>
                         <td class="text-center">
                             <nb-icon icon="trash-outline" status="danger" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Eliminar
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
             </table>

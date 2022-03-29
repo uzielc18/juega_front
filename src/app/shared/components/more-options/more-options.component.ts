@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './more-options.component.html',
   styleUrls: ['./more-options.component.scss']
 })
-export class MoreOptionsComponent implements OnInit {
+export class MoreOptionsComponent implements OnInit, OnChanges {
   loading: boolean = false;
   formHeader: any = FormGroup;
   @Input() tipo:any;
@@ -14,9 +14,13 @@ export class MoreOptionsComponent implements OnInit {
   @Input() setValues:any;
   @Input() code:any;
   constructor(private formBuilder: FormBuilder) { }
-
+  ngOnChanges():void {
+    // this.setValues = JSON.parse(JSON.stringify(this.setValues));
+  }
   ngOnInit(): void {
     this.fieldReactive();
+    console.log(this.tipo);
+    
   }
   private fieldReactive() {
     const controls = {
@@ -28,6 +32,10 @@ export class MoreOptionsComponent implements OnInit {
     this.formHeader = this.formBuilder.group(controls);
     if (this.code === 'UPDATE') {
       this.updateValues();
+    } else {
+      if (this.tipo === 'EVALUACION') {
+          this.formHeader.controls['visibilidad'].setValue('N');
+      }
     }
     setTimeout(() => {
       this.formsValues.emit(this.formHeader.value);
@@ -43,7 +51,7 @@ export class MoreOptionsComponent implements OnInit {
       permitir_comentarios: this.setValues.permitir_comentarios  === '1' ? true : false,
       duration: this.setValues.duracion,
       calificable: this.setValues.calificable  === '1' ? true : false,
-      visibilidad: this.setValues.visibilidad   === '1' ? 'S' : 'N',
+      visibilidad: this.setValues.visibilidad,
     });
   }
 }
