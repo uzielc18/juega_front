@@ -8,6 +8,45 @@ import { NbDialogRef } from '@nebular/theme';
   styleUrls: ['./create-rubric.component.scss'],
 })
 export class CreateRubricComponent implements OnInit {
+  rubrica: any = {
+    nombre: 'Rubrica sssssssssss',
+    descripcion: 'aaaaaaaa',
+    num_criterios: 2,
+    num_niveles: 2,
+    criterios: [
+      {
+        titulo: 'Criterio 1',
+        descripcion: 'ssssss',
+        puntuacion: 5,
+        niveles: [
+          {
+            descripcion: 'qwww',
+            puntuacion: 5,
+          },
+          {
+            descripcion: 'wwwee',
+            puntuacion: 3,
+          },
+        ],
+      },
+      {
+        titulo: 'Criterio 2',
+        descripcion: 'aaaaaaa',
+        puntuacion: 10,
+        niveles: [
+          {
+            descripcion: 'eeer',
+            puntuacion: 10,
+          },
+          {
+            descripcion: 'rrrrt',
+            puntuacion: 5,
+          },
+        ],
+      },
+    ],
+  };
+
   loading: boolean = false;
   userForm: any = FormGroup;
   @Input() rubric: any;
@@ -36,7 +75,9 @@ export class CreateRubricComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.userForm.patchValue(this.rubrica);
+  }
 
   closeModal() {
     this.activeModal.close('close');
@@ -75,34 +116,31 @@ export class CreateRubricComponent implements OnInit {
 
   private addCriterioGroup(): FormGroup {
     return this.fb.group({
-      titulo: [''],
-      descripcion: [''],
-      puntuacion: [0],
+      titulo: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
+      puntuacion: [0, [Validators.required, Validators.min(0)]],
       niveles: this.fb.array([]),
     });
   }
 
   private NivelesGroup(): FormGroup {
     return this.fb.group({
-      // titulo: [''],
-      descripcion: [''],
-      puntuacion: [0],
+      // titulo: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
+      puntuacion: [0, [Validators.required, Validators.min(0)]],
     });
   }
 
   get criterioArray(): FormArray {
     return <FormArray>this.userForm.get('criterios');
   }
+
   addCriterios(): void {
     this.criterioArray.controls = [];
     for (let i = 0; i < this.userForm.get('num_criterios').value; i++) {
       this.criterioArray.push(this.addCriterioGroup());
     }
     this.addNiveles();
-  }
-
-  removeAddress(index: number): void {
-    this.criterioArray.removeAt(index);
   }
 
   addNiveles(): void {
@@ -113,13 +151,12 @@ export class CreateRubricComponent implements OnInit {
     });
   }
 
-  deletePhoneNumber(control: any, index: any) {
-    control.removeAt(index);
-  }
-
   nivelesGroup(nivel: any) {
     return <FormArray>nivel.controls.niveles;
   }
 
-  saveRubrica() {}
+  saveRubrica() {
+    console.log(this.userForm.value);
+    // Save Rubrica
+  }
 }

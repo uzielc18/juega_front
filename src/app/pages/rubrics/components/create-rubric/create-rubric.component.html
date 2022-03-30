@@ -97,10 +97,10 @@
             >
               <div class="fw-bold">Criterios / Niveles</div>
             </div>
-            <div class="d-flex border-end w-100">
+            <div class="d-flex border-end">
               <div
-                class="pe-2"
-                style="min-width: 208px"
+                class="me-2"
+                style="min-width: 200px; max-width: 200px;"
                 *ngFor="let item of userForm.get('criterios').value[0].niveles; let idj = index"
               >
                 <input
@@ -138,6 +138,7 @@
                       status="primary"
                       type="number"
                       formControlName="puntuacion"
+                      min="0"
                       fullWidth
                     />
                   </div>
@@ -159,7 +160,7 @@
                   *ngFor="let subgroup of nivelesGroup(group).controls; let idx = index"
                   [formGroupName]="idx"
                   class="me-2"
-                  style="min-width: 200px"
+                  style="min-width: 200px; max-width: 200px"
                 >
                   <!-- <div>
                       <input fieldSize="small" nbInput placeholder="titulo" type="text" formControlName="titulo" />
@@ -181,6 +182,8 @@
                       placeholder="Puntuacion"
                       type="number"
                       formControlName="puntuacion"
+                      min="0"
+                      [max]="group.get('puntuacion')?.value"
                       fullWidth
                     />
                   </div>
