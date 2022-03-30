@@ -1,0 +1,200 @@
+<nb-card
+  accent="primary"
+  class="scrollModal"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Procesando información"
+>
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
+    <div class="d-flex align-items-center justify-content-between">
+      <h4>Nueva Rúbrica</h4>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="userForm">
+      <div class="row">
+        <div class="col-md-8">
+          <input
+            class="mb-2"
+            type="text"
+            nbInput
+            placeholder="Título de la rubrica"
+            fullWidth
+            status="primary"
+            fieldSize="small"
+            formControlName="nombre"
+          />
+          <textarea
+            nbInput
+            fullWidth
+            placeholder="Descripción de la rubrica"
+            status="primary"
+            fieldSize="small"
+            rows="1"
+            formControlName="descripcion"
+          ></textarea>
+        </div>
+        <div class="col-md-4">
+          <div class="d-flex align-items-center mb-2">
+            <label class="label" style="width: 100px">Criterios: </label>
+            <input
+              fieldSize="small"
+              type="number"
+              status="primary"
+              nbInput
+              fullWidth
+              fieldSize="small"
+              formControlName="num_criterios"
+              min="1"
+            />
+            <div class="icons d-flex ms-2">
+              <button type="button" nbButton size="small" status="basic" (click)="downNumCriterio()">
+                <nb-icon icon="minus-outline"></nb-icon>
+              </button>
+              <button type="button" nbButton size="small" status="primary" (click)="upNumCriterio()">
+                <nb-icon icon="plus-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <label class="label" style="width: 100px">Niveles: </label>
+            <input
+              fieldSize="small"
+              type="number"
+              status="primary"
+              nbInput
+              fullWidth
+              fieldSize="small"
+              formControlName="num_niveles"
+              min="1"
+              max="7"
+            />
+            <div class="icons d-flex ms-2">
+              <button type="button" nbButton size="small" status="basic" (click)="downNumNivel()">
+                <nb-icon icon="minus-outline"></nb-icon>
+              </button>
+              <button type="button" nbButton size="small" status="primary" (click)="upNumNivel()">
+                <nb-icon icon="plus-outline"></nb-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="test mt-2">
+        <!-- <div class="buttons">
+          <button *ngIf="false" (click)="addCriterios()">Add criterios</button>
+          <button *ngIf="false" (click)="addNiveles()">Add niveles</button>
+        </div> -->
+        <div formArrayName="criterios" class="border-top" style="min-width: fit-content">
+          <div class="d-flex py-2 border-bottom" style="width: fit-content">
+            <div
+              class="d-flex align-items-center me-2 px-2 border-end border-start"
+              style="min-width: 300px; max-width: 300px"
+            >
+              <div class="fw-bold">Criterios / Niveles</div>
+            </div>
+            <div class="d-flex border-end w-100">
+              <div
+                class="pe-2"
+                style="min-width: 208px"
+                *ngFor="let item of userForm.get('criterios').value[0].niveles; let idj = index"
+              >
+                <input
+                  [ngStyle]="item ? rubricColors(idj) : {}"
+                  type="text"
+                  value="Nivel {{ idj + 1 }}"
+                  nbInput
+                  fullWidth
+                  fieldSize="small"
+                  placeholder="Nivel {{ idj + 1 }}"
+                />
+              </div>
+            </div>
+          </div>
+          <div *ngFor="let group of criterioArray.controls; let i = index" [formGroupName]="i">
+            <div class="d-flex pt-2 pb-1 border-bottom" style="max-width: fit-content">
+              <div class="me-2 px-2 border-end border-start" style="min-width: 300px; max-width: 300px">
+                <div class="d-flex">
+                  <div class="mb-2" style="width: 75%">
+                    <input
+                      fieldSize="small"
+                      nbInput
+                      placeholder="Criterio {{ i + 1 }}"
+                      status="primary"
+                      type="text"
+                      formControlName="titulo"
+                      fullWidth
+                    />
+                  </div>
+                  <div class="ms-2" style="width: 25%">
+                    <input
+                      fieldSize="small"
+                      nbInput
+                      placeholder="Puntuacion"
+                      status="primary"
+                      type="number"
+                      formControlName="puntuacion"
+                      fullWidth
+                    />
+                  </div>
+                </div>
+                <div>
+                  <textarea
+                    nbInput
+                    fullWidth
+                    placeholder="Descripción"
+                    status="primary"
+                    fieldSize="small"
+                    rows="2"
+                    formControlName="descripcion"
+                  ></textarea>
+                </div>
+              </div>
+              <div formArrayName="niveles" class="d-flex border-end">
+                <div
+                  *ngFor="let subgroup of nivelesGroup(group).controls; let idx = index"
+                  [formGroupName]="idx"
+                  class="me-2"
+                  style="min-width: 200px"
+                >
+                  <!-- <div>
+                      <input fieldSize="small" nbInput placeholder="titulo" type="text" formControlName="titulo" />
+                    </div> -->
+                  <div class="mb-1">
+                    <textarea
+                      nbInput
+                      fullWidth
+                      placeholder="Descripción"
+                      fieldSize="small"
+                      rows="2"
+                      formControlName="descripcion"
+                    ></textarea>
+                  </div>
+                  <div>
+                    <input
+                      fieldSize="small"
+                      nbInput
+                      placeholder="Puntuacion"
+                      type="number"
+                      formControlName="puntuacion"
+                      fullWidth
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>{{ userForm?.value | json }}</pre>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="d-flex">
+    <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
+    <button type="button" class="ms-2" nbButton size="small" status="primary" (click)="saveRubrica()">Guardar</button>
+  </nb-card-footer>
+</nb-card>

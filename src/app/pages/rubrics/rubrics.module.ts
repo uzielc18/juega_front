@@ -5,6 +5,7 @@ import { RubricsRoutingModule } from './rubrics-routing.module';
 import { RubricsComponent } from './rubrics.component';
 import { RubricsHomeComponent } from './containers/rubrics-home.component';
 import { NebularModule } from '../../shared/nebular.module';
+import { CreateRubricComponent } from './components/create-rubric/create-rubric.component';
 
 const COMPONENTS: any = [
   RubricsComponent,
@@ -22,6 +23,7 @@ const NEBULAR: any = [
 @NgModule({
   declarations: [
     ...COMPONENTS,
+    CreateRubricComponent,
   ],
   imports: [
     CommonModule,
