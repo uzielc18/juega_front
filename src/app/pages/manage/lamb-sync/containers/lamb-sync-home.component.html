@@ -82,13 +82,25 @@
                   formControlName="termino"
                   placeholder="Nombre / Código"
                   fieldSize="small"
-                  (keyup.enter)="searchStudent()"
+                  (keypress)="searchStudent()"
                 />
                 <button nbSuffix nbButton ghost>
                   <nb-icon icon="search-outline" pack="eva"> </nb-icon>
                 </button>
               </nb-form-field>
-              <button class="mt-2" nbButton status="primary" size="small" fullWidth>Matriculas</button>
+              <ul class="list-group">
+                <li
+                  *ngFor="let item of listEstudiantes"
+                  class="list-group-item list-group-item-action py-1"
+                  (click)="setTermino(item)"
+                >
+                  {{ item.nombres }} {{ item.apellido_paterno }} {{ item.apellido_materno }}
+                </li>
+              </ul>
+              <!-- <div *ngIf="listEstudiantes.length === 0" class="alert alert-danger py-2">No se encontró nada con el término</div> -->
+              <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="matriculaByStudent()">
+                Matriculas
+              </button>
               <button class="mt-2" nbButton status="primary" size="small" fullWidth>Datos</button>
               <button class="mt-2" nbButton status="primary" size="small" fullWidth>Cursos</button>
             </div>

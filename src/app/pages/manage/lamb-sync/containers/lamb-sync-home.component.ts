@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils/end-points';
 import { ListCursosComponent } from '../components/modals/list-cursos/list-cursos.component';
@@ -14,6 +15,7 @@ import { ListSilabusComponent } from '../components/modals/list-silabus/list-sil
   styleUrls: ['./lamb-sync-home.component.scss'],
 })
 export class LambSyncHomeComponent implements OnInit {
+  id_programa_estudio: any = '0';
   id_unidad_academica: any = '0';
   id_carga_curso: any = '0';
   codigo: any = '0';
@@ -26,6 +28,7 @@ export class LambSyncHomeComponent implements OnInit {
   semestres: any = [];
 
   listEstudiantes: any = [];
+  searchstring: any = [];
 
   docentes: any = [];
   cursos: any = [];
@@ -55,6 +58,7 @@ export class LambSyncHomeComponent implements OnInit {
       programa_estudio: ['', [Validators.required]],
       semestre: [this.rolSemestre.semestre.nombre || '', [Validators.required]],
       termino: ['', [Validators.required]],
+      estudiante: ['', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listSedes();
@@ -369,20 +373,63 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   searchStudent() {
-    // const serviceName = END_POINTS.base_back.default + '/person-search';
-    // this.loading = true;
-    console.log(this.formHeader.get('termino').value);
-    // this.generalService.nameAll$(serviceName).subscribe(
-      // (res: any) => {
-        // this.listEstudiantes = res.data || [];
-        // console.log(this.listEstudiantes);
-      // },
-      // () => {
-        // this.loading = false;
-      // },
-      // () => {
-        // this.loading = false;
-      // }
-    // );
+    const serviceName = END_POINTS.base_back.default + '/person-search';
+    if (!this.formHeader.get('estudiante').value) {
+      this.formHeader.controls['termino'].valueChanges
+        .pipe(
+          debounceTime(500),
+          distinctUntilChanged((curr: any, prev: any) => {
+            return curr.toLowerCase() === prev.toLowerCase();
+          }),
+          switchMap((text) => {
+            this.searchstring.push(text);
+            if (this.searchstring[this.searchstring.length - 1] !== this.searchstring[this.searchstring.length - 2]) {
+              return this.generalService.nameParams$(serviceName, { q: text });
+            } else {
+              return [];
+            }
+          })
+        )
+        .subscribe((res: any) => {
+          this.listEstudiantes = res.data.splice(0, 5);
+          console.log(this.listEstudiantes);
+        });
+    }
+  }
+
+  setTermino(termino: any) {
+    this.formHeader.controls['termino'].setValue(
+      `${termino.nombres} ${termino.apellido_paterno} ${termino.apellido_materno}`
+    );
+    this.formHeader.controls['estudiante'].setValue(termino);
+    this.listEstudiantes = [];
+    console.log(this.formHeader.controls['termino'].value);
+  }
+
+  matriculaByStudent() {
+    const serviceName = END_POINTS.base_back.config + '/get-enrollments';
+    this.loading = true;
+    if (this.formHeader.get('estudiante').value) {
+      this.generalService
+        .nameIdAndIdAndIdAndId$(
+          serviceName,
+          this.rolSemestre.semestre.nombre,
+          this.id_carga_curso,
+          this.formHeader.get('estudiante').value.codigo,
+          this.id_programa_estudio
+        )
+        .subscribe(
+          (res: any) => {
+            console.log(res);
+            this.formHeader.controls['estudiante'].setValue(null);
+          },
+          () => {
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
+    }
   }
 }
