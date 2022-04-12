@@ -1,36 +1,34 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { el } from "date-fns/locale";
-
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
-  selector: "app-v-est-relation",
-  templateUrl: "./v-est-relation.component.html",
-  styleUrls: ["./v-est-relation.component.scss"],
+  selector: 'app-v-est-relation',
+  templateUrl: './v-est-relation.component.html',
+  styleUrls: ['./v-est-relation.component.scss'],
 })
 export class VEstRelationComponent implements OnInit {
   @Input() alternativas: any = [];
   @Output() saveValues = new EventEmitter<any>();
+
+  form: any = FormGroup;
+
   colors: any = [
-    "#1AAE9F",
-    "#D3455B",
-    "#5D1787",
-    "#E39800",
-    "#2BADD3",
-    "#F6ACC8",
-    "#246C75",
-    "#94124E",
-    "#F1D00A",
-    "#002885",
+    '#1AAE9F',
+    '#D3455B',
+    '#5D1787',
+    '#E39800',
+    '#2BADD3',
+    '#F6ACC8',
+    '#246C75',
+    '#94124E',
+    '#F1D00A',
+    '#002885',
   ];
   randomListColor: any = [];
   relationList: any[] = [];
   secondList: any[] = [];
   randomList: any[] = [];
-  currentA: any = null;
-  currentB: any = null;
-  pares: any[] = [];
-  tempPos: any = null;
 
-  constructor() {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnChanges(): void {
     this.alternativas = JSON.parse(JSON.stringify(this.alternativas));
@@ -42,7 +40,17 @@ export class VEstRelationComponent implements OnInit {
     this.addCheckB();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fieldReactive();
+  }
+
+  private fieldReactive() {
+    const controls = {
+      itemA: [null, [Validators.required]],
+      itemB: [null, [Validators.required]],
+    };
+    this.form = this.fb.group(controls);
+  }
 
   getShuffledArr(arr: any) {
     const newArr = arr.slice();
@@ -66,8 +74,8 @@ export class VEstRelationComponent implements OnInit {
     if (this.relationList.length > 0) {
       this.relationList.map((el: any) => {
         el.selected = false;
-        el.bgcolor = "#EDF1F7";
-        el.color = "#000";
+        el.bgcolor = '#EDF1F7';
+        el.color = '#000';
       });
     }
   }
@@ -76,8 +84,8 @@ export class VEstRelationComponent implements OnInit {
     if (this.randomList.length > 0) {
       this.randomList.map((el: any) => {
         el.selected = false;
-        el.bgcolor = "#EDF1F7";
-        el.color = "#000";
+        el.bgcolor = '#EDF1F7';
+        el.color = '#000';
         el.padre = null;
       });
     }
@@ -87,83 +95,77 @@ export class VEstRelationComponent implements OnInit {
     if (!item.selected) {
       item.selected = true;
       item.bgcolor = this.randomListColor[i];
-      item.color = "#fff";
-      this.currentA = item;
+      item.color = '#fff';
+      this.form.get('itemA').setValue(item);
     } else {
       this.randomList.map((el: any) => {
         if (el.padre !== null) {
           if (el.padre.id === item.id) {
             el.selected = false;
-            el.color = "#000";
-            el.bgcolor = "#EDF1F7";
+            el.color = '#000';
+            el.bgcolor = '#EDF1F7';
             el.padre = null;
-            this.currentA = null;
+            this.form.get('itemA').setValue(null);
           } else {
             item.selected = false;
-            item.bgcolor = "#EDF1F7";
-            item.color = "#000";
-            this.currentA = null;
+            item.bgcolor = '#EDF1F7';
+            item.color = '#000';
+            this.form.get('itemA').setValue(null);
           }
         } else {
           item.selected = false;
-          item.bgcolor = "#EDF1F7";
-          item.color = "#000";
-          this.currentA = null;
+          item.bgcolor = '#EDF1F7';
+          item.color = '#000';
+          this.form.get('itemA').setValue(null);
         }
       });
     }
-    // console.log(item, "item");
-    // console.table(this.randomList);
-    // console.table(this.relationList);
   }
 
   revisarCheckB(item: any, i: any) {
-    if (!item.selected) {
-      item.padre = this.currentA;
+    if (!item.selected && this.form.get('itemA').value !== null) {
+      item.padre = this.form.get('itemA').value;
       if (item.padre !== null) {
         item.selected = item.padre.selected;
         item.color = item.padre.color;
         item.bgcolor = item.padre.bgcolor;
-        this.currentA = null;
+        this.form.get('itemA').setValue(null);
       } else {
         item.selected = false;
-        item.color = "#000";
-        item.bgcolor = "#EDF1F7";
+        item.color = '#000';
+        item.bgcolor = '#EDF1F7';
       }
     } else {
       item.selected = false;
-      item.color = "#000";
-      item.bgcolor = "#EDF1F7";
-      item.padre.color = "#000";
-      item.padre.bgcolor = "#EDF1F7";
+      item.color = '#000';
+      item.bgcolor = '#EDF1F7';
+      item.padre.color = '#000';
+      item.padre.bgcolor = '#EDF1F7';
       item.padre.selected = false;
       item.padre = null;
     }
-    // console.log(item, "item");
-    // console.table(this.randomList);
-    // console.table(this.relationList);
   }
 
   style(item: any) {
     return {
-      "background-color": item.bgcolor,
+      'background-color': item.bgcolor,
       color: item.color,
     };
   }
 
   imgStyleDef() {
     return {
-      "background-color": "#EDF1F7",
-      "border-radius": "var(--border-radius)",
-      overflow: "hidden",
+      'background-color': '#EDF1F7',
+      'border-radius': 'var(--border-radius)',
+      overflow: 'hidden',
     };
   }
 
   imgStyle(item: any) {
     return {
-      "background-color": item.bgcolor,
-      "border-radius": "var(--border-radius)",
-      overflow: "hidden",
+      'background-color': item.bgcolor,
+      'border-radius': 'var(--border-radius)',
+      overflow: 'hidden',
     };
   }
   saveResponse() {
