@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-v-est-multi-option',
-  templateUrl: './v-est-multi-option.component.html',
-  styleUrls: ['./v-est-multi-option.component.scss']
+  selector: 'app-v-est-true-false',
+  templateUrl: './v-est-true-false.component.html',
+  styleUrls: ['./v-est-true-false.component.scss']
 })
-export class VEstMultiOptionComponent implements OnInit, OnChanges {
+export class VEstTrueFalseComponent implements OnInit, OnChanges {
   @Input() alternativas:any = [];
   @Output() saveValues = new EventEmitter<any>();
   constructor() { }
@@ -15,15 +15,13 @@ export class VEstMultiOptionComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
   changeValue(item:any) {
-    if (item.checked) {
-      item.checked = false;
-      item.selected = 0;
-    } else {
-      item.checked = true;
-      item.selected = 1;
-    }
+    this.alternativas.map((re:any) => {
+      re.checked = false;
+      re.selected = 0;
+    })
+    item.checked = true;
+    item.selected = 1;
   }
-
   get alternativesMov() {
     if (this.alternativas.length>0) {
       const array = this.alternativas.filter((r:any) => r.option && !r.imagen);

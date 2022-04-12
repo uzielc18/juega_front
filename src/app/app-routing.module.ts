@@ -56,7 +56,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: "exam",
+    path: "exam/:pending_id/:person_id",
     canActivate: [Auth2Guard],
     loadChildren: () => import("./pages/exam/exam.module").then((m) => m.ExamModule),
   },

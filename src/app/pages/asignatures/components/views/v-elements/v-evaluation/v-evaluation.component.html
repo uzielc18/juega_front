@@ -22,7 +22,7 @@
             <hr>
             <div class="row">
               <div class="col-md-6">* N° de preguntas :</div>
-              <div class="col-md-6">{{element?.exam?.aleatorio === 0 ? element?.exam?.count_preguntas : element?.exam?.aleatorio}}</div>
+              <div class="col-md-6">{{element?.exam?.aleatorio === '0' ? element?.exam?.count_preguntas : element?.exam?.aleatorio}}</div>
             </div>
             <hr>
             <div class="row">
@@ -44,7 +44,10 @@
             </div>
           </nb-card-body>
           <nb-card-footer class="text-center">
-            <button nbButton size="small" status="primary">Iniciar evaluación</button>
+            <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && validFechaHoraFin">
+              <button *ngIf="!pending?.student_pending?.exam_estudent" nbButton size="small" status="primary" (click)="initEvaluations()">Iniciar evaluación</button>
+              <button *ngIf="pending?.student_pending?.exam_estudent" nbButton size="small" status="primary" (click)="backQuestions()">Volver a la evaluación</button>
+            </div>
           </nb-card-footer>
         </nb-card>
       </div>

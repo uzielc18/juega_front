@@ -1,9 +1,12 @@
 <div>
     <label class="label">Alternativas: </label><br><br>
     <div *ngIf="alternativesMov">
-    <ul class="alternatives-list" *ngFor="let item of alternativas">
-        <li><button nbButton [status]="item.selected === 1 ? 'primary' : 'basic'" size="small" fullWidth (click)="changeValue(item)">{{item.option}}</button></li>
-    </ul>
+        <div class="row">
+            <div *ngFor="let item of alternativas" class="col-md-6">
+                <button nbButton [status]="item.selected === 1 ? 'primary' : 'basic'" size="small" fullWidth (click)="changeValue(item)"
+                [ngStyle]="{'color': item.option === 'FALSO' ? 'red' : ''}">{{item.option}}</button>
+            </div>
+    </div>
     </div>
     <!-- // solo imagenes -->
     <div *ngIf="!alternativesMov" class="row" >

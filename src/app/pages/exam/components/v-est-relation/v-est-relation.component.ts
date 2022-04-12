@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { el } from "date-fns/locale";
 
 @Component({
@@ -8,7 +8,7 @@ import { el } from "date-fns/locale";
 })
 export class VEstRelationComponent implements OnInit {
   @Input() alternativas: any = [];
-
+  @Output() saveValues = new EventEmitter<any>();
   colors: any = [
     "#1AAE9F",
     "#D3455B",
@@ -165,5 +165,22 @@ export class VEstRelationComponent implements OnInit {
       "border-radius": "var(--border-radius)",
       overflow: "hidden",
     };
+  }
+  saveResponse() {
+    const arrayA = JSON.parse(JSON.stringify(this.relationList));
+    const arrayB = JSON.parse(JSON.stringify(this.secondList));
+    console.log(arrayB);
+    
+    // const response:any = [];
+    // array.map((r:any) => {
+    //   if (r.checked) {
+    //     const item = {
+    //       id: r.id,
+    //       // pregunta_id: r.pregunta_id
+    //     };
+    //     response.push(item);
+    //   }
+    // });
+    // this.saveValues.emit(response);
   }
 }

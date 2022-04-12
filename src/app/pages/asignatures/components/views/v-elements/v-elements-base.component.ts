@@ -154,4 +154,9 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
       this.getResponsesDocen();
     }
   }
+  changeLoading($event:any) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 1000);
+  } 
 }

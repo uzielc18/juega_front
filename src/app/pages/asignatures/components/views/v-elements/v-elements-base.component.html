@@ -40,7 +40,7 @@
       </app-v-document>
 
       <app-v-evaluation *ngIf="['EVAL'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"
-      [pending]="pending"></app-v-evaluation>
+      [pending]="pending" (loadingss)="changeLoading($event)"></app-v-evaluation>
 
       <app-v-folder *ngIf="['CARP'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo">
       </app-v-folder>
