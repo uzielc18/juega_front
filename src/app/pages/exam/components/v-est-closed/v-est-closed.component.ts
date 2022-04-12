@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-v-est-closed',
@@ -7,16 +6,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./v-est-closed.component.scss']
 })
 export class VEstClosedComponent implements OnInit {
-  formHeaders:any = FormGroup;
-  constructor(private formBuilder: FormBuilder) { }
-
-  ngOnInit(): void {
-    this.fieldReactive();
+  @Input() alternativas:any = [];
+  @Output() saveValues = new EventEmitter<any>();
+  constructor() { }
+  ngOnChanges():void {
+    this.alternativas = JSON.parse(JSON.stringify(this.alternativas));
   }
-  private fieldReactive() {
-    const controls = {
-      respuesta: ['', [Validators.required]]
-    }
-    this.formHeaders = this.formBuilder.group(controls);
+  ngOnInit(): void {
+  }
+  saveResponse() {
+    const array = JSON.parse(JSON.stringify(this.alternativas));
+    const response:any = [];
+    array.map((r:any) => {
+        const item = {
+          id: r.id,
+          respuesta: r.respuesta
+        };
+        response.push(item);
+    });
+    this.saveValues.emit(response);
   }
 }

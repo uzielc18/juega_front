@@ -264,7 +264,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                           .subscribe(
                             (authResult: NbAuthResult) => {
                               if (authResult.isSuccess()) {
-                                this.appService.stop();
+                                // this.appService.stop();
                                 this.router.navigate([`/auth`]);
                                 // window.location.href = environment.shellApp;
                               }

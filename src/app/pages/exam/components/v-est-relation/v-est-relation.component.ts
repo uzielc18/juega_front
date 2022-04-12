@@ -1,7 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { el } from 'date-fns/locale';
-
 @Component({
   selector: 'app-v-est-relation',
   templateUrl: './v-est-relation.component.html',
@@ -9,6 +7,7 @@ import { el } from 'date-fns/locale';
 })
 export class VEstRelationComponent implements OnInit {
   @Input() alternativas: any = [];
+  @Output() saveValues = new EventEmitter<any>();
 
   form: any = FormGroup;
 
@@ -168,5 +167,22 @@ export class VEstRelationComponent implements OnInit {
       'border-radius': 'var(--border-radius)',
       overflow: 'hidden',
     };
+  }
+  saveResponse() {
+    const arrayA = JSON.parse(JSON.stringify(this.relationList));
+    const arrayB = JSON.parse(JSON.stringify(this.secondList));
+    console.log(arrayB);
+    
+    // const response:any = [];
+    // array.map((r:any) => {
+    //   if (r.checked) {
+    //     const item = {
+    //       id: r.id,
+    //       // pregunta_id: r.pregunta_id
+    //     };
+    //     response.push(item);
+    //   }
+    // });
+    // this.saveValues.emit(response);
   }
 }

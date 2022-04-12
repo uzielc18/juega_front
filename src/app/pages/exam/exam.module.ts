@@ -11,6 +11,7 @@ import { VEstUniqueOptionComponent } from './components/v-est-unique-option/v-es
 import { VideoPlayerModule } from '../../shared/components/video-player/video-player.module';
 import { VEstClosedComponent } from './components/v-est-closed/v-est-closed.component';
 import { VEstOpenComponent } from './components/v-est-open/v-est-open.component';
+import { VEstTrueFalseComponent } from './components/v-est-true-false/v-est-true-false.component';
 
 const COMPONENTS: any = [
   ExamHomeComponent,
@@ -19,7 +20,8 @@ const COMPONENTS: any = [
   VEstMultiOptionComponent,
   VEstUniqueOptionComponent,
   VEstClosedComponent,
-  VEstOpenComponent
+  VEstOpenComponent,
+  VEstTrueFalseComponent
 ]
 
 const MODULES: any = [

@@ -1,7 +1,5 @@
-<form [formGroup]="formHeaders">
-<div class="response w-100 d-flex flex-column">
-    <label class="label">Respuesta: </label><br><br>
-    <input type="text" nbInput fullWidth status="basic" fieldSize="small" formControlName="respuesta">
-    <button nbButton outline status="primary" class="ms-auto mt-2" size="small" [disabled]="formHeaders.invalid">Guardar</button>
-  </div>
-</form>
+<div class="response w-100 d-flex flex-column" *ngFor="let item of alternativas">
+    <label class="label">Respuesta: </label>
+    <input type="text" nbInput fullWidth status="basic" fieldSize="small" [(ngModel)]="item.respuesta">
+    <button nbButton status="primary" class="ms-auto mt-2" size="tiny" [disabled]="!item.respuesta" (click)="saveResponse()">Guardar</button>
+</div>
