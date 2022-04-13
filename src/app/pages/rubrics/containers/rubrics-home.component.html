@@ -1,26 +1,30 @@
 <nb-card class="h-100 border-0" style="border-radius: 15px" nbSpinnerStatus="primary" nbSpinnerSize="small">
   <nb-card-header>
-    <h5>Hola rubrica</h5>
+    <div class="d-flex">
+      <nb-icon icon="edit-2-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px">MIS RÚBRICAS</strong>
+    </div>
+    <hr />
+    <button nbButton (click)="createRubric()">Crear Rúbrica</button>
   </nb-card-header>
   <nb-card-body class="pb-0">
     <div class="table-responsive">
       <table class="table table-sm">
         <thead>
           <tr style="font-size: 12px">
-            <th style="width: 120px" class="text-center">life</th>
-            <th>sucks</th>
-            <th style="width: 100px" class="text-center">:)</th>
+            <th class="text-center">II</th>
+            <th class="text-center">TTTT</th>
+            <th class="text-center">SSSSs</th>
           </tr>
         </thead>
         <tbody>
           <tr style="font-size: 12px; vertical-align: middle">
             <td class="text-center">ho</td>
-            <td>ho</td>
-            <td class="text-center" style="color: brown; font-weight: bold">ho</td>
+            <td class="text-center">ho</td>
+            <td class="text-center">ho</td>
           </tr>
         </tbody>
       </table>
-      <button nbButton (click)="createRubric()">Crear Rubrica</button>
     </div>
   </nb-card-body>
 </nb-card>
