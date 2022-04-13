@@ -134,12 +134,12 @@ export class CreateRubricComponent implements OnInit {
   private NivelesGroup(): FormGroup {
     return this.fb.group({
       titulo: [''],
-      descripcion: ['', [Validators.required]],
+      // descripcion: ['', [Validators.required]],
       puntuacion: [0, [Validators.required, Validators.min(0)]],
-      // rubrica: this.fb.group({
-      //   descripcion: ['', [Validators.required]],
-      //   puntuacion: [0, [Validators.required, Validators.min(0)]],
-      // }),
+      rubrica: this.fb.group({
+        descripcion: ['', [Validators.required]],
+        puntuacion: [0, [Validators.required, Validators.min(0)]],
+      }),
     });
   }
 
@@ -231,9 +231,10 @@ export class CreateRubricComponent implements OnInit {
   }
 
   saveRubrica() {
-    this.criterioArray.controls.forEach((criterio: any, index: any) => {
+    this.criterioArray.controls.forEach((criterio: any) => {
       criterio.get('niveles').controls.forEach((nivel: any, index: any) => {
         nivel.get('titulo').setValue(this.titles[index].nombre);
+        nivel.get('puntuacion').setValue(nivel.get('rubrica').get('puntuacion').value);
       });
     });
     console.log(this.userForm.value);
