@@ -392,7 +392,7 @@ export class LambSyncHomeComponent implements OnInit {
         )
         .subscribe((res: any) => {
           this.listEstudiantes = res.data.splice(0, 5);
-          console.log(this.listEstudiantes);
+          // console.log(this.listEstudiantes);
         });
     }
   }
@@ -403,7 +403,7 @@ export class LambSyncHomeComponent implements OnInit {
     );
     this.formHeader.controls['estudiante'].setValue(termino);
     this.listEstudiantes = [];
-    console.log(this.formHeader.controls['termino'].value);
+    // console.log(this.formHeader.controls['termino'].value);
   }
 
   matriculaByStudent() {
@@ -420,7 +420,7 @@ export class LambSyncHomeComponent implements OnInit {
         )
         .subscribe(
           (res: any) => {
-            console.log(res);
+            // console.log(res);
             this.formHeader.controls['estudiante'].setValue(null);
           },
           () => {

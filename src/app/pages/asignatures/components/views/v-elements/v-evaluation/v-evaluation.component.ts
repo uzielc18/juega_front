@@ -18,12 +18,12 @@ export class VEvaluationComponent implements OnInit, OnChanges {
   constructor(private service: GeneralService, private router: Router, public datepipe: DatePipe) { }
   ngOnChanges():void {
     this.pending = this.pending;
-    console.log(this.pending, this.element, 'elllllllllll', this.userInfo);
+    // console.log(this.pending, this.element, 'elllllllllll', this.userInfo);
     
   }
   ngOnInit(): void {
     this.getIp();
-    console.log(this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss'));
+    // console.log(this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss'));
     
   }
   get rolSemestre() {

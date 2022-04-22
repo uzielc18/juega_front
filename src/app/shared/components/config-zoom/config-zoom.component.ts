@@ -47,7 +47,7 @@ export class ConfigZoomComponent implements OnInit {
     this.loading = true;
     this.generalServi.nameIdAndId$(serviceName, ids.id, option).subscribe((res:any) => {
       // this.listCourseZoom = res.data || [];
-      console.log(res);
+      // console.log(res);
       
     }, () => {this.loading = false}, () => {this.loading = false});
   }
