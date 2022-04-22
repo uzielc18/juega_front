@@ -3,24 +3,61 @@
    <nb-card>
       <nb-card-header>
         <div class="row header m-0">
-          <div class="col-md-4 d-flex align-items-center">
+
+        <div class="col-md-3 d-flex align-items-center" style="margin-top: 8px;">
+            <div class="col-md-3 text-center" style="padding-left: 1px; padding-right: 1px;" *ngIf="tiempoRestante.dias > 0">
+              <nb-card status="primary" nbTooltip="Total de Preguntas" nbTooltipPlacement="top" nbTooltipStatus="primary">
+                <nb-card-header style="padding-top: 3px; padding-bottom: 3px;">
+                  <strong style="font-size: 18px;">{{tiempoRestante?.dias}}</strong><br>
+                  <strong style="font-size: 11px; font-weight: bold;">Días</strong>
+                </nb-card-header>
+              </nb-card>
+            </div>
+            <div class="col-md-3 text-center" style="padding-left: 1px; padding-right: 1px;">
+              <nb-card status="warning" nbTooltip="Total de Preguntas" nbTooltipPlacement="top" nbTooltipStatus="primary">
+                <nb-card-header style="padding-top: 3px; padding-bottom: 3px;">
+                  <strong style="font-size: 18px;">{{tiempoRestante?.horas}}</strong><br>
+                  <strong style="font-size: 11px; font-weight: bold;">Horas</strong>
+                </nb-card-header>
+              </nb-card>
+            </div>
+            <div class="col-md-3 text-center" style="padding-left: 1px; padding-right: 1px;">
+              <nb-card status="danger" nbTooltip="Total de Preguntas" nbTooltipPlacement="top" nbTooltipStatus="primary">
+                <nb-card-header style="padding-top: 3px; padding-bottom: 3px;">
+                  <strong style="font-size: 16px;">{{tiempoRestante?.minutos}}</strong><br>
+                  <strong style="font-size: 11px; font-weight: bold;">Minutos</strong>
+                </nb-card-header>
+              </nb-card>
+            </div>
+            <div class="col-md-3 text-center" style="padding-left: 1px; padding-right: 1px;">
+              <nb-card status="info" nbTooltip="Total de Preguntas" nbTooltipPlacement="top" nbTooltipStatus="primary">
+                <nb-card-header style="padding-top: 3px; padding-bottom: 3px;">
+                  <strong style="font-size: 16px;">{{tiempoRestante?.segundos}}</strong><br>
+                  <strong style="font-size: 11px; font-weight: bold;">Segundos</strong>
+                </nb-card-header>
+              </nb-card>
+            </div>
+          </div>
+
+          <!-- <div class="col-md-4 d-flex align-items-center">
             <div class="count d-md-block d-none d-md-flex" style="gap: 5px">
               <span class="time days"*ngIf="tiempoRestante.dias > 0">{{tiempoRestante?.dias}} d</span>
               <span class="time hour">{{tiempoRestante?.horas}} h</span>
               <span class="time minute">{{tiempoRestante?.minutos}} m</span>
               <span class="time second">{{tiempoRestante?.segundos}} s</span>
             </div>
+          </div> -->
+          <div class="col-md-6 text-center">
+            <!-- <div class="questions-header"> -->
+              <h5 style="padding-top: 10px; font-weight: bold;" class="title">{{!info?.titulo ? 'Nombre del examen' : info?.titulo}}</h5><br>
+              <span class="subTitle">Preguntas ( 0 / {{info?.total_questions}} )</span>
+            <!-- </div> -->
           </div>
-          <div class="col-md-4 d-flex align-items-center justify-content-center">
-            <div class="questions-header">
-              <span>{{!info?.titulo ? 'Nombre del examen' : info?.titulo}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <span>Preguntas ( 0 / {{info?.total_questions}} )</span>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex align-items-center">
-            <div class="buttons d-md-block d-none ms-auto d-md-flex flex-md-wrap" style="gap: 10px" *ngIf="!tiempoRestante?.tiempo_vencido">
-            <button nbButton status="danger" size="small" (click)="refresquestion()">Act. Preguntas</button>
-              <button nbButton status="success" size="small">Terminar</button>
+          <div class="col-md-3 d-flex align-items-center">
+            <div class="buttons d-md-block d-none ms-auto d-md-flex flex-md-wrap" style="gap: 10px">
+              <button nbButton status="primary" size="small" (click)="backGo()"><nb-icon icon="arrow-back-outline"></nb-icon> Salir</button>
+              <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="danger" size="small" (click)="refresquestion()"><nb-icon icon="refresh-outline"></nb-icon> Act. Preguntas</button>
+              <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="success" size="small">Terminar <nb-icon icon="arrowhead-right-outline"></nb-icon></button>
             </div>
           </div>
         </div>
@@ -44,7 +81,9 @@
         </div>
       </nb-card-header>
     </nb-card>
-    <div class="d-flex align-items-center justify-content-between">
+    <!-- <br *ngIf="questions?.length>0">
+    <br *ngIf="questions?.length>0"> -->
+    <div class="d-flex align-items-center justify-content-between" style="margin-top: 65px;">
       <div></div>
 
         <div style="width: 100%; max-width: 746px;">
@@ -101,10 +140,11 @@
       <div></div>
     </div>
   
-    <div class="movil-buttons d-md-none d-block" *ngIf="!tiempoRestante?.tiempo_vencido">
+    <div class="movil-buttons d-md-none d-block">
       <div class="buttons d-flex justify-content-end" style="gap: 20px">
-        <button nbButton status="danger" size="small">Act. Preguntas</button>
-        <button nbButton status="success" size="small">Terminar</button>
+        <button nbButton status="primary" size="small" (click)="backGo()"><nb-icon icon="arrow-back-outline"></nb-icon> Salir</button>
+        <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="danger" size="small" (click)="refresquestion()"><nb-icon icon="refresh-outline"></nb-icon> Act. Preguntas</button>
+        <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="success" size="small">Terminar <nb-icon icon="arrowhead-right-outline"></nb-icon></button>
       </div>
     </div>
   </nb-layout-column>

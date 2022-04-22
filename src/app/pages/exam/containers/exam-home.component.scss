@@ -28,7 +28,7 @@ nb-layout-column {
 }
 
 .header {
-  padding: 15px 20px;
+  // padding: 15px 20px;
   width: 100%;
   top: 0;
   left: 0;
@@ -38,29 +38,7 @@ nb-layout-column {
   z-index: 1;
 }
 
-.time {
-  padding: 10px;
-  border-radius: 50%;
-  font-weight: bold;
-}
-.days {
-  background-color: #96f896;
-  border: 2px solid #1AAE9F;
-}
-.hour {
-  background-color: #8DD7CF;
-  border: 2px solid #1AAE9F;
-}
 
-.minute {
-  background-color: #B2ACFA;
-  border: 2px solid #7165F6;
-}
-
-.second {
-  background-color: #F3C19D;
-  border: 2px solid #E8833A;
-}
 
 .questions-header span {
   color: #293845;
@@ -169,4 +147,10 @@ p {
 .nextBack {
   background: var(--color-primary-900) !important;
   color: white !important;
+}
+.title {
+  color: var(--color-danger-900) !important;
+}
+.subTitle {
+  color: var(--color-primary-400) !important;
 }

@@ -225,14 +225,13 @@ export class ExamHomeComponent implements OnInit {
   };
   questions:any = [];
   info:any = '';
-  tiempoRestante = {
+  tiempoRestante:any = {
     dias: 0,
     horas: 0,
     minutos: 0,
     segundos: 0,
     tiempo_vencido: false,
   }
-  sub:any = Subscription;
   constructor(private activatedRoute: ActivatedRoute, private service: GeneralService, public router: Router, private rou: ActivatedRoute,) {
       setInterval(() => {
         if (this.info) {
@@ -324,8 +323,6 @@ export class ExamHomeComponent implements OnInit {
       const serviceName = END_POINTS.base_back.quiz + '/quiz-play';
       if (this.person_id && this.pending_id) {
         this.loading = true;
-        console.log(this.page);
-        
         const params = {
           page: this.page
         }
@@ -342,9 +339,6 @@ export class ExamHomeComponent implements OnInit {
         }, () => {this.loading = false;}, () => {this.loading = false;});
       }
     }
-  }
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 
   refresquestion() {
@@ -369,6 +363,10 @@ export class ExamHomeComponent implements OnInit {
       question_student_id: item.id,
       question_id: item.question_id,
     }
-    console.log(params);
+    // console.log(params);
+  }
+  backGo() {
+    this.router.navigate([`/pages/asignatures/course/${this.info?.curso?.id_carga_curso_docente}/element/${this.info?.element_id}`]);
   }
 }
+// 'http://localhost:4200/pages/asignatures/course/127805/element/98'
