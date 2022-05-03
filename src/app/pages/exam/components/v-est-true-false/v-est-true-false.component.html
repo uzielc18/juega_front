@@ -3,18 +3,21 @@
     <div *ngIf="alternativesMov">
         <div class="row">
             <div *ngFor="let item of alternativas" class="col-md-6">
-                <button nbButton [status]="item.selected === 1 ? 'primary' : 'basic'" size="small" fullWidth (click)="changeValue(item)"
-                [ngStyle]="{'color': item.option === 'FALSO' ? 'red' : ''}">{{item.option}}</button>
+                <button style="font-size: 10px;" nbButton 
+                [status]="item?.checked && item.option_select ? 'primary' :
+                            item?.checked && !item.option_select ? 'info' : 'basic'"
+                size="small" fullWidth (click)="changeValue(item)"
+                >{{item.orden}} ).&nbsp;{{item.option}}</button>
             </div>
     </div>
     </div>
     <!-- // solo imagenes -->
     <div *ngIf="!alternativesMov" class="row" >
-        <nb-card *ngFor="let item of alternativas" class="text-center col-md-4" (click)="changeValue(item)"  [ngClass]="{'optionSelect': item.selected === 1}" 
+        <nb-card *ngFor="let item of alternativas" class="text-center col-md-4" (click)="changeValue(item)"  [ngClass]="{'optionSelect': item?.checked}" 
         style="padding: 10px; margin-bottom: 0px; cursor: pointer;">
         <nb-card-header *ngIf="item?.option">
             <strong>
-                {{item?.option}}
+                {{item.orden}} ).&nbsp;{{item?.option}}
             </strong>
         </nb-card-header>
             <nb-card-body style="padding: 10px;">

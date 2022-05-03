@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 export class VEstMultiOptionComponent implements OnInit, OnChanges {
   @Input() alternativas:any = [];
   @Output() saveValues = new EventEmitter<any>();
+  @Output() saveValueDelete = new EventEmitter<any>();
   constructor() { }
   ngOnChanges():void {
     this.alternativas = JSON.parse(JSON.stringify(this.alternativas));
@@ -18,9 +19,18 @@ export class VEstMultiOptionComponent implements OnInit, OnChanges {
     if (item.checked) {
       item.checked = false;
       item.selected = 0;
+
+      setTimeout(() => {
+        this.saveDelete(item);
+      }, 1000);
+
     } else {
       item.checked = true;
       item.selected = 1;
+
+      setTimeout(() => {
+        this.saveResponse();
+      }, 1000);
     }
   }
 
@@ -42,12 +52,18 @@ export class VEstMultiOptionComponent implements OnInit, OnChanges {
     array.map((r:any) => {
       if (r.checked) {
         const item = {
-          id: r.id,
-          // pregunta_id: r.pregunta_id
+          option_id: r.id,
+          id_election: r.id_election || null,
+          respuesta: ''
         };
         response.push(item);
       }
     });
     this.saveValues.emit(response);
+  }
+  saveDelete(item:any) {
+    if (item && item.id_election) {
+      this.saveValueDelete.emit(item);
+    }
   }
 }

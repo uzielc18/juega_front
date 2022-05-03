@@ -52,6 +52,7 @@ export class COpenComponent implements OnInit, OnChanges {
         delete r['base64'];
         delete r['checked'];
         delete r['nivel'];
+        delete r['question'];
       });
     const serviceName = END_POINTS.base_back.quiz + '/questions';
     const params:any = {

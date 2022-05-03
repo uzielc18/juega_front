@@ -19,8 +19,9 @@ export class VEstClosedComponent implements OnInit {
     const response:any = [];
     array.map((r:any) => {
         const item = {
-          id: r.id,
-          respuesta: r.respuesta
+          option_id: r.id,
+          respuesta: r.respuesta || null,
+          id_election: r.id_election || null,
         };
         response.push(item);
     });
