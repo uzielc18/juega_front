@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils/end-points';
@@ -43,7 +43,8 @@ export class LambSyncHomeComponent implements OnInit {
   constructor(
     private generalService: GeneralService,
     private formBuilder: FormBuilder,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private toastrService: NbToastrService
   ) {}
 
   ngOnInit(): void {
@@ -144,8 +145,7 @@ export class LambSyncHomeComponent implements OnInit {
             this.programa_estudios.map((r: any) => {
               r.name_programa_estudio = r.nombre_corto + ' ' + (r.sede_nombre ? r.sede_nombre : '');
               if (r.semiprecencial_nombre) {
-                r.name_programa_estudio =
-                  r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+                r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
               }
             });
           }
@@ -200,11 +200,7 @@ export class LambSyncHomeComponent implements OnInit {
     this.formHeader.controls['facultad'].setValue(fac);
     this.programa_estudios = [];
     this.formHeader.controls['programa_estudio'].setValue('');
-    this.listProgramaEstudios(
-      this.formHeader.get('nivel_ensenanza').value.id,
-      this.formHeader.get('sede').value.id,
-      fac.id
-    );
+    this.listProgramaEstudios(this.formHeader.get('nivel_ensenanza').value.id, this.formHeader.get('sede').value.id, fac.id);
   }
 
   selectedProgramaEstudio(prog: any) {
@@ -236,7 +232,7 @@ export class LambSyncHomeComponent implements OnInit {
                 closeOnBackdropClick: false,
                 closeOnEsc: false,
               })
-              .onClose.subscribe((result) => {
+              .onClose.subscribe(result => {
                 if (result === 'ok') {
                   this.changeEmit.emit();
                 }
@@ -276,7 +272,7 @@ export class LambSyncHomeComponent implements OnInit {
                 closeOnBackdropClick: false,
                 closeOnEsc: false,
               })
-              .onClose.subscribe((result) => {
+              .onClose.subscribe(result => {
                 if (result === 'ok') {
                   this.changeEmit.emit();
                 }
@@ -297,11 +293,7 @@ export class LambSyncHomeComponent implements OnInit {
     this.loading = true;
     if (this.formHeader.get('programa_estudio').value) {
       this.generalService
-        .nameIdAndId$(
-          serviceName,
-          this.rolSemestre.semestre.nombre,
-          this.formHeader.get('programa_estudio').value.id_programa_estudio
-        )
+        .nameIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.formHeader.get('programa_estudio').value.id_programa_estudio)
         .subscribe(
           (res: any) => {
             this.estudiantes = res.data || [];
@@ -315,7 +307,7 @@ export class LambSyncHomeComponent implements OnInit {
                 closeOnBackdropClick: false,
                 closeOnEsc: false,
               })
-              .onClose.subscribe((result) => {
+              .onClose.subscribe(result => {
                 if (result === 'ok') {
                   this.changeEmit.emit();
                 }
@@ -356,7 +348,7 @@ export class LambSyncHomeComponent implements OnInit {
                 closeOnBackdropClick: false,
                 closeOnEsc: false,
               })
-              .onClose.subscribe((result) => {
+              .onClose.subscribe(result => {
                 if (result === 'ok') {
                   this.changeEmit.emit();
                 }
@@ -373,37 +365,41 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   searchStudent() {
-    const serviceName = END_POINTS.base_back.default + '/person-search';
-    if (!this.formHeader.get('estudiante').value) {
+    const serviceName = END_POINTS.base_back.default + 'person-search';
+    if (this.formHeader.get('termino').value !== '') {
       this.formHeader.controls['termino'].valueChanges
         .pipe(
           debounceTime(500),
           distinctUntilChanged((curr: any, prev: any) => {
             return curr.toLowerCase() === prev.toLowerCase();
           }),
-          switchMap((text) => {
+          switchMap(text => {
             this.searchstring.push(text);
-            if (this.searchstring[this.searchstring.length - 1] !== this.searchstring[this.searchstring.length - 2]) {
+            if (text !== '' && this.searchstring[this.searchstring.length - 1] !== this.searchstring[this.searchstring.length - 2]) {
               return this.generalService.nameParams$(serviceName, { q: text });
             } else {
+              this.searchstring = [];
+              this.listEstudiantes = [];
               return [];
             }
           })
         )
         .subscribe((res: any) => {
-          this.listEstudiantes = res.data.splice(0, 5);
+          if (res.data) {
+            this.listEstudiantes = res.data.splice(0, 5);
+          }
           console.log(this.listEstudiantes);
         });
     }
   }
 
   setTermino(termino: any) {
-    this.formHeader.controls['termino'].setValue(
-      `${termino.nombres} ${termino.apellido_paterno} ${termino.apellido_materno}`
-    );
-    this.formHeader.controls['estudiante'].setValue(termino);
-    this.listEstudiantes = [];
-    console.log(this.formHeader.controls['termino'].value);
+    if (termino !== '') {
+      this.formHeader.controls['termino'].setValue(`${termino.nombres} ${termino.apellido_paterno} ${termino.apellido_materno}`);
+      this.formHeader.controls['estudiante'].setValue(termino);
+      this.listEstudiantes = [];
+      console.log(this.formHeader.controls['termino'].value);
+    }
   }
 
   matriculaByStudent() {
@@ -421,7 +417,9 @@ export class LambSyncHomeComponent implements OnInit {
         .subscribe(
           (res: any) => {
             console.log(res);
-            this.formHeader.controls['estudiante'].setValue(null);
+            this.toastrService.info(status, `${res.message}`);
+            this.formHeader.controls['termino'].setValue('');
+            this.formHeader.controls['estudiante'].setValue('');
           },
           () => {
             this.loading = false;

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { CreateRubricComponent } from '../components/create-rubric/create-rubric.component';
 
@@ -23,7 +22,7 @@ export class RubricsHomeComponent implements OnInit {
         closeOnBackdropClick: false,
         closeOnEsc: false,
       })
-      .onClose.subscribe((result) => {
+      .onClose.subscribe(result => {
         if (result === 'ok') {
           this.changeEmit.emit();
         }

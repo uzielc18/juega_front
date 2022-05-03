@@ -8,7 +8,7 @@
 >
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
     <div class="d-flex align-items-center justify-content-between">
-      <h4>Nueva Rúbrica</h4>
+      <h5>Nueva Rúbrica</h5>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -169,7 +169,7 @@
                   class="me-2"
                   style="min-width: 200px; max-width: 200px"
                 >
-                  <div class="mb-1" formGroupName="rubrica">
+                  <div class="mb-1">
                     <textarea
                       nbInput
                       fullWidth
@@ -179,7 +179,7 @@
                       formControlName="descripcion"
                     ></textarea>
                   </div>
-                  <div formGroupName="rubrica">
+                  <div>
                     <input
                       fieldSize="small"
                       nbInput
@@ -190,7 +190,10 @@
                       [max]="group.get('puntuacion')?.value"
                       fullWidth
                     />
-                    <div *ngIf="subgroup.get('puntuacion')!.value > group.get('puntuacion')?.value" class="text-danger">
+                    <div
+                      *ngIf="subgroup.get('puntuacion')?.value > group.get('puntuacion')?.value"
+                      class="text-danger"
+                    >
                       <small>*Max puntuación: {{ group.get('puntuacion')?.value }}</small>
                     </div>
                   </div>
@@ -199,7 +202,7 @@
             </div>
           </div>
         </div>
-        <!-- <pre>{{ userForm?.value | json }}</pre> -->
+        <pre>{{ userForm?.value | json }}</pre>
         <!-- <pre>{{ titles | json }}</pre> -->
       </div>
     </form>

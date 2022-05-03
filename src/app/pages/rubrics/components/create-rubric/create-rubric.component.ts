@@ -8,59 +8,59 @@ import { NbDialogRef } from '@nebular/theme';
   styleUrls: ['./create-rubric.component.scss'],
 })
 export class CreateRubricComponent implements OnInit {
-  @Input() rubrica: any = null;
-  // rubrica: any = {
-  //   nombre: 'Rubrica sssssssssss',
-  //   descripcion: 'aaaaaaaa',
-  //   num_criterios: 2,
-  //   num_niveles: 3,
-  //   criterios: [
-  //     {
-  //       titulo: 'Criterio 1',
-  //       descripcion: 'ssssss',
-  //       puntuacion: 5,
-  //       niveles: [
-  //         {
-  //           titulo: 'Nivel 1',
-  //           descripcion: 'aaaaaaaaaaaa',
-  //           puntuacion: 5,
-  //         },
-  //         {
-  //           titulo: 'Nivel 2',
-  //           descripcion: 'bbbbbbbbbbbbb',
-  //           puntuacion: 4,
-  //         },
-  //         {
-  //           titulo: 'Nivel 3',
-  //           descripcion: 'ccccccccccc',
-  //           puntuacion: 4,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       titulo: 'Criterio 2',
-  //       descripcion: 'zzzzzzzzzz',
-  //       puntuacion: 5,
-  //       niveles: [
-  //         {
-  //           titulo: 'Nivel 1',
-  //           descripcion: 'dddddddddddd',
-  //           puntuacion: 5,
-  //         },
-  //         {
-  //           titulo: 'Nivel 2',
-  //           descripcion: 'eeeeeeeeeee',
-  //           puntuacion: 4,
-  //         },
-  //         {
-  //           titulo: 'Nivel 3',
-  //           descripcion: 'ffffffffffffff',
-  //           puntuacion: 4,
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // };
+  // @Input() rubrica: any = null;
+  rubrica: any = {
+    nombre: 'Rubrica sssssssssss',
+    descripcion: 'aaaaaaaa',
+    num_criterios: 2,
+    num_niveles: 3,
+    criterios: [
+      {
+        titulo: 'Criterio 1',
+        descripcion: 'ssssss',
+        puntuacion: 5,
+        niveles: [
+          {
+            titulo: 'Nivel 1',
+            descripcion: 'aaaaaaaaaaaa',
+            puntuacion: 5,
+          },
+          {
+            titulo: 'Nivel 2',
+            descripcion: 'bbbbbbbbbbbbb',
+            puntuacion: 4,
+          },
+          {
+            titulo: 'Nivel 3',
+            descripcion: 'ccccccccccc',
+            puntuacion: 4,
+          },
+        ],
+      },
+      {
+        titulo: 'Criterio 2',
+        descripcion: 'ssssss',
+        puntuacion: 5,
+        niveles: [
+          {
+            titulo: 'Nivel 1',
+            descripcion: 'aaaaaaaaaaaa',
+            puntuacion: 5,
+          },
+          {
+            titulo: 'Nivel 2',
+            descripcion: 'bbbbbbbbbbbbb',
+            puntuacion: 4,
+          },
+          {
+            titulo: 'Nivel 3',
+            descripcion: 'ccccccccccc',
+            puntuacion: 4,
+          },
+        ],
+      },
+    ],
+  };
 
   titles: any = [];
 
@@ -134,12 +134,12 @@ export class CreateRubricComponent implements OnInit {
   private NivelesGroup(): FormGroup {
     return this.fb.group({
       titulo: [''],
-      // descripcion: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
       puntuacion: [0, [Validators.required, Validators.min(0)]],
-      rubrica: this.fb.group({
-        descripcion: ['', [Validators.required]],
-        puntuacion: [0, [Validators.required, Validators.min(0)]],
-      }),
+      // // rubrica: this.fb.group({
+      //   descripcion: ['', [Validators.required]],
+      //   puntuacion: [0, [Validators.required, Validators.min(0)]],
+      // }),
     });
   }
 
@@ -234,7 +234,6 @@ export class CreateRubricComponent implements OnInit {
     this.criterioArray.controls.forEach((criterio: any) => {
       criterio.get('niveles').controls.forEach((nivel: any, index: any) => {
         nivel.get('titulo').setValue(this.titles[index].nombre);
-        nivel.get('puntuacion').setValue(nivel.get('rubrica').get('puntuacion').value);
       });
     });
     console.log(this.userForm.value);
