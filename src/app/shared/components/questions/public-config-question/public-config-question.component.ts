@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDateService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
@@ -10,7 +10,7 @@ import { END_POINTS } from 'src/app/providers/utils';
   templateUrl: './public-config-question.component.html',
   styleUrls: ['./public-config-question.component.scss']
 })
-export class PublicConfigQuestionComponent implements OnInit {
+export class PublicConfigQuestionComponent implements OnInit, OnChanges {
   formHeader: any = FormGroup;
   min: any = Date;
   @Input() item:any;
@@ -19,14 +19,22 @@ export class PublicConfigQuestionComponent implements OnInit {
   listIntentos = ['1','2','3','4','5'];
   @Output() saveValues = new EventEmitter<any>();
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
+  @Input() examInfo:any;
   constructor(private formBuilder: FormBuilder, private generalServi: GeneralService, dateService: NbDateService<Date>,public datepipe: DatePipe) {
     let date:any = Date;
     date = dateService.today();
     this.min = dateService.addDay(date, 0);
   }
-
+  ngOnChanges():void {
+    if (this.examInfo) {
+      this.examInfo = JSON.parse(JSON.stringify(this.examInfo));
+      // console.log(this.examInfo, 'daos');
+    }
+    
+  }
   ngOnInit(): void {
     this.fieldReactive();
+    
   }
   private fieldReactive() {
     const controls = {
@@ -44,9 +52,11 @@ export class PublicConfigQuestionComponent implements OnInit {
       tipo_supervisado: [''],
       paginado: ['none', [Validators.required]],
       intentos: ['', [Validators.required]],
+      type_fin_exam: ['fin', [Validators.required]],
+      tipo_num_alternativa: ['letras', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
-    console.log(this.item, 'holas');
+    // console.log(this.item, 'holas');
     if (this.item) {
       this.setObjectUpdate();
     }
@@ -77,6 +87,9 @@ export class PublicConfigQuestionComponent implements OnInit {
             mostrar_nota:             this.item.exam?.mostrar_nota  === 'NO' ? false : true,
             supervisado:              (!this.item.exam?.supervisado || this.item.exam?.supervisado === '0') ? false : true,
             tipo_supervisado:         !this.item.exam?.supervisado ? '0' : this.item.exam?.supervisado,
+
+            type_fin_exam:             this.item.exam?.type_fin_exam,
+            tipo_num_alternativa:      this.item.exam?.tipo_num_alternativa,
           });
         }
   }
@@ -107,7 +120,7 @@ export class PublicConfigQuestionComponent implements OnInit {
     return '';
   }
   valueToogle($event:any) {
-    console.log($event);
+    // console.log($event);
     if (!$event) {
       this.formHeader.controls['tipo_supervisado'].setValue('0');
     }
@@ -126,6 +139,7 @@ export class PublicConfigQuestionComponent implements OnInit {
       return false;
     }
   }
+
   saveInfos(val:any) {
     const forms = this.formHeader.value;
     const serviceName = END_POINTS.base_back.elements;
@@ -147,7 +161,10 @@ export class PublicConfigQuestionComponent implements OnInit {
         paginado:               forms.paginado,
         mostrar_respuestas:     forms.mostrar_respuestas === false ? 'NO' : 'SI',
         mostrar_nota:           forms.mostrar_nota === false ? 'NO' : 'SI',
-        supervisado:            forms.tipo_supervisado
+        supervisado:            forms.tipo_supervisado,
+
+        type_fin_exam:          forms.type_fin_exam,
+        tipo_num_alternativa:   forms.tipo_num_alternativa,
       }
     };
      if (val === '2') {
@@ -168,5 +185,10 @@ export class PublicConfigQuestionComponent implements OnInit {
     }
   }
 
+  changeAleatorio($event:any) {
+    if ($event !== '0') {
+      this.formHeader.controls['paginado'].setValue('none');
+    }
+  }
 }
 // api elements
