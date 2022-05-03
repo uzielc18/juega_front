@@ -14,14 +14,14 @@ export class VEstRelationComponent implements OnInit {
   colors: any = [
     '#1AAE9F',
     '#D3455B',
-    '#5D1787',
-    '#E39800',
     '#2BADD3',
+    '#F1D00A',
+    '#E39800',
     '#F6ACC8',
     '#246C75',
     '#94124E',
-    '#F1D00A',
     '#002885',
+    '#5D1787',
   ];
   randomListColor: any = [];
   relationList: any[] = [];
@@ -32,12 +32,17 @@ export class VEstRelationComponent implements OnInit {
 
   ngOnChanges(): void {
     this.alternativas = JSON.parse(JSON.stringify(this.alternativas));
+
     this.relationList = this.alternativas.arrayA;
     this.secondList = this.alternativas.arrayB;
-    this.getShuffledColor(this.colors);
-    this.getShuffledArr(this.secondList);
-    this.addCheckA();
-    this.addCheckB();
+
+    // this.getShuffledColor(this.colors);
+    // this.getShuffledArr(this.secondList);
+    // this.addCheckA();
+    // this.addCheckB();
+
+    // this.setColor();
+    // this.recorrer();
   }
 
   ngOnInit(): void {
@@ -48,110 +53,213 @@ export class VEstRelationComponent implements OnInit {
     const controls = {
       itemA: [null, [Validators.required]],
       itemB: [null, [Validators.required]],
+      temporal: ['']
     };
     this.form = this.fb.group(controls);
   }
-
-  getShuffledArr(arr: any) {
-    const newArr = arr.slice();
-    for (let i = newArr.length - 1; i > 0; i--) {
-      const rand = Math.floor(Math.random() * (i + 1));
-      [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
-    }
-    this.randomList = newArr;
-  }
-
-  getShuffledColor(arr: any) {
-    const newArr = arr.slice();
-    for (let i = newArr.length - 1; i > 0; i--) {
-      const rand = Math.floor(Math.random() * (i + 1));
-      [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
-    }
-    this.randomListColor = newArr;
-  }
-
-  addCheckA() {
-    if (this.relationList.length > 0) {
-      this.relationList.map((el: any) => {
-        el.selected = false;
-        el.bgcolor = '#EDF1F7';
-        el.color = '#000';
-      });
-    }
-  }
-
-  addCheckB() {
-    if (this.randomList.length > 0) {
-      this.randomList.map((el: any) => {
-        el.selected = false;
-        el.bgcolor = '#EDF1F7';
-        el.color = '#000';
-        el.padre = null;
-      });
-    }
-  }
-
-  revisarCheckA(item: any, i: any) {
-    if (!item.selected) {
-      item.selected = true;
-      item.bgcolor = this.randomListColor[i];
-      item.color = '#fff';
-      this.form.get('itemA').setValue(item);
+  // recorrer() {
+  //   this.relationList.map((re:any) => {
+  //     if (re.relations_answers_studnet) {
+  //       re.checked = true;
+  //     }
+  //   });
+  //   this.secondList.map((re:any) => {
+  //     if (re.relations_answers_studnet) {
+  //       re.checked = true;
+  //     }
+  //   });
+  // }
+  
+  selectedA(item:any, i:any) {
+    if (item?.checked) {
+      item.checked = false;
+      item.color = '';
+      this.form.controls['temporal'].setValue('');
+      this.searchArrayB(item);
     } else {
-      this.randomList.map((el: any) => {
-        if (el.padre !== null) {
-          if (el.padre.id === item.id) {
-            el.selected = false;
-            el.color = '#000';
-            el.bgcolor = '#EDF1F7';
-            el.padre = null;
-            this.form.get('itemA').setValue(null);
-          } else {
-            item.selected = false;
-            item.bgcolor = '#EDF1F7';
-            item.color = '#000';
-            this.form.get('itemA').setValue(null);
-          }
-        } else {
-          item.selected = false;
-          item.bgcolor = '#EDF1F7';
-          item.color = '#000';
-          this.form.get('itemA').setValue(null);
-        }
-      });
+      item.checked = true;
+      item.color = this.colors[i];
+      this.form.controls['temporal'].setValue(item);
     }
   }
-
-  revisarCheckB(item: any, i: any) {
-    if (!item.selected && this.form.get('itemA').value !== null) {
-      item.padre = this.form.get('itemA').value;
-      if (item.padre !== null) {
-        item.selected = item.padre.selected;
-        item.color = item.padre.color;
-        item.bgcolor = item.padre.bgcolor;
-        this.form.get('itemA').setValue(null);
-      } else {
-        item.selected = false;
-        item.color = '#000';
-        item.bgcolor = '#EDF1F7';
+  searchArrayB(value:any) {
+    this.secondList.map((re:any) => {
+      if (value.id === re.relations_answers_studnet) {
+        re.checked = false;
+        re.color = '';
       }
+    });
+  }
+  selectedB(item:any, i:any) {
+    if (item?.checked) {
+      item.checked = false;
+      item.color = '';
+      this.searchArrayA(item);
+      item.relations_answers_studnet = '';
+      this.form.controls['temporal'].setValue('');
     } else {
-      item.selected = false;
-      item.color = '#000';
-      item.bgcolor = '#EDF1F7';
-      item.padre.color = '#000';
-      item.padre.bgcolor = '#EDF1F7';
-      item.padre.selected = false;
-      item.padre = null;
+      if (this.form.value.temporal.id) {
+        item.checked = true;
+        item.color = this.form.value.temporal.color;
+        item.relations_answers_studnet = this.form.value.temporal.id;
+        this.form.controls['temporal'].setValue('');
+      }
     }
   }
 
-  style(item: any) {
-    return {
-      'background-color': item.bgcolor,
-      color: item.color,
-    };
+  searchArrayA(value:any) {
+    this.relationList.map((re:any) => {
+      if (value.relations_answers_studnet === re.id) {
+        re.checked = false;
+        re.color = '';
+      }
+    });
   }
+  
+  styles(item: any) {
+    if (item && item.checked) {
+      // console.log(item.color);
+      
+      return {
+        'background-color': item.color,
+        color: 'white',
+      };
+    } else {
+      return {
+        'background-color': 'white',
+        color: 'black',
+      };
+    }
+  }
+
+  // searchMarker() {
+  //   if (this.relationList.length > 0) {
+  //     this.relationList.map((el: any, inde:any) => {
+  //       this.secondList.map((col: any, index:any) => {
+  //         if (el.id === index) {
+  //           el.bgcolor = col;
+  //           el.color = '#000';
+  //           el.selected = false;
+  //         }
+  //       });
+  //       // el.bgcolor = '#EDF1F7';
+  //       // el.color = '#000';
+  //     });
+  //     console.log(this.relationList);
+
+  //   }
+  // }
+
+
+
+
+
+
+
+
+
+
+
+  // getShuffledArr(arr: any) {
+  //   const newArr = arr.slice();
+  //   for (let i = newArr.length - 1; i > 0; i--) {
+  //     const rand = Math.floor(Math.random() * (i + 1));
+  //     [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+  //   }
+  //   this.randomList = newArr;
+  // }
+
+  // getShuffledColor(arr: any) {
+  //   const newArr = arr.slice();
+  //   for (let i = newArr.length - 1; i > 0; i--) {
+  //     const rand = Math.floor(Math.random() * (i + 1));
+  //     [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+  //   }
+  //   this.randomListColor = newArr;
+  // }
+
+  // addCheckA() {
+  //   if (this.relationList.length > 0) {
+  //     this.relationList.map((el: any) => {
+  //       el.selected = false;
+  //       el.bgcolor = '#EDF1F7';
+  //       el.color = '#000';
+  //     });
+  //   }
+  // }
+
+  // addCheckB() {
+  //   if (this.randomList.length > 0) {
+  //     this.randomList.map((el: any) => {
+  //       el.selected = false;
+  //       el.bgcolor = '#EDF1F7';
+  //       el.color = '#000';
+  //       el.padre = null;
+  //     });
+  //   }
+  // }
+
+  // revisarCheckA(item: any, i: any) {
+  //   if (!item.selected) {
+  //     item.selected = true;
+  //     item.bgcolor = this.randomListColor[i];
+  //     item.color = '#fff';
+  //     this.form.get('itemA').setValue(item);
+  //   } else {
+  //     this.randomList.map((el: any) => {
+  //       if (el.padre !== null) {
+  //         if (el.padre.id === item.id) {
+  //           el.selected = false;
+  //           el.color = '#000';
+  //           el.bgcolor = '#EDF1F7';
+  //           el.padre = null;
+  //           this.form.get('itemA').setValue(null);
+  //         } else {
+  //           item.selected = false;
+  //           item.bgcolor = '#EDF1F7';
+  //           item.color = '#000';
+  //           this.form.get('itemA').setValue(null);
+  //         }
+  //       } else {
+  //         item.selected = false;
+  //         item.bgcolor = '#EDF1F7';
+  //         item.color = '#000';
+  //         this.form.get('itemA').setValue(null);
+  //       }
+  //     });
+  //   }
+  // }
+
+  // revisarCheckB(item: any, i: any) {
+  //   if (!item.selected && this.form.get('itemA').value !== null) {
+  //     item.padre = this.form.get('itemA').value;
+  //     if (item.padre !== null) {
+  //       item.selected = item.padre.selected;
+  //       item.color = item.padre.color;
+  //       item.bgcolor = item.padre.bgcolor;
+  //       this.form.get('itemA').setValue(null);
+  //     } else {
+  //       item.selected = false;
+  //       item.color = '#000';
+  //       item.bgcolor = '#EDF1F7';
+  //     }
+  //   } else {
+  //     item.selected = false;
+  //     item.color = '#000';
+  //     item.bgcolor = '#EDF1F7';
+  //     item.padre.color = '#000';
+  //     item.padre.bgcolor = '#EDF1F7';
+  //     item.padre.selected = false;
+  //     item.padre = null;
+  //   }
+  // }
+
+  // style(item: any) {
+  //   return {
+  //     'background-color': item.bgcolor,
+  //     color: item.color,
+  //   };
+  // }
 
   imgStyleDef() {
     return {
@@ -171,7 +279,7 @@ export class VEstRelationComponent implements OnInit {
   saveResponse() {
     const arrayA = JSON.parse(JSON.stringify(this.relationList));
     const arrayB = JSON.parse(JSON.stringify(this.secondList));
-    console.log(arrayB);
+    console.log(arrayA);
     
     // const response:any = [];
     // array.map((r:any) => {

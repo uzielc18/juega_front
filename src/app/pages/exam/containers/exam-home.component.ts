@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import { Component, HostListener, Inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { GeneralService } from "src/app/providers";
@@ -231,45 +232,62 @@ export class ExamHomeComponent implements OnInit {
     minutos: 0,
     segundos: 0,
     tiempo_vencido: false,
-  }
-  constructor(private activatedRoute: ActivatedRoute, private service: GeneralService, public router: Router, private rou: ActivatedRoute,) {
+  };
+  time: number = 0;
+  loadingSave: boolean = false;
+  questionResponse: number = 0;
+
+  private scrollHeight = 500;
+  showButtom:boolean = true;
+  constructor(private activatedRoute: ActivatedRoute, private service: GeneralService, public router: Router, private rou: ActivatedRoute,
+    @Inject(DOCUMENT) private document: Document) {
       setInterval(() => {
         if (this.info) {
           this.countdown();
         }
       }, 1000);
+      setInterval(() => {
+        if (this.info) {
+          this.timeResponse();
+        }
+      }, 1000);
+  }
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    const yOffSet = window.pageXOffset;
+    const scrollTop = this.document.documentElement.scrollTop;
+    this.showButtom = (yOffSet || scrollTop) > this.scrollHeight;
+
+    let y:any = window.scrollY;
+    let x:any = window.scrollX;
+    console.log('hola:Scroll', x, y);
+    
   }
 
   ngOnInit(): void {
     setTimeout(() => {
       this.getQuestions();
     }, 2000);
-    // const DATE_TARGET = new Date('04/13/2023 0:01 AM');
-    // Milliseconds for the calculations
-    // this.countdown();
   }
-  // get tiempoReal() {
-  //   const NOW:any = new Date()
-  //   const DATE_TARGET:any = new Date('2022-03-30 20:00:00');
-  //   const MILLISECONDS_OF_A_SECOND = 1000;
-  //   const MILLISECONDS_OF_A_MINUTE = MILLISECONDS_OF_A_SECOND * 60;
-  //   const MILLISECONDS_OF_A_HOUR = MILLISECONDS_OF_A_MINUTE * 60;
-  //   const MILLISECONDS_OF_A_DAY = MILLISECONDS_OF_A_HOUR * 24
-  //   const DURATION = DATE_TARGET - NOW;
-  //   const REMAINING_DAYS = Math.floor(DURATION / MILLISECONDS_OF_A_DAY);
-  //   const REMAINING_HOURS = Math.floor((DURATION % MILLISECONDS_OF_A_DAY) / MILLISECONDS_OF_A_HOUR);
-  //   const REMAINING_MINUTES = Math.floor((DURATION % MILLISECONDS_OF_A_HOUR) / MILLISECONDS_OF_A_MINUTE);
-  //   const REMAINING_SECONDS = Math.floor((DURATION % MILLISECONDS_OF_A_MINUTE) / MILLISECONDS_OF_A_SECOND);
+  //  onScrollTop(): void {
+  //   const boxes:any = document.getElementsByClassName('box');
+  //       const result = boxes[0].getBoundingClientRect();
 
-  //   const tiempoRestante = {
-  //     dias: REMAINING_DAYS,
-  //     horas: REMAINING_HOURS,
-  //     minutos: REMAINING_MINUTES,
-  //     segundos: REMAINING_SECONDS,
-  //   }
-  //   console.log(REMAINING_DAYS, REMAINING_HOURS, REMAINING_MINUTES, REMAINING_SECONDS);
-  //   return tiempoRestante;
+  //    const sum = this.document.documentElement.scrollTop + result['x'];
+
+  //   this.document.documentElement.scrollTop = sum;
+  //   console.log(this.document.documentElement.scrollTop,  window.pageXOffset);
+  //   // let y:any = window.scrollY;
+  //   // let x:any = window.scrollX;
+  //   // // let x = ContainerElement.scrollLeft;
+  //   // // var y = ContainerElement.scrollTop;
+  //   // // console.log(x); // scroll position from Left
+  //   // console.log('y', y, 'x', x); // scroll position from top
+  //   // this.getPosition();
   // }
+  timeResponse() {
+    this.time ++;
+  }
   countdown() {
     // const countDate = new Date('2022-03-31 11:30:00').getTime();
     const countDate = new Date(this.info.fecha_fin).getTime();
@@ -329,18 +347,32 @@ export class ExamHomeComponent implements OnInit {
         this.service.nameIdAndIdParams$(serviceName, this.pending_id, this.person_id, params).subscribe(res => {
           this.questions = res.data && res.data.data || [];
           this.info = res.data && res.data.info || '';
+          this.questionResponse = res.data && res.data.info.preguntas_respondidas || 0;
           if (this.questions.length>0) {
             this.questions.map((re:any, index:any) => {
               if (re.nivel === '2'){
                re.numeracion = index;
               }
-            })
+              // this.getPosition();
+            });
+            console.log(this.questions);
+            
           }
         }, () => {this.loading = false;}, () => {this.loading = false;});
       }
     }
   }
+  valueScroll(value:any) {
+    console.log(value);
+    
+    const boxes:any = document.getElementsByClassName(value);
+    const result = boxes[0].getBoundingClientRect();
+    const sum = this.document.documentElement.scrollTop + result['top'];
 
+    this.document.documentElement.scrollTop = sum;
+    console.log(result);
+    
+  }
   refresquestion() {
     this.getQuestions();
   }
@@ -357,13 +389,35 @@ export class ExamHomeComponent implements OnInit {
     this.getQuestions();
   }
   save($event:any, item:any) {
+    const serviceName = END_POINTS.base_back.quiz + '/elections';
     const params = {
       alternativas: $event,
       codigo: item.codigo,
       question_student_id: item.id,
       question_id: item.question_id,
+      segundos: this.time,
+      exam_student_id: item.exam_student_id,
     }
-    // console.log(params);
+    this.loadingSave = true;
+    this.service.addNameData$(serviceName, params).subscribe(res => {
+      if (res.success) {
+        this.time = 0;
+        this.getQuestions();
+        this.questionResponse = res.data && res.data.preguntas_respondidas || 0;
+        // this.valueScroll(classs);
+      }
+    }, () => {this.loadingSave = false;}, () => {this.loadingSave = false;});
+
+    console.log(params);
+  }
+  deleteItem($event:any) {
+    const serviceName = END_POINTS.base_back.quiz + '/elections';
+    this.loadingSave = true;
+    this.service.deleteNameId$(serviceName, $event.id_election).subscribe(res => {
+      if (res.success) {
+        this.getQuestions();
+      }
+    }, () => {this.loadingSave = false;}, () => {this.loadingSave = false;});
   }
   backGo() {
     this.router.navigate([`/pages/asignatures/course/${this.info?.curso?.id_carga_curso_docente}/element/${this.info?.element_id}`]);

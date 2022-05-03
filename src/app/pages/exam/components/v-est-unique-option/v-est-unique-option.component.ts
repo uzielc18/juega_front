@@ -21,6 +21,9 @@ export class VEstUniqueOptionComponent implements OnInit, OnChanges {
     })
     item.checked = true;
     item.selected = 1;
+    setTimeout(() => {
+      this.saveResponse();
+    }, 1000);
   }
   get alternativesMov() {
     if (this.alternativas.length>0) {
@@ -40,8 +43,9 @@ export class VEstUniqueOptionComponent implements OnInit, OnChanges {
     array.map((r:any) => {
       if (r.checked) {
         const item = {
-          id: r.id,
-          // pregunta_id: r.pregunta_id
+          option_id: r.id,
+          id_election: r.id_election || null,
+          respuesta: ''
         };
         response.push(item);
       }
