@@ -1,18 +1,22 @@
 <div>
     <label class="label">Alternativas: </label><br><br>
-    <span class="d-block mb-2 fst-italic text-danger">Ud. puede marcar más de una opción</span>
+    <span class="d-block mb-2 fst-italic text-warning">Ud. puede marcar más de una opción</span>
     <div *ngIf="alternativesMov">
         <ul class="alternatives-list" *ngFor="let item of alternativas">
-            <li *ngIf="item.option"><button nbButton [status]="item.selected === 1 ? 'primary' : 'basic'" size="small" fullWidth (click)="changeValue(item)">{{item.option}}</button></li>
+            <li *ngIf="item.option"><button style="font-size: 10px;" nbButton 
+                [status]="item?.checked && item.option_select ? 'primary' :
+                item?.checked && !item.option_select ? 'info' : 'basic'" 
+                size="small" fullWidth (click)="changeValue(item)">
+                {{item.orden}} ).&nbsp;{{item.option}}</button></li>
         </ul>
     </div>
     <!-- // solo imagenes -->
     <div *ngIf="!alternativesMov" class="row" >
-        <nb-card *ngFor="let item of alternativas" class="text-center col-md-4" (click)="changeValue(item)"  [ngClass]="{'optionSelect': item.selected === 1}" 
+        <nb-card *ngFor="let item of alternativas" class="text-center col-md-4" (click)="changeValue(item)"  [ngClass]="{'optionSelect': item?.checked}" 
         style="padding: 10px; margin-bottom: 0px; cursor: pointer;">
         <nb-card-header *ngIf="item?.option">
             <strong>
-                {{item?.option}}
+                {{item.orden}} ).&nbsp;{{item?.option}}
             </strong>
         </nb-card-header>
             <nb-card-body style="padding: 10px;">

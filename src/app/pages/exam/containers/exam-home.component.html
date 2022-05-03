@@ -1,5 +1,5 @@
 <nb-layout withScroll [windowMode]="false" style=" max-height: 90 vh;">
-  <nb-layout-column [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información" style="background: #a0b9c4;">
+  <nb-layout-column [nbSpinner]="loading || loadingSave" nbSpinnerStatus="primary" nbSpinnerSize="large" style="background: #a0b9c4;">
    <nb-card>
       <nb-card-header>
         <div class="row header m-0">
@@ -50,7 +50,21 @@
           <div class="col-md-6 text-center">
             <!-- <div class="questions-header"> -->
               <h5 style="padding-top: 10px; font-weight: bold;" class="title">{{!info?.titulo ? 'Nombre del examen' : info?.titulo}}</h5><br>
-              <span class="subTitle">Preguntas ( 0 / {{info?.total_questions}} )</span>
+              <span class="subTitle">Preguntas ( {{questionResponse}} / {{info?.total_questions}} )</span>
+              <ng-container *ngIf="loadingSave" style="font-size: 10px;">
+                <br>
+                <div class="spinner-grow text-success" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-danger" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-warning" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </ng-container>
+              <!-- <button class="button" (click)="onScrollTop()">👆</button> -->
+              
             <!-- </div> -->
           </div>
           <div class="col-md-3 d-flex align-items-center">
@@ -88,17 +102,21 @@
 
         <div style="width: 100%; max-width: 746px;">
           <div *ngIf="!tiempoRestante?.tiempo_vencido">
-            <nb-card *ngFor="let item of questions" [accent]="item?.nivel === '1' ? 'primary' : ''">
+            <nb-card *ngFor="let item of questions; let i = index" [accent]="item?.nivel === '1' ? 'primary' : ''" [class]="i+'box'">
               <nb-card-header *ngIf="item.nivel === '1'">
                   <h5 class="sections">{{item.titulo}}</h5>
                   <p *ngIf="item.descripcion" style="font-size: 12px; text-align: justify;">{{item.descripcion}}</p>
               </nb-card-header>
               <nb-card-body *ngIf="item.nivel === '2'">
                 <div >
-                <strong style="font-size: 12px; text-align: justify;">{{item.numeracion}}). {{item?.pregunta?.pregunta}}</strong>
+                  <div *ngIf="info?.paginado === 'one' || info?.aleatorio !== '0'">
+                    <h5 class="sections">{{item?.section?.titulo}}</h5>
+                    <br>
+                  </div>
+                <strong style="font-size: 12px; text-align: justify;">{{item?.numeracion}}). {{item?.pregunta?.pregunta}}</strong>
                   <br>
                   <div *ngIf="['07'].includes(item.codigo)">
-                    <app-v-est-multi-option [alternativas]="item?.alternativas" (saveValues)="save($event, item)"></app-v-est-multi-option>
+                    <app-v-est-multi-option [alternativas]="item?.alternativas" (saveValues)="save($event, item)" (saveValueDelete)="deleteItem($event)"></app-v-est-multi-option>
                   </div>
                   <div *ngIf="['01'].includes(item.codigo)">
                     <app-v-est-unique-option [alternativas]="item?.alternativas" (saveValues)="save($event, item)"></app-v-est-unique-option>
@@ -116,6 +134,7 @@
                     <app-v-est-relation [alternativas]="item?.alternativas"></app-v-est-relation>
                   </div>
                 </div>
+                <button (click)="valueScroll(i+'box')">ssssss</button>
               </nb-card-body>
             </nb-card>
             <div *ngIf="['section', 'one'].includes(info?.paginado)" class="d-flex align-items-center justify-content-between">
@@ -148,6 +167,7 @@
         <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="success" size="small">Terminar <nb-icon icon="arrowhead-right-outline"></nb-icon></button>
       </div>
     </div>
+  
   </nb-layout-column>
   <!-- <nb-layout-footer>
     dddd
