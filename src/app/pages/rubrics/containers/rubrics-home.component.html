@@ -11,17 +11,45 @@
     <div class="table-responsive">
       <table class="table table-sm">
         <thead>
-          <tr style="font-size: 12px">
-            <th class="text-center">II</th>
-            <th class="text-center">TTTT</th>
-            <th class="text-center">SSSSs</th>
+          <tr class="text-center" style="font-size: 12px">
+            <th style="width: 20px">#</th>
+            <th>Titulo</th>
+            <th>Descripcion</th>
+            <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr style="font-size: 12px; vertical-align: middle">
-            <td class="text-center">ho</td>
-            <td class="text-center">ho</td>
-            <td class="text-center">ho</td>
+          <tr
+            *ngFor="let rubric of rubrics; let i = index"
+            class="text-center"
+            style="font-size: 12px; vertical-align: middle"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ rubric?.titulo }}</td>
+            <td>{{ rubric?.descripcion }}</td>
+            <td class="text-center" style="width: 150px">
+              <div class="d-flex justify-content-evenly">
+                <div>
+                  <nb-icon icon="edit" status="info" style="cursor: pointer; font-size: 25px" (click)="editRubric(rubric)"></nb-icon>
+                  <!-- (click)="updateZoom(item)" -->
+                  <br />
+                  Editar
+                </div>
+                <div>
+                  <nb-icon
+                    icon="trash-2-outline"
+                    status="danger"
+                    style="cursor: pointer; font-size: 25px"
+                    (click)="deleteRubric(rubric)"
+                  ></nb-icon>
+                  <!-- (click)="openCourseZoom(item)" -->
+                  <br />
+                  Eliminar
+                </div>
+              </div>
+            </td>
+            <!-- <td class="text-center" style="width: 70px">
+            </td> -->
           </tr>
         </tbody>
       </table>

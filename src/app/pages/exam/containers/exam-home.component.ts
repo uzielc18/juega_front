@@ -261,7 +261,7 @@ export class ExamHomeComponent implements OnInit {
     let y:any = window.scrollY;
     let x:any = window.scrollX;
     console.log('hola:Scroll', x, y);
-    
+
   }
 
   ngOnInit(): void {
@@ -326,7 +326,7 @@ export class ExamHomeComponent implements OnInit {
       // this.tiempoRestante.segundos = 0;
     }
   }
-  
+
   collapse() {
     this.collapsed = !this.collapsed;
   }
@@ -356,7 +356,7 @@ export class ExamHomeComponent implements OnInit {
               // this.getPosition();
             });
             console.log(this.questions);
-            
+
           }
         }, () => {this.loading = false;}, () => {this.loading = false;});
       }
@@ -364,14 +364,14 @@ export class ExamHomeComponent implements OnInit {
   }
   valueScroll(value:any) {
     console.log(value);
-    
+
     const boxes:any = document.getElementsByClassName(value);
     const result = boxes[0].getBoundingClientRect();
     const sum = this.document.documentElement.scrollTop + result['top'];
 
     this.document.documentElement.scrollTop = sum;
     console.log(result);
-    
+
   }
   refresquestion() {
     this.getQuestions();

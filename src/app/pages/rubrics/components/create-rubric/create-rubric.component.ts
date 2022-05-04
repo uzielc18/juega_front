@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
+import { GeneralService } from '../../../../providers';
+import { END_POINTS } from '../../../../providers/utils';
 
 @Component({
   selector: 'app-create-rubric',
@@ -10,6 +12,7 @@ import { NbDialogRef } from '@nebular/theme';
 export class CreateRubricComponent implements OnInit {
   // @Input() rubrica: any = null;
   rubrica: any = {
+    id: 1,
     nombre: 'Rubrica sssssssssss',
     descripcion: 'aaaaaaaa',
     num_criterios: 2,
@@ -69,7 +72,11 @@ export class CreateRubricComponent implements OnInit {
 
   colors: any[] = ['#57884e', '#8ba642', '#f9c851', '#f9a65a', '#f97a5a', '#f94a5a', '#f9065a'];
 
-  constructor(public activeModal: NbDialogRef<CreateRubricComponent>, private fb: FormBuilder) {
+  constructor(
+    public activeModal: NbDialogRef<CreateRubricComponent>,
+    private fb: FormBuilder,
+    private generalService: GeneralService
+  ) {
     this.userForm = this.fb.group({
       nombre: ['', [Validators.required]],
       descripcion: [''],
@@ -236,6 +243,22 @@ export class CreateRubricComponent implements OnInit {
         nivel.get('titulo').setValue(this.titles[index].nombre);
       });
     });
-    console.log(this.userForm.value);
+    // console.log(this.userForm.value);
+    const serviceName = END_POINTS.base_back.rubrics + '/save-rubrica';
+    this.loading = true;
+    this.generalService.addNameData$(serviceName, this.userForm.value).subscribe(
+      (res: any) => {
+        if (res.success) {
+          console.log(res);
+          this.activeModal.close('ok');
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
 }
