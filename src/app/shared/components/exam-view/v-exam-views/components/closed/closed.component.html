@@ -1,0 +1,4 @@
+<div class="response w-100 d-flex flex-column" *ngFor="let item of alternativas">
+    <label class="label">Respuesta: </label>
+    <input type="text" nbInput fullWidth status="basic" fieldSize="small" [(ngModel)]="item.respuesta">
+</div>

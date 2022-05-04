@@ -1,9 +1,9 @@
-import { DOCUMENT } from "@angular/common";
-import { Component, HostListener, Inject, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { NbDialogService } from "@nebular/theme";
 import { GeneralService } from "src/app/providers";
 import { END_POINTS } from "src/app/providers/utils";
+import { ConfirmFinishExamComponent } from "../components/modals/confirm-finish-exam/confirm-finish-exam.component";
 
 @Component({
   selector: "app-exam-home",
@@ -240,7 +240,7 @@ export class ExamHomeComponent implements OnInit {
   private scrollHeight = 500;
   showButtom:boolean = true;
   constructor(private activatedRoute: ActivatedRoute, private service: GeneralService, public router: Router, private rou: ActivatedRoute,
-    @Inject(DOCUMENT) private document: Document) {
+    private dialogService: NbDialogService) {
       setInterval(() => {
         if (this.info) {
           this.countdown();
@@ -252,17 +252,17 @@ export class ExamHomeComponent implements OnInit {
         }
       }, 1000);
   }
-  @HostListener('window:scroll')
-  onWindowScroll(): void {
-    const yOffSet = window.pageXOffset;
-    const scrollTop = this.document.documentElement.scrollTop;
-    this.showButtom = (yOffSet || scrollTop) > this.scrollHeight;
+  // @HostListener('window:scroll')
+  // onWindowScroll(): void {
+  //   const yOffSet = window.pageXOffset;
+  //   const scrollTop = this.document.documentElement.scrollTop;
+  //   this.showButtom = (yOffSet || scrollTop) > this.scrollHeight;
 
-    let y:any = window.scrollY;
-    let x:any = window.scrollX;
-    console.log('hola:Scroll', x, y);
+  //   let y:any = window.scrollY;
+  //   let x:any = window.scrollX;
+  //   // console.log('hola:Scroll', x, y);
     
-  }
+  // }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -355,24 +355,43 @@ export class ExamHomeComponent implements OnInit {
               }
               // this.getPosition();
             });
-            console.log(this.questions);
+            
+            if (this.info && this.info.bloqueo === 1) {
+              this.backGo;
+            }
+            // console.log(this.questions);
             
           }
         }, () => {this.loading = false;}, () => {this.loading = false;});
       }
     }
   }
-  valueScroll(value:any) {
-    console.log(value);
-    
-    const boxes:any = document.getElementsByClassName(value);
-    const result = boxes[0].getBoundingClientRect();
-    const sum = this.document.documentElement.scrollTop + result['top'];
-
-    this.document.documentElement.scrollTop = sum;
-    console.log(result);
-    
+  get questionsNoResponse():any {
+    if (this.questions.length > 0) {
+      return this.questions.filter((r:any) => r.nivel === '2' && !r.estado_respuesta);
+    } else {
+      return [];
+    }
   }
+  get sectionsResponse():any {
+    if (this.questions.length > 0) {
+      return this.questions.filter((r:any) => r.nivel === '1');
+    } else {
+      return [];
+    }
+  }
+  // valueScroll(value:any) {
+  //   // console.log(value);
+    
+  //   const boxes:any = document.getElementsByClassName(value);
+  //   const result = boxes[0].getBoundingClientRect();
+  //   const sum = this.document.documentElement.scrollTop + result['top'];
+
+  //   this.document.documentElement.scrollTop = sum;
+   
+  //   // console.log(result);
+    
+  // }
   refresquestion() {
     this.getQuestions();
   }
@@ -388,8 +407,14 @@ export class ExamHomeComponent implements OnInit {
     this.page = valor;
     this.getQuestions();
   }
-  save($event:any, item:any) {
-    const serviceName = END_POINTS.base_back.quiz + '/elections';
+  save($event:any, item:any, index:any) {
+    let serviceName = '';
+    if (item.codigo === '05') {
+      serviceName = END_POINTS.base_back.quiz + '/relationsAnswers';
+    } else {
+      serviceName = END_POINTS.base_back.quiz + '/elections';
+    }
+
     const params = {
       alternativas: $event,
       codigo: item.codigo,
@@ -398,17 +423,37 @@ export class ExamHomeComponent implements OnInit {
       segundos: this.time,
       exam_student_id: item.exam_student_id,
     }
-    this.loadingSave = true;
-    this.service.addNameData$(serviceName, params).subscribe(res => {
-      if (res.success) {
-        this.time = 0;
-        this.getQuestions();
-        this.questionResponse = res.data && res.data.preguntas_respondidas || 0;
-        // this.valueScroll(classs);
-      }
-    }, () => {this.loadingSave = false;}, () => {this.loadingSave = false;});
-
-    console.log(params);
+    if (serviceName && params.codigo && params.question_student_id && params.question_id && params.exam_student_id) {
+      this.loadingSave = true;
+      this.service.addNameData$(serviceName, params).subscribe(res => {
+        if (res.success) {
+          this.time = 0;
+          this.getQuestions();
+          this.questionResponse = res.data && res.data.preguntas_respondidas || 0;
+          // this.valueScroll(classs);
+          if (res.data && res.data.bloqueo === 1) {
+            this.backGo;
+          }
+          this.nextQuestion(index);
+        }
+      }, () => {this.loadingSave = false;}, () => {this.loadingSave = false;});
+    }
+  }
+  nextQuestion(index:any) { //para la siguiente pregunta
+    var elem = document.getElementsByClassName("pregunta"+ (index + 1));
+    // var elem = document.getElementById("pregunta"+ (index + 1));
+    // console.log(elem);
+    if(elem){
+      // elem.scrollIntoView({block: "center",behavior:"smooth"});
+      elem[0].scrollIntoView({block: "center",behavior:"smooth"});
+    }
+  }
+  nextIds(index:any) { //para la siguiente pregunta
+    var elem = document.getElementById("pregunta"+ index );
+    // console.log(elem);
+    if(elem){
+      elem.scrollIntoView({block: "center",behavior:"smooth"});
+    }
   }
   deleteItem($event:any) {
     const serviceName = END_POINTS.base_back.quiz + '/elections';
@@ -422,5 +467,28 @@ export class ExamHomeComponent implements OnInit {
   backGo() {
     this.router.navigate([`/pages/asignatures/course/${this.info?.curso?.id_carga_curso_docente}/element/${this.info?.element_id}`]);
   }
+
+  openFinish() {
+    const values = {
+      quest_sn_response: this.questionsNoResponse.length,
+      exam_student_id: this.info.exam_student_id,
+    }
+    this.dialogService.open(ConfirmFinishExamComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        datos: values,
+        // response: params,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.backGo();
+      }
+      if (result === 'view-question') {
+        // this.filtrar();
+        this.collapsed = true;
+      }
+    });
+  }
 }
-// 'http://localhost:4200/pages/asignatures/course/127805/element/98'
