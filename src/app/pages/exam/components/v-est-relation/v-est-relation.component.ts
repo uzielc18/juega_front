@@ -23,10 +23,10 @@ export class VEstRelationComponent implements OnInit {
     '#002885',
     '#5D1787',
   ];
-  randomListColor: any = [];
+  // randomListColor: any = [];
   relationList: any[] = [];
   secondList: any[] = [];
-  randomList: any[] = [];
+  // randomList: any[] = [];
 
   constructor(private fb: FormBuilder) {}
 
@@ -74,6 +74,7 @@ export class VEstRelationComponent implements OnInit {
     if (item?.checked) {
       item.checked = false;
       item.color = '';
+      item.relations_answers_studnet = null;
       this.form.controls['temporal'].setValue('');
       this.searchArrayB(item);
     } else {
@@ -87,6 +88,7 @@ export class VEstRelationComponent implements OnInit {
       if (value.id === re.relations_answers_studnet) {
         re.checked = false;
         re.color = '';
+        re.relations_answers_studnet = null;
       }
     });
   }
@@ -94,24 +96,29 @@ export class VEstRelationComponent implements OnInit {
     if (item?.checked) {
       item.checked = false;
       item.color = '';
-      this.searchArrayA(item);
-      item.relations_answers_studnet = '';
+      this.searchArrayA(item, item.checked);
+      item.relations_answers_studnet = null;
       this.form.controls['temporal'].setValue('');
     } else {
       if (this.form.value.temporal.id) {
         item.checked = true;
         item.color = this.form.value.temporal.color;
         item.relations_answers_studnet = this.form.value.temporal.id;
+        this.searchArrayA(item, item.checked);
         this.form.controls['temporal'].setValue('');
       }
     }
   }
 
-  searchArrayA(value:any) {
+  searchArrayA(value:any, check:any) {
     this.relationList.map((re:any) => {
-      if (value.relations_answers_studnet === re.id) {
+      if (value.relations_answers_studnet === re.id && !check) {
         re.checked = false;
         re.color = '';
+        re.relations_answers_studnet = null;
+      }
+      if (value.relations_answers_studnet === re.id && check) {
+        re.relations_answers_studnet = value.id;
       }
     });
   }
@@ -279,18 +286,19 @@ export class VEstRelationComponent implements OnInit {
   saveResponse() {
     const arrayA = JSON.parse(JSON.stringify(this.relationList));
     const arrayB = JSON.parse(JSON.stringify(this.secondList));
-    console.log(arrayA);
-    
-    // const response:any = [];
-    // array.map((r:any) => {
-    //   if (r.checked) {
-    //     const item = {
-    //       id: r.id,
-    //       // pregunta_id: r.pregunta_id
-    //     };
-    //     response.push(item);
-    //   }
-    // });
-    // this.saveValues.emit(response);
+    console.log(arrayA, arrayB);
+
+    const response:any = [];
+    arrayA.map((r:any) => {
+      if (r.checked) {
+        const item = {
+          id: r.id,
+          id_question_relations: r.id_question_relations || null,
+          relations_answers_studnet: r.relations_answers_studnet || null,
+        };
+        response.push(item);
+      }
+    });
+    this.saveValues.emit(response);
   }
 }
