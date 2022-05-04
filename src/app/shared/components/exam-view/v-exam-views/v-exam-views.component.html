@@ -1,0 +1,44 @@
+<nb-card>
+    <nb-card-header>
+        TITULO
+    </nb-card-header>
+    <nb-card-body style="align-items: center;">
+        <div style="width: 100%; max-width: 746px;">
+            <nb-card *ngFor="let item of questions; let i = index" [accent]="item?.nivel === '1' ? 'primary' : ''" [id]="'pregunta'+ i">
+                <a :name="'section'{{item.id}}" class="sr-only sr-only-focusable"></a>
+                <nb-card-header *ngIf="item.nivel === '1'">
+                    <h5 class="sections">{{item.titulo}}</h5>
+                    <p *ngIf="item.descripcion" style="font-size: 12px; text-align: justify;">{{item.descripcion}}</p>
+                </nb-card-header>
+                <nb-card-body *ngIf="item.nivel === '2'">
+                  <div >
+                  <strong style="font-size: 12px; text-align: justify;">{{item?.numeracion}}). {{item?.pregunta?.pregunta}}</strong>
+                    <br>
+                    <div *ngIf="['07'].includes(item.codigo)">
+                      <app-multi [alternativas]="item?.alternativas"></app-multi>
+                    </div>
+                    <div *ngIf="['01'].includes(item.codigo)">
+                      <app-unique [alternativas]="item?.alternativas"></app-unique>
+                    </div>
+                    <div *ngIf="['03'].includes(item.codigo)">
+                      <app-open [alternativas]="item?.alternativas"></app-open>
+                    </div>
+                    <div *ngIf="['04'].includes(item.codigo)">
+                      <app-closed [alternativas]="item?.alternativas"></app-closed>
+                    </div>
+                    <div *ngIf="['02'].includes(item.codigo)">
+                      <app-true-false [alternativas]="item?.alternativas"></app-true-false>
+                    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                    <div *ngIf="['05'].includes(item.codigo)">
+                      <app-relation [alternativas]="item?.alternativas"></app-relation>
+                    </div>
+                  </div>
+                  <!-- <button (click)="valueScroll(i+'box')">ssssss</button> -->
+                </nb-card-body>
+              </nb-card>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+
+    </nb-card-footer>
+</nb-card>

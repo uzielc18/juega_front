@@ -12,6 +12,7 @@ import { VideoPlayerModule } from '../../shared/components/video-player/video-pl
 import { VEstClosedComponent } from './components/v-est-closed/v-est-closed.component';
 import { VEstOpenComponent } from './components/v-est-open/v-est-open.component';
 import { VEstTrueFalseComponent } from './components/v-est-true-false/v-est-true-false.component';
+import { ConfirmFinishExamComponent } from './components/modals/confirm-finish-exam/confirm-finish-exam.component';
 
 const COMPONENTS: any = [
   ExamHomeComponent,
@@ -21,9 +22,12 @@ const COMPONENTS: any = [
   VEstUniqueOptionComponent,
   VEstClosedComponent,
   VEstOpenComponent,
-  VEstTrueFalseComponent
+  VEstTrueFalseComponent,
+  ConfirmFinishExamComponent
 ]
-
+const MODALS: any = [
+  ConfirmFinishExamComponent
+]
 const MODULES: any = [
   VideoPlayerModule
 ]
@@ -41,6 +45,7 @@ const NEBULAR: any = [
     ExamRoutingModule,
     ...MODULES,
     ...NEBULAR
-  ]
+  ],
+  entryComponents: [...MODALS],
 })
 export class ExamModule { }

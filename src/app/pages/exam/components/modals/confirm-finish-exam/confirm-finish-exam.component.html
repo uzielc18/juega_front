@@ -1,0 +1,24 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+      <div class=" d-flex align-items-center justify-content-between">
+        <div>
+          FINALIZAR
+        </div>
+        <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </nb-card-header>
+    <nb-card-body class="text-center">
+        ¿ Esta seguro que desea finalizar ?
+
+        <span style="font-weight: bold; color: brown;">
+        <br><br>
+          Aún tiene {{datos?.quest_sn_response}} preguntas sin responder
+        </span>
+    </nb-card-body>
+    <nb-card-footer class="text-center">
+        <button nbButton size="small" status="warning" (click)="verQuestion()">Ver Preguntas</button> &nbsp;&nbsp;
+        <button nbButton size="small" status="primary">Finalizar</button>
+    </nb-card-footer>
+    </nb-card>
