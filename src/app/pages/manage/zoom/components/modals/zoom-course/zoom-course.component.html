@@ -3,31 +3,34 @@
     <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
         <div class=" d-flex align-items-center justify-content-between">
             <div>
-                Cursos por zoom
+                CURSOS POR CUENTA ZOOM
             </div>
             <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <hr>
+        <label class="label">Programa estudio: </label>&nbsp;&nbsp;<strong style="font-size: 12px;">{{item?.programa_estudio_nombre}}</strong><br>
+        <label class="label">Ciclo: </label>&nbsp;&nbsp;<strong style="font-size: 12px;">{{item?.ciclo}}</strong>
+
+        <!-- <hr>
         <form [formGroup]="formHeader">
         <div class="row">
             <div class="col-md-6"></div>
             <div class="col-md-3">
                 <label class="label">Programa estudio</label>
                 <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id" (selectedChange)="changeProgramStudy()">
-                    <nb-option value="">Todos</nb-option>
                     <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.nombre_corto}}</nb-option>
                 </nb-select>
             </div>
             <div class="col-md-3">
                 <label class="label">Ciclo</label>
-                <nb-select size="small" fullWidth placeholder="Ciclo" formControlName="ciclo" (selectedChange)="changeCiclo()">
+                <nb-select size="small" fullWidth placeholder="Ciclo" formControlName="ciclo" (selectedChange)="changeCiclo()" [disabled]="true">
                     <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{item.ciclo}}</nb-option>
                 </nb-select>
             </div>
         </div>
-    </form>
+    </form> -->
     </nb-card-header>
     <nb-card-body>
         <div class="table-responsive">
@@ -40,7 +43,7 @@
                         <th>Cod. anfitrión</th>
                         <th>Zoom</th>
                         <th style="width: 1px;"><nb-icon icon="people" style="font-size: 20px;"></nb-icon></th>
-                        <th class="text-center" style="width: 1px;" colspan="5">Opciones</th>
+                        <th class="text-center" style="width: 1px;">Zoom</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,10 +53,9 @@
                         <td>{{item.persons_teacher_nombre}}</td>
                         <td>{{item.meeting_id}}</td>
                         <td style="color: brown;">{{item.join_url}}</td>
-                        <td>100</td>
+                        <td>{{item?.matriculados}}</td>
                         <td class="text-center">
                             <nb-icon icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon> <br>
-                            Zoom
                         </td>
                         <!-- <td class="text-center">
                             <nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
@@ -63,14 +65,14 @@
                             <nb-icon icon="tv-outline" status="warning" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Portada
                         </td> -->
-                        <td class="text-center">
+                        <!-- <td class="text-center">
                             <nb-icon icon="edit-outline" status="info" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Editar
                         </td>
                         <td class="text-center">
                             <nb-icon icon="trash-outline" status="danger" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Eliminar
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
             </table>

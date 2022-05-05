@@ -1,0 +1,5 @@
+<div class="response w-100 d-flex flex-column" *ngFor="let item of alternativas">
+    <label class="label">Respuesta: </label>
+    <input type="text" nbInput fullWidth status="basic" fieldSize="small" [(ngModel)]="item.respuesta">
+    <button nbButton status="primary" class="ms-auto mt-2" size="tiny" [disabled]="!item.respuesta" (click)="saveResponse()">Guardar</button>
+</div>

@@ -12,8 +12,10 @@ export class UpZoomComponent implements OnInit {
   loading:boolean = false;
   @Input() item:any;
   @Input() code:any;
+  @Input() datosMe:any;
   listProgramStudy:any = [];
   formHeader: any = FormGroup;
+  ciclos = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
   constructor(public activeModal: NbDialogRef<UpZoomComponent>, private generalServi: GeneralService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -26,6 +28,8 @@ export class UpZoomComponent implements OnInit {
       ciclo: ['', [Validators.required, Validators.max(12), Validators.maxLength(2)]],
       correo: ['', [Validators.required, Validators.email]],
       clave: ['', [Validators.required]],
+      grupo: ['unico', [Validators.required]],
+      host_key: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
     if (this.code === 'UPDATE') {
@@ -36,10 +40,15 @@ export class UpZoomComponent implements OnInit {
     this.activeModal.close('close');
   }
   getProgramStudy() {
-    const serviceName = 'programaEstudios';
-    this.generalServi.nameAll$(serviceName).subscribe((res:any) => {
-      this.listProgramStudy = res.data || [];
+    const serviceName = 'mis-programas';
+    const ids = {
+      person_id: this.datosMe.user.id || '',
+    };
+    if (ids && ids.person_id) {
+      this.generalServi.nameId$(serviceName, ids.person_id).subscribe((res:any) => {
+        this.listProgramStudy = res.data || [];
     });
+  }
   }
   saveZoom() {
     const serviceName = 'zoomAcounts';
@@ -51,6 +60,8 @@ export class UpZoomComponent implements OnInit {
       ciclo: forms.ciclo,
       correo: forms.correo,
       clave: forms.clave,
+      grupo: forms.grupo,
+      host_key: forms.host_key || '',
     };
     if (params && params.programa_estudio_id && params.id_programa_estudio) {
       this.loading = true;
@@ -77,10 +88,12 @@ export class UpZoomComponent implements OnInit {
         if (re.success) {
           const items = re.data || '';
             this.formHeader.patchValue({
-              id: items.id,
+              id: items.programa_estudio_id,
               ciclo: items.ciclo,
               correo: items.correo,
               clave: items.clave,
+              grupo: items.grupo,
+              host_key: items.host_key,
             })
         }
       }, () => { this.loading =false; }, () => { this.loading =false; });

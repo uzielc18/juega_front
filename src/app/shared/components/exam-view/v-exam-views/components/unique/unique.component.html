@@ -1,0 +1,27 @@
+<div>
+    <label class="label">Alternativas: </label><br><br>
+    <div *ngIf="alternativesMov">
+    <ul class="alternatives-list" *ngFor="let item of alternativas">
+        <li>
+         <button style="font-size: 10px;" nbButton 
+         [status]="item?.checked && item.option_select ? 'primary' :
+         item?.checked && !item.option_select ? 'info' : 'basic'"
+          size="small" fullWidth >{{item.orden}} ).&nbsp; {{item.option}}</button>
+        </li>
+    </ul>
+    </div>
+    <!-- // solo imagenes -->
+    <div *ngIf="!alternativesMov" class="row" >
+        <nb-card *ngFor="let item of alternativas" class="text-center col-md-4" [ngClass]="{'optionSelect': item?.checked}" 
+        style="padding: 10px; margin-bottom: 0px; cursor: pointer;">
+        <nb-card-header *ngIf="item?.option">
+            <strong style="font-size: 10px;">
+                {{item.orden}} ).&nbsp;{{item?.option}}
+            </strong>
+        </nb-card-header>
+            <nb-card-body style="padding: 10px;">
+                <img [src]="item.imagen" alt="" style="max-width: 100%; height: 100%; max-height: 375px; margin: 0 auto;">
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

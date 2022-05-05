@@ -1,4 +1,187 @@
-<nb-layout withScroll [windowMode]="false">
+<nb-layout withScroll [windowMode]="false" style=" max-height: 90 vh;">
+  <nb-layout-column [nbSpinner]="loading || loadingSave" nbSpinnerStatus="primary" nbSpinnerSize="large" style="background: #a0b9c4;">
+   <nb-card>
+      <nb-card-header>
+        <div class="row header m-0">
+
+        <div class="col-md-3 d-flex align-items-center" style="margin-top: 8px;">
+            <div class="col-md-3 text-center" style="padding-left: 1px; padding-right: 1px;" *ngIf="tiempoRestante.dias > 0">
+              <nb-card status="primary" nbTooltip="Total de Preguntas" nbTooltipPlacement="top" nbTooltipStatus="primary">
+                <nb-card-header style="padding-top: 3px; padding-bottom: 3px;">
+                  <strong style="font-size: 18px;">{{tiempoRestante?.dias}}</strong><br>
+                  <strong style="font-size: 11px; font-weight: bold;">Días</strong>
+                </nb-card-header>
+              </nb-card>
+            </div>
+            <div class="col-md-3 text-center" style="padding-left: 1px; padding-right: 1px;">
+              <nb-card status="warning" nbTooltip="Total de Preguntas" nbTooltipPlacement="top" nbTooltipStatus="primary">
+                <nb-card-header style="padding-top: 3px; padding-bottom: 3px;">
+                  <strong style="font-size: 18px;">{{tiempoRestante?.horas}}</strong><br>
+                  <strong style="font-size: 11px; font-weight: bold;">Horas</strong>
+                </nb-card-header>
+              </nb-card>
+            </div>
+            <div class="col-md-3 text-center" style="padding-left: 1px; padding-right: 1px;">
+              <nb-card status="danger" nbTooltip="Total de Preguntas" nbTooltipPlacement="top" nbTooltipStatus="primary">
+                <nb-card-header style="padding-top: 3px; padding-bottom: 3px;">
+                  <strong style="font-size: 16px;">{{tiempoRestante?.minutos}}</strong><br>
+                  <strong style="font-size: 11px; font-weight: bold;">Minutos</strong>
+                </nb-card-header>
+              </nb-card>
+            </div>
+            <div class="col-md-3 text-center" style="padding-left: 1px; padding-right: 1px;">
+              <nb-card status="info" nbTooltip="Total de Preguntas" nbTooltipPlacement="top" nbTooltipStatus="primary">
+                <nb-card-header style="padding-top: 3px; padding-bottom: 3px;">
+                  <strong style="font-size: 16px;">{{tiempoRestante?.segundos}}</strong><br>
+                  <strong style="font-size: 11px; font-weight: bold;">Segundos</strong>
+                </nb-card-header>
+              </nb-card>
+            </div>
+          </div>
+
+          <!-- <div class="col-md-4 d-flex align-items-center">
+            <div class="count d-md-block d-none d-md-flex" style="gap: 5px">
+              <span class="time days"*ngIf="tiempoRestante.dias > 0">{{tiempoRestante?.dias}} d</span>
+              <span class="time hour">{{tiempoRestante?.horas}} h</span>
+              <span class="time minute">{{tiempoRestante?.minutos}} m</span>
+              <span class="time second">{{tiempoRestante?.segundos}} s</span>
+            </div>
+          </div> -->
+          <div class="col-md-6 text-center">
+            <!-- <div class="questions-header"> -->
+              <h5 style="padding-top: 10px; font-weight: bold;" class="title">{{!info?.titulo ? 'Nombre del examen' : info?.titulo}}</h5><br>
+              <span class="subTitle">Preguntas ( {{questionResponse}} / {{info?.total_questions || 0}} )</span>
+
+              <ng-container *ngIf="loadingSave" style="font-size: 10px;">
+                <br>
+                <div class="spinner-grow text-success" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-danger" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-warning" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </ng-container>
+              <!-- <button class="button" (click)="onScrollTop()">👆</button> -->
+              
+            <!-- </div> -->
+          </div>
+          <div class="col-md-3 d-flex align-items-center">
+            <div class="buttons d-md-block d-none ms-auto d-md-flex flex-md-wrap" style="gap: 10px">
+              <button nbButton status="primary" size="small" (click)="backGo()"><nb-icon icon="arrow-back-outline"></nb-icon> Salir</button>
+              <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="danger" size="small" (click)="refresquestion()"><nb-icon icon="refresh-outline"></nb-icon> Act. Preguntas</button>
+              <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="success" size="small" (click)="openFinish();"
+              >Terminar <nb-icon icon="arrowhead-right-outline"></nb-icon></button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!tiempoRestante?.tiempo_vencido" class="settings-button" (click)="collapse()" [ngStyle]="{ right: collapsed ? '50%' : '0' }">
+          <nb-icon icon="settings-2-outline"></nb-icon>
+        </div>
+        <div class="settings" *ngIf="collapsed">
+          <div class="settings-container">
+            <nb-card class="m-0">
+              <nb-card-body class="d-flex flex-column px-lg-4 py-lg-4 px-xl-5 py-xl-4">
+                <h5 class="fw-bold">Secciones</h5>
+                <div *ngFor="let item of sectionsResponse" >
+                  <button class="mb-2" nbButton outline status="info" (click)="nextIds(item.id)">Sección 1 {{item.id}}</button>
+                </div>
+                <h5 class="fw-bold mt-5">Preguntas sin responder</h5>
+                <div *ngFor="let item of questionsNoResponse">
+                  <button class="mb-2" nbButton outline status="success">Pregunta 1</button>
+                </div>
+                <p>Hola</p>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+      </nb-card-header>
+    </nb-card>
+    <!-- <br *ngIf="questions?.length>0">
+    <br *ngIf="questions?.length>0"> -->
+    <div class="d-flex align-items-center justify-content-between" style="margin-top: 65px;">
+      <div></div>
+
+        <div style="width: 100%; max-width: 746px;">
+          <div *ngIf="!tiempoRestante?.tiempo_vencido">
+            <nb-card *ngFor="let item of questions; let i = index" [accent]="item?.nivel === '1' ? 'primary' : ''" [class]="'pregunta'+ i" [id]="'pregunta'+ item.id" >
+              <a :name="'section'{{item.id}}" class="sr-only sr-only-focusable"></a>
+              <nb-card-header *ngIf="item.nivel === '1'">
+                  <h5 class="sections">{{item.titulo}} {{item.id}}</h5>
+                  <p *ngIf="item.descripcion" style="font-size: 12px; text-align: justify;">{{item.descripcion}}</p>
+              </nb-card-header>
+              <nb-card-body *ngIf="item.nivel === '2'">
+                <div >
+                  <div *ngIf="info?.paginado === 'one' || info?.aleatorio !== '0'">
+                    <h5 class="sections">{{item?.section?.titulo}}</h5>
+                    <br>
+                  </div>
+                <strong style="font-size: 12px; text-align: justify;">{{item?.numeracion}}). {{item?.pregunta?.pregunta}}</strong>
+                  <br>
+                  <div *ngIf="['07'].includes(item.codigo)">
+                    <app-v-est-multi-option [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)" (saveValueDelete)="deleteItem($event)"></app-v-est-multi-option>
+                  </div>
+                  <div *ngIf="['01'].includes(item.codigo)">
+                    <app-v-est-unique-option [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)"></app-v-est-unique-option>
+                  </div>
+                  <div *ngIf="['03'].includes(item.codigo)">
+                    <app-v-est-open [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)"></app-v-est-open>
+                  </div>
+                  <div *ngIf="['04'].includes(item.codigo)">
+                    <app-v-est-closed [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)"></app-v-est-closed>
+                  </div>
+                  <div *ngIf="['02'].includes(item.codigo)">
+                    <app-v-est-true-false [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)"></app-v-est-true-false>
+                  </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                  <div *ngIf="['05'].includes(item.codigo)">
+                    <app-v-est-relation [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)"></app-v-est-relation>
+                  </div>
+                </div>
+                <!-- <button (click)="valueScroll(i+'box')">ssssss</button> -->
+              </nb-card-body>
+            </nb-card>
+            <div *ngIf="['section', 'one'].includes(info?.paginado)" class="d-flex align-items-center justify-content-between">
+                <div>
+                  <button *ngIf="page > 1" nbButton class="nextBack" size="small" (click)="backContinue()">Atras&nbsp;<nb-icon icon="arrow-back-outline"></nb-icon></button>
+                </div>
+                <div>
+                  <button *ngIf="page < (info?.total_section || info?.total_questions)" nbButton class="nextBack" size="small" (click)="nextContinue()">Siguiente&nbsp;<nb-icon icon="arrow-forward-outline"></nb-icon></button>
+                </div>
+            </div>
+          </div>
+          <div *ngIf="tiempoRestante?.tiempo_vencido">
+            <nb-card>
+              <nb-card-header class="text-center">
+                <nb-icon icon="alert-triangle-outline" status="warning" style="font-size: 150px;"></nb-icon><br>
+                SU TIEMPO HA FINALIZADO
+              </nb-card-header>
+            </nb-card>
+          </div>
+       
+        </div>
+       
+      <div></div>
+    </div>
+  
+    <div class="movil-buttons d-md-none d-block">
+      <div class="buttons d-flex justify-content-end" style="gap: 20px">
+        <button nbButton status="primary" size="small" (click)="backGo()"><nb-icon icon="arrow-back-outline"></nb-icon> Salir</button>
+        <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="danger" size="small" (click)="refresquestion()"><nb-icon icon="refresh-outline"></nb-icon> Act. Preguntas</button>
+        <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="success" size="small" (click)="openFinish();"
+        >Terminar <nb-icon icon="arrowhead-right-outline"></nb-icon></button>
+      </div>
+    </div>
+  
+  </nb-layout-column>
+  <!-- <nb-layout-footer>
+    dddd
+  </nb-layout-footer> -->
+  </nb-layout>
+
+
+<!-- <nb-layout withScroll [windowMode]="false">
   <nb-layout-column class="d-flex align-items-center justify-content-center p-0 h-100">
     <div class="row header m-0">
       <div class="col-md-4 d-flex align-items-center">
@@ -21,7 +204,7 @@
         </div>
       </div>
     </div>
-    <div class="settings-button" (click)="collapse()" [ngStyle]="{'right': collapsed ? '50%': '0'}">
+    <div class="settings-button" (click)="collapse()" [ngStyle]="{ right: collapsed ? '50%' : '0' }">
       <nb-icon icon="settings-2-outline"></nb-icon>
     </div>
     <div class="settings" *ngIf="collapsed">
@@ -34,6 +217,7 @@
             <h5 class="fw-bold mt-5">Preguntas sin responder</h5>
             <button class="mb-2" nbButton outline status="success">Pregunta 1</button>
             <button class="mb-2" nbButton outline status="success">Pregunta 2</button>
+            <p>Hola</p>
           </nb-card-body>
         </nb-card>
       </div>
@@ -45,75 +229,104 @@
             <h3 class="fw-bold px-4 py-3 m-0">Sección 1</h3>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
-              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-              is appreciated - click here to donate using PayPal. Thank you for your support.</p> <br>
-            <ul class="alternatives-list">
-              <li><button nbButton status="primary">a) Opcion 1</button></li>
-              <li><button nbButton outline status="info">b) Opcion 2</button></li>
-              <li><button nbButton outline status="info">c) Opcion 3</button></li>
-            </ul>
+            <p>
+              1. ¿Sabías que hay animales que perciben el sonido a través de la piel, como el topo dorado del Desierto
+              del Sahara? Así que se podría decir que sus sentidos del tacto y del oído están “fusionados”. ¿Que ya
+              conocías esa información? Pues…¡Prueba suerte y demuestra cuánto sabes con el resto de preguntas!.
+            </p>
+            <div>
+              <app-v-est-unique-option [alternativas]="texts"></app-v-est-unique-option>
+            </div>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
               donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-              is appreciated - click here to donate using PayPal. Thank you for your support.</p>
-            <span class="d-block mb-2 fst-italic text-danger">Ud. puede marcar más de una opción</span>
-            <ul class="alternatives-list">
-              <li><button nbButton status="primary">a) Opcion 1</button></li>
-              <li><button nbButton status="primary">b) Opcion 2</button></li>
-              <li><button nbButton outline status="info">c) Opcion 3</button></li>
-              <li><button nbButton outline status="info">d) Opcion 4</button></li>
-            </ul>
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
+            <div>
+              <app-v-est-multi-option [alternativas]="images"></app-v-est-multi-option>
+            </div>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. What animal is this?</p>
+            <p>1. ¿Qué especie es la más pequeña de entre todos los cérvidos?</p>
             <div class="image-container w-100 d-flex justify-content-center mb-4">
-              <img src="https://cdn.pixabay.com/photo/2018/05/03/22/34/lion-3372720_1280.jpg" alt=""
-                style="max-width: 100%; height: 100%; max-height: 375px; margin: 0 auto;">
-              <!-- <img src="https://dearsam.com/img/600/744/resize/m/a/male-lion-50x70_d8c47.jpg" alt=""
-                style="max-width: 100%; height: 100%; max-height: 375px; margin: 0 auto;"> -->
+              <img
+                src="https://cdn.pixabay.com/photo/2018/05/03/22/34/lion-3372720_1280.jpg"
+                alt=""
+                style="max-width: 100%; height: 100%; max-height: 375px; margin: 0 auto"
+              />
+    
             </div>
-            <ul class="alternatives-list">
-              <li><button nbButton status="primary">a) Lion</button></li>
-              <li><button nbButton outline status="info">b) Turtle</button></li>
-              <li><button nbButton outline status="info">c) Elephant</button></li>
-              <li><button nbButton outline status="info">c) Bear</button></li>
-            </ul>
+            <div>
+              <app-v-est-unique-option [alternativas]="textImg"></app-v-est-unique-option>
+            </div>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
               donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-              is appreciated - click here to donate using PayPal. Thank you for your support.</p>
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
             <div class="video-container w-100 mb-4">
-              <app-video-player [videoFormat]="'YouTube'" [url]="'https://www.youtube.com/watch?v=vgLco8K7Ki4'"
-                (loadingsFiles)="loadingsFiles($event)"></app-video-player>
+              <app-video-player
+                [videoFormat]="'YouTube'"
+                [url]="'https://www.youtube.com/watch?v=vgLco8K7Ki4'"
+                (loadingsFiles)="loadingsFiles($event)"
+              ></app-video-player>
             </div>
-            <ul class="alternatives-list">
-              <li><button nbButton outline status="info">a) Opcion 1</button></li>
-              <li><button nbButton outline status="info">b) Opcion 2</button></li>
-              <li><button nbButton status="primary">c) Opcion 3</button></li>
-              <li><button nbButton outline status="info">d) Opcion 4</button></li>
-            </ul>
-          </div>
-          <div class="question-container p-4 p-lg-5">
-            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
-              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-              is appreciated - click here to donate using PayPal. Thank you for your support.</p>
-            <div class="response w-100 d-flex flex-column">
-              <span class="d-block mb-2 fs-6 fw-bold">Respuesta</span>
-              <input type="text" nbInput fullWidth status="basic">
-              <button nbButton outline status="success" class="ms-auto mt-2" size="small">Guardar</button>
+            <div>
+              <app-v-est-unique-option [alternativas]="images"></app-v-est-unique-option>
             </div>
           </div>
           <div class="question-container p-4 p-lg-5">
-            <p>1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
               donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
-              is appreciated - click here to donate using PayPal. Thank you for your support.</p>
-            <div class="response w-100 d-flex flex-column">
-              <span class="d-block mb-2 fs-6 fw-bold">Respuesta</span>
-              <textarea nbInput fullWidth rows="4"></textarea>
-              <button nbButton outline status="success" class="ms-auto mt-2" size="small">Guardar</button>
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
+            <div>
+              <app-v-est-multi-option [alternativas]="texts"></app-v-est-multi-option>
+            </div>
+          </div>
+          <div class="question-container p-4 p-lg-5">
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
+            <div>
+              <app-v-est-closed></app-v-est-closed>
+            </div>
+          </div>
+          <div class="question-container p-4 p-lg-5">
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
+            <div>
+              <app-v-est-open></app-v-est-open>
+            </div>
+          </div>
+          <div class="question-container p-4 p-lg-5">
+            <p>
+              1. If you use this site regularly and would like to help keep the site on the Internet, please consider
+              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
+            <div>
+              <app-v-est-relation [alternativas]="relation"></app-v-est-relation>
+            </div>
+          </div>
+          <div class="question-container p-4 p-lg-5">
+            <p>
+              2. If you use this site regularly and would like to help keep the site on the Internet, please consider
+              donating a small sum to help pay for the hosting and bandwidth bill. There is no minimum donation, any sum
+              is appreciated - click here to donate using PayPal. Thank you for your support.
+            </p>
+            <div>
+              <app-v-est-relation [alternativas]="relationText"></app-v-est-relation>
             </div>
           </div>
         </div>
@@ -126,4 +339,4 @@
       </div>
     </div>
   </nb-layout-column>
-</nb-layout>
+</nb-layout> -->

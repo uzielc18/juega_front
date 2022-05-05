@@ -1,3 +1,7 @@
+// .shadow:hover {
+//   transform: scale(1.01);
+// }
+
 .exam-card {
   width: 100%;
   min-height: 92vh;
@@ -13,10 +17,10 @@
     margin-bottom: 50px;
   }
 
-  nb-card {
-    margin-top: 70px;
-    margin-bottom: 20px;
-  };
+  // nb-card {
+  //   margin-top: 70px;
+  //   margin-bottom: 20px;
+  // };
 }
 
 nb-layout-column {
@@ -24,7 +28,7 @@ nb-layout-column {
 }
 
 .header {
-  padding: 15px 20px;
+  // padding: 15px 20px;
   width: 100%;
   top: 0;
   left: 0;
@@ -34,33 +38,17 @@ nb-layout-column {
   z-index: 1;
 }
 
-.time {
-  padding: 10px;
-  border-radius: 50%;
-  font-weight: bold;
-}
 
-.hour {
-  background-color: #8DD7CF;
-  border: 2px solid #1AAE9F;
-}
-
-.minute {
-  background-color: #B2ACFA;
-  border: 2px solid #7165F6;
-}
-
-.second {
-  background-color: #F3C19D;
-  border: 2px solid #E8833A;
-}
 
 .questions-header span {
   color: #293845;
   font-size: 16px;
   font-weight: bold;
 }
-
+p {
+  font-size: 14px;
+  font-weight: bold;
+}
 .settings {
   position: fixed;
   top: 74px;
@@ -68,6 +56,10 @@ nb-layout-column {
   width: 50%;
   height: 100%;
   z-index: 999;
+
+  // nb-card-body {
+  //   padding-bottom: 100px !important;
+  // }
 
   &-button {
     // padding: 5px;
@@ -123,7 +115,6 @@ nb-layout-column {
   background-color: #fff;
   border: 1px solid #C3CFD9;
   text-align: justify;
-
   &:not(:last-child) {
     margin-bottom: 10px;
   }
@@ -149,4 +140,17 @@ nb-layout-column {
     width: 100%;
     margin-bottom: 10px;
   }
+}
+.sections {
+  color: var(--color-primary-900) !important;
+}
+.nextBack {
+  background: var(--color-primary-900) !important;
+  color: white !important;
+}
+.title {
+  color: var(--color-danger-900) !important;
+}
+.subTitle {
+  color: var(--color-primary-400) !important;
 }

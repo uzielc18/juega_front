@@ -48,6 +48,7 @@ import { QuestionsConfigComponent } from './components/modals/questions-config/q
 import { QConfigModule } from 'src/app/shared/components/questions/q-config/q-config.module';
 import { QViewModule } from '../../shared/components/questions/q-view/q-view.module';
 import { FilterPipeModule } from 'src/app/shared/pipes/filterPipe/filterPipe.module';
+import { PublicConfigQuestionModule } from 'src/app/shared/components/questions/public-config-question/public-config-question.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -119,6 +120,7 @@ const MODULES: any = [
   CardListCourseModule,
   QConfigModule,
   QViewModule,
+  PublicConfigQuestionModule
 ]
 
 @NgModule({

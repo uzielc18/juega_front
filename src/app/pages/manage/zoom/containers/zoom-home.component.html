@@ -7,15 +7,17 @@
         <hr>
         <form [formGroup]="formHeader">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label class="label">Buscar cuenta</label>
                 <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar cuenta por correo" [(ngModel)]="queryString" [ngModelOptions]="{standalone: true}" >
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label class="label">Programa estudio</label>
+                <!-- <app-input-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-input-select-search>
+                <app-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-select-search>  -->
                     <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
-                        <nb-option value="">Todos</nb-option>
-                        <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.nombre_corto}}</nb-option>
+                        <!-- <nb-option value="">Todos</nb-option> -->
+                        <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.name_programa_estudio}}</nb-option>
                     </nb-select>
             </div>
             <div class="col-md-2">
@@ -94,8 +96,14 @@
                             Salas
                         </td>
                         <td class="text-center" style="width: 70px;">
-                            <nb-icon icon="flip-2-outline" status="success" style="cursor: pointer; font-size: 25px;" (click)="vincular()"></nb-icon> <br>
-                            Vincular
+                            <span *ngIf="!item?.host_key">
+                                <nb-icon icon="flip-2-outline" status="success" style="cursor: pointer; font-size: 25px;" (click)="vincular()"></nb-icon> <br>
+                                Vincular
+                            </span>
+                            <span *ngIf="item?.host_key">
+                                <nb-icon icon="refresh-outline" status="success" style="cursor: pointer; font-size: 25px;" (click)="actualizar(item)"></nb-icon> <br>
+                                Actualizar
+                            </span>
                         </td>
                     </tr>
                 </tbody>

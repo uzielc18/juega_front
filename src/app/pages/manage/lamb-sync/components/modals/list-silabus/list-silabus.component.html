@@ -8,45 +8,46 @@
 >
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
     <div class="d-flex align-items-center justify-content-between">
-      <h3>Cursos</h3>
-      <button
-        nbButton
-        outline
-        status="primary"
-        size="tiny"
-        (click)="closeModal()"
-      >
+      <h4>Silabus - {{ prog?.nombre }}</h4>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
   </nb-card-header>
   <nb-card-body>
-    <h1>hola</h1>
-    <table class="table table-striped">
+    <table class="table table-sm table-striped">
       <thead>
-        <tr>
-          <th scope="col">Contenido</th>
+        <tr style="font-size: 14px" class="fw-bold text-center">
+          <th style="width: 250px">Titulo</th>
+          <th>Nombre del Tema</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let silabu of item">
-          <td>{{ silabu?.contenido }}</td>
+        <tr *ngFor="let silabu of items" style="font-size: 12px" class="align-middle">
+          <td>{{ silabu?.titulo | titlecase }}</td>
+          <td>{{ silabu?.tema }}</td>
         </tr>
       </tbody>
     </table>
-    <div class="d-flex justify-content-between p-2">
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="d-flex align-items-center justify-content-between p-2">
+      <p class="text-danger fw-bold mb-0">Total: {{ item.length }}</p>
       <ngb-pagination
-        [collectionSize]="pagination?.sizeListData"
+        [collectionSize]="pagination?.collectionSize"
         [(page)]="pagination.page"
-        [maxSize]="20"
-        [disabled]="pagination?.isDisabledPage"
-        [pageSize]="pagination?.sizePage"
-        class="d-flex justify-content-center"
-        size="sm"
-        [boundaryLinks]="true"
-        (pageChange)="loadPage($event)"
+        [pageSize]="pagination?.pageSize"
+        (pageChange)="refreshItems()"
       >
       </ngb-pagination>
+      <nb-form-field [formGroup]="formHeader">
+        <nb-icon nbPrefix icon="list-outline"></nb-icon>
+        <nb-select size="small" status="primary" formControlName="id_per_page" fullWidth>
+          <nb-option *ngFor="let per of pagesCount" [value]="per" (click)="selectedPerPage(per)"
+            >Paginar de {{ per }} en {{ per }}</nb-option
+          >
+        </nb-select>
+      </nb-form-field>
     </div>
-  </nb-card-body>
+  </nb-card-footer>
 </nb-card>

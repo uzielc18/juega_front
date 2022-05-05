@@ -16,24 +16,17 @@
                 <label class="label col-md-4">Programa estudio:</label>
                 <div class="col-md-8">
                     <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="id">
-                        <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.nombre_corto}}</nb-option>
+                        <nb-option *ngFor="let item of listProgramStudy" [value]="item.id">{{item.nombre_corto}} &nbsp; ( {{item.sede_nombre}}
+                            {{item.semiprecencial_nombre ? ('- ' + item.semiprecencial_nombre) : ''}} )</nb-option>
                     </nb-select>
                     <control-messages [control]="formHeader.get('id')"></control-messages>
                 </div>
         </div>
         <br>
         <div class="row">
-            <label class="label col-md-4">Ciclo:</label>
-            <div class="col-md-8">
-                <input type="text" fullWidth nbInput placeholder="de 1 a 12" formControlName="ciclo">
-                <control-messages [control]="formHeader.get('ciclo')"></control-messages>
-            </div>
-        </div>
-        <br>
-        <div class="row">
             <label class="label col-md-4">Correo:</label>
             <div class="col-md-8">
-                <input type="text" fullWidth nbInput placeholder="Correo" formControlName="correo">
+                <input type="text" fullWidth nbInput placeholder="Correo" formControlName="correo" fieldSize="small">
                 <control-messages [control]="formHeader.get('correo')"></control-messages>
             </div>
         </div>
@@ -41,8 +34,35 @@
         <div class="row">
             <label class="label col-md-4">Clave:</label>
             <div class="col-md-8">
-                <input type="text" fullWidth nbInput placeholder="Clave" formControlName="clave">
+                <input type="text" fullWidth nbInput placeholder="Clave" formControlName="clave" fieldSize="small">
                 <control-messages [control]="formHeader.get('clave')"></control-messages>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <label class="label col-md-4">Ciclo:</label>
+            <div class="col-md-8">
+                <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="ciclo">
+                    <nb-option value="" disabled>Selecciona ciclo</nb-option>
+                    <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{item.ciclo}}</nb-option>
+                </nb-select>
+                <control-messages [control]="formHeader.get('ciclo')"></control-messages>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <label class="label col-md-4">Grupo:</label>
+            <div class="col-md-8">
+                <input type="text" fullWidth nbInput placeholder="Grupo" formControlName="grupo" fieldSize="small">
+                <control-messages [control]="formHeader.get('grupo')"></control-messages>
+            </div>
+        </div>
+        <br *ngIf="formHeader.value.host_key">
+        <div class="row" *ngIf="formHeader.value.host_key">
+            <label class="label col-md-4">Host key:</label>
+            <div class="col-md-8">
+                <input type="text" fullWidth nbInput placeholder="Host" formControlName="host_key" fieldSize="small">
+                <control-messages [control]="formHeader.get('host_key')"></control-messages>
             </div>
         </div>
     </form>

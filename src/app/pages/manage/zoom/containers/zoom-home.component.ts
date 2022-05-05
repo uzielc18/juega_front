@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbPopoverDirective } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { UpZoomComponent } from '../components/modals/up-zoom/up-zoom.component';
 import { ZoomCourseComponent } from '../components/modals/zoom-course/zoom-course.component';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { AppService } from 'src/app/core';
+import { environment } from 'src/environments/environment';
+import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-zoom-home',
   templateUrl: './zoom-home.component.html',
@@ -15,29 +19,86 @@ export class ZoomHomeComponent implements OnInit {
   loading:boolean = false;
   listZoom:any = [];
   formHeader: any = FormGroup;
-  listProgramStudy:any = [];
+  listProgramStudy:any = [{
+    id: '',
+    nombre_corto: 'Todos',
+    name_programa_estudio: 'Todos'
+  }];
   public searchableList: any[] = [];
   public queryString:any;
-  constructor(private dialogService: NbDialogService, private generalServi: GeneralService, private formBuilder: FormBuilder, private router: Router) {
+
+  datosMe = this.appService;
+  nombreSubscription: any = Subscription;
+  // theRolSemestre:any;
+  valida: boolean = false;
+  constructor(private dialogService: NbDialogService, private generalServi: GeneralService, private formBuilder: FormBuilder, private router: Router,
+    private appService: AppService,  private emitEventsService: EmitEventsService) {
     this.searchableList = ['correo', 'programa_estudio_nombre'];
+
   }
 
   ngOnInit(): void {
     this.fieldReactive();
-    this.getZoom();
+    this.getProgramStudy();
+    this.nombreSubscription = this.emitEventsService.returns().subscribe(value => { // para emitir evento desde la cabecera
+      if (value && value.rol && value.semestre) {
+        // this.theRolSemestre =  value;
+        this.valida = true;
+        setTimeout(() => {
+          this.getZoom();
+        }, 1000);
+      } else {
+        this.valida = false;
+      }
+      });
+      this.recoveryValues();
+    // this.getZoom();
+  }
+  recoveryValues() {
+    this.emitEventsService.castRolSemester.subscribe(value => {
+      if (value && value.rol && value.semestre && !this.valida) {
+        // this.theRolSemestre =  value;
+        setTimeout(() => {
+          this.getZoom();
+        }, 1000);
+      }
+    });
   }
   private fieldReactive() {
     const controls = {
       programa_estudio_id: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.getProgramStudy();
+  }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol){
+      return val;
+    } else {
+      return '';
+    }
+
   }
   getProgramStudy() {
-    const serviceName = 'programaEstudios';
-    this.generalServi.nameAll$(serviceName).subscribe((res:any) => {
-      this.listProgramStudy = res.data || [];
-    });
+    const serviceName = 'mis-programas';
+    const ids = {
+      person_id: this.datosMe.user.id || '',
+    };
+    if (ids && ids.person_id) {
+      this.generalServi.nameId$(serviceName, ids.person_id).subscribe((res:any) => {
+        this.listProgramStudy = [...this.listProgramStudy, ...res.data];
+        if (this.listProgramStudy.length>0) {
+          this.listProgramStudy.map((r:any) => {
+            r.name_programa_estudio = r.nombre_corto + ' ' + (r.sede_nombre ? r.sede_nombre : '');
+            if (r.semiprecencial_nombre) {
+              r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+            }
+          })
+          // this.getZoom();
+        }
+      });
+    }
   }
   updateZoom(params: any) {
     const prams:any = {
@@ -59,6 +120,7 @@ export class ZoomHomeComponent implements OnInit {
       context: {
         item: prams.item,
         code: prams.code,
+        datosMe: this.datosMe,
       },
       closeOnBackdropClick: false,
       closeOnEsc: false
@@ -89,11 +151,14 @@ export class ZoomHomeComponent implements OnInit {
     this.loading = true;
     const forms = this.formHeader.value;
     const params:any = {
-      programa_estudio_id: forms.programa_estudio_id,
+      programa_estudio_id: forms.programa_estudio_id || '',
+      person_id: this.datosMe.user.id || '',
     };
-    this.generalServi.nameParams$(serviceName, params).subscribe((re:any) => {
-      this.listZoom = re.data || [];
-    }, () => { this.loading =false; }, () => { this.loading =false; });
+    if (params && params.person_id) {
+      this.generalServi.nameParams$(serviceName, params).subscribe((re:any) => {
+        this.listZoom = re.data || [];
+      }, () => { this.loading =false; }, () => { this.loading =false; });
+    }
   }
   refresh() {
     this.getZoom();
@@ -114,14 +179,44 @@ export class ZoomHomeComponent implements OnInit {
       // timer: 2000,
     }).then((result:any) => {
         if (result.isConfirmed) {
-          location.href = 'https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate';
-          // this.router.navigate([`https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate`]);
-          // const url = 'https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate';
-          // window.open(url, '_blank');
-          // console.log('ok');
-          
+          location.href = `https://zoom.us/oauth/authorize?response_type=code&client_id=${environment.uri.client_id}&redirect_uri=${environment.uri.url}`;
+          // location.href = 'https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate'
+
         }
       
     });
   }
+  changeSelected(event:any) {
+    this.formHeader.patchValue({
+      programa_estudio_id: event.value.programa_estudio_id,
+    });
+  }
+  actualizar(item:any) {
+    const serviceName = 'actualizar-cursos';
+    if (item && item.id) {
+      Swal.fire({
+        title: 'Actualizar',
+        text: '¿ Desea actualizar cursos ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+        if (result.isConfirmed) {
+          this.loading = true;
+          this.generalServi.nameId$(serviceName, item.id).subscribe((re:any) => {
+            this.getZoom();
+            
+          }, () => { this.loading =false; }, () => { this.loading =false; });
+        }
+      });
+    }
+  }
+ 
 }

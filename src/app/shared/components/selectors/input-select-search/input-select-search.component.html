@@ -1,0 +1,19 @@
+<nb-form-field>
+    <!-- <input type="button" nbInput fullWidth style="text-align: left;" [value]="formHeader.value.name_programa_estudio" [nbPopover]="templateRef" nbPopoverPlacement="bottom" fieldSize="small"> -->
+    <input type="text" nbInput fullWidth  [(ngModel)]="querySearch" [ngModelOptions]="{standalone: true}" placeholder="Buscar por nombre" 
+    [value]="formHeader.value.name_programa_estudio" [nbPopover]="templateRef" nbPopoverPlacement="bottom" fieldSize="small" autofocus>
+    <nb-icon icon="search" nbSuffix></nb-icon>
+</nb-form-field>
+<ng-template #templateRef>
+    <nb-card >
+        <nb-card-body style="max-height: 450px; max-width: 100%; padding-top: 5px;">
+            <nb-list class="seled" style="cursor: pointer;">
+                <nb-list-item *ngFor="let item of listProgStud | FilterPipe: querySearch:searchProgramList" 
+                style="font-size: 12px; padding-top: 2px; padding-bottom: 2px;" (click)="selecteItem(item)" 
+                [ngStyle]="{'background': item?.background, 'color': item?.color}">
+                        {{item?.name_programa_estudio}}
+                </nb-list-item>
+                </nb-list>
+        </nb-card-body>
+    </nb-card>
+</ng-template>

@@ -22,7 +22,6 @@ export class EvaluationsHomeComponent implements OnInit {
 
   formHeader: any = FormGroup;
   loading: boolean = false;
-  loadingFilters: boolean = false;
   selectedItem: any;
 
   pagination: any = {
@@ -66,7 +65,6 @@ export class EvaluationsHomeComponent implements OnInit {
   listCursos() {
     this.listTypeElements();
     const serviceName = END_POINTS.base_back.activities_evaluations + "/get-courses-list";
-    this.loadingFilters = true;
     this.generalService.nameAll$(serviceName).subscribe(
       (res: any) => {
         this.cursos = res.data || [];
@@ -79,12 +77,8 @@ export class EvaluationsHomeComponent implements OnInit {
           this.listElements();
         }
       },
-      () => {
-        this.loadingFilters = false;
-      },
-      () => {
-        this.loadingFilters = false;
-      }
+      () => {},
+      () => {}
     );
   }
 
@@ -155,9 +149,10 @@ export class EvaluationsHomeComponent implements OnInit {
   }
 
   navigate(element: any): any {
-    this.router.navigate([`../asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`], {
-      relativeTo: this.activatedRoute.parent,
-    });
+    // this.router.navigate([`../asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`], {
+    // relativeTo: this.activatedRoute.parent,
+    // });
+    window.open(`../pages/asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`, "_blank");
   }
 
   refresh() {

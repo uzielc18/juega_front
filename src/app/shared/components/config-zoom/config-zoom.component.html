@@ -15,31 +15,38 @@
             <nb-tab tabTitle="Configurar" tabIcon="settings-outline" responsive>
                 <br>
                 <div class="row">
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <nb-icon icon="video-outline" status="danger" style="font-size: 35px;"></nb-icon><br>
                         <label class="label" style="color: brown;">En Vivo</label>
+                    </div> -->
+                    <div class="col-md-3 d-flex">
+                        <div>
+                            <nb-icon icon="phone-call-outline" status="success" style="font-size: 35px; cursor: pointer;" (click)="joins()"></nb-icon><br>
+                            <label class="label">Unirte</label>
+                        </div>&nbsp;&nbsp;
+                        <div>
+                            <nb-icon icon="refresh-outline" status="info" style="font-size: 35px; cursor: pointer;" (click)="zoomOperator(99)"></nb-icon><br>
+                            <label class="label">Actualizar</label>
+                        </div>
+
                     </div>
-                    <div class="col-md-3" style="text-align: right;">
-                         <nb-icon icon="phone-call-outline" status="success" style="font-size: 35px;"></nb-icon><br>
-                         <label class="label">Unirte</label>
-                    </div>
-                    <div class="col-md-3" style="text-align: left;">
+                    <!-- <div class="col-md-3">
                         <nb-icon icon="phone-call-outline" status="basic" style="font-size: 35px;"></nb-icon><br>
                         <label class="label">Iniciar</label>
-                    </div>
-                    <div class="col-md-3" style="text-align: right;">
+                    </div> -->
+                    <!-- <div class="col-md-3" style="text-align: right;">
                         <nb-icon icon="activity-outline" status="info" style="font-size: 35px;"></nb-icon><br>
                         <label class="label">Estado</label>
-                    </div>
+                    </div> -->
                 </div>
-                <hr>
+                <!-- <hr>
                 <div class="d-flex align-items-center justify-content-between">
                     <p>En el curso hay 35 matriculados y en la sala hay 30 matriculados</p>
                     <nb-icon icon="person-add-outline" status="danger" style="font-size: 35px;"></nb-icon>
-                </div>
+                </div> -->
                 <hr>
                 <div class="row">
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <div class="d-flex align-items-center justify-content-between">
                             <label class="label">Bloquear sala</label>
                             <nb-toggle status="primary"></nb-toggle>
@@ -49,16 +56,16 @@
                             <label class="label">Grabación automática</label>
                             <nb-toggle status="primary"></nb-toggle>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
-                        <div class="d-flex align-items-center justify-content-between">
+                        <!-- <div class="d-flex align-items-center justify-content-between">
                             <label class="label">Acceder sin anfitrión</label>
                             <nb-toggle status="primary"></nb-toggle>
                         </div>
-                        <hr>
+                        <hr> -->
                         <div class="d-flex align-items-center justify-content-between">
                             <label class="label">Forzar descarga</label>
-                            <nb-icon icon="cloud-download-outline" status="basic" style="font-size: 35px;"></nb-icon>
+                            <nb-icon icon="cloud-download-outline" status="basic" style="font-size: 35px; cursor: pointer;" (click)="zoomOperator(61)"></nb-icon>
                         </div>
                     </div>
                 </div>

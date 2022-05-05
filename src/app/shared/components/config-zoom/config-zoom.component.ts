@@ -37,17 +37,22 @@ export class ConfigZoomComponent implements OnInit {
   getZoomMeetings() {
     const serviceName = 'zoomMeetings';
     this.loading = true;
-    this.generalServi.nameId$(serviceName, this.datos.id).subscribe((res:any) => {
+    this.generalServi.nameId$(serviceName, this.datos.id_zoom_meetings).subscribe((res:any) => {
       this.zoomMeets = res.data || '';
     }, () => {this.loading = false}, () => {this.loading = false});
   }
-  zoomOperator() {
-    const serviceName = 'zoom-operator';
+  zoomOperator(option:any) {
+    const serviceName = 'zoom-operador';
     const ids = this.datos;
     this.loading = true;
-    this.generalServi.nameAll$(serviceName).subscribe((res:any) => {
+    this.generalServi.nameIdAndId$(serviceName, ids.id, option).subscribe((res:any) => {
       // this.listCourseZoom = res.data || [];
+      // console.log(res);
+      
     }, () => {this.loading = false}, () => {this.loading = false});
+  }
+  joins() {
+    window.open(this.zoomMeets.join_url, '_blank');
   }
 
 }

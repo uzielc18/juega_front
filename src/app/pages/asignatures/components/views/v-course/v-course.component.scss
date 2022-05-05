@@ -6,7 +6,7 @@ nb-progress-bar {
   height: 7px;
 }
 .another-color {
-  color: #934054;
+  color: var(--color-primary-500);
   font-size: 12px;
 }
 
@@ -32,7 +32,7 @@ h5 {
   font-weight: bold;
   padding: 5px 0px 5px 0px;
   margin: 0;
-  color: #934054;
+  color: var(--color-primary-500);
 }
 
 p {
