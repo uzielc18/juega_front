@@ -1,4 +1,26 @@
 <div class="response w-100 d-flex flex-column" *ngFor="let item of alternativas">
-    <label class="label">Respuesta: </label>
-    <textarea nbInput fullWidth rows="4"[(ngModel)]="item.respuesta"></textarea>
+    <br>
+    <label class="label">Respuesta</label><br>
+    <p style="text-align: justify; font-style: oblique; font-weight: bold;">{{item.respuesta}}</p>
+
+    <div  *ngIf="item?.respuesta_sugerida">
+        <div class=" d-flex align-items-center justify-content-between" *ngIf="['Docente'].includes(role);">
+            <br>
+            <div>
+                <label class="label">Cambiar puntos</label>
+                <nb-form-field>
+                    <input type="number" nbInput   [(ngModel)]="item.puntos" fieldSize="small" >
+                    <button nbSuffix nbButton fullWidth size="small" status="primary" [disabled]="item.puntos < 0 || item.puntos === null" (click)="savePuntos(item)">
+                        <nb-icon  icon="save-outline" pack="eva"></nb-icon>
+                    </button> 
+                </nb-form-field>
+            </div>
+        </div>
+
+        <br>
+        <label class="label">Respuesta sugerida</label>
+        <br><br>
+        <p style="text-align: justify; font-style: oblique; font-weight: bold;">{{item?.respuesta_sugerida}}</p>
+    </div>
+
 </div>

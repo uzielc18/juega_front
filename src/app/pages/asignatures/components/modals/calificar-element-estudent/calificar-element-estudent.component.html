@@ -60,61 +60,103 @@
         </nb-card>
       </div>
       <div class="col-md-7 p-1">
-        <div>
-          <div class="row">
-            <div class="col-md-6">
-              <strong>
-                {{element?.titulo}}
-              </strong>
-            </div>
-            <div class="col-md-6">
-            <nb-radio-group class="row" formControlName="ver_trabajo">
-              <nb-radio value="S" class="col-md-6">Ver contenido</nb-radio>
-              <nb-radio value="N" class="col-md-6">Ocultar contenido</nb-radio>
-            </nb-radio-group>
-            </div>
-          </div>
-          <p *ngIf="formHeader.value.ver_trabajo === 'S'" style="text-align: justify; font-size: 11px;">{{element?.descripcion}}</p>
-        </div>
-        <div *ngIf="element?.type_element?.codigo === 'TRAB'">
-          <app-c-works [pending]="pending" [datos]="datosStudent"></app-c-works>
-        </div>
-        <div *ngIf="element?.type_element?.codigo === 'FOR'" >
-          <app-c-forums
-          [pending]="pending"
-          [element]="element"
-          [datos]="datosStudent"
-          [userInfo]="userInfo"
-          [listResponses]="listResponses"
-          ></app-c-forums>
-        </div>
+        <nb-card>
+          <nb-card-header class="p-1">
+            <span *ngIf="element?.type_element?.codigo === 'EVAL' && pending?.student_pending">
+              <nb-badge [text]="pending?.student_pending?.realizo === '1' ? 'Finalizado' : 'En proceso'" [status]="pending?.student_pending?.realizo === '1' ? 'success' : 'warning'" position="top right"></nb-badge>
+            </span>
 
-        <ng-template #elseAddDate>
-          <nb-card *ngIf="formDate.value.person_id">
-            <nb-card-header>
-              ¿ Desea extender la fecha para el participante ?
-            </nb-card-header>
-            <nb-card-body>
-              <form [formGroup]="formDate">
-                <div>
-                  <label class="label">Fecha inicio</label>
-                  <input type="text" nbInput fieldSize="small" fullWidth formControlName="fecha_inicio">
+            <div>
+              <div class="row">
+                <div class="col-md-6">
+                  <span style="font-size: 12px; text-align: justify;">
+                    {{element?.titulo}}
+                  </span>
                 </div>
-                <br>
-                <div>
-                  <label class="label">Fecha fin</label>
-                  <input type="text" nbInput fieldSize="small" fullWidth formControlName="fecha_fin">
+                <div class="col-md-6">
+                <nb-radio-group class="row" formControlName="ver_trabajo">
+                  <nb-radio value="S" class="col-md-6">Ver contenido</nb-radio>
+                  <nb-radio value="N" class="col-md-6">Ocultar contenido</nb-radio>
+                </nb-radio-group>
                 </div>
-                <br>
-                <div class="text-center">
-                 <button nbButton size="small" status="primary" (click)="updateDateStudent()">
-                   Actualizar fecha entrega
-                 </button>
-                </div>
-              </form>
-            </nb-card-body>
-          </nb-card>
-        </ng-template>
+              </div>
+
+              <div *ngIf="formHeader.value.ver_trabajo === 'S'">
+                <p  style="text-align: justify; font-size: 11px;">{{element?.descripcion}}</p>
+
+                <div class="row" style="font-size: 11px;" *ngIf="infor && element?.type_element?.codigo === 'EVAL'">
+                  <br>
+                  <div class="col-md-10" *ngIf="infor">
+                      <strong>Duración:</strong> {{infor?.duracion}} minutos <br> 
+                      <strong>Tiempo de interación:</strong> {{infor?.segundos}} <br>
+                      <strong>Preguntas:</strong> {{infor?.preguntas_respondidas || 0}} / {{infor?.total_questions || 0}}
+                  </div>
+                  <div class="col-md-2 text-center" *ngIf="infor">
+                      <span *ngIf="infor?.m_nota === 'SI'">Puntos <br> <strong style="font-size: 20px;">{{infor?.nota}}</strong></span><br>
+                      <!-- *ngIf="['Docente'].includes(datos?.rol?.name);" -->
+                  </div>
+              </div>
+              </div>
+            </div>
+          </nb-card-header>
+          <nb-card-body style="background: #a0b9c4; max-height: 75vh !important;" >
+            <div *ngIf="element?.type_element?.codigo === 'TRAB'">
+              <app-c-works [pending]="pending" [datos]="datosStudent"></app-c-works>
+            </div>
+            <div *ngIf="element?.type_element?.codigo === 'FOR'" >
+              <app-c-forums
+              [pending]="pending"
+              [element]="element"
+              [datos]="datosStudent"
+              [userInfo]="userInfo"
+              [listResponses]="listResponses"
+              ></app-c-forums>
+            </div>
+            <div *ngIf="element?.type_element?.codigo === 'EVAL'" >
+              <br>
+              <app-v-exam-views
+              [pending_id]="pending?.student_pending?.id"
+              [person_id]="pending?.student_pending?.persons_student_id"
+              [rol]="rol?.name"
+              (informacion)="infoQuestion($event)"
+              (loadingsQuestion)="loadings($event)"
+              ></app-v-exam-views>
+            </div>
+            <ng-template #elseAddDate>
+              <nb-card *ngIf="formDate.value.person_id">
+                <nb-card-header>
+                  ¿ Desea extender la fecha para el participante ?
+                </nb-card-header>
+                <nb-card-body>
+                  <form [formGroup]="formDate">
+                    <div>
+                      <label class="label">Fecha inicio</label>
+                      <input type="text" nbInput fieldSize="small" fullWidth formControlName="fecha_inicio">
+                    </div>
+                    <br>
+                    <div>
+                      <label class="label">Fecha fin</label>
+                      <input type="text" nbInput fieldSize="small" fullWidth formControlName="fecha_fin">
+                    </div>
+                    <br>
+                    <div class="text-center">
+                     <button nbButton size="small" status="primary" (click)="updateDateStudent()">
+                       Actualizar fecha entrega
+                     </button>
+                    </div>
+                  </form>
+                </nb-card-body>
+              </nb-card>
+            </ng-template>
+          </nb-card-body>
+          <nb-card-footer style="font-size: 10px;" *ngIf="element?.type_element?.codigo === 'EVAL'">
+            Leyenda: <br>
+            <strong>Rpt. estudiante: </strong>&nbsp;&nbsp;<span style="color: rgb(36, 151, 21);">Texto</span> <nb-icon  style="color: rgb(36, 151, 21);" icon="checkmark-outline"></nb-icon>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <strong>Rpt. docente: </strong>&nbsp;&nbsp;<span >Texto</span> <nb-icon  style="color: rgb(36, 151, 21);" icon="checkmark-outline"></nb-icon>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <strong>Rpt. correcta: </strong>&nbsp;&nbsp;<span style="color: rgb(36, 151, 21);">Texto</span><nb-icon  style="color: rgb(36, 151, 21);" icon="done-all-outline"></nb-icon>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <strong>Rpt. incorrecta: </strong>&nbsp;&nbsp;<span style="color: red;">Texto</span> <nb-icon  style="color: red;" icon="close-outline"></nb-icon>&nbsp;&nbsp;
+        </nb-card-footer>
+        </nb-card>
       </div>
       <div class="col-md-2 p-1">
         <nb-card>

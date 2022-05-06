@@ -368,7 +368,7 @@ export class ExamHomeComponent implements OnInit {
   }
   get questionsNoResponse():any {
     if (this.questions.length > 0) {
-      return this.questions.filter((r:any) => r.nivel === '2' && !r.estado_respuesta);
+      return this.questions.filter((r:any) => r.nivel === '2' && r.estado_respuesta === 'SIN-RESPONDER');
     } else {
       return [];
     }

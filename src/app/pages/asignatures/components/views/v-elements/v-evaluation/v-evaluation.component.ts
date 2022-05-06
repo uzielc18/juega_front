@@ -1,9 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
+import { MExamViewModalComponent } from 'src/app/shared/components/exam-view/m-exam-view-modal/m-exam-view-modal.component';
 import Swal from 'sweetalert2';
+import { CalificarElementEstudentComponent } from '../../../modals/calificar-element-estudent/calificar-element-estudent.component';
 @Component({
   selector: 'app-v-evaluation',
   templateUrl: './v-evaluation.component.html',
@@ -15,7 +18,8 @@ export class VEvaluationComponent implements OnInit, OnChanges {
   @Input() pending: any;
   ip:any = '';
   @Output() loadingss: EventEmitter<any> = new EventEmitter();
-  constructor(private service: GeneralService, private router: Router, public datepipe: DatePipe) { }
+  constructor(private service: GeneralService, private router: Router, public datepipe: DatePipe,
+    private dialogService: NbDialogService) { }
   ngOnChanges():void {
     this.pending = this.pending;
     // console.log(this.pending, this.element, 'elllllllllll', this.userInfo);
@@ -36,19 +40,19 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     }
   }
 
-  get validFechaHoraFin() {
-    if (this.pending) {
-      const fechaHoraFin = this.pending?.fecha_fin;
-      const DateActual:any = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
-      if (fechaHoraFin>=DateActual) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }
+  // get validFechaHoraFin() {
+  //   if (this.pending) {
+  //     const fechaHoraFin = this.pending?.fecha_fin;
+  //     const DateActual:any = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+  //     if (fechaHoraFin>=DateActual) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   getIp() {
     this.service.apisExternas$('GET', 'https://api.ipify.org/?format=json', {}).subscribe(res => {
@@ -121,6 +125,41 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     } else { 
       return 'Movil';
     }
+  }
+  verEvaluacion() {
+    const values:any = {
+      person_id: this.pending?.student_pending?.persons_student_id || '',
+      pending_id: this.pending?.student_pending?.id || '',
+      rol: this.rolSemestre.rol,
+    }
+    this.dialogService.open(MExamViewModalComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        datos: values,
+        // response: params,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+      }
+    });
+  }
+  calificar(element: any) {
+    this.dialogService.open(CalificarElementEstudentComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        element: element,
+        rol: this.rolSemestre.rol,
+        // response: params,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        // this.filtrar();
+      }
+    });
   }
 
 }

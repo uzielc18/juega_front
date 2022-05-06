@@ -12,13 +12,13 @@
     <nb-card-body class="text-center">
         ¿ Esta seguro que desea finalizar ?
 
-        <span style="font-weight: bold; color: brown;">
+        <span style="font-weight: bold; color: brown;" *ngIf="datos?.quest_sn_response > 0">
         <br><br>
           Aún tiene {{datos?.quest_sn_response}} preguntas sin responder
         </span>
     </nb-card-body>
     <nb-card-footer class="text-center">
-        <button nbButton size="small" status="warning" (click)="verQuestion()">Ver Preguntas</button> &nbsp;&nbsp;
-        <button nbButton size="small" status="primary">Finalizar</button>
+        <button *ngIf="datos?.quest_sn_response > 0" nbButton size="small" status="warning" (click)="verQuestion()">Ver Preguntas</button> &nbsp;&nbsp;
+        <button nbButton size="small" status="primary" (click)="finish()">Finalizar</button>
     </nb-card-footer>
     </nb-card>
