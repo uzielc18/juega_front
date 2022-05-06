@@ -1,4 +1,10 @@
-<nb-card class="h-100 border-0" style="border-radius: 15px" nbSpinnerStatus="primary" nbSpinnerSize="small">
+<nb-card
+  class="h-100 border-0"
+  style="border-radius: 15px"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="small"
+>
   <nb-card-header>
     <div class="d-flex">
       <nb-icon icon="file-text-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
@@ -12,7 +18,6 @@
       <table class="table table-sm">
         <thead>
           <tr class="text-center" style="font-size: 12px">
-            <th style="width: 20px">#</th>
             <th>Titulo</th>
             <th>Descripcion</th>
             <th>Opciones</th>
@@ -24,16 +29,29 @@
             class="text-center"
             style="font-size: 12px; vertical-align: middle"
           >
-            <td>{{ i + 1 }}</td>
             <td>{{ rubric?.titulo }}</td>
             <td>{{ rubric?.descripcion }}</td>
-            <td class="text-center" style="width: 150px">
+            <td class="text-center" style="width: 200px">
               <div class="d-flex justify-content-evenly">
                 <div>
-                  <nb-icon icon="edit" status="info" style="cursor: pointer; font-size: 25px" (click)="editRubric(rubric)"></nb-icon>
-                  <!-- (click)="updateZoom(item)" -->
+                  <nb-icon
+                    icon="edit"
+                    status="info"
+                    style="cursor: pointer; font-size: 25px"
+                    (click)="editRubric(rubric)"
+                  ></nb-icon>
                   <br />
                   Editar
+                </div>
+                <div>
+                  <nb-icon
+                    icon="copy-outline"
+                    status="warning"
+                    style="cursor: pointer; font-size: 25px"
+                    (click)="duplicateRubric(rubric)"
+                  ></nb-icon>
+                  <br />
+                  Duplicar
                 </div>
                 <div>
                   <nb-icon
@@ -55,4 +73,29 @@
       </table>
     </div>
   </nb-card-body>
+  <nb-card-footer>
+    <div class="d-flex justify-content-between align-items-center p-2">
+      <div></div>
+      <ngb-pagination
+        [collectionSize]="pagination?.sizeListData"
+        [(page)]="pagination.page"
+        [maxSize]="20"
+        [disabled]="pagination?.isDisabledPage"
+        [pageSize]="pagination?.sizePage"
+        class="d-flex justify-content-center"
+        size="sm"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      >
+      </ngb-pagination>
+      <div class="">
+        <nb-form-field [formGroup]="formHeader">
+          <nb-icon nbPrefix icon="list-outline"></nb-icon>
+          <nb-select size="small" status="primary" formControlName="id_per_page" fullWidth>
+            <nb-option *ngFor="let per of pagesCount" [value]="per" (click)="selectedPerPage(per)">{{ per }}</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
+    </div>
+  </nb-card-footer>
 </nb-card>

@@ -10,60 +10,10 @@ import { END_POINTS } from '../../../../providers/utils';
   styleUrls: ['./create-rubric.component.scss'],
 })
 export class CreateRubricComponent implements OnInit {
-  // @Input() rubrica: any = null;
-  rubrica: any = {
-    id: 1,
-    nombre: 'Rubrica sssssssssss',
-    descripcion: 'aaaaaaaa',
-    num_criterios: 2,
-    num_niveles: 3,
-    criterios: [
-      {
-        titulo: 'Criterio 1',
-        descripcion: 'ssssss',
-        puntuacion: 5,
-        niveles: [
-          {
-            titulo: 'Nivel 1',
-            descripcion: 'aaaaaaaaaaaa',
-            puntuacion: 5,
-          },
-          {
-            titulo: 'Nivel 2',
-            descripcion: 'bbbbbbbbbbbbb',
-            puntuacion: 4,
-          },
-          {
-            titulo: 'Nivel 3',
-            descripcion: 'ccccccccccc',
-            puntuacion: 4,
-          },
-        ],
-      },
-      {
-        titulo: 'Criterio 2',
-        descripcion: 'ssssss',
-        puntuacion: 5,
-        niveles: [
-          {
-            titulo: 'Nivel 1',
-            descripcion: 'aaaaaaaaaaaa',
-            puntuacion: 5,
-          },
-          {
-            titulo: 'Nivel 2',
-            descripcion: 'bbbbbbbbbbbbb',
-            puntuacion: 4,
-          },
-          {
-            titulo: 'Nivel 3',
-            descripcion: 'ccccccccccc',
-            puntuacion: 4,
-          },
-        ],
-      },
-    ],
-  };
+  @Input() rubricaId: any = null;
+  @Input() action: string = 'create';
+
+  rubrica: any = null;
 
   titles: any = [];
 
@@ -78,6 +28,7 @@ export class CreateRubricComponent implements OnInit {
     private generalService: GeneralService
   ) {
     this.userForm = this.fb.group({
+      id: [''],
       nombre: ['', [Validators.required]],
       descripcion: [''],
       num_criterios: [4, [Validators.required, Validators.min(1), Validators.max(7)]],
@@ -88,6 +39,19 @@ export class CreateRubricComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialCriterios();
+    this.getRubrica();
+  }
+
+  getRubrica() {
+    if (this.rubricaId !== null) {
+      const serviceName = END_POINTS.base_back.rubrics + '/get-rubrica';
+      this.generalService.nameId$(serviceName, this.rubricaId).subscribe((res: any) => {
+        if (res.success) {
+          this.rubrica = res.data;
+          this.initialCriterios();
+        }
+      });
+    }
   }
 
   closeModal() {
@@ -141,12 +105,10 @@ export class CreateRubricComponent implements OnInit {
   private NivelesGroup(): FormGroup {
     return this.fb.group({
       titulo: [''],
-      descripcion: ['', [Validators.required]],
-      puntuacion: [0, [Validators.required, Validators.min(0)]],
-      // // rubrica: this.fb.group({
-      //   descripcion: ['', [Validators.required]],
-      //   puntuacion: [0, [Validators.required, Validators.min(0)]],
-      // }),
+      rubricas: this.fb.group({
+        descripcion: ['', [Validators.required]],
+        puntuacion: [0, [Validators.required, Validators.min(0)]],
+      }),
     });
   }
 
@@ -159,6 +121,7 @@ export class CreateRubricComponent implements OnInit {
     control.controls = [];
     if (this.rubrica !== null) {
       this.userForm.patchValue({
+        id: this.rubrica.id,
         nombre: this.rubrica.nombre,
         descripcion: this.rubrica.descripcion,
         num_criterios: this.rubrica.num_criterios,
@@ -238,18 +201,20 @@ export class CreateRubricComponent implements OnInit {
   }
 
   saveRubrica() {
+    if (this.action === 'create' || this.action === 'duplicate') {
+      this.userForm.removeControl('id');
+    }
+
     this.criterioArray.controls.forEach((criterio: any) => {
       criterio.get('niveles').controls.forEach((nivel: any, index: any) => {
         nivel.get('titulo').setValue(this.titles[index].nombre);
       });
     });
-    // console.log(this.userForm.value);
     const serviceName = END_POINTS.base_back.rubrics + '/save-rubrica';
     this.loading = true;
     this.generalService.addNameData$(serviceName, this.userForm.value).subscribe(
       (res: any) => {
         if (res.success) {
-          console.log(res);
           this.activeModal.close('ok');
         }
       },
