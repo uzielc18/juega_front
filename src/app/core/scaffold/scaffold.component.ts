@@ -70,22 +70,22 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       link: "/pages/rubrics",
       pathMatch: "prefix",
     },
-    // {
-    //   title: "Mi calendario",
-    //   icon: "calendar-outline",
-    //   link: "/pages/my-calendar",
-    //   pathMatch: "prefix",
-    // },
+   {
+      title: "Mi calendario",
+      icon: "calendar-outline",
+      link: "/pages/my-calendar",
+      pathMatch: "prefix",
+    }, 
     {
       title: "Biblioteca",
       icon: "book-outline",
     },
-    {
-      title: "Exámen",
-      icon: "clipboard-outline",
-      link: "/exam",
-      pathMatch: "prefix",
-    },
+    // {
+    //   title: "Exámen",
+    //   icon: "clipboard-outline",
+    //   link: "/exam",
+    //   pathMatch: "prefix",
+    // },
     {
       title: "Administrar",
       icon: "settings-outline",

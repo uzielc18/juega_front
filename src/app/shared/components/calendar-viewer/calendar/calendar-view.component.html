@@ -2,20 +2,20 @@
     <div class="col-md-4">
       <div class="btn-group">
         <button
-          nbButton status="primary"
+          nbButton status="primary" size="small"
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()">
           Anterior
         </button>
-        <button nbButton status="warning"
+        <button nbButton status="warning" size="small"
                 mwlCalendarToday
                 [(viewDate)]="viewDate">
           Hoy
         </button>
         <button nbButton
-                status="primary"
+                status="primary" size="small"
                 mwlCalendarNextView
                 [view]="view"
                 [(viewDate)]="viewDate"
@@ -29,19 +29,19 @@
     </div>
     <div class="col-md-4">
       <div class="btn-group">
-        <button nbButton status="primary"
+        <button nbButton status="primary" size="small"
                 (click)="setView(CalendarView.Month)"
                 [class.active]="view === CalendarView.Month">
           Mes
         </button>
         <button
-          nbButton status="warning"
+          nbButton status="warning" size="small"
           (click)="setView(CalendarView.Week)"
           [class.active]="view === CalendarView.Week">
           Semana
         </button>
         <button
-          nbButton status="primary"
+          nbButton status="primary" size="small"
           (click)="setView(CalendarView.Day)"
           [class.active]="view === CalendarView.Day">
           Dia

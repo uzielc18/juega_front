@@ -167,11 +167,11 @@
             <div>
               <div class="d-flex">
                 <div *ngFor="let opts of optionsType" style="padding-left: 3px; padding-right: 3px;">
-                  <button nbButton size="large"
+                  <button nbButton size="tiny"
                     [ngStyle]="{'background': opts.checked ? opts.color : '', 'color': opts.checked ? 'white' : ''}"
                     (click)="changeButtom(opts)" [disabled]="formHeader.invalid" nbTooltip="{{opts.nombre}}"
                     nbTooltipPlacement="top" nbTooltipStatus="primary">
-                    <nb-icon [icon]="opts.icon"></nb-icon>
+                    <nb-icon [icon]="opts.icon"></nb-icon> {{opts.nombre}}
                   </button>
                 </div>
               </div>

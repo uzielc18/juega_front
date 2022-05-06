@@ -5,6 +5,7 @@ import { NebularModule } from 'src/app/shared/nebular.module';
 import { MyCalendarHomeComponent } from './containers/my-calendar-home.component';
 import { MyCalendarRoutingModule } from './my-calendar-routing.module';
 import { CalendarViewModule } from 'src/app/shared/components/calendar-viewer/calendar/calendar-view.module';
+import { NbCalendarModule } from '@nebular/theme';
 const COMPONENTS: any = [
   MyCalendarComponent,
   MyCalendarHomeComponent
@@ -16,7 +17,8 @@ const MODULES: any = [
 ]
 
 const NEBULAR: any = [
-  NebularModule
+  NebularModule,
+  NbCalendarModule
 ]
 
 @NgModule({

@@ -80,6 +80,7 @@ export class CalendarComponent implements OnInit {
 
 
   setView(view: CalendarView) {
+    console.log(view);
     this.view = view;
   }
 

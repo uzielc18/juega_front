@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyCalendarHomeComponent implements OnInit {
   loading: boolean = false;
+  date = new Date();
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  handleDateChange($event:any) {
+    console.log($event);
+    
+  }
 }

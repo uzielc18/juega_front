@@ -13,7 +13,47 @@ nbSpinnerSize="small"
   </div>
 </nb-card-header>
 <nb-card-body style="background: #a0b9c4; max-height: 80vh !important;">
-    <app-calendar-view></app-calendar-view>
+    <div class="row">
+        <div class="col-md-3">
+            <nb-card>
+                <nb-card-header style="padding: 8px;">
+                    <button nbButton fullWidth status="primary" size="small">
+                        <nb-icon icon="plus-square-outline"></nb-icon> Crear evento
+                    </button>
+                </nb-card-header>
+                <nb-card-body>
+                    <div style="display: flex; justify-content: center;">
+                        <nb-calendar size="medium" [date]="date" (dateChange)="handleDateChange($event)"></nb-calendar>
+                    </div>
+                    <br>
+                    <div style="font-size: 12px;">
+                        <label class="label" style="font-size: 15px; font-weight: bold;">Mis calendarios</label>
+                        <br>
+                        <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp; Mi horario</strong>
+                    </div>
+                    <div style="font-size: 12px;">
+                        <label class="label" style="font-size: 15px; font-weight: bold;">Pendiéntes</label>
+                        <br>
+                        <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp;Trabajos</strong><br>
+                        <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp;Evaluaciones</strong><br>
+                        <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp;Foros</strong>
+                    </div>
+                    <div style="font-size: 12px;">
+                        <label class="label" style="font-size: 15px; font-weight: bold;">Otros calendarios</label>
+                        <br>
+                        <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp;Mi universidad</strong><br>
+                        <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp;Mi facultad</strong><br>
+                        <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp;Mi escuela</strong><br>
+                        <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp;Mi google calendar</strong>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-md-9">
+            <app-calendar-view></app-calendar-view>
+        </div>
+    </div>
+    
 </nb-card-body>
   
 </nb-card>
