@@ -1,0 +1,70 @@
+<label class="label">Relacionar: </label><br /><br />
+<div class="row">
+  <div class="col-md-5">
+    <nb-card class="mb-3" style="background-color: #fff8fb">
+      <nb-card-header class="text-center p-1">Grupo A</nb-card-header>
+      <nb-card-body class="pb-0">
+        <nb-card
+          *ngFor="let rel of relationList; let i = index"
+          [ngClass]="{ 'mb-4': rel.imagen}"
+          style="cursor: pointer; text-align: center"
+          [ngStyle]="rel ? imgStyle(rel) : imgStyleDef()"
+        >
+          <nb-card-header class="p-0 border-bottom-0" *ngIf="rel.relacion" [ngStyle]="styles(rel)">
+            <span class="d-block py-2">
+              {{ rel?.relacion | titlecase }} <span *ngIf="rel?.relacion_respuesta"> - ({{ rel?.relacion_respuesta | titlecase }})</span> 
+            </span>
+          </nb-card-header>
+          <nb-card-body class="p-3 pt-1" *ngIf="rel.imagen" [ngStyle]="styles(rel)">
+            <div style="height: 100px">
+              <img [src]="rel?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-2"></div>
+  <hr class="d-md-none" />
+  <div class="col-md-5">
+    <nb-card class="mb-3" style="background-color: #f8fffe">
+      <nb-card-header class="text-center p-1">Grupo B</nb-card-header>
+      <nb-card-body class="pb-0">
+        <nb-card
+          *ngFor="let item of secondList; let i = index"
+          [ngClass]="{ 'mb-4': item.imagen !== null }"
+          style="cursor: pointer; text-align: center"
+          [ngStyle]="item ? imgStyle(item) : imgStyleDef()"
+        >
+       
+          <nb-card-header class="p-0 border-bottom-0" *ngIf="item.relacion" [ngStyle]="styles(item)">
+            <span  class="d-block py-2">
+              {{ item?.relacion | titlecase }}
+              <div class="circulo">
+                <nb-icon *ngIf="item?.correcto?.length === 0  && item?.checked"  style="color: rgb(36, 151, 21);" icon="checkmark-outline"></nb-icon>
+                <nb-icon *ngIf="item?.correcto === 1 && !item?.checked"  style="color: rgb(36, 151, 21);" icon="checkmark-outline"></nb-icon>
+                <nb-icon *ngIf="item?.checked && item?.correcto === 1"  style="color: rgb(36, 151, 21);" icon="done-all-outline"></nb-icon>
+                <nb-icon *ngIf="item?.checked && item?.correcto === 0" style="color: red;" icon="close-outline"></nb-icon>
+              </div>
+            </span>
+          </nb-card-header>
+          <nb-card-body class="p-3 pt-1" *ngIf="item.imagen" [ngStyle]="styles(item)">
+            <div style="height: 100px">
+                <div class="circulo" *ngIf="!item.relacion">
+                    <nb-icon *ngIf="item?.correcto?.length === 0  && item?.checked"  style="color: rgb(36, 151, 21);" icon="checkmark-outline"></nb-icon>
+                    <nb-icon *ngIf="item?.correcto === 1 && !item?.checked"  style="color: rgb(36, 151, 21);" icon="checkmark-outline"></nb-icon>
+                    <nb-icon *ngIf="item?.checked && item?.correcto === 1"  style="color: rgb(36, 151, 21);" icon="done-all-outline"></nb-icon>
+                    <nb-icon *ngIf="item?.checked && item?.correcto === 0" style="color: red;" icon="close-outline"></nb-icon>
+                </div>
+                <img  [src]="item?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<ng-template #name>
+
+</ng-template>
+

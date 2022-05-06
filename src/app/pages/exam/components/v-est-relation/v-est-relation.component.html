@@ -6,8 +6,63 @@
       <nb-card-body class="pb-0">
         <nb-card
           *ngFor="let rel of relationList; let i = index"
+          (click)="selectedA(rel, i)"
+          [ngClass]="{ 'mb-4': rel.imagen }"
+          style="cursor: pointer; text-align: center"
+          [ngStyle]="rel ? imgStyle(rel) : imgStyleDef()"
+        >
+          <nb-card-header class="p-0 border-bottom-0" *ngIf="rel?.relacion" [ngStyle]="styles(rel)">
+            <span  class="d-block py-2">
+              {{ rel?.relacion | titlecase }}
+            </span>
+          </nb-card-header>
+          <nb-card-body class="p-3 pt-1" *ngIf="rel.imagen"  [ngStyle]="styles(rel)">
+            <div style="height: 100px">
+              <img  [src]="rel?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-2"></div>
+  <hr class="d-md-none" />
+  <div class="col-md-5">
+    <nb-card class="mb-3" style="background-color: #f8fffe">
+      <nb-card-header class="text-center">Grupo B</nb-card-header>
+      <nb-card-body class="pb-0">
+        <nb-card
+          *ngFor="let item of secondList; let i = index"
+          (click)="selectedB(item, i)"
+          [ngClass]="{ 'mb-4': item.imagen }"
+          style="cursor: pointer; text-align: center"
+          [ngStyle]="item ? imgStyle(item) : imgStyleDef()"
+        >
+          <nb-card-header class="p-0 border-bottom-0" *ngIf="item?.relacion" [ngStyle]="styles(item)">
+            <span  class="d-block py-2">
+              {{ item?.relacion | titlecase }}
+            </span>
+          </nb-card-header>
+          <nb-card-body class="p-3 pt-1" *ngIf="item.imagen"  [ngStyle]="styles(item)">
+            <div style="height: 100px">
+              <img [src]="item?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<!-- <div class="row">
+  <div class="col-md-5">
+    <nb-card class="mb-3" style="background-color: #fff8fb">
+      <nb-card-header class="text-center">Grupo A</nb-card-header>
+      <nb-card-body class="pb-0">
+        <nb-card
+          *ngFor="let rel of relationList; let i = index"
           (click)="revisarCheckA(rel, i)"
-          [ngClass]="{ 'mb-4': rel.imagen !== null }"
+          [ngClass]="{ 'mb-4': rel.imagen }"
           style="cursor: pointer; text-align: center"
           [ngStyle]="rel ? imgStyle(rel) : imgStyleDef()"
         >
@@ -16,9 +71,9 @@
               {{ rel?.relacion | titlecase }}
             </span>
           </nb-card-header>
-          <nb-card-body class="p-3 pt-1" *ngIf="rel.imagen !== null">
+          <nb-card-body class="p-3 pt-1" *ngIf="rel.imagen">
             <div style="height: 100px">
-              <img *ngIf="rel.imagen !== null" [src]="rel?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+              <img *ngIf="rel.imagen" [src]="rel?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
             </div>
           </nb-card-body>
         </nb-card>
@@ -34,7 +89,7 @@
         <nb-card
           *ngFor="let item of randomList; let i = index"
           (click)="revisarCheckB(item, i)"
-          [ngClass]="{ 'mb-4': item.imagen !== null }"
+          [ngClass]="{ 'mb-4': item.imagen }"
           style="cursor: pointer; text-align: center"
           [ngStyle]="item ? imgStyle(item) : imgStyleDef()"
         >
@@ -43,13 +98,17 @@
               {{ item?.relacion | titlecase }}
             </span>
           </nb-card-header>
-          <nb-card-body class="p-3 pt-1" *ngIf="item.imagen !== null">
+          <nb-card-body class="p-3 pt-1" *ngIf="item.imagen">
             <div style="height: 100px">
-              <img *ngIf="item.imagen !== null" [src]="item?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+              <img *ngIf="item.imagen" [src]="item?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
             </div>
           </nb-card-body>
         </nb-card>
       </nb-card-body>
     </nb-card>
   </div>
+</div> -->
+<hr>
+<div style="text-align: right;">
+    <button nbButton status="primary" class="ms-auto mt-2" size="tiny" (click)="saveResponse()">Guardar</button>
 </div>

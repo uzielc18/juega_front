@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
-import { ConfigZoomComponent } from './config-zoom/config-zoom.component';
+import { ConfigZoomComponent } from 'src/app/shared/components/config-zoom/config-zoom.component';
 
 @Component({
   selector: 'app-zoom-course',
@@ -48,7 +48,7 @@ export class ZoomCourseComponent implements OnInit {
       closeOnEsc: false
     }).onClose.subscribe(result => {
       if (result === 'ok') {
-        // this.filtrar();
+        this.getCourseZoom();
       }
     });
   }

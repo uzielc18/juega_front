@@ -1,7 +1,5 @@
-<form [formGroup]="formHeaders">
-    <div class="response w-100 d-flex flex-column">
-        <label class="label">Respuesta: </label><br><br>
-        <textarea nbInput fullWidth rows="4" formControlName="respuesta"></textarea>
-        <button nbButton outline status="primary" class="ms-auto mt-2" size="small" [disabled]="formHeaders.invalid">Guardar</button>
-      </div>
-</form>
+<div class="response w-100 d-flex flex-column" *ngFor="let item of alternativas">
+        <label class="label">Respuesta: </label>
+        <textarea nbInput fullWidth rows="4"[(ngModel)]="item.respuesta"></textarea>
+        <button nbButton status="primary" class="ms-auto mt-2" size="tiny" [disabled]="!item.respuesta" (click)="saveResponse()">Guardar</button>
+</div>

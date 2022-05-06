@@ -1,10 +1,10 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
-import { DIRECTORY } from 'src/app/shared/directorios/directory';
+import { DIRECTORY, DIRECTORY_ELEMENTS } from 'src/app/shared/directorios/directory';
 import { MProcessUrlComponent } from './modals/m-process-url/m-process-url.component';
 import Swal from 'sweetalert2';
 import { MSectionComponent } from './modals/m-section/m-section.component';
@@ -15,9 +15,11 @@ import { MSectionComponent } from './modals/m-section/m-section.component';
   styleUrls: ['./q-config.component.scss']
 })
 export class QConfigComponent implements OnInit {
-  @Input() item:any;
-  @Input() userInfo:any;
-  directorio: any = DIRECTORY.base;
+  @Input() item: any = [];
+  id_carga_curso_docente: any = '';
+  @Input() userInfo: any;
+  // directorio: any = DIRECTORY.base;
+  directorio: any;
   arrayFile: any = [];
   formHeader: any = FormGroup;
   loading: boolean = false;
@@ -41,6 +43,7 @@ export class QConfigComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.dragQuestions, event.previousIndex, event.currentIndex);
   }
+  @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService, private generalServi: GeneralService) { }
 
   ngOnInit(): void {
@@ -71,11 +74,14 @@ export class QConfigComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.key_file = this.item?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo;
+    console.log(this.item, 'Itttttt');
   }
   getQuestions() {
     const serviceName = END_POINTS.base_back.quiz + '/get-questions';
     if (this.item && this.item.exam && this.item.exam.id) {
-      this.loadingQuestion = true;
+      this.loadings.emit(true);
+      this.id_carga_curso_docente = this.item.id_carga_curso_docente;
+      this.directorio = DIRECTORY_ELEMENTS.base + `/${this.id_carga_curso_docente}` + '/exam'; // directory
       this.generalServi.nameId$(serviceName, this.item.exam.id).subscribe(r => {
         this.questions = r.data || [];
         if (this.questions.length> 0) {
@@ -93,8 +99,13 @@ export class QConfigComponent implements OnInit {
               r.ultimo = true;
             }
           });
+
+          if (this.item && this.item?.pendientes_realizados !== 0) { // Solo para no editar cuando es mayor a cero (0)
+            this.formHeader.controls['drag_drop'].setValue(true);
+            this.dragQuestions = JSON.parse(JSON.stringify(this.questions));
+          }
         }
-      }, () => { this.loadingQuestion = false; }, () => { this.loadingQuestion  = false; });
+      }, () => { this.loadings.emit(false); }, () => { this.loadings.emit(false); });
       }
   }
 
@@ -393,12 +404,12 @@ export class QConfigComponent implements OnInit {
             arrayOrder.push(object);
           }
         });
-        const serviceName = END_POINTS.base_back.quiz + 'question-orden'
+        const serviceName = END_POINTS.base_back.quiz + '/save-order'
         const params = {
           drag_and_drop: arrayOrder
         }
         this.loading = true;
-        this.generalServi.updateNameData$(serviceName, params).subscribe((res:any) => {
+        this.generalServi.addNameData$(serviceName, params).subscribe((res:any) => {
           if (res.success) {
             this.getQuestions();
             this.fieldReactive();
@@ -411,7 +422,7 @@ export class QConfigComponent implements OnInit {
         }, () => { this.loading = false; }, () => { this.loading = false; });
         // console.log(valid, 'Plopppppppp', arrayOrder, this.dragQuestions);
       }
-      
+
     }
 
   }

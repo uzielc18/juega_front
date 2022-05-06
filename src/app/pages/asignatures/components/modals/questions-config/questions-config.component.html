@@ -1,5 +1,4 @@
-<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
-  nbSpinnerMessage="Procesando información">
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
@@ -11,8 +10,8 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-    <nb-tabset>
-      <nb-tab tabIcon="question-mark-circle-outline" tabTitle="Preguntas"
+    <nb-tabset (changeTab)="valueChangeTab($event)">
+      <nb-tab tabIcon="question-mark-circle-outline" tabTitle="Preguntas" tabId="QUESTION"
         style="padding-left: 0px; padding-right: 0px;">
         <nb-card style="padding-bottom: 0px;">
           <nb-card-body>
@@ -27,11 +26,16 @@
           </nb-card-body>
         </nb-card>
         <div style="padding-top: 0px;">
-          <app-q-config [item]="item" [userInfo]="userInfo"></app-q-config>
+          <app-q-config [item]="item" [userInfo]="userInfo"  (loadings)="loadingsss($event)"></app-q-config>
         </div>
       </nb-tab>
-      <nb-tab tabIcon="settings-2-outline" tabTitle="Configuraciónes">
-        Tab content 2
+      <nb-tab tabIcon="settings-2-outline" tabTitle="Publicar examen" *ngIf="item?.pendientes_realizados === 0" tabId="CONFIG">
+        <app-public-config-question
+        [item]="item" 
+        [userInfo]="userInfo"
+        [examInfo]="infoExam"
+        (saveValues)="saveValues($event)"
+        (loadings)="loadingsss($event)"></app-public-config-question>
       </nb-tab>
     </nb-tabset>
   </nb-card-body>

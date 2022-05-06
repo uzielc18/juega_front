@@ -54,7 +54,7 @@ export class EvaluationsComponent implements OnInit {
 
       tipo: ['EVALUACION', [Validators.required]],
 
-      visibilidad: ['S'],
+      visibilidad: ['N'],
       calificable: [false],
       duracion: ['180', [Validators.required]],
       permitir_comentarios: [false],

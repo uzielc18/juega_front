@@ -37,8 +37,16 @@ const routes: Routes = [
           import("./pages/evaluations-teacher/evaluations-teacher.module").then((m) => m.EvaluationsTeacherModule),
       },
       {
+        path: "rubrics",
+        loadChildren: () => import("./pages/rubrics/rubrics.module").then((m) => m.RubricsModule),
+      },
+      {
         path: "manage",
         loadChildren: () => import("./pages/manage/manage.module").then((m) => m.ManageModule),
+      },
+      {
+        path: "my-calendar",
+        loadChildren: () => import("./pages/my-calendar/my-calendar.module").then((m) => m.MyCalendarModule),
       },
       {
         path: "",
@@ -52,7 +60,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: "exam",
+    path: "exam/:pending_id/:person_id",
     canActivate: [Auth2Guard],
     loadChildren: () => import("./pages/exam/exam.module").then((m) => m.ExamModule),
   },

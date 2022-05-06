@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EntityDataService, IResponse, END_POINTS } from '../providers/utils';
 
 @Injectable()
 export class GeneralService extends EntityDataService<IResponse> {
-    constructor(protected httpClient: HttpClient) {
+    constructor(protected httpClient: HttpClient,
+      private handler: HttpBackend) {
         super(httpClient, END_POINTS.patmos_base);
     }
 
@@ -18,7 +19,6 @@ export class GeneralService extends EntityDataService<IResponse> {
     public nameId$(serviceName: any, id: any): Observable<IResponse> {
         return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}`);
     }
-
     public addNameData$(serviceName: any, data: any): Observable<IResponse> {
         return this.httpClient.post<IResponse>(`${this.endPoint}/${serviceName}`, data);
     }
@@ -57,5 +57,17 @@ export class GeneralService extends EntityDataService<IResponse> {
     }
     public nameIdParams$(serviceName: any, id: any, params:any): Observable<IResponse> {
       return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}`, {params});
+    }
+    public apisExternas$(methos:any, url:any, paramsHeaders?:any): Observable<any> {
+      const http = new HttpClient(this.handler);
+      const headers = new HttpHeaders(
+        {
+          // 'Authorization': ''
+        });
+      const req = new HttpRequest(methos, url,
+        {
+          headers: headers,
+        });
+      return http.request(req);
     }
 }

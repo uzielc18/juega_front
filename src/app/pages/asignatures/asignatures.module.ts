@@ -48,6 +48,9 @@ import { QuestionsConfigComponent } from './components/modals/questions-config/q
 import { QConfigModule } from 'src/app/shared/components/questions/q-config/q-config.module';
 import { QViewModule } from '../../shared/components/questions/q-view/q-view.module';
 import { FilterPipeModule } from 'src/app/shared/pipes/filterPipe/filterPipe.module';
+import { PublicConfigQuestionModule } from 'src/app/shared/components/questions/public-config-question/public-config-question.module';
+import { MExamViewModalModule } from 'src/app/shared/components/exam-view/m-exam-view-modal/m-exam-view-modal.module';
+import { VExamViewsModule } from 'src/app/shared/components/exam-view/v-exam-views/v-exam-views.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -119,6 +122,9 @@ const MODULES: any = [
   CardListCourseModule,
   QConfigModule,
   QViewModule,
+  PublicConfigQuestionModule,
+  MExamViewModalModule,
+  VExamViewsModule
 ]
 
 @NgModule({

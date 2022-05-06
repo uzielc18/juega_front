@@ -65,6 +65,18 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       pathMatch: "prefix",
     },
     {
+      title: "Rúbricas",
+      icon: "file-text-outline",
+      link: "/pages/rubrics",
+      pathMatch: "prefix",
+    },
+    // {
+    //   title: "Mi calendario",
+    //   icon: "calendar-outline",
+    //   link: "/pages/my-calendar",
+    //   pathMatch: "prefix",
+    // },
+    {
       title: "Biblioteca",
       icon: "book-outline",
     },
@@ -258,7 +270,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                           .subscribe(
                             (authResult: NbAuthResult) => {
                               if (authResult.isSuccess()) {
-                                this.appService.stop();
+                                // this.appService.stop();
                                 this.router.navigate([`/auth`]);
                                 // window.location.href = environment.shellApp;
                               }

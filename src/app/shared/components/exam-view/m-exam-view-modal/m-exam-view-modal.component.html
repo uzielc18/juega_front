@@ -1,0 +1,37 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+      <div class=" d-flex align-items-center justify-content-between">
+        <div class="row" style="font-size: 12px;">
+            <div class="col-md-10" *ngIf="infor">
+                <strong>Examen:</strong> {{infor?.titulo}} <br>
+                <strong>Duración:</strong> {{infor?.duracion}} minutos <br> 
+                <strong>Tiempo de interación:</strong> {{infor?.segundos}} <br>
+                <strong>Preguntas:</strong> {{infor?.preguntas_respondidas || 0}} / {{infor?.total_questions || 0}}
+            </div>
+            <div class="col-md-2 text-center" *ngIf="infor">
+                <span *ngIf="infor?.m_nota === 'SI'">Puntos <br> <strong style="font-size: 20px;">{{infor?.nota}}</strong></span><br>
+                <!-- *ngIf="['Docente'].includes(datos?.rol?.name);" -->
+            </div>
+        </div>
+        <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </nb-card-header>
+    <nb-card-body style="align-items: center; background: #a0b9c4;">
+        <div class="d-flex align-items-center justify-content-between">
+            <div></div>
+            <app-v-exam-views [pending_id]="datos?.pending_id" [person_id]="datos?.person_id"  [rol]="datos?.rol?.name"
+             (loadingsQuestion)="loadings($event);"
+             (informacion)="infoQuestion($event)"></app-v-exam-views>
+             <div></div>
+        </div>
+    </nb-card-body>
+    <nb-card-footer style="font-size: 10px;">
+        Leyenda: <br>
+        <strong>Rpt. estudiante: </strong>&nbsp;&nbsp;<span style="color: rgb(36, 151, 21);">Texto</span> <nb-icon  style="color: rgb(36, 151, 21);" icon="checkmark-outline"></nb-icon>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <strong>Rpt. docente: </strong>&nbsp;&nbsp;<span >Texto</span> <nb-icon  style="color: rgb(36, 151, 21);" icon="checkmark-outline"></nb-icon>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <strong>Rpt. correcta: </strong>&nbsp;&nbsp;<span style="color: rgb(36, 151, 21);">Texto</span><nb-icon  style="color: rgb(36, 151, 21);" icon="done-all-outline"></nb-icon>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <strong>Rpt. incorrecta: </strong>&nbsp;&nbsp;<span style="color: red;">Texto</span> <nb-icon  style="color: red;" icon="close-outline"></nb-icon>&nbsp;&nbsp;
+    </nb-card-footer>
+    </nb-card>

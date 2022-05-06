@@ -1,7 +1,7 @@
 <!-- drag-and-drop -->
 <div [nbSpinner]="loading || loadingQuestion" nbSpinnerStatus="primary" nbSpinnerSize="large" >
 
-<div *ngIf="questions?.length>2" style="padding-top: 0px; padding-bottom: 8px;">
+<div *ngIf="questions?.length>2 && item?.pendientes_realizados === 0" style="padding-top: 0px; padding-bottom: 8px;">
   <form [formGroup]="formHeader" class=" d-flex align-items-center justify-content-between">
     <div>
     </div>
@@ -25,7 +25,7 @@
         'margin-left': quiz?.nivel === 2 ? '25px' : '',
         'font-size':  quiz?.nivel === 1 ? '18px' : '13px',
         'font-weight':  quiz?.nivel === 1 ? 'bold' : '',
-        'border-left': '6px solid #934054'
+        'border-left': '6px solid #00244e'
         }">
         <nb-card-body>
           <div class="d-flex">
@@ -61,7 +61,7 @@
         'margin-left': quiz?.nivel === 2 ? '25px' : '',
         'font-size':  quiz?.nivel === 1 ? '18px' : '13px',
         'font-weight':  quiz?.nivel === 1 ? 'bold' : '',
-        'border-left': '6px solid #934054'
+        'border-left': '6px solid #00244e'
         }">
         <nb-card-body *ngIf="!quiz?.editValid">
           <div class="d-flex">
@@ -188,7 +188,7 @@
             <div *ngIf="['07'].includes(formHeader?.value?.type_alternative?.codigo)">
 
               <app-c-multi-option [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
-                (changeSuccess)="changeSuccess($event)"></app-c-multi-option>
+                (changeSuccess)="changeSuccess($event)" [item]="item"></app-c-multi-option>
 
             </div>
 

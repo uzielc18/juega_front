@@ -11,6 +11,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListSilabusComponent } from './components/modals/list-silabus/list-silabus.component';
 import { ListEstudiantesComponent } from './components/modals/list-estudiantes/list-estudiantes.component';
 import { FormsModule } from '@angular/forms';
+import { ListMatriculasComponent } from './components/modals/list-matriculas/list-matriculas.component';
 
 const COMPONENTS: any[] = [
   LambSyncComponent,
@@ -50,7 +51,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS, ListDocenteComponent, ListCursosComponent, ListSilabusComponent, ListEstudiantesComponent],
+  declarations: [...COMPONENTS, ListDocenteComponent, ListCursosComponent, ListSilabusComponent, ListEstudiantesComponent, ListMatriculasComponent],
   entryComponents: [...MODALS],
 })
 export class LambSyncModule { }
