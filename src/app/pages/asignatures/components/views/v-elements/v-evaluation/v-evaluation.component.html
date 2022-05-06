@@ -1,9 +1,26 @@
 <nb-card class="instructions-container m-4">
   <nb-card-body class="px-4 py-3">
-    <div class="d-flex">
-      <div class="instructions">
+    <div class="row">
+      <div class="instructions  col-md-9 col-xxl-10">
         <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
         <p class="instructions-description">{{ element?.descripcion }}</p>
+      </div>
+      <div class="col-md-3 col-xxl-2 pe-0">
+        <div class="calification calification-evalue ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'"
+          (click)="calificar(element)">
+          <nb-icon icon="edit"></nb-icon>
+          <span>Calificar</span>
+        </div>
+
+        <div class="calification ms-auto"
+          *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.nota">
+          Aún no tiene calificación
+        </div>
+        <div class="calification calification-evaluated"
+          *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota">
+          <p>{{pending?.student_pending?.nota}}</p>
+          <span>Calificación</span>
+        </div>
       </div>
     </div>
     <hr>
@@ -15,38 +32,48 @@
             INFORMACIÓN DE LA EVALUACIÓN
           </nb-card-header>
           <nb-card-body>
-            <div class="row">
-              <div class="col-md-6">* Duración del examen :</div>
-              <div class="col-md-6">{{element?.duracion}} minutos</div>
+            <span *ngIf="element?.type_element?.codigo === 'EVAL' && pending?.student_pending && rolSemestre?.rol?.name === 'Estudiante'">
+              <nb-alert status="success" class="text-center" *ngIf="pending?.student_pending?.realizo === '1'" style="padding: 3px;">
+                EXAMEN FINALIZADO
+              </nb-alert>
+            </span>
+            <div class="table-responsive" style="padding-top: 0px;">
+              <table class="table table-sm">
+                <tbody style="font-size: 11px;">
+                  <tr>
+                    <th>* Duración del examen :</th>
+                    <th>{{element?.duracion}} minutos</th>
+                  </tr>
+                  <tr>
+                    <th>* N° de preguntas :</th>
+                    <th>{{element?.exam?.aleatorio === '0' ? element?.exam?.count_preguntas : element?.exam?.aleatorio}}</th>
+                  </tr>
+                  <tr>
+                    <th>* Fecha y hora inicio :</th>
+                    <th>{{element?.fecha_inicio}}</th>
+                  </tr>
+                  <tr>
+                    <th>* Fecha y hora fin :</th>
+                    <th>{{element?.fecha_fin}}</th>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-md-6">* N° de preguntas :</div>
-              <div class="col-md-6">{{element?.exam?.aleatorio === '0' ? element?.exam?.count_preguntas : element?.exam?.aleatorio}}</div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-md-6">* Fecha y hora inicio :</div>
-              <div class="col-md-6">{{element?.fecha_inicio}}</div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-md-6">* Fecha y hora fin :</div>
-              <div class="col-md-6">{{element?.fecha_fin}}</div>
-            </div>
-            <hr>
             <div>
-              <nb-alert outline="primary">
+              <nb-alert outline="primary" style="padding: 2px; font-size: 12px;">
                 - {{element?.exam?.mostrar_respuestas === 'SI' ? 'Si' : 'No'}} se mostrara las respuestas al finalizar el examen.
-                <hr>
+                <hr style="padding: 0px;">
                 - {{element?.exam?.mostrar_nota === 'SI' ? 'Si' : 'No'}} se mostrara el nota al finalizar el examen.
               </nb-alert>
             </div>
           </nb-card-body>
           <nb-card-footer class="text-center">
-            <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && validFechaHoraFin">
+            <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && pending?.validaciones?.bloqueo === 0 && pending?.student_pending?.realizo !== '1'">
               <button *ngIf="!pending?.student_pending?.exam_estudent" nbButton size="small" status="primary" (click)="initEvaluations()">Iniciar evaluación</button>
               <button *ngIf="pending?.student_pending?.exam_estudent" nbButton size="small" status="primary" (click)="backQuestions()">Volver a la evaluación</button>
+            </div>
+            <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && pending?.student_pending?.realizo === '1'">
+              <button *ngIf="pending?.student_pending?.exam_estudent" nbButton size="small" status="primary" (click)="verEvaluacion()">Ver evaluación</button>
             </div>
           </nb-card-footer>
         </nb-card>

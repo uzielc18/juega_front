@@ -84,15 +84,30 @@
           <div class="settings-container">
             <nb-card class="m-0">
               <nb-card-body class="d-flex flex-column px-lg-4 py-lg-4 px-xl-5 py-xl-4">
-                <h5 class="fw-bold">Secciones</h5>
-                <div *ngFor="let item of sectionsResponse" >
-                  <button class="mb-2" nbButton outline status="info" (click)="nextIds(item.id)">Sección 1 {{item.id}}</button>
+                <h5 class="fw-bold">Secciones</h5> <br>
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <tbody>
+                      <tr *ngFor="let item of sectionsResponse"  style="font-size: 12px;" class="selections">
+                        <td (click)="nextIds(item.id)" style="cursor: pointer;">
+                          {{item.titulo}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <h5 class="fw-bold mt-5">Preguntas sin responder</h5>
-                <div *ngFor="let item of questionsNoResponse">
-                  <button class="mb-2" nbButton outline status="success">Pregunta 1</button>
+                <h5 class="fw-bold mt-5">Preguntas sin responder</h5> <br>
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <tbody>
+                      <tr *ngFor="let item of questionsNoResponse"  style="font-size: 12px;" class="selections">
+                        <td (click)="nextIds(item.id)" style="cursor: pointer;">
+                          {{item?.pregunta?.pregunta}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <p>Hola</p>
               </nb-card-body>
             </nb-card>
           </div>

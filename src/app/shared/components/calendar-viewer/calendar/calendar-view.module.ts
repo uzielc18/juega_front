@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MExamViewModalComponent } from './m-exam-view-modal.component';
+import { CalendarComponent } from './calendar-view.component';
 import { NebularModule } from 'src/app/shared/nebular.module';
-import { VExamViewsModule } from '../v-exam-views/v-exam-views.module';
-
+import {adapterFactory} from "angular-calendar/date-adapters/date-fns";
+import { CalendarModule, DateAdapter } from 'angular-calendar';
 const COMPONENTS: any = [
-  MExamViewModalComponent
+  CalendarComponent
 ]
 const MODALS: any = [
 ]
 const MODULES: any = [
   // VideoPlayerModule
-  VExamViewsModule
 ]
 
 const NEBULAR: any = [
@@ -25,10 +24,14 @@ const NEBULAR: any = [
   imports: [
     CommonModule,
     ...MODULES,
-    ...NEBULAR
+    ...NEBULAR,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   entryComponents: [...MODALS],
-  exports: [MExamViewModalComponent]
+  exports: [CalendarComponent]
 })
 
-export class MExamViewModalModule { }
+export class CalendarViewModule { }
