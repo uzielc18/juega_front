@@ -1,11 +1,4 @@
-<nb-card
-  accent="primary"
-  class="scrollModal"
-  [nbSpinner]="loading"
-  nbSpinnerStatus="primary"
-  nbSpinnerSize="large"
-  nbSpinnerMessage="Procesando información"
->
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
     <div class="d-flex align-items-center justify-content-between">
       <h5>Nueva Rúbrica</h5>
@@ -190,7 +183,10 @@
                       [max]="group.get('puntuacion')?.value"
                       fullWidth
                     />
-                    <div *ngIf="subgroup.get('rubricas')?.get('puntuacion')?.value > group.get('puntuacion')?.value" class="text-danger">
+                    <div
+                      *ngIf="subgroup.get('rubricas')?.get('puntuacion')?.value > group.get('puntuacion')?.value"
+                      class="text-danger"
+                    >
                       <small>*Max puntuación: {{ group.get('puntuacion')?.value }}</small>
                     </div>
                   </div>
