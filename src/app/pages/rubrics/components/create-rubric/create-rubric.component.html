@@ -1,7 +1,8 @@
 <nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
     <div class="d-flex align-items-center justify-content-between">
-      <h5>Nueva Rúbrica</h5>
+      <h5 *ngIf="rubrica === null">Nueva Rúbrica</h5>
+      <h5 *ngIf="rubrica !== null">{{ rubrica?.nombre }}</h5>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
