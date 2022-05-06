@@ -6,6 +6,7 @@ import { RubricsComponent } from './rubrics.component';
 import { RubricsHomeComponent } from './containers/rubrics-home.component';
 import { NebularModule } from '../../shared/nebular.module';
 import { CreateRubricComponent } from './components/create-rubric/create-rubric.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 const COMPONENTS: any = [
   RubricsComponent,
@@ -13,7 +14,7 @@ const COMPONENTS: any = [
 ]
 
 const MODULES: any = [
-
+  NgbPaginationModule
 ]
 
 const NEBULAR: any = [

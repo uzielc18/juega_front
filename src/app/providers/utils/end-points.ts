@@ -17,5 +17,6 @@ export const END_POINTS = {
     programa_estudios: 'list-programa-estudios',
     semesters: 'semesters',
     activities_evaluations: 'activities-evaluations-resume',
+    rubrics: 'rubricas'
   },
 };
