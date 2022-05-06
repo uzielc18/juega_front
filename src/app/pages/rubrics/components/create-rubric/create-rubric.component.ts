@@ -45,12 +45,21 @@ export class CreateRubricComponent implements OnInit {
   getRubrica() {
     if (this.rubricaId !== null) {
       const serviceName = END_POINTS.base_back.rubrics + '/get-rubrica';
-      this.generalService.nameId$(serviceName, this.rubricaId).subscribe((res: any) => {
-        if (res.success) {
-          this.rubrica = res.data;
-          this.initialCriterios();
+      this.loading = true;
+      this.generalService.nameId$(serviceName, this.rubricaId).subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.rubrica = res.data;
+            this.initialCriterios();
+          }
+        },
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
         }
-      });
+      );
     }
   }
 
