@@ -7,12 +7,13 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 })
 export class RelationComponent implements OnInit, OnChanges {
   @Input() alternativas:any = [];
+  @Input() information:any;
   relationList: any[] = [];
   secondList: any[] = [];
   constructor() { }
   ngOnChanges():void {
     this.alternativas = JSON.parse(JSON.stringify(this.alternativas));
-
+    this.information = JSON.parse(JSON.stringify(this.information));
     this.relationList = this.alternativas.arrayA;
     this.secondList = this.alternativas.arrayB;
   }
