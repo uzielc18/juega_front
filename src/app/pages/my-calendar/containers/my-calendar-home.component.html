@@ -21,12 +21,36 @@ nbSpinnerSize="small"
                         <nb-icon icon="plus-square-outline"></nb-icon> Crear evento
                     </button>
                 </nb-card-header>
-                <nb-card-body>
-                    <div style="display: flex; justify-content: center;">
+                <nb-card-body style="padding: 2px;">
+                    <!-- <div class="text-center">
+                        <label class="label" style="font-size: 12px;">{{ date | date }}</label>
+                    </div> -->
+                    <div style="display: flex; justify-content: center;" class="table-responsive">
                         <nb-calendar size="medium" [date]="date" (dateChange)="handleDateChange($event)"></nb-calendar>
                     </div>
                     <br>
-                    <div style="font-size: 12px;">
+                    <div class="table-responsive" style="padding: 10px;">
+                        <table class="table table-sm">
+                            <tbody style="font-size: 12px;">
+                                <ng-container *ngFor="let item of infoCalendars">
+                                    <tr>
+                                        <td>{{item?.nombre}}</td>
+                                    </tr>
+                                    <tr *ngFor="let child of item?.calendario">
+                                        <td class="selecHover">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <!-- <input type="checkbox" [value]="child?.nombre" [checked]="child.checked"> -->
+                                            <nb-checkbox (checkedChange)="typeElementCal($event, child)" [checked]="child.checked">{{child?.nombre}}</nb-checkbox></td>
+                                        <td style="width: 1px;" *ngIf="child?.count_eventos >=0">
+                                             <span class="badge bg-success">{{child?.count_eventos}}</span>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div style="font-size: 12px;">
                         <label class="label" style="font-size: 15px; font-weight: bold;">Mis calendarios</label>
                         <br>
                         <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp; Mi horario</strong>
@@ -45,12 +69,13 @@ nbSpinnerSize="small"
                         <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp;Mi facultad</strong><br>
                         <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp;Mi escuela</strong><br>
                         <strong>&nbsp;&nbsp;&nbsp;&nbsp; <nb-icon icon="briefcase-outline" status="info"></nb-icon>&nbsp;&nbsp;Mi google calendar</strong>
-                    </div>
+                    </div> -->
                 </nb-card-body>
             </nb-card>
         </div>
         <div class="col-md-9">
-            <app-calendar-view></app-calendar-view>
+            <app-calendar-view  (typeMonthWeekDay)="monthWeekDay($event)" [events]="events"
+            [newDate]="date"></app-calendar-view>
         </div>
     </div>
     

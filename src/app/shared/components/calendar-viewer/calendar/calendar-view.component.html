@@ -6,12 +6,14 @@
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()">
+          (viewDateChange)="closeOpenMonthViewDay($event)"
+          >
           Anterior
         </button>
         <button nbButton status="warning" size="small"
                 mwlCalendarToday
-                [(viewDate)]="viewDate">
+                [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay($event)">
           Hoy
         </button>
         <button nbButton
@@ -19,13 +21,13 @@
                 mwlCalendarNextView
                 [view]="view"
                 [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
+                (viewDateChange)="closeOpenMonthViewDay($event)">
           Siguiente
         </button>
       </div>
     </div>
     <div class="col-md-4">
-      <h3>{{ viewDate |   calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      <h3>{{ viewDate |   calendarDate:(view + 'ViewTitle') }}</h3>
     </div>
     <div class="col-md-4">
       <div class="btn-group">
@@ -51,6 +53,7 @@
   </div>
   <br/>
   <div [ngSwitch]="view">
+    {{viewDate}} - {{CalendarView.Month}} - {{CalendarView.Week}} - {{CalendarView.Day}} - {{view}}
     <mwl-calendar-month-view
       *ngSwitchCase="CalendarView.Month"
       [viewDate]="viewDate"
