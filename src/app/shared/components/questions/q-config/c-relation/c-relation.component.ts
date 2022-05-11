@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 export class CRelationComponent implements OnInit {
   @Input() headParams: any;
   @Input() itemQuiz: any;
+  @Input() keyFile:any;
   @Input() relationList: any = [
     {
       relacion: '',
@@ -27,10 +28,8 @@ export class CRelationComponent implements OnInit {
   @Input() code: any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
-  directorio: any = DIRECTORY.base;
+  directorio: any = DIRECTORY.exam;
   loading: boolean = false;
-  key_file: any;
-  key_file_resp: any;
 
   abecedario: any = [
     "a", "b", "c", "d",
@@ -45,16 +44,12 @@ export class CRelationComponent implements OnInit {
   ngOnChanges(): void {
     this.headParams = JSON.parse(JSON.stringify(this.headParams));
     this.itemQuiz = JSON.parse(JSON.stringify(this.itemQuiz));
+    this.keyFile = JSON.parse(JSON.stringify(this.keyFile));
     if (this.headParams?.code === 'UPDATE') {
       this.setUpdate();
     }
   }
   ngOnInit(): void {
-    this.valueKey();
-  }
-  valueKey() {
-    this.key_file = 'rrrr' + '_' + '00000000001';
-    this.key_file_resp = 'rsrs' + '_' + '00000000001';
   }
 
   valueFile($event: any, item: any) {

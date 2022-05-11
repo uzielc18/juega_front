@@ -1,10 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
 import { CalendarEvent } from 'angular-calendar';
-import { addDays, addHours, endOfMonth, startOfDay, subDays } from 'date-fns';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
+import { MDetailsCalendarComponent } from '../components/modals/m-details-calendar/m-details-calendar.component';
+import { MEventGoogleCalendarComponent } from '../components/modals/m-event-google-calendar/m-event-google-calendar.component';
 
 @Component({
   selector: 'app-my-calendar-home',
@@ -17,67 +19,11 @@ export class MyCalendarHomeComponent implements OnInit {
   typeCalendario = 'month';
   infoCalendars:any = [];
   events: CalendarEvent[] = [];
-    // {
-    //   start: new Date('2022-05-09 10:00:00'),
-    //   // end: new Date('2022-05-09 13:30:00'),
-    //   title: 'Prueba de testing calendar',
-    //   color: {
-    //     primary: '#ad2121',
-    //     secondary: '#FAE3E3',
-    //   },
-    //   // actions: this.actions,
-    //   // allDay: true,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: false,
-    // },
-    // {
-    //   start: new Date('2022-05-09 08:00:00'),
-    //   end: new Date('2022-05-09 11:00:00'),
-    //   title: 'An event with no end date',
-    //   color: {
-    //     primary: '#e3bc08',
-    //     secondary: '#FDF1BA',
-    //   },
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    //   // actions: this.actions,
-    // },
-    // {
-    //   start: new Date('2022-05-09 04:00:00'),
-    //   end: new Date('2022-05-09 06:00:00'),
-    //   title: 'A long event that spans 2 months',
-    //   color: {
-    //     primary: '#1e90ff',
-    //     secondary: '#D1E8FF',
-    //   },
-    //   draggable: true,
-    //   // allDay: true,
-    // },
-    // {
-    //   start: new Date('2022-05-09 09:00:00'),
-    //   end: new Date('2022-05-09 18:00:00'),
-    //   title: 'A draggable and resizable event',
-    //   color: {
-    //     primary: '#1e90ff',
-    //     secondary: '#D1E8FF',
-    //   },
-    //   // actions: this.actions,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-  constructor(private userService: AppService, private service: GeneralService, public datepipe: DatePipe) { }
+  valueCalendar:any = [];
+  constructor(private userService: AppService, private service: GeneralService, public datepipe: DatePipe,
+    private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
-    console.log(this.userService.user);
     this.getTypeCalendars();
   }
   handleDateChange($event:Date) {
@@ -93,7 +39,6 @@ export class MyCalendarHomeComponent implements OnInit {
       }
       this.loading = true;
         this.service.nameIdParams$(serviceName, this.userService.user.id, params).subscribe((res:any) => {
-          console.log(res);
           this.infoCalendars = res.data  || [];
           if (this.infoCalendars.length>0) {
                 const array:any = [];
@@ -156,14 +101,14 @@ export class MyCalendarHomeComponent implements OnInit {
       }
       this.loading = true;
         this.service.nameIdParams$(serviceName, this.userService.user.id, params).subscribe((res:any) => {
-          console.log(res);
-          const data = res.data  || [];
-          if (data.length>0) {
+          this.valueCalendar = res.data  || [];
+          if (this.valueCalendar.length>0) {
                 const newArray:any = [];
-                data.forEach((value:any) => {
-                const structure = {
+                this.valueCalendar.forEach((value:any) => {
+                const structure:any = {
                   start: new Date(value.start),
-                  // end: new Date('2022-05-09 13:30:00'),
+                  // end: new Date(value.end) || '',
+                  id: value.id,
                   title: value.title,
                   color: {
                     primary: value.color_primary,
@@ -177,18 +122,59 @@ export class MyCalendarHomeComponent implements OnInit {
                   },
                   draggable: false,
                 }
+                if (value && value.end) {
+                  structure.end = new Date(value.end);
+                }
                 newArray.push(structure);
                 
               });
               // setTimeout(() => {
                 this.events = newArray;
-                // setTimeout(() => {
-                //   this.events = newArray;
-                // }, 3000);
-              // }, 100);
-              // console.log(this.events, 'evensss', newArray);
           }
         }, () => { this.loading = false; }, () => { this.loading = false; });
     }
+  }
+  selectedEvent($event:any) {
+    const values = this.valueCalendar.find((a:any) => a.id === $event.id);
+    if (values) {
+      this.dialogService.open(MDetailsCalendarComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          datos: values
+          // response: params,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false
+      }).onClose.subscribe(result => {
+        if (result === 'ok') {
+          // this.filtrar();
+        }
+      });
+    }
+    
+  }
+  changeDate($event:any) {
+    if ($event) {
+      this.date = $event;
+      setTimeout(() => {
+        this.getTypeCalendars();
+      }, 100);
+    }
+  }
+  googleEvents() {
+      this.dialogService.open(MEventGoogleCalendarComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          // datos: values
+          // response: params,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false
+      }).onClose.subscribe(result => {
+        if (result === 'ok') {
+          // this.filtrar();
+        }
+      });
+    
   }
 }

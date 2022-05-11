@@ -23,6 +23,7 @@ export class CalendarComponent implements OnInit, OnChanges {
   @Input() useDefaultViewer: boolean = true;
   @Output() eventSelected = new EventEmitter<any>();
   @Output() typeMonthWeekDay = new EventEmitter<any>();
+  @Output() dateChange = new EventEmitter<any>();
   activeDayIsOpen: boolean = false;
   @Input() newDate: Date = new Date();
   constructor(private dialogService: NbDialogService) {
@@ -34,7 +35,6 @@ export class CalendarComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.viewDate = this.newDate;
     this.events = this.events;
-    console.log(this.events, 'llegue');
     
     // this.events = this.events;
     // if (changes && changes.hasOwnProperty('events') && changes.events.currentValue && changes.events.previousValue &&
@@ -49,8 +49,6 @@ export class CalendarComponent implements OnInit, OnChanges {
     // }
   }
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
-    console.log(date, 'oooo');
-    
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -88,18 +86,20 @@ export class CalendarComponent implements OnInit, OnChanges {
 
 
   setView(view: CalendarView) {
-    console.log(view);
     this.view = view;
     this.typeMonthWeekDay.emit(view);
+    this.events = [];
+    this.dateChange.emit(this.viewDate);
   }
 
   closeOpenMonthViewDay($event:any) {
     this.activeDayIsOpen = false;
-    console.log(this.viewDate, 'event', $event);
-    
+    this.events = [];
+    this.dateChange.emit($event);
   }
 
   onEventSelected(event: any) {
+    this.eventSelected.emit(event);
     // if (this.useDefaultViewer) {
     //   this.eventSelected.emit(event);
     //   this.dialogService.open(EvaluationActivitiesViewerComponent, {

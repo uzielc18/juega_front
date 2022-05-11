@@ -33,7 +33,8 @@
       <div class="btn-group">
         <button nbButton status="primary" size="small"
                 (click)="setView(CalendarView.Month)"
-                [class.active]="view === CalendarView.Month">
+                [class.active]="view === CalendarView.Month"
+                >
           Mes
         </button>
         <button
@@ -52,8 +53,8 @@
     </div>
   </div>
   <br/>
+  <!-- {{viewDate}} -->
   <div [ngSwitch]="view">
-    {{viewDate}} - {{CalendarView.Month}} - {{CalendarView.Week}} - {{CalendarView.Day}} - {{view}}
     <mwl-calendar-month-view
       *ngSwitchCase="CalendarView.Month"
       [viewDate]="viewDate"
