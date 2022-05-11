@@ -22,6 +22,14 @@
         <nb-card>
             <nb-card-body>
                 <div class="row">
+                    <label class="label col-md-4">Título:</label>
+                    <div class="col-md-8">{{datos?.title}}</div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card>
+            <nb-card-body>
+                <div class="row">
                     <label class="label col-md-4">Descripción:</label>
                     <div class="col-md-8">{{datos?.descripcion}}</div>
                 </div>
@@ -31,7 +39,7 @@
             <nb-card-body>
                 <div class="row">
                     <label class="label col-md-4">Fecha y hora inicio:</label>
-                    <div class="col-md-8">{{datos?.start}}</div>
+                    <div class="col-md-8">{{datos?.start | date: 'dd/MM/yyyy hh:mm:ss'}}</div>
                 </div>
             </nb-card-body>
         </nb-card>
@@ -39,7 +47,7 @@
             <nb-card-body>
                 <div class="row">
                     <label class="label col-md-4">Fecha y hora fin:</label>
-                    <div class="col-md-8">{{datos?.end}}</div>
+                    <div class="col-md-8">{{datos?.end | date: 'dd/MM/yyyy hh:mm:ss'}}</div>
                 </div>
             </nb-card-body>
         </nb-card>
@@ -48,13 +56,13 @@
                 <div class="row">
                     <label class="label col-md-4">Color:</label>
                     <div class="col-md-8" [ngStyle]="{'background': datos?.color_primary}">
-                        <br><br>
+                        <br>
                     </div>
                 </div>
             </nb-card-body>
         </nb-card>
     </nb-card-body>
     <nb-card-footer class="text-center">
-        <button nbButton size="small" status="primary">Ir</button>
+        <button nbButton size="small" status="primary" (click)="redirect()">Ir al curso o elemento</button>
     </nb-card-footer>
 </nb-card>
