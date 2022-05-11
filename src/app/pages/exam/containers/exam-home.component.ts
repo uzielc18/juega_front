@@ -261,7 +261,7 @@ export class ExamHomeComponent implements OnInit {
   //   let y:any = window.scrollY;
   //   let x:any = window.scrollX;
   //   // console.log('hola:Scroll', x, y);
-    
+
   // }
 
   ngOnInit(): void {
@@ -326,7 +326,7 @@ export class ExamHomeComponent implements OnInit {
       // this.tiempoRestante.segundos = 0;
     }
   }
-  
+
   collapse() {
     this.collapsed = !this.collapsed;
   }
@@ -355,12 +355,12 @@ export class ExamHomeComponent implements OnInit {
               }
               // this.getPosition();
             });
-            
+
             if (this.info && this.info.bloqueo === 1) {
               this.backGo;
             }
             // console.log(this.questions);
-            
+
           }
         }, () => {this.loading = false;}, () => {this.loading = false;});
       }
@@ -368,7 +368,7 @@ export class ExamHomeComponent implements OnInit {
   }
   get questionsNoResponse():any {
     if (this.questions.length > 0) {
-      return this.questions.filter((r:any) => r.nivel === '2' && !r.estado_respuesta);
+      return this.questions.filter((r:any) => r.nivel === '2' && r.estado_respuesta === 'SIN-RESPONDER');
     } else {
       return [];
     }
@@ -382,15 +382,15 @@ export class ExamHomeComponent implements OnInit {
   }
   // valueScroll(value:any) {
   //   // console.log(value);
-    
+
   //   const boxes:any = document.getElementsByClassName(value);
   //   const result = boxes[0].getBoundingClientRect();
   //   const sum = this.document.documentElement.scrollTop + result['top'];
 
   //   this.document.documentElement.scrollTop = sum;
-   
+
   //   // console.log(result);
-    
+
   // }
   refresquestion() {
     this.getQuestions();

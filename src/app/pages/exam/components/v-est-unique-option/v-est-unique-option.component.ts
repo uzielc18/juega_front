@@ -37,6 +37,18 @@ export class VEstUniqueOptionComponent implements OnInit, OnChanges {
       return true;
     }
   }
+  get validButoms() {
+    if (this.alternativas.length>0) {
+      const array = this.alternativas.filter((r:any) => r.checked);
+      if (array.length>0) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  }
   saveResponse() {
     const array = JSON.parse(JSON.stringify(this.alternativas));
     const response:any = [];

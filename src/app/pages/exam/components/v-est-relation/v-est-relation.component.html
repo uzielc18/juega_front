@@ -7,18 +7,18 @@
         <nb-card
           *ngFor="let rel of relationList; let i = index"
           (click)="selectedA(rel, i)"
-          [ngClass]="{ 'mb-4': rel.imagen !== null }"
+          [ngClass]="{ 'mb-4': rel.imagen }"
           style="cursor: pointer; text-align: center"
           [ngStyle]="rel ? imgStyle(rel) : imgStyleDef()"
         >
-          <nb-card-header class="p-0 border-bottom-0">
-            <span [ngStyle]="styles(rel)" class="d-block py-2">
-              {{ rel?.relacion | titlecase }} aaa
+          <nb-card-header class="p-0 border-bottom-0" *ngIf="rel?.relacion" [ngStyle]="styles(rel)">
+            <span  class="d-block py-2">
+              {{ rel?.relacion | titlecase }}
             </span>
           </nb-card-header>
-          <nb-card-body class="p-3 pt-1" *ngIf="rel.imagen !== null">
+          <nb-card-body class="p-3 pt-1" *ngIf="rel.imagen"  [ngStyle]="styles(rel)">
             <div style="height: 100px">
-              <img *ngIf="rel.imagen !== null" [src]="rel?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+              <img  [src]="rel?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
             </div>
           </nb-card-body>
         </nb-card>
@@ -34,18 +34,18 @@
         <nb-card
           *ngFor="let item of secondList; let i = index"
           (click)="selectedB(item, i)"
-          [ngClass]="{ 'mb-4': item.imagen !== null }"
+          [ngClass]="{ 'mb-4': item.imagen }"
           style="cursor: pointer; text-align: center"
           [ngStyle]="item ? imgStyle(item) : imgStyleDef()"
         >
-          <nb-card-header class="p-0 border-bottom-0">
-            <span [ngStyle]="styles(item)" class="d-block py-2">
+          <nb-card-header class="p-0 border-bottom-0" *ngIf="item?.relacion" [ngStyle]="styles(item)">
+            <span  class="d-block py-2">
               {{ item?.relacion | titlecase }}
             </span>
           </nb-card-header>
-          <nb-card-body class="p-3 pt-1" *ngIf="item.imagen !== null">
+          <nb-card-body class="p-3 pt-1" *ngIf="item.imagen"  [ngStyle]="styles(item)">
             <div style="height: 100px">
-              <img *ngIf="item.imagen !== null" [src]="item?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+              <img [src]="item?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
             </div>
           </nb-card-body>
         </nb-card>
@@ -62,7 +62,7 @@
         <nb-card
           *ngFor="let rel of relationList; let i = index"
           (click)="revisarCheckA(rel, i)"
-          [ngClass]="{ 'mb-4': rel.imagen !== null }"
+          [ngClass]="{ 'mb-4': rel.imagen }"
           style="cursor: pointer; text-align: center"
           [ngStyle]="rel ? imgStyle(rel) : imgStyleDef()"
         >
@@ -71,9 +71,9 @@
               {{ rel?.relacion | titlecase }}
             </span>
           </nb-card-header>
-          <nb-card-body class="p-3 pt-1" *ngIf="rel.imagen !== null">
+          <nb-card-body class="p-3 pt-1" *ngIf="rel.imagen">
             <div style="height: 100px">
-              <img *ngIf="rel.imagen !== null" [src]="rel?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+              <img *ngIf="rel.imagen" [src]="rel?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
             </div>
           </nb-card-body>
         </nb-card>
@@ -89,7 +89,7 @@
         <nb-card
           *ngFor="let item of randomList; let i = index"
           (click)="revisarCheckB(item, i)"
-          [ngClass]="{ 'mb-4': item.imagen !== null }"
+          [ngClass]="{ 'mb-4': item.imagen }"
           style="cursor: pointer; text-align: center"
           [ngStyle]="item ? imgStyle(item) : imgStyleDef()"
         >
@@ -98,9 +98,9 @@
               {{ item?.relacion | titlecase }}
             </span>
           </nb-card-header>
-          <nb-card-body class="p-3 pt-1" *ngIf="item.imagen !== null">
+          <nb-card-body class="p-3 pt-1" *ngIf="item.imagen">
             <div style="height: 100px">
-              <img *ngIf="item.imagen !== null" [src]="item?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
+              <img *ngIf="item.imagen" [src]="item?.imagen" alt="" style="max-width: 100%; max-height: 100%" />
             </div>
           </nb-card-body>
         </nb-card>

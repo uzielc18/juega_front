@@ -14,6 +14,7 @@ import { CForumsComponent } from '../../c-free/calificar-elements/c-forums/c-for
 export class CalificarElementEstudentComponent implements OnInit {
   loading:boolean = false;
   @Input() element:any;
+  @Input() rol:any;
   listAlumns:any = [];
   formHeader: any = FormGroup;
   pending:any;
@@ -25,7 +26,7 @@ export class CalificarElementEstudentComponent implements OnInit {
   public queryString:any;
   userInfo: any;
   listResponses:any = [];
-
+  infor:any = '';
   constructor(public activeModal: NbDialogRef<CalificarElementEstudentComponent>, private formBuilder: FormBuilder, private generalServi: GeneralService,
     private userService: AppService) {
     this.searchableList = ['nombres', 'apellido_paterno', 'apellido_materno'];
@@ -179,6 +180,18 @@ export class CalificarElementEstudentComponent implements OnInit {
             })
           }
         }, () => { this.loading = false; }, () => { this.loading = false; });
+    }
+  }
+
+  loadings($event:any) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
+  }
+  infoQuestion($event:any) {
+    if ($event) {
+      this.formHeader.controls['nota'].setValue($event.nota);
+      this.infor = $event;
     }
   }
 }
