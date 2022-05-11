@@ -2,46 +2,49 @@
     <div class="col-md-4">
       <div class="btn-group">
         <button
-          nbButton status="primary"
+          nbButton status="primary" size="small"
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
-          (viewDateChange)="closeOpenMonthViewDay()">
+          (viewDateChange)="closeOpenMonthViewDay($event)"
+          >
           Anterior
         </button>
-        <button nbButton status="warning"
+        <button nbButton status="warning" size="small"
                 mwlCalendarToday
-                [(viewDate)]="viewDate">
+                [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay($event)">
           Hoy
         </button>
         <button nbButton
-                status="primary"
+                status="primary" size="small"
                 mwlCalendarNextView
                 [view]="view"
                 [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
+                (viewDateChange)="closeOpenMonthViewDay($event)">
           Siguiente
         </button>
       </div>
     </div>
     <div class="col-md-4">
-      <h3>{{ viewDate |   calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      <h3>{{ viewDate |   calendarDate:(view + 'ViewTitle') }}</h3>
     </div>
     <div class="col-md-4">
       <div class="btn-group">
-        <button nbButton status="primary"
+        <button nbButton status="primary" size="small"
                 (click)="setView(CalendarView.Month)"
-                [class.active]="view === CalendarView.Month">
+                [class.active]="view === CalendarView.Month"
+                >
           Mes
         </button>
         <button
-          nbButton status="warning"
+          nbButton status="warning" size="small"
           (click)="setView(CalendarView.Week)"
           [class.active]="view === CalendarView.Week">
           Semana
         </button>
         <button
-          nbButton status="primary"
+          nbButton status="primary" size="small"
           (click)="setView(CalendarView.Day)"
           [class.active]="view === CalendarView.Day">
           Dia
@@ -50,6 +53,7 @@
     </div>
   </div>
   <br/>
+  <!-- {{viewDate}} -->
   <div [ngSwitch]="view">
     <mwl-calendar-month-view
       *ngSwitchCase="CalendarView.Month"

@@ -1,9 +1,10 @@
-let dir:any = 'upeu';
+let upeu:any = 'upeu';
 export const DIRECTORY = {
-  base: dir,
-  courses: dir + '/courses',
-  news: dir + '/news',
-  users: dir = '/users',
+  base: upeu,
+  courses: upeu + '/courses',
+  exam: upeu + '/exam',
+  news: upeu + '/news',
+  users: upeu = '/users',
   // works: dir + '/works',
   // forums: dir + '/forum',
   // question: 'exam'
@@ -15,4 +16,4 @@ export const DIRECTORY_ELEMENTS = {
   works: dir_element + '/works',
   forums: dir_element + '/forum',
   exam: dir_element + '/exam',
-}
+};

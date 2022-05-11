@@ -1,0 +1,60 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+    nbSpinnerMessage="Procesando información">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div>
+                DETALLE
+            </div>
+            <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body style="background: #f5f5f5;">
+        <nb-card>
+            <nb-card-body>
+                <div class="row">
+                    <label class="label col-md-4">Autor:</label>
+                    <div class="col-md-8">{{datos?.autor}}</div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card>
+            <nb-card-body>
+                <div class="row">
+                    <label class="label col-md-4">Descripción:</label>
+                    <div class="col-md-8">{{datos?.descripcion}}</div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card>
+            <nb-card-body>
+                <div class="row">
+                    <label class="label col-md-4">Fecha y hora inicio:</label>
+                    <div class="col-md-8">{{datos?.start}}</div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card *ngIf="datos?.end">
+            <nb-card-body>
+                <div class="row">
+                    <label class="label col-md-4">Fecha y hora fin:</label>
+                    <div class="col-md-8">{{datos?.end}}</div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card>
+            <nb-card-body>
+                <div class="row">
+                    <label class="label col-md-4">Color:</label>
+                    <div class="col-md-8" [ngStyle]="{'background': datos?.color_primary}">
+                        <br><br>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </nb-card-body>
+    <nb-card-footer class="text-center">
+        <button nbButton size="small" status="primary">Ir</button>
+    </nb-card-footer>
+</nb-card>

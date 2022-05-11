@@ -16,10 +16,9 @@ import { MSectionComponent } from './modals/m-section/m-section.component';
 })
 export class QConfigComponent implements OnInit {
   @Input() item: any = [];
-  id_carga_curso_docente: any = '';
   @Input() userInfo: any;
   // directorio: any = DIRECTORY.base;
-  directorio: any;
+  directorio: any = DIRECTORY.exam;
   arrayFile: any = [];
   formHeader: any = FormGroup;
   loading: boolean = false;
@@ -73,15 +72,12 @@ export class QConfigComponent implements OnInit {
       code:['NEW'],
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.key_file = this.item?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo;
-    console.log(this.item, 'Itttttt');
+    this.key_file = this.userInfo?.person?.codigo + '-' + this.item.id;
   }
   getQuestions() {
     const serviceName = END_POINTS.base_back.quiz + '/get-questions';
     if (this.item && this.item.exam && this.item.exam.id) {
       this.loadings.emit(true);
-      this.id_carga_curso_docente = this.item.id_carga_curso_docente;
-      this.directorio = DIRECTORY_ELEMENTS.base + `/${this.id_carga_curso_docente}` + '/exam'; // directory
       this.generalServi.nameId$(serviceName, this.item.exam.id).subscribe(r => {
         this.questions = r.data || [];
         if (this.questions.length> 0) {
