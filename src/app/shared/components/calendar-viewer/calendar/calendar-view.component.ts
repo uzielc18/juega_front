@@ -35,7 +35,9 @@ export class CalendarComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.viewDate = this.newDate;
     this.events = this.events;
-    
+    if (this.events.length<=0) {
+      this.activeDayIsOpen = false;
+    }
     // this.events = this.events;
     // if (changes && changes.hasOwnProperty('events') && changes.events.currentValue && changes.events.previousValue &&
     //  (changes.events.currentValue.length !== changes.events.previousValue.length)) {

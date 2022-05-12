@@ -10,59 +10,64 @@
             </button>
         </div>
     </nb-card-header>
-    <nb-card-body style="background: #f5f5f5;">
+    <nb-card-body style="background: #a0b9c4; padding-bottom: 0px;">
         <nb-card>
             <nb-card-body>
                 <div class="row">
                     <label class="label col-md-4">Autor:</label>
                     <div class="col-md-8">{{datos?.autor}}</div>
                 </div>
-            </nb-card-body>
-        </nb-card>
-        <nb-card>
-            <nb-card-body>
+                <br>
                 <div class="row">
                     <label class="label col-md-4">Título:</label>
                     <div class="col-md-8">{{datos?.title}}</div>
                 </div>
-            </nb-card-body>
-        </nb-card>
-        <nb-card>
-            <nb-card-body>
+                <br>
                 <div class="row">
                     <label class="label col-md-4">Descripción:</label>
                     <div class="col-md-8">{{datos?.descripcion}}</div>
                 </div>
-            </nb-card-body>
-        </nb-card>
-        <nb-card>
-            <nb-card-body>
+                <br>
                 <div class="row">
                     <label class="label col-md-4">Fecha y hora inicio:</label>
                     <div class="col-md-8">{{datos?.start | date: 'dd/MM/yyyy hh:mm:ss'}}</div>
                 </div>
-            </nb-card-body>
-        </nb-card>
-        <nb-card *ngIf="datos?.end">
-            <nb-card-body>
-                <div class="row">
+                <br>
+                <div class="row" *ngIf="datos?.end">
                     <label class="label col-md-4">Fecha y hora fin:</label>
                     <div class="col-md-8">{{datos?.end | date: 'dd/MM/yyyy hh:mm:ss'}}</div>
                 </div>
-            </nb-card-body>
-        </nb-card>
-        <nb-card>
-            <nb-card-body>
+                <br>
                 <div class="row">
                     <label class="label col-md-4">Color:</label>
-                    <div class="col-md-8" [ngStyle]="{'background': datos?.color_primary}">
-                        <br>
+                    <div class="col-md-8">
+                        <nb-icon icon="droplet"
+                        [ngStyle]="{'color': datos?.color_primary, 'font-size': '35px'}"
+                        pack="eva"></nb-icon>
+                    </div>
+                </div>
+                <br *ngIf="datos?.invitados">
+                <div class="row" *ngIf="datos?.invitados">
+                    <label class="label col-md-4">Invitados:</label>
+                    <div class="table-responsive col-md-8">
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr *ngFor="let item of datos?.invitados">
+                                    <td><nb-icon icon="person" status="warning"></nb-icon>{{item?.email}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </nb-card-body>
         </nb-card>
     </nb-card-body>
     <nb-card-footer class="text-center">
-        <button nbButton size="small" status="primary" (click)="redirect()">Ir al curso o elemento</button>
+        <div *ngIf="datos?.origen === 'interno'">
+            <button nbButton size="small" status="primary" (click)="redirect()">Ir al curso o elemento</button>
+        </div>
+        <div *ngIf="datos?.origen === 'google'">
+            <button nbButton size="small" status="danger" (click)="deleteGoogle()">Eliminar</button>
+        </div>
     </nb-card-footer>
 </nb-card>

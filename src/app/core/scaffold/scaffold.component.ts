@@ -234,6 +234,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                                   .subscribe((authResult: NbAuthResult) => {
                                     if (authResult.isSuccess()) {
                                       // this.appService.stop();
+                                      sessionStorage.removeItem('rolSemesterLeng');
                                       this.router.navigate([`/auth`]);
                                       // window.location.href = environment.shellApp;
                                     }
@@ -250,6 +251,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                                 .subscribe((authResult: NbAuthResult) => {
                                   if (authResult.isSuccess()) {
                                     // this.appService.stop();
+                                    sessionStorage.removeItem('rolSemesterLeng');
                                     this.router.navigate([`/auth`]);
                                     // window.location.href = environment.shellApp;
                                   }
@@ -271,6 +273,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                             (authResult: NbAuthResult) => {
                               if (authResult.isSuccess()) {
                                 // this.appService.stop();
+                                sessionStorage.removeItem('rolSemesterLeng');
                                 this.router.navigate([`/auth`]);
                                 // window.location.href = environment.shellApp;
                               }

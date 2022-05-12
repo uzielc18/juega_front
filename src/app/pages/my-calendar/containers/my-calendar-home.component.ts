@@ -20,11 +20,59 @@ export class MyCalendarHomeComponent implements OnInit {
   infoCalendars:any = [];
   events: CalendarEvent[] = [];
   valueCalendar:any = [];
+  colors:any = [
+    {
+      id: 1,
+      color: 'rgb(213, 0, 0)',
+    },
+    {
+      id: 2,
+      color: 'rgb(230, 124, 115)',
+    },
+    {
+      id: 3,
+      color: 'rgb(244, 81, 30)',
+    },
+    {
+      id: 4,
+      color: 'rgb(246, 191, 38)',
+    },
+    {
+      id: 5,
+      color: 'rgb(51, 182, 121)',
+    },
+    {
+      id: 6,
+      color: 'rgb(11, 128, 67)',
+    },
+    {
+      id: 7,
+      color: 'rgb(3, 155, 229)',
+    },
+    {
+      id: 8,
+      color: 'rgb(63, 81, 181)',
+    },
+    {
+      id: 9,
+      color: 'rgb(121, 134, 203)',
+    },
+    {
+      id: 10,
+      color: 'rgb(142, 36, 170)',
+    },
+    {
+      id: 11,
+      color: 'rgb(97, 97, 97)',
+    }
+  ];
   constructor(private userService: AppService, private service: GeneralService, public datepipe: DatePipe,
     private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
     this.getTypeCalendars();
+    // console.log(this.userService);
+    
   }
   handleDateChange($event:Date) {
     this.date = $event;
@@ -42,19 +90,27 @@ export class MyCalendarHomeComponent implements OnInit {
           this.infoCalendars = res.data  || [];
           if (this.infoCalendars.length>0) {
                 const array:any = [];
+                const origin:any = [];
                 this.infoCalendars.forEach((element:any) => {
                 if (element.calendario.length>0) {
                   element.calendario.map((a:any)=> {
+                    a.nombre_copy = a.nombre.substr(0,20) + '...';
                     if (a.checked === 1) {
                       a.checked = true;
                       array.push(a.codigo);
+                      origin.push(a.origen);
                     } else {
                       a.checked = false;
                     }
                   });
                 }
               });
-              const value = array.join(',');
+              var unique = [...new Set(origin)]; // No duplicar valores iguales
+              const value = {
+                codigos: array.join(','),
+                origen: unique.join(','),
+              }
+
               setTimeout(() => {
                 this.getMyEvents(value);
                 
@@ -69,35 +125,41 @@ export class MyCalendarHomeComponent implements OnInit {
   }
   typeElementCal($event:boolean, item:any) {
     item.checked = $event;
-    let codigos = '';
     setTimeout(() => {
-      codigos = this.reccore(); 
-      this.getMyEvents(codigos);
+     const value = this.reccore(); 
+      this.getMyEvents(value);
     }, 100);
 
     
   }
   reccore() {
     const array:any = [];
+    const origin:any = [];
     this.infoCalendars.forEach((element:any) => {
       if (element.calendario.length>0) {
         element.calendario.map((a:any)=> {
           if (a.checked) {
             array.push(a.codigo);
+            origin.push(a.origen);
           }
         });
       }
     });
-    const value = array.join(',');
+    var unique = [...new Set(origin)]; // No duplicar valores iguales
+    const value = {
+      codigos: array.join(','),
+      origen: unique.join(','),
+    }
     return value;
   }
-  getMyEvents(codigos:any) {
+  getMyEvents(values:any) {
     const serviceName = END_POINTS.base_back.calendar + '/mis-eventos';
     if (this.userService.user.id) {
       const params:any = {
         fecha: this.datepipe.transform(this.date, 'yyyy-MM-dd'),
         calendar: this.typeCalendario === 'month' ? 'mes' : this.typeCalendario === 'week' ? 'semana' : this.typeCalendario === 'day' ? 'dia' : '',
-        type: codigos || '',
+        type: values.codigos || '',
+        origen: values.origen || '',
       }
       this.loading = true;
         this.service.nameIdParams$(serviceName, this.userService.user.id, params).subscribe((res:any) => {
@@ -105,31 +167,38 @@ export class MyCalendarHomeComponent implements OnInit {
           if (this.valueCalendar.length>0) {
                 const newArray:any = [];
                 this.valueCalendar.forEach((value:any) => {
-                const structure:any = {
-                  start: new Date(value.start),
-                  // end: new Date(value.end) || '',
-                  id: value.id,
-                  title: value.title,
-                  color: {
-                    primary: value.color_primary,
-                    secondary: '#FAE3E3',
-                  },
-                  // actions: this.actions,
-                  // allDay: true,
-                  resizable: {
-                    beforeStart: true,
-                    afterEnd: true,
-                  },
-                  draggable: false,
-                }
-                if (value && value.end) {
-                  structure.end = new Date(value.end);
-                }
-                newArray.push(structure);
-                
-              });
+
+                  if (value && value.origen === 'google') {
+                    let col = this.colors.find((a:any) => a.id === Number(value.colorId));
+                    value.color_primary = col ? col.color : 'rgb(121, 134, 203)';
+                  }
+
+                  const structure:any = {
+                    start: new Date(value.start),
+                    id: value.id,
+                    title: value.title,
+                    color: {
+                      primary: value.color_primary,
+                      secondary: '#FAE3E3',
+                    },
+                    // actions: this.actions,
+                    allDay: value.allDay === 1 ? true : false,
+                    resizable: {
+                      beforeStart: true,
+                      afterEnd: true,
+                    },
+                    draggable: false,
+                  }
+                  if (value && value.end) {
+                    structure.end = new Date(value.end);
+                  }
+                  newArray.push(structure);
+                  
+                });
               // setTimeout(() => {
                 this.events = newArray;
+          } else {
+            this.events = [];
           }
         }, () => { this.loading = false; }, () => { this.loading = false; });
     }
@@ -140,7 +209,8 @@ export class MyCalendarHomeComponent implements OnInit {
       this.dialogService.open(MDetailsCalendarComponent, {
         dialogClass: 'dialog-limited-height',
         context: {
-          datos: values
+          datos: values,
+          email: this.userService.user.email,
           // response: params,
         },
         closeOnBackdropClick: false,
@@ -148,6 +218,7 @@ export class MyCalendarHomeComponent implements OnInit {
       }).onClose.subscribe(result => {
         if (result === 'ok') {
           // this.filtrar();
+          this.getTypeCalendars();
         }
       });
     }
@@ -162,19 +233,23 @@ export class MyCalendarHomeComponent implements OnInit {
     }
   }
   googleEvents() {
-      this.dialogService.open(MEventGoogleCalendarComponent, {
-        dialogClass: 'dialog-limited-height',
-        context: {
-          // datos: values
-          // response: params,
-        },
-        closeOnBackdropClick: false,
-        closeOnEsc: false
-      }).onClose.subscribe(result => {
-        if (result === 'ok') {
-          // this.filtrar();
-        }
-      });
-    
+      const values:any = {
+        email: this.userService.user.email,
+      }
+       if (values && values.email) {
+         this.dialogService.open(MEventGoogleCalendarComponent, {
+           dialogClass: 'dialog-limited-height',
+           context: {
+             datos: values
+           },
+           closeOnBackdropClick: false,
+           closeOnEsc: false
+         }).onClose.subscribe(result => {
+           if (result === 'ok') {
+             // this.filtrar();
+             this.getTypeCalendars();
+           }
+         });
+       }
   }
 }
