@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./calendar-view.component.scss']
 })
 export class CalendarComponent implements OnInit, OnChanges {
-  view: CalendarView = CalendarView.Month;
+  @Input() view: any = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
 
@@ -38,6 +38,9 @@ export class CalendarComponent implements OnInit, OnChanges {
     if (this.events.length<=0) {
       this.activeDayIsOpen = false;
     }
+    this.view = this.view;
+    // console.log(this.view);
+    
     // this.events = this.events;
     // if (changes && changes.hasOwnProperty('events') && changes.events.currentValue && changes.events.previousValue &&
     //  (changes.events.currentValue.length !== changes.events.previousValue.length)) {

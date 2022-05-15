@@ -19,15 +19,14 @@
             </button>
         </div>
     </nb-card-header>
-    <nb-card-body style="background: #eef1f2">
+    <nb-card-body>
         <form [formGroup]="formHeader">
             <div class="row">
                 <div class="col-md-4">
                     <label class="label">Título:</label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" nbInput fullWidth fieldSize="small" formControlName="title"
-                        [status]="(formHeader.hasError('required', ['title'])) === true ? 'primary' : 'basic'">
+                    <input type="text" nbInput fullWidth fieldSize="small" formControlName="title">
                     <control-messages [control]="formHeader.get('title')"></control-messages>
                 </div>
             </div>
@@ -37,8 +36,7 @@
                     <label class="label">Descripción:</label>
                 </div>
                 <div class="col-md-8">
-                    <textarea type="text" nbInput fullWidth fieldSize="small" formControlName="descripcion"
-                        [status]="(formHeader.hasError('required', ['descripcion'])) === true ? 'primary' : 'basic'"></textarea>
+                    <textarea type="text" nbInput fullWidth fieldSize="small" formControlName="descripcion"></textarea>
                     <control-messages [control]="formHeader.get('descripcion')"></control-messages>
                 </div>
             </div>
@@ -62,7 +60,6 @@
                         <nb-form-field  [class]="!formHeader.value.allDay ? 'date-input' : ''">
                             <input nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="fechaInicio"
                                 fieldSize="small"
-                                [status]="(formHeader.hasError('required', ['fecha_inicio'])) === true ? 'primary' : 'basic'"
                                 formControlName="fecha_inicio" />
                             <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
                             <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min"></nb-datepicker>
@@ -71,7 +68,6 @@
                         <nb-form-field *ngIf="!formHeader.value.allDay" class="hour-input ms-auto" >
                             <input nbInput placeholder="Hora Inicio" [nbTimepicker]="horaInicio" type="text"
                                 fieldSize="small"
-                                [status]="(formHeader.hasError('required', ['hora_inicio'])) === true ? 'primary' : 'basic'"
                                 formControlName="hora_inicio" />
                             <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
                             <nb-timepicker #horaInicio></nb-timepicker>
@@ -90,7 +86,6 @@
                             <nb-form-field class="date-input">
                                 <input nbInput placeholder="Fecha fin" fullWidth [nbDatepicker]="fechFin"
                                     fieldSize="small"
-                                    [status]="(formHeader.hasError('required', ['fecha_fin'])) === true ? 'primary' : 'basic'"
                                     formControlName="fecha_fin" />
                                 <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
                                 <nb-datepicker #fechFin format="dd/MM/yyyy" [min]="formHeader.value.fecha_inicio">
@@ -100,7 +95,6 @@
                             <nb-form-field class="hour-input ms-auto">
                                 <input nbInput placeholder="Hora fin" [nbTimepicker]="horaFin" type="text"
                                     fieldSize="small"
-                                    [status]="(formHeader.hasError('required', ['hora_fin'])) === true ? 'primary' : 'basic'"
                                     formControlName="hora_fin" />
                                 <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva">
                                 </nb-icon>
@@ -117,8 +111,7 @@
                     <label class="label">Lugar:</label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" nbInput fullWidth fieldSize="small" formControlName="location"
-                        [status]="(formHeader.hasError('required', ['location'])) === true ? 'primary' : 'basic'">
+                    <input type="text" nbInput fullWidth fieldSize="small" formControlName="location">
                     <control-messages [control]="formHeader.get('location')"></control-messages>
                 </div>
             </div>
@@ -128,8 +121,7 @@
                     <label class="label">Invitados (Separados por cóma (,)):</label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" placeholder="abcdef@upeu.edu.pe,cdfg@upeu.edu.pe" nbInput fullWidth fieldSize="small" formControlName="attendees"
-                        [status]="(formHeader.hasError('required', ['attendees'])) === true ? 'primary' : 'basic'">
+                    <input type="text" placeholder="abcdef@upeu.edu.pe,cdfg@upeu.edu.pe" nbInput fullWidth fieldSize="small" formControlName="attendees">
                     <control-messages [control]="formHeader.get('attendees')"></control-messages>
                 </div>
             </div>
@@ -140,8 +132,7 @@
                 </div>
                 <div class="col-md-8">
                     <nb-form-field>
-                        <nb-select placeholder="Seleccionar color" fullWidth size="small" formControlName="color"
-                            [status]="(formHeader.hasError('required', ['color'])) === true ? 'primary' : 'basic'">
+                        <nb-select placeholder="Seleccionar color" fullWidth size="small" formControlName="color">
                             <nb-option value="" disabled="">Seleccione</nb-option>
                             <nb-option *ngFor="let item of colors" [value]="item.color">
                                 <nb-icon icon="droplet" [ngStyle]="{'color': item.color, 'font-size': '25px'}">

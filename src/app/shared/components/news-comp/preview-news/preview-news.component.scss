@@ -1,0 +1,33 @@
+.scrollModal {
+    // max-width: 95vw;
+    max-height: 95vh;
+    width: 894px;
+  }
+  .contenedor{
+    position: relative;
+  
+    .centrado{
+    //   opacity: 0.75;
+    //   align-items: center;
+    //   border-radius: 50%;
+      display: flex;
+    //   height: 68px;
+      justify-content: start;
+      left: 20%;
+      position: absolute;
+      top: 90%;
+      transform: translate(-50%, -50%);
+    //   width: 68px;
+      transition: all .2s;
+  
+    //   nb-icon {
+    //     width: 36px;
+    //     height: 36px;
+    //     color: #FFFFFF;
+    //   }
+  
+    //   &:hover {
+    //     opacity: 1;
+    //   }
+    }
+  }

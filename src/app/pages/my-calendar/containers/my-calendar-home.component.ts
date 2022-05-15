@@ -16,7 +16,6 @@ import { MEventGoogleCalendarComponent } from '../components/modals/m-event-goog
 export class MyCalendarHomeComponent implements OnInit {
   loading: boolean = false;
   date: Date = new Date();
-  typeCalendario = 'month';
   infoCalendars:any = [];
   events: CalendarEvent[] = [];
   valueCalendar:any = [];
@@ -74,6 +73,15 @@ export class MyCalendarHomeComponent implements OnInit {
     // console.log(this.userService);
     
   }
+  get sessionConfigCalendarType() {
+    const sesion: any = sessionStorage.getItem("configAssign");
+    let val = JSON.parse(sesion);
+    if (val && val.type_calendar) {
+      return val.type_calendar;
+    } else {
+      return 'mes';
+    }
+  }
   handleDateChange($event:Date) {
     this.date = $event;
     this.getTypeCalendars();
@@ -83,7 +91,7 @@ export class MyCalendarHomeComponent implements OnInit {
     if (this.userService.user.id) {
       const params:any = {
         fecha: this.datepipe.transform(this.date, 'yyyy-MM-dd'),
-        calendar: this.typeCalendario === 'month' ? 'mes' : this.typeCalendario === 'week' ? 'semana' : this.typeCalendario === 'day' ? 'dia' : '',
+        calendar: this.sessionConfigCalendarType,
       }
       this.loading = true;
         this.service.nameIdParams$(serviceName, this.userService.user.id, params).subscribe((res:any) => {
@@ -120,8 +128,26 @@ export class MyCalendarHomeComponent implements OnInit {
     }
   }
   monthWeekDay($event:any) {
-    this.typeCalendario = $event;
+    const type = this.renameTypeCalendarEspanish($event);
+    const params = {
+      type_calendar: type,
+    }
+    sessionStorage.setItem("configAssign", JSON.stringify(params));
     // this.getTypeCalendars();
+  }
+  renameTypeCalendarEspanish($event:any) {
+    let type = 'mes';
+    if ($event) {
+      type = $event === 'month' ? 'mes' : $event === 'week' ? 'semana' : $event === 'day' ? 'dia' : 'mes';
+    }
+    return type;
+  }
+  renameTypeCalendarIngles($event:any) {
+    let type = 'month';
+    if ($event) {
+      type = $event === 'mes' ? 'month' : $event === 'semana' ? 'week' : $event === 'dia' ? 'day' : 'month';
+    }
+    return type;
   }
   typeElementCal($event:boolean, item:any) {
     item.checked = $event;
@@ -157,7 +183,7 @@ export class MyCalendarHomeComponent implements OnInit {
     if (this.userService.user.id) {
       const params:any = {
         fecha: this.datepipe.transform(this.date, 'yyyy-MM-dd'),
-        calendar: this.typeCalendario === 'month' ? 'mes' : this.typeCalendario === 'week' ? 'semana' : this.typeCalendario === 'day' ? 'dia' : '',
+        calendar: this.sessionConfigCalendarType,
         type: values.codigos || '',
         origen: values.origen || '',
       }
