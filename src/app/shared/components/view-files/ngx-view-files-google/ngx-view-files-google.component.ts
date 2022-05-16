@@ -15,10 +15,12 @@ export class NgxViewFilesGoogleComponent implements OnInit, OnChanges {
   @Input() styleWidth: any = '100%';
   @Input() styleHeight: any = '50vh';
   @Input() valueFile: any = '';
+  @Input() directGogle: any = '';
   constructor(private generalServi: GeneralService) { }
 
   ngOnChanges():void {
     this.valueFile = this.valueFile;
+    this.directGogle = this.directGogle;
     if (this.valueFile) {
       this.extensionFile();
     }
@@ -69,7 +71,7 @@ export class NgxViewFilesGoogleComponent implements OnInit, OnChanges {
   getFile() {
     const params:any = {
       type: 'get',
-      directory: 'upeu',
+      directory: this.directGogle,
       key: this.valueFile.nombre, // name s3
       // 127805_200110121_17603.pdf
     };

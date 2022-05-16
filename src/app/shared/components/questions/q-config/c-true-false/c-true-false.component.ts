@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 export class CTrueFalseComponent implements OnInit, OnChanges {
   @Input() headParams:any;
   @Input() itemQuiz:any;
+  @Input() keyFile:any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
   arrayTrueFalse:any = [
@@ -35,22 +36,19 @@ export class CTrueFalseComponent implements OnInit, OnChanges {
       color: 'rgb(248, 193, 176)',
     }
   ];
-  key_file:any;
-  directorio = DIRECTORY.base;
+  directorio = DIRECTORY.exam;
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
     this.headParams = JSON.parse(JSON.stringify(this.headParams));
     this.itemQuiz = JSON.parse(JSON.stringify(this.itemQuiz));
+    this.keyFile = JSON.parse(JSON.stringify(this.keyFile));
     if (this.headParams?.code === 'UPDATE') {
       this.setUpdate();
     }
   }
   ngOnInit(): void {
-    this.valueKey();
   }
-  valueKey() {
-    this.key_file = 'ssss' + '_' + '00000000001';
-  }
+
 
   valueFile($event: any, item:any) {
     item.imagen = $event.value.nombre_s3;

@@ -12,11 +12,11 @@
   </nb-card-header>
   <nb-card-body>
     <div>
-      <app-list-view-files [arrayFiles]="pending?.student_pending?.pending_files || []" [typeView]="'VIEW'"
+      <app-list-view-files [arrayFiles]="pending?.student_pending?.pending_files || []" [typeView]="'VIEW'" [showText]="false"
         (fileValue)="fileValues($event)"></app-list-view-files>
     </div><br>
     <div *ngIf="datosFile">
-      <app-ngx-view-files-google [valueFile]="datosFile" (loadingsFiles)="loadingsFiles($event)">
+      <app-ngx-view-files-google [valueFile]="datosFile" (loadingsFiles)="loadingsFiles($event)" [directGogle]="director">
       </app-ngx-view-files-google>
     </div>
     <div *ngIf="datosUrl">

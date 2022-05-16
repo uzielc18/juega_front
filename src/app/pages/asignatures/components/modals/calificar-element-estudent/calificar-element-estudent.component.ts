@@ -12,10 +12,11 @@ import { CForumsComponent } from '../../c-free/calificar-elements/c-forums/c-for
   styleUrls: ['./calificar-element-estudent.component.scss'],
 })
 export class CalificarElementEstudentComponent implements OnInit {
-  loading: boolean = false;
-  @Input() element: any;
-  @Input() rol: any;
-  listAlumns: any = [];
+  loading:boolean = false;
+  @Input() element:any;
+  @Input() rol:any;
+  @Input() directore:any;
+  listAlumns:any = [];
   formHeader: any = FormGroup;
   pending: any;
   has_rubric: boolean = false;

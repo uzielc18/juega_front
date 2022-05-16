@@ -1,36 +1,40 @@
 <!-- <ul class="p-0" [class.sticky]="sticky" #stickyMenu [nbSpinner]="loading" nbSpinnerStatus="primary"
 nbSpinnerSize="large"> -->
-<ul class="p-0" [nbSpinner]="loading" nbSpinnerStatus="primary"
-nbSpinnerSize="large">
-  <div class="text-center mb-1 mt-4">
-    <label class="label" style="padding-top: 15px; padding-bottom: 15px;">&ndash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; Navegación de contenido
-      &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</label>
-  </div>
-  <li class="p-0" *ngFor="let element of listElemtChild; let i = index" (click)="recorrerLisElChild(element)"
-    (click)="clickedIndex = i" (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null">
-    <div class="p-2" [style]="elementStyleActive(element)" [ngStyle]="element.checked
-    ? elementStyleActive(element)
-    : elementStyle() && hoveredIndex === i
-    ? elementStyleHover(element)
-    : elementStyle()
-    ">
-      <nb-icon [icon]="element.icono"></nb-icon>
-      {{ element.nombre | titlecase }}
-    </div>
-    <div *ngIf="element?.checked">
-      <ul class="child-list" *ngFor="let item of element?.elements">
-        <li class="child-list-item" [ngStyle]="{
-          'color': item?.color ? item?.color : '',
-          'font-weight': item?.font_weight ? item?.font_weight : '',
-          'font-size': '14px',
-          'background-color': item?.background,
-          'padding': '5px 15px 5px 30px'}" (click)="selectElement(item)">
-          <span class="me-2">&rsaquo;</span><span style="width: 90%; word-wrap: break-word;">{{item.titulo}}</span>
-        </li>
-      </ul>
-    </div>
-  </li>
-</ul>
+<nb-card status="primary">
+  <nb-card-header class="text-center" style="padding-top: 5px; padding-bottom: 5px">
+    Navegación de contenido
+  </nb-card-header>
+  <nb-card-body  style="max-height: 68vh !important">
+    <ul class="p-0" [nbSpinner]="loading" nbSpinnerStatus="primary"
+    nbSpinnerSize="large">
+  
+      <li class="p-0" *ngFor="let element of listElemtChild; let i = index" (click)="recorrerLisElChild(element)" 
+        (click)="clickedIndex = i" (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null">
+        <div class="p-2" [style]="elementStyleActive(element)" [ngStyle]="element.checked
+        ? elementStyleActive(element)
+        : elementStyle() && hoveredIndex === i
+        ? elementStyleHover(element)
+        : elementStyle()
+        ">
+          <nb-icon [icon]="element.icono"></nb-icon>
+          {{ element.nombre | titlecase }}
+        </div>
+        <div *ngIf="element?.checked">
+          <ul class="child-list" *ngFor="let item of element?.elements">
+            <li class="child-list-item" [ngStyle]="{
+              'color': item?.color ? item?.color : '',
+              'font-weight': item?.font_weight ? item?.font_weight : '',
+              'font-size': '14px',
+              'background-color': item?.background,
+              'padding': '5px 15px 5px 30px'}" (click)="selectElement(item)">
+              <span class="me-2">&rsaquo;</span><span style="width: 90%; word-wrap: break-word;">{{item.titulo}}</span>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nb-card-body>
+</nb-card>
 
 <!-- <div class="p-0"  [nbSpinner]="loading" nbSpinnerStatus="primary"
   nbSpinnerSize="large" nbSpinnerMessage="Procesando información">

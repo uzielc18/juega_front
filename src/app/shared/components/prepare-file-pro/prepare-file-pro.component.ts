@@ -28,6 +28,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
   ngOnChanges():void {
     this.listArrayFile = this.listArrayFile;
     this.isDisabled = this.isDisabled;
+    this.paramsInfo = this.paramsInfo;
   }
   ngOnInit(): void {
     this.getUsers();

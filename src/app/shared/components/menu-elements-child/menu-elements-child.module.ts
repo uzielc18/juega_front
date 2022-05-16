@@ -6,7 +6,8 @@ import { NbCardModule, NbIconModule, NbSpinnerModule, NbTooltipModule } from '@n
 
 const NB_MODULES: any = [
   NbIconModule,
-  NbSpinnerModule
+  NbSpinnerModule, 
+  NbCardModule
 ];
 
 @NgModule({

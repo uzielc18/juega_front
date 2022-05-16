@@ -12,6 +12,7 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   @Input() headParams:any;
   @Input() itemQuiz:any;
   @Input() item: any = [];
+  @Input() keyFile:any;
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   @Output() changeSuccess: EventEmitter<any> = new EventEmitter();
   arrayMultiple:any = [
@@ -34,13 +35,13 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
       base64: '',
   }
   ];
-  key_file:any;
-  directorio = DIRECTORY.base;
+  directorio = DIRECTORY.exam;
   loading: boolean = false;
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
     this.headParams = JSON.parse(JSON.stringify(this.headParams));
     this.itemQuiz = JSON.parse(JSON.stringify(this.itemQuiz));
+    this.keyFile = JSON.parse(JSON.stringify(this.keyFile));
     // console.log(this.itemQuiz);
 
     if (this.headParams?.code === 'UPDATE') {
@@ -49,11 +50,8 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
 
   }
   ngOnInit(): void {
-    this.valueKey();
   }
-  valueKey() {
-    this.key_file = 'ssss' + '_' + '00000000001';
-  }
+
 
   valueFile($event: any, item:any) {
     item.imagen = $event.value.nombre_s3;

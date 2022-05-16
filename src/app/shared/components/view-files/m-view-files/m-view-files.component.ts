@@ -11,6 +11,7 @@ import { END_POINTS } from 'src/app/providers/utils';
 export class MViewFilesComponent implements OnInit {
   loading:boolean = false;
   @Input() item:any;
+  @Input() director:any;
   constructor(public activeModal: NbDialogRef<MViewFilesComponent>) { }
 
   ngOnInit(): void {

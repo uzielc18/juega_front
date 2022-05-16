@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDateService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
+import { DIRECTORY } from 'src/app/shared/directorios/directory';
 
 @Component({
   selector: 'app-works',
@@ -18,7 +19,7 @@ export class WorksComponent implements OnInit, OnChanges {
   @Input() topics: any;
   @Input() unidad: any;
   @Input() curso: any;
-  directorio: any = 'plantillas/upeu';
+  directorio: any = DIRECTORY.courses;
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
@@ -146,7 +147,7 @@ export class WorksComponent implements OnInit, OnChanges {
     };
     this.formHeader = this.formBuilder.group(controls);
 
-    this.key_file = this.topics?.id_carga_curso_docente + '_' + this.userInfo?.person?.codigo;
+    this.key_file = this.userInfo?.person?.codigo;
 
     this.setValuesPre();
     this.setMenuValues();
@@ -396,5 +397,12 @@ export class WorksComponent implements OnInit, OnChanges {
       }
     }
     return '';
+  }
+  getDirectoy() {
+    if (this.topics && this.topics?.id_carga_curso_docente) {
+      return this.directorio + '/' + this.topics?.id_carga_curso_docente + '/works';
+    } else {
+      return '';
+    }
   }
 }

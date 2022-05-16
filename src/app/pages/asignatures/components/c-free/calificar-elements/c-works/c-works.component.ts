@@ -11,9 +11,11 @@ export class CWorksComponent implements OnInit, OnChanges {
   loading: boolean = false;
   @Input() pending: any = [];
   @Input() datos:any;
+  @Input() director:any;
   constructor() { }
   ngOnChanges(): void {
     this.pending = this.pending;
+    this.director = this.director;
     if (!this.pending?.student_pending?.pending_files?.length) {
       this.datosFile = '';
       this.datosUrl = '';

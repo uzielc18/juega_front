@@ -167,11 +167,11 @@
             <div>
               <div class="d-flex">
                 <div *ngFor="let opts of optionsType" style="padding-left: 3px; padding-right: 3px;">
-                  <button nbButton size="large"
+                  <button nbButton size="tiny"
                     [ngStyle]="{'background': opts.checked ? opts.color : '', 'color': opts.checked ? 'white' : ''}"
                     (click)="changeButtom(opts)" [disabled]="formHeader.invalid" nbTooltip="{{opts.nombre}}"
                     nbTooltipPlacement="top" nbTooltipStatus="primary">
-                    <nb-icon [icon]="opts.icon"></nb-icon>
+                    <nb-icon [icon]="opts.icon"></nb-icon> {{opts.nombre}}
                   </button>
                 </div>
               </div>
@@ -188,21 +188,21 @@
             <div *ngIf="['07'].includes(formHeader?.value?.type_alternative?.codigo)">
 
               <app-c-multi-option [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
-                (changeSuccess)="changeSuccess($event)" [item]="item"></app-c-multi-option>
+                (changeSuccess)="changeSuccess($event)" [item]="item" [keyFile]="key_file"></app-c-multi-option>
 
             </div>
 
             <div *ngIf="['01'].includes(formHeader?.value?.type_alternative?.codigo)">
 
               <app-c-unique-option [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
-              (changeSuccess)="changeSuccess($event)"></app-c-unique-option>
+              (changeSuccess)="changeSuccess($event)" [keyFile]="key_file"></app-c-unique-option>
 
             </div>
 
             <div *ngIf="['05'].includes(formHeader?.value?.type_alternative?.codigo)">
 
               <app-c-relation [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
-                (changeSuccess)="changeSuccess($event)">
+                (changeSuccess)="changeSuccess($event)" [keyFile]="key_file">
               </app-c-relation>
 
             </div>
@@ -210,7 +210,7 @@
             <div *ngIf="['02'].includes(formHeader?.value?.type_alternative?.codigo)">
 
               <app-c-true-false [headParams]="formHeader.value" [itemQuiz]="quiz" (loadings)="changeLoadings($event)"
-              (changeSuccess)="changeSuccess($event)"></app-c-true-false>
+              (changeSuccess)="changeSuccess($event)" [keyFile]="key_file"></app-c-true-false>
 
             </div>
 

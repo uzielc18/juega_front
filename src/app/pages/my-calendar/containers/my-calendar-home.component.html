@@ -13,7 +13,54 @@ nbSpinnerSize="small"
   </div>
 </nb-card-header>
 <nb-card-body style="background: #a0b9c4; max-height: 80vh !important;">
-    <app-calendar-view></app-calendar-view>
+    <div class="row">
+        <div class="col-md-3">
+            <nb-card class="sticky">
+                <nb-card-header style="padding: 8px;">
+                    <button nbButton fullWidth status="primary" size="small" (click)="googleEvents()">
+                        <nb-icon icon="plus-square-outline"></nb-icon> Crear evento
+                    </button>
+                </nb-card-header>
+                <nb-card-body style="padding: 2px;  max-height: 70vh;">
+                    <div style="display: flex; justify-content: center;" class="table-responsive">
+                        <nb-calendar size="medium" [date]="date" (dateChange)="handleDateChange($event)"></nb-calendar>
+                    </div>
+                    <div class="table-responsive" style="padding: 10px;">
+                        <table class="table table-sm">
+                            <tbody style="font-size: 12px; vertical-align: middle;">
+                                <ng-container *ngFor="let item of infoCalendars">
+                                    <tr>
+                                        <td>{{item?.nombre}}</td>
+                                    </tr>
+                                    <tr *ngFor="let child of item?.calendario">
+                                        <td class="selecHover" [nbTooltip]="child?.nombre" nbTooltipPlacement="top" nbTooltipStatus="primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <!-- <input type="checkbox" [value]="child?.nombre" [checked]="child.checked"> -->
+                                            <nb-checkbox (checkedChange)="typeElementCal($event, child)" [checked]="child.checked">{{child?.nombre_copy}}</nb-checkbox></td>
+                                        <td style="width: 1px;" *ngIf="child?.count_eventos >=0">
+                                             <span class="badge" [ngStyle]="{'background': child?.color, 'color': 'white', 'font-size': '13px'}">{{child?.count_eventos}}</span>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-md-9">
+            <app-calendar-view  
+            (typeMonthWeekDay)="monthWeekDay($event)"
+            [events]="events"
+            [newDate]="date"
+            (eventSelected)="selectedEvent($event)"
+            (dateChange)="changeDate($event)"
+            [view]="renameTypeCalendarIngles(sessionConfigCalendarType)"
+            ></app-calendar-view>
+        </div>
+    </div>
+    
 </nb-card-body>
   
 </nb-card>

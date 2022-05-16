@@ -1,0 +1,36 @@
+<nb-card accent="primary" class="scrollModal">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div>
+                PREVISUALIZACIÓN
+            </div>
+            <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="text-center" *ngIf="valuess?.base64_url">
+            <img  *ngIf="!valuess?.mostrar_boton" [src]="valuess.base64_url" alt="" width="100%" height="350px">
+
+            <div class="contenedor"  *ngIf="valuess?.mostrar_boton === true">
+                <img [src]="valuess.base64_url" alt="" width="100%" height="350px">
+                <div class="centrado" >
+                    <button nbButton size="medium" shape="semi-round" status="warning" (click)="irUrl()">{{valuess?.nombre_boton}}</button>
+                </div>
+              </div>
+            
+        </div>
+        <nb-card>
+            <nb-card-header>
+                <strong>{{valuess?.titulo}}</strong><br>
+                <div class="d-flex align-items-center justify-content-between">
+                    <label class="label">{{valuess?.contenido}}</label>
+                    <span *ngIf="valuess?.mostrar_boton === true">
+                        <button nbButton size="medium" shape="semi-round" status="warning" (click)="irUrl()">{{valuess?.nombre_boton}}</button>
+                    </span>
+                </div>
+            </nb-card-header>
+        </nb-card>
+    </nb-card-body>
+</nb-card>

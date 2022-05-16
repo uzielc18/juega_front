@@ -11,12 +11,14 @@ export const END_POINTS = {
     elements: 'elements',
     user: 'user',
     config: 'config',
+    news: 'noticias',
     quiz: 'quiz',
     nivel_ensenanza: 'list-nivel-ensenanzas',
     sede_areas: 'list-sede-areas',
     programa_estudios: 'list-programa-estudios',
     semesters: 'semesters',
     activities_evaluations: 'activities-evaluations-resume',
-    rubrics: 'rubricas'
+    rubrics: 'rubricas',
+    calendar: 'calendar',
   },
 };
