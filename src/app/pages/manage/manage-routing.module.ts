@@ -21,7 +21,18 @@ const routes: Routes = [
         path: 'course',
         loadChildren: () => import('src/app/pages/manage/course/course.module')
           .then(m => m.CourseModule),
-      }
+      },
+      {
+        path: 'configuration',
+        loadChildren: () => import('src/app/pages/manage/configuration/configuration.module')
+          .then(m => m.ConfigurationModule),
+      },
+      {
+        path: 'news',
+        loadChildren: () => import('src/app/pages/manage/news/news.module')
+          .then(m => m.NewsModule),
+      },
+      
     ]
   }
 ];

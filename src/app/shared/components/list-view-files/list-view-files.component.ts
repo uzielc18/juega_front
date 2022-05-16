@@ -14,12 +14,16 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
   @Input() showText: boolean = true; // mostrar nombre del archivo
   @Input() arrayFiles: any = [];
   @Input() deleteFile: boolean = false;
+  @Input() director: any;
   @Output() fileValue: EventEmitter<any> = new EventEmitter();
   @Output() deleteFileEmit: EventEmitter<any> = new EventEmitter();
   constructor(private dialogService: NbDialogService) { }
 
   ngOnChanges():void {
     this.arrayFiles = this.arrayFiles;
+    this.director = this.director;
+    console.log(this.director);
+    
     this.recorrerList();
   }
   ngOnInit(): void {
@@ -92,6 +96,7 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
             dialogClass: 'dialog-limited-height',
             context: {
               item: item,
+              director: this.director,
             },
             closeOnBackdropClick: false,
             closeOnEsc: false

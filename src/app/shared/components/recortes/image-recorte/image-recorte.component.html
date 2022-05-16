@@ -1,0 +1,69 @@
+<!-- <div >
+    
+    <div class="text-center" style="border: 2px solid rgb(80, 78, 78); border-style: dashed;">
+        <label class="label" style="padding-top: 5px">Dar click para adjuntar</label><br><br>
+        <div   class="text-center" style="padding-bottom: 5px">
+          <button nbButton  size="small"
+           style="font-size: 12px; font-weight: bold; cursor: pointer; background: rgb(213 213 213);">Adjuntar archivo <nb-icon icon="cloud-upload-outline"></nb-icon> </button>
+        </div>
+      </div>
+</div> -->
+<div [nbSpinner]="loading" nbSpinnerStatus="primary">
+    <div class="row">
+        <label class="label col-md-3">Adjuntar</label><br><br>
+        <div   class="col-md-9">
+            <input type="file" status="basic" placeholder="Documento" class="form-control form-control-sm"
+             accept="image/png, image/PNG, image/jpg, image/jpeg" id='adjunto' name="adjunto" (change)="onFileChange($event)" style="display: none">
+          <button nbButton  size="small" fullWidth (click)="selectArchivo()">Adjuntar archivo <nb-icon icon="cloud-upload-outline"></nb-icon></button><br>
+          <label *ngIf="formHeaders.value.name" class="label">{{formHeaders.value.name}}</label>
+        </div>
+      </div>
+      <br>
+      <div *ngIf="formHeaders.value.file" class="row">
+          <div class="col-md-6" style="padding-left: 0px; padding-right: 2px;">
+              <nb-card status="primary">
+                  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;" class="d-flex align-items-center justify-content-between">
+                    <span>
+                    Imágen original
+                    </span>
+                    <span>
+                        <nb-icon icon="maximize-outline" (click)="zoomIn()"  nbTooltip="Aumentar" nbTooltipStatus="primary" style="cursor: pointer"></nb-icon>&nbsp;&nbsp;
+                        <nb-icon icon="minimize-outline" (click)="zoomOut()"  nbTooltip="Disminuir" nbTooltipStatus="primary" style="cursor: pointer"></nb-icon>&nbsp;&nbsp;
+                        <nb-icon icon="refresh-outline" (click)="resetImage()"  nbTooltip="Resetear" nbTooltipStatus="primary" style="cursor: pointer"></nb-icon>
+                    </span>
+                  </nb-card-header>
+                  <nb-card-body style="padding-left: 0px; padding-right: 0px;">
+                    <image-cropper
+                    [imageFile]="formHeaders.value.file"
+                    (imageCropped)="imageCropped($event)"
+                    [onlyScaleDown]="true"
+                    [maintainAspectRatio]="false"
+                    format="png"
+                    [transform]="transform"
+                    [resizeToWidth]="894"
+                    [cropperStaticWidth]="894"
+                    [cropperStaticHeight]="300"
+                    [resizeToHeight]="300"
+                    [aspectRatio]="2 / 1"></image-cropper>
+                  </nb-card-body>
+              </nb-card>
+            
+          </div>
+          <div class="col-md-6" style="padding-left: 2px; padding-right: 0px;">
+            <nb-card status="primary">
+                <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+                  Imágen recortada
+                </nb-card-header>
+                <nb-card-body style="padding-left: 0px; padding-right: 0px;">
+                    <div *ngIf="formFileHeaders.value.base64">
+                        <img [src]="formFileHeaders.value.base64" width="100%" height="300px"/>
+                    </div>
+                </nb-card-body>
+                <nb-card-footer *ngIf="formFileHeaders.value.base64" style="text-align: center">
+                    <button nbButton size="tiny" status="warning" (click)="procesCutFile()">Guardar imágen</button>
+                </nb-card-footer>
+            </nb-card>
+           
+          </div>
+      </div>
+</div>

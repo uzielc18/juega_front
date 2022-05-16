@@ -16,7 +16,7 @@
 ::ng-deep nb-select.ng-invalid{ // campo requerido
   border-left: 3px solid #e74c3c !important;
 }
-::ng-deep input.ng-invalid{
+::ng-deep input .ng-touched .ng-invalid{
   border-left: 3px solid #e74c3c !important;
 }
 ::ng-deep select.ng-invalid{ // campo requerido

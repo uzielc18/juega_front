@@ -1,0 +1,17 @@
+.scrollModal {
+    // max-width: 95vw;
+    max-height: 95vh;
+    width: 894px;
+  }
+  .contenedor{
+    position: relative;
+    .centrado{
+      display: flex;
+      // justify-content: start;
+      left: 20%;
+      position: absolute;
+      top: 90%;
+      transform: translate(-50%, -50%);
+      transition: all .2s;
+    }
+  }

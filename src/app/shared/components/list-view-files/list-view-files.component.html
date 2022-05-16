@@ -1,5 +1,5 @@
 
-  <div class="d-flex mt-4">
+  <div class="d-flex">
     <div [ngStyle]="showText ? {'width': '90px', 'padding-right': '7px'} : {'width': '50px', 'padding-right': '70px'}" *ngFor="let item of arrayFiles">
       <div style="text-align: right; cursor: pointer;" *ngIf="deleteFile">
         <nb-icon icon="close-outline" status="danger" (click)="valueDeleteFile(item)"></nb-icon>
