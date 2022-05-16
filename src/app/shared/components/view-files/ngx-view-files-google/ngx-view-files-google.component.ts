@@ -69,10 +69,11 @@ export class NgxViewFilesGoogleComponent implements OnInit, OnChanges {
   getFile() {
     const params:any = {
       type: 'get',
-      directory: 'plantillas/upeu',
+      directory: 'upeu',
       key: this.valueFile.nombre, // name s3
       // 127805_200110121_17603.pdf
     };
+    console.log(params, 'paramssssssssssssssssss');
     const serviceName = END_POINTS.base_back.resourse + '/files-upload/get-signed-url';
     if (params && params.key) {
       this.loadingsFiles.emit(true);

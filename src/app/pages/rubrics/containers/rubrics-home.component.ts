@@ -67,9 +67,9 @@ export class RubricsHomeComponent implements OnInit {
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
         if (res.success) {
-          this.rubrics = res.data || [];
-          this.pagination.sizeListData = (res.data && res.meta.total) || 0;
-          this.pagination.sizePage = (res.data && res.meta.per_page) || 0;
+          this.rubrics = res.data.data || [];
+          this.pagination.sizeListData = (res.data && res.data.total) || 0;
+          this.pagination.sizePage = (res.data && res.data.per_page) || 0;
           if (this.pagination.sizeListData < this.rubrics.length) {
             this.pagination.isDisabledPage = true;
           } else {
@@ -145,7 +145,7 @@ export class RubricsHomeComponent implements OnInit {
     if (rubric && rubric.id) {
       Swal.fire({
         title: 'Eliminar rubrica',
-        text: '¿Está seguro de eliminar la rubrica?',
+        text: `¿Está seguro de eliminar la rubrica: ${rubric.titulo}?`,
         backdrop: true,
         icon: 'question',
         showCloseButton: true,

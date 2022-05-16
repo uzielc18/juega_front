@@ -1,5 +1,5 @@
 <nb-card accent="primary" class="scrollModal"[nbSpinner]="loading" nbSpinnerStatus="primary"
-  nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+  nbSpinnerSize="large" nbSpinnerMessage="Procesando información" [ngStyle]="has_rubric ? { width: '1624px' } : { width: '1324px'}">
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
@@ -13,7 +13,7 @@
   <nb-card-body style="background: #f5f5f5;">
     <form [formGroup]="formHeader">
     <div class="row">
-      <div class="col-md-3 p-1">
+      <div class="p-1" [ngClass]="has_rubric ? 'col-md-2' : 'col-md-3'">
         <nb-card size="giant">
           <nb-card-header>
             Estudiantes <br>
@@ -59,7 +59,7 @@
           </nb-card-body>
         </nb-card>
       </div>
-      <div class="col-md-7 p-1">
+      <div class="p-1" [ngClass]="has_rubric ? 'col-md-6' : 'col-md-7'">
         <nb-card>
           <nb-card-header class="p-1">
             <span *ngIf="element?.type_element?.codigo === 'EVAL' && pending?.student_pending">
@@ -87,7 +87,7 @@
                 <div class="row" style="font-size: 11px;" *ngIf="infor && element?.type_element?.codigo === 'EVAL'">
                   <br>
                   <div class="col-md-10" *ngIf="infor">
-                      <strong>Duración:</strong> {{infor?.duracion}} minutos <br> 
+                      <strong>Duración:</strong> {{infor?.duracion}} minutos <br>
                       <strong>Tiempo de interación:</strong> {{infor?.segundos}} <br>
                       <strong>Preguntas:</strong> {{infor?.preguntas_respondidas || 0}} / {{infor?.total_questions || 0}}
                   </div>
@@ -158,27 +158,50 @@
         </nb-card-footer>
         </nb-card>
       </div>
-      <div class="col-md-2 p-1">
+      <div class="p-1" [ngClass]="has_rubric ? 'col-md-4' : 'col-md-2'">
         <nb-card>
           <nb-card-header>
             Ingresar nota
           </nb-card-header>
           <nb-card-body class="p-2">
             <form [formGroup]="formHeader">
-            <div>
-              <label class="label">Comentario</label><br>
-              <textarea nbInput fullWidth placeholder="Ingrese un comentario" formControlName="comentario"></textarea>
-              <control-messages [control]="formHeader.get('comentario')"></control-messages>
-            </div>
-            <div>
-              <label class="label">Nota</label><br>
-              <input type="number" maxlength="2" nbInput fullWidth placeholder="Ingrese una nota" formControlName="nota">
-              <control-messages [control]="formHeader.get('nota')"></control-messages>
-            </div> <br>
-            <div class="text-center">
-              <button nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()">Calificar</button>
-            </div>
-          </form>
+              <div>
+                <label class="label">Comentario</label><br>
+                <textarea nbInput fullWidth placeholder="Ingrese un comentario" formControlName="comentario"></textarea>
+                <control-messages [control]="formHeader.get('comentario')"></control-messages>
+              </div>
+              <div *ngIf="!has_rubric">
+                <label class="label">Nota</label><br>
+                <input type="number" maxlength="2" nbInput fullWidth placeholder="Ingrese una nota" formControlName="nota">
+                <control-messages [control]="formHeader.get('nota')"></control-messages>
+              </div> <br>
+              <div *ngIf="has_rubric">
+                <label class="label">Rubrica: {{ rubrica?.nombre }}</label><br>
+                <table class="table table-sm table-striped">
+                  <thead>
+                    <tr>
+                      <th style="width: 100px; max-width: 200px;">Crit/Nivel</th>
+                      <th *ngFor="let nivel of rubrica?.criterios[0]?.niveles"></th>
+                      <!-- <th *ngFor="let nivel of rubrica?.criterios[0]?.niveles" class="text-center align-middle">{{ nivel?.titulo }}</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let crit of rubrica?.criterios; let i = index">
+                      <td class="align-middle">{{ crit?.titulo }}</td>
+                      <td *ngFor="let rub of crit?.niveles; let j = index" class="text-center align-middle"  style="width: 30px;">
+                        <button nbButton class="py-1 px-2" [ngStyle]="rubricColors(rub, j)" (click)="selectedPoint(rub)">{{ rub?.rubricas?.puntuacion }}</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <input type="number" maxlength="2" nbInput fullWidth placeholder="Nota" formControlName="nota" [readonly]="true">
+                <control-messages [control]="formHeader.get('nota')"></control-messages>
+              </div>
+              <div class="text-center">
+                <button *ngIf="has_rubric" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="sendCalification()">Calificar</button>
+                <button *ngIf="!has_rubric" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()">Calificar</button>
+              </div>
+            </form>
           </nb-card-body>
         </nb-card>
       </div>

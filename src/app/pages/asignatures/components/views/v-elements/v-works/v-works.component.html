@@ -51,13 +51,13 @@
         <h4 class="attached-files-title">Archivos de apoyo</h4>
         <app-list-view-files [arrayFiles]="element?.element_files || []"></app-list-view-files>
       </div>
-      <!-- <div>
+      <div *ngIf="has_rubric">
         <div class="d-flex">
           <h4 class="rubrica-title me-2">Rubrica</h4>
           <span class="rubrica-title-desc">(Criterios de evaluación)</span>
         </div>
-        <app-rubricas></app-rubricas>
-      </div> -->
+        <app-rubricas [rubrica]="rubrica" [calification]="calification"></app-rubricas>
+      </div>
       <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
         <div class="d-flex">
           <h4 class="send-work-title">Entrega de trabajo</h4>

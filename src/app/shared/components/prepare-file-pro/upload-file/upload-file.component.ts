@@ -91,7 +91,7 @@ export class UploadFileComponent implements OnInit {
   anadirFile() {
     const form = this.formHeaders.value;
     if (form && (form.size <= 26214400) ) { // 25MB
-    const key = this.params.key_file + '_' + Math.floor(Math.random() * 90000) + 10000 + '.' + form.ext;
+    const key = this.params.key_file + '_' + Math.floor(1000 + Math.random() * 9000) + '.' + form.ext;
     const prams = {
       type: this.params.type,
       directory: this.params.directory,
