@@ -110,6 +110,18 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
           link: "/pages/manage/course",
           pathMatch: "prefix",
         },
+        {
+          title: "Configuraciones",
+          icon: "settings-outline",
+          link: "/pages/manage/configuration",
+          pathMatch: "prefix",
+        },
+        {
+          title: "Noticias",
+          icon: "bell-outline",
+          link: "/pages/manage/news",
+          pathMatch: "prefix",
+        },
       ],
     },
   ];
@@ -186,6 +198,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.setConfiguartion();
     this.fieldReactive();
     this.appService
       .onLoader()
@@ -235,6 +248,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                                     if (authResult.isSuccess()) {
                                       // this.appService.stop();
                                       sessionStorage.removeItem('rolSemesterLeng');
+                                      sessionStorage.removeItem('configAssign');
                                       this.router.navigate([`/auth`]);
                                       // window.location.href = environment.shellApp;
                                     }
@@ -252,6 +266,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                                   if (authResult.isSuccess()) {
                                     // this.appService.stop();
                                     sessionStorage.removeItem('rolSemesterLeng');
+                                    sessionStorage.removeItem('configAssign');
                                     this.router.navigate([`/auth`]);
                                     // window.location.href = environment.shellApp;
                                   }
@@ -274,6 +289,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                               if (authResult.isSuccess()) {
                                 // this.appService.stop();
                                 sessionStorage.removeItem('rolSemesterLeng');
+                                sessionStorage.removeItem('configAssign');
                                 this.router.navigate([`/auth`]);
                                 // window.location.href = environment.shellApp;
                               }
@@ -331,7 +347,24 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.getLanguages();
     }, 100);
   }
-
+  setConfiguartion() {
+    this.user = this.appService.user;
+    if (this.appService.user && this.appService.user.person && this.appService.user.person.configurationperson) {
+      const typeCalendar = this.appService.user.person.configurationperson.find((b:any) => b.nombre === 'CALENDAR-TYPE');
+      const params = {
+        type_calendar: typeCalendar ? this.validValueMesSemanaDia(typeCalendar.valor) : 'mes',
+      }
+      sessionStorage.setItem("configAssign", JSON.stringify(params));
+    } else {
+      const params = {
+        type_calendar: 'mes',
+      }
+      sessionStorage.setItem("configAssign", JSON.stringify(params));
+    }
+  }
+  validValueMesSemanaDia(value:any) {
+    return value === 'mes' ? 'mes' : value === 'semana' ? 'semana' : value === 'dia' ? 'dia' : 'mes';
+  }
   toggle(): void {
     this.hidden = !this.hidden;
     this.sidebarService.toggle(true, "core-sidebar");

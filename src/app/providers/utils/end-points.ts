@@ -18,6 +18,6 @@ export const END_POINTS = {
     semesters: 'semesters',
     activities_evaluations: 'activities-evaluations-resume',
     rubrics: 'rubricas',
-    calendar: 'calendar'
+    calendar: 'calendar',
   },
 };

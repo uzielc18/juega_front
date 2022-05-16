@@ -129,6 +129,7 @@ export class VWorksComponent implements OnInit, OnChanges {
         dialogClass: 'dialog-limited-height',
         context: {
           element: element,
+          directore: this.getDirectoy(),
           // response: params,
         },
         closeOnBackdropClick: false,
