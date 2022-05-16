@@ -23,37 +23,13 @@ export class CreatedNewsComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
   min: any = Date;
-  emploreAreas: TreeviewItem[] =  [new TreeviewItem({
-    text: 'IT', value: 9, children: [
-      {
-        text: 'Programming', value: 91, children: [{
-          text: 'Frontend', value: 911, children: [
-            { text: 'Angular 1', value: 9111 },
-            { text: 'Angular 2', value: 9112 },
-            { text: 'ReactJS', value: 9113, disabled: true }
-          ]
-        }, {
-          text: 'Backend', value: 912, children: [
-            { text: 'C#', value: 9121 },
-            { text: 'Java', value: 9122 },
-            { text: 'Python', value: 9123, checked: false, disabled: true }
-          ]
-        }]
-      },
-      {
-        text: 'Networking', value: 92, children: [
-          { text: 'Internet', value: 921 },
-          { text: 'Security', value: 922 }
-        ]
-      }
-    ]
-  })];
+  emploreAreas: TreeviewItem[] =  [];
   config = TreeviewConfig.create({
     hasAllCheckBox: true,
     hasFilter: true,
     hasCollapseExpand: true,
     decoupleChildFromParent: false,
-    maxHeight: 250,
+    maxHeight: 350,
   });
   buttonClasses = [
     'btn-outline-light btn-sm',
@@ -70,6 +46,7 @@ export class CreatedNewsComponent implements OnInit {
 
    ngOnInit(): void {
     this.fieldReactive();
+    this.getProgramNews();
   }
   private fieldReactive() {
     const controls = {
@@ -136,6 +113,15 @@ export class CreatedNewsComponent implements OnInit {
     }
     console.log(this.formHeader.value.area);
   }
+
+  getProgramNews() {
+    const serviceName = END_POINTS.base_back.news + '/mis-programas';
+    this.service.nameId$(serviceName, this.userService.user.id).subscribe((res: any) => {
+      this.emploreAreas =  [new TreeviewItem(res.data)]
+      console.log(this.emploreAreas)
+    })
+  }
+
   saveNews() {
     const serviceName = END_POINTS.base_back.news + '/news';
     const forms = this.formHeader.value;
@@ -162,7 +148,6 @@ export class CreatedNewsComponent implements OnInit {
       filtro: filtros,
       imagen: forms.imagen,
     }
-    // console.log(params);
     this.loading = true;
     this.service.addNameData$(serviceName, params).subscribe((res:any) => {
       if (res.success) {

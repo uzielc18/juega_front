@@ -51,15 +51,15 @@
                                     </div>
                                 </div>
                             </div>
-                         
-                            <br *ngIf="formHeader.value.todos">
-                            <div class="row" *ngIf="formHeader.value.todos">
+
+                            <br *ngIf="formHeader.value.tipo_filtro === 'area' && !formHeader.value.todos">
+                            <div class="row" *ngIf="formHeader.value.tipo_filtro === 'area' && !formHeader.value.todos ">
                                 <label class="label col-md-3">Área:</label>
                                 <div class="col-md-9">
                                     <ngx-dropdown-treeview [config]="config" [items]="emploreAreas" [buttonClass]="buttonClass"
                                     (selectedChange)="onSelectedChange($event)">
                                     </ngx-dropdown-treeview>
-                                    
+
                                     <control-messages [control]="formHeader.get('area')"></control-messages>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                                         <div class="col-md-6">
                                             <fieldset [disabled]="!formHeader.value.fecha_inicio">
                                             <nb-form-field>
-                                                <input nbInput placeholder="Fecha fin" fullWidth 
+                                                <input nbInput placeholder="Fecha fin" fullWidth
                                                     [nbDatepicker]="fechaFin" fieldSize="small"
                                                     [ngStyle]="{'border-left': formHeader.hasError('required', ['fecha_fin']) ? '3px solid #e74c3c' : ''}"
                                                     (keyup)="fFinKey($event)" [readOnly]=""/>

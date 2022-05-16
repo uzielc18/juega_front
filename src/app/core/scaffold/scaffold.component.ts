@@ -75,7 +75,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       icon: "calendar-outline",
       link: "/pages/my-calendar",
       pathMatch: "prefix",
-    }, 
+    },
     {
       title: "Biblioteca",
       icon: "book-outline",
@@ -108,6 +108,18 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
           title: "Cursos",
           icon: "shopping-bag-outline",
           link: "/pages/manage/course",
+          pathMatch: "prefix",
+        },
+        {
+          title: "Docentes",
+          icon: "person-outline",
+          link: "/pages/manage/teacher",
+          pathMatch: "prefix",
+        },
+        {
+          title: "Estudiantes",
+          icon: "people-outline",
+          link: "/pages/manage/student",
           pathMatch: "prefix",
         },
         {
