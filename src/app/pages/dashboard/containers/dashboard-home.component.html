@@ -1,15 +1,19 @@
-<nb-card class="m-0 border-0 h-100" style="border-radius: 15px; overflow: hidden;">
+<nb-card
+  class="m-0 border-0 h-100"
+  style="border-radius: 15px; overflow: hidden"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="small"
+>
   <nb-card-body class="p-0">
     <div class="main-container">
-      <div *ngIf="!collapseLeft" class="perfil">
+      <div *ngIf="collapseLeft" class="perfil">
         <app-perfil></app-perfil>
       </div>
-      <div class="cursos" style="background-color: #EEEEEE;">
-        <div *ngIf="!collapseTop" class="anuncios" [ngStyle]="{'height': collapseLeft ? '380px' : '300px'}">
-          hohohoho
-        </div>
-        <nb-card class="curso-container" [ngStyle]="{'margin-top': collapseTop ? '0' : '-10px'}">
-          <nb-card-body style="background-color: #F7F7F7; position: relative;" class="p-0">
+      <div class="cursos" style="background-color: #eeeeee">
+        <div *ngIf="collapseTop" class="anuncios" [ngStyle]="{ height: !collapseLeft ? '380px' : '300px' }"></div>
+        <nb-card class="curso-container" [ngStyle]="{ 'margin-top': !collapseTop ? '0' : '-10px' }">
+          <nb-card-body style="background-color: #f7f7f7; position: relative" class="p-0">
             <span class="tweak-button left" (click)="tweakCollapseLeft()">
               <span>&#9830;</span>
               <span>&#9830;</span>

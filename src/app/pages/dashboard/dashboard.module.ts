@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgbCarousel, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardListCourseModule } from 'src/app/shared/components/card-list-course/card-list-course.module';
 import { GeneralService } from '../../providers';
 import { NebularModule } from '../../shared/nebular.module';
@@ -26,6 +27,7 @@ const SERVICES: any = [
 const MODALS: any = [
 ];
 const NGX_MODULES: any = [
+  NgbCarouselModule
 ];
 const PIPES: any = [
 ];
