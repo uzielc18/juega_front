@@ -48,7 +48,7 @@
       </div>
       <div>
         <br>
-        <h4 class="attached-files-title">Archivos de apoyo</h4>
+        <h4 class="attached-files-title">Archivos de apoyo</h4> <br>
         <app-list-view-files [arrayFiles]="element?.element_files || []" [director]="getDirectoy()"></app-list-view-files>
       </div>
       <!-- <div>
@@ -98,7 +98,7 @@
         </div>
         <br>
         <div>
-          <h4 class="send-work-title">Documentos entregados</h4>
+          <h4 class="send-work-title">Documentos entregados</h4> <br>
           <div *ngIf="pending?.student_pending?.pending_files?.length>0">
             <app-list-view-files
             [arrayFiles]="pending?.student_pending?.pending_files || []"
