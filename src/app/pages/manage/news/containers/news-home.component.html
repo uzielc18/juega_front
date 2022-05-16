@@ -14,7 +14,7 @@
             </div>
         </div>
         <hr>
-        <nb-tabset>
+        <nb-tabset (changeTab)="tabChange($event)">
             <nb-tab tabTitle="Notcias activas">
               <div class="table-responsive">
                 <table class="table table-sm">
@@ -40,10 +40,10 @@
                             <td>{{item.type_filtro}}</td>
                             <td>{{item.filtro}}</td>
                             <th style="width: 1px">
-                                <button nbButton fullWidth size="tiny" status="warning"><nb-icon icon="eye-outline"></nb-icon></button>
+                                <button nbButton fullWidth size="tiny" status="warning" (click)="getFileItem(item)"><nb-icon icon="eye-outline"></nb-icon></button>
                             </th>
                             <th style="width: 1px">
-                                <button nbButton fullWidth size="tiny" status="danger"><nb-icon icon="trash-outline"></nb-icon></button>
+                                <button nbButton fullWidth size="tiny" status="danger" (click)="deleteNews(item)"><nb-icon icon="trash-outline"></nb-icon></button>
                             </th>
                         </tr>
                     </tbody>

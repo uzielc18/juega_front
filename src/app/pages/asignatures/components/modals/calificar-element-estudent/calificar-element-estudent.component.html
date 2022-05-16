@@ -101,7 +101,8 @@
           </nb-card-header>
           <nb-card-body style="background: #a0b9c4; max-height: 75vh !important;" >
             <div *ngIf="element?.type_element?.codigo === 'TRAB'">
-              <app-c-works [pending]="pending" [datos]="datosStudent"></app-c-works>
+              <app-c-works [pending]="pending" [datos]="datosStudent"
+              [director]="directore"></app-c-works>
             </div>
             <div *ngIf="element?.type_element?.codigo === 'FOR'" >
               <app-c-forums

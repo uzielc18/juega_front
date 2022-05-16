@@ -15,6 +15,7 @@ export class CalificarElementEstudentComponent implements OnInit {
   loading:boolean = false;
   @Input() element:any;
   @Input() rol:any;
+  @Input() directore:any;
   listAlumns:any = [];
   formHeader: any = FormGroup;
   pending:any;

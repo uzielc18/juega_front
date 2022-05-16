@@ -49,7 +49,7 @@
       <div>
         <br>
         <h4 class="attached-files-title">Archivos de apoyo</h4>
-        <app-list-view-files [arrayFiles]="element?.element_files || []"></app-list-view-files>
+        <app-list-view-files [arrayFiles]="element?.element_files || []" [director]="getDirectoy()"></app-list-view-files>
       </div>
       <!-- <div>
         <div class="d-flex">
@@ -103,7 +103,9 @@
             <app-list-view-files
             [arrayFiles]="pending?.student_pending?.pending_files || []"
             [deleteFile]="!pending?.student_pending?.nota"
-            (deleteFileEmit)="deleteFile($event)"></app-list-view-files>
+            (deleteFileEmit)="deleteFile($event)"
+            [director]="getDirectoy()"
+            ></app-list-view-files>
           </div>
           <div class="mt-4" *ngIf="pending?.student_pending?.pending_files?.length<=0">
             <nb-alert outline="danger" style="font-size: 12px;">No se encontraron archivos adjuntos</nb-alert>
