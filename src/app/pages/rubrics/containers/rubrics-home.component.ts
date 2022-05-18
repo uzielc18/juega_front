@@ -60,7 +60,7 @@ export class RubricsHomeComponent implements OnInit {
     const serviceName = END_POINTS.base_back.rubrics + '/rubricasGuias';
     this.loading = true;
     const params = {
-      person_id: this.userInfo._user.id,
+      person_id: this.userInfo._user.person.id,
       page: this.pagination.page,
       per_page: this.pagination.per_page,
     };

@@ -10,6 +10,7 @@ export const END_POINTS = {
     resourse: 'resources-person',
     elements: 'elements',
     user: 'user',
+    people: 'people',
     config: 'config',
     news: 'noticias',
     quiz: 'quiz',

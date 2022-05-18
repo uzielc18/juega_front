@@ -57,13 +57,13 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       link: "/pages/evaluations",
       pathMatch: "prefix",
     },
-    {
-      title: "Evaluaciones (Docente)",
-      icon: "checkmark-circle-outline",
-      link: "/pages/evaluations-teacher",
+    // {
+      // title: "Evaluaciones (Docente)",
+      // icon: "checkmark-circle-outline",
+      // link: "/pages/evaluations-teacher",
       // hidden: this.rolSemestre.rol.name === "Docente" ? false : true,
-      pathMatch: "prefix",
-    },
+      // pathMatch: "prefix",
+    // },
     {
       title: "Rúbricas",
       icon: "file-text-outline",
@@ -329,6 +329,11 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                 // this.appService.stop();
               }
             );
+        } else if (data.item.subtag === "profile") {
+          this.emitEventsService.profileInfo(true);
+          setTimeout(() => {
+            this.router.navigate([`/pages/dashboard`]);
+          }, 500);
         }
       });
 
