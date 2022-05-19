@@ -27,26 +27,12 @@
             <ng-template ngbSlide *ngFor="let img of newsList; index as i">
               <a [href]="img?.url" target="_blank" rel="nofollow noopener noreferrer">
                 <div class="picsum-img-wrapper">
-                  <img [src]="img?.imagen" [alt]="img?.titulo" style="width: 100%; object-fit: contain" />
+                  <img [src]="img?.imagen_url" [alt]="img?.titulo" style="width: 100%; object-fit: contain" />
                 </div>
               </a>
             </ng-template>
           </ngb-carousel>
           <hr />
-        </div>
-        <div *ngIf="!collapseTop" style="height: 100px">
-          <ngb-carousel
-            #carousel
-            [interval]="5000"
-            [pauseOnHover]="pauseOnHover"
-            [pauseOnFocus]="pauseOnFocus"
-            (slide)="onSlide($event)"
-            style="width: 100%; height: 100%"
-          >
-            <ng-template ngbSlide *ngFor="let img of images; index as i">
-              Texto
-            </ng-template>
-          </ngb-carousel>
         </div>
         <nb-card class="curso-container" [ngStyle]="{ 'margin-top': !collapseTop ? '0' : '-10px' }">
           <nb-card-body style="background-color: #f7f7f7; position: relative" class="p-0">
@@ -59,6 +45,31 @@
               <nb-icon *ngIf="collapseTop" icon="arrow-ios-upward"></nb-icon>
               <nb-icon *ngIf="!collapseTop" icon="arrow-ios-downward"></nb-icon>
             </span>
+            <div *ngIf="!collapseTop" class="me-5">
+              <ngb-carousel
+                #carousel
+                [showNavigationArrows]="false"
+                [showNavigationIndicators]="false"
+                [interval]="5000"
+                [pauseOnHover]="pauseOnHover"
+                [pauseOnFocus]="pauseOnFocus"
+                (slide)="onSlide($event)"
+                style="width: 100%; height: 100%"
+              >
+                <ng-template ngbSlide *ngFor="let img of newsList; index as i">
+                  <div class="d-flex align-items-center justify-content-between px-5 py-3">
+                    <div>
+                      <h5 style="font-size: 14px" class="fw-bold mb-0">{{ img?.titulo }}</h5>
+                      <span style="font-size: 11px" class="text-secondary">{{ img?.contenido }}</span>
+                    </div>
+                    <a nbButton status="warning" outline size="small" [href]="img?.url" target="_blank"
+                      >MATRICULATE YA!</a
+                    >
+                  </div>
+                </ng-template>
+              </ngb-carousel>
+            </div>
+            <hr class="mt-0" />
             <div class="card-list">
               <app-card-list-course *ngIf="!perfilInfo"></app-card-list-course>
               <div *ngIf="perfilInfo" class="row p-3 pb-0">

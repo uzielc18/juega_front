@@ -193,6 +193,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.generalService.nameIdAndIdParams$(serviceName, person_id, user_id, params).subscribe((res: any) => {
       if (res.success) {
         this.profile = res.data;
+        console.log(this.profile)
         this.formHeader.patchValue({
           codigo: this.profile.person.codigo,
           nombre: this.profile.person.nombres,
