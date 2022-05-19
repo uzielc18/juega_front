@@ -17,6 +17,15 @@ export class ImageRecorteComponent implements OnInit, OnChanges {
   loading: boolean = false;
   @Output() resultFile: any = new EventEmitter<any>();
   @Input() paramsInfoFile: any;
+
+  @Input() resizeToWidth: any = 894;
+  @Input() cropperStaticWidth: any = 894;
+  @Input() cropperStaticHeight: any = 300;
+  @Input() resizeToHeight: any = 300;
+  @Input() aspectRatio: any = 2 / 1;
+  @Input() heightImg: any = 300;
+  @Input() widthImg: any = '';
+
   constructor(private formBuilder: FormBuilder, private s3ServiceServ: S3ServiceService) { }
   ngOnChanges():void {
     this.paramsInfoFile = this.paramsInfoFile;
@@ -46,6 +55,21 @@ export class ImageRecorteComponent implements OnInit, OnChanges {
     };
     this.formFileHeaders = this.formBuilder.group(controls);
   }
+
+  imgSize() {
+    if (this.widthImg !== '') {
+      return {
+        'height': this.heightImg + 'px',
+        'width': this.widthImg + 'px'
+      }
+    } else {
+      return {
+        // 'height': this.heightImg + 'px',
+        'width': '100%'
+      }
+    }
+  }
+
   onFileChange(event:any) {
     this.prepareFile();
     // this.urlSafe = '';
@@ -116,7 +140,7 @@ export class ImageRecorteComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.anadirCutFile();
     }, 200);
-    
+
   }
   base64toFile(dataurl: string, filename: string) {
     var arr:any = dataurl.split(','),
@@ -159,7 +183,7 @@ export class ImageRecorteComponent implements OnInit, OnChanges {
   anadirCutFile() {
     const form = this.formFileHeaders.value;
     if (form && (form.size <= 26214400) ) { // 25MB
-    const key = this.paramsInfoFile.key_file + '-' + Math.floor(Math.random() * 90000) + 10000 + '.' + form.ext;
+    const key = this.paramsInfoFile.key_file + '_' + Math.floor(1000 + Math.random() * 9000) + '.' + form.ext;
     const prams = {
       type: this.paramsInfoFile.type,
       directory: this.paramsInfoFile.directory,

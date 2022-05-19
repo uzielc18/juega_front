@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
+import { NgbCarousel, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardListCourseModule } from 'src/app/shared/components/card-list-course/card-list-course.module';
 import { GeneralService } from '../../providers';
+import { PreviewNewsModule } from '../../shared/components/news-comp/preview-news/preview-news.module';
+import { ImageRecorteModule } from '../../shared/components/recortes/image-recorte/image-recorte.module';
 import { NebularModule } from '../../shared/nebular.module';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { DashboardHomeComponent } from './containers/dashboard-home.component';
@@ -26,11 +29,14 @@ const SERVICES: any = [
 const MODALS: any = [
 ];
 const NGX_MODULES: any = [
+  NgbCarouselModule
 ];
 const PIPES: any = [
 ];
 const MODULES: any = [
   CardListCourseModule,
+  ImageRecorteModule,
+  PreviewNewsModule
 ]
 
 @NgModule({

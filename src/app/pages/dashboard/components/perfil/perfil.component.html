@@ -2,22 +2,22 @@
   <div class="profile mb-1">
     <div class="photo-container">
       <!-- <img src="assets/student.jpg" alt=""> -->
-      <img src="https://files-erp.upeu.edu.pe/media/lamb-academic/fotodb/0380200110121.jpg" alt="" />
+      <img src="{{ profile?.user?.profile_photo_path }}" alt="" />
     </div>
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column" style="flex: 1">
       <div class="student">
         <p class="student-name">
-          {{ userInfo?.user?.person?.nombres }}
+          {{ profile?.person?.nombres }}
         </p>
         <p class="student-lastname">
-          {{ userInfo?.user?.person?.apellido_paterno }} &nbsp; {{ userInfo?.user?.person?.apellido_materno }}
+          {{ profile?.person?.apellido_paterno }} &nbsp; {{ profile?.person?.apellido_materno }}
         </p>
       </div>
       <div class="student-info">
-        <p class="ciclo">1º Ciclo</p>
-        <p class="carrera">Ingeniería de Sistemas</p>
+        <p class="ciclo">{{ profile?.person?.ciclo }}º Ciclo</p>
+        <p class="carrera">{{ profile?.person?.programa_estudio }}</p>
         <p class="codigo">
-          {{ userInfo?.user?.person?.codigo }}
+          {{ profile?.person?.codigo }}
         </p>
       </div>
     </div>

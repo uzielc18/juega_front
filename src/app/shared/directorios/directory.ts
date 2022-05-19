@@ -4,7 +4,7 @@ export const DIRECTORY = {
   courses: upeu + '/courses',
   exam: upeu + '/exam',
   news: upeu + '/news',
-  users: upeu = '/users',
+  users: upeu + '/users',
   // works: dir + '/works',
   // forums: dir + '/forum',
   // question: 'exam'
@@ -15,5 +15,5 @@ export const DIRECTORY_ELEMENTS = {
   base: dir_element,
   works: dir_element + '/works',
   forums: dir_element + '/forum',
-  exam: dir_element + '/exam',
+  // exam: dir_element + '/exam',
 };

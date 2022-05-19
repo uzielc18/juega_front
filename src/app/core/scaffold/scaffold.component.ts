@@ -57,13 +57,13 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       link: "/pages/evaluations",
       pathMatch: "prefix",
     },
-    {
-      title: "Evaluaciones (Docente)",
-      icon: "checkmark-circle-outline",
-      link: "/pages/evaluations-teacher",
+    // {
+      // title: "Evaluaciones (Docente)",
+      // icon: "checkmark-circle-outline",
+      // link: "/pages/evaluations-teacher",
       // hidden: this.rolSemestre.rol.name === "Docente" ? false : true,
-      pathMatch: "prefix",
-    },
+      // pathMatch: "prefix",
+    // },
     {
       title: "Rúbricas",
       icon: "file-text-outline",
@@ -75,7 +75,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       icon: "calendar-outline",
       link: "/pages/my-calendar",
       pathMatch: "prefix",
-    }, 
+    },
     {
       title: "Biblioteca",
       icon: "book-outline",
@@ -108,6 +108,18 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
           title: "Cursos",
           icon: "shopping-bag-outline",
           link: "/pages/manage/course",
+          pathMatch: "prefix",
+        },
+        {
+          title: "Docentes",
+          icon: "person-outline",
+          link: "/pages/manage/teacher",
+          pathMatch: "prefix",
+        },
+        {
+          title: "Estudiantes",
+          icon: "people-outline",
+          link: "/pages/manage/student",
           pathMatch: "prefix",
         },
         {
@@ -317,6 +329,11 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                 // this.appService.stop();
               }
             );
+        } else if (data.item.subtag === "profile") {
+          this.emitEventsService.profileInfo(true);
+          setTimeout(() => {
+            this.router.navigate([`/pages/dashboard`]);
+          }, 500);
         }
       });
 
