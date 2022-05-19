@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { AppService } from '../../../core';
 import { GeneralService } from '../../../providers';
@@ -22,7 +23,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   idCollapseTop: number = 0;
   idCollapseLeft: number = 0;
 
-  perfilInfo: boolean = true;
+  perfilInfo: boolean = false;
   view: string = 'mini';
   subscription$: Subscription = new Subscription();
 
@@ -30,8 +31,44 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
 
   formHeader: any = FormGroup;
 
-  directorio = DIRECTORY.users;
+  directorio: any;
   key_file: any;
+
+  //////////////
+
+  images = [62, 83, 466, 965, 982, 1043, 738].map(n => `https://picsum.photos/id/${n}/900/500`);
+
+  paused = false;
+  unpauseOnArrow = false;
+  pauseOnIndicator = false;
+  pauseOnHover = true;
+  pauseOnFocus = true;
+
+  @ViewChild('carousel', { static: true }) carousel!: NgbCarousel;
+
+  togglePaused() {
+    if (this.paused) {
+      this.carousel.cycle();
+    } else {
+      this.carousel.pause();
+    }
+    this.paused = !this.paused;
+  }
+
+  onSlide(slideEvent: NgbSlideEvent) {
+    if (
+      this.unpauseOnArrow &&
+      slideEvent.paused &&
+      (slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)
+    ) {
+      this.togglePaused();
+    }
+    if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
+      this.togglePaused();
+    }
+  }
+
+  ///////////////
 
   constructor(
     private generalService: GeneralService,
@@ -64,10 +101,12 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       fecha_nacimiento: ['', [Validators.required]],
       presentacion: ['', [Validators.required]],
       foto: ['', [Validators.required]],
+      profile_photo_path: ['', [Validators.required]],
       base64_url: ['', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.key_file = this.userService?.user?.person?.codigo;
+    this.directorio = DIRECTORY.users + `/${this.userInfo._user.person.codigo}`;
   }
 
   backToProfile() {
@@ -135,10 +174,10 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   fileResult($event: any) {
-    this.formHeader.controls['foto'].setValue('');
+    this.formHeader.controls['profile_photo_path'].setValue('');
     this.formHeader.controls['base64_url'].setValue('');
     if ($event && $event.archivo) {
-      this.formHeader.controls['foto'].setValue($event.nombre);
+      this.formHeader.controls['profile_photo_path'].setValue($event.nombre);
       this.formHeader.controls['base64_url'].setValue($event.base64);
     }
   }
@@ -169,6 +208,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
           fecha_nacimiento: new Date(this.profile.person.fecha_nacimiento) || new Date(),
           presentacion: this.profile.person.resumen || '',
           foto: this.profile.person.foto || '',
+          profile_photo_path: this.profile.user.profile_photo_path || '',
         });
       }
     });
@@ -179,6 +219,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.generalService.nameId$(serviceName, this.userService.user.id).subscribe((res: any) => {
       if (res.success) {
         this.newsList = res.data || [];
+        console.log(this.newsList);
       }
     });
   }
@@ -201,10 +242,11 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       },
       user: {
         email: this.formHeader.controls['correo'].value,
+        profile_photo_path: this.formHeader.controls['profile_photo_path'].value,
         // profile_photo_path: this.formHeader.controls['base64_url'].value,
       },
     };
-    this.generalService.updateNameIdAndIdData$(serviceName, person_id, user_id, data).subscribe((res: any) => {
+    this.generalService.updateNameIdData$(serviceName, person_id, data).subscribe((res: any) => {
       if (res.success) {
         console.log(res);
       }

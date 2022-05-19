@@ -56,8 +56,8 @@ export class VWorksComponent implements OnInit, OnChanges {
   secondsMap = {
     '=0': '.',
     '=1': '1 segundo.',
-    'other': '# segundos.'
-  }
+    other: '# segundos.',
+  };
   directorio: any = DIRECTORY.courses;
   arrayFile: any = [];
   @Output() refreshPending: EventEmitter<any> = new EventEmitter();
@@ -124,6 +124,7 @@ export class VWorksComponent implements OnInit, OnChanges {
     };
     this.form = this.formBuilder.group(controls);
     this.key_file = this.userInfo?.person?.codigo;
+    // this.directorio = DIRECTORY.courses + `/${this.element.id_carga_curso_docente}` + '/works';
     // console.log(this.key_file, 'Key file');
   }
 
@@ -243,6 +244,5 @@ export class VWorksComponent implements OnInit, OnChanges {
     } else {
       return '';
     }
-
   }
 }
