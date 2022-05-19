@@ -1,25 +1,442 @@
-<nb-card class="m-0 border-0 h-100" style="border-radius: 15px; overflow: hidden;">
+<nb-card
+  class="m-0 border-0 h-100"
+  style="border-radius: 15px; overflow: hidden"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="small"
+>
   <nb-card-body class="p-0">
     <div class="main-container">
-      <div *ngIf="!collapseLeft" class="perfil">
-        <app-perfil></app-perfil>
+      <div
+        *ngIf="collapseLeft"
+        class="perfil"
+        [ngStyle]="perfilInfo ? { 'min-width': '480px' } : { 'min-width': '480px', width: '480px' }"
+      >
+        <app-perfil [profile]="profile"></app-perfil>
       </div>
-      <div class="cursos" style="background-color: #EEEEEE;">
-        <div *ngIf="!collapseTop" class="anuncios" [ngStyle]="{'height': collapseLeft ? '380px' : '300px'}">
+      <div class="cursos" style="background-color: #eeeeee">
+        <div *ngIf="collapseTop" class="anuncios" [ngStyle]="{ height: !collapseLeft ? '380px' : '300px' }">
+          <ngb-carousel
+            #carousel
+            [interval]="5000"
+            [pauseOnHover]="pauseOnHover"
+            [pauseOnFocus]="pauseOnFocus"
+            (slide)="onSlide($event)"
+            style="width: 100%; height: 100%"
+          >
+            <ng-template ngbSlide *ngFor="let img of newsList; index as i">
+              <a [href]="img?.url" target="_blank" rel="nofollow noopener noreferrer">
+                <div class="picsum-img-wrapper">
+                  <img [src]="img?.imagen" [alt]="img?.titulo" style="width: 100%; object-fit: contain" />
+                </div>
+              </a>
+            </ng-template>
+          </ngb-carousel>
+          <hr />
         </div>
-        <nb-card class="curso-container" [ngStyle]="{'margin-top': collapseTop ? '0' : '-10px'}">
-          <nb-card-body style="background-color: #F7F7F7; position: relative;" class="p-0">
-            <span class="tweak-button left" (click)="tweakCollapseLeft()">
+        <div *ngIf="!collapseTop" style="height: 100px">
+          <ngb-carousel
+            #carousel
+            [interval]="5000"
+            [pauseOnHover]="pauseOnHover"
+            [pauseOnFocus]="pauseOnFocus"
+            (slide)="onSlide($event)"
+            style="width: 100%; height: 100%"
+          >
+            <ng-template ngbSlide *ngFor="let img of images; index as i">
+              Texto
+            </ng-template>
+          </ngb-carousel>
+        </div>
+        <nb-card class="curso-container" [ngStyle]="{ 'margin-top': !collapseTop ? '0' : '-10px' }">
+          <nb-card-body style="background-color: #f7f7f7; position: relative" class="p-0">
+            <span class="tweak-button left" (click)="tweakCollapse('left')">
               <span>&#9830;</span>
               <span>&#9830;</span>
               <span>&#9830;</span>
             </span>
-            <span class="tweak-button top" (click)="tweakCollapseTop()">
-              <nb-icon *ngIf="!collapseTop" icon="arrow-ios-upward"></nb-icon>
-              <nb-icon *ngIf="collapseTop" icon="arrow-ios-downward"></nb-icon>
+            <span class="tweak-button top" (click)="tweakCollapse('top')">
+              <nb-icon *ngIf="collapseTop" icon="arrow-ios-upward"></nb-icon>
+              <nb-icon *ngIf="!collapseTop" icon="arrow-ios-downward"></nb-icon>
             </span>
             <div class="card-list">
-              <app-card-list-course></app-card-list-course>
+              <app-card-list-course *ngIf="!perfilInfo"></app-card-list-course>
+              <div *ngIf="perfilInfo" class="row p-3 pb-0">
+                <div class="col-md-6">
+                  <nb-card status="primary" class="mb-0">
+                    <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
+                      Informacion Principal del Usuario
+                    </nb-card-header>
+                    <nb-card-body>
+                      <form [formGroup]="formHeader">
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Código:</label>
+                          <div class="col-md-9">
+                            <input
+                              type="number"
+                              nbInput
+                              fullWidth
+                              fieldSize="small"
+                              formControlName="codigo"
+                              placeholder="Código"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Nombres:</label>
+                          <div class="col-md-9">
+                            <input
+                              type="text"
+                              nbInput
+                              fullWidth
+                              fieldSize="small"
+                              formControlName="nombre"
+                              readonly
+                              placeholder="Nombres"
+                            />
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Apellido Paterno:</label>
+                          <div class="col-md-9">
+                            <input
+                              type="text"
+                              nbInput
+                              fullWidth
+                              fieldSize="small"
+                              formControlName="apellido_paterno"
+                              placeholder="Apellido Paterno"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Apellido Materno:</label>
+                          <div class="col-md-9">
+                            <input
+                              type="text"
+                              nbInput
+                              fullWidth
+                              fieldSize="small"
+                              formControlName="apellido_materno"
+                              placeholder="Apellido Materno"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">DNI:</label>
+                          <div class="col-md-9">
+                            <input
+                              type="number"
+                              nbInput
+                              fullWidth
+                              fieldSize="small"
+                              formControlName="dni"
+                              readonly
+                              placeholder="DNI"
+                            />
+                          </div>
+                        </div>
+                        <br />
+                        <hr />
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Correo Institucional:</label>
+                          <div class="col-md-9">
+                            <input
+                              type="email"
+                              nbInput
+                              fullWidth
+                              fieldSize="small"
+                              formControlName="correo"
+                              status="primary"
+                              placeholder="Correo Institucional"
+                            />
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Genero:</label>
+                          <div class="col-md-9">
+                            <nb-select
+                              placeholder="Seleccione una opción"
+                              selected="0"
+                              fullWidth
+                              size="small"
+                              status="primary"
+                              formControlName="genero"
+                            >
+                              <nb-option value="Masculino">Masculino</nb-option>
+                              <nb-option value="Femenino">Femenino</nb-option>
+                            </nb-select>
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Nacionalidad:</label>
+                          <div class="col-md-9">
+                            <input
+                              type="email"
+                              nbInput
+                              fullWidth
+                              fieldSize="small"
+                              formControlName="nacionalidad"
+                              status="primary"
+                              placeholder="Ej: Perú"
+                            />
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Ubigeo:</label>
+                          <div class="col-md-9">
+                            <input
+                              type="number"
+                              nbInput
+                              fullWidth
+                              fieldSize="small"
+                              formControlName="ubigeo"
+                              status="primary"
+                              placeholder="Ubigeo"
+                            />
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Estado Civil:</label>
+                          <div class="col-md-9">
+                            <nb-select
+                              placeholder="Seleccione una opción"
+                              selected="0"
+                              fullWidth
+                              size="small"
+                              status="primary"
+                              formControlName="estado_civil"
+                            >
+                              <nb-option value="Casado (a)">Casado (a)</nb-option>
+                              <nb-option value="Soltero (a)">Soltero (a)</nb-option>
+                              <nb-option value="Divorciado (a)">Divorciado (a)</nb-option>
+                              <nb-option value="Separado (a)">Separado (a)</nb-option>
+                              <nb-option value="Viudo (a)">Viudo (a)</nb-option>
+                              <nb-option value="Conviviente">Conviviente</nb-option>
+                              <nb-option value="No precisa">No precisa</nb-option>
+                            </nb-select>
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Religion:</label>
+                          <div class="col-md-9">
+                            <nb-select
+                              placeholder="Seleccione una opción"
+                              selected="0"
+                              fullWidth
+                              size="small"
+                              status="primary"
+                              formControlName="religion"
+                            >
+                              <nb-option value="Adventista del Séptimo Día">Adventista del Séptimo Día</nb-option>
+                              <nb-option value="Católico">Católico</nb-option>
+                              <nb-option value="Evangélico">Evangélico</nb-option>
+                              <nb-option value="Mormón">Mormón</nb-option>
+                              <nb-option value="Pentecostes">Pentecostes</nb-option>
+                              <nb-option value="Testigo de Jehova">Testigo de Jehova</nb-option>
+                              <nb-option value="Otro">Otro</nb-option>
+                              <nb-option value="Ninguno">Ninguno</nb-option>
+                            </nb-select>
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Fecha de Nacimiento:</label>
+                          <div class="col-md-9">
+                            <nb-form-field>
+                              <input
+                                nbInput
+                                placeholder="Fecha de Nacimiento"
+                                fullWidth
+                                [nbDatepicker]="fechaNacimiento"
+                                fieldSize="small"
+                                status="primary"
+                                formControlName="fecha_nacimiento"
+                              />
+                              <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+                              <nb-datepicker #fechaNacimiento format="dd/MM/yyyy"> </nb-datepicker>
+                            </nb-form-field>
+                          </div>
+                        </div>
+                        <br />
+                      </form>
+                    </nb-card-body>
+                    <nb-card-footer style="text-align: right">
+                      <button class="me-2" nbButton size="small" status="primary" (click)="saveInfo()">Guardar</button>
+                      <button nbButton size="small" status="primary">Sincronizar</button>
+                    </nb-card-footer>
+                  </nb-card>
+                </div>
+                <div class="col-md-6">
+                  <nb-card status="primary" class="mb-0">
+                    <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
+                      Informacion Adicional
+                    </nb-card-header>
+                    <nb-card-body>
+                      <form [formGroup]="formHeader">
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-start">Presentacion:</label>
+                          <div class="col-md-9">
+                            <textarea
+                              nbInput
+                              fullWidth
+                              fieldSize="small"
+                              formControlName="presentacion"
+                              rows="5"
+                              status="primary"
+                              placeholder="Mi presentacion"
+                            >
+                            </textarea>
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <label class="label col-md-3 d-flex align-items-center">Foto:</label>
+                          <div class="col-md-9">
+                            <input
+                              type="text"
+                              nbInput
+                              fullWidth
+                              fieldSize="small"
+                              formControlName="foto"
+                              readonly
+                              placeholder="Mi foto"
+                            />
+                          </div>
+                        </div>
+                        <br />
+                        <app-image-recorte
+                          [paramsInfoFile]="{
+                            key_file: key_file,
+                            directory: directorio,
+                            type: 'put'
+                          }"
+                          (resultFile)="fileResult($event)"
+                          [aspectRatio]="1 / 1"
+                          [resizeToWidth]="170"
+                          [cropperStaticWidth]="170"
+                          [cropperStaticHeight]="170"
+                          [resizeToHeight]="170"
+                          [heightImg]="170"
+                          [widthImg]="170"
+                        ></app-image-recorte>
+                        <div class="text-end">
+                          <button nbButton size="small" status="primary" (click)="saveInfo()">
+                            Guardar Informacion
+                          </button>
+                        </div>
+                      </form>
+                      <div class="row m-0">
+                        <label class="label">Familia</label>
+                        <nb-card class="p-0 m-2">
+                          <nb-card-body class="p-3">
+                            <div class="row">
+                              <div class="col-md-6 d-flex align-items-center">
+                                <div
+                                  class="img-container"
+                                  style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden"
+                                >
+                                  <img
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                                    alt=""
+                                    style="width: 100%"
+                                  />
+                                </div>
+                                <div class="nombres ms-3">
+                                  <p class="m-0 fw-bold">Nombres y Apellidos</p>
+                                  <span class="text-secondary">Relacion</span>
+                                </div>
+                              </div>
+                              <div class="col-md-6 d-flex align-items-center justify-content-end">
+                                <div class="d-flex gap-2">
+                                  <button nbButton size="small" status="primary" outline>Mensaje</button>
+                                  <button nbButton size="small" status="primary" outline>Perfil</button>
+                                </div>
+                              </div>
+                            </div>
+                          </nb-card-body>
+                        </nb-card>
+                        <nb-card class="p-0 m-2">
+                          <nb-card-body class="p-3">
+                            <div class="row">
+                              <div class="col-md-6 d-flex align-items-center">
+                                <div
+                                  class="img-container"
+                                  style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden"
+                                >
+                                  <img
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                                    alt=""
+                                    style="width: 100%"
+                                  />
+                                </div>
+                                <div class="nombres ms-3">
+                                  <p class="m-0 fw-bold">Nombres y Apellidos</p>
+                                  <span class="text-secondary">Relacion</span>
+                                </div>
+                              </div>
+                              <div class="col-md-6 d-flex align-items-center justify-content-end">
+                                <div class="d-flex gap-2">
+                                  <button nbButton size="small" status="primary" outline>Mensaje</button>
+                                  <button nbButton size="small" status="primary" outline>Perfil</button>
+                                </div>
+                              </div>
+                            </div>
+                          </nb-card-body>
+                        </nb-card>
+                      </div>
+                      <div class="row m-0">
+                        <label class="label">Grupos</label>
+                        <nb-card class="mx-2 mt-2 p-0">
+                          <nb-card-body class="p-3">
+                            <div class="row">
+                              <div class="col-md-8 d-flex align-items-center">
+                                <div class="nombres ms-3">
+                                  <p class="m-0 fw-bold">Nombre del Curso</p>
+                                  <span class="text-secondary">Nombre del Grupo</span><br />
+                                  <span class="text-secondary">Nombre del trabajo - Fecha de entrega</span>
+                                </div>
+                              </div>
+                              <div class="col-md-4 d-flex align-items-center justify-content-end">
+                                <div class="d-flex gap-2">
+                                  <!-- <button nbButton size="small" status="primary" outline>Ver Grupo</button> -->
+                                  <button
+                                    nbButton
+                                    size="small"
+                                    status="primary"
+                                    outline
+                                    nbPopoverPlacement="bottom"
+                                    [nbPopover]="integrantesRef"
+                                  >
+                                    Ver Grupos
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </nb-card-body>
+                        </nb-card>
+                      </div>
+                    </nb-card-body>
+                    <nb-card-footer> </nb-card-footer>
+                  </nb-card>
+                </div>
+                <div class="text-end">
+                  <button nbButton size="small" status="danger" (click)="backToProfile()">Cerrar</button>
+                </div>
+              </div>
             </div>
           </nb-card-body>
         </nb-card>
@@ -27,3 +444,37 @@
     </div>
   </nb-card-body>
 </nb-card>
+
+<ng-template #integrantesRef>
+  <nb-card>
+    <nb-card-header> Integrantes </nb-card-header>
+    <nb-card-body>
+      <div class="d-flex align-items-center mb-2">
+        <div class="img-container" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden">
+          <img
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            alt=""
+            style="width: 100%"
+          />
+        </div>
+        <div class="nombres ms-3">
+          <p class="m-0 fw-bold">Nombres del Estudiante</p>
+          <span class="text-secondary">Código</span>
+        </div>
+      </div>
+      <div class="d-flex align-items-center mb-2">
+        <div class="img-container" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden">
+          <img
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            alt=""
+            style="width: 100%"
+          />
+        </div>
+        <div class="nombres ms-3">
+          <p class="m-0 fw-bold">Nombres del Estudiante</p>
+          <span class="text-secondary">Código</span>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-template>

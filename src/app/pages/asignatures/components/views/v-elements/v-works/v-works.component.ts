@@ -10,12 +10,15 @@ import { CalificarElementEstudentComponent } from '../../../modals/calificar-ele
 @Component({
   selector: 'app-v-works',
   templateUrl: './v-works.component.html',
-  styleUrls: ['./v-works.component.scss']
+  styleUrls: ['./v-works.component.scss'],
 })
 export class VWorksComponent implements OnInit, OnChanges {
   @Input() element: any;
   @Input() userInfo: any;
   @Input() pending: any;
+  @Input() rubrica: any = null;
+  @Input() has_rubric: boolean = false;
+  @Input() calification: any;
   loading: boolean = false;
   fechaFin: any;
 
@@ -35,52 +38,57 @@ export class VWorksComponent implements OnInit, OnChanges {
   daysMap = {
     '=0': '',
     '=1': '1 dia,',
-    'other': '# dias,'
-  }
+    other: '# dias,',
+  };
 
   hoursMap = {
     '=0': '',
     '=1': '1 hora,',
-    'other': '# horas,'
-  }
+    other: '# horas,',
+  };
 
   minutesMap = {
     '=0': '',
     '=1': '1 minuto,',
-    'other': '# minutos,'
-  }
+    other: '# minutos,',
+  };
 
   secondsMap = {
     '=0': '.',
     '=1': '1 segundo.',
-    'other': '# segundos.'
-  }
+    other: '# segundos.',
+  };
   directorio: any = DIRECTORY.courses;
   arrayFile: any = [];
   @Output() refreshPending: EventEmitter<any> = new EventEmitter();
-  key_file:any;
+  key_file: any;
   constructor(
-    private formBuilder: FormBuilder, private dialogService: NbDialogService, private appService: AppService, private generalServi: GeneralService
+    private formBuilder: FormBuilder,
+    private dialogService: NbDialogService,
+    private appService: AppService,
+    private generalServi: GeneralService
   ) {
     setInterval(() => {
-      this.countdown(this.element?.fecha_fin)
+      this.countdown(this.element?.fecha_fin);
     }, 1000);
   }
-  ngOnChanges():void {
+  ngOnChanges(): void {
     this.pending = this.pending;
   }
   ngOnInit(): void {
     this.fieldReactive();
+    if (this.rubrica !== null) {
+      console.log(this.rubrica, 'desde rubriiiiiiiiiiica');
+    }
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     const val = JSON.parse(sesion);
-    if (val && val.rol){
+    if (val && val.rol) {
       return val;
     } else {
       return '';
     }
-
   }
   countdown(fecha_fin: any) {
     const countDate = new Date(fecha_fin).getTime();
@@ -116,6 +124,7 @@ export class VWorksComponent implements OnInit, OnChanges {
     };
     this.form = this.formBuilder.group(controls);
     this.key_file = this.userInfo?.person?.codigo;
+    // this.directorio = DIRECTORY.courses + `/${this.element.id_carga_curso_docente}` + '/works';
     // console.log(this.key_file, 'Key file');
   }
 
@@ -124,8 +133,9 @@ export class VWorksComponent implements OnInit, OnChanges {
       tipo: $event,
     });
   }
-  calificar(element:any) {
-      this.dialogService.open(CalificarElementEstudentComponent, {
+  calificar(element: any) {
+    this.dialogService
+      .open(CalificarElementEstudentComponent, {
         dialogClass: 'dialog-limited-height',
         context: {
           element: element,
@@ -133,63 +143,79 @@ export class VWorksComponent implements OnInit, OnChanges {
           // response: params,
         },
         closeOnBackdropClick: false,
-        closeOnEsc: false
-      }).onClose.subscribe(result => {
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
         if (result === 'ok') {
           // this.filtrar();
         }
       });
   }
 
-  valueFile($event:any){
+  valueFile($event: any) {
     const serviceName = END_POINTS.base_back.resourse + '/save-work-student';
     const params: any = {
       files: $event.arrayFile,
     };
     if (params && params.files.length === 1) {
       this.loading = true;
-      this.generalServi.addNameIdData$(serviceName, this.pending.student_pending.id, params).subscribe((res:any) => {
-        if (res.success) {
-          this.arrayFile = [];
-          this.refreshPending.emit();
-        } else {
-          this.arrayFile = [];
-         }
-      }, () => { this.loading = false; }, () => { this.loading = false; });
+      this.generalServi.addNameIdData$(serviceName, this.pending.student_pending.id, params).subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.arrayFile = [];
+            this.refreshPending.emit();
+          } else {
+            this.arrayFile = [];
+          }
+        },
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
     }
-
   }
   saveEnlace() {
     const serviceName = END_POINTS.base_back.resourse + '/save-work-student';
     const form = this.form.value;
     const params: any = {
-        ext: form.ext_enlace,
-        nombre: form.ext_enlace,
-        nombre_original: form.ext_enlace,
-        url: form.enlace,
-        peso: 0,
-        tipo: 'REFERENCIA_TRABAJO',
-        person_id: this.appService.user.id,
-        tabla: 'pendings',
-        tabla_id: '',
+      ext: form.ext_enlace,
+      nombre: form.ext_enlace,
+      nombre_original: form.ext_enlace,
+      url: form.enlace,
+      peso: 0,
+      tipo: 'REFERENCIA_TRABAJO',
+      person_id: this.appService.user.id,
+      tabla: 'pendings',
+      tabla_id: '',
     };
     if (params && params.ext && params.nombre && params.person_id) {
       const data = {
         files: [params],
       };
       this.loading = true;
-      this.generalServi.addNameIdData$(serviceName, this.pending.student_pending.id, data).subscribe((res:any) => {
-        if (res.success) {
-          this.fieldReactive();
-          this.refreshPending.emit();
+      this.generalServi.addNameIdData$(serviceName, this.pending.student_pending.id, data).subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.fieldReactive();
+            this.refreshPending.emit();
+          }
+        },
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
         }
-      }, () => { this.loading = false; }, () => { this.loading = false; });
+      );
       // this.lo
     }
   }
   get validButtons() {
     const forms = this.form.value;
-    if (!forms.ext_enlace || !forms.enlace || this.pending?.student_pending?.pending_files?.length === 6){
+    if (!forms.ext_enlace || !forms.enlace || this.pending?.student_pending?.pending_files?.length === 6) {
       return true;
     } else {
       return false;
@@ -198,11 +224,19 @@ export class VWorksComponent implements OnInit, OnChanges {
   deleteFile($event: any) {
     const serviceName = 'files';
     this.loading = true;
-    this.generalServi.deleteNameId$(serviceName, $event.id).subscribe((res:any) => {
-      if (res.success) {
-        this.refreshPending.emit();
+    this.generalServi.deleteNameId$(serviceName, $event.id).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.refreshPending.emit();
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
       }
-    }, () => { this.loading = false; }, () => { this.loading = false; });
+    );
   }
   getDirectoy() {
     if (this.element && this.element?.id_carga_curso_docente) {
@@ -210,6 +244,5 @@ export class VWorksComponent implements OnInit, OnChanges {
     } else {
       return '';
     }
-   
   }
 }

@@ -28,14 +28,14 @@ export class NewsHomeComponent implements OnInit {
     this.getNews();
   }
   getNews() {
-    const serviceName = END_POINTS.base_back.config + '/news';
+    const serviceName = END_POINTS.base_back.news + '/news';
     this.loading = true;
     this.service.nameAll$(serviceName).subscribe((res:any) => {
       this.listNews = res.data || [];
     }, () => {this.loading = false}, ()=> {this.loading=false});
   }
   deleteNews(item:any) {
-    const serviceName = END_POINTS.base_back.config + '/news';
+    const serviceName = END_POINTS.base_back.news + '/news';
     if (item.id) {
       Swal.fire({
         title: 'Eliminar',

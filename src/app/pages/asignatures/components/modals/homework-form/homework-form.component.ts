@@ -18,6 +18,7 @@ export class HomeworkFormComponent {
   @Input() code: any;
 
   loading: boolean = false;
+  has_rubric: boolean = false;
   element:any;
   itemsValue: any;
   userInfo: any;
