@@ -1,0 +1,156 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+    nbSpinnerMessage="Procesando información">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div>
+                <nb-icon icon="google-outline" status="danger"></nb-icon>&nbsp;&nbsp; NUEVO EVENTO EN <span
+                    [ngTemplateOutlet]="google"></span> CALENDAR
+                <ng-template #google>
+                    <span style="font-weight: bold; color: blue">G</span>
+                    <span style="font-weight: bold; color: red;">O</span>
+                    <span style="font-weight: bold; color: yellow;">O</span>
+                    <span style="font-weight: bold; color: blue;">G</span>
+                    <span style="font-weight: bold; color: green;">L</span>
+                    <span style="font-weight: bold; color: red;">E</span>
+                </ng-template>
+            </div>
+            <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="formHeader">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label">Título:</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" nbInput fullWidth fieldSize="small" formControlName="title">
+                    <control-messages [control]="formHeader.get('title')"></control-messages>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label">Descripción:</label>
+                </div>
+                <div class="col-md-8">
+                    <textarea type="text" nbInput fullWidth fieldSize="small" formControlName="descripcion"></textarea>
+                    <control-messages [control]="formHeader.get('descripcion')"></control-messages>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label">Todo el día:</label>
+                </div>
+                <div class="col-md-8">
+                    <nb-toggle formControlName="allDay" (checkedChange)="changeToggle($event)"></nb-toggle>
+                    <control-messages [control]="formHeader.get('allDay')"></control-messages>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label">{{formHeader.value.allDay ? 'Fecha inicio' : 'Fecha y hora de inicio'}}:</label>
+                </div>
+                <div class="col-md-8">
+                    <div [class]="!formHeader.value.allDay ? 'd-flex' : ''">
+                        <nb-form-field  [class]="!formHeader.value.allDay ? 'date-input' : ''">
+                            <input nbInput placeholder="Fecha Inicio" fullWidth [nbDatepicker]="fechaInicio"
+                                fieldSize="small"
+                                formControlName="fecha_inicio" />
+                            <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+                            <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min"></nb-datepicker>
+                            <control-messages [control]="formHeader.get('fecha_inicio')"></control-messages>
+                        </nb-form-field>
+                        <nb-form-field *ngIf="!formHeader.value.allDay" class="hour-input ms-auto" >
+                            <input nbInput placeholder="Hora Inicio" [nbTimepicker]="horaInicio" type="text"
+                                fieldSize="small"
+                                formControlName="hora_inicio" />
+                            <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
+                            <nb-timepicker #horaInicio></nb-timepicker>
+                        </nb-form-field>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row" *ngIf="!formHeader.value.allDay">
+                <div class="col-md-4">
+                    <label class="label">Fecha y hora de fin:</label>
+                </div>
+                <div class="col-md-8">
+                    <fieldset [disabled]="!formHeader.value.fecha_inicio">
+                        <div class="d-flex">
+                            <nb-form-field class="date-input">
+                                <input nbInput placeholder="Fecha fin" fullWidth [nbDatepicker]="fechFin"
+                                    fieldSize="small"
+                                    formControlName="fecha_fin" />
+                                <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+                                <nb-datepicker #fechFin format="dd/MM/yyyy" [min]="formHeader.value.fecha_inicio">
+                                </nb-datepicker>
+                                <control-messages [control]="formHeader.get('fecha_fin')"></control-messages>
+                            </nb-form-field>
+                            <nb-form-field class="hour-input ms-auto">
+                                <input nbInput placeholder="Hora fin" [nbTimepicker]="horaFin" type="text"
+                                    fieldSize="small"
+                                    formControlName="hora_fin" />
+                                <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva">
+                                </nb-icon>
+                                <nb-timepicker #horaFin></nb-timepicker>
+                            </nb-form-field>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            
+            <br *ngIf="!formHeader.value.allDay">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label">Lugar:</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" nbInput fullWidth fieldSize="small" formControlName="location">
+                    <control-messages [control]="formHeader.get('location')"></control-messages>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label">Invitados (Separados por cóma (,)):</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" placeholder="abcdef@upeu.edu.pe,cdfg@upeu.edu.pe" nbInput fullWidth fieldSize="small" formControlName="attendees">
+                    <control-messages [control]="formHeader.get('attendees')"></control-messages>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label">Color:</label>
+                </div>
+                <div class="col-md-8">
+                    <nb-form-field>
+                        <nb-select placeholder="Seleccionar color" fullWidth size="small" formControlName="color">
+                            <nb-option value="" disabled="">Seleccione</nb-option>
+                            <nb-option *ngFor="let item of colors" [value]="item.color">
+                                <nb-icon icon="droplet" [ngStyle]="{'color': item.color, 'font-size': '25px'}">
+                                </nb-icon>
+                                <span style="visibility: hidden">{{item.color}}</span>
+                            </nb-option>
+                        </nb-select>
+                        <nb-icon nbPrefix icon="droplet"
+                            [ngStyle]="{'color': formHeader.value.color ? formHeader.value.color : '', 'font-size': '25px'}"
+                            pack="eva"></nb-icon>
+                    </nb-form-field>
+                    <control-messages [control]="formHeader.get('color')"></control-messages>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer style="text-align: right;">
+        <button nbButton size="small" status="primary"
+            (click)="saveGoogle()">Guardar</button>
+    </nb-card-footer>
+</nb-card>

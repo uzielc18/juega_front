@@ -1,7 +1,13 @@
-<nb-card class="h-100 border-0" style="border-radius: 15px" nbSpinnerStatus="primary" nbSpinnerSize="small">
+<nb-card
+  class="h-100 border-0"
+  style="border-radius: 15px"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="small"
+>
   <nb-card-header>
     <div class="d-flex">
-      <nb-icon icon="edit-2-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
+      <nb-icon icon="file-text-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
       <strong style="padding-top: 7px">MIS RÚBRICAS</strong>
     </div>
     <hr />
@@ -11,20 +17,85 @@
     <div class="table-responsive">
       <table class="table table-sm">
         <thead>
-          <tr style="font-size: 12px">
-            <th class="text-center">II</th>
-            <th class="text-center">TTTT</th>
-            <th class="text-center">SSSSs</th>
+          <tr class="text-center" style="font-size: 12px">
+            <th>Titulo</th>
+            <th>Descripcion</th>
+            <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr style="font-size: 12px; vertical-align: middle">
-            <td class="text-center">ho</td>
-            <td class="text-center">ho</td>
-            <td class="text-center">ho</td>
+          <tr
+            *ngFor="let rubric of rubrics; let i = index"
+            class="text-center"
+            style="font-size: 12px; vertical-align: middle"
+          >
+            <td>{{ rubric?.titulo }}</td>
+            <td>{{ rubric?.descripcion }}</td>
+            <td class="text-center" style="width: 200px">
+              <div class="d-flex justify-content-evenly">
+                <div>
+                  <nb-icon
+                    icon="edit"
+                    status="info"
+                    style="cursor: pointer; font-size: 25px"
+                    (click)="editRubric(rubric)"
+                  ></nb-icon>
+                  <br />
+                  Editar
+                </div>
+                <div>
+                  <nb-icon
+                    icon="copy-outline"
+                    status="warning"
+                    style="cursor: pointer; font-size: 25px"
+                    (click)="duplicateRubric(rubric)"
+                  ></nb-icon>
+                  <br />
+                  Duplicar
+                </div>
+                <div>
+                  <nb-icon
+                    icon="trash-2-outline"
+                    status="danger"
+                    style="cursor: pointer; font-size: 25px"
+                    (click)="deleteRubric(rubric)"
+                  ></nb-icon>
+                  <!-- (click)="openCourseZoom(item)" -->
+                  <br />
+                  Eliminar
+                </div>
+              </div>
+            </td>
+            <!-- <td class="text-center" style="width: 70px">
+            </td> -->
           </tr>
         </tbody>
       </table>
     </div>
   </nb-card-body>
+  <nb-card-footer>
+    <div class="d-flex justify-content-between align-items-center p-2">
+      <div></div>
+      <ngb-pagination
+        [collectionSize]="pagination?.sizeListData"
+        [(page)]="pagination.page"
+        [maxSize]="20"
+        [disabled]="pagination?.isDisabledPage"
+        [pageSize]="pagination?.sizePage"
+        class="d-flex justify-content-center"
+        size="sm"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      >
+      </ngb-pagination>
+      <div class="">
+        <nb-form-field [formGroup]="formHeader">
+          <nb-icon nbPrefix icon="list-outline"></nb-icon>
+          <nb-select size="small" status="primary" formControlName="id_per_page" fullWidth>
+            <nb-option *ngFor="let per of pagesCount" [value]="per" (click)="selectedPerPage(per)">{{ per }}</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
+    </div>
+  </nb-card-footer>
 </nb-card>

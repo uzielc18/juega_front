@@ -13,7 +13,6 @@ export class MExamViewModalComponent implements OnInit {
   constructor(public activeModal: NbDialogRef<MExamViewModalComponent>) { }
 
   ngOnInit(): void {
-    console.log(this.datos);
     // name
   }
   closeModal() {
