@@ -61,10 +61,10 @@
         [userInfo]="userInfo"></app-v-video-conference>
 
       <app-v-works *ngIf="['TRAB'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"
-        [pending]="pending" (refreshPending)="refreshPending()"></app-v-works>
+        [pending]="pending" (refreshPending)="refreshPending()" [rubrica]="rubrica" [has_rubric]="has_rubric" [calification]="calification"></app-v-works>
     </div>
     <div class="menu-container">
-      <app-menu-elements-child class="menu-children mt-1 pe-2 pe-xl-4 pe-xxl-5" [topic_id]="element?.topic_id"
+      <app-menu-elements-child class="menu-children pe-2 pe-xl-4 pe-xxl-5" [topic_id]="element?.topic_id"
         [type_element_id]="element?.type_element_id" [id_element]="element?.id"
         (elementSelected)="elementSelected($event)"></app-menu-elements-child>
     </div>

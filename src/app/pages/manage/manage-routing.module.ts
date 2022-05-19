@@ -23,6 +23,16 @@ const routes: Routes = [
           .then(m => m.CourseModule),
       },
       {
+        path: 'teacher',
+        loadChildren: () => import('src/app/pages/manage/teacher/teacher.module')
+          .then(m => m.TeacherModule),
+      },
+      // {
+      //   path: 'student',
+      //   loadChildren: () => import('src/app/pages/manage/student/student.module')
+      //     .then(m => m.StudentModule),
+      // },
+      {
         path: 'configuration',
         loadChildren: () => import('src/app/pages/manage/configuration/configuration.module')
           .then(m => m.ConfigurationModule),
@@ -32,7 +42,7 @@ const routes: Routes = [
         loadChildren: () => import('src/app/pages/manage/news/news.module')
           .then(m => m.NewsModule),
       },
-      
+
     ]
   }
 ];

@@ -1,22 +1,23 @@
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmitEventsService {
   valuesRolSem$ = new Subject<any>();
 
-  public  rolSemester = new BehaviorSubject<any>({});
+  public rolSemester = new BehaviorSubject<any>({});
   castRolSemester = this.rolSemester.asObservable();
 
   blockRolSem$ = new Subject<any>();
 
   setLanguages$ = new Subject<any>();
 
-  constructor() {
-  }
-  asingDatos(newUser:any){
+  profile$ = new Subject<boolean>();
+
+  constructor() {}
+  asingDatos(newUser: any) {
     this.rolSemester.next(newUser);
   }
 
@@ -44,4 +45,11 @@ export class EmitEventsService {
     return this.setLanguages$.asObservable();
   }
 
+  profileInfo(value: boolean) {
+    this.profile$.next(value);
+  }
+
+  profileInfoReturns(): Observable<any> {
+    return this.profile$.asObservable();
+  }
 }

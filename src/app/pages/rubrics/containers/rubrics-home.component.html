@@ -33,33 +33,18 @@
             <td>{{ rubric?.descripcion }}</td>
             <td class="text-center" style="width: 200px">
               <div class="d-flex justify-content-evenly">
-                <div>
-                  <nb-icon
-                    icon="edit"
-                    status="info"
-                    style="cursor: pointer; font-size: 25px"
-                    (click)="editRubric(rubric)"
-                  ></nb-icon>
+                <div *ngIf="rubric?.editable === '1' ? true : false" (click)="editRubric(rubric)" style="cursor: pointer">
+                  <nb-icon icon="edit" status="info" style="font-size: 25px"></nb-icon>
                   <br />
                   Editar
                 </div>
-                <div>
-                  <nb-icon
-                    icon="copy-outline"
-                    status="warning"
-                    style="cursor: pointer; font-size: 25px"
-                    (click)="duplicateRubric(rubric)"
-                  ></nb-icon>
+                <div (click)="duplicateRubric(rubric)" style="cursor: pointer">
+                  <nb-icon icon="copy-outline" status="warning" style="font-size: 25px"></nb-icon>
                   <br />
                   Duplicar
                 </div>
-                <div>
-                  <nb-icon
-                    icon="trash-2-outline"
-                    status="danger"
-                    style="cursor: pointer; font-size: 25px"
-                    (click)="deleteRubric(rubric)"
-                  ></nb-icon>
+                <div *ngIf="rubric?.editable === '1' ? true : false" (click)="deleteRubric(rubric)" style="cursor: pointer">
+                  <nb-icon icon="trash-2-outline" status="danger" style="font-size: 25px"></nb-icon>
                   <!-- (click)="openCourseZoom(item)" -->
                   <br />
                   Eliminar

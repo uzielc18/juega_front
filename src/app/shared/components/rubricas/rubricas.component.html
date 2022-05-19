@@ -1,22 +1,33 @@
-  <div class="teble-responsive">
-    <table class="table table-sm table-striped">
-      <thead>
-        <tr style="font-size: 12px;">
-          <th>Criterios / Niveles</th>
-          <th class="excelente">Excelente</th>
-          <th class="bueno">Bueno</th>
-          <th class="regular">Regular</th>
-          <th class="deficiente">Deficiente</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of listRubricas; let i = index" style="font-size: 11px;">
-          <td>{{item.nombre}}</td>
-          <td>{{item.excelente}}</td>
-          <td>{{item.bueno}}</td>
-          <td>{{item.regular}}</td>
-          <td>{{item.deficiente}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="teble-responsive" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+  <table class="table table-sm table-borderless">
+    <thead>
+      <tr style="font-size: 14px">
+        <th style="width: 350px">Criterios / Niveles</th>
+        <th
+          *ngFor="let niv of rubrica?.criterios[0]?.niveles; let i = index"
+          [ngStyle]="rubricColors(i)"
+          class="align-middle text-center"
+          style="min-width: 100px"
+        >
+          {{ niv?.titulo }}
+        </th>
+      </tr>
+    </thead>
+    <tbody style="border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf">
+      <tr *ngFor="let crit of rubrica?.criterios">
+        <td style="font-size: 12px" class="align-middle fw-bold">{{ crit?.titulo }} ({{ crit?.puntuacion }})</td>
+        <td
+          style="font-size: 12px"
+          *ngFor="let rub of crit?.niveles; let i = index"
+          class="align-middle text-center"
+          [ngStyle]="rubricColorsContent(rub, i)"
+        >
+          <div>
+            {{ rub?.rubricas?.descripcion }}<br />
+            <small class="text-secondary" style="font-size: 10px">{{ rub?.rubricas?.puntuacion }}</small>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
