@@ -2,7 +2,7 @@
   <nb-card-header>
     <div class="d-flex">
       <nb-icon icon="person-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
-      <strong style="padding-top: 7px">DOCENTES</strong>
+      <strong style="padding-top: 7px">ESTUDIANTES</strong>
     </div>
     <hr />
     <form [formGroup]="formHeader">
@@ -48,7 +48,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of listTeachers; let i = index" style="font-size: 10px; vertical-align: middle">
+          <tr *ngFor="let item of listStudents; let i = index" style="font-size: 10px; vertical-align: middle">
             <td>{{ item.codigo }}</td>
             <td>{{ item.nombres }} {{ item.apellido_paterno }} {{ item.apellido_materno }}</td>
             <td>{{ item.nombre }}</td>

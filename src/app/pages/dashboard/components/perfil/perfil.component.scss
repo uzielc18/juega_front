@@ -151,8 +151,8 @@
   margin-bottom: 10px;
 
   .chart {
-    width: 110px;
-    height: 110px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     border: 10px solid #e9cb62;
     margin: 20px;
@@ -160,7 +160,7 @@
 
   .description {
     border-left: 1px solid #e6eaee;
-    padding: 20px;
+    padding: 15px;
     flex: 1;
 
     p {
@@ -209,11 +209,12 @@
 .trabajos {
   .count {
     display: flex;
-    flex: 1;
+    // flex: 1;
     align-items: center;
     justify-content: center;
     padding: 15px 20px;
     border-right: 1px solid #e6eaee;
+    width: 100px;
 
     p {
       font-size: 24px;
@@ -265,7 +266,7 @@
 
 nb-progress-bar {
   height: 10px;
-  width: 162px;
+  // width: 162px;
 
   ::ng-deep .progress-container {
     background-color: #f6eac0 !important;

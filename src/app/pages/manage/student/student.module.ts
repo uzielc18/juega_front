@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TeacherRoutingModule } from './teacher-routing.module';
-import { TeacherComponent } from './teacher.component';
-import { TeacherHomeComponent } from './containers/teacher-home.component';
+import { StudentRoutingModule } from './student-routing.module';
+import { StudentComponent } from './student.component';
+import { StudentHomeComponent } from './containers/student-home.component';
 import { NebularModule } from '../../../shared/nebular.module';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ControlMessagesModule } from '../../../shared/components/control-messages/control-messages.module';
 import { GeneralService } from '../../../providers';
 
 const COMPONENTS: any[] = [
-  TeacherComponent,
-  TeacherHomeComponent
+  StudentComponent,
+  StudentHomeComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -37,7 +37,7 @@ const MODULES: any = [
     ...SERIVCES,
   ],
   imports: [
-    TeacherRoutingModule,
+    StudentRoutingModule,
     ...NG_MODULES,
     ...NGB_MODULES,
     ...CONTROL_MESSAGGE,
@@ -47,4 +47,4 @@ const MODULES: any = [
   declarations: [...COMPONENTS],
   entryComponents: [...MODALS],
 })
-export class TeacherModule { }
+export class StudentModule { }

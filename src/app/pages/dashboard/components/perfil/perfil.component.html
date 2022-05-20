@@ -2,7 +2,12 @@
   <div class="profile mb-1">
     <div class="photo-container">
       <!-- <img src="assets/student.jpg" alt=""> -->
-      <img [src]="profile?.user?.profile_photo_path" [alt]="profile?.person?.foto" />
+      <img
+        [src]="profile?.user?.profile_photo_url"
+        [alt]="profile?.person?.foto"
+        width="100%"
+        style="object-fit: contain"
+      />
     </div>
     <div class="d-flex flex-column" style="flex: 1">
       <div class="student">
@@ -14,8 +19,8 @@
         </p>
       </div>
       <div class="student-info">
-        <p class="ciclo">{{ profile?.person?.ciclo }}º Ciclo</p>
-        <p class="carrera">{{ profile?.person?.programa_estudio }}</p>
+        <p *ngIf="rolSemestre.rol.name === 'Estudiante'" class="ciclo">{{ profile?.person?.ciclo }}º Ciclo</p>
+        <p *ngIf="rolSemestre.rol.name === 'Estudiante'" class="carrera">{{ profile?.person?.programa_estudio }}</p>
         <p class="codigo">
           {{ profile?.person?.codigo }}
         </p>
@@ -25,54 +30,54 @@
   <div class="stats-ciclo">
     <div class="asignaturas">
       <nb-icon icon="book-open"></nb-icon>
-      <p>8</p>
+      <p>{{ profile?.info?.total_cursos }}</p>
       <span>Asignaturas en este ciclo</span>
     </div>
     <div class="avance">
       <nb-icon icon="activity"></nb-icon>
-      <p>72%</p>
+      <p>{{ profile?.info?.avance_academico }}%</p>
       <span>Avance Académico</span>
     </div>
     <div class="promedio">
       <nb-icon icon="award"></nb-icon>
-      <p>16</p>
+      <p>{{ profile?.info?.promedio_ciclo }}</p>
       <span>Promedio en este ciclo</span>
     </div>
   </div>
   <div class="trabajos">
     <div class="completados work">
       <div class="count">
-        <p>25</p>
-        <span>/ 50</span>
+        <p>{{ profile?.info?.trabajos_completados }}</p>
+        <span>/ {{ profile?.info?.total_trabajos }}</span>
       </div>
       <div class="description">
         <div class="text">
           <p>Trabajos completados</p>
-          <nb-progress-bar [value]="50"></nb-progress-bar>
+          <nb-progress-bar [value]="profile?.info?.trabajos_completados / profile?.info?.total_trabajos * 100"></nb-progress-bar>
         </div>
       </div>
     </div>
     <div class="vencidos work">
       <div class="count">
-        <p>5</p>
-        <span>/ 50</span>
+        <p>{{ profile?.info?.trabajos_vencidos }}</p>
+        <span>/ {{ profile?.info?.total_trabajos }}</span>
       </div>
       <div class="description">
         <div class="text">
           <p>Trabajos vencidos</p>
-          <nb-progress-bar [value]="15"></nb-progress-bar>
+          <nb-progress-bar [value]="profile?.info?.trabajos_vencidos / profile?.info?.total_trabajos * 100"></nb-progress-bar>
         </div>
       </div>
     </div>
     <div class="por-completar work">
       <div class="count">
-        <p>20</p>
-        <span>/ 50</span>
+        <p>{{ profile?.info?.trabajos_por_completar }}</p>
+        <span>/ {{ profile?.info?.total_trabajos }}</span>
       </div>
       <div class="description">
         <div class="text">
           <p>Trabajos por completar</p>
-          <nb-progress-bar [value]="60"></nb-progress-bar>
+          <nb-progress-bar [value]="profile?.info?.trabajos_por_completar / profile?.info?.total_trabajos * 100"></nb-progress-bar>
         </div>
       </div>
     </div>
@@ -82,12 +87,12 @@
       <!-- chart -->
     </div>
     <div class="description">
-      <p>50</p>
+      <p>{{ profile?.info?.total_trabajos }}</p>
       <span>Trabajos en total</span>
       <ul>
-        <li><span></span><small>20 Trabajos por completar</small></li>
-        <li><span></span><small>5 Trabajos vencidos</small></li>
-        <li><span></span><small>25 Trabajos completados</small></li>
+        <li><span></span><small>{{ profile?.info?.trabajos_por_completar }} Trabajos por completar</small></li>
+        <li><span></span><small>{{ profile?.info?.trabajos_vencidos }} Trabajos vencidos</small></li>
+        <li><span></span><small>{{ profile?.info?.trabajos_completados }} Trabajos completados</small></li>
       </ul>
     </div>
   </div>
@@ -95,16 +100,16 @@
     <div class="participacion">
       <div class="description">
         <p>Participación</p>
-        <span>Ciclo: 1 - Campus: Lima</span>
+        <span>Ciclo: {{ profile?.person?.ciclo }} - Campus: Lima</span>
       </div>
       <div class="percentage">
-        <p>65%</p>
+        <p>{{ profile?.info?.participation }}%</p>
       </div>
     </div>
     <div class="asistencia">
       <div class="description">
         <p>Asistencia</p>
-        <span>Ciclo: 1 - Campus: Lima</span>
+        <span>Ciclo: {{ profile?.person?.ciclo }} - Campus: Lima</span>
       </div>
       <div class="percentage">
         <p>90%</p>
@@ -113,7 +118,7 @@
     <div class="evaluacion">
       <div class="description">
         <p>Evaluación</p>
-        <span>Ciclo: 1 - Campus: Lima</span>
+        <span>Ciclo: {{ profile?.person?.ciclo }} - Campus: Lima</span>
       </div>
       <div class="percentage">
         <p>85%</p>

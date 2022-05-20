@@ -11,15 +11,15 @@
     </nb-card-header>
     <nb-card-body>
         <div class="text-center" *ngIf="valuess?.base64_url">
-            <img  *ngIf="!valuess?.mostrar_boton" [src]="valuess.base64_url" alt="" width="100%" height="350px">
+            <img  *ngIf="!valuess?.mostrar_boton" [src]="valuess.base64_url" alt="" width="100%" height="350px" style="object-fit: cover;">
 
             <div class="contenedor"  *ngIf="valuess?.mostrar_boton === true">
-                <img [src]="valuess.base64_url" alt="" width="100%" height="350px">
+                <img [src]="valuess.base64_url" alt="" width="100%" height="350px" style="object-fit: cover;">
                 <div class="centrado" >
                     <button nbButton size="medium" shape="semi-round" status="warning" (click)="irUrl()">{{valuess?.nombre_boton}}</button>
                 </div>
               </div>
-            
+
         </div>
         <nb-card>
             <nb-card-header>

@@ -51,6 +51,7 @@ import { FilterPipeModule } from 'src/app/shared/pipes/filterPipe/filterPipe.mod
 import { PublicConfigQuestionModule } from 'src/app/shared/components/questions/public-config-question/public-config-question.module';
 import { MExamViewModalModule } from 'src/app/shared/components/exam-view/m-exam-view-modal/m-exam-view-modal.module';
 import { VExamViewsModule } from 'src/app/shared/components/exam-view/v-exam-views/v-exam-views.module';
+import { AnswerQuestionsComponent } from './components/modals/answer-questions/answer-questions.component';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -140,7 +141,7 @@ const MODULES: any = [
     ...MODULES,
     ...PIPES
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, AnswerQuestionsComponent],
   entryComponents: [...MODALS],
 
 })

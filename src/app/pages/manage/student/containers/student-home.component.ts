@@ -4,14 +4,14 @@ import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils';
 
 @Component({
-  selector: 'app-teacher-home',
-  templateUrl: './teacher-home.component.html',
-  styleUrls: ['./teacher-home.component.scss'],
+  selector: 'app-student-home',
+  templateUrl: './student-home.component.html',
+  styleUrls: ['./student-home.component.scss'],
 })
-export class TeacherHomeComponent implements OnInit {
+export class StudentHomeComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
-  listTeachers: any = [];
+  listStudents: any = [];
   ciclos = [
     { ciclo: '1' },
     { ciclo: '2' },
@@ -38,10 +38,7 @@ export class TeacherHomeComponent implements OnInit {
   };
   pagesCount: any[] = [20, 30, 50, 100, 200, 300, 500, 1000];
   litProgramStudy: any = [];
-  constructor(
-    private generalServi: GeneralService,
-    private formBuilder: FormBuilder,
-  ) {}
+  constructor(private generalServi: GeneralService, private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -102,7 +99,7 @@ export class TeacherHomeComponent implements OnInit {
     this.getTeachers();
   }
   getTeachers() {
-    const serviceName = END_POINTS.base_back.default + '/persons/list-docentes';
+    const serviceName = END_POINTS.base_back.default + '/persons/list-estudiantes';
     const forms = this.formHeader.value;
     const params = {
       programa_estudio_id: forms.programa_estudio_id || '',
@@ -116,11 +113,11 @@ export class TeacherHomeComponent implements OnInit {
     this.loading = true;
     this.generalServi.nameParams$(serviceName, params).subscribe(
       (res: any) => {
-        this.listTeachers = res.data.data || [];
-        console.log(this.listTeachers)
+        this.listStudents = res.data.data || [];
+        console.log(this.listStudents);
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;
-        if (this.pagination.sizeListData < this.listTeachers.length) {
+        if (this.pagination.sizeListData < this.listStudents.length) {
           this.pagination.isDisabledPage = true;
         } else {
           this.pagination.isDisabledPage = false;

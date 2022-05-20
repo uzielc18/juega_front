@@ -35,9 +35,6 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   key_file: any;
 
   //////////////
-
-  images = [62, 83, 466, 965, 982, 1043, 738].map(n => `https://picsum.photos/id/${n}/900/500`);
-
   paused = false;
   unpauseOnArrow = false;
   pauseOnIndicator = false;
@@ -67,7 +64,6 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       this.togglePaused();
     }
   }
-
   ///////////////
 
   constructor(
@@ -117,7 +113,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.subscription$ = this.emitEventsService.profileInfoReturns().subscribe((res: any) => {
       if (res) {
         this.perfilInfo = res;
-        console.log(this.perfilInfo);
+        this.getUserInfo();
       }
     });
   }
@@ -174,9 +170,11 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   fileResult($event: any) {
+    this.formHeader.controls['foto'].setValue('');
     this.formHeader.controls['profile_photo_path'].setValue('');
     this.formHeader.controls['base64_url'].setValue('');
     if ($event && $event.archivo) {
+      this.formHeader.controls['foto'].setValue($event.nombre);
       this.formHeader.controls['profile_photo_path'].setValue($event.nombre);
       this.formHeader.controls['base64_url'].setValue($event.base64);
     }
@@ -187,13 +185,17 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     const serviceName = END_POINTS.base_back.user + '/perfil';
     const person_id = this.userInfo._user.id;
     const user_id = this.userInfo._user.person.id;
+    if (this.perfilInfo) {
+      this.view = 'full';
+    }
+    // console.log(this.view);
     const params = {
       view: this.view,
     };
     this.generalService.nameIdAndIdParams$(serviceName, person_id, user_id, params).subscribe((res: any) => {
       if (res.success) {
         this.profile = res.data;
-        console.log(this.profile)
+        // console.log(this.profile);
         this.formHeader.patchValue({
           codigo: this.profile.person.codigo,
           nombre: this.profile.person.nombres,
@@ -220,7 +222,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.generalService.nameId$(serviceName, this.userService.user.id).subscribe((res: any) => {
       if (res.success) {
         this.newsList = res.data || [];
-        console.log(this.newsList);
+        // console.log(this.newsList);
       }
     });
   }
@@ -228,8 +230,8 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   saveInfo() {
     const serviceName = END_POINTS.base_back.people;
     const person_id = this.userInfo._user.id;
-    const user_id = this.userInfo._user.person.id;
-    console.log(person_id, user_id);
+    // const user_id = this.userInfo._user.person.id;
+    this.loading = true;
     const data = {
       person: {
         genero: this.formHeader.controls['genero'].value,
@@ -247,11 +249,16 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
         // profile_photo_path: this.formHeader.controls['base64_url'].value,
       },
     };
-    this.generalService.updateNameIdData$(serviceName, person_id, data).subscribe((res: any) => {
-      if (res.success) {
-        console.log(res);
-      }
-    });
+    this.generalService.updateNameIdData$(serviceName, person_id, data).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.getUserInfo();
+          this.formHeader.controls['foto'].setValue('');
+          this.formHeader.controls['profile_photo_path'].setValue('');
+          this.formHeader.controls['base64_url'].setValue('');
+        }
+      }, () => { this.loading = false; }, () => { this.loading = false; }
+    );
   }
 
   ngOnDestroy(): void {
