@@ -10,7 +10,8 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 const COMPONENTS: any = [
   RubricsComponent,
-  RubricsHomeComponent
+  RubricsHomeComponent,
+  CreateRubricComponent
 ]
 
 const MODULES: any = [
@@ -23,8 +24,7 @@ const NEBULAR: any = [
 
 @NgModule({
   declarations: [
-    ...COMPONENTS,
-    CreateRubricComponent,
+    ...COMPONENTS
   ],
   imports: [
     CommonModule,

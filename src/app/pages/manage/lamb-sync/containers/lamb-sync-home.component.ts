@@ -77,7 +77,7 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   listSedes() {
-    const serviceName = END_POINTS.base_back.config + '/sedes';
+    const serviceName = END_POINTS.base_back.default + 'sedes';
     this.loading = true;
     this.generalService.nameAll$(serviceName).subscribe(
       (res: any) => {

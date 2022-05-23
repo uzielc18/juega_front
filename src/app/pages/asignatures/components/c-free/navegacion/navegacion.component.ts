@@ -57,12 +57,12 @@ export class NavegacionComponent implements OnInit {
   }
 
   upVote(event: any) {
-    event.stopPropagation();
+    // event.stopPropagation();
     console.log('+1 vote');
   }
 
   answerQuestion(event: any) {
-    event.stopPropagation();
+    // event.stopPropagation();
     console.log('answer');
   }
 }

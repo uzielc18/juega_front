@@ -8,6 +8,7 @@ import { NebularModule } from '../../../shared/nebular.module';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ControlMessagesModule } from '../../../shared/components/control-messages/control-messages.module';
 import { GeneralService } from '../../../providers';
+import { EditUserModule } from '../../../shared/components/edit-user/edit-user.module';
 
 const COMPONENTS: any[] = [
   TeacherComponent,
@@ -15,6 +16,7 @@ const COMPONENTS: any[] = [
 ];
 const NG_MODULES: any = [
   NebularModule,
+  EditUserModule
 ];
 const NGB_MODULES: any = [
   NgbPaginationModule

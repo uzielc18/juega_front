@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils';
+import { EditUserComponent } from '../../../../shared/components/edit-user/edit-user.component';
 
 @Component({
   selector: 'app-teacher-home',
@@ -38,15 +40,20 @@ export class TeacherHomeComponent implements OnInit {
   };
   pagesCount: any[] = [20, 30, 50, 100, 200, 300, 500, 1000];
   litProgramStudy: any = [];
+
+  @Output() changeEmit: EventEmitter<any> = new EventEmitter();
+
   constructor(
     private generalServi: GeneralService,
     private formBuilder: FormBuilder,
+    private dialogService: NbDialogService
   ) {}
 
   ngOnInit(): void {
     this.fieldReactive();
     this.getTeachers();
   }
+
   private fieldReactive() {
     const controls = {
       programa_estudio_id: [''],
@@ -55,6 +62,7 @@ export class TeacherHomeComponent implements OnInit {
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
   }
+
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     const val = JSON.parse(sesion);
@@ -64,6 +72,7 @@ export class TeacherHomeComponent implements OnInit {
       return '';
     }
   }
+
   getProgramStudy() {
     const serviceName = 'list-programa-estudios';
     const ids = {
@@ -89,20 +98,24 @@ export class TeacherHomeComponent implements OnInit {
         });
     }
   }
+
   refresh() {
     this.pagination.page = 1;
     this.getTeachers();
   }
+
   loadPage($event: any): any {
     this.pagination.page = $event;
     this.getTeachers();
   }
+
   sizeTable($event: any): any {
     this.pagination.per_page = $event;
     this.getTeachers();
   }
+
   getTeachers() {
-    const serviceName = END_POINTS.base_back.default + '/persons/list-docentes';
+    const serviceName = END_POINTS.base_back.default + 'persons/list-docentes';
     const forms = this.formHeader.value;
     const params = {
       programa_estudio_id: forms.programa_estudio_id || '',
@@ -117,7 +130,7 @@ export class TeacherHomeComponent implements OnInit {
     this.generalServi.nameParams$(serviceName, params).subscribe(
       (res: any) => {
         this.listTeachers = res.data.data || [];
-        console.log(this.listTeachers)
+        // console.log(this.listTeachers)
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;
         if (this.pagination.sizeListData < this.listTeachers.length) {
@@ -134,5 +147,20 @@ export class TeacherHomeComponent implements OnInit {
       }
     );
     // }
+  }
+
+  editTeacher(teacher: any) {
+    this.dialogService
+      .open(EditUserComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: { user: teacher, rol: 'teacher' },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
+        if (result === 'ok') {
+          this.changeEmit.emit();
+        }
+      });
   }
 }

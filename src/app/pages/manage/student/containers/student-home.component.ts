@@ -99,7 +99,7 @@ export class StudentHomeComponent implements OnInit {
     this.getTeachers();
   }
   getTeachers() {
-    const serviceName = END_POINTS.base_back.default + '/persons/list-estudiantes';
+    const serviceName = END_POINTS.base_back.default + 'persons/list-estudiantes';
     const forms = this.formHeader.value;
     const params = {
       programa_estudio_id: forms.programa_estudio_id || '',

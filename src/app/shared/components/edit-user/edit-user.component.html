@@ -1,0 +1,269 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
+    <div class="d-flex align-items-center justify-content-between">
+      <h5 *ngIf="rol === 'teacher'">Editar Docente</h5>
+      <h5 *ngIf="rol === 'student'">Editar Estudiante</h5>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-tabset>
+      <nb-tab tabTitle="Perfil">
+        <form [formGroup]="formHeader">
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Código:</label>
+            <div class="col-md-9">
+              <input
+                type="number"
+                nbInput
+                fullWidth
+                fieldSize="small"
+                formControlName="codigo"
+                placeholder="Código"
+                readonly
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Nombres:</label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                nbInput
+                fullWidth
+                fieldSize="small"
+                formControlName="nombre"
+                readonly
+                placeholder="Nombres"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Apellido Paterno:</label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                nbInput
+                fullWidth
+                fieldSize="small"
+                formControlName="apellido_paterno"
+                placeholder="Apellido Paterno"
+                readonly
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Apellido Materno:</label>
+            <div class="col-md-9">
+              <input
+                type="text"
+                nbInput
+                fullWidth
+                fieldSize="small"
+                formControlName="apellido_materno"
+                placeholder="Apellido Materno"
+                readonly
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">DNI:</label>
+            <div class="col-md-9">
+              <input
+                type="number"
+                nbInput
+                fullWidth
+                fieldSize="small"
+                formControlName="dni"
+                readonly
+                placeholder="DNI"
+              />
+            </div>
+          </div>
+          <br />
+          <hr />
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Correo Institucional:</label>
+            <div class="col-md-9">
+              <input
+                type="email"
+                nbInput
+                fullWidth
+                fieldSize="small"
+                formControlName="correo"
+                status="primary"
+                placeholder="Correo Institucional"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Genero:</label>
+            <div class="col-md-9">
+              <nb-select
+                placeholder="Seleccione una opción"
+                selected="0"
+                fullWidth
+                size="small"
+                status="primary"
+                formControlName="genero"
+              >
+                <nb-option value="Masculino">Masculino</nb-option>
+                <nb-option value="Femenino">Femenino</nb-option>
+              </nb-select>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Nacionalidad:</label>
+            <div class="col-md-9">
+              <input
+                type="email"
+                nbInput
+                fullWidth
+                fieldSize="small"
+                formControlName="nacionalidad"
+                status="primary"
+                placeholder="Ej: Perú"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Ubigeo:</label>
+            <div class="col-md-9">
+              <input
+                type="number"
+                nbInput
+                fullWidth
+                fieldSize="small"
+                formControlName="ubigeo"
+                status="primary"
+                placeholder="Ubigeo"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Estado Civil:</label>
+            <div class="col-md-9">
+              <nb-select
+                placeholder="Seleccione una opción"
+                selected="0"
+                fullWidth
+                size="small"
+                status="primary"
+                formControlName="estado_civil"
+              >
+                <nb-option value="Casado (a)">Casado (a)</nb-option>
+                <nb-option value="Soltero (a)">Soltero (a)</nb-option>
+                <nb-option value="Divorciado (a)">Divorciado (a)</nb-option>
+                <nb-option value="Separado (a)">Separado (a)</nb-option>
+                <nb-option value="Viudo (a)">Viudo (a)</nb-option>
+                <nb-option value="Conviviente">Conviviente</nb-option>
+                <nb-option value="No precisa">No precisa</nb-option>
+              </nb-select>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Religion:</label>
+            <div class="col-md-9">
+              <nb-select
+                placeholder="Seleccione una opción"
+                selected="0"
+                fullWidth
+                size="small"
+                status="primary"
+                formControlName="religion"
+              >
+                <nb-option value="Adventista del Séptimo Día">Adventista del Séptimo Día</nb-option>
+                <nb-option value="Católico">Católico</nb-option>
+                <nb-option value="Evangélico">Evangélico</nb-option>
+                <nb-option value="Mormón">Mormón</nb-option>
+                <nb-option value="Pentecostes">Pentecostes</nb-option>
+                <nb-option value="Testigo de Jehova">Testigo de Jehova</nb-option>
+                <nb-option value="Otro">Otro</nb-option>
+                <nb-option value="Ninguno">Ninguno</nb-option>
+              </nb-select>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <label class="label col-md-3 d-flex align-items-center">Fecha de Nacimiento:</label>
+            <div class="col-md-9">
+              <nb-form-field>
+                <input
+                  nbInput
+                  placeholder="Fecha de Nacimiento"
+                  fullWidth
+                  [nbDatepicker]="fechaNacimiento"
+                  fieldSize="small"
+                  status="primary"
+                  formControlName="fecha_nacimiento"
+                />
+                <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+                <nb-datepicker #fechaNacimiento format="dd/MM/yyyy"> </nb-datepicker>
+              </nb-form-field>
+            </div>
+          </div>
+          <div class="mt-4 text-end">
+            <button class="me-2" nbButton size="small" status="primary" (click)="saveInfo()">Guardar</button>
+            <button nbButton size="small" status="primary">Sincronizar</button>
+          </div>
+          <br />
+        </form>
+      </nb-tab>
+      <nb-tab tabTitle="Roles">
+        <div class="text-end">
+          <button nbButton ghost status="primary" (click)="newAreaRol()">
+            <nb-icon icon="plus-circle-outline" style="width: 32px; height: 32px"></nb-icon>
+          </button>
+        </div>
+        <table class="table table-sm">
+          <thead>
+            <tr class="text-center" style="font-size: 12px">
+              <th style="width: 100px">N<sup>&deg;</sup></th>
+              <th class="text-start">Area / Programa</th>
+              <th>Estado</th>
+              <th>Predefinido</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="text-center"
+							style="font-size: 11px; vertical-align: middle"
+              *ngFor="let areaRol of areasRoles; let i = index"
+            >
+              <td>{{ i + 1 }}</td>
+              <td class="text-start">{{ areaRol?.programa_estudio_nombre }} - {{ areaRol?.area_nombres }} - {{ areaRol?.sede_nombre }}</td>
+              <td><nb-toggle [checked]="areaRol?.estado === '1'" (click)="statusToggle(areaRol)"></nb-toggle></td>
+              <td>
+                <nb-toggle [checked]="areaRol?.predefinido === '1'" (click)="predefinedToggle(areaRol)"></nb-toggle>
+              </td>
+              <td class="text-center" style="width: 100px">
+                <div class="d-flex justify-content-evenly">
+                  <div style="cursor: pointer" (click)="editAreaRol(areaRol)">
+                    <nb-icon icon="edit" status="info" style="font-size: 25px"></nb-icon>
+                  </div>
+                  <div style="cursor: pointer" (click)="deleteAreaRol(areaRol)">
+                    <nb-icon icon="trash-2-outline" status="danger" style="font-size: 25px"></nb-icon>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </nb-tab>
+      <nb-tab tabTitle="Cursos"> cursos </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,96 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
+    <div class="d-flex align-items-center justify-content-between">
+      <h5 *ngIf="action === 'new'">Nuevo Perfil</h5>
+      <h5 *ngIf="action === 'edit'">Editar Perfil</h5>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body [formGroup]="formHeader">
+    <div class="row">
+      <div class="col-md-4 mb-0 mb-md-2">
+        <label class="label">Filial</label>
+        <nb-select placeholder="Filial" size="small" status="primary" fullWidth formControlName="sede">
+          <nb-option *ngFor="let sede of sedes" [value]="sede.id" (click)="selectedSede(sede.id)"
+            >{{ sede?.nombre }}
+          </nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-4 mb-0 mb-md-2">
+        <label class="label">Nivel enseñanza</label>
+        <nb-select
+          placeholder="Nivel enseñanza"
+          size="small"
+          status="primary"
+          fullWidth
+          formControlName="nivel_ensenanza"
+        >
+          <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel.id" (click)="selectedNivel(nivel.id)"
+            >{{ nivel?.nombre }}
+          </nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-4 mb-0 mb-md-2">
+        <label class="label">Facultades</label>
+        <nb-select placeholder="Facultades" size="small" status="primary" fullWidth formControlName="facultad">
+          <nb-option *ngFor="let fac of facultades" [value]="fac.id" (click)="selectedFacultad(fac.id)"
+            >{{ fac?.nombre }}
+          </nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-8 mb-0 mb-md-2">
+        <label class="label">Programa / Estudio</label>
+        <nb-select
+          placeholder="Programa / Estudio"
+          size="small"
+          status="primary"
+          fullWidth
+          formControlName="programa_estudio"
+        >
+          <nb-option *ngFor="let prog of programa_estudios" [value]="prog.id" (click)="selectedProgramaEstudio(prog.id)">
+            {{ prog?.name_programa_estudio }}</nb-option
+          >
+        </nb-select>
+      </div>
+      <div class="col-md-4 mb-0 mb-md-2"></div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-4 mb-0 mb-md-2">
+        <label class="label">Seleccione el rol</label>
+        <nb-select placeholder="Roles" size="small" status="primary" fullWidth formControlName="rol">
+          <nb-option *ngFor="let rol of roles" [value]="rol.id" (click)="selectedRol(rol.id)">{{ rol?.name }} </nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-4">
+				<div class="d-flex align-items-center justify-content-between">
+					<div class="d-flex flex-column">
+						<label class="label mb-1">Estado</label>
+						<nb-toggle formControlName="estado"></nb-toggle>
+					</div>
+					<div class="d-flex flex-column">
+						<label class="label mb-1">Predefinido</label>
+						<nb-toggle formControlName="predefinido"></nb-toggle>
+					</div>
+				</div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="d-flex">
+    <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
+    <button
+      type="button"
+      class="ms-2"
+      nbButton
+      size="small"
+      status="primary"
+      (click)="savePerfil()"
+      [disabled]="!formHeader.valid"
+    >
+      Guardar
+    </button>
+  </nb-card-footer>
+</nb-card>
