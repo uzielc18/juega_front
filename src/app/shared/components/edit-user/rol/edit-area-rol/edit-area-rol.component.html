@@ -1,8 +1,8 @@
 <nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
     <div class="d-flex align-items-center justify-content-between">
-      <h5 *ngIf="action === 'new'">Nuevo Perfil</h5>
-      <h5 *ngIf="action === 'edit'">Editar Perfil</h5>
+      <div *ngIf="action === 'new'">Nuevo Rol</div>
+      <div *ngIf="action === 'edit'">Editar Rol</div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -49,7 +49,11 @@
           fullWidth
           formControlName="programa_estudio"
         >
-          <nb-option *ngFor="let prog of programa_estudios" [value]="prog.id" (click)="selectedProgramaEstudio(prog.id)">
+          <nb-option
+            *ngFor="let prog of programa_estudios"
+            [value]="prog.id"
+            (click)="selectedProgramaEstudio(prog.id)"
+          >
             {{ prog?.name_programa_estudio }}</nb-option
           >
         </nb-select>
@@ -61,20 +65,22 @@
       <div class="col-md-4 mb-0 mb-md-2">
         <label class="label">Seleccione el rol</label>
         <nb-select placeholder="Roles" size="small" status="primary" fullWidth formControlName="rol">
-          <nb-option *ngFor="let rol of roles" [value]="rol.id" (click)="selectedRol(rol.id)">{{ rol?.name }} </nb-option>
+          <nb-option *ngFor="let rol of roles" [value]="rol.id" (click)="selectedRol(rol.id)"
+            >{{ rol?.name }}
+          </nb-option>
         </nb-select>
       </div>
       <div class="col-md-4">
-				<div class="d-flex align-items-center justify-content-between">
-					<div class="d-flex flex-column">
-						<label class="label mb-1">Estado</label>
-						<nb-toggle formControlName="estado"></nb-toggle>
-					</div>
-					<div class="d-flex flex-column">
-						<label class="label mb-1">Predefinido</label>
-						<nb-toggle formControlName="predefinido"></nb-toggle>
-					</div>
-				</div>
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex flex-column">
+            <label class="label mb-1">Estado</label>
+            <nb-toggle formControlName="estado"></nb-toggle>
+          </div>
+          <div class="d-flex flex-column">
+            <label class="label mb-1">Predefinido</label>
+            <nb-toggle formControlName="predefinido"></nb-toggle>
+          </div>
+        </div>
       </div>
       <div class="col-md-4"></div>
     </div>
@@ -88,7 +94,7 @@
       size="small"
       status="primary"
       (click)="savePerfil()"
-      [disabled]="!formHeader.valid"
+      [disabled]="!formHeader.controls.rol.valid"
     >
       Guardar
     </button>

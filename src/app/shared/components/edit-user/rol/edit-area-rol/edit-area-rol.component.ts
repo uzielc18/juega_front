@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
-import { GeneralService } from '../../../../providers';
-import { END_POINTS } from '../../../../providers/utils';
+import { GeneralService } from '../../../../../providers';
+import { END_POINTS } from '../../../../../providers/utils';
 
 @Component({
   selector: 'app-edit-area-rol',

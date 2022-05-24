@@ -1,0 +1,134 @@
+<div class="row" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+  <div class="col-md-8">
+    <nb-card status="primary">
+      <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Cursos Estudiante </nb-card-header>
+      <nb-card-body>
+        <nb-card *ngFor="let cursoEst of studentCourses" class="mb-2">
+          <nb-card-body class="p-2 ps-0">
+            <div class="row m-0">
+              <div class="col-md-2 p-0">
+                <div class="h-100 d-flex align-items-center justify-content-center">
+                  <div class="img-container" style="width: 60px; height: 60px">
+                    <img
+                      [src]="cursoEst?.persons_teacher_foto"
+                      [alt]="cursoEst?.person_teacher_nombre"
+                      width="100%"
+                      height="100%"
+                      style="object-fit: cover"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9 p-0">
+                <div class="d-flex flex-column">
+                  <p class="mb-0 fw-bold" style="font-size: 16px">{{ cursoEst?.course_nombre }}</p>
+                  <span class="text-secondary" style="font-size: 12px">{{ cursoEst?.person_teacher_nombre }}</span>
+                  <span class="text-secondary" style="font-size: 12px">
+                    {{ cursoEst?.programa_estudio_nombre }} - Ciclo {{ cursoEst?.ciclo }} - Grupo {{ cursoEst?.grupo }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div style="cursor: pointer" class="d-flex h-100 justify-content-end align-items-center">
+                  <nb-icon icon="trash-2-outline" status="danger" style="font-size: 30px"></nb-icon>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+    <nb-card status="primary">
+      <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Cursos Docente </nb-card-header>
+      <nb-card-body>
+        <nb-card *ngFor="let cursoDoc of teacherCourses" class="mb-2">
+          <nb-card-body class="p-2 ps-0">
+            <div class="row m-0">
+              <div class="col-md-2 p-0">
+                <div class="h-100 d-flex align-items-center justify-content-center">
+                  <div class="img-container" style="width: 60px; height: 60px">
+                    <img
+                      [src]="cursoDoc?.persons_teacher_foto"
+                      [alt]="cursoDoc?.persons_teacher_nombre"
+                      width="100%"
+                      height="100%"
+                      style="object-fit: cover"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9 p-0">
+                <div class="d-flex flex-column">
+                  <p class="mb-0 fw-bold" style="font-size: 16px">{{ cursoDoc?.nombre }}</p>
+                  <span class="text-secondary" style="font-size: 12px">{{ cursoDoc?.persons_teacher_nombre }}</span>
+                  <span class="text-secondary" style="font-size: 12px">
+                    {{ cursoDoc?.programa_estudio_nombre }} - Ciclo {{ cursoDoc?.ciclo }} - Grupo {{ cursoDoc?.grupo }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div style="cursor: pointer" class="d-flex h-100 justify-content-end align-items-center">
+                  <nb-icon icon="trash-2-outline" status="danger" style="font-size: 30px"></nb-icon>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+    <nb-card status="primary">
+      <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Cursos Tutor </nb-card-header>
+      <nb-card-body>
+        <nb-card *ngFor="let cursoTut of tutorCourses" class="mb-2">
+          <nb-card-body class="p-2 ps-0">
+            <div class="row m-0">
+              <div class="col-md-2 p-0">
+                <div class="h-100 d-flex align-items-center justify-content-center">
+                  <div class="img-container" style="width: 60px; height: 60px">
+                    <img
+                      [src]="cursoTut?.persons_teacher_foto"
+                      [alt]="cursoTut?.persons_teacher_nombre"
+                      width="100%"
+                      height="100%"
+                      style="object-fit: cover"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9 p-0">
+                <div class="d-flex flex-column">
+                  <p class="mb-0 fw-bold" style="font-size: 16px">{{ cursoTut?.course_nombre }}</p>
+                  <span class="text-secondary" style="font-size: 12px">{{ cursoTut?.persons_teacher_nombre }}</span>
+                  <span class="text-secondary" style="font-size: 12px">
+                    Ciclo {{ cursoTut?.ciclo }} - Grupo {{ cursoTut?.grupo }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div style="cursor: pointer" class="d-flex h-100 justify-content-end align-items-center">
+                  <nb-icon icon="trash-2-outline" status="danger" style="font-size: 30px"></nb-icon>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-12">
+        <nb-card status="primary">
+          <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Progreso del Estudiante </nb-card-header>
+          <nb-card-body> AAAAAAAAAAA </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-12">
+        <nb-card status="primary">
+          <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Preguntas sin Responder </nb-card-header>
+          <nb-card-body> sssssssssssssss </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+</div>

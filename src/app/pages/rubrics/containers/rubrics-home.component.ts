@@ -158,19 +158,21 @@ export class RubricsHomeComponent implements OnInit {
         if (result.isConfirmed) {
           const serviceName = END_POINTS.base_back.rubrics + '/rubricasGuias';
           this.loading = true;
-          this.generalService.deleteNameId$(serviceName, rubric.id).subscribe((res: any) => {
-            if (res.success) {
-              this.getRubrics();
+          this.generalService.deleteNameId$(serviceName, rubric.id).subscribe(
+            (res: any) => {
+              if (res.success) {
+                this.getRubrics();
+              }
+            },
+            () => {
+              this.loading = false;
+            },
+            () => {
+              this.loading = false;
             }
-          });
+          );
         }
-      }),
-        () => {
-          this.loading = false;
-        },
-        () => {
-          this.loading = false;
-        };
+      });
     }
   }
 }
