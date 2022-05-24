@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-curso',
   templateUrl: './curso.component.html',
-  styleUrls: ['./curso.component.scss']
+  styleUrls: ['./curso.component.scss'],
 })
 export class CursoComponent implements OnInit {
-
   @Input() user: any;
 
   loading: boolean = false;
@@ -17,7 +17,7 @@ export class CursoComponent implements OnInit {
   studentCourses: any = [];
   tutorCourses: any = [];
 
-  constructor(private generalService: GeneralService) { }
+  constructor(private generalService: GeneralService) {}
 
   ngOnInit(): void {
     this.getCourses();
@@ -56,4 +56,84 @@ export class CursoComponent implements OnInit {
     );
   }
 
+  deleteStudentEnrollment(course: any) {
+    if (course && course.id) {
+      Swal.fire({
+        title: 'Eliminar curso',
+        text: `¿Está seguro de eliminar el curso ${course.course_nombre}?`,
+        backdrop: true,
+        icon: 'question',
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+      }).then(res => {
+        if (res.isConfirmed) {
+          const serviceName = END_POINTS.base_back.default + 'enrollments';
+          this.loading = true;
+          this.generalService.deleteNameId$(serviceName, course.id).subscribe((res: any) => {
+            if (res.success) {
+              this.getCourses();
+            }
+          }, () => { this.loading = false; }, () => { this.loading = false; });
+        }
+      });
+    }
+  }
+
+  deleteTeacherEnrollment(course: any) {
+    if (course && course.id) {
+      Swal.fire({
+        title: 'Eliminar curso',
+        text: `¿Está seguro de eliminar el curso ${course.course_nombre}?`,
+        backdrop: true,
+        icon: 'question',
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+      }).then(res => {
+        if (res.isConfirmed) {
+          const serviceName = END_POINTS.base_back.default + '';
+          this.loading = true;
+          this.generalService.deleteNameId$(serviceName, course.id).subscribe((res: any) => {
+            if (res.success) {
+              this.getCourses();
+            }
+          }, () => { this.loading = false; }, () => { this.loading = false; });
+        }
+      });
+    }
+  }
+
+  deleteTutorEnrollment(course: any) {
+    if (course && course.id) {
+      Swal.fire({
+        title: 'Eliminar curso',
+        text: `¿Está seguro de eliminar el curso ${course.course_nombre}?`,
+        backdrop: true,
+        icon: 'question',
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+      }).then(res => {
+        if (res.isConfirmed) {
+          const serviceName = END_POINTS.base_back.default + 'tutors';
+          this.loading = true;
+          this.generalService.deleteNameId$(serviceName, course.id).subscribe((res: any) => {
+            if (res.success) {
+              this.getCourses();
+            }
+          }, () => { this.loading = false; }, () => { this.loading = false; });
+        }
+      });
+    }
+  }
 }

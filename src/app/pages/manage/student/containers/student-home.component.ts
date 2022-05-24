@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils';
+import { EditUserComponent } from '../../../../shared/components/edit-user/edit-user.component';
 
 @Component({
   selector: 'app-student-home',
@@ -38,12 +40,18 @@ export class StudentHomeComponent implements OnInit {
   };
   pagesCount: any[] = [20, 30, 50, 100, 200, 300, 500, 1000];
   litProgramStudy: any = [];
-  constructor(private generalServi: GeneralService, private formBuilder: FormBuilder) {}
+
+  constructor(
+    private generalServi: GeneralService,
+    private formBuilder: FormBuilder,
+    private dialogService: NbDialogService
+  ) {}
 
   ngOnInit(): void {
     this.fieldReactive();
-    this.getTeachers();
+    this.getStudents();
   }
+
   private fieldReactive() {
     const controls = {
       programa_estudio_id: [''],
@@ -52,6 +60,7 @@ export class StudentHomeComponent implements OnInit {
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
   }
+
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     const val = JSON.parse(sesion);
@@ -61,6 +70,7 @@ export class StudentHomeComponent implements OnInit {
       return '';
     }
   }
+
   getProgramStudy() {
     const serviceName = 'list-programa-estudios';
     const ids = {
@@ -81,24 +91,27 @@ export class StudentHomeComponent implements OnInit {
                   r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
               }
             });
-            // this.getZoom();
           }
         });
     }
   }
+
   refresh() {
     this.pagination.page = 1;
-    this.getTeachers();
+    this.getStudents();
   }
+
   loadPage($event: any): any {
     this.pagination.page = $event;
-    this.getTeachers();
+    this.getStudents();
   }
+
   sizeTable($event: any): any {
     this.pagination.per_page = $event;
-    this.getTeachers();
+    this.getStudents();
   }
-  getTeachers() {
+
+  getStudents() {
     const serviceName = END_POINTS.base_back.default + 'persons/list-estudiantes';
     const forms = this.formHeader.value;
     const params = {
@@ -109,7 +122,6 @@ export class StudentHomeComponent implements OnInit {
       page: this.pagination.page,
       paginate: 'S',
     };
-    // if (params && params.programa_estudio_id && params.ciclo && params.grupo) {
     this.loading = true;
     this.generalServi.nameParams$(serviceName, params).subscribe(
       (res: any) => {
@@ -130,6 +142,20 @@ export class StudentHomeComponent implements OnInit {
         this.loading = false;
       }
     );
-    // }
+  }
+
+  editStudent(student: any) {
+    this.dialogService
+      .open(EditUserComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: { user: student, rol: 'student' },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
+        if (result === 'ok') {
+          this.getStudents();
+        }
+      });
   }
 }

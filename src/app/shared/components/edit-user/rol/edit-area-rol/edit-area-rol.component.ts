@@ -30,8 +30,8 @@ export class EditAreaRolComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldReactive();
-    console.log(this.action);
-    console.log(this.areaRol);
+    // console.log(this.action);
+    // console.log(this.areaRol);
   }
 
   private fieldReactive() {
@@ -266,6 +266,6 @@ export class EditAreaRolComponent implements OnInit {
   }
 
   closeModal() {
-    this.activeModal.close('close');
+    this.activeModal.close('ok');
   }
 }

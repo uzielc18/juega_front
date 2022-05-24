@@ -44,6 +44,7 @@
             <th>Areas</th>
             <th>Cursos</th>
             <th>Perfiles</th>
+            <th>Último Ingreso</th>
             <th class="text-center">Acciones</th>
           </tr>
         </thead>
@@ -55,24 +56,16 @@
             <td>{{ item?.cursos }}</td>
             <td>{{ item?.perfiles }}</td>
             <td>{{ item?.ultimo_ingreso }}</td>
-            <td>ddddddddddd</td>
-
-            <!-- <td class="text-center">
-													<nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
-													Unidades
-											</td>
-											<td class="text-center">
-													<nb-icon icon="tv-outline" status="warning" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
-													Portada
-											</td> -->
-            <!-- <td class="text-center">
-													<nb-icon icon="edit-outline" status="info" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
-													Editar
-											</td>
-											<td class="text-center">
-													<nb-icon icon="trash-outline" status="danger" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
-													Eliminar
-											</td> -->
+            <td class="text-center" style="width: 120px">
+              <div class="d-flex justify-content-evenly">
+                <div style="cursor: pointer" (click)="editStudent(item)">
+                  <nb-icon icon="edit" status="info" style="font-size: 25px"></nb-icon>
+                </div>
+                <div style="cursor: pointer">
+                  <nb-icon icon="trash-2-outline" status="danger" style="font-size: 25px"></nb-icon>
+                </div>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>

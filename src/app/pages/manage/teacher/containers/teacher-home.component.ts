@@ -41,8 +41,6 @@ export class TeacherHomeComponent implements OnInit {
   pagesCount: any[] = [20, 30, 50, 100, 200, 300, 500, 1000];
   litProgramStudy: any = [];
 
-  @Output() changeEmit: EventEmitter<any> = new EventEmitter();
-
   constructor(
     private generalServi: GeneralService,
     private formBuilder: FormBuilder,
@@ -50,6 +48,7 @@ export class TeacherHomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getProgramStudy();
     this.fieldReactive();
     this.getTeachers();
   }
@@ -60,7 +59,6 @@ export class TeacherHomeComponent implements OnInit {
       ciclo: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.getProgramStudy();
   }
 
   get rolSemestre() {
@@ -74,12 +72,13 @@ export class TeacherHomeComponent implements OnInit {
   }
 
   getProgramStudy() {
-    const serviceName = 'list-programa-estudios';
+    const serviceName = END_POINTS.base_back.programa_estudios;
     const ids = {
       nivel_ensenanza_id: this.rolSemestre.area.nivel_ensenanza_id || '',
       sede_id: this.rolSemestre.area.sede_id || '',
       area_id: this.rolSemestre.area.area_id || '',
     };
+    this.loading = true;
     if (ids && ids.nivel_ensenanza_id && ids.sede_id && ids.area_id) {
       this.generalServi
         .nameIdAndIdAndId$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id)
@@ -93,9 +92,8 @@ export class TeacherHomeComponent implements OnInit {
                   r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
               }
             });
-            // this.getZoom();
           }
-        });
+        }, () => { this.loading = false; }, () => { this.loading = false; });
     }
   }
 
@@ -125,12 +123,10 @@ export class TeacherHomeComponent implements OnInit {
       page: this.pagination.page,
       paginate: 'S',
     };
-    // if (params && params.programa_estudio_id && params.ciclo && params.grupo) {
     this.loading = true;
     this.generalServi.nameParams$(serviceName, params).subscribe(
       (res: any) => {
         this.listTeachers = res.data.data || [];
-        // console.log(this.listTeachers)
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;
         if (this.pagination.sizeListData < this.listTeachers.length) {
@@ -146,7 +142,6 @@ export class TeacherHomeComponent implements OnInit {
         this.loading = false;
       }
     );
-    // }
   }
 
   editTeacher(teacher: any) {
@@ -159,7 +154,7 @@ export class TeacherHomeComponent implements OnInit {
       })
       .onClose.subscribe(result => {
         if (result === 'ok') {
-          this.changeEmit.emit();
+          this.getTeachers();
         }
       });
   }

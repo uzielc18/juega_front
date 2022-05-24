@@ -16,6 +16,6 @@ export class EditUserComponent implements OnInit {
   }
 
   closeModal() {
-    this.activeModal.close('close');
+    this.activeModal.close('ok');
   }
 }
