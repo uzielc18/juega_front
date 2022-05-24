@@ -1,6 +1,9 @@
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small" class="h-100 mb-0">
   <nb-card-body class="px-0 py-4">
     <nb-tabset>
+      <nb-tab tabTitle="Silabo" tabIcon="file-text-outline" responsive>
+        <button nbButton status="primary" (click)="getSilabu()">Ver Silabo</button>
+      </nb-tab>
       <nb-tab tabTitle="Preguntas" tabIcon="question-mark-outline" responsive>
         <h5 class="fw-bold text-start" style="font-size: 16px">Preguntas</h5>
         <div class="question-container" style="text-align: justify; padding-top: 5px">
@@ -47,9 +50,6 @@
             </div>
           </div>
         </div>
-      </nb-tab>
-      <nb-tab tabTitle="Silabo" tabIcon="file-text-outline" responsive>
-        <button nbButton status="primary" (click)="getSilabu()">Ver Silabo</button>
       </nb-tab>
       <nb-tab tabTitle="Mensajes" tabIcon="message-square-outline" responsive>
         <p>Mensajes</p>

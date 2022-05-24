@@ -29,7 +29,13 @@
                 </div>
               </div>
               <div class="col-md-1">
-                <div style="cursor: pointer" class="d-flex h-100 justify-content-end align-items-center" (click)="deleteStudentEnrollment(cursoEst)">
+                <div
+                  style="cursor: pointer"
+                  class="d-flex h-100 justify-content-end align-items-center"
+                  (click)="deleteStudentEnrollment(cursoEst)"
+                  nbTooltip="Eliminar matricula"
+                  nbTooltipStatus="danger"
+                >
                   <nb-icon icon="trash-2-outline" status="danger" style="font-size: 30px"></nb-icon>
                 </div>
               </div>
@@ -66,11 +72,7 @@
                   </span>
                 </div>
               </div>
-              <div class="col-md-1">
-                <div style="cursor: pointer" class="d-flex h-100 justify-content-end align-items-center" (click)="deleteTeacherEnrollment(cursoDoc)">
-                  <nb-icon icon="trash-2-outline" status="danger" style="font-size: 30px"></nb-icon>
-                </div>
-              </div>
+              <div class="col-md-1"></div>
             </div>
           </nb-card-body>
         </nb-card>
@@ -100,12 +102,18 @@
                   <p class="mb-0 fw-bold" style="font-size: 16px">{{ cursoTut?.course_nombre }}</p>
                   <span class="text-secondary" style="font-size: 12px">{{ cursoTut?.persons_teacher_nombre }}</span>
                   <span class="text-secondary" style="font-size: 12px">
-                    Ciclo {{ cursoTut?.ciclo }} - Grupo {{ cursoTut?.grupo }}
+                    {{ cursoTut?.programa_estudio_nombre }} - Ciclo {{ cursoTut?.ciclo }} - Grupo {{ cursoTut?.grupo }}
                   </span>
                 </div>
               </div>
               <div class="col-md-1">
-                <div style="cursor: pointer" class="d-flex h-100 justify-content-end align-items-center" (click)="deleteTutorEnrollment(cursoTut)">
+                <div
+                  style="cursor: pointer"
+                  class="d-flex h-100 justify-content-end align-items-center"
+                  (click)="deleteTutorEnrollment(cursoTut)"
+                  nbTooltip="Eliminar matricula"
+                  nbTooltipStatus="danger"
+                >
                   <nb-icon icon="trash-2-outline" status="danger" style="font-size: 30px"></nb-icon>
                 </div>
               </div>

@@ -94,7 +94,7 @@
       size="small"
       status="primary"
       (click)="savePerfil()"
-      [disabled]="!formHeader.controls.rol.valid"
+      [disabled]="!formHeader.controls.rol.valid || !formHeader.controls.sede.valid"
     >
       Guardar
     </button>
