@@ -225,12 +225,12 @@ export class EditAreaRolComponent implements OnInit {
     const serviceName = END_POINTS.base_back.default + 'areasRoles';
     this.loading = true;
     const data = {
-      person_id: this.user.person_id,
-      role_id: this.formHeader.get('rol').value,
-      sede_id: this.formHeader.get('sede').value,
-      nivel_ensenanza_id: this.formHeader.get('nivel_ensenanza').value,
-      area_id: this.formHeader.get('facultad').value,
-      programa_estudio_id: this.formHeader.get('programa_estudio').value,
+      person_id: this.user.person_id || '',
+      role_id: this.formHeader.get('rol').value || '',
+      sede_id: this.formHeader.get('sede').value || '',
+      nivel_ensenanza_id: this.formHeader.get('nivel_ensenanza').value || '',
+      area_id: this.formHeader.get('facultad').value || '',
+      programa_estudio_id: this.formHeader.get('programa_estudio').value || '',
       predefinido: this.formHeader.get('predefinido').value ? '1' : '0',
       estado: this.formHeader.get('estado').value ? '1' : '0',
     };

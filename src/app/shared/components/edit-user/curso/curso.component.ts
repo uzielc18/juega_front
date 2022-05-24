@@ -59,8 +59,8 @@ export class CursoComponent implements OnInit {
   deleteStudentEnrollment(course: any) {
     if (course && course.id) {
       Swal.fire({
-        title: 'Eliminar curso',
-        text: `¿Está seguro de eliminar el curso ${course.course_nombre}?`,
+        title: 'Eliminar matricula',
+        text: `¿Está seguro de eliminar la matricula del curso ${course.course_nombre}?`,
         backdrop: true,
         icon: 'question',
         showCloseButton: true,
@@ -83,38 +83,11 @@ export class CursoComponent implements OnInit {
     }
   }
 
-  deleteTeacherEnrollment(course: any) {
-    if (course && course.id) {
-      Swal.fire({
-        title: 'Eliminar curso',
-        text: `¿Está seguro de eliminar el curso ${course.course_nombre}?`,
-        backdrop: true,
-        icon: 'question',
-        showCloseButton: true,
-        showCancelButton: true,
-        showConfirmButton: true,
-        confirmButtonColor: '#7f264a',
-        confirmButtonText: 'Si',
-        cancelButtonText: 'No',
-      }).then(res => {
-        if (res.isConfirmed) {
-          const serviceName = END_POINTS.base_back.default + '';
-          this.loading = true;
-          this.generalService.deleteNameId$(serviceName, course.id).subscribe((res: any) => {
-            if (res.success) {
-              this.getCourses();
-            }
-          }, () => { this.loading = false; }, () => { this.loading = false; });
-        }
-      });
-    }
-  }
-
   deleteTutorEnrollment(course: any) {
     if (course && course.id) {
       Swal.fire({
-        title: 'Eliminar curso',
-        text: `¿Está seguro de eliminar el curso ${course.course_nombre}?`,
+        title: 'Eliminar matricula',
+        text: `¿Está seguro de eliminar la matricula del curso ${course.course_nombre}?`,
         backdrop: true,
         icon: 'question',
         showCloseButton: true,

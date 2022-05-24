@@ -28,7 +28,7 @@ export class EnterZoomComponent implements OnInit {
   }
 
   closeModal() {
-    this.activeModal.close('close');
+    this.activeModal.close('ok');
   }
 
 }

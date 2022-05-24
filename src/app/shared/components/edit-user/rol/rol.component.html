@@ -1,44 +1,45 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
-	<div class="text-end">
-		<button nbButton ghost status="primary" (click)="newAreaRol()">
-			<nb-icon icon="plus-circle-outline" style="width: 32px; height: 32px"></nb-icon>
-		</button>
-	</div>
-	<table class="table table-sm">
-		<thead>
-			<tr class="text-center" style="font-size: 12px">
-				<th style="width: 100px">N<sup>&deg;</sup></th>
-				<th class="text-start">Area / Programa</th>
-				<th>Estado</th>
-				<th>Predefinido</th>
-				<th>Acciones</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr
-				class="text-center"
-				style="font-size: 11px; vertical-align: middle"
-				*ngFor="let areaRol of areasRoles; let i = index"
-			>
-				<td>{{ i + 1 }}</td>
-				<td class="text-start">
-					{{ areaRol?.programa_estudio_nombre }} - {{ areaRol?.area_nombres }} - {{ areaRol?.sede_nombre }}
-				</td>
-				<td><nb-toggle [checked]="areaRol?.estado === '1'" (click)="statusToggle(areaRol)"></nb-toggle></td>
-				<td>
-					<nb-toggle [checked]="areaRol?.predefinido === '1'" (click)="predefinedToggle(areaRol)"></nb-toggle>
-				</td>
-				<td class="text-center" style="width: 100px">
-					<div class="d-flex justify-content-evenly">
-						<div style="cursor: pointer" (click)="editAreaRol(areaRol)">
-							<nb-icon icon="edit" status="info" style="font-size: 25px"></nb-icon>
-						</div>
-						<div style="cursor: pointer" (click)="deleteAreaRol(areaRol)">
-							<nb-icon icon="trash-2-outline" status="danger" style="font-size: 25px"></nb-icon>
-						</div>
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+  <div class="text-end">
+    <button nbButton ghost status="primary" (click)="newAreaRol()">
+      <nb-icon icon="plus-circle-outline" style="width: 32px; height: 32px"></nb-icon>
+    </button>
+  </div>
+  <table class="table table-sm">
+    <thead>
+      <tr class="text-center" style="font-size: 12px">
+        <th style="width: 100px">N<sup>&deg;</sup></th>
+        <th class="text-start">Area / Programa</th>
+        <th>Estado</th>
+        <th>Predefinido</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="text-center"
+        style="font-size: 11px; vertical-align: middle"
+        *ngFor="let areaRol of areasRoles; let i = index"
+      >
+        <td>{{ i + 1 }}</td>
+        <td class="text-start">
+          {{ areaRol.programa_estudio_nombre ? areaRol.programa_estudio_nombre + ' - ' : ''
+          }}{{ areaRol?.area_nombres ? areaRol?.area_nombres + ' - ' : '' }}{{ areaRol?.sede_nombre }}
+        </td>
+        <td><nb-toggle [checked]="areaRol?.estado === '1'" (click)="statusToggle(areaRol)"></nb-toggle></td>
+        <td>
+          <nb-toggle [checked]="areaRol?.predefinido === '1'" (click)="predefinedToggle(areaRol)"></nb-toggle>
+        </td>
+        <td class="text-center" style="width: 100px">
+          <div class="d-flex justify-content-evenly">
+            <div style="cursor: pointer" (click)="editAreaRol(areaRol)">
+              <nb-icon icon="edit" status="info" style="font-size: 25px"></nb-icon>
+            </div>
+            <div style="cursor: pointer" (click)="deleteAreaRol(areaRol)">
+              <nb-icon icon="trash-2-outline" status="danger" style="font-size: 25px"></nb-icon>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

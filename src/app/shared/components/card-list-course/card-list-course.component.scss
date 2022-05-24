@@ -1,6 +1,6 @@
 nb-card {
   box-shadow: 0px 2px 10px #00000012;
-  transition: all .2s;
+  transition: all 0.2s;
 
   &:hover {
     transform: translateY(-1px);
@@ -68,19 +68,114 @@ li {
 
 // Curso list
 
-.car-list {
+.card-list {
   cursor: pointer;
   border-radius: 7px;
   overflow: hidden;
 }
 
-.contenedor{
+.main-container {
+  display: flex;
+  height: 100%;
+
+  .content-container {
+    display: flex;
+    flex: 1 1 auto;
+    padding: 20px;
+
+    .course-info {
+      flex: 1 1 auto;
+
+      .text-course {
+        display: flex;
+
+        span {
+          margin: 0 3px;
+        }
+      }
+    }
+
+    .progress-icon {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+      margin-left: auto;
+
+      .progress-bar-container {
+      }
+
+      .icons-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px;
+
+        .icon {
+          display: flex;
+          align-items: center;
+          gap: 2px;
+        }
+      }
+    }
+  }
+
+  .img-container {
+    height: auto;
+    width: 120px;
+
+    img {
+      object-fit: cover;
+    }
+  }
+
+  .element-img {
+    height: auto;
+    width: 68px;
+
+    img {
+      object-fit: cover;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-container {
+    .content-container {
+      flex-direction: column;
+      padding: 10px;
+
+      .progress-icon {
+        margin-left: 0px;
+        flex-direction: column;
+
+        .progress-bar-container {
+          margin: 10px 0px;
+        }
+
+        .icons-container {
+          padding: 0px;
+        }
+      }
+
+      .text-course {
+        display: flex;
+        flex-direction: column;
+
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.contenedor {
   position: relative;
 
-  .centrado{
+  .centrado {
     opacity: 0.75;
     align-items: center;
-    background-color: #6DCB96;
+    background-color: #6dcb96;
     border-radius: 50%;
     display: flex;
     height: 68px;
@@ -90,12 +185,12 @@ li {
     top: 50%;
     transform: translate(-50%, -50%);
     width: 68px;
-    transition: all .2s;
+    transition: all 0.2s;
 
     nb-icon {
       width: 36px;
       height: 36px;
-      color: #FFFFFF;
+      color: #ffffff;
     }
 
     &:hover {

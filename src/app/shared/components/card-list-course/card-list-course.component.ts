@@ -22,8 +22,6 @@ export class CardListCourseComponent implements OnInit {
   nombreSubscription: any = Subscription;
   theRolSemestre:any;
   valida: boolean = false;
-  @Output() changeEmit: EventEmitter<any> = new EventEmitter();
-  // public valorEmitido = this.emitEventsService.recibir;
   constructor( private formBuilder: FormBuilder,   private generalService: GeneralService, private emitEventsService: EmitEventsService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -52,7 +50,7 @@ export class CardListCourseComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      tipo: ['2']
+      tipo: ['1']
     };
     this.form = this.formBuilder.group(controls);
     this.updateBreadcrumb();
@@ -105,7 +103,7 @@ export class CardListCourseComponent implements OnInit {
       closeOnEsc: true
     }).onClose.subscribe(result => {
       if (result === 'ok') {
-        this.changeEmit.emit();
+
       }
     });
   }
