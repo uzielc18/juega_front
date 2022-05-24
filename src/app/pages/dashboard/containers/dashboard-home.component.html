@@ -10,26 +10,35 @@
       <div
         *ngIf="collapseLeft"
         class="perfil"
-        [ngStyle]="perfilInfo ? { 'min-width': '480px' } : { 'min-width': '480px', width: '480px' }"
-      >
+        >
+        <!-- [ngStyle]="perfilInfo ? { 'min-width': '361px', width: '361px' } : { 'min-width': '361px', width: '361px' }" -->
         <app-perfil [profile]="profile"></app-perfil>
       </div>
       <div class="cursos" style="background-color: #eeeeee">
         <div *ngIf="collapseTop" class="anuncios" [ngStyle]="{ height: !collapseLeft ? '380px' : '300px' }">
           <ngb-carousel
             #carousel
-            [interval]="5000"
+            [interval]="10000"
             [pauseOnHover]="pauseOnHover"
             [pauseOnFocus]="pauseOnFocus"
             (slide)="onSlide($event)"
-            style="width: 100%; height: 100%"
+            style="height: 100%"
           >
+            <!-- style="width: 100%; height: 100%" -->
             <ng-template ngbSlide *ngFor="let img of newsList; index as i">
-              <a [href]="img?.url" target="_blank" rel="nofollow noopener noreferrer">
-                <div class="picsum-img-wrapper">
-                  <img [src]="img?.imagen_url" [alt]="img?.titulo" style="width: 100%; object-fit: contain" />
-                </div>
-              </a>
+              <div class="picsum-img-wrapper button-container">
+                <img [src]="img?.imagen_url" [alt]="img?.titulo" style="width: 100%; height: 100%; object-fit: cover" />
+                <a
+                  *ngIf="img?.mostrar_boton"
+                  nbButton
+                  status="warning"
+                  shape="round"
+                  [href]="img?.url"
+                  target="_blank"
+                  rel="nofollow noopener noreferrer"
+                  >{{ img?.nombre_boton }}</a
+                >
+              </div>
             </ng-template>
           </ngb-carousel>
           <hr />
@@ -45,12 +54,12 @@
               <nb-icon *ngIf="collapseTop" icon="arrow-ios-upward"></nb-icon>
               <nb-icon *ngIf="!collapseTop" icon="arrow-ios-downward"></nb-icon>
             </span>
-            <div *ngIf="!collapseTop" class="me-5">
+            <div *ngIf="!collapseTop" class="me-5" style="min-height: 90px">
               <ngb-carousel
                 #carousel
                 [showNavigationArrows]="false"
                 [showNavigationIndicators]="false"
-                [interval]="5000"
+                [interval]="10000"
                 [pauseOnHover]="pauseOnHover"
                 [pauseOnFocus]="pauseOnFocus"
                 (slide)="onSlide($event)"
@@ -60,10 +69,17 @@
                   <div class="d-flex align-items-center justify-content-between px-5 py-3">
                     <div>
                       <h5 style="font-size: 14px" class="fw-bold mb-0">{{ img?.titulo }}</h5>
-                      <span style="font-size: 11px" class="text-secondary">{{ img?.contenido }}</span>
+                      <span style="font-size: 11px" class="text-secondary new-content">{{ img?.contenido }}</span>
                     </div>
-                    <a nbButton status="warning" outline size="small" [href]="img?.url" target="_blank"
-                      >MATRICULATE YA!</a
+                    <a
+                      *ngIf="img?.mostrar_boton"
+                      nbButton
+                      status="warning"
+                      outline
+                      size="small"
+                      [href]="img?.url"
+                      target="_blank"
+                      >{{ img?.nombre_boton }}</a
                     >
                   </div>
                 </ng-template>
@@ -72,7 +88,7 @@
             <hr class="mt-0" />
             <div class="card-list">
               <app-card-list-course *ngIf="!perfilInfo"></app-card-list-course>
-              <div *ngIf="perfilInfo" class="row p-3 pb-0">
+              <div *ngIf="perfilInfo" class="row p-3 m-0" style="width: 100%">
                 <div class="col-md-6">
                   <nb-card status="primary" class="mb-0">
                     <nb-card-header style="padding-top: 5px; padding-bottom: 5px">

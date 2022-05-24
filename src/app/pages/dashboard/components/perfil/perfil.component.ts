@@ -10,7 +10,19 @@ import { END_POINTS } from '../../../../providers/utils';
 })
 export class PerfilComponent implements OnInit {
   @Input() profile: any;
-  constructor(private userService: AppService, private generalService: GeneralService) {}
 
-  ngOnInit(): void {}
+  constructor() {}
+
+  ngOnInit(): void {
+    // console.log(this.rolSemestre.rol.name)
+  }
+
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion) {
+      return JSON.parse(sesion);
+    } else {
+      return '';
+    }
+  }
 }

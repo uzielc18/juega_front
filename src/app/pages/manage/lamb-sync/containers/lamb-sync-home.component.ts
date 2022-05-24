@@ -54,9 +54,9 @@ export class LambSyncHomeComponent implements OnInit {
   private fieldReactive() {
     const controls = {
       sede: ['', [Validators.required]],
-      nivel_ensenanza: ['', [Validators.required]],
-      facultad: ['', [Validators.required]],
-      programa_estudio: ['', [Validators.required]],
+      nivel_ensenanza: [{ value: '', disabled: true }, [Validators.required]],
+      facultad: [{ value: '', disabled: true }, [Validators.required]],
+      programa_estudio: [{ value: '', disabled: true }, [Validators.required]],
       semestre: [this.rolSemestre.semestre.nombre || '', [Validators.required]],
       termino: ['', [Validators.required]],
       estudiante: ['', [Validators.required]],
@@ -77,7 +77,7 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   listSedes() {
-    const serviceName = END_POINTS.base_back.config + '/sedes';
+    const serviceName = END_POINTS.base_back.default + 'sedes';
     this.loading = true;
     this.generalService.nameAll$(serviceName).subscribe(
       (res: any) => {
@@ -86,6 +86,7 @@ export class LambSyncHomeComponent implements OnInit {
           this.formHeader.patchValue({
             sede: this.sedes[0],
           });
+          this.formHeader.controls['nivel_ensenanza'].enable();
           this.listNivelEnsenanza(this.sedes[0].id);
         }
       },
@@ -178,6 +179,7 @@ export class LambSyncHomeComponent implements OnInit {
 
   selectedSede(sede: any) {
     this.formHeader.controls['sede'].setValue(sede);
+    this.formHeader.controls['nivel_ensenanza'].enable();
     this.nivelEnsenanza = [];
     this.facultades = [];
     this.programa_estudios = [];
@@ -189,6 +191,7 @@ export class LambSyncHomeComponent implements OnInit {
 
   selectedNivel(nivel: any) {
     this.formHeader.controls['nivel_ensenanza'].setValue(nivel);
+    this.formHeader.controls['facultad'].enable();
     this.facultades = [];
     this.programa_estudios = [];
     this.formHeader.controls['facultad'].setValue('');
@@ -198,6 +201,7 @@ export class LambSyncHomeComponent implements OnInit {
 
   selectedFacultad(fac: any) {
     this.formHeader.controls['facultad'].setValue(fac);
+    this.formHeader.controls['programa_estudio'].enable();
     this.programa_estudios = [];
     this.formHeader.controls['programa_estudio'].setValue('');
     this.listProgramaEstudios(this.formHeader.get('nivel_ensenanza').value.id, this.formHeader.get('sede').value.id, fac.id);

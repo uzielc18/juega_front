@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from '../../../../providers';
@@ -6,14 +6,14 @@ import { END_POINTS } from '../../../../providers/utils';
 import { EditUserComponent } from '../../../../shared/components/edit-user/edit-user.component';
 
 @Component({
-  selector: 'app-teacher-home',
-  templateUrl: './teacher-home.component.html',
-  styleUrls: ['./teacher-home.component.scss'],
+  selector: 'app-student-home',
+  templateUrl: './student-home.component.html',
+  styleUrls: ['./student-home.component.scss'],
 })
-export class TeacherHomeComponent implements OnInit {
+export class StudentHomeComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
-  listTeachers: any = [];
+  listStudents: any = [];
   ciclos = [
     { ciclo: '1' },
     { ciclo: '2' },
@@ -48,9 +48,8 @@ export class TeacherHomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getProgramStudy();
     this.fieldReactive();
-    this.getTeachers();
+    this.getStudents();
   }
 
   private fieldReactive() {
@@ -59,6 +58,7 @@ export class TeacherHomeComponent implements OnInit {
       ciclo: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
+    this.getProgramStudy();
   }
 
   get rolSemestre() {
@@ -72,13 +72,12 @@ export class TeacherHomeComponent implements OnInit {
   }
 
   getProgramStudy() {
-    const serviceName = END_POINTS.base_back.programa_estudios;
+    const serviceName = 'list-programa-estudios';
     const ids = {
       nivel_ensenanza_id: this.rolSemestre.area.nivel_ensenanza_id || '',
       sede_id: this.rolSemestre.area.sede_id || '',
       area_id: this.rolSemestre.area.area_id || '',
     };
-    this.loading = true;
     if (ids && ids.nivel_ensenanza_id && ids.sede_id && ids.area_id) {
       this.generalServi
         .nameIdAndIdAndId$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id)
@@ -93,27 +92,27 @@ export class TeacherHomeComponent implements OnInit {
               }
             });
           }
-        }, () => { this.loading = false; }, () => { this.loading = false; });
+        });
     }
   }
 
   refresh() {
     this.pagination.page = 1;
-    this.getTeachers();
+    this.getStudents();
   }
 
   loadPage($event: any): any {
     this.pagination.page = $event;
-    this.getTeachers();
+    this.getStudents();
   }
 
   sizeTable($event: any): any {
     this.pagination.per_page = $event;
-    this.getTeachers();
+    this.getStudents();
   }
 
-  getTeachers() {
-    const serviceName = END_POINTS.base_back.default + 'persons/list-docentes';
+  getStudents() {
+    const serviceName = END_POINTS.base_back.default + 'persons/list-estudiantes';
     const forms = this.formHeader.value;
     const params = {
       programa_estudio_id: forms.programa_estudio_id || '',
@@ -126,10 +125,11 @@ export class TeacherHomeComponent implements OnInit {
     this.loading = true;
     this.generalServi.nameParams$(serviceName, params).subscribe(
       (res: any) => {
-        this.listTeachers = res.data.data || [];
+        this.listStudents = res.data.data || [];
+        console.log(this.listStudents);
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;
-        if (this.pagination.sizeListData < this.listTeachers.length) {
+        if (this.pagination.sizeListData < this.listStudents.length) {
           this.pagination.isDisabledPage = true;
         } else {
           this.pagination.isDisabledPage = false;
@@ -144,17 +144,17 @@ export class TeacherHomeComponent implements OnInit {
     );
   }
 
-  editTeacher(teacher: any) {
+  editStudent(student: any) {
     this.dialogService
       .open(EditUserComponent, {
         dialogClass: 'dialog-limited-height',
-        context: { user: teacher, rol: 'teacher' },
+        context: { user: student, rol: 'student' },
         closeOnBackdropClick: false,
         closeOnEsc: false,
       })
       .onClose.subscribe(result => {
         if (result === 'ok') {
-          this.getTeachers();
+          this.getStudents();
         }
       });
   }
