@@ -21,5 +21,6 @@ export const END_POINTS = {
     activities_evaluations: 'activities-evaluations-resume',
     rubrics: 'rubricas',
     calendar: 'calendar',
+    inquiries: 'inquiries'
   },
 };

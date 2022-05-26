@@ -66,7 +66,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
         (data: any) => {
           this.element = data.data;
           this.has_rubric = this.element.rubricas_guia_id !== null ? true : false;
-          console.log(this.element, 'elemento');
+          // console.log(this.element, 'elemento');
           if (this.element) {
             if (this.rolSemestre?.rol?.name === 'Estudiante') {
               setTimeout(() => {
@@ -102,7 +102,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
         if (this.has_rubric) {
           this.getRubric();
         }
-        console.log(this.pending, 'pendiente');
+        // console.log(this.pending, 'pendiente');
       },
       () => {
         this.loading = false;
@@ -140,7 +140,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
       (res: any) => {
         if (res.success) {
           this.calification = res.data;
-          console.log(this.calification, 'calificacion');
+          // console.log(this.calification, 'calificacion');
         }
       },
       () => {

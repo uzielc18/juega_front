@@ -49,6 +49,10 @@ const routes: Routes = [
         loadChildren: () => import("./pages/my-calendar/my-calendar.module").then((m) => m.MyCalendarModule),
       },
       {
+        path: "element",
+        loadChildren: () => import("./pages/element/element.module").then((m) => m.ElementModule),
+      },
+      {
         path: "",
         redirectTo: "dashboard",
         pathMatch: "full",

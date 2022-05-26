@@ -6,18 +6,38 @@ import { END_POINTS } from '../../../../providers/utils';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.scss']
+  styleUrls: ['./perfil.component.scss'],
 })
 export class PerfilComponent implements OnInit {
-
   @Input() user: any;
   profile: any;
+
+  generoArray: any[] = ['Masculino', 'Femenino'];
+  estadoCivilArray: any[] = [
+    'Casado(a)',
+    'Soltero(a)',
+    'Divorciado(a)',
+    'Viudo(a)',
+    'Separado(a)',
+    'Conviviente',
+    'No precisa',
+  ];
+  religionArray: any[] = [
+    'Adventista del Séptimo Día',
+    'Católico',
+    'Evangélico',
+    'Mormón',
+    'Pentecostes',
+    'Testigo de Jehova',
+    'Otro',
+    'Ninguno',
+  ];
 
   view: string = 'mini';
   loading: boolean = false;
   formHeader: any = FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private generalService: GeneralService) { }
+  constructor(private formBuilder: FormBuilder, private generalService: GeneralService) {}
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -110,5 +130,4 @@ export class PerfilComponent implements OnInit {
       }
     );
   }
-
 }

@@ -550,4 +550,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.logoLangs = logo.img;
     }
   }
+
+  newElements() {
+    this.router.navigate(["/pages/element/new"]);
+  }
 }

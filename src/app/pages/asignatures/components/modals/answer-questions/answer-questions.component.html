@@ -1,12 +1,153 @@
-<nb-card class="scrollModal" [nbSpinner]="loading"
-nbSpinnerStatus="primary"
-nbSpinnerSize="small">
-	<nb-card-header>
-		hooholl
-	</nb-card-header>
-	<nb-card-body>
-		hooholl
-	</nb-card-body>
-	<nb-card-footer>
-	</nb-card-footer>
+<nb-card class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
+    <div class="d-flex align-items-center justify-content-between">
+      <div>Responder Pregunta</div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="comment-container row mt-3" [ngClass]="{ 'comment-container-public': question?.mostrar !== 'help' }">
+      <div class="photo-name col-md-2 p-0">
+        <div class="photo-container">
+          <img [src]="question?.person_foto" style="object-fit: cover" width="100%" height="100%" />
+        </div>
+        <div class="name-container my-1">
+          <span class="name"
+            >{{ question?.person_nombre }} {{ question.codigo ? '(' + question.codigo + ')' : '' }}</span
+          >
+        </div>
+        <span class="puntos-info">+ {{ question?.puntos }}</span>
+      </div>
+      <div class="text-comment col-md-10 pe-0" [ngClass]="{ 'text-comment-public': question?.mostrar !== 'help' }">
+        <span>{{ question?.consulta }}</span>
+        <span *ngIf="question.created_at" class="text-secondary ms-auto mt-top" style="font-size: 10px">
+          Hace {{ expiredDays | i18nPlural: daysMap }} {{ expiredHours | i18nPlural: hoursMap }}
+          {{ expiredMinutes | i18nPlural: minutesMap }}
+        </span>
+        <div class="d-flex align-items-center mt-1" [formGroup]="formHeader">
+          <button
+            nbButton
+            shape="round"
+            size="tiny"
+            outline
+            status="warning"
+            class="me-2 custom-button"
+            [ngClass]="{
+              'custom-button-public': question?.mostrar !== 'help',
+              'button-votado': question?.puntos_activo === 0 && question?.mostrar === 'help',
+              'button-votado-public': question?.puntos_activo === 0 && question?.mostrar !== 'help'
+            }"
+            (click)="upVoteQuestion()"
+            [disabled]="question?.puntos_activo === 0"
+          >
+            + 1
+          </button>
+          <button
+            nbButton
+            shape="round"
+            size="tiny"
+            outline
+            status="warning"
+            class="me-2 custom-button"
+            [ngClass]="{ 'custom-button-public': question?.mostrar !== 'help' }"
+            (click)="showInput()"
+          >
+            Responder
+          </button>
+          <button
+            nbButton
+            shape="round"
+            size="tiny"
+            outline
+            status="warning"
+            class="me-2 custom-button"
+            [ngClass]="{ 'custom-button-public': question?.mostrar !== 'help' }"
+          >
+            Ver respuestas
+          </button>
+          <nb-radio-group formControlName="mostrar" class="d-flex">
+            <nb-radio *ngFor="let item of mostrarArray" [value]="item" (click)="updateMostrar(item)">{{
+              item
+            }}</nb-radio>
+          </nb-radio-group>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" style="text-align: justify; padding-top: 5px">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          <div class="d-flex flex-column" *ngIf="responder" [formGroup]="formHeader">
+            <textarea
+              nbInput
+              fullWidth
+              placeholder="Responder"
+              fieldSize="small"
+              style="font-size: 12px"
+              rows="4"
+              formControlName="respuesta"
+            ></textarea>
+            <div class="d-flex align-items-center justify-content-end">
+              <button
+                nbButton
+                status="primary"
+                size="small"
+                class="ms-2 my-2"
+                (click)="answerQuestion()"
+                [disabled]="!formHeader.valid"
+              >
+                Responder
+              </button>
+            </div>
+          </div>
+          <div *ngIf="answers.length > 0">
+            <div
+              *ngFor="let item of answers"
+              class="comment-container row mt-3"
+              [ngClass]="{ 'comment-container-public': item?.mostrar !== 'help' }"
+            >
+              <div class="photo-name col-md-2 p-0">
+                <div class="photo-container">
+                  <img [src]="item?.person_foto" style="object-fit: cover" width="100%" height="100%" />
+                </div>
+                <div class="name-container my-1">
+                  <span class="name">{{ item?.person_nombre }} {{ item.codigo ? '(' + item.codigo + ')' : '' }}</span>
+                </div>
+                <span class="puntos-info">+ {{ item?.puntos }}</span>
+              </div>
+              <div class="text-comment col-md-10 pe-0" [ngClass]="{ 'text-comment-public': item?.mostrar !== 'help' }">
+                <span>{{ item?.respuesta }}</span>
+                <span *ngIf="item.created_at" class="text-secondary ms-auto mt-auto" style="font-size: 10px">
+                  Hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
+                  {{ item?.expiredMinutes | i18nPlural: minutesMap }}
+                </span>
+                <div class="d-flex align-items-center">
+                  <button
+                    nbButton
+                    shape="round"
+                    size="tiny"
+                    outline
+                    status="warning"
+                    class="me-2 custom-button"
+                    [ngClass]="{
+                      'custom-button-public': item?.mostrar !== 'help',
+                      'button-votado': item?.puntos_activo === 0 && item?.mostrar === 'help',
+                      'button-votado-public': item?.puntos_activo === 0 && item?.mostrar !== 'help'
+                    }"
+                    (click)="upVoteAnswer(item)"
+                    [disabled]="item?.puntos_activo === 0"
+                  >
+                    + 1
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer> </nb-card-footer>
 </nb-card>

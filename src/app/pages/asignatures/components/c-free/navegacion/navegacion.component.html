@@ -1,60 +1,26 @@
-<nb-card [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small" class="h-100 mb-0">
+<nb-card class="h-100 mb-0">
   <nb-card-body class="px-0 py-4">
-    <nb-tabset>
-      <nb-tab tabTitle="Silabo" tabIcon="file-text-outline" responsive>
-        <button nbButton status="primary" (click)="getSilabu()">Ver Silabo</button>
-      </nb-tab>
-      <nb-tab tabTitle="Preguntas" tabIcon="question-mark-outline" responsive>
-        <h5 class="fw-bold text-start" style="font-size: 16px">Preguntas</h5>
-        <div class="question-container" style="text-align: justify; padding-top: 5px">
-          <div class="d-flex flex-column">
-            <textarea
-              nbInput
-              fullWidth
-              placeholder="Tienes alguna duda?"
-              fieldSize="small"
-              style="font-size: 14px"
-              rows="3"
-            ></textarea>
-            <button nbButton status="success" size="tiny" class="ms-auto my-2">Preguntar</button>
-          </div>
-        </div>
-        <div class="comment-container row mt-2">
-          <div class="photo-name col-md-3 p-0">
-            <div class="photo-container">
-              <img
-                src="https://i.pinimg.com/originals/d9/56/9b/d9569bbed4393e2ceb1af7ba64fdf86a.jpg"
-                style="object-fit: cover"
-                width="100%"
-                height="100%"
-              />
-            </div>
-            <div class="name-container">
-              <span class="name">Juan Perez</span>
-            </div>
-            <button nbButton shape="round" size="tiny" outline status="basic" class="mt-1">+ 34</button>
-          </div>
-          <div class="text-comment col-md-9 pe-0">
-            <span (click)="answerQuestionOnModal()" style="cursor: pointer;">
-              En ocasiones, a la hora de crear una página web o una tienda, nos encontramos que en un espacio donde
-              queremos situar un texto encontramos que en un espacio donde queremos situar un texto
-            </span>
-            <div class="d-flex align-items-center mt-1">
-              <button nbButton shape="round" size="tiny" outline status="warning" class="me-2 custom-button" (click)="upVote($event)">
-                + 1
-              </button>
-              <button nbButton shape="round" size="tiny" outline status="warning" class="custom-button" (click)="answerQuestion($event)">
-                Responder
-              </button>
-              <span class="text-secondary ms-auto" style="font-size: 10px">Hace 1 minuto</span>
-            </div>
-          </div>
-        </div>
-      </nb-tab>
-      <nb-tab tabTitle="Mensajes" tabIcon="message-square-outline" responsive>
-        <p>Mensajes</p>
-      </nb-tab>
-    </nb-tabset>
+    <div class="tabs-container">
+      <nb-tabset>
+        <nb-tab [tabTitle]="showText ? 'Silabo' : ''" tabIcon="clipboard-outline" responsive>
+          <app-silabo [curso]="curso"></app-silabo>
+        </nb-tab>
+        <nb-tab [tabTitle]="showText ? 'Preguntas' : ''" tabIcon="question-mark-outline" responsive>
+          <app-preguntas [userInfo]="userInfo" [curso]="curso"></app-preguntas>
+        </nb-tab>
+        <nb-tab [tabTitle]="showText ? 'Jutificación' : ''" tabIcon="file-text-outline" responsive>
+          <p>Jutificación</p>
+        </nb-tab>
+
+        <nb-tab [tabTitle]="showText ? 'Estudiantes' : ''" tabIcon="people-outline" responsive>
+          <app-estudiantes [curso]="curso"></app-estudiantes>
+        </nb-tab>
+
+        <nb-tab [tabTitle]="showText ? 'Configuración' : ''" tabIcon="settings-2-outline" responsive>
+          <p>Configuración</p>
+        </nb-tab>
+      </nb-tabset>
+    </div>
   </nb-card-body>
   <nb-card-footer>
     <hr />

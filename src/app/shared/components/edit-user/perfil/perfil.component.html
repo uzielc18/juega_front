@@ -78,8 +78,7 @@
         status="primary"
         formControlName="genero"
       >
-        <nb-option value="Masculino">Masculino</nb-option>
-        <nb-option value="Femenino">Femenino</nb-option>
+        <nb-option *ngFor="let item of generoArray" [value]="item">{{ item }}</nb-option>
       </nb-select>
     </div>
   </div>
@@ -125,13 +124,7 @@
         status="primary"
         formControlName="estado_civil"
       >
-        <nb-option value="Casado (a)">Casado (a)</nb-option>
-        <nb-option value="Soltero (a)">Soltero (a)</nb-option>
-        <nb-option value="Divorciado (a)">Divorciado (a)</nb-option>
-        <nb-option value="Separado (a)">Separado (a)</nb-option>
-        <nb-option value="Viudo (a)">Viudo (a)</nb-option>
-        <nb-option value="Conviviente">Conviviente</nb-option>
-        <nb-option value="No precisa">No precisa</nb-option>
+        <nb-option *ngFor="let item of estadoCivilArray" [value]="item">{{ item }}</nb-option>
       </nb-select>
     </div>
   </div>
@@ -147,14 +140,7 @@
         status="primary"
         formControlName="religion"
       >
-        <nb-option value="Adventista del Séptimo Día">Adventista del Séptimo Día</nb-option>
-        <nb-option value="Católico">Católico</nb-option>
-        <nb-option value="Evangélico">Evangélico</nb-option>
-        <nb-option value="Mormón">Mormón</nb-option>
-        <nb-option value="Pentecostes">Pentecostes</nb-option>
-        <nb-option value="Testigo de Jehova">Testigo de Jehova</nb-option>
-        <nb-option value="Otro">Otro</nb-option>
-        <nb-option value="Ninguno">Ninguno</nb-option>
+        <nb-option *ngFor="let item of religionArray" [value]="item">{{ item }}</nb-option>
       </nb-select>
     </div>
   </div>

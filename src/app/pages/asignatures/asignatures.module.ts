@@ -52,6 +52,9 @@ import { PublicConfigQuestionModule } from 'src/app/shared/components/questions/
 import { MExamViewModalModule } from 'src/app/shared/components/exam-view/m-exam-view-modal/m-exam-view-modal.module';
 import { VExamViewsModule } from 'src/app/shared/components/exam-view/v-exam-views/v-exam-views.module';
 import { AnswerQuestionsComponent } from './components/modals/answer-questions/answer-questions.component';
+import { SilaboComponent } from './components/c-free/navegacion/silabo/silabo.component';
+import { PreguntasComponent } from './components/c-free/navegacion/preguntas/preguntas.component';
+import { EstudiantesComponent } from './components/c-free/navegacion/estudiantes/estudiantes.component';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -141,7 +144,7 @@ const MODULES: any = [
     ...MODULES,
     ...PIPES
   ],
-  declarations: [...COMPONENTS, AnswerQuestionsComponent],
+  declarations: [...COMPONENTS, AnswerQuestionsComponent, SilaboComponent, PreguntasComponent, EstudiantesComponent],
   entryComponents: [...MODALS],
 
 })

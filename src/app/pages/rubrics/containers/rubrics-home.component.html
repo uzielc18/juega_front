@@ -14,7 +14,15 @@
     <!-- <button nbButton (click)="createRubric()">Crear Rúbrica</button> -->
   </nb-card-header>
   <nb-card-body class="pb-0 d-flex flex-column">
-    <button class="ms-auto" nbButton ghost status="primary" (click)="createRubric()">
+    <button
+      class="ms-auto"
+      nbButton
+      ghost
+      status="primary"
+      (click)="createRubric()"
+      nbTooltip="Nueva Rúbrica"
+      nbTooltipStatus="primary"
+    >
       <nb-icon icon="plus-circle-outline" style="width: 32px; height: 32px"></nb-icon>
     </button>
     <div class="table-responsive">
