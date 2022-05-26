@@ -22,6 +22,10 @@
       </div>
       <div class="text-comment col-md-10 pe-0" [ngClass]="{ 'text-comment-public': question?.mostrar !== 'help' }">
         <span>{{ question?.consulta }}</span>
+        <span *ngIf="question.created_at" class="text-secondary ms-auto mt-top" style="font-size: 10px">
+          Hace {{ expiredDays | i18nPlural: daysMap }} {{ expiredHours | i18nPlural: hoursMap }}
+          {{ expiredMinutes | i18nPlural: minutesMap }}
+        </span>
         <div class="d-flex align-items-center mt-1" [formGroup]="formHeader">
           <button
             nbButton
@@ -64,12 +68,10 @@
             Ver respuestas
           </button>
           <nb-radio-group formControlName="mostrar" class="d-flex">
-            <nb-radio *ngFor="let item of mostrarArray" [value]="item" (click)="updateMostrar(item)">{{ item }}</nb-radio>
+            <nb-radio *ngFor="let item of mostrarArray" [value]="item" (click)="updateMostrar(item)">{{
+              item
+            }}</nb-radio>
           </nb-radio-group>
-          <span *ngIf="question.created_at" class="text-secondary ms-auto" style="font-size: 10px">
-            Hace {{ expiredDays | i18nPlural: daysMap }} {{ expiredHours | i18nPlural: hoursMap }}
-            {{ expiredMinutes | i18nPlural: minutesMap }}
-          </span>
         </div>
       </div>
     </div>
@@ -117,7 +119,11 @@
               </div>
               <div class="text-comment col-md-10 pe-0" [ngClass]="{ 'text-comment-public': item?.mostrar !== 'help' }">
                 <span>{{ item?.respuesta }}</span>
-                <div class="d-flex align-items-center mt-1">
+                <span *ngIf="item.created_at" class="text-secondary ms-auto mt-auto" style="font-size: 10px">
+                  Hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
+                  {{ item?.expiredMinutes | i18nPlural: minutesMap }}
+                </span>
+                <div class="d-flex align-items-center">
                   <button
                     nbButton
                     shape="round"
@@ -135,10 +141,6 @@
                   >
                     + 1
                   </button>
-                  <span *ngIf="item.created_at" class="text-secondary ms-auto" style="font-size: 10px">
-                    Hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
-                    {{ item?.expiredMinutes | i18nPlural: minutesMap }}
-                  </span>
                 </div>
               </div>
             </div>

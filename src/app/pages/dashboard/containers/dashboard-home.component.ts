@@ -300,10 +300,10 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.generalService.updateNameIdData$(serviceName, person_id, data).subscribe(
       (res: any) => {
         if (res.success) {
-          this.getUserInfo();
           this.formHeader.controls['foto'].setValue('');
           this.formHeader.controls['profile_photo_path'].setValue('');
           this.formHeader.controls['base64_url'].setValue('');
+          this.getUserInfo();
         }
       },
       () => {

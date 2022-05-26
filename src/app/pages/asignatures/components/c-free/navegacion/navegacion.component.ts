@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogService, NbMenuItem } from '@nebular/theme';
+import { NbDialogService } from '@nebular/theme';
 import { AppService } from '../../../../../core';
 import { GeneralService } from '../../../../../providers';
 import { END_POINTS } from '../../../../../providers/utils';
 import { AnswerQuestionsComponent } from '../../modals/answer-questions/answer-questions.component';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-navegacion',
@@ -19,6 +20,7 @@ export class NavegacionComponent implements OnInit, OnChanges {
   mostrar: any;
   questions: any[] = [];
   loading: boolean = false;
+  showText: boolean = false;
   formHeader: any = FormGroup;
 
   // expiredDays: any;
@@ -47,8 +49,19 @@ export class NavegacionComponent implements OnInit, OnChanges {
     private generalService: GeneralService,
     private dialogService: NbDialogService,
     private userService: AppService,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    this.breakpointObserver.observe(['(max-width: 1399px)']).subscribe((result: BreakpointState) => {
+      if (result.matches) {
+        this.showText = true;
+        console.log('show');
+      } else {
+        this.showText = false;
+        console.log('hide');
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.fieldReactive();

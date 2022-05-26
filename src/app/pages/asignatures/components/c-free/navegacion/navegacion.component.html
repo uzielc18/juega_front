@@ -2,7 +2,11 @@
   <nb-card-body class="px-0 py-4">
     <div class="tabs-container">
       <nb-tabset>
-        <nb-tab tabTitle="Preguntas" tabIcon="question-mark-outline" responsive>
+        <nb-tab [tabTitle]="showText ? 'Silabo' : ''" tabIcon="clipboard-outline" responsive>
+          <button nbButton status="primary" (click)="getSilabu()">Ver Silabo</button>
+        </nb-tab>
+
+        <nb-tab [tabTitle]="showText ? 'Preguntas' : ''" tabIcon="question-mark-outline" responsive>
           <h5 class="fw-bold text-start" style="font-size: 16px">Preguntas</h5>
           <div class="question-container" style="text-align: justify; padding-top: 5px" [formGroup]="formHeader">
             <div class="d-flex flex-column">
@@ -37,7 +41,7 @@
             class="comment-container row mt-3"
             [ngClass]="{ 'comment-container-public': item?.mostrar !== 'help' }"
           >
-            <div class="photo-name col-md-3 p-0">
+            <div class="photo-name col-2 col-md-1 col-xxl-3 p-0">
               <div class="photo-container">
                 <img [src]="item?.person_foto" style="object-fit: cover" width="100%" height="100%" />
               </div>
@@ -46,9 +50,16 @@
               </div>
               <span class="puntos-info">+ {{ item?.puntos }}</span>
             </div>
-            <div class="text-comment col-md-9 pe-0" [ngClass]="{ 'text-comment-public': item?.mostrar !== 'help' }">
+            <div
+              class="text-comment col-10 col-md-11 col-xxl-9 pe-0"
+              [ngClass]="{ 'text-comment-public': item?.mostrar !== 'help' }"
+            >
               <span>{{ item?.consulta }}</span>
-              <div class="d-flex align-items-center mt-1">
+              <span *ngIf="item.created_at" class="text-secondary ms-auto mt-auto" style="font-size: 10px">
+                Hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
+                {{ item?.expiredMinutes | i18nPlural: minutesMap }}
+              </span>
+              <div class="d-flex align-items-center">
                 <button
                   nbButton
                   shape="round"
@@ -78,21 +89,21 @@
                 >
                   Responder
                 </button>
-                <span *ngIf="item.created_at" class="text-secondary ms-auto" style="font-size: 10px">
-                  Hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
-                  {{ item?.expiredMinutes | i18nPlural: minutesMap }}
-                </span>
               </div>
             </div>
           </div>
         </nb-tab>
 
-        <nb-tab tabTitle="Silabo" tabIcon="file-text-outline" responsive>
-          <button nbButton status="primary" (click)="getSilabu()">Ver Silabo</button>
+        <nb-tab [tabTitle]="showText ? 'Jutificación' : ''" tabIcon="file-text-outline" responsive>
+          <p>Jutificación</p>
         </nb-tab>
 
-        <nb-tab tabTitle="Mensajes" tabIcon="message-square-outline" responsive>
-          <p>Mensajes</p>
+        <nb-tab [tabTitle]="showText ? 'Estudiantes' : ''" tabIcon="people-outline" responsive>
+          <p>Estudiantes</p>
+        </nb-tab>
+
+        <nb-tab [tabTitle]="showText ? 'Configuración' : ''" tabIcon="settings-2-outline" responsive>
+          <p>Configuración</p>
         </nb-tab>
       </nb-tabset>
     </div>
