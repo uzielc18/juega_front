@@ -1,7 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AppService } from 'src/app/core';
-import { GeneralService } from '../../../../providers';
-import { END_POINTS } from '../../../../providers/utils';
 
 @Component({
   selector: 'app-perfil',
@@ -13,9 +10,7 @@ export class PerfilComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    // console.log(this.rolSemestre.rol.name)
-  }
+  ngOnInit(): void {}
 
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
