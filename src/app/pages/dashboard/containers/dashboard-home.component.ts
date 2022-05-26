@@ -23,6 +23,27 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   idCollapseTop: number = 0;
   idCollapseLeft: number = 0;
 
+  generoArray: any[] = ['Masculino', 'Femenino'];
+  estadoCivilArray: any[] = [
+    'Casado(a)',
+    'Soltero(a)',
+    'Divorciado(a)',
+    'Viudo(a)',
+    'Separado(a)',
+    'Conviviente',
+    'No precisa',
+  ];
+  religionArray: any[] = [
+    'Adventista del Séptimo Día',
+    'Católico',
+    'Evangélico',
+    'Mormón',
+    'Pentecostes',
+    'Testigo de Jehova',
+    'Otro',
+    'Ninguno',
+  ];
+
   perfilInfo: boolean = false;
   view: string = 'mini';
   subscription$: Subscription = new Subscription();

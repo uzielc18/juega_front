@@ -7,7 +7,7 @@
       </button>
     </div>
   </nb-card-header>
-  <nb-card-body [formGroup]="formHeader">
+  <nb-card-body>
     <div class="comment-container row mt-3" [ngClass]="{ 'comment-container-public': question?.mostrar !== 'help' }">
       <div class="photo-name col-md-2 p-0">
         <div class="photo-container">
@@ -22,7 +22,7 @@
       </div>
       <div class="text-comment col-md-10 pe-0" [ngClass]="{ 'text-comment-public': question?.mostrar !== 'help' }">
         <span>{{ question?.consulta }}</span>
-        <div class="d-flex align-items-center mt-1">
+        <div class="d-flex align-items-center mt-1" [formGroup]="formHeader">
           <button
             nbButton
             shape="round"
@@ -64,9 +64,7 @@
             Ver respuestas
           </button>
           <nb-radio-group formControlName="mostrar" class="d-flex">
-            <nb-radio value="Privado"> Privado </nb-radio>
-            <nb-radio value="Público"> Público </nb-radio>
-            <nb-radio value="Ayuda"> Ayuda </nb-radio>
+            <nb-radio *ngFor="let item of mostrarArray" [value]="item" (click)="updateMostrar(item)">{{ item }}</nb-radio>
           </nb-radio-group>
           <span *ngIf="question.created_at" class="text-secondary ms-auto" style="font-size: 10px">
             Hace {{ expiredDays | i18nPlural: daysMap }} {{ expiredHours | i18nPlural: hoursMap }}
@@ -79,7 +77,7 @@
       <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-10">
-          <div class="d-flex flex-column" *ngIf="responder">
+          <div class="d-flex flex-column" *ngIf="responder" [formGroup]="formHeader">
             <textarea
               nbInput
               fullWidth
@@ -87,7 +85,7 @@
               fieldSize="small"
               style="font-size: 12px"
               rows="4"
-              formControlName="consulta"
+              formControlName="respuesta"
             ></textarea>
             <div class="d-flex align-items-center justify-content-end">
               <button
@@ -118,7 +116,7 @@
                 <span class="puntos-info">+ {{ item?.puntos }}</span>
               </div>
               <div class="text-comment col-md-10 pe-0" [ngClass]="{ 'text-comment-public': item?.mostrar !== 'help' }">
-                <span>{{ item?.consulta }}</span>
+                <span>{{ item?.respuesta }}</span>
                 <div class="d-flex align-items-center mt-1">
                   <button
                     nbButton
@@ -138,8 +136,8 @@
                     + 1
                   </button>
                   <span *ngIf="item.created_at" class="text-secondary ms-auto" style="font-size: 10px">
-                    Hace {{ expiredDays | i18nPlural: daysMap }} {{ expiredHours | i18nPlural: hoursMap }}
-                    {{ expiredMinutes | i18nPlural: minutesMap }}
+                    Hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
+                    {{ item?.expiredMinutes | i18nPlural: minutesMap }}
                   </span>
                 </div>
               </div>

@@ -14,8 +14,17 @@ export class AnswerQuestionsComponent implements OnInit {
   @Input() userInfo: any;
 
   responder: boolean = false;
+  mostrarChanged: boolean = false;
   answers: any[] = [];
   formHeader: any = FormGroup;
+
+  mostrarArray: any = ['Privado', 'Público', 'Ayuda'];
+
+  MOSTRAR_OPTIONS: any = {
+    Privado: 'privado',
+    Público: 'publico',
+    Ayuda: 'help',
+  };
 
   expiredDays: any;
   expiredHours: any;
@@ -58,12 +67,33 @@ export class AnswerQuestionsComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      consulta: ['', [Validators.required, Validators.maxLength(200)]],
+      respuesta: ['', [Validators.required, Validators.maxLength(200)]],
       mostrar: ['', [Validators.required]],
     };
+    const RECOVER_MOSTRAR: any = {
+      privado: 'Privado',
+      publico: 'Público',
+      help: 'Ayuda',
+    };
     this.formHeader = this.formBuilder.group(controls);
-    this.formHeader.controls['mostrar'].setValue(this.question.mostrar === 'privado' ? 'Privado' : 'Público');
+    this.formHeader.controls['mostrar'].setValue(RECOVER_MOSTRAR[this.question.mostrar]);
     this.getAnswers();
+  }
+
+  updateMostrar(item: any) {
+    if (item !== this.formHeader.value.mostrar) {
+      this.formHeader.controls['mostrar'].setValue(item);
+      const serviceName = END_POINTS.base_back.inquiries;
+      const mostrar = this.MOSTRAR_OPTIONS[this.formHeader.value.mostrar] || '';
+      const data = {
+        mostrar: mostrar,
+      };
+      this.generalService.updateNameIdData$(serviceName, this.question.id, data).subscribe((res: any) => {
+        if (res.success) {
+          this.mostrarChanged = true;
+        }
+      });
+    }
   }
 
   countdown() {
@@ -83,14 +113,49 @@ export class AnswerQuestionsComponent implements OnInit {
     } else [(this.expiredDays = 0), (this.expiredHours = 0), (this.expiredMinutes = 0)];
   }
 
+  countdownAnswers(answer: any) {
+    if (answer && answer.created_at) {
+      const countDate = new Date(answer.created_at).getTime();
+      const now = new Date().getTime();
+      const expired = now - countDate;
+
+      const second = 1000;
+      const minute = second * 60;
+      const hour = minute * 60;
+      const day = hour * 24;
+
+      answer.expiredDays = Math.floor(expired / day);
+      answer.expiredHours = Math.floor((expired % day) / hour);
+      answer.expiredMinutes = Math.floor((expired % hour) / minute);
+    } else {
+      answer.expiredDays = 0;
+      answer.expiredHours = 0;
+      answer.expiredMinutes = 0;
+    }
+  }
+
   getAnswers() {
     const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
+    const params = {
+      inquirie_id: this.question.id,
+    };
     this.loading = true;
-    this.generalService.nameId$(serviceName, this.question.id).subscribe(
+    this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
         if (res.success) {
           this.answers = res.data;
           console.log(this.answers);
+          this.answers.forEach(answer => {
+            answer.expiredDays = 0;
+            answer.expiredHours = 0;
+            answer.expiredMinutes = 0;
+          });
+          this.answers.forEach(answer => {
+            this.countdownAnswers(answer);
+            setInterval(() => {
+              this.countdownAnswers(answer);
+            }, 60 * 1000);
+          });
         }
       },
       () => {
@@ -136,7 +201,7 @@ export class AnswerQuestionsComponent implements OnInit {
       codigo: 'mas_uno' || '',
       type_rating_id: 1 || '',
       valor: 1 || '',
-      tabla: 'inquiries' || '',
+      tabla: 'inquirie_answers' || '',
       tabla_id: answer.id || '',
       person_id: this.userInfo._user.person.id || '',
     };
@@ -163,17 +228,37 @@ export class AnswerQuestionsComponent implements OnInit {
   }
 
   answerQuestion() {
-    const serviceName = END_POINTS.base_back + 'inquirieAnswers';
+    const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
+    const mostrar = this.MOSTRAR_OPTIONS[this.formHeader.value.mostrar] || '';
     const data = {
       inquirie_id: this.question.id,
-      respuesta: this.formHeader.value.consulta,
+      respuesta: this.formHeader.value.respuesta,
       person_id: this.userInfo._user.person.id,
-      mostrar: this.formHeader.value.mostrar,
+      mostrar: mostrar,
     };
-    console.log(data);
+    this.loading = true;
+    this.generalService.addNameData$(serviceName, data).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.responder = false;
+          this.getAnswers();
+          this.formHeader.reset();
+          this.formHeader.controls['mostrar'].setValue(this.question.mostrar === 'privado' ? 'Privado' : 'Público');
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
 
   closeModal() {
+    if (this.mostrarChanged) {
+      this.activeModal.close('changed');
+    }
     this.activeModal.close('ok');
   }
 }

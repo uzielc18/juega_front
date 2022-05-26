@@ -220,8 +220,8 @@ export class NavegacionComponent implements OnInit, OnChanges {
         closeOnEsc: true,
       })
       .onClose.subscribe(result => {
-        if (result === 'ok') {
-          // this.getQuestions();
+        if (result === 'changed') {
+          this.getQuestions();
         }
       });
   }
