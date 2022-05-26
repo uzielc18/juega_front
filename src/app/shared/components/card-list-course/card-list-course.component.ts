@@ -50,7 +50,7 @@ export class CardListCourseComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      tipo: ['1']
+      tipo: ['2']
     };
     this.form = this.formBuilder.group(controls);
     this.updateBreadcrumb();

@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-rubricas',
   templateUrl: './rubricas.component.html',
   styleUrls: ['./rubricas.component.scss'],
 })
-export class RubricasComponent implements OnInit {
-  @Input() rubrica: any = null;
-  @Input() calification: any = null;
+export class RubricasComponent implements OnInit, OnChanges {
+  @Input() rubrica: any;
+  @Input() calification: any;
   colors: any[] = ['#57884e', '#8ba642', '#f9c851', '#f9a65a', '#f97a5a', '#f94a5a', '#f9065a'];
   bgColors: any[] = ['#57884e50', '#8ba64250', '#f9c85150', '#f9a65a50', '#f97a5a50', '#f94a5a50', '#f9065a50'];
 
@@ -15,8 +15,12 @@ export class RubricasComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.check();
+  ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['calification']) {
+      this.check();
+    }
   }
 
   rubricColors(i: any) {
@@ -40,10 +44,7 @@ export class RubricasComponent implements OnInit {
   }
 
   check() {
-    // if (this.rubrica && this.calification) {
-    // this.loading = false;
-    setTimeout(() => {
-      console.log(this.rubrica);
+    if (this.calification && this.calification.puntos) {
       this.rubrica.criterios.map((rub: any) => {
         rub.niveles.map((niv: any) => {
           this.calification.puntos.map((punt: any) => {
@@ -53,7 +54,6 @@ export class RubricasComponent implements OnInit {
           });
         });
       });
-    }, 15000);
-    // }
+    }
   }
 }

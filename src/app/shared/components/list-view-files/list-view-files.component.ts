@@ -22,8 +22,8 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
   ngOnChanges():void {
     this.arrayFiles = this.arrayFiles;
     this.director = this.director;
-    console.log(this.director);
-    
+    // console.log(this.director);
+
     this.recorrerList();
   }
   ngOnInit(): void {

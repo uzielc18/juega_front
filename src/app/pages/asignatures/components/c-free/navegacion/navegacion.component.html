@@ -1,60 +1,101 @@
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small" class="h-100 mb-0">
   <nb-card-body class="px-0 py-4">
-    <nb-tabset>
-      <nb-tab tabTitle="Silabo" tabIcon="file-text-outline" responsive>
-        <button nbButton status="primary" (click)="getSilabu()">Ver Silabo</button>
-      </nb-tab>
-      <nb-tab tabTitle="Preguntas" tabIcon="question-mark-outline" responsive>
-        <h5 class="fw-bold text-start" style="font-size: 16px">Preguntas</h5>
-        <div class="question-container" style="text-align: justify; padding-top: 5px">
-          <div class="d-flex flex-column">
-            <textarea
-              nbInput
-              fullWidth
-              placeholder="Tienes alguna duda?"
-              fieldSize="small"
-              style="font-size: 14px"
-              rows="3"
-            ></textarea>
-            <button nbButton status="success" size="tiny" class="ms-auto my-2">Preguntar</button>
-          </div>
-        </div>
-        <div class="comment-container row mt-2">
-          <div class="photo-name col-md-3 p-0">
-            <div class="photo-container">
-              <img
-                src="https://i.pinimg.com/originals/d9/56/9b/d9569bbed4393e2ceb1af7ba64fdf86a.jpg"
-                style="object-fit: cover"
-                width="100%"
-                height="100%"
-              />
-            </div>
-            <div class="name-container">
-              <span class="name">Juan Perez</span>
-            </div>
-            <button nbButton shape="round" size="tiny" outline status="basic" class="mt-1">+ 34</button>
-          </div>
-          <div class="text-comment col-md-9 pe-0">
-            <span (click)="answerQuestionOnModal()" style="cursor: pointer;">
-              En ocasiones, a la hora de crear una página web o una tienda, nos encontramos que en un espacio donde
-              queremos situar un texto encontramos que en un espacio donde queremos situar un texto
-            </span>
-            <div class="d-flex align-items-center mt-1">
-              <button nbButton shape="round" size="tiny" outline status="warning" class="me-2 custom-button" (click)="upVote($event)">
-                + 1
-              </button>
-              <button nbButton shape="round" size="tiny" outline status="warning" class="custom-button" (click)="answerQuestion($event)">
-                Responder
-              </button>
-              <span class="text-secondary ms-auto" style="font-size: 10px">Hace 1 minuto</span>
+    <div class="tabs-container">
+      <nb-tabset>
+        <nb-tab tabTitle="Preguntas" tabIcon="question-mark-outline" responsive>
+          <h5 class="fw-bold text-start" style="font-size: 16px">Preguntas</h5>
+          <div class="question-container" style="text-align: justify; padding-top: 5px" [formGroup]="formHeader">
+            <div class="d-flex flex-column">
+              <textarea
+                nbInput
+                fullWidth
+                placeholder="Tienes alguna duda?"
+                fieldSize="small"
+                style="font-size: 12px"
+                rows="4"
+                formControlName="consulta"
+              ></textarea>
+              <div class="d-flex align-items-center justify-content-end">
+                <nb-toggle formControlName="mostrar" status="basic" labelPosition="start">{{
+                  formHeader.value.mostrar ? 'Privado' : 'Publico'
+                }}</nb-toggle>
+                <button
+                  nbButton
+                  status="primary"
+                  size="small"
+                  class="ms-2 my-2"
+                  (click)="sendQuestion()"
+                  [disabled]="!formHeader.valid"
+                >
+                  Preguntar
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </nb-tab>
-      <nb-tab tabTitle="Mensajes" tabIcon="message-square-outline" responsive>
-        <p>Mensajes</p>
-      </nb-tab>
-    </nb-tabset>
+          <div
+            *ngFor="let item of questions; let i = index"
+            class="comment-container row mt-3"
+            [ngClass]="{ 'comment-container-public': item?.mostrar !== 'help' }"
+          >
+            <div class="photo-name col-md-3 p-0">
+              <div class="photo-container">
+                <img [src]="item?.person_foto" style="object-fit: cover" width="100%" height="100%" />
+              </div>
+              <div class="name-container my-1">
+                <span class="name">{{ item?.person_nombre }} {{ item.codigo ? '(' + item.codigo + ')' : '' }}</span>
+              </div>
+              <span class="puntos-info">+ {{ item?.puntos }}</span>
+            </div>
+            <div class="text-comment col-md-9 pe-0" [ngClass]="{ 'text-comment-public': item?.mostrar !== 'help' }">
+              <span>{{ item?.consulta }}</span>
+              <div class="d-flex align-items-center mt-1">
+                <button
+                  nbButton
+                  shape="round"
+                  size="tiny"
+                  outline
+                  status="warning"
+                  class="me-2 custom-button"
+                  [ngClass]="{
+                    'custom-button-public': item?.mostrar !== 'help',
+                    'button-votado': item?.puntos_activo === 0 && item?.mostrar === 'help',
+                    'button-votado-public': item?.puntos_activo === 0 && item?.mostrar !== 'help'
+                  }"
+                  (click)="upVoteQuestion(item)"
+                  [disabled]="item?.puntos_activo === 0"
+                >
+                  + 1
+                </button>
+                <button
+                  nbButton
+                  shape="round"
+                  size="tiny"
+                  outline
+                  status="warning"
+                  class="custom-button"
+                  [ngClass]="{ 'custom-button-public': item?.mostrar !== 'help' }"
+                  (click)="answerQuestionOnModal(item)"
+                >
+                  Responder
+                </button>
+                <span *ngIf="item.created_at" class="text-secondary ms-auto" style="font-size: 10px">
+                  Hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
+                  {{ item?.expiredMinutes | i18nPlural: minutesMap }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </nb-tab>
+
+        <nb-tab tabTitle="Silabo" tabIcon="file-text-outline" responsive>
+          <button nbButton status="primary" (click)="getSilabu()">Ver Silabo</button>
+        </nb-tab>
+
+        <nb-tab tabTitle="Mensajes" tabIcon="message-square-outline" responsive>
+          <p>Mensajes</p>
+        </nb-tab>
+      </nb-tabset>
+    </div>
   </nb-card-body>
   <nb-card-footer>
     <hr />

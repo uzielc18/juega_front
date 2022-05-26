@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
@@ -16,7 +16,7 @@ export class VWorksComponent implements OnInit, OnChanges {
   @Input() element: any;
   @Input() userInfo: any;
   @Input() pending: any;
-  @Input() rubrica: any = null;
+  @Input() rubrica: any;
   @Input() has_rubric: boolean = false;
   @Input() calification: any;
   loading: boolean = false;
@@ -72,15 +72,23 @@ export class VWorksComponent implements OnInit, OnChanges {
       this.countdown(this.element?.fecha_fin);
     }, 1000);
   }
-  ngOnChanges(): void {
-    this.pending = this.pending;
-  }
+  // ngOnChanges(): void {
+  //   this.pending = this.pending;
+  // }
   ngOnInit(): void {
     this.fieldReactive();
-    if (this.rubrica !== null) {
-      console.log(this.rubrica, 'desde rubriiiiiiiiiiica');
+    // if (this.rubrica !== null) {
+    //   console.log(this.rubrica, 'desde rubriiiiiiiiiiica');
+    // }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.pending = this.pending;
+    if (changes.rubrica) {
+      this.rubrica = changes.rubrica.currentValue;
     }
   }
+
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     const val = JSON.parse(sesion);
@@ -112,7 +120,7 @@ export class VWorksComponent implements OnInit, OnChanges {
     this.expiredSeconds = Math.floor((expired % minute) / second);
 
     if (this.daysLeft <= 0 && this.hoursLeft <= 0 && this.minutesLeft <= 0 && this.secondsLeft <= 0) {
-      this.tiempo_vencido = true; // mejorar la logica
+      this.tiempo_vencido = true;
     }
   }
 

@@ -30,6 +30,9 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   loading: boolean = false;
 
   formHeader: any = FormGroup;
+  nombreSubscription: any = Subscription;
+  theRolSemestre: any;
+  valida: boolean = false;
 
   directorio: any;
   key_file: any;
@@ -79,6 +82,30 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.getUserInfo();
     this.getNews();
     this.fieldReactive();
+    this.nombreSubscription = this.emitEventsService.returns().subscribe(value => {
+      // para emitir evento desde la cabecera
+      if (value && value.rol && value.semestre) {
+        this.theRolSemestre = value;
+        this.valida = true;
+        // setTimeout(() => {
+        this.getUserInfo();
+        // }, 1000);
+      } else {
+        this.valida = false;
+      }
+    });
+    this.recoveryValues();
+  }
+
+  recoveryValues() {
+    this.emitEventsService.castRolSemester.subscribe(value => {
+      if (value && value.rol && value.semestre && !this.valida) {
+        this.theRolSemestre = value;
+        // setTimeout(() => {
+        this.getUserInfo();
+        // }, 1000);
+      }
+    });
   }
 
   private fieldReactive() {
@@ -257,12 +284,19 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
           this.formHeader.controls['profile_photo_path'].setValue('');
           this.formHeader.controls['base64_url'].setValue('');
         }
-      }, () => { this.loading = false; }, () => { this.loading = false; }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
     );
   }
 
   ngOnDestroy(): void {
     this.perfilInfo = false;
     this.subscription$.unsubscribe();
+    this.nombreSubscription.unsubscribe();
   }
 }
