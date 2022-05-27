@@ -55,6 +55,8 @@ import { AnswerQuestionsComponent } from './components/modals/answer-questions/a
 import { SilaboComponent } from './components/c-free/navegacion/silabo/silabo.component';
 import { PreguntasComponent } from './components/c-free/navegacion/preguntas/preguntas.component';
 import { EstudiantesComponent } from './components/c-free/navegacion/estudiantes/estudiantes.component';
+import { FilterModule } from '../../shared/pipes/filter/filter.module';
+import { HighlightModule } from '../../shared/directives/highlight.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -110,7 +112,11 @@ const NGX_MODULES: any = [
 ];
 const PIPES: any = [
   FilterPipeModule,
+  FilterModule
 ];
+const DIRECTIVES: any = [
+  HighlightModule
+]
 const MODULES: any = [
   PrepareFileProModule,
   MoreOptionsModule,
@@ -142,7 +148,8 @@ const MODULES: any = [
     ...CONTROL_MESSAGGE,
     ...NGX_MODULES,
     ...MODULES,
-    ...PIPES
+    ...PIPES,
+    ...DIRECTIVES
   ],
   declarations: [...COMPONENTS, AnswerQuestionsComponent, SilaboComponent, PreguntasComponent, EstudiantesComponent],
   entryComponents: [...MODALS],

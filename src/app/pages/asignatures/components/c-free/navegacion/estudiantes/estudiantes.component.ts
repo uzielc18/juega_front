@@ -1,5 +1,16 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbToastrService } from '@nebular/theme';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { GeneralService } from '../../../../../../providers';
@@ -14,7 +25,10 @@ export class EstudiantesComponent implements OnInit, OnChanges {
   @Input() curso: any;
 
   loading: boolean = false;
-  listStudents: any[] = [];
+  listStudents: any;
+  tempList: any = [];
+  anotherTempList: any = [];
+  showOneStudent: boolean = false;
   searchstring: any = [];
   formHeader: any = FormGroup;
 
@@ -32,13 +46,30 @@ export class EstudiantesComponent implements OnInit, OnChanges {
 
   minutesMap = {
     '=0': '',
-    '=1': '1 minuto,',
-    other: '# minutos,',
+    '=1': '1 minuto.',
+    other: '# minutos.',
   };
 
-  debouncer: Subject<any>= new Subject();
+  isListOpen = false;
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
+    this.isListOpen = false;
+  }
+  @ViewChild('lista') lista!: ElementRef;
 
-  constructor(private generalService: GeneralService, private formBuilder: FormBuilder) {}
+  constructor(
+    private generalService: GeneralService,
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2,
+    private toastrService: NbToastrService
+  ) {
+    if (this.isListOpen) {
+      this.renderer.listen('window', 'click', (e: Event) => {
+        if ((e.target !== e.target) !== this.lista.nativeElement) {
+          this.isListOpen = false;
+        }
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -52,9 +83,19 @@ export class EstudiantesComponent implements OnInit, OnChanges {
 
   private fieldReactive() {
     const controls = {
-      termino: ['', [Validators.required]],
+      termino: [{ value: '', disabled: false }, [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
+    this.formHeader.controls['termino'].setValue('');
+  }
+
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion) {
+      return JSON.parse(sesion);
+    } else {
+      return '';
+    }
   }
 
   countdown(question: any) {
@@ -87,12 +128,12 @@ export class EstudiantesComponent implements OnInit, OnChanges {
         (res: any) => {
           if (res.success) {
             this.listStudents = res.data;
-            this.listStudents.forEach(student => {
+            this.listStudents.forEach((student: any) => {
               student.expiredDays = 0;
               student.expiredHours = 0;
               student.expiredMinutes = 0;
             });
-            this.listStudents.forEach(student => {
+            this.listStudents.forEach((student: any) => {
               this.countdown(student);
               setInterval(() => {
                 this.countdown(student);
@@ -113,14 +154,52 @@ export class EstudiantesComponent implements OnInit, OnChanges {
   syncStudentsLamb() {
     if (this.curso && this.curso.id_carga_curso) {
       const serviceName = END_POINTS.base_back.config + '/get-enrollments';
-      // const semestre =
+      const ids = {
+        semestre_nombre: this.rolSemestre.semestre.nombre || '',
+        id_carga_curso: this.curso.id_carga_curso || '',
+        id_3: '0',
+        id_4: '0',
+      };
+      this.loading = true;
+      this.generalService
+        .nameIdAndIdAndIdAndId$(serviceName, ids.semestre_nombre, ids.id_carga_curso, ids.id_3, ids.id_4)
+        .subscribe(
+          (res: any) => {
+            if (res.success) {
+              this.toastrService.info(status, `${res.message}`);
+            }
+          },
+          () => {
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
     }
   }
 
   searchStudent() {
+    this.isListOpen = true;
+    this.tempList = this.listStudents;
+  }
 
+  restoreStudents() {
+    this.listStudents = this.anotherTempList;
+    this.formHeader.controls['termino'].setValue('');
+    this.formHeader.controls['termino'].enable();
+    this.showOneStudent = false;
+    this.isListOpen = false;
   }
 
   setTermino(termino: any) {
+    this.showOneStudent = true;
+    this.isListOpen = false;
+    this.formHeader.controls['termino'].setValue(termino.persons_student_nombre);
+    this.formHeader.controls['termino'].disable();
+    this.anotherTempList = this.listStudents;
+    this.tempList = [];
+    this.listStudents = [];
+    this.listStudents.push(termino);
   }
 }

@@ -46,6 +46,7 @@ export class EmitEventsService {
   }
 
   profileInfo(value: boolean) {
+    console.log('profileInfo', value);
     this.profile$.next(value);
   }
 
