@@ -1,5 +1,17 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small" class="h-100">
-  <h5 class="fw-bold text-start" style="font-size: 16px">Lista de estudiantes</h5>
+  <div class="d-flex align-items-center mb-2">
+    <h5 class="fw-bold text-start mb-0 me-2" style="font-size: 16px">Lista de estudiantes</h5>
+    <button
+      nbButton
+      ghost
+      status="warning"
+      (click)="syncStudentsLamb()"
+      nbTooltip="Sincronizar"
+      nbTooltipStatus="warning"
+    >
+      <nb-icon icon="sync-outline"></nb-icon>
+    </button>
+  </div>
   <nb-form-field [formGroup]="formHeader">
     <input
       type="text"
@@ -7,25 +19,45 @@
       fullWidth
       status="primary"
       formControlName="termino"
-      placeholder="Buscador"
+      placeholder="Buscar alumno(a)"
       fieldSize="small"
       (keypress)="searchStudent()"
     />
-    <button nbSuffix nbButton ghost>
-      <nb-icon icon="search-outline"></nb-icon>
-    </button>
+    <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
   </nb-form-field>
-	<div class="students-container">
-		<div *ngFor="let item of listStudents" class="student mb-2">
-			<div class="img-container">
-				<img *ngIf="item?.persons_student_id" [src]="item?.persons_student_foto" [alt]="item?.persons_student_nombre">
-			</div>
-			<div class="student-info">
-				<p class="student-name">{{ item?.persons_student_nombre }}</p>
-				<span class="codigo text-secondary">{{ item?.codigo }}</span>
-				<span *ngIf="item.created_at" class="tiempo-activo text-secondary">Activo hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
-					{{ item?.expiredMinutes | i18nPlural: minutesMap }}</span>
-			</div>
-		</div>
-	</div>
+  <div class="text-end my-1">
+    <button nbButton size="tiny" status="primary" *ngIf="showOneStudent" (click)="restoreStudents()">
+      Lista completa
+    </button>
+  </div>
+  <ul class="list-group" *ngIf="isListOpen" #lista>
+    <li
+      *ngFor="let item of tempList | appFilter: formHeader.value.termino"
+      appHighlight
+      [searchedWord]="formHeader.value.termino"
+      [content]="item.persons_student_nombre"
+      [classToApply]="'fw-bold'"
+      [setTitle]="true"
+      class="list-group-item list-group-item-action py-1"
+      style="cursor: pointer"
+      (click)="setTermino(item)"
+    >
+      {{ item.persons_student_nombre }}
+    </li>
+  </ul>
+  <div class="students-container">
+    <div *ngFor="let item of listStudents" class="student mb-2">
+      <div class="img-container">
+        <img *ngIf="item?.persons_student_id" [src]="item?.persons_student_foto" [alt]="item?.persons_student_nombre" />
+      </div>
+      <div class="student-info ms-2">
+        <p class="student-name">{{ item?.persons_student_nombre }}</p>
+        <span class="codigo text-secondary">{{ item?.codigo }}</span>
+        <span *ngIf="item.created_at" class="tiempo-activo text-secondary"
+          >Activo hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
+          {{ item?.expiredMinutes | i18nPlural: minutesMap }}</span
+        >
+      </div>
+    </div>
+  </div>
 </div>

@@ -12,7 +12,7 @@
         formControlName="consulta"
       ></textarea>
       <div class="d-flex align-items-center justify-content-end">
-        <nb-toggle formControlName="mostrar" status="basic" labelPosition="start">{{
+        <nb-toggle formControlName="mostrar" status="basic" labelPosition="start" [disabled]="!formHeader.controls['consulta'].valid">{{
           formHeader.value.mostrar ? 'Privado' : 'Publico'
         }}</nb-toggle>
         <button
@@ -57,7 +57,7 @@
           shape="round"
           size="tiny"
           outline
-          status="warning"
+          status="basic"
           class="me-2 custom-button"
           [ngClass]="{
             'custom-button-public': item?.mostrar !== 'help',
@@ -74,7 +74,7 @@
           shape="round"
           size="tiny"
           outline
-          status="warning"
+          status="basic"
           class="custom-button"
           [ngClass]="{ 'custom-button-public': item?.mostrar !== 'help' }"
           (click)="answerQuestionOnModal(item)"

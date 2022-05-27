@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
@@ -46,7 +46,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
 
   perfilInfo: boolean = false;
   view: string = 'mini';
-  subscription$: Subscription = new Subscription();
+  subscription$: any = Subscription;
 
   loading: boolean = false;
 
@@ -98,9 +98,15 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.emitEventsService.profileInfoReturns().subscribe(value => {
+      this.perfilInfo = value;
+      // this.getUserInfo();
+      // console.log('value', value);
+    });
+
     this.showProfileInfo();
     this.setCollapse();
-    this.getUserInfo();
+    this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
     this.getNews();
     this.fieldReactive();
     this.nombreSubscription = this.emitEventsService.returns().subscribe(value => {
@@ -109,7 +115,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
         this.theRolSemestre = value;
         this.valida = true;
         // setTimeout(() => {
-        this.getUserInfo();
+        this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
         // }, 1000);
       } else {
         this.valida = false;
@@ -118,12 +124,21 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.recoveryValues();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes.perfilInfo) {
+      console.log('perfilInfo', changes.perfilInfo);
+      this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
+    }
+  }
+
   recoveryValues() {
     this.emitEventsService.castRolSemester.subscribe(value => {
       if (value && value.rol && value.semestre && !this.valida) {
         this.theRolSemestre = value;
         // setTimeout(() => {
-        this.getUserInfo();
+        this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
         // }, 1000);
       }
     });
@@ -158,11 +173,21 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   showProfileInfo() {
+    console.log('inininininin');
+    // this.subscription$ = this.emitEventsService.profileInfoReturns().subscribe((res: any) => {
+    //   if (res) {
+    //     console.log('res', res);
+    //     this.perfilInfo = res;
+    //     this.getUserInfo();
+    //   }
+    // });
+    // get value from emitEventsService
     this.subscription$ = this.emitEventsService.profileInfoReturns().subscribe((res: any) => {
-      if (res) {
-        this.perfilInfo = res;
-        this.getUserInfo();
-      }
+      console.log('res', res);
+      // if (res) {
+      // this.perfilInfo = res;
+      // this.getUserInfo();
+      // }
     });
   }
 
@@ -228,41 +253,48 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  getUserInfo() {
+  getUserInfo(view: any) {
     this.userInfo = this.userService;
     const serviceName = END_POINTS.base_back.user + '/perfil';
     const person_id = this.userInfo._user.id;
     const user_id = this.userInfo._user.person.id;
-    if (this.perfilInfo) {
-      this.view = 'full';
-    }
+    this.loading = true;
+    // this.view = view;
     // console.log(this.view);
     const params = {
-      view: this.view,
+      view: view,
     };
-    this.generalService.nameIdAndIdParams$(serviceName, person_id, user_id, params).subscribe((res: any) => {
-      if (res.success) {
-        this.profile = res.data;
-        // console.log(this.profile);
-        this.formHeader.patchValue({
-          codigo: this.profile.person.codigo,
-          nombre: this.profile.person.nombres,
-          apellido_paterno: this.profile.person.apellido_paterno,
-          apellido_materno: this.profile.person.apellido_materno,
-          dni: this.profile.person.dni,
-          correo: this.profile.user.email,
-          genero: this.profile.person.genero || '',
-          nacionalidad: this.profile.person.nacionalidad || '',
-          ubigeo: this.profile.person.ubigeo || '',
-          estado_civil: this.profile.person.estado_civil || '',
-          religion: this.profile.person.religion || '',
-          fecha_nacimiento: new Date(this.profile.person.fecha_nacimiento) || new Date(),
-          presentacion: this.profile.person.resumen || '',
-          foto: this.profile.person.foto || '',
-          profile_photo_path: this.profile.user.profile_photo_path || '',
-        });
+    this.generalService.nameIdAndIdParams$(serviceName, person_id, user_id, params).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.profile = res.data;
+          // console.log(this.profile);
+          this.formHeader.patchValue({
+            codigo: this.profile.person.codigo,
+            nombre: this.profile.person.nombres,
+            apellido_paterno: this.profile.person.apellido_paterno,
+            apellido_materno: this.profile.person.apellido_materno,
+            dni: this.profile.person.dni,
+            correo: this.profile.user.email,
+            genero: this.profile.person.genero || '',
+            nacionalidad: this.profile.person.nacionalidad || '',
+            ubigeo: this.profile.person.ubigeo || '',
+            estado_civil: this.profile.person.estado_civil || '',
+            religion: this.profile.person.religion || '',
+            fecha_nacimiento: new Date(this.profile.person.fecha_nacimiento) || new Date(),
+            presentacion: this.profile.person.resumen || '',
+            foto: this.profile.person.foto || '',
+            profile_photo_path: this.profile.user.profile_photo_path || '',
+          });
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
       }
-    });
+    );
   }
 
   getNews() {
@@ -282,18 +314,18 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.loading = true;
     const data = {
       person: {
-        genero: this.formHeader.controls['genero'].value,
-        nacionalidad: this.formHeader.controls['nacionalidad'].value,
-        ubigeo: this.formHeader.controls['ubigeo'].value,
-        estado_civil: this.formHeader.controls['estado_civil'].value,
-        religion: this.formHeader.controls['religion'].value,
-        fecha_nacimiento: this.formHeader.controls['fecha_nacimiento'].value,
-        resumen: this.formHeader.controls['presentacion'].value,
-        foto: this.formHeader.controls['foto'].value,
+        genero: this.formHeader.controls['genero'].value || '',
+        nacionalidad: this.formHeader.controls['nacionalidad'].value || '',
+        ubigeo: this.formHeader.controls['ubigeo'].value || '',
+        estado_civil: this.formHeader.controls['estado_civil'].value || '',
+        religion: this.formHeader.controls['religion'].value || '',
+        fecha_nacimiento: this.formHeader.controls['fecha_nacimiento'].value || '',
+        resumen: this.formHeader.controls['presentacion'].value || '',
+        foto: this.formHeader.controls['foto'].value || '',
       },
       user: {
-        email: this.formHeader.controls['correo'].value,
-        profile_photo_path: this.formHeader.controls['profile_photo_path'].value,
+        email: this.formHeader.controls['correo'].value || '',
+        profile_photo_path: this.formHeader.controls['profile_photo_path'].value || '',
         // profile_photo_path: this.formHeader.controls['base64_url'].value,
       },
     };
@@ -303,7 +335,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
           this.formHeader.controls['foto'].setValue('');
           this.formHeader.controls['profile_photo_path'].setValue('');
           this.formHeader.controls['base64_url'].setValue('');
-          this.getUserInfo();
+          this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
         }
       },
       () => {

@@ -105,15 +105,15 @@ export class PerfilComponent implements OnInit {
     this.loading = true;
     const data = {
       person: {
-        genero: this.formHeader.controls['genero'].value,
-        nacionalidad: this.formHeader.controls['nacionalidad'].value,
-        ubigeo: this.formHeader.controls['ubigeo'].value,
-        estado_civil: this.formHeader.controls['estado_civil'].value,
-        religion: this.formHeader.controls['religion'].value,
-        fecha_nacimiento: this.formHeader.controls['fecha_nacimiento'].value,
+        genero: this.formHeader.controls['genero'].value || '',
+        nacionalidad: this.formHeader.controls['nacionalidad'].value || '',
+        ubigeo: this.formHeader.controls['ubigeo'].value || '',
+        estado_civil: this.formHeader.controls['estado_civil'].value || '',
+        religion: this.formHeader.controls['religion'].value || '',
+        fecha_nacimiento: this.formHeader.controls['fecha_nacimiento'].value || '',
       },
       user: {
-        email: this.formHeader.controls['correo'].value,
+        email: this.formHeader.controls['correo'].value || '',
       },
     };
     this.generalService.updateNameIdData$(serviceName, person_id, data).subscribe(

@@ -14,6 +14,7 @@ export class AnswerQuestionsComponent implements OnInit {
   @Input() userInfo: any;
 
   responder: boolean = false;
+  verRespuestas: boolean = true;
   mostrarChanged: boolean = false;
   answers: any[] = [];
   formHeader: any = FormGroup;
@@ -44,8 +45,8 @@ export class AnswerQuestionsComponent implements OnInit {
 
   minutesMap = {
     '=0': '',
-    '=1': '1 minuto,',
-    other: '# minutos,',
+    '=1': '1 minuto.',
+    other: '# minutos.',
   };
 
   loading: boolean = false;
@@ -225,6 +226,10 @@ export class AnswerQuestionsComponent implements OnInit {
 
   showInput() {
     this.responder = !this.responder;
+  }
+
+  showAnswers() {
+    this.verRespuestas = !this.verRespuestas;
   }
 
   answerQuestion() {
