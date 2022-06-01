@@ -2,21 +2,14 @@
   <div class="profile mb-1">
     <div class="photo-container">
       <!-- <img src="assets/student.jpg" alt=""> -->
-      <img
-        [src]="profile?.user?.profile_photo_url"
-        [alt]="profile?.person?.foto"
-        width="100%"
-        style="object-fit: contain"
-      />
+      <img [src]="profile?.user?.profile_photo_url" [alt]="profile?.person?.foto" width="100%" style="object-fit: contain" />
     </div>
     <div class="d-flex flex-column" style="flex: 1">
       <div class="student">
         <p class="student-name">
           {{ profile?.person?.nombres }}
         </p>
-        <p class="student-lastname">
-          {{ profile?.person?.apellido_paterno }} &nbsp; {{ profile?.person?.apellido_materno }}
-        </p>
+        <p class="student-lastname">{{ profile?.person?.apellido_paterno }} &nbsp; {{ profile?.person?.apellido_materno }}</p>
       </div>
       <div class="student-info">
         <p *ngIf="rolSemestre?.rol?.name === 'Estudiante'" class="ciclo">{{ profile?.person?.ciclo }}º Ciclo</p>
@@ -53,9 +46,7 @@
       <div class="description">
         <div class="text">
           <p>Trabajos completados</p>
-          <nb-progress-bar
-            [value]="(profile?.info?.trabajos_completados / profile?.info?.total_trabajos) * 100"
-          ></nb-progress-bar>
+          <nb-progress-bar [value]="(profile?.info?.trabajos_completados / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
         </div>
       </div>
     </div>
@@ -67,9 +58,7 @@
       <div class="description">
         <div class="text">
           <p>Trabajos vencidos</p>
-          <nb-progress-bar
-            [value]="(profile?.info?.trabajos_vencidos / profile?.info?.total_trabajos) * 100"
-          ></nb-progress-bar>
+          <nb-progress-bar [value]="(profile?.info?.trabajos_vencidos / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
         </div>
       </div>
     </div>
@@ -81,9 +70,7 @@
       <div class="description">
         <div class="text">
           <p>Trabajos por completar</p>
-          <nb-progress-bar
-            [value]="(profile?.info?.trabajos_por_completar / profile?.info?.total_trabajos) * 100"
-          ></nb-progress-bar>
+          <nb-progress-bar [value]="(profile?.info?.trabajos_por_completar / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
         </div>
       </div>
     </div>

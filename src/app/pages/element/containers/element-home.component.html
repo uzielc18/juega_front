@@ -1,8 +1,107 @@
-<nb-card class="h-100">
-	<nb-card-header>
-		FYFS
-	</nb-card-header>
-	<nb-card-body>
-		fasfsdafasfasdfasdfasdfasfsfsdfsdfsdf
-	</nb-card-body>
+<nb-card class="h-100" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+  <nb-card-header> FYFS </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="rolSemestre?.rol?.name === 'Docente'" class="row">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-6 mb-2 mb-md-2">
+            <button nbButton status="primary" size="small" fullWidth><nb-icon icon="plus-outline"></nb-icon>Nuevo</button>
+          </div>
+          <div class="col-md-6">
+            <button nbButton status="info" size="small" outline fullWidth><nb-icon icon="flip-outline"></nb-icon>Importar</button>
+          </div>
+        </div>
+        <!-- <div>
+          <label class="label">Seleccione el curso:</label>
+          <nb-form-field class="mt-2" [formGroup]="formHeader">
+            <nb-icon nbPrefix icon="search" pack="eva"></nb-icon>
+            <input
+              type="text"
+              status="primary"
+              fieldSize="small"
+              placeholder="Buscador"
+              formControlName="termino"
+              (click)="searchCourses()"
+              nbInput
+              fullWidth
+            />
+            <button nbSuffix nbButton ghost status="danger" (click)="resetCourses()">
+              <nb-icon icon="close-square-outline" pack="eva"> </nb-icon>
+            </button>
+          </nb-form-field>
+          <ul *ngIf="showCourses" class="list-group" #listaCurso>
+            <li
+              *ngFor="let item of listOfCourses | appFilter: formHeader.value.termino:'nombre'"
+              appHighlight
+              [searchedWord]="formHeader.value.termino"
+              [content]="item.nombre"
+              [classToApply]="'fw-bold'"
+              [setTitle]="true"
+              class="list-group-item list-group-item-action py-1"
+              style="cursor: pointer"
+              (click)="setCourse(item)"
+
+            >
+              {{ item.nombre }}
+            </li>
+          </ul>
+        </div>
+        <div>
+          <label class="label">Seleccione la unidad:</label>
+          <nb-form-field class="mt-2" [formGroup]="formHeader">
+            <nb-icon nbPrefix icon="search" pack="eva"></nb-icon>
+            <input
+              type="text"
+              status="primary"
+              fieldSize="small"
+              placeholder="Buscador"
+              formControlName="terminoUnidad"
+              nbInput
+              fullWidth
+            />
+          </nb-form-field>
+          <ng-container *ngFor="let item of listOFTopics">
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-action py-1" style="cursor: pointer" (click)="setTopics(item)">
+                {{ item.tema }}
+              </li>
+            </ul>
+          </ng-container>
+        </div> -->
+        <div [formGroup]="formHeader">
+          <input
+            formControlName="termino"
+            nbInput
+            size="small"
+            type="text"
+            placeholder="Seleccione un curso"
+            [nbAutocomplete]="auto"
+            fullWidth
+          />
+          <nb-autocomplete #auto>
+            <nb-option-group *ngFor="let course of filteredGroups$ | async; trackBy: trackByFn" [title]="course.nombre">
+              <nb-option *ngFor="let topic of course.topics" [value]="topic.tema" (click)="setTopics(topic)">
+                <!-- <nb-checkbox [checked]="topic.checked">{{ topic.tema }}</nb-checkbox> -->
+                {{ topic.tema }}
+              </nb-option>
+            </nb-option-group>
+          </nb-autocomplete>
+          <div class="mt-4">
+            <ol *ngIf="selectedTopics.length > 0" class="list-group list-group-numbered">
+              <li *ngFor="let item of selectedTopics" class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">{{ item.tema }}</div>
+                  {{ item.course_name }}
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8"></div>
+    </div>
+    <div *ngIf="rolSemestre?.rol?.name !== 'Docente'">
+      <h4>Vista solo para Docentes</h4>
+    </div>
+  </nb-card-body>
 </nb-card>

@@ -38,11 +38,7 @@ export class PreguntasComponent implements OnInit {
     other: '# minutos,',
   };
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private generalService: GeneralService,
-    private dialogService: NbDialogService
-  ) {}
+  constructor(private formBuilder: FormBuilder, private generalService: GeneralService, private dialogService: NbDialogService) {}
 
   ngOnInit(): void {
     this.fieldReactive();
