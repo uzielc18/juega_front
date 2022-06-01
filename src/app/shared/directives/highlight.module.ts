@@ -1,9 +1,15 @@
 import { NgModule } from '@angular/core';
+import { ClickOutsideDirective } from './clickOutside.directive';
 import { HighlightDirective } from './highlight.directive';
 
+const DIRECTIVES: any = [
+  HighlightDirective,
+  ClickOutsideDirective,
+]
+
 @NgModule({
-  declarations: [HighlightDirective],
+  declarations: [...DIRECTIVES],
   imports: [],
-  exports: [HighlightDirective],
+  exports: [...DIRECTIVES],
 })
-export class HighlightModule {}
+export class DirectiveModule {}

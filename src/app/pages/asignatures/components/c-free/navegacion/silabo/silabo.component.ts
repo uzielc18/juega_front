@@ -28,9 +28,7 @@ export class SilaboComponent implements OnInit {
           const pdf_newTab = window.open('about:blank');
           if (pdf_newTab) {
             pdf_newTab?.document.write(
-              "<iframe width='100%' height='100%' src='data:application/pdf;base64, " +
-                encodeURI(this.silabu) +
-                "'></iframe>"
+              "<iframe width='100%' height='100%' src='data:application/pdf;base64, " + encodeURI(this.silabu) + "'></iframe>"
             );
           }
         }

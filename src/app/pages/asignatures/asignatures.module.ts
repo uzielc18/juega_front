@@ -56,7 +56,7 @@ import { SilaboComponent } from './components/c-free/navegacion/silabo/silabo.co
 import { PreguntasComponent } from './components/c-free/navegacion/preguntas/preguntas.component';
 import { EstudiantesComponent } from './components/c-free/navegacion/estudiantes/estudiantes.component';
 import { FilterModule } from '../../shared/pipes/filter/filter.module';
-import { HighlightModule } from '../../shared/directives/highlight.module';
+import { DirectiveModule } from '../../shared/directives/highlight.module';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -115,7 +115,7 @@ const PIPES: any = [
   FilterModule
 ];
 const DIRECTIVES: any = [
-  HighlightModule
+  DirectiveModule
 ]
 const MODULES: any = [
   PrepareFileProModule,

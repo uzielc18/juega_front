@@ -1,18 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  Input,
-  OnChanges,
-  OnInit,
-  Renderer2,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { GeneralService } from '../../../../../../providers';
 import { END_POINTS } from '../../../../../../providers/utils';
 
@@ -54,22 +42,13 @@ export class EstudiantesComponent implements OnInit, OnChanges {
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(evt: KeyboardEvent) {
     this.isListOpen = false;
   }
-  @ViewChild('lista') lista!: ElementRef;
 
   constructor(
     private generalService: GeneralService,
     private formBuilder: FormBuilder,
     private renderer: Renderer2,
     private toastrService: NbToastrService
-  ) {
-    if (this.isListOpen) {
-      this.renderer.listen('window', 'click', (e: Event) => {
-        if ((e.target !== e.target) !== this.lista.nativeElement) {
-          this.isListOpen = false;
-        }
-      });
-    }
-  }
+  ) {}
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -161,21 +140,19 @@ export class EstudiantesComponent implements OnInit, OnChanges {
         id_4: '0',
       };
       this.loading = true;
-      this.generalService
-        .nameIdAndIdAndIdAndId$(serviceName, ids.semestre_nombre, ids.id_carga_curso, ids.id_3, ids.id_4)
-        .subscribe(
-          (res: any) => {
-            if (res.success) {
-              this.toastrService.info(status, `${res.message}`);
-            }
-          },
-          () => {
-            this.loading = false;
-          },
-          () => {
-            this.loading = false;
+      this.generalService.nameIdAndIdAndIdAndId$(serviceName, ids.semestre_nombre, ids.id_carga_curso, ids.id_3, ids.id_4).subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.toastrService.info(status, `${res.message}`);
           }
-        );
+        },
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
     }
   }
 
