@@ -66,6 +66,11 @@ export class EstudiantesComponent implements OnInit, OnChanges {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.formHeader.controls['termino'].setValue('');
+    this.formHeader.controls['termino'].valueChanges.subscribe((value: any) => {
+      if (value === '') {
+        this.isListOpen = false;
+      }
+    });
   }
 
   get rolSemestre() {
