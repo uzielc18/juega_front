@@ -1,7 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { AfterViewInit, Component, OnChanges, OnInit, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbSelectComponent } from '@nebular/theme';
+import { Observable } from 'rxjs';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
@@ -13,13 +13,16 @@ import { END_POINTS } from 'src/app/providers/utils';
 export class ElementHomeComponent implements OnInit {
   formHeader: any = FormGroup;
 
+  listOfTeachers: any = [];
   listOfCourses: any = [];
-  listOFTopics: any = [];
   selectedTopics: any = [];
 
   filteredGroups$!: Observable<any[]>;
 
   loading: boolean = false;
+  showTeachers: boolean = false;
+
+  @ViewChildren('secondSelect') select2!: QueryList<NbSelectComponent>;
 
   constructor(private generalService: GeneralService, private formBuilder: FormBuilder) {}
 
@@ -38,39 +41,28 @@ export class ElementHomeComponent implements OnInit {
 
   fieldReactive() {
     const controls = {
-      termino: ['', [Validators.required]],
-      terminoUnidad: ['', [Validators.required]],
+      termino: ['', Validators.required],
     };
     this.formHeader = this.formBuilder.group(controls);
+    // this.formHeader.controls['termino'].setValue('');
+    this.formHeader.controls['termino'].valueChanges.subscribe((value: any) => {
+      console.log(typeof value, value);
+      if (value === '') {
+        this.showTeachers = false;
+      }
+    });
+    this.getListOfTeachers();
     this.getListOfCourses();
   }
 
-  initTopics() {
-    if (this.listOfCourses.length > 0) {
-      this.filteredGroups$ = of(this.listOfCourses);
-      this.filteredGroups$ = this.formHeader.controls['termino'].valueChanges.pipe(
-        startWith(''),
-        map((filterString: any) => this.filter(filterString))
-      );
-    }
-  }
-
-  getListOfCourses() {
-    const serviceName = END_POINTS.base_back.default + 'get-courses-topics';
+  getListOfTeachers() {
+    const serviceName = END_POINTS.base_back.default + 'get-teachers';
     this.loading = true;
     this.generalService.nameAll$(serviceName).subscribe(
       (res: any) => {
         if (res.success) {
-          this.listOfCourses = res.data;
-          this.listOfCourses.map((course: any) => {
-            course.topics.map((topic: any) => {
-              topic.checked = false;
-              topic.course_name = course.nombre;
-            });
-          });
-          console.log(this.listOfCourses);
-          //
-          this.initTopics();
+          this.listOfTeachers = res.data;
+          console.log(this.listOfTeachers);
         }
       },
       () => {
@@ -82,60 +74,89 @@ export class ElementHomeComponent implements OnInit {
     );
   }
 
-  private filterChildren(children: any, filterValue: any) {
-    return children.filter((optionValue: any) => optionValue.tema.toLowerCase().includes(filterValue));
+  searchTeachers() {
+    this.showTeachers = true;
   }
 
-  private filter(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.listOfCourses
-      .map((group: any) => {
-        return {
-          nombre: group.nombre,
-          topics: this.filterChildren(group.topics, filterValue),
-        };
-      })
-      .filter((group: any) => group.topics.length);
+  resetTeachers() {
+    this.formHeader.controls['termino'].setValue('');
+    this.showTeachers = false;
   }
 
-  trackByFn(index: any, item: any) {
-    return item.nombre;
+  setTeacher(teacher: any) {
+    this.showTeachers = false;
+    this.formHeader.controls['termino'].setValue(teacher.nombres_completos);
   }
 
-  setCourse(item: any) {
-    this.listOFTopics = item.topics;
-    this.formHeader.controls['termino'].setValue(item.nombre);
+  getListOfCourses() {
+    const serviceName = END_POINTS.base_back.default + 'get-courses-topics';
+    this.loading = true;
+    this.generalService.nameAll$(serviceName).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.listOfCourses = res.data;
+          this.listOfCourses.map((course: any) => {
+            course.show = false;
+            course.topics.map((topic: any) => {
+              topic.course_name = course.nombre;
+              topic.checked = false;
+            });
+          });
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
 
-  setTopics(item: any) {
-    item.checked = !item.checked;
-    if (item.checked) {
-      this.selectedTopics.push(item);
+  toggleOption(course: any) {
+    course.show = !course.show;
+  }
+
+  toggleTopicOption(event: any, i: any) {
+    event.stopPropagation();
+
+    if (this.select2.toArray()[i].isOpen) {
+      this.select2.toArray()[i].hide();
     } else {
-      this.selectedTopics = this.selectedTopics.filter((topic: any) => topic.id !== item.id);
+      this.select2.toArray()[i].show();
     }
-    // order by course_name
-    this.selectedTopics = this.selectedTopics.sort((a: any, b: any) => {
-      if (a.course_name < b.course_name) {
-        return -1;
-      }
-      if (a.course_name > b.course_name) {
-        return 1;
-      }
-      return 0;
+  }
+
+  uncheckTopicsByCourse(id_carga_curso: any) {
+    this.listOfCourses.map((course: any) => {
+      course.topics.map((item: any) => {
+        if (item.id_carga_curso === id_carga_curso) {
+          item.checked = false;
+          this.selectedTopics.map((selectedTopic: any) => {
+            if (selectedTopic.id_carga_curso === item.id_carga_curso) {
+              this.selectedTopics = this.selectedTopics.filter((selectedTopic: any) => selectedTopic.id !== item.id);
+            }
+          });
+        }
+      });
     });
+  }
+
+  saveTopics(event: any, topic: any) {
+    event.stopPropagation();
+    this.uncheckTopicsByCourse(topic.id_carga_curso);
+    topic.checked = !topic.checked;
+    if (topic.checked) {
+      this.selectedTopics.push(topic);
+    } else {
+      this.selectedTopics = this.selectedTopics.filter((topic: any) => topic.id !== topic.id);
+    }
     console.log(this.selectedTopics);
-    this.formHeader.controls['termino'].setValue('');
   }
 
-  searchCourses() {}
-
-  resetCourses() {
-    this.formHeader.controls['termino'].setValue('');
-    this.listOFTopics = [];
-  }
-
-  closeCourses(event: any) {
-    console.log(event, 'hola');
-  }
+  // deleteTopic(topic: any) {
+  //   this.selectedTopics = this.selectedTopics.filter((item: any) => item.id !== topic.id);
+  //   topic.checked = false;
+  //   console.log(this.selectedTopics);
+  // }
 }
