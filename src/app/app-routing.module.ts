@@ -64,14 +64,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/exam/exam.module').then(m => m.ExamModule),
   },
   {
-    path: '**',
-    canActivate: [Auth2Guard],
-    loadChildren: () => import('./pages/notfound/notfound.module').then(m => m.NotfoundModule),
-  },
-  {
     path: '',
     redirectTo: 'pages',
     pathMatch: 'full',
+  },
+  {
+    path: '**',
+    canActivate: [Auth2Guard],
+    loadChildren: () => import('./pages/notfound/notfound.module').then(m => m.NotfoundModule),
   },
 ];
 
