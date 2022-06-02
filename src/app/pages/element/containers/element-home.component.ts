@@ -115,6 +115,10 @@ export class ElementHomeComponent implements OnInit {
 
   toggleOption(course: any) {
     course.show = !course.show;
+    // remove from selectedTopics if course.id_carga_curso is already in selectedTopics
+    if (!course.show) {
+      this.selectedTopics = this.selectedTopics.filter((topic: any) => topic.id_carga_curso !== course.id_carga_curso);
+    }
   }
 
   toggleTopicOption(event: any, i: any) {
