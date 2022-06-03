@@ -23,6 +23,9 @@ export class VidioConferenceComponent implements OnInit {
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
+
+  @Input() destino: any;
+
   listIcons:any = [
     {
       checked: false,
@@ -87,7 +90,9 @@ settValuesMore:any;
 
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.setValuesPre();
+    if (this.unidad && this.unidad.course_id) {
+      this.setValuesPre();
+    }
     this.setMenuValues();
     if(this.code === 'UPDATE') {
       this.setObjectUpdate();

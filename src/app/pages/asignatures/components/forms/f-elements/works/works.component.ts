@@ -24,6 +24,9 @@ export class WorksComponent implements OnInit, OnChanges {
   @Input() code: any;
   @Input() valueMenu: any;
 
+  @Input() destino: any;
+  @Input() type: any;
+
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   // current = new Date();
   // minDateActual: any = '';
@@ -149,7 +152,9 @@ export class WorksComponent implements OnInit, OnChanges {
 
     this.key_file = this.userInfo?.person?.codigo;
 
-    this.setValuesPre();
+    if (this.unidad && this.unidad.course_id) {
+      this.setValuesPre();
+    }
     this.setMenuValues();
 
     if (this.code === 'UPDATE') {
