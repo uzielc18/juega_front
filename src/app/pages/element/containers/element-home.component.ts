@@ -243,6 +243,7 @@ export class ElementHomeComponent implements OnInit {
       (res) => {
         if (res.success) {
           this.listOfTopicsToImport = res.data.topics;
+          this.selectedElements = [];
           this.elementsByTopic = res.data.elements;
           this.elementsByTopic.map((element: any) => {
             element.checked = false;
@@ -267,6 +268,7 @@ export class ElementHomeComponent implements OnInit {
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
         if (res.success) {
+          this.selectedElements = [];
           this.elementsByTopic = res.data;
           this.elementsByTopic.map((element: any) => {
             element.checked = false;
@@ -389,29 +391,40 @@ export class ElementHomeComponent implements OnInit {
     this.origen = this.selectedElements.map((element: any) => {
       return {
         element_id: element.id,
-      }
-    })
+      };
+    });
 
     this.destino = this.selectedTopics.map((topic: any) => {
       return {
         course_id: topic.course_id,
-        topic_id: topic.id
-      }
-    })
-
-    console.log('origen', this.origen);
-    console.log('destino', this.destino);
-
-    console.log({
-      origen: this.origen,
-      destino: this.destino
-    })
-
-    this.elementsByTopic.map((element: any) => {
-      element.checked = false;
+        topic_id: topic.id,
+      };
     });
-    this.resetTeachers()
-    this.selectedElements = [];
-    this.selectedTopics = [];
+
+    const serviceName = END_POINTS.base_back.default + 'save-elements-imported';
+    const data = {
+      origen: this.origen,
+      destino: this.destino,
+    };
+    this.loading = true;
+    this.generalService.addNameData$(serviceName, data).subscribe(
+      (res: any) => {
+        console.log(res);
+        if (res.success) {
+          this.elementsByTopic.map((element: any) => {
+            element.checked = false;
+          });
+          this.resetTeachers();
+          this.selectedElements = [];
+          this.selectedTopics = [];
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
 }

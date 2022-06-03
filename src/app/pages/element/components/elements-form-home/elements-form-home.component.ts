@@ -7,6 +7,8 @@ import { AppService } from '../../../../core';
   styleUrls: ['./elements-form-home.component.scss'],
 })
 export class ElementsFormHomeComponent implements OnInit {
+
+  // el destino[] tiene que ser obserbable
   @Input() destino: any[] = [];
 
   iterableDiffer: any = IterableDiffers;
