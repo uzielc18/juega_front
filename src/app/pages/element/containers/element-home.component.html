@@ -1,95 +1,206 @@
 <nb-card class="h-100" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
-  <nb-card-header> FYFS </nb-card-header>
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="list-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px">CREAR ELEMENTOS</strong>
+    </div>
+  </nb-card-header>
   <nb-card-body>
-    <div *ngIf="rolSemestre?.rol?.name === 'Docente'" class="row">
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-6 mb-2 mb-md-2">
-            <button nbButton status="primary" size="small" fullWidth><nb-icon icon="plus-outline"></nb-icon>Nuevo</button>
-          </div>
-          <div class="col-md-6">
-            <button nbButton status="info" size="small" outline fullWidth><nb-icon icon="flip-outline"></nb-icon>Importar</button>
-          </div>
-        </div>
-        <div class="mt-4">
-          <label class="label">Seleccione un(a) Docente</label>
-          <nb-form-field class="mt-2" [formGroup]="formHeader">
-            <nb-icon nbPrefix icon="search" pack="eva"></nb-icon>
-            <input
-              type="text"
-              status="primary"
-              fieldSize="small"
-              placeholder="Buscar Docente"
-              formControlName="termino"
-              (keypress)="searchTeachers()"
-              nbInput
-              fullWidth
-            />
-            <button nbSuffix nbButton ghost status="danger" (click)="resetTeachers()">
-              <nb-icon icon="close-square-outline" pack="eva"> </nb-icon>
-            </button>
-          </nb-form-field>
-          <ul *ngIf="showTeachers" class="list-group">
-            <li
-              *ngFor="let item of listOfTeachers | appFilter: formHeader.value.termino:'nombres_completos'"
-              appHighlight
-              [searchedWord]="formHeader.value.termino"
-              [content]="item.nombres_completos | titlecase"
-              [classToApply]="'fw-bold'"
-              [setTitle]="true"
-              class="list-group-item list-group-item-action py-1"
-              style="cursor: pointer"
-              (click)="setTeacher(item)"
-            >
-              {{ item.nombres_completos | titlecase }}
-            </li>
-          </ul>
-
-          <div *ngIf="listOfCourses.length > 0" class="mt-2">
-            <label class="label">Seleccionar Curso</label>
-            <nb-select status="primary" placeholder="Seleccione Curso" size="small" fullWidth multiple>
-              <nb-option
-                class="flex-wrap"
-                *ngFor="let course of listOfCourses; let i = index"
-                [value]="course.nombre"
-                (click)="toggleOption(course)"
-              >
-                <div>{{ course.nombre }}</div>
-                <nb-select
+    <div *ngIf="rolSemestre?.rol?.name !== 'Estudiante'" class="row h-100">
+      <div class="col-xl-4">
+        <nb-card status="primary" class="mb-0 h-100">
+          <nb-card-header style="padding-top: 5px; padding-bottom: 5px" class="text-center">Destino</nb-card-header>
+          <nb-card-body>
+            <div class="row mt-3">
+              <div class="col-md-6 mb-2 mb-md-2">
+                <button nbButton [status]="elementAction === 'new' ? 'primary' : 'basic'" size="small" fullWidth (click)="newElements()">
+                  <nb-icon icon="plus-outline"></nb-icon>Nuevo
+                </button>
+              </div>
+              <div class="col-md-6">
+                <button
+                  nbButton
+                  [status]="elementAction === 'import' ? 'primary' : 'basic'"
                   size="small"
-                  status="primary"
-                  [style.display]="course.show ? 'block' : 'none'"
-                  placeholder=" - Seleccione la sesion"
-                  (click)="toggleTopicOption($event, i)"
                   fullWidth
-                  #secondSelect
+                  (click)="importElements()"
                 >
-                  <nb-option *ngFor="let item of course.topics" [value]="item.tema" (click)="saveTopics($event, item)">
-                    - {{ item.tema }}
+                  <nb-icon icon="flip-outline"></nb-icon>Importar
+                </button>
+              </div>
+            </div>
+            <div class="mt-1">
+              <div *ngIf="rolSemestre.rol.name === 'Admin'">
+                <label class="label">Seleccione un(a) Docente:</label>
+                <nb-form-field [formGroup]="formHeader">
+                  <nb-icon nbPrefix icon="search" pack="eva"></nb-icon>
+                  <input
+                    type="text"
+                    status="primary"
+                    fieldSize="small"
+                    placeholder="Buscar Docente"
+                    formControlName="termino"
+                    (keypress)="searchTeachers()"
+                    nbInput
+                    fullWidth
+                  />
+                  <button *ngIf="resetTeacherButton" nbSuffix nbButton ghost status="danger" (click)="resetTeachers()">
+                    <nb-icon icon="close-square-outline" pack="eva"> </nb-icon>
+                  </button>
+                </nb-form-field>
+              </div>
+              <div *ngIf="showTeachers" class="position-relative" style="height: 0px">
+                <ul
+                  class="list-group position-absolute top-0 start-0 w-100"
+                  style="z-index: 9999; max-height: 500px; height: 50vh; overflow-y: auto"
+                >
+                  <li
+                    *ngFor="let item of listOfTeachers | appFilter: formHeader.value.termino:'nombres_completos'"
+                    appHighlight
+                    [searchedWord]="formHeader.value.termino"
+                    [content]="item.nombres_completos | titlecase"
+                    [classToApply]="'fw-bold'"
+                    [setTitle]="true"
+                    class="list-group-item py-1"
+                    style="cursor: pointer"
+                    (click)="setTeacher(item)"
+                  >
+                    {{ item.nombres_completos | titlecase }}
+                  </li>
+                </ul>
+              </div>
+              <div *ngIf="listOfCourses.length > 0" class="mt-2">
+                <label class="label">Seleccionar Curso:</label>
+                <nb-select status="primary" placeholder="Seleccione Curso" size="small" fullWidth multiple>
+                  <nb-option
+                    class="flex-wrap"
+                    *ngFor="let course of listOfCourses; let i = index"
+                    [value]="course.nombre"
+                    (click)="toggleOption(course, i)"
+                  >
+                    <div class="mb-1">{{ course.nombre }}</div>
+                    <nb-select
+                      size="small"
+                      status="primary"
+                      [style.display]="course.show ? 'block' : 'none'"
+                      placeholder=" - Seleccione la sesion"
+                      (click)="toggleTopicOption($event, i)"
+                      fullWidth
+                      #secondSelect
+                    >
+                      <nb-option *ngFor="let item of course.topics" [value]="item.tema" (click)="saveTopics($event, item)">
+                        - {{ item.tema }}
+                      </nb-option>
+                    </nb-select>
                   </nb-option>
                 </nb-select>
-              </nb-option>
-            </nb-select>
-          </div>
-          <div class="mt-4">
-            <ul *ngIf="selectedTopics.length > 0" class="list-group">
-              <li *ngFor="let topic of selectedTopics" class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold">{{ topic.tema }}</div>
-                  {{ topic.course_name }}
-                </div>
-                <!-- <button nbButton size="tiny" status="danger" (click)="deleteTopic(topic)">
-                    <nb-icon icon="close-square-outline"> </nb-icon>
-                  </button> -->
-              </li>
-            </ul>
-          </div>
-        </div>
+              </div>
+              <div *ngIf="selectedTopics.length > 0" class="mt-4">
+                <p class="fw-bold">Items seleccionados:</p>
+                <ul class="list-group">
+                  <li *ngFor="let topic of selectedTopics" class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                      <div class="fw-bold">{{ topic.tema }}</div>
+                      {{ topic.course_name }}
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
       </div>
-      <div class="col-md-8">hohohohoho</div>
+      <div class="col-xl-8">
+        <nb-card status="primary" class="mb-0 h-100">
+          <nb-card-header style="padding-top: 5px; padding-bottom: 5px" class="text-center">Origen</nb-card-header>
+          <nb-card-body>
+            <div *ngIf="elementAction === 'new'">
+              <app-elements-form-home [destino]="destino"></app-elements-form-home>
+            </div>
+            <div *ngIf="elementAction === 'import'">
+              <div class="row" [formGroup]="formHeader">
+                <div [ngClass]="rolSemestre.rol.name === 'Admin' ? 'col-md-4' : 'col-md-3'">
+                  <label class="label">Eliga un periodo:</label>
+                  <nb-select placeholder="Seleccione un ciclo" formControlName="ciclo" status="primary" size="small" fullWidth>
+                    <nb-option *ngFor="let ciclo of listOfSemesters" [value]="ciclo.id" (click)="setSemester(ciclo)">
+                      Semestre - {{ ciclo.nombre }}
+                    </nb-option>
+                  </nb-select>
+                </div>
+                <div *ngIf="rolSemestre.rol.name === 'Admin'" class="col-md-8">
+                  <label class="label">Seleccione un(a) Docente:</label>
+                  <nb-form-field [formGroup]="formHeader">
+                    <nb-icon nbPrefix icon="search" pack="eva"></nb-icon>
+                    <input
+                      type="text"
+                      status="primary"
+                      fieldSize="small"
+                      placeholder="Buscar Docente"
+                      formControlName="teacherToImportName"
+                      (keypress)="searchTeachersToImport()"
+                      nbInput
+                      fullWidth
+                    />
+                    <button *ngIf="resetTeacherImportButton" nbSuffix nbButton ghost status="danger" (click)="resetTeachersToImport()">
+                      <nb-icon icon="close-square-outline" pack="eva"> </nb-icon>
+                    </button>
+                  </nb-form-field>
+                  <div *ngIf="showTeachersToImport" class="position-relative" style="height: 0px">
+                    <ul
+                      class="list-group position-absolute top-0 start-0 w-100"
+                      style="z-index: 9999; max-height: 500px; height: 50vh; overflow-y: auto"
+                    >
+                      <li
+                        *ngFor="let item of listOfTeachersToImport | appFilter: formHeader.value.teacherToImportName:'nombres_completos'"
+                        appHighlight
+                        [searchedWord]="formHeader.value.teacherToImportName"
+                        [content]="item.nombres_completos | titlecase"
+                        [classToApply]="'fw-bold'"
+                        [setTitle]="true"
+                        class="list-group-item list-group-item-action py-1"
+                        style="cursor: pointer"
+                        (click)="setTeacherToImport(item)"
+                      >
+                        {{ item.nombres_completos | titlecase }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div [ngClass]="rolSemestre.rol.name === 'Admin' ? 'col-md-6 mt-md-2 mt-0' : 'col-md-4 mt-2 mt-md-0'">
+                  <label class="label">Eliga un curso:</label>
+                  <nb-select placeholder="Seleccione un curso" formControlName="curso" status="primary" size="small" fullWidth>
+                    <nb-option *ngFor="let curso of listOfCoursesToImport" [value]="curso.id" (click)="setCourse(curso)">
+                      {{ curso.nombre }}
+                    </nb-option>
+                  </nb-select>
+                </div>
+                <div [ngClass]="rolSemestre.rol.name === 'Admin' ? 'col-md-6 mt-md-2 mt-0' : 'col-md-5 mt-2 mt-md-0'">
+                  <label class="label">Eliga un sesion:</label>
+                  <nb-select placeholder="Seleccione una sesion" formControlName="sesion" status="primary" size="small" fullWidth>
+                    <nb-option *ngFor="let topic of listOfTopicsToImport" [value]="topic.id" (click)="setTopic(topic)">
+                      {{ topic.tema }}
+                    </nb-option>
+                  </nb-select>
+                </div>
+              </div>
+              <div class="my-2 d-flex">
+                <button nbButton status="info" size="small" class="ms-auto" (click)="saveElements()">Importar</button>
+              </div>
+              <div *ngFor="let element of elementsByTopic" class="d-flex flex-column">
+                <!-- <nb-toggle status="primary" [checked]="element.checked" >
+                  {{ element.titulo }} - <span class="text-secondary">{{ element.tipo | uppercase }}</span>
+                </nb-toggle> -->
+                <nb-checkbox class="fw-bold" [checked]="element.checked" (checkedChange)="selectElements(element)">
+                  {{ element.titulo }} - <span class="text-secondary">{{ element.tipo | uppercase }}</span>
+                </nb-checkbox>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
     </div>
-    <div *ngIf="rolSemestre?.rol?.name !== 'Docente'">
-      <h4>Vista solo para Docentes</h4>
+    <div *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
+      <h4>Vista no disponible para estudiantes</h4>
     </div>
   </nb-card-body>
 </nb-card>

@@ -87,7 +87,11 @@ const COMPONENTS: any[] = [
   CalificarElementEstudentComponent,
   CWorksComponent,
   CForumsComponent,
-  QuestionsConfigComponent
+  QuestionsConfigComponent,
+  AnswerQuestionsComponent,
+  SilaboComponent,
+  PreguntasComponent,
+  EstudiantesComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -151,7 +155,10 @@ const MODULES: any = [
     ...PIPES,
     ...DIRECTIVES
   ],
-  declarations: [...COMPONENTS, AnswerQuestionsComponent, SilaboComponent, PreguntasComponent, EstudiantesComponent],
+  exports: [
+    ... COMPONENTS
+  ],
+  declarations: [...COMPONENTS],
   entryComponents: [...MODALS],
 
 })
