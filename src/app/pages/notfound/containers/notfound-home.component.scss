@@ -108,10 +108,10 @@ body{
   top: 18vmin;
   left: 30vmin;
   height: 30vmin;
-	animation: floating 3s infinite ease-in-out;
+  animation: floating 3s infinite ease-in-out;
 
   @include breakpoint(mobile){
-    top: 50vmin;
+    top: 25vmin;
   }
 }
 
