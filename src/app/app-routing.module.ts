@@ -51,15 +51,21 @@ const routes: Routes = [
         path: 'element',
         loadChildren: () => import('./pages/element/element.module').then(m => m.ElementModule),
       },
+      // {
+      //   path: "**",
+      //   loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
+      // },
+    
+      // {
+      //   path: "pages/not-found",
+      //   loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
+      // },
       {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
       },
-      {
-        path: "pages/not-found",
-        loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
-      },
+      
     ],
   },
   {
@@ -73,9 +79,15 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: '**',
+    path: "**",
     canActivate: [Auth2Guard],
-    loadChildren: () => import('./pages/notfound/notfound.module').then(m => m.NotfoundModule),
+    loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
+  },
+
+  {
+    path: "pages/not-found",
+    canActivate: [Auth2Guard],
+    loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
   },
 ];
 
