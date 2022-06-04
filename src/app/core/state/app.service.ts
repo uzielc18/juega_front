@@ -1,11 +1,10 @@
 import { Inject, Injectable, Injector } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { NbMenuService } from '@nebular/theme';
 import { CORE_OPTIONS, CoreOptions } from '../core.options';
 import { NbAuthService } from '@nebular/auth';
-import { map, switchMap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 // / Antes
 // export function init_app(
@@ -29,6 +28,7 @@ export class AppService {
   private _menu: any[] = [];
   private _usernameMenu: any[] = [];
   private _userInfoUrl = `${this.options.apiAuth}/api/user/me`;
+  private _menusApi = `${this.options.apiAuth}/api/my-menus`;
   private _loading = new BehaviorSubject<boolean>(false);
 
   constructor(
@@ -102,6 +102,7 @@ export class AppService {
               this._semestre = data.data.semestre;
               this._rol = data.data.roles;
               this._area = data.data.area;
+              this.getMenus(data.data.user.person.role_id);
               return true;
             } else {
               localStorage.clear();
@@ -118,6 +119,14 @@ export class AppService {
 
     });
   }
+  getMenus(role_id:any) {
+    this.httpClient.get(`${this._menusApi + '/' + role_id}`).subscribe((res:any) => {
+      if (res.success) {
+        this.nbMenuService.addItems(res.data ? res.data : [], 'core-menu');
+      }
+    });
+  }
+
   start = (): void => this._loading.next(true);
   stop = (): void => this._loading.next(false);
 

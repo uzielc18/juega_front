@@ -1,0 +1,34 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+      <div class=" d-flex align-items-center justify-content-between">
+        <div>
+         <nb-icon icon="{{elemento?.type_element?.icono}}"></nb-icon>&nbsp;&nbsp; {{elemento?.titulo}}
+        </div>
+        <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="work work-expired m-4" *ngIf="tiempo_vencido &&  rolSemestre?.rol?.name === 'Estudiante'">
+            <span>
+              <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu Trabajo: {{ elemento?.titulo }} acaba de caducar hace {{
+              expiredDays |
+              i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
+              expiredSeconds | i18nPlural:secondsMap }}
+            </span>
+          </div>
+        <br>
+        <form [formGroup]="formHeader">
+            <div>
+                <label class="label">¿ Cual es la razón ?</label><br>
+                <textarea type="text" nbInput fullWidth formControlName="justification"></textarea>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer style="text-align: right;">
+        <button nbButton size="small">No hacer nada</button>&nbsp;&nbsp;
+        <button nbButton size="small" status="primary" (click)="saveJustificate()" [disabled]="formHeader.invalid">Solicitar apertura</button>
+    </nb-card-footer>
+
+</nb-card>

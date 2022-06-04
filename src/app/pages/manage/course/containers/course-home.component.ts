@@ -4,6 +4,7 @@ import { NbDialogService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { ConfigZoomComponent } from 'src/app/shared/components/config-zoom/config-zoom.component';
+import { MMatricularComponent } from '../components/modals/m-matricular/m-matricular.component';
 
 @Component({
   selector: 'app-course-home',
@@ -25,16 +26,19 @@ export class CourseHomeComponent implements OnInit {
   };
   pagesCount: any[] = [20, 30, 50, 100, 200, 300, 500, 1000];
   litProgramStudy:any = [];
+  semestrers:any = [];
   constructor(private generalServi: GeneralService, private formBuilder: FormBuilder, private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
-    this.getCourseZoom();
+    this.getSemester();
   }
   private fieldReactive() {
     const controls = {
+      semester: [''],
       programa_estudio_id: [''],
       ciclo: [''],
+      nombre: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
@@ -48,6 +52,16 @@ export class CourseHomeComponent implements OnInit {
       return '';
     }
 
+  }
+  getSemester() {
+    const serviceName = 'semesters';
+      this.generalServi.nameAll$(serviceName).subscribe((res:any) => {
+        this.semestrers = res.data || [];
+        if (this.semestrers.length>0) {
+          this.formHeader.controls['semester'].setValue(this.rolSemestre.semestre.id);
+          this.getCourseZoom();
+        }
+      });
   }
   getProgramStudy() {
     const serviceName = 'list-programa-estudios';
@@ -83,13 +97,21 @@ export class CourseHomeComponent implements OnInit {
     this.pagination.per_page = $event;
     this.getCourseZoom();
   }
+  keyNombre($event:any) {
+    if (!this.formHeader.value.nombre) {
+      this.pagination.page = 1;
+      this.getCourseZoom();
+    }
+  }
   getCourseZoom() {
     const serviceName = 'courses';
     const forms =  this.formHeader.value;
     const params = {
       programa_estudio_id: forms.programa_estudio_id || '',
+      semester_id: forms.semester || '',
       ciclo: forms.ciclo || '',
       grupo: forms.grupo || '',
+      nombre: forms.nombre || '',
       per_page: this.pagination.per_page,
       page: this.pagination.page,
       paginate: 'S',
@@ -123,6 +145,20 @@ export class CourseHomeComponent implements OnInit {
       }
     });
   }
+  openMatricula(items:any) {
+    this.dialogService.open(MMatricularComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        item: items,
 
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.getCourseZoom();
+      }
+    });
+  }
 
 }

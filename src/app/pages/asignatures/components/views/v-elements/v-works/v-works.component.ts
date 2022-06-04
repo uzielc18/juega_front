@@ -6,6 +6,7 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { DIRECTORY } from 'src/app/shared/directorios/directory';
 import { CalificarElementEstudentComponent } from '../../../modals/calificar-element-estudent/calificar-element-estudent.component';
+import { RequestAperturaComponent } from '../../../modals/request-apertura/request-apertura.component';
 
 @Component({
   selector: 'app-v-works',
@@ -68,8 +69,11 @@ export class VWorksComponent implements OnInit, OnChanges {
     private appService: AppService,
     private generalServi: GeneralService
   ) {
+    
     setInterval(() => {
-      this.countdown(this.element?.fecha_fin);
+      if (this.pending) {
+        this.countdown(this.pending?.fecha_fin);
+      }
     }, 1000);
   }
   // ngOnChanges(): void {
@@ -252,5 +256,23 @@ export class VWorksComponent implements OnInit, OnChanges {
     } else {
       return '';
     }
+  }
+  justifications() {
+    this.dialogService.open(RequestAperturaComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          elemento: this.element,
+          pendiente: this.pending,
+          rolSemestre: this.rolSemestre,
+          userInfo: this.userInfo,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
+        if (result === 'ok') {
+          this.refreshPending.emit();
+        }
+      });
   }
 }

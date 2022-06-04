@@ -130,4 +130,23 @@ export class PerfilComponent implements OnInit {
       }
     );
   }
+  syncLamb() {
+    const serviceName = END_POINTS.base_back.config + '/get-info-user';
+    // const person_id = this.userInfo._user.id;
+    const user = this.user.usuario_upeu;
+    this.loading = true;
+    this.generalService.nameParams$(serviceName, {user: user}).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.getUserInfo();
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
 }

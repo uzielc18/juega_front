@@ -42,7 +42,12 @@ const routes: Routes = [
         loadChildren: () => import('src/app/pages/manage/news/news.module')
           .then(m => m.NewsModule),
       },
-
+      {
+        path: 'menu',
+        loadChildren: () => import('src/app/pages/manage/menus/menus.module')
+          .then(m => m.MenusModule),
+      },
+      
     ]
   }
 ];

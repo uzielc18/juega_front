@@ -7,14 +7,13 @@ import {
   NbSidebarService,
   NbThemeService,
 } from '@nebular/theme';
-import { delay, map, startWith, takeUntil } from 'rxjs/operators';
-import { forkJoin, Observable, of, Subject, Subscription } from 'rxjs';
+import {  map, takeUntil } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
 
 import { NbAuthResult, NbAuthService, NbAuthToken, NbTokenService } from '@nebular/auth';
 import { CORE_OPTIONS, CoreOptions } from '../core.options';
 import { AppService } from '../state/app.service';
 import { AppValidateTokenService } from '../state/app-validate-token.service';
-import { environment } from '../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { END_POINTS } from 'src/app/providers/utils';
 import { GeneralService } from 'src/app/providers';
@@ -28,111 +27,7 @@ import { Router } from '@angular/router';
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
-  MENU_ITEMS: NbMenuItem[] = [
-    {
-      title: 'Inicio',
-      icon: 'home-outline',
-      link: '/pages/dashboard',
-      pathMatch: 'prefix',
-    },
-    {
-      title: 'Asignaturas',
-      icon: 'book-open-outline',
-      link: '/pages/asignatures',
-      pathMatch: 'prefix',
-    },
-    {
-      title: 'Actividades',
-      icon: 'edit-2-outline',
-      link: '/pages/activities',
-      pathMatch: 'prefix',
-    },
-    {
-      title: 'Evaluaciones',
-      icon: 'checkmark-circle-outline',
-      link: '/pages/evaluations',
-      pathMatch: 'prefix',
-    },
-    // {
-    // title: "Evaluaciones (Docente)",
-    // icon: "checkmark-circle-outline",
-    // link: "/pages/evaluations-teacher",
-    // hidden: this.rolSemestre.rol.name === "Docente" ? false : true,
-    // pathMatch: "prefix",
-    // },
-    {
-      title: 'Rúbricas',
-      icon: 'file-text-outline',
-      link: '/pages/rubrics',
-      pathMatch: 'prefix',
-    },
-    {
-      title: 'Mi calendario',
-      icon: 'calendar-outline',
-      link: '/pages/my-calendar',
-      pathMatch: 'prefix',
-    },
-    {
-      title: 'Biblioteca',
-      icon: 'book-outline',
-    },
-    // {
-    //   title: "Exámen",
-    //   icon: "clipboard-outline",
-    //   link: "/exam",
-    //   pathMatch: "prefix",
-    // },
-    {
-      title: 'Administrar',
-      icon: 'settings-outline',
-      link: '/pages/manage',
-      pathMatch: 'prefix',
-      children: [
-        {
-          title: 'Sincronización',
-          icon: 'sync-outline',
-          link: '/pages/manage/lamb-sync',
-          pathMatch: 'prefix',
-        },
-        {
-          title: 'Zoom',
-          icon: 'video-outline',
-          link: '/pages/manage/zoom',
-          pathMatch: 'prefix',
-        },
-        {
-          title: 'Cursos',
-          icon: 'shopping-bag-outline',
-          link: '/pages/manage/course',
-          pathMatch: 'prefix',
-        },
-        {
-          title: 'Docentes',
-          icon: 'person-outline',
-          link: '/pages/manage/teacher',
-          pathMatch: 'prefix',
-        },
-        {
-          title: 'Estudiantes',
-          icon: 'people-outline',
-          link: '/pages/manage/student',
-          pathMatch: 'prefix',
-        },
-        {
-          title: 'Configuraciones',
-          icon: 'settings-outline',
-          link: '/pages/manage/configuration',
-          pathMatch: 'prefix',
-        },
-        {
-          title: 'Noticias',
-          icon: 'bell-outline',
-          link: '/pages/manage/news',
-          pathMatch: 'prefix',
-        },
-      ],
-    },
-  ];
+  MENU_ITEMS: NbMenuItem[] = [];
   minimum = false;
   hidden = false;
   user: any;
@@ -351,6 +246,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       id_semestre: ['', [Validators.required]],
       lenguaje: [''],
       carga: ['1'],
+      cambioRol: ['1'],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getRoles();
@@ -406,7 +302,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     let val = JSON.parse(sesion);
 
-    this.roles = this.appService.rol.filter((rol: any) => ['Estudiante', 'Docente'].includes(rol.name));
+    // this.roles = this.appService.rol.filter((rol: any) => ['Estudiante', 'Docente'].includes(rol.name));
+    this.roles = this.appService.rol;
     if (this.roles.length > 0) {
       const rolDefault = this.appService.user.person.role_id || '';
       const rolDef = this.roles.find((r: any) => r.id === rolDefault);
@@ -442,30 +339,35 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.generalService.nameId$(serviceName, rol.id).subscribe((res: any) => {
         this.semestres = res.data || [];
         if (this.semestres.length > 0) {
-          const semester = this.semestres.find((r: any) => r.vigente === '1');
+          const semester = this.semestres.find((r: any) => r.id === this.appService.semestre.semester);
           if (semester) {
             this.formHeader.patchValue({
               id_semestre: semester.id,
             });
             if (this.formHeader.value.carga === '1') {
               this.updateSemestre(semester, rol);
-            } else {
-              this.loading = false;
             }
           } else {
-            this.formHeader.patchValue({
-              id_semestre: this.semestres[0].id,
-            });
-            if (this.formHeader.value.carga === '1') {
-              this.updateSemestre(this.semestres[0], rol);
+            const semes = this.semestres.find((r: any) => r.vigente === '1');
+            if (semes) {
+              this.formHeader.patchValue({
+                id_semestre: this.semestres.id,
+              });
+              if (this.formHeader.value.carga === '1') {
+                this.updateSemestre(semes, rol);
+              }
             } else {
-              this.loading = false;
+              this.formHeader.patchValue({
+                id_semestre: this.semestres[0].id,
+              });
+              if (this.formHeader.value.carga === '1') {
+                this.updateSemestre(this.semestres[0], rol);
+              }
             }
+           
           }
-        } else {
-          this.loading = false;
         }
-      });
+      }, () => {this.loading = false;}, () => {this.loading = false;});
     }
   }
 
@@ -474,6 +376,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.semestres = [];
     this.formHeader.controls['id_semestre'].setValue('');
     this.formHeader.controls['carga'].setValue('2');
+    this.formHeader.controls['cambioRol'].setValue('2');
     this.getSemestres(rol);
   }
 
@@ -487,21 +390,34 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     const serviceName = END_POINTS.base_back.user + '/updatesemester';
     if (id) {
       this.loading = true;
-      this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe(
+      const params = {
+        url: this.router.url,
+      };
+      // console.log(this.router.url);
+      this.generalService.addNameIdAndIdData$(serviceName, id, id_rol, params).subscribe(
+      // this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe(
         (data: any) => {
           if (data.success) {
             this.paramsSessionStorage.rol = rol;
             this.paramsSessionStorage.semestre = value;
             this.paramsSessionStorage.lenguaje = (this.appService.user && this.appService.user.lang) || '';
-            this.paramsSessionStorage.persons_student =
-              (this.appService.user.person && this.appService.user.person.persons_student) || '';
-            this.paramsSessionStorage.persons_teacher =
-              (this.appService.user.person && this.appService.user.person.persons_teacher) || '';
+            this.paramsSessionStorage.persons_student = (this.appService.user.person && this.appService.user.person.persons_student) || '';
+            this.paramsSessionStorage.persons_teacher = (this.appService.user.person && this.appService.user.person.persons_teacher) || '';
             this.paramsSessionStorage.area = this.appService.area;
             sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
             // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
             this.emitEventsService.enviar(this.paramsSessionStorage);
             this.emitEventsService.asingDatos(this.paramsSessionStorage);
+
+            if(this.formHeader.value.cambioRol === '2') {
+              this.MENU_ITEMS = [];
+              this.appService.getMenus(this.formHeader.value.id_rol);
+            }
+            if (data && data.data && !data.data.url_valid) {
+              this.router.navigate([`/pages/not-found`]);
+            }
+
+            this.formHeader.controls['cambioRol'].setValue('1');
 
             if (this.formHeader.value.carga === '2') {
               this.close();

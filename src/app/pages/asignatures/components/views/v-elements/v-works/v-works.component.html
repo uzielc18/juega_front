@@ -1,11 +1,11 @@
-<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <!-- <div class="work work-remember m-4" *ngIf="!tiempo_vencido">
     <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Trabajo: {{ element?.titulo }} está por vencer en {{
       daysLeft |
       i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} {{
       secondsLeft | i18nPlural:secondsMap }}</span>
-  </div>
-  <div class="work work-expired m-4" *ngIf="tiempo_vencido">
+  </div> -->
+  <div class="work work-expired m-4" *ngIf="tiempo_vencido &&  rolSemestre?.rol?.name === 'Estudiante'">
     <span>
       <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu Trabajo: {{ element?.titulo }} acaba de caducar hace {{
       expiredDays |
@@ -13,14 +13,14 @@
       expiredSeconds | i18nPlural:secondsMap }}
     </span>
     <div class="ms-auto d-flex align-items-center">
-      <button class="d-flex align-items-center mx-3 py-1 work-expired-button">
+      <button class="d-flex align-items-center mx-3 py-1 work-expired-button" (click)="justifications()">
         <nb-icon class="me-2" icon="info"></nb-icon>
         <span>Solicitar apertura</span>
       </button>
       <nb-icon class="work-expired-close" icon="close-outline"></nb-icon>
     </div>
   </div>
-  <div class="work work-evaluated m-4">
+  <!-- <div class="work work-evaluated m-4">
     <p>Hola {{ userInfo.name }}!,</p><span>Tu Trabajo: {{ element?.titulo }} fué calificado hace 4 días</span>
   </div>  -->
   <nb-card class="instructions-container m-4">
@@ -58,7 +58,7 @@
         </div>
         <app-rubricas [rubrica]="rubrica" [calification]="calification"></app-rubricas>
       </div>
-      <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
+      <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending && !tiempo_vencido">
         <div class="d-flex">
           <h4 class="send-work-title">Entrega de trabajo</h4>
           <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon" style="font-size: 25px;" nbTooltip="Subir archivo" nbTooltipPlacement="top" nbTooltipStatus="primary"
@@ -96,20 +96,20 @@
             </nb-card-body>
           </nb-card>
         </div>
-        <br>
-        <div>
-          <h4 class="send-work-title">Documentos entregados</h4> <br>
-          <div *ngIf="pending?.student_pending?.pending_files?.length>0">
-            <app-list-view-files
-            [arrayFiles]="pending?.student_pending?.pending_files || []"
-            [deleteFile]="!pending?.student_pending?.nota"
-            (deleteFileEmit)="deleteFile($event)"
-            [director]="getDirectoy()"
-            ></app-list-view-files>
-          </div>
-          <div class="mt-4" *ngIf="pending?.student_pending?.pending_files?.length<=0">
-            <nb-alert outline="danger" style="font-size: 12px;">No se encontraron archivos adjuntos</nb-alert>
-          </div>
+      </div>
+      <br>
+      <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
+        <h4 class="send-work-title">Documentos entregados</h4> <br>
+        <div *ngIf="pending?.student_pending?.pending_files?.length>0">
+          <app-list-view-files
+          [arrayFiles]="pending?.student_pending?.pending_files || []"
+          [deleteFile]="!pending?.student_pending?.nota"
+          (deleteFileEmit)="deleteFile($event)"
+          [director]="getDirectoy()"
+          ></app-list-view-files>
+        </div>
+        <div class="mt-4" *ngIf="pending?.student_pending?.pending_files?.length<=0">
+          <nb-alert outline="danger" style="font-size: 12px;">No se encontraron archivos adjuntos</nb-alert>
         </div>
       </div>
       <div class="mt-4" *ngIf="!pending?.student_pending && rolSemestre?.rol?.name === 'Estudiante'">
