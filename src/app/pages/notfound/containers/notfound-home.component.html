@@ -1,4 +1,4 @@
-<nb-layout>
+<!-- <nb-layout>
   <nb-layout-column class="p-0">
     <nb-card class="h-100 border-0">
       <nb-card-body
@@ -11,14 +11,15 @@
           <h2 class="fw-bold text-white mb-3">¿Perdido en el campus?</h2>
           <p class="text-white">Es posible que haya escrito mal la dirección o que la página se haya movido.</p>
           <button nbButton (click)="navigateToHome()" class="back-button text-white">Ir al Inicio</button>
-          <!-- <a href="pages/dashboard">Ir al Inicio</a> -->
         </div>
       </nb-card-body>
     </nb-card>
   </nb-layout-column>
-</nb-layout>
+</nb-layout> -->
 
-<!-- <nb-card class="m-0 h-100 border-0">
+<nb-layout>
+  <nb-layout-column class="p-0">
+<nb-card class="m-0 h-100 border-0">
   <body>
     <div class="text-center">
       <strong style="font-size: 80px" >404</strong>
@@ -33,5 +34,11 @@
     </div>
     <img src="https://assets.codepen.io/1538474/astronaut.svg" class="astronaut" />
     <img src="https://assets.codepen.io/1538474/spaceship.svg" class="spaceship" />
+    <div style="bottom: 0; position: absolute;">
+      <img  src="assets/logo-lamb-learning-blanco.svg" alt="Lamb" class="logo" height="40px"/>
+
+    </div>
   </body>
-</nb-card> -->
+</nb-card>
+</nb-layout-column>
+</nb-layout>
