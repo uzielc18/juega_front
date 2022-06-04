@@ -1,65 +1,60 @@
-import { NgModule } from "@angular/core";
-import { ExtraOptions, RouterModule, Routes } from "@angular/router";
-import { Auth2Guard, ScaffoldComponent } from "./core";
+import { NgModule } from '@angular/core';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { Auth2Guard, ScaffoldComponent } from './core';
 
 const config: ExtraOptions = {
   useHash: false,
 };
 const routes: Routes = [
   {
-    path: "auth",
-    loadChildren: () => import("../app/core/auth/auth.module").then((m) => m.AuthModule),
+    path: 'auth',
+    loadChildren: () => import('../app/core/auth/auth.module').then(m => m.AuthModule),
   },
   {
-    path: "pages",
+    path: 'pages',
     canActivate: [Auth2Guard],
     component: ScaffoldComponent,
     children: [
       {
-        path: "dashboard",
-        loadChildren: () => import("./pages/dashboard/dashboard.module").then((m) => m.DashboardModule),
+        path: 'dashboard',
+        loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
       },
       {
-        path: "asignatures",
-        loadChildren: () => import("./pages/asignatures/asignatures.module").then((m) => m.AsignaturesModule),
+        path: 'asignatures',
+        loadChildren: () => import('./pages/asignatures/asignatures.module').then(m => m.AsignaturesModule),
       },
       {
-        path: "activities",
-        loadChildren: () => import("./pages/activities/activities.module").then((m) => m.ActivitiesModule),
+        path: 'activities',
+        loadChildren: () => import('./pages/activities/activities.module').then(m => m.ActivitiesModule),
       },
       {
-        path: "evaluations",
-        loadChildren: () => import("./pages/evaluations/evaluations.module").then((m) => m.EvaluationsModule),
+        path: 'evaluations',
+        loadChildren: () => import('./pages/evaluations/evaluations.module').then(m => m.EvaluationsModule),
       },
       {
-        path: "evaluations-teacher",
-        loadChildren: () =>
-          import("./pages/evaluations-teacher/evaluations-teacher.module").then((m) => m.EvaluationsTeacherModule),
+        path: 'evaluations-teacher',
+        loadChildren: () => import('./pages/evaluations-teacher/evaluations-teacher.module').then(m => m.EvaluationsTeacherModule),
       },
       {
-        path: "rubrics",
-        loadChildren: () => import("./pages/rubrics/rubrics.module").then((m) => m.RubricsModule),
+        path: 'rubrics',
+        loadChildren: () => import('./pages/rubrics/rubrics.module').then(m => m.RubricsModule),
       },
       {
-        path: "manage",
-        loadChildren: () => import("./pages/manage/manage.module").then((m) => m.ManageModule),
+        path: 'manage',
+        loadChildren: () => import('./pages/manage/manage.module').then(m => m.ManageModule),
       },
       {
-        path: "my-calendar",
-        loadChildren: () => import("./pages/my-calendar/my-calendar.module").then((m) => m.MyCalendarModule),
+        path: 'my-calendar',
+        loadChildren: () => import('./pages/my-calendar/my-calendar.module').then(m => m.MyCalendarModule),
       },
       {
-        path: "element",
-        loadChildren: () => import("./pages/element/element.module").then((m) => m.ElementModule),
+        path: 'element',
+        loadChildren: () => import('./pages/element/element.module').then(m => m.ElementModule),
       },
       {
-        path: "",
-        redirectTo: "dashboard",
-        pathMatch: "full",
-      },
-      {
-        path: "**",
-        loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
       },
       {
         path: "pages/not-found",
@@ -68,14 +63,19 @@ const routes: Routes = [
     ],
   },
   {
-    path: "exam/:pending_id/:person_id",
+    path: 'exam/:pending_id/:person_id',
     canActivate: [Auth2Guard],
-    loadChildren: () => import("./pages/exam/exam.module").then((m) => m.ExamModule),
+    loadChildren: () => import('./pages/exam/exam.module').then(m => m.ExamModule),
   },
   {
-    path: "",
-    redirectTo: "pages",
-    pathMatch: "full",
+    path: '',
+    redirectTo: 'pages',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    canActivate: [Auth2Guard],
+    loadChildren: () => import('./pages/notfound/notfound.module').then(m => m.NotfoundModule),
   },
 ];
 

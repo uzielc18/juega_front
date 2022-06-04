@@ -24,15 +24,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   idCollapseLeft: number = 0;
 
   generoArray: any[] = ['Masculino', 'Femenino'];
-  estadoCivilArray: any[] = [
-    'Casado(a)',
-    'Soltero(a)',
-    'Divorciado(a)',
-    'Viudo(a)',
-    'Separado(a)',
-    'Conviviente',
-    'No precisa',
-  ];
+  estadoCivilArray: any[] = ['Casado(a)', 'Soltero(a)', 'Divorciado(a)', 'Viudo(a)', 'Separado(a)', 'Conviviente', 'No precisa'];
   religionArray: any[] = [
     'Adventista del Séptimo Día',
     'Católico',
@@ -125,10 +117,8 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
     if (changes.perfilInfo) {
-      console.log('perfilInfo', changes.perfilInfo);
+      // console.log('perfilInfo', changes.perfilInfo);
       this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
     }
   }
@@ -173,7 +163,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   showProfileInfo() {
-    console.log('inininininin');
+    // console.log('inininininin');
     // this.subscription$ = this.emitEventsService.profileInfoReturns().subscribe((res: any) => {
     //   if (res) {
     //     console.log('res', res);
@@ -183,7 +173,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     // });
     // get value from emitEventsService
     this.subscription$ = this.emitEventsService.profileInfoReturns().subscribe((res: any) => {
-      console.log('res', res);
+      // console.log('res', res);
       // if (res) {
       // this.perfilInfo = res;
       // this.getUserInfo();

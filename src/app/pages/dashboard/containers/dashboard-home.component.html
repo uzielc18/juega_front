@@ -33,8 +33,8 @@
                   [href]="img?.url"
                   target="_blank"
                   rel="nofollow noopener noreferrer"
-                  >{{ img?.nombre_boton }}</a
-                >
+                  >{{ img?.nombre_boton }}
+                </a>
               </div>
             </ng-template>
           </ngb-carousel>
@@ -68,16 +68,9 @@
                       <h5 style="font-size: 14px" class="fw-bold mb-0">{{ img?.titulo }}</h5>
                       <span style="font-size: 11px" class="text-secondary new-content">{{ img?.contenido }}</span>
                     </div>
-                    <a
-                      *ngIf="img?.mostrar_boton"
-                      nbButton
-                      status="warning"
-                      outline
-                      size="small"
-                      [href]="img?.url"
-                      target="_blank"
-                      >{{ img?.nombre_boton }}</a
-                    >
+                    <a *ngIf="img?.mostrar_boton" nbButton status="warning" outline size="small" [href]="img?.url" target="_blank">
+                      {{ img?.nombre_boton }}
+                    </a>
                   </div>
                 </ng-template>
               </ngb-carousel>
@@ -156,15 +149,7 @@
                         <div class="row">
                           <label class="label col-md-3 d-flex align-items-center">DNI:</label>
                           <div class="col-md-9">
-                            <input
-                              type="number"
-                              nbInput
-                              fullWidth
-                              fieldSize="small"
-                              formControlName="dni"
-                              readonly
-                              placeholder="DNI"
-                            />
+                            <input type="number" nbInput fullWidth fieldSize="small" formControlName="dni" readonly placeholder="DNI" />
                           </div>
                         </div>
                         <br />
@@ -292,9 +277,7 @@
                 </div>
                 <div class="col-md-6">
                   <nb-card status="primary" class="mb-0">
-                    <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
-                      Informacion Adicional
-                    </nb-card-header>
+                    <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Informacion Adicional </nb-card-header>
                     <nb-card-body>
                       <form [formGroup]="formHeader">
                         <div class="row">
@@ -316,15 +299,7 @@
                         <div class="row">
                           <label class="label col-md-3 d-flex align-items-center">Foto:</label>
                           <div class="col-md-9">
-                            <input
-                              type="text"
-                              nbInput
-                              fullWidth
-                              fieldSize="small"
-                              formControlName="foto"
-                              readonly
-                              placeholder="Mi foto"
-                            />
+                            <input type="text" nbInput fullWidth fieldSize="small" formControlName="foto" readonly placeholder="Mi foto" />
                           </div>
                         </div>
                         <br />
@@ -338,9 +313,7 @@
                           [aspectRatio]="1 / 1"
                         ></app-image-recorte>
                         <div class="text-end">
-                          <button nbButton size="small" status="primary" (click)="saveInfo()">
-                            Guardar Informacion
-                          </button>
+                          <button nbButton size="small" status="primary" (click)="saveInfo()">Guardar Informacion</button>
                         </div>
                       </form>
                       <div class="row m-0">
@@ -349,10 +322,7 @@
                           <nb-card-body class="p-3">
                             <div class="row">
                               <div class="col-md-6 d-flex align-items-center">
-                                <div
-                                  class="img-container"
-                                  style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden"
-                                >
+                                <div class="img-container" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden">
                                   <img
                                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                                     alt=""
@@ -377,10 +347,7 @@
                           <nb-card-body class="p-3">
                             <div class="row">
                               <div class="col-md-6 d-flex align-items-center">
-                                <div
-                                  class="img-container"
-                                  style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden"
-                                >
+                                <div class="img-container" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden">
                                   <img
                                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                                     alt=""
@@ -454,11 +421,7 @@
     <nb-card-body>
       <div class="d-flex align-items-center mb-2">
         <div class="img-container" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden">
-          <img
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-            alt=""
-            style="width: 100%"
-          />
+          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" style="width: 100%" />
         </div>
         <div class="nombres ms-3">
           <p class="m-0 fw-bold">Nombres del Estudiante</p>
@@ -467,11 +430,7 @@
       </div>
       <div class="d-flex align-items-center mb-2">
         <div class="img-container" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden">
-          <img
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-            alt=""
-            style="width: 100%"
-          />
+          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" style="width: 100%" />
         </div>
         <div class="nombres ms-3">
           <p class="m-0 fw-bold">Nombres del Estudiante</p>

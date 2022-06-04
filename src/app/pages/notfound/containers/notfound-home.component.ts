@@ -7,11 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./notfound-home.component.scss']
 })
 export class NotfoundHomeComponent implements OnInit {
+  constructor(private router: Router) {}
 
-  constructor(private router: Router,) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   navigateToHome() {
     this.router.navigate(['/pages/dashboard']);

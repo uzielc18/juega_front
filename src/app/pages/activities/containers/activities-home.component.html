@@ -1,23 +1,11 @@
-<nb-card
-  class="h-100 border-0"
-  style="border-radius: 15px"
-  [nbSpinner]="loading"
-  nbSpinnerStatus="primary"
-  nbSpinnerSize="small"
->
+<nb-card class="h-100 border-0" style="border-radius: 15px" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
   <nb-card-header>
     <div class="d-flex">
       <nb-icon icon="edit-2-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
       <strong style="padding-top: 7px">MIS EVALUACIONES</strong>
     </div>
     <hr />
-    <div
-      class="row"
-      [formGroup]="formHeader"
-      [nbSpinner]="loadingFilters"
-      nbSpinnerStatus="primary"
-      nbSpinnerSize="small"
-    >
+    <div class="row" [formGroup]="formHeader" [nbSpinner]="loadingFilters" nbSpinnerStatus="primary" nbSpinnerSize="small">
       <div class="col-md-4">
         <label class="label">Curso</label>
         <nb-select placeholder="Curso" size="small" status="primary" formControlName="id_curso" fullWidth>
@@ -28,13 +16,7 @@
       </div>
       <div class="col-md-3">
         <label class="label">Tipo Elemento</label>
-        <nb-select
-          placeholder="Tipo Elemento"
-          size="small"
-          status="primary"
-          formControlName="id_tipo_elemento"
-          fullWidth
-        >
+        <nb-select placeholder="Tipo Elemento" size="small" status="primary" formControlName="id_tipo_elemento" fullWidth>
           <nb-option *ngFor="let elemento of tipo_elementos" [value]="elemento?.id" (click)="selectedElement(elemento)">
             {{ elemento?.nombre | titlecase }}
           </nb-option>
@@ -48,9 +30,7 @@
       </div>
       <div class="col-md-2">
         <label class="label" style="visibility: hidden">Filtrar</label><br />
-        <button nbButton fullWidth size="small" status="warning" (click)="refresh()">
-          <nb-icon icon="funnel"></nb-icon>Filtrar
-        </button>
+        <button nbButton fullWidth size="small" status="warning" (click)="refresh()"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
       </div>
     </div>
   </nb-card-header>
@@ -86,12 +66,12 @@
             <td class="text-start">{{ element?.descripcion }}</td>
             <td>
               <nb-icon icon="{{ element?.grupal === '1' ? 'people-outline' : 'person-outline' }}"></nb-icon>
-              {{ element?.grupal === "1" ? "Grupal" : "Personal" }}
+              {{ element?.grupal === '1' ? 'Grupal' : 'Personal' }}
             </td>
             <td>
               <div class="d-flex align-items-center justify-content-center">
                 <div class="d-flex flex-column text-start">
-                  <span>{{ element?.fecha_fin | date: "dd/MM/yyyy, h:mm a" }}</span>
+                  <span>{{ element?.fecha_fin | date: 'dd/MM/yyyy, h:mm a' }}</span>
                   <span class="fw-bold">Faltan 6 días</span>
                 </div>
                 <div class="status-end ms-3"></div>
@@ -99,10 +79,10 @@
             </td>
             <td>
               <div *ngIf="element?.fecha_entrega; else noEntregado">
-                {{ element?.fecha_entrega | date: "dd/MM/yyyy, h:mm a" }}
+                {{ element?.fecha_entrega | date: 'dd/MM/yyyy, h:mm a' }}
               </div>
               <ng-template #noEntregado>
-                <span style="color: red" class="fw-bold">{{ "No entregó" | uppercase }}</span>
+                <span style="color: red" class="fw-bold">{{ 'No entregó' | uppercase }}</span>
               </ng-template>
             </td>
             <td>

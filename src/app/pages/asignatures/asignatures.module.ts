@@ -56,7 +56,7 @@ import { SilaboComponent } from './components/c-free/navegacion/silabo/silabo.co
 import { PreguntasComponent } from './components/c-free/navegacion/preguntas/preguntas.component';
 import { EstudiantesComponent } from './components/c-free/navegacion/estudiantes/estudiantes.component';
 import { FilterModule } from '../../shared/pipes/filter/filter.module';
-import { HighlightModule } from '../../shared/directives/highlight.module';
+import { DirectiveModule } from '../../shared/directives/highlight.module';
 import { ConfiguracionesComponent } from './components/c-free/navegacion/configuraciones/configuraciones.component';
 import { RequestAperturaComponent } from './components/modals/request-apertura/request-apertura.component';
 const COMPONENTS: any[] = [
@@ -94,7 +94,8 @@ const COMPONENTS: any[] = [
   SilaboComponent,
   PreguntasComponent,
   EstudiantesComponent,
-  ConfiguracionesComponent
+  ConfiguracionesComponent,
+  RequestAperturaComponent,
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -113,7 +114,8 @@ const MODALS: any = [
   HomeworkFormComponent,
   AdminGroupsComponent,
   CalificarElementEstudentComponent,
-  QuestionsConfigComponent
+  QuestionsConfigComponent,
+  RequestAperturaComponent
 ];
 const NGX_MODULES: any = [
 ];
@@ -122,7 +124,7 @@ const PIPES: any = [
   FilterModule
 ];
 const DIRECTIVES: any = [
-  HighlightModule
+  DirectiveModule
 ]
 const MODULES: any = [
   PrepareFileProModule,
@@ -158,7 +160,7 @@ const MODULES: any = [
     ...PIPES,
     ...DIRECTIVES
   ],
-  declarations: [...COMPONENTS, RequestAperturaComponent],
+  declarations: [...COMPONENTS],
   entryComponents: [...MODALS],
 
 })

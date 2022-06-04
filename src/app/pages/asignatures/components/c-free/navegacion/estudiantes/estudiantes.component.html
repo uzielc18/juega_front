@@ -1,14 +1,7 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small" class="h-100">
   <div class="d-flex align-items-center mb-2">
     <h5 class="fw-bold text-start mb-0 me-2" style="font-size: 16px">Lista de estudiantes</h5>
-    <button
-      nbButton
-      ghost
-      status="warning"
-      (click)="syncStudentsLamb()"
-      nbTooltip="Sincronizar"
-      nbTooltipStatus="warning"
-    >
+    <button nbButton ghost status="warning" (click)="syncStudentsLamb()" nbTooltip="Sincronizar" nbTooltipStatus="warning">
       <nb-icon icon="sync-outline"></nb-icon>
     </button>
   </div>
@@ -26,13 +19,11 @@
     <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
   </nb-form-field>
   <div class="text-end my-1">
-    <button nbButton size="tiny" status="primary" *ngIf="showOneStudent" (click)="restoreStudents()">
-      Lista completa
-    </button>
+    <button nbButton size="tiny" status="primary" *ngIf="showOneStudent" (click)="restoreStudents()">Lista completa</button>
   </div>
-  <ul class="list-group" *ngIf="isListOpen" #lista>
+  <ul class="list-group" *ngIf="isListOpen">
     <li
-      *ngFor="let item of tempList | appFilter: formHeader.value.termino"
+      *ngFor="let item of tempList | appFilter: formHeader.value.termino: 'persons_student_nombre'"
       appHighlight
       [searchedWord]="formHeader.value.termino"
       [content]="item.persons_student_nombre"
@@ -53,10 +44,10 @@
       <div class="student-info ms-2">
         <p class="student-name">{{ item?.persons_student_nombre }}</p>
         <span class="codigo text-secondary">{{ item?.codigo }}</span>
-        <span *ngIf="item.created_at" class="tiempo-activo text-secondary"
-          >Activo hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
-          {{ item?.expiredMinutes | i18nPlural: minutesMap }}</span
-        >
+        <span *ngIf="item.created_at" class="tiempo-activo text-secondary">
+          Activo hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
+          {{ item?.expiredMinutes | i18nPlural: minutesMap }}
+        </span>
       </div>
     </div>
   </div>

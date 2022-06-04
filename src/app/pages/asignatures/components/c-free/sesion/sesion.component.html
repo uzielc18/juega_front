@@ -1,25 +1,13 @@
-<nb-card class="mb-2 cardd"
-  [nbSpinner]="loading"
-  nbSpinnerStatus="primary"
-  nbSpinnerSize="large"
-  nbSpinnerMessage="Procesando información"
->
+<nb-card class="mb-2 cardd" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesando información">
   <nb-card-body class="p-0">
     <div class="ps-0">
       <div class="d-flex align-items-center" style="overflow: hidden; position: relative; width: 100%">
         <div
           class="d-flex flex-column align-items-center justify-content-center rounded-start"
-          style="
-            background-color: var(--color-primary-50);
-            height: 100%;
-            width: 80px;
-            position: absolute;
-            left: 0;
-            top: 0;
-          "
+          style="background-color: var(--color-primary-50); height: 100%; width: 80px; position: absolute; left: 0; top: 0"
         >
-          <span class="fw-bold" style="font-size: 24px">{{ sesion?.fecha_tema | date: "dd" }}</span
-          ><small style="font-size: 14px; color: #898989">{{ sesion?.fecha_tema | date: "MMM" | titlecase }}</small>
+          <span class="fw-bold" style="font-size: 24px">{{ sesion?.fecha_tema | date: 'dd' }}</span
+          ><small style="font-size: 14px; color: #898989">{{ sesion?.fecha_tema | date: 'MMM' | titlecase }}</small>
         </div>
         <div style="width: 100%; margin-left: 80px">
           <div class="d-flex justify-content-between align-items-center my-3">
@@ -52,9 +40,7 @@
                 >
                   <small style="font-size: 10px" *ngIf="rolSemestre?.rol?.name === 'Estudiante'"
                     >{{ elem.realizo }}-{{
-                      arrayEl.length > 0 && elem.type_element_id === arrayEl[0].type_element_id
-                        ? arrayEl.length
-                        : elem.count
+                      arrayEl.length > 0 && elem.type_element_id === arrayEl[0].type_element_id ? arrayEl.length : elem.count
                     }}</small
                   >
                   <nb-icon [icon]="elem.icono"></nb-icon>
@@ -99,42 +85,16 @@
           {{ el.descripcion }}
         </p>
         <label class="label" *ngIf="rolSemestre?.rol?.name === 'Docente'">
-          <button
-            *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)"
-            nbButton
-            size="tiny"
-            outline
-            status="basic"
-            ghost
-            class="butonsInfo"
-          >
+          <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="basic" ghost class="butonsInfo">
             Sin Calificar: {{ el?.total_entregados - el?.total_revisados }}</button
           >&nbsp;
-          <button
-            *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)"
-            nbButton
-            size="tiny"
-            outline
-            status="success"
-            ghost
-            class="butonsInfo"
-          >
+          <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="success" ghost class="butonsInfo">
             Calificados: {{ el?.total_revisados }}</button
           >&nbsp;
-          <button
-            *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)"
-            nbButton
-            size="tiny"
-            outline
-            status="danger"
-            ghost
-            class="butonsInfo"
-          >
+          <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="danger" ghost class="butonsInfo">
             Sin entregar: {{ el?.total_pendientes - el?.total_entregados }}</button
           >&nbsp;
-          <button nbButton size="tiny" outline status="warning" ghost class="butonsInfo">
-            Total vistos: {{ el?.total_vistos }}</button
-          >&nbsp;
+          <button nbButton size="tiny" outline status="warning" ghost class="butonsInfo">Total vistos: {{ el?.total_vistos }}</button>&nbsp;
           <button nbButton size="tiny" outline status="info" ghost class="butonsInfo">
             Total alumnos: {{ el?.course?.total_matriculados }}
           </button>

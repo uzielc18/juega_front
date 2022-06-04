@@ -28,99 +28,99 @@ export class SesionComponent implements OnInit {
     private generalService: GeneralService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
-    if (sesion){
+    if (sesion) {
       return JSON.parse(sesion);
     } else {
       return '';
     }
-
   }
   newElemnts() {
     const params = {
       code: 'NEW',
       item: '',
-    }
+    };
     this.open(params);
   }
   updateElements(el: any) {
     const params = {
       code: 'UPDATE',
       item: el,
-    }
+    };
     this.open(params);
   }
 
   open(params: any) {
-    this.dialogService.open(HomeworkFormComponent, {
-      dialogClass: 'dialog-limited-height',
-      context: {
-        topics: this.sesion,
-        unidad: this.unidad,
-        curso: this.curso,
-        code: params.code,
-        item: params.item,
-      },
-      closeOnBackdropClick: false,
-      closeOnEsc: false
-    }).onClose.subscribe(result => {
-      if (result.value_close === 'ok') {
-        // console.log(result.response);
-        let valid = false;
-        if (this.sesion.elements.length > 0) {
-          valid = this.sesion.elements.find((r: any) => r.type_element_id === result.response.type_element_id ? true : false);
-          if (valid) {
-            this.setCheck(result.response.type_element_id);
-            this.listElements(result.response.topic_id, result.response.type_element_id);
-          } else {
-            this.arrayEl = [];
-            this.validaExist.emit();
+    this.dialogService
+      .open(HomeworkFormComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          topics: this.sesion,
+          unidad: this.unidad,
+          curso: this.curso,
+          code: params.code,
+          item: params.item,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
+        if (result.value_close === 'ok') {
+          // console.log(result.response);
+          let valid = false;
+          if (this.sesion.elements.length > 0) {
+            valid = this.sesion.elements.find((r: any) => (r.type_element_id === result.response.type_element_id ? true : false));
+            if (valid) {
+              this.setCheck(result.response.type_element_id);
+              this.listElements(result.response.topic_id, result.response.type_element_id);
+            } else {
+              this.arrayEl = [];
+              this.validaExist.emit();
+            }
+          }
+
+          if (result.response && result.response.id && result.value.grupal === '1') {
+            // console.log(result, 'que tenemos');
+            // this.openGroups(result.response);
+            const params = {
+              id: result.response.id, // id del elemento.
+              course_id: this.curso.id,
+            };
+            this.openGroups(params);
           }
         }
-
-
-        if (result.response && result.response.id && result.value.grupal === '1') {
-          // console.log(result, 'que tenemos');
-          // this.openGroups(result.response);
-          const params = {
-            id: result.response.id, // id del elemento.
-            course_id: this.curso.id,
-          }
-          this.openGroups(params);
-        }
-
-      }
-    });
+      });
   }
   adminGrupal(el: any) {
     const params = {
       id: el.id, // id del elemento.
       course_id: this.curso.id,
-    }
+    };
     if (params && params.id && params.course_id) {
       this.openGroups(params);
     }
   }
 
   openGroups(params: any) {
-    this.dialogService.open(AdminGroupsComponent, {
-      dialogClass: 'dialog-limited-height',
-      context: {
-        curso: this.curso,
-        response: params,
-      },
-      closeOnBackdropClick: false,
-      closeOnEsc: false
-    }).onClose.subscribe(result => {
-      if (result === 'ok') {
-        // this.filtrar();
-      }
-    });
+    this.dialogService
+      .open(AdminGroupsComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          curso: this.curso,
+          response: params,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
+        if (result === 'ok') {
+          // this.filtrar();
+        }
+      });
   }
 
   elementStyle() {
@@ -132,14 +132,14 @@ export class SesionComponent implements OnInit {
   elementStyleActive(element: any) {
     return {
       'background-color': element.color_hover,
-      color: element.color_active
+      color: element.color_active,
     };
   }
 
   elementStyleHover(element: any) {
     return {
       'background-color': element.color_hover,
-      color: element.color_active
+      color: element.color_active,
     };
   }
 
@@ -172,9 +172,10 @@ export class SesionComponent implements OnInit {
     const topic_id = topic;
     const type_element_id = type;
     this.loading = true;
-    this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe((data) => {
-      this.arrayEl = data.data || [];
-    },
+    this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe(
+      data => {
+        this.arrayEl = data.data || [];
+      },
       () => {
         this.loading = false;
       },
@@ -212,51 +213,62 @@ export class SesionComponent implements OnInit {
       }).then((result: any) => {
         if (result.isConfirmed) {
           this.loading = true;
-          this.generalService.deleteNameId$(serviceName, el.id).subscribe(r => {
-            if (r.success) {
-              this.listElements(el.topic_id, el.type_element_id);
-              setTimeout(() => {
-                if (this.arrayEl.length <= 0) {
-                  this.arrayEl = [];
-                  this.validaExist.emit();
-                }
-              }, 5000);
+          this.generalService.deleteNameId$(serviceName, el.id).subscribe(
+            r => {
+              if (r.success) {
+                this.listElements(el.topic_id, el.type_element_id);
+                setTimeout(() => {
+                  if (this.arrayEl.length <= 0) {
+                    this.arrayEl = [];
+                    this.validaExist.emit();
+                  }
+                }, 5000);
+              }
+            },
+            () => {
+              this.loading = false;
+            },
+            () => {
+              this.loading = false;
             }
-          }, () => { this.loading = false; }, () => { this.loading = false; });
+          );
         }
       });
     }
   }
   navigate(element: any): any {
-    this.router.navigate([`../asignatures/course/${this.curso.id_carga_curso_docente}/element/${element.id}`], { relativeTo: this.activatedRoute.parent });
+    this.router.navigate([`../asignatures/course/${this.curso.id_carga_curso_docente}/element/${element.id}`], {
+      relativeTo: this.activatedRoute.parent,
+    });
   }
   openQuestionConfig(params: any) {
-    this.dialogService.open(QuestionsConfigComponent, {
-      dialogClass: 'dialog-limited-height',
-      context: {
-        item: params,
-        // curso: this.curso,
-        // response: params,
-      },
-      closeOnBackdropClick: false,
-      closeOnEsc: false
-    }).onClose.subscribe(result => {
-      console.log(result);
-      if (result  && result.save_close === 'ok') {
-        
-        let valid = false;
-        if (this.sesion.elements.length > 0) {
-          valid = this.sesion.elements.find((r: any) => r.type_element_id === result.values.type_element_id ? true : false);
-          if (valid) {
-            this.setCheck(result.values.type_element_id);
-            this.listElements(result.values.topic_id, result.values.type_element_id);
-          } else {
-            this.arrayEl = [];
-            this.validaExist.emit();
+    this.dialogService
+      .open(QuestionsConfigComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          item: params,
+          // curso: this.curso,
+          // response: params,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
+        console.log(result);
+        if (result && result.save_close === 'ok') {
+          let valid = false;
+          if (this.sesion.elements.length > 0) {
+            valid = this.sesion.elements.find((r: any) => (r.type_element_id === result.values.type_element_id ? true : false));
+            if (valid) {
+              this.setCheck(result.values.type_element_id);
+              this.listElements(result.values.topic_id, result.values.type_element_id);
+            } else {
+              this.arrayEl = [];
+              this.validaExist.emit();
+            }
           }
+          // this.filtrar();
         }
-        // this.filtrar();
-      }
-    });
+      });
   }
 }

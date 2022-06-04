@@ -12,17 +12,10 @@
         formControlName="consulta"
       ></textarea>
       <div class="d-flex align-items-center justify-content-end">
-        <nb-toggle formControlName="mostrar" status="basic" labelPosition="start" [disabled]="!formHeader.controls['consulta'].valid">{{
-          formHeader.value.mostrar ? 'Privado' : 'Publico'
-        }}</nb-toggle>
-        <button
-          nbButton
-          status="primary"
-          size="small"
-          class="ms-2 my-2"
-          (click)="sendQuestion()"
-          [disabled]="!formHeader.valid"
-        >
+        <nb-toggle formControlName="mostrar" status="basic" labelPosition="start">
+          {{ formHeader.value.mostrar ? 'Privado' : 'Publico' }}
+        </nb-toggle>
+        <button nbButton status="primary" size="small" class="ms-2 my-2" (click)="sendQuestion()" [disabled]="!formHeader.valid">
           Preguntar
         </button>
       </div>
@@ -42,10 +35,7 @@
       </div>
       <span class="puntos-info">+ {{ item?.puntos }}</span>
     </div>
-    <div
-      class="text-comment col-10 col-md-11 col-xxl-9 pe-0"
-      [ngClass]="{ 'text-comment-public': item?.mostrar !== 'help' }"
-    >
+    <div class="text-comment col-10 col-md-11 col-xxl-9 pe-0" [ngClass]="{ 'text-comment-public': item?.mostrar !== 'help' }">
       <span>{{ item?.consulta }}</span>
       <span *ngIf="item.created_at" class="text-secondary ms-auto mt-auto" style="font-size: 10px">
         Hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}

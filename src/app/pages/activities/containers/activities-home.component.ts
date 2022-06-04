@@ -1,13 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { GeneralService } from "../../../providers";
-import { END_POINTS } from "../../../providers/utils";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GeneralService } from '../../../providers';
+import { END_POINTS } from '../../../providers/utils';
 
 @Component({
-  selector: "app-activities-home",
-  templateUrl: "./activities-home.component.html",
-  styleUrls: ["./activities-home.component.scss"],
+  selector: 'app-activities-home',
+  templateUrl: './activities-home.component.html',
+  styleUrls: ['./activities-home.component.scss'],
 })
 export class ActivitiesHomeComponent implements OnInit {
   cursos: any[] = [];
@@ -18,7 +18,7 @@ export class ActivitiesHomeComponent implements OnInit {
   curso_id: any;
   elemento_id: any;
   pagesCount: any[] = [20, 50, 100, 300, 500];
-  estados: any[] = ["Pendiente", "Vencido", "Completado", "Próximo", "Re-apertura"];
+  estados: any[] = ['Pendiente', 'Vencido', 'Completado', 'Próximo', 'Re-apertura'];
 
   formHeader: any = FormGroup;
   loading: boolean = false;
@@ -48,10 +48,10 @@ export class ActivitiesHomeComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      id_per_page: [this.pagination.per_page || "", [Validators.required]],
-      id_curso: ["", [Validators.required]],
-      id_tipo_elemento: ["", [Validators.required]],
-      id_estado: [this.estados[0] || "", [Validators.required]],
+      id_per_page: [this.pagination.per_page || '', [Validators.required]],
+      id_curso: ['', [Validators.required]],
+      id_tipo_elemento: ['', [Validators.required]],
+      id_estado: [this.estados[0] || '', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listCursos();
@@ -59,18 +59,18 @@ export class ActivitiesHomeComponent implements OnInit {
 
   iconStyle(element: any) {
     return {
-      "background-color": element?.background,
+      'background-color': element?.background,
     };
   }
 
   listCursos() {
     this.listTypeElements();
-    const serviceName = END_POINTS.base_back.activities_evaluations + "/get-courses-list";
+    const serviceName = END_POINTS.base_back.activities_evaluations + '/get-courses-list';
     this.loadingFilters = true;
     this.generalService.nameAll$(serviceName).subscribe(
       (res: any) => {
         this.cursos = res.data || [];
-        this.cursos.unshift({ id: "ALL", nombre: "TODOS" });
+        this.cursos.unshift({ id: 'ALL', nombre: 'TODOS' });
         if (this.cursos.length > 0) {
           this.formHeader.patchValue({
             id_curso: this.cursos[0].id,
@@ -89,10 +89,10 @@ export class ActivitiesHomeComponent implements OnInit {
   }
 
   listTypeElements() {
-    const serviceName = END_POINTS.base_back.activities_evaluations + "/get-elements-types";
+    const serviceName = END_POINTS.base_back.activities_evaluations + '/get-elements-types';
     this.generalService.nameAll$(serviceName).subscribe((res: any) => {
       this.tipo_elementos = res.data || [];
-      this.tipo_elementos.unshift({ id: "ALL", nombre: "TODOS" });
+      this.tipo_elementos.unshift({ id: 'ALL', nombre: 'TODOS' });
       if (this.tipo_elementos.length > 0) {
         this.formHeader.patchValue({
           id_tipo_elemento: this.tipo_elementos[0].id,
@@ -127,7 +127,7 @@ export class ActivitiesHomeComponent implements OnInit {
       per_page: this.pagination.per_page,
       type_element_id: this.elemento_id.id,
     };
-    const serviceName = END_POINTS.base_back.activities_evaluations + "/get-my-activities";
+    const serviceName = END_POINTS.base_back.activities_evaluations + '/get-my-activities';
     this.loading = true;
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
