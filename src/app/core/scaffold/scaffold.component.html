@@ -8,7 +8,7 @@
         </nb-action>
       </nb-actions>
       <nb-actions>
-        <nb-action *ngIf="rolSemestre.rol.name === 'Docente'">
+        <nb-action *ngIf="rolSemestre?.rol?.name === 'Docente'">
           <button nbButton ghost nbTooltip="Crear elementos" nbTooltipStatus="primary" nbTooltipPlacement="left" status="primary" size="medium" (click)="newElements()"><nb-icon icon="plus-outline"></nb-icon></button>
         </nb-action>
         <nb-action class="p-0">
@@ -120,8 +120,8 @@
     </nb-layout-header>
     <nb-sidebar responsive tag="core-sidebar">
       <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
-      <nb-sidebar-footer *ngIf="!hidden">
-        <nb-toggle (checkedChange)="changeTheme($event)" *ngIf="!minimum">
+      <nb-sidebar-footer  *ngIf="!minimum">
+        <nb-toggle (checkedChange)="changeTheme($event)">
           <span class="text-white">TEMA</span>
         </nb-toggle>
       </nb-sidebar-footer>

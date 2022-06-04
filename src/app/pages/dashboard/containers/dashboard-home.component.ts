@@ -352,4 +352,23 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
     this.nombreSubscription.unsubscribe();
   }
+  syncLamb() {
+    const serviceName = END_POINTS.base_back.config + '/get-info-user';
+    // const person_id = this.userInfo._user.id;
+    const user = this.userInfo._user.usuario_upeu;
+    this.loading = true;
+    this.generalService.nameParams$(serviceName, {user: user}).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
 }

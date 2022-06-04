@@ -89,7 +89,7 @@
                 <div class="col-md-6">
                   <nb-card status="primary" class="mb-0">
                     <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
-                      Informacion Principal del Usuario
+                      Información Principal del Usuario
                     </nb-card-header>
                     <nb-card-body>
                       <form [formGroup]="formHeader">
@@ -286,7 +286,7 @@
                     </nb-card-body>
                     <nb-card-footer style="text-align: right">
                       <button class="me-2" nbButton size="small" status="primary" (click)="saveInfo()">Guardar</button>
-                      <button nbButton size="small" status="primary">Sincronizar</button>
+                      <button nbButton size="small" status="primary" (click)="syncLamb()">Sincronizar</button>
                     </nb-card-footer>
                   </nb-card>
                 </div>

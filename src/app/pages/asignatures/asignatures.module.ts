@@ -57,6 +57,8 @@ import { PreguntasComponent } from './components/c-free/navegacion/preguntas/pre
 import { EstudiantesComponent } from './components/c-free/navegacion/estudiantes/estudiantes.component';
 import { FilterModule } from '../../shared/pipes/filter/filter.module';
 import { HighlightModule } from '../../shared/directives/highlight.module';
+import { ConfiguracionesComponent } from './components/c-free/navegacion/configuraciones/configuraciones.component';
+import { RequestAperturaComponent } from './components/modals/request-apertura/request-apertura.component';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -87,7 +89,12 @@ const COMPONENTS: any[] = [
   CalificarElementEstudentComponent,
   CWorksComponent,
   CForumsComponent,
-  QuestionsConfigComponent
+  QuestionsConfigComponent,
+  AnswerQuestionsComponent,
+  SilaboComponent,
+  PreguntasComponent,
+  EstudiantesComponent,
+  ConfiguracionesComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -151,7 +158,7 @@ const MODULES: any = [
     ...PIPES,
     ...DIRECTIVES
   ],
-  declarations: [...COMPONENTS, AnswerQuestionsComponent, SilaboComponent, PreguntasComponent, EstudiantesComponent],
+  declarations: [...COMPONENTS, RequestAperturaComponent],
   entryComponents: [...MODALS],
 
 })

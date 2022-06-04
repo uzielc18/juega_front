@@ -37,6 +37,16 @@ export class ZoomCourseComponent implements OnInit {
   closeModal() {
     this.activeModal.close('close');
   }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol){
+      return val;
+    } else {
+      return '';
+    }
+
+  }
   openConfig(items:any) {
     this.dialogService.open(ConfigZoomComponent, {
       dialogClass: 'dialog-limited-height',
@@ -75,6 +85,7 @@ export class ZoomCourseComponent implements OnInit {
       ciclo: forms.ciclo || '',
       grupo: forms.grupo || '',
       paginate: 'N',
+      semester_id: this.rolSemestre.semestre.id || '',
     }
     if (params && params.programa_estudio_id && params.ciclo && params.grupo) {
       this.loading = true;
