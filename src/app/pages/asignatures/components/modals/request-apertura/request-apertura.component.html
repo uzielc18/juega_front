@@ -27,7 +27,7 @@
         </form>
     </nb-card-body>
     <nb-card-footer style="text-align: right;">
-        <button nbButton size="small">No hacer nada</button>&nbsp;&nbsp;
+        <button nbButton size="small" (click)="closeModal()">No hacer nada</button>&nbsp;&nbsp;
         <button nbButton size="small" status="primary" (click)="saveJustificate()" [disabled]="formHeader.invalid">Solicitar apertura</button>
     </nb-card-footer>
 

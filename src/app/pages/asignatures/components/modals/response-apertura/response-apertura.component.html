@@ -1,0 +1,61 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div>
+                RESPUESTA
+            </div>
+            <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="formHeader">
+            <strong style="color: brown;">{{item?.element_nombre}}</strong>
+            <hr>
+            <p style="text-align: justify;" class="label">{{item?.justification}}</p>
+            <br>
+            <div class="row">
+                <label class="label col-md-3">Fecha y hora fin:</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <nb-form-field>
+                                <input nbInput placeholder="Fecha Inicio" fullWidth
+                                    [nbDatepicker]="fechaFin" fieldSize="small"
+                                    [ngStyle]="{'border-left': formHeader.hasError('required', ['fecha_fin']) ? '3px solid #e74c3c' : ''}"
+                                    (keyup)="keyFechaF($event)"/>
+                                <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                                    pack="eva"></nb-icon>
+                                <nb-datepicker #fechaFin format="dd/MM/yyyy" [min]="min" (dateChange)="fechaF($event)">
+                                </nb-datepicker>
+                                <control-messages [control]="formHeader.get('fecha_fin')">
+                                </control-messages>
+                            </nb-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <nb-form-field class="hour-input ms-auto">
+                                <input nbInput placeholder="Hora Termino" [nbTimepicker]="horaTem" type="text"
+                                [ngStyle]="{'border-left': formHeader.hasError('required', ['hora_fin']) ? '3px solid #e74c3c' : ''}" formControlName="hora_fin"/>
+                                <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
+                                <nb-timepicker #horaTem></nb-timepicker>
+                                </nb-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label class="label col-md-3">Respuesta:</label>
+                <div class="col-md-9">
+                    <textarea nbInput fullWidth formControlName="respuesta"></textarea>
+                    <control-messages [control]="formHeader.get('respuesta')"></control-messages>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer style="text-align: right;">
+        <button nbButton size="small" status="danger" (click)="saveResponse('rechazado')"  [disabled]="formHeader.invalid">Rechazar</button>&nbsp;&nbsp;
+        <button nbButton size="small" status="primary" (click)="saveResponse('aceptado')" [disabled]="formHeader.invalid">Guardar</button>
+    </nb-card-footer>
+</nb-card>

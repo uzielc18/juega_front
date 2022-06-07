@@ -47,10 +47,7 @@ const routes: Routes = [
         path: 'my-calendar',
         loadChildren: () => import('./pages/my-calendar/my-calendar.module').then(m => m.MyCalendarModule),
       },
-      {
-        path: 'element',
-        loadChildren: () => import('./pages/element/element.module').then(m => m.ElementModule),
-      },
+   
       // {
       //   path: "**",
       //   loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),

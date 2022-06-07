@@ -21,6 +21,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
   @Input() list: any = [];
   @Output() changeEmit: EventEmitter<any> = new EventEmitter();
   @Input() pending: any;
+  @Input() validFecha: boolean = false;
   constructor(private formBuilder: FormBuilder, private generalService: GeneralService, private dialogService: NbDialogService) { }
 
   ngOnChanges():void {
@@ -30,6 +31,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
     this.getValidComent = this.getValidComent;
     this.options = this.options;
     this.pending = this.pending;
+    this.validFecha = this.validFecha;
     // console.log(this.pending, 'id');
 
   }

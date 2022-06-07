@@ -1,5 +1,22 @@
-<nb-card class="instructions-container m-4">
-  <nb-card-body class="px-4 py-3">
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <div class="work work-expired" style="margin-left: 20px; margin-right: 20px;"
+   *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && !pending?.student_pending?.nota">
+    <span>
+      <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu Trabajo: {{ element?.titulo }} acaba de caducar hace {{
+      expiredDays |
+      i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
+      expiredSeconds | i18nPlural:secondsMap }}
+    </span>
+    <div class="ms-auto d-flex align-items-center">
+      <button class="d-flex align-items-center mx-3 py-1 work-expired-button" (click)="justifications()">
+        <nb-icon class="me-2" icon="info"></nb-icon>
+        <span>Solicitar apertura</span>
+      </button>
+      <!-- <nb-icon class="work-expired-close" icon="close-outline"></nb-icon> -->
+    </div>
+  </div>
+<nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">
+  <nb-card-body>
     <div class="row">
       <div class="instructions  col-md-9 col-xxl-10">
         <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
@@ -82,3 +99,4 @@
     </div>
   </nb-card-body>
 </nb-card>
+</div>

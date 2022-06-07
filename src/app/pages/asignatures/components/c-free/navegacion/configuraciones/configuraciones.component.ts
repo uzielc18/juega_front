@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import Swal from 'sweetalert2';
@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 })
 export class ConfiguracionesComponent implements OnInit {
   @Input() curso:any;
+  @Output() changeLoad: EventEmitter<any> = new EventEmitter();
   constructor(private generalService: GeneralService) { }
 
   ngOnInit(): void {
@@ -48,7 +49,7 @@ export class ConfiguracionesComponent implements OnInit {
           if (result.isConfirmed) {
        this.generalService.nameIdAndIdAndIdAndId$(serviceName, params.semestre, params.idCargCurDoc, params.id_1, params.id_2).subscribe((res:any) => {
         if (res.success) {
-
+          // this.changeLoad.emit('ok');
         }
        });
       }
@@ -80,7 +81,7 @@ export class ConfiguracionesComponent implements OnInit {
           if (result.isConfirmed) {
        this.generalService.nameIdAndIdAndId$(serviceName, params.semestre, params.idCargCurDoc, params.id_1).subscribe((res:any) => {
         if (res.success) {
-          
+          this.changeLoad.emit('ok');
         }
        });
       }
@@ -107,7 +108,7 @@ export class ConfiguracionesComponent implements OnInit {
           if (result.isConfirmed) {
       this.generalService.nameIdAndId$(serviceName, this.curso.id, option).subscribe((res:any) => {
         if (res.success) {
-          
+          // this.changeLoad.emit('ok');
         }
        });
       }

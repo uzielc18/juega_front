@@ -45,9 +45,11 @@ export class PreguntasComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.curso) {
-      this.getQuestions();
-    }
+    // console.log(changes, 'golas');
+    
+    // if (changes.curso) {
+    //   this.getQuestions();
+    // }
   }
 
   private fieldReactive() {

@@ -89,6 +89,7 @@ export class AppService {
     this._area = value;
   }
 
+
   init(injector: any): Promise<any> {
     return injector.get(NbAuthService).isAuthenticated().toPromise().then((isAuthent: any) => {
       if (isAuthent) {

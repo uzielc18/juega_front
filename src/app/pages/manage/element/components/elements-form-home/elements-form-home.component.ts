@@ -1,5 +1,5 @@
 import { Component, Input, IterableDiffers, OnInit } from '@angular/core';
-import { AppService } from '../../../../core';
+import { AppService } from 'src/app/core';
 
 @Component({
   selector: 'app-elements-form-home',

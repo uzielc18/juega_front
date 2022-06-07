@@ -9,11 +9,13 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { DashboardHomeComponent } from './containers/dashboard-home.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import { ChartTrabajosComponent } from './components/chart-trabajos/chart-trabajos.component';
 
 const COMPONENTS: any[] = [
   DashboardComponent,
   DashboardHomeComponent,
-  PerfilComponent
+  PerfilComponent,
+  ChartTrabajosComponent
 ];
 const NG_MODULES: any = [
   NebularModule,

@@ -9,14 +9,14 @@ const routes: Routes = [
     component: ElementComponent,
     children: [
       {
-        path: 'new',
+        path: '',
         component: ElementHomeComponent,
       },
-      {
-        path: '',
-        redirectTo: 'new',
-        pathMatch: 'full',
-      },
+      // {
+      //   path: '',
+      //   redirectTo: '',
+      //   pathMatch: 'full',
+      // },
     ],
   },
 ];
