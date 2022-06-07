@@ -99,7 +99,7 @@ export class RequestAperturaComponent implements OnInit {
   saveJustificate() {
     const serviceName = 'justifications';
     const params = {
-      pending_id:this.pendiente.id,
+      pending_id:this.pendiente.student_pending.id,
       persons_student_id: this.pendiente.student_pending.persons_student_id || '',
       persons_teacher_id: this.elemento.course.persons_teacher_id || '',
       element_id: this.elemento.id || '',

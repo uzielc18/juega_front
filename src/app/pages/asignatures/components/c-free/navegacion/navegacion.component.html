@@ -1,23 +1,23 @@
-<nb-card class="h-100 mb-0">
-  <nb-card-body class="px-0 py-4">
+<nb-card >
+  <nb-card-body class="px-0 py-4" >
     <div class="tabs-container">
-      <nb-tabset>
-        <nb-tab [tabTitle]="showText ? 'Silabo' : ''" tabIcon="clipboard-outline" responsive>
+      <nb-tabset (changeTab)="changeTabs($event)">
+        <nb-tab [tabTitle]="showText ? 'Silabo' : ''" tabIcon="clipboard-outline" responsive tabId="silabo" style="max-height: 70vh;">
           <app-silabo [curso]="curso"></app-silabo>
         </nb-tab>
-        <nb-tab [tabTitle]="showText ? 'Preguntas' : ''" tabIcon="question-mark-outline" responsive>
+        <nb-tab [tabTitle]="showText ? 'Preguntas' : ''" tabIcon="question-mark-outline" responsive tabId="pregunta" style="max-height: 70vh;">
           <app-preguntas [userInfo]="userInfo" [curso]="curso"></app-preguntas>
         </nb-tab>
-        <nb-tab [tabTitle]="showText ? 'Jutificación' : ''" tabIcon="file-text-outline" responsive>
-          <p>Jutificación</p>
+        <nb-tab [tabTitle]="showText ? 'Jutificación' : ''" tabIcon="file-text-outline" responsive tabId="justifications" style="max-height: 70vh;">
+          <app-justifications [userInfo]="userInfo" [curso]="curso"></app-justifications>
         </nb-tab>
 
-        <nb-tab [tabTitle]="showText ? 'Estudiantes' : ''" tabIcon="people-outline" responsive>
+        <nb-tab [tabTitle]="showText ? 'Estudiantes' : ''" tabIcon="people-outline" responsive tabId="estudiantes" style="max-height: 70vh;">
           <app-estudiantes [curso]="curso"></app-estudiantes>
         </nb-tab>
 
-        <nb-tab [tabTitle]="showText ? 'Configuración' : ''" tabIcon="settings-2-outline" responsive>
-          <app-configuraciones  [curso]="curso"></app-configuraciones>
+        <nb-tab [tabTitle]="showText ? 'Configuración' : ''" tabIcon="settings-2-outline" responsive tabId="configuracion" style="max-height: 70vh;">
+          <app-configuraciones  [curso]="curso" (changeLoad)="syngChanges($event)"></app-configuraciones>
         </nb-tab>
       </nb-tabset>
     </div>

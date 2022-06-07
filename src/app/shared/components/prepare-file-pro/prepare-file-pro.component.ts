@@ -22,6 +22,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
   loading: boolean = false;
   @Input() viewFile: string = 'ARRAY';
   @Input() fullWidth: boolean = true;
+  @Input() colorButom: any = 'basic';
   constructor(private formBuilder: FormBuilder, private modalServiceNebular: NbDialogService,
     private appService: AppService) {
   }
@@ -29,6 +30,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
     this.listArrayFile = this.listArrayFile;
     this.isDisabled = this.isDisabled;
     this.paramsInfo = this.paramsInfo;
+    this.colorButom = this.colorButom;
   }
   ngOnInit(): void {
     this.getUsers();

@@ -7,7 +7,7 @@ import { END_POINTS } from 'src/app/providers/utils';
 import { DIRECTORY } from 'src/app/shared/directorios/directory';
 import { CalificarElementEstudentComponent } from '../../../modals/calificar-element-estudent/calificar-element-estudent.component';
 import { RequestAperturaComponent } from '../../../modals/request-apertura/request-apertura.component';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-v-works',
   templateUrl: './v-works.component.html',
@@ -274,5 +274,31 @@ export class VWorksComponent implements OnInit, OnChanges {
           this.refreshPending.emit();
         }
       });
+  }
+  deleteJust(just:any) {
+    const serviceName = 'justifications'
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿ Desea eliminar ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#7f264a',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalServi.deleteNameId$(serviceName, just.id).subscribe(r => {
+            if (r.success) {
+              this.refreshPending.emit();
+            }
+          },() => {this.loading = false;},() => {this.loading = false;});
+      }
+    });
   }
 }

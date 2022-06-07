@@ -58,5 +58,10 @@ export class VCourseComponent implements OnInit, OnDestroy {
     ];
     this.ngDynamicBreadcrumbService.updateBreadcrumb(breadcrumbs);
   }
+  eventsChangesss($event:any) {
+    if ($event === 'ok') {
+      this.getUnidades();
+    }
+  }
 }
 

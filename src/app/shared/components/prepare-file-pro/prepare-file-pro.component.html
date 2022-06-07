@@ -8,7 +8,7 @@ nbSpinnerSize="large">
         <br>
         <label class="label">Dar click para adjuntar, máx ({{numFiles}}) {{numFiles === 1 ? 'archivo' : 'archivos'}}</label><br><br>
         <div   class="text-center">
-          <button nbButton  size="small" (click)="openModal();"
+          <button nbButton  size="small" (click)="openModal();" [status]="colorButom"
           [disabled]="listArrayFile.length === numFiles || isDisabled" style="font-size: 12px; font-weight: bold; cursor: pointer; background: rgb(213 213 213);">Adjuntar archivo <nb-icon icon="cloud-upload-outline"></nb-icon> </button>
         </div>
         <br>
@@ -37,7 +37,7 @@ nbSpinnerSize="large">
 
   <div *ngIf="viewFile === 'UNIQUE'">
     <div  class="text-center">
-      <button nbButton  size="small" [fullWidth]="fullWidth" status="basic" outline (click)="openModal();" [disabled]="isDisabled"><nb-icon style="font-size: 20px;" icon="cloud-upload-outline"></nb-icon> </button>
+      <button nbButton  size="small" [fullWidth]="fullWidth" [status]="colorButom" outline (click)="openModal();" [disabled]="isDisabled"><nb-icon style="font-size: 20px;" icon="cloud-upload-outline"></nb-icon> </button>
     </div>
   </div>
 </form>

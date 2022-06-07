@@ -65,6 +65,14 @@
                         <control-messages [control]="formHeader.get('orden')"></control-messages>
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <label class="label col-md-3">Estado:</label>
+                    <div class="col-md-9">
+                        <nb-toggle status="primary" formControlName="estado"></nb-toggle>
+                        <control-messages [control]="formHeader.get('estado')"></control-messages>
+                    </div>
+                </div>
             </form>
             </div>
         </div>

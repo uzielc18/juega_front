@@ -98,7 +98,10 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private generalService: GeneralService,
     public emitEventsService: EmitEventsService,
     private router: Router
-  ) {}
+  ) {
+    console.log(this.router);
+    
+  }
 
   ngOnInit(): void {
     this.setConfiguartion();
@@ -391,8 +394,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     if (id) {
       this.loading = true;
       const params = {
-        url: this.router.url,
+        url: this.validUrlRouter(this.router.url),
       };
+      
       // console.log(this.router.url);
       this.generalService.addNameIdAndIdData$(serviceName, id, id_rol, params).subscribe(
       // this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe(
@@ -434,6 +438,27 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       );
     }
   }
+  validUrlRouter(url:any) {
+    const newStr = url.slice(1);
+    const valUrl = newStr.split('/') || [];
+    const length = valUrl.length || 0;
+    let newUrl:any = '';
+    switch (true) {
+      case (length === 1):
+        newUrl = '/' + valUrl[0];
+        break;
+      case (length === 2):
+        newUrl = '/' + valUrl[0] + '/' + valUrl[1];
+        break;
+      case (length >= 3):
+        newUrl = '/' + valUrl[0] + '/' + valUrl[1] + '/' + valUrl[2];
+        break;
+      default:
+        break;
+      }
+      return newUrl;
+    // console.log(url, valUrl, newUrl);
+  }
 
   saveChanges() {
     const object = this.semestres.find((r: any) => r.id === this.formHeader.value.id_semestre);
@@ -464,6 +489,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   newElements() {
-    this.router.navigate(['/pages/element/new']);
+    this.router.navigate(['/pages/manage/element']);
   }
+ 
 }

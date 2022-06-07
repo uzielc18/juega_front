@@ -55,9 +55,9 @@ export class EstudiantesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.curso) {
-      this.getStudents();
-    }
+    // if (changes.curso) {
+    //   this.getStudents();
+    // }
   }
 
   private fieldReactive() {

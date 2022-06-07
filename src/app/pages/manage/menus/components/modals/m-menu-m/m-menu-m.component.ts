@@ -33,6 +33,7 @@ export class MMenuMComponent implements OnInit {
       path_match: ['prefix', [Validators.required]],
       target: [''],
       orden: ['', [Validators.required]],
+      estado: [false],
     };
     this.formHeader = this.formBuilder.group(controls);
     if (this.code === 'UPDATE') {
@@ -61,6 +62,7 @@ export class MMenuMComponent implements OnInit {
       path_match: forms.path_match,
       target: forms.target,
       orden: forms.orden,
+      estado: forms.estado === true ? 1 : 0,
     };
     if (this.code === 'NEW') {
       params.menu_id = this.nivel === 1 ? 0 : this.nivel === 2 ? this.item.id : '';
@@ -91,6 +93,7 @@ export class MMenuMComponent implements OnInit {
       path_match: this.item.path_match,
       target: this.item.target,
       orden: this.item.orden,
+      estado: this.item.estado === 1 ? true : false,
     });
   }
 

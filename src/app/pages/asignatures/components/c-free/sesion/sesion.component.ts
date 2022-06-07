@@ -254,7 +254,7 @@ export class SesionComponent implements OnInit {
         closeOnEsc: false,
       })
       .onClose.subscribe(result => {
-        console.log(result);
+        // console.log(result);
         if (result && result.save_close === 'ok') {
           let valid = false;
           if (this.sesion.elements.length > 0) {
