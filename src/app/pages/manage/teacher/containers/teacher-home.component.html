@@ -1,0 +1,106 @@
+<nb-card class="m-0 h-100 border-0" style="border-radius: 15px" [nbSpinner]="loading">
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="person-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px">DOCENTES</strong>
+    </div>
+    <hr />
+    <form [formGroup]="formHeader">
+      <div class="row">
+        <!-- <div class="col-md-6"></div> -->
+        <div class="col-md-3">
+          <label class="label">Programa estudio</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
+            <nb-option value="">Todos</nb-option>
+            <nb-option *ngFor="let item of litProgramStudy" [value]="item.id">{{
+              item.name_programa_estudio
+            }}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-3">
+          <label class="label">Ciclo</label>
+          <nb-select fullWidth size="small" formControlName="ciclo">
+            <nb-option value="">Todos</nb-option>
+            <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{ item.ciclo }}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+          <label class="label" style="visibility: hidden">Filtrar</label><br />
+          <button nbButton fullWidth size="small" status="warning" (click)="refresh()">
+            <nb-icon icon="funnel"></nb-icon>Filtrar
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+          <tr style="font-size: 12px">
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Areas</th>
+            <th>Cursos</th>
+            <th>Perfiles</th>
+            <th>Último Ingreso</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listTeachers; let i = index" style="font-size: 10px; vertical-align: middle">
+            <td>{{ item.codigo }}</td>
+            <td>{{ item.nombres }} {{ item.apellido_paterno }} {{ item.apellido_materno }}</td>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item?.cursos }}</td>
+            <td>{{ item?.perfiles }}</td>
+            <td>{{ item?.ultimo_ingreso }}</td>
+            <td class="text-center" style="width: 120px">
+              <div class="d-flex justify-content-evenly">
+                <div style="cursor: pointer" (click)="editTeacher(item)">
+                  <nb-icon icon="edit" status="info" style="font-size: 25px"></nb-icon>
+                </div>
+                <div style="cursor: pointer">
+                  <nb-icon icon="trash-2-outline" status="danger" style="font-size: 25px"></nb-icon>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="d-flex justify-content-between align-items-center p-2">
+      <div style="color: brown; font-weight: bold">Total: {{ pagination.sizeListData }}</div>
+      <ngb-pagination
+        [collectionSize]="pagination?.sizeListData"
+        [(page)]="pagination.page"
+        [maxSize]="20"
+        [disabled]="pagination?.isDisabledPage"
+        [pageSize]="pagination?.sizePage"
+        class="d-flex justify-content-center"
+        size="sm"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      >
+      </ngb-pagination>
+      <div>
+        <nb-form-field>
+          <nb-icon nbPrefix icon="list-outline"></nb-icon>
+          <nb-select
+            placeholder="Paginación"
+            status="success"
+            size="tiny"
+            fullWidth
+            [(selected)]="selectedItem"
+            (selectedChange)="sizeTable($event)"
+          >
+            <nb-option *ngFor="let per of pagesCount" [value]="per">Paginar de {{ per }} en {{ per }}</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
+    </div>
+  </nb-card-footer>
+</nb-card>

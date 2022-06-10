@@ -3,7 +3,7 @@ nb-card {
 }
 
 nb-progress-bar {
-  height: 7px;
+  height: 10px;
 }
 .another-color {
   color: var(--color-primary-500);
@@ -13,7 +13,6 @@ nb-progress-bar {
 .description {
   font-size: 14px;
 }
-
 
 nb-icon {
   cursor: pointer;
@@ -51,7 +50,6 @@ nb-badge {
 }
 
 p {
-
   small {
     font-size: 14px;
   }
@@ -61,13 +59,23 @@ p {
   font-size: 14px;
 }
 
-@media screen and (max-width: 1000px){
-  .container-fluid {
-    padding: 0 !important;
-  }
+.course-description {
+  line-height: 18px;
+}
 
-  .cont-1 {
-    padding: 0 !important;
+.course-accordion-body {
+  ::ng-deep .item-body {
+    padding: 20px !important;
   }
+}
 
+@media screen and (max-width: 768px) {
+  .course-accordion-body {
+    ::ng-deep .item-body {
+      padding: 10px !important;
+    }
+  }
+}
+nb-accordion nb-accordion-item:hover {
+  background: var(--color-warning-100);
 }

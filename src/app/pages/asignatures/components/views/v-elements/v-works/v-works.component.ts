@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
@@ -6,7 +6,8 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { DIRECTORY } from 'src/app/shared/directorios/directory';
 import { CalificarElementEstudentComponent } from '../../../modals/calificar-element-estudent/calificar-element-estudent.component';
-
+import { RequestAperturaComponent } from '../../../modals/request-apertura/request-apertura.component';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-v-works',
   templateUrl: './v-works.component.html',
@@ -16,7 +17,7 @@ export class VWorksComponent implements OnInit, OnChanges {
   @Input() element: any;
   @Input() userInfo: any;
   @Input() pending: any;
-  @Input() rubrica: any = null;
+  @Input() rubrica: any;
   @Input() has_rubric: boolean = false;
   @Input() calification: any;
   loading: boolean = false;
@@ -68,19 +69,30 @@ export class VWorksComponent implements OnInit, OnChanges {
     private appService: AppService,
     private generalServi: GeneralService
   ) {
+    
     setInterval(() => {
-      this.countdown(this.element?.fecha_fin);
+      if (this.pending) {
+        this.countdown(this.pending?.fecha_fin);
+      }
     }, 1000);
   }
-  ngOnChanges(): void {
-    this.pending = this.pending;
-  }
+  // ngOnChanges(): void {
+  //   this.pending = this.pending;
+  // }
   ngOnInit(): void {
     this.fieldReactive();
-    if (this.rubrica !== null) {
-      console.log(this.rubrica, 'desde rubriiiiiiiiiiica');
+    // if (this.rubrica !== null) {
+    //   console.log(this.rubrica, 'desde rubriiiiiiiiiiica');
+    // }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.pending = this.pending;
+    if (changes.rubrica) {
+      this.rubrica = changes.rubrica.currentValue;
     }
   }
+
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     const val = JSON.parse(sesion);
@@ -112,7 +124,7 @@ export class VWorksComponent implements OnInit, OnChanges {
     this.expiredSeconds = Math.floor((expired % minute) / second);
 
     if (this.daysLeft <= 0 && this.hoursLeft <= 0 && this.minutesLeft <= 0 && this.secondsLeft <= 0) {
-      this.tiempo_vencido = true; // mejorar la logica
+      this.tiempo_vencido = true;
     }
   }
 
@@ -244,5 +256,49 @@ export class VWorksComponent implements OnInit, OnChanges {
     } else {
       return '';
     }
+  }
+  justifications() {
+    this.dialogService.open(RequestAperturaComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          elemento: this.element,
+          pendiente: this.pending,
+          rolSemestre: this.rolSemestre,
+          userInfo: this.userInfo,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
+        if (result === 'ok') {
+          this.refreshPending.emit();
+        }
+      });
+  }
+  deleteJust(just:any) {
+    const serviceName = 'justifications'
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿ Desea eliminar ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#7f264a',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalServi.deleteNameId$(serviceName, just.id).subscribe(r => {
+            if (r.success) {
+              this.refreshPending.emit();
+            }
+          },() => {this.loading = false;},() => {this.loading = false;});
+      }
+    });
   }
 }

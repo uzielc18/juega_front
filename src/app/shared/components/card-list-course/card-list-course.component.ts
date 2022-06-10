@@ -22,8 +22,6 @@ export class CardListCourseComponent implements OnInit {
   nombreSubscription: any = Subscription;
   theRolSemestre:any;
   valida: boolean = false;
-  @Output() changeEmit: EventEmitter<any> = new EventEmitter();
-  // public valorEmitido = this.emitEventsService.recibir;
   constructor( private formBuilder: FormBuilder,   private generalService: GeneralService, private emitEventsService: EmitEventsService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -72,12 +70,38 @@ export class CardListCourseComponent implements OnInit {
       tipo: $event,
     });
   }
+  reloadList() {
+    this.getCourses();
+  }
   getCourses() {
     const serviceName = END_POINTS.base_back.resourse + '/enrollment-student';
     this.loading = true;
     this.generalService.nameAll$(serviceName).subscribe((res:any) => {
       this.cursosDocente = res.data.cursos_docente || [];
+      if (this.cursosDocente.length>0) {
+        this.cursosDocente.map((r:any) => {
+          // r.link_activo.diferencia = 14;
+          const cv = r.link_activo.diferencia;
+          r.verIconZoom = false;
+          if(cv !== '') {
+            if (cv >= -15 && cv <= 15) {
+              r.verIconZoom = true;
+            }
+          }
+        });
+      }
       this.cursosEstudiante = res.data.cursos_estudiante || [];
+      if (this.cursosEstudiante.length>0) {
+        this.cursosEstudiante.map((a:any) => {
+          const cv = a.link_activo.diferencia;
+          a.verIconZoom = false;
+          if(cv !== '') {
+            if (cv >= -15 && cv <= 15) {
+              a.verIconZoom = true;
+            }
+          }
+        });
+      }
     }, () => { this.loading =false; }, () => { this.loading =false; });
   }
   navigate(item:any): any {
@@ -105,9 +129,19 @@ export class CardListCourseComponent implements OnInit {
       closeOnEsc: true
     }).onClose.subscribe(result => {
       if (result === 'ok') {
-        this.changeEmit.emit();
+
       }
     });
   }
-
+  status(value:any) {
+    // console.log(value);
+    
+    if (value <= 33) {
+      return 'danger';
+    } else if (value <= 66) {
+      return 'warning';
+    } else {
+      return 'success';
+    }
+  }
 }

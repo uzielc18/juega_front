@@ -1,0 +1,24 @@
+<nb-card accent="primary" class="scrollModal">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
+    <div class="d-flex align-items-center justify-content-between">
+      <div *ngIf="rol === 'teacher'">Editar Docente</div>
+      <div *ngIf="rol === 'student'">Editar Estudiante</div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-tabset>
+      <nb-tab tabTitle="Perfil">
+        <app-perfil [user]="user"></app-perfil>
+      </nb-tab>
+      <nb-tab tabTitle="Roles">
+        <app-rol [user]="user"></app-rol>
+      </nb-tab>
+      <nb-tab tabTitle="Cursos">
+        <app-curso [user]="user"></app-curso>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>

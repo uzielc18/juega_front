@@ -8,6 +8,13 @@
        <form [formGroup]="formHeader">
         <div class="row">
             <!-- <div class="col-md-6"></div> -->
+            <div class="col-md-2">
+                <label class="label">Semestre</label>
+                <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="semester">
+                    <!-- <nb-option value="">Todos</nb-option> -->
+                    <nb-option *ngFor="let item of semestrers" [value]="item.id">{{item.nombre}}</nb-option>
+                </nb-select>
+            </div>
             <div class="col-md-3">
                 <label class="label">Programa estudio</label>
                 <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
@@ -22,7 +29,10 @@
                     <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{item.ciclo}}</nb-option>
                 </nb-select>
             </div>
-            <div class="col-md-4"></div>
+            <div class="col-md-2">
+                <label class="label">Nombre curso</label>
+                <input type="text" nbInput fullWidth fieldSize="small" placeholder="Ingrese nombre" formControlName="nombre" (keyup)="keyNombre($event)">
+            </div>
             <div class="col-md-2">
                 <label class="label" style="visibility: hidden;">Filtrar</label><br>
                         <button nbButton fullWidth size="small" status="warning" (click)="refresh()"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
@@ -40,8 +50,8 @@
                         <th>Docente</th>
                         <th>Cod. anfitrión</th>
                         <th>Zoom</th>
-                        <th style="width: 1px;"><nb-icon icon="people" style="font-size: 20px;"></nb-icon></th>
-                        <th class="text-center" style="width: 1px;">Zoom</th>
+                        <th style="width: 1px;"><nb-icon icon="people"></nb-icon></th>
+                        <th class="text-center" style="width: 1px;" colspan="2">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,9 +61,12 @@
                         <td>{{item.persons_teacher_nombre}}</td>
                         <td>{{item.meeting_id}}</td>
                         <td style="color: brown;">{{item.join_url}}</td>
-                        <td>{{item?.matriculados}}</td>
-                        <td class="text-center">
-                            <nb-icon *ngIf="item?.id_zoom_meetings" icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon> <br>
+                        <td style="color: brown; font-size: 14px; font-weight: bold;" class="text-center">{{item?.matriculados}}</td>
+                        <td class="text-center" style="width: 1px; vertical-align: middle;">
+                            <nb-icon *ngIf="item?.id_zoom_meetings" icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon>
+                        </td>
+                        <td class="text-center" style="width: 1px;">
+                            <button nbButton size="tiny" status="primary" (click)="openMatricula(item)">Matricular</button>
                         </td>
                         <!-- <td class="text-center">
                             <nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>

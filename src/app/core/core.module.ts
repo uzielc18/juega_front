@@ -31,6 +31,7 @@ import {
   NbToastrModule,
   NbToastrService,
   NbToggleModule,
+  NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -83,7 +84,8 @@ const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
     NbButtonModule,
     NbPopoverModule,
     NbCardModule,
-    NbRadioModule
+    NbRadioModule,
+    NbTooltipModule
   ],
   // exports: [RouterModule],
   providers: [

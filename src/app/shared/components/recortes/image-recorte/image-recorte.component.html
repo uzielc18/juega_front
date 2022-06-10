@@ -37,14 +37,15 @@
                     [imageFile]="formHeaders.value.file"
                     (imageCropped)="imageCropped($event)"
                     [onlyScaleDown]="true"
-                    [maintainAspectRatio]="false"
                     format="png"
                     [transform]="transform"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="aspectRatio"
+                    ></image-cropper>
+                    <!-- [cropperStaticWidth]="cropperStaticWidth"
                     [resizeToWidth]="resizeToWidth"
-                    [cropperStaticWidth]="cropperStaticWidth"
                     [cropperStaticHeight]="cropperStaticHeight"
-                    [resizeToHeight]="resizeToHeight"
-                    [aspectRatio]="aspectRatio"></image-cropper>
+                    [resizeToHeight]="resizeToHeight" -->
                   </nb-card-body>
               </nb-card>
 

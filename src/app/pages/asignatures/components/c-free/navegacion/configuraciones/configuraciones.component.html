@@ -1,0 +1,31 @@
+<nb-card>
+    <nb-card-header>
+        CONFIGURACIÓN
+    </nb-card-header>
+    <nb-card-body>
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <tbody style="text-align: left;">
+                    <tr>
+                        <td>Sincronizar estudiantes de Lamb</td>
+                        <td style="width: 1px;">
+                            <button nbButton size="tiny" status="primary" (click)="syncEstLamb()"><nb-icon icon="sync-outline"></nb-icon></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sincronizar sesiones de Lamb</td>
+                        <td style="width: 1px;">
+                            <button nbButton size="tiny" status="primary" (click)="syncSessionesLamb()"><nb-icon icon="sync-outline"></nb-icon></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Actualizar sala zoom</td>
+                        <td style="width: 1px;">
+                            <button nbButton size="tiny" status="primary" (click)="actSalaZoom(99)"><nb-icon icon="sync-outline"></nb-icon></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </nb-card-body>
+</nb-card>

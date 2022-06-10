@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
@@ -23,21 +23,34 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   idCollapseTop: number = 0;
   idCollapseLeft: number = 0;
 
+  generoArray: any[] = ['Masculino', 'Femenino'];
+  estadoCivilArray: any[] = ['Casado(a)', 'Soltero(a)', 'Divorciado(a)', 'Viudo(a)', 'Separado(a)', 'Conviviente', 'No precisa'];
+  religionArray: any[] = [
+    'Adventista del Séptimo Día',
+    'Católico',
+    'Evangélico',
+    'Mormón',
+    'Pentecostes',
+    'Testigo de Jehova',
+    'Otro',
+    'Ninguno',
+  ];
+
   perfilInfo: boolean = false;
   view: string = 'mini';
-  subscription$: Subscription = new Subscription();
+  subscription$: any = Subscription;
 
   loading: boolean = false;
 
   formHeader: any = FormGroup;
+  nombreSubscription: any = Subscription;
+  theRolSemestre: any;
+  valida: boolean = false;
 
   directorio: any;
   key_file: any;
 
   //////////////
-
-  images = [62, 83, 466, 965, 982, 1043, 738].map(n => `https://picsum.photos/id/${n}/900/500`);
-
   paused = false;
   unpauseOnArrow = false;
   pauseOnIndicator = false;
@@ -67,7 +80,6 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       this.togglePaused();
     }
   }
-
   ///////////////
 
   constructor(
@@ -78,11 +90,48 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.emitEventsService.profileInfoReturns().subscribe(value => {
+      this.perfilInfo = value;
+      // this.getUserInfo();
+      // console.log('value', value);
+    });
+
     this.showProfileInfo();
     this.setCollapse();
-    this.getUserInfo();
+    this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
     this.getNews();
     this.fieldReactive();
+    this.nombreSubscription = this.emitEventsService.returns().subscribe(value => {
+      // para emitir evento desde la cabecera
+      if (value && value.rol && value.semestre) {
+        this.theRolSemestre = value;
+        this.valida = true;
+        // setTimeout(() => {
+        this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
+        // }, 1000);
+      } else {
+        this.valida = false;
+      }
+    });
+    this.recoveryValues();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.perfilInfo) {
+      // console.log('perfilInfo', changes.perfilInfo);
+      this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
+    }
+  }
+
+  recoveryValues() {
+    this.emitEventsService.castRolSemester.subscribe(value => {
+      if (value && value.rol && value.semestre && !this.valida) {
+        this.theRolSemestre = value;
+        // setTimeout(() => {
+        this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
+        // }, 1000);
+      }
+    });
   }
 
   private fieldReactive() {
@@ -114,11 +163,21 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   showProfileInfo() {
+    // console.log('inininininin');
+    // this.subscription$ = this.emitEventsService.profileInfoReturns().subscribe((res: any) => {
+    //   if (res) {
+    //     console.log('res', res);
+    //     this.perfilInfo = res;
+    //     this.getUserInfo();
+    //   }
+    // });
+    // get value from emitEventsService
     this.subscription$ = this.emitEventsService.profileInfoReturns().subscribe((res: any) => {
-      if (res) {
-        this.perfilInfo = res;
-        console.log(this.perfilInfo);
-      }
+      // console.log('res', res);
+      // if (res) {
+      // this.perfilInfo = res;
+      // this.getUserInfo();
+      // }
     });
   }
 
@@ -174,44 +233,58 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   fileResult($event: any) {
+    this.formHeader.controls['foto'].setValue('');
     this.formHeader.controls['profile_photo_path'].setValue('');
     this.formHeader.controls['base64_url'].setValue('');
     if ($event && $event.archivo) {
+      this.formHeader.controls['foto'].setValue($event.nombre);
       this.formHeader.controls['profile_photo_path'].setValue($event.nombre);
       this.formHeader.controls['base64_url'].setValue($event.base64);
     }
   }
 
-  getUserInfo() {
+  getUserInfo(view: any) {
     this.userInfo = this.userService;
     const serviceName = END_POINTS.base_back.user + '/perfil';
     const person_id = this.userInfo._user.id;
     const user_id = this.userInfo._user.person.id;
+    this.loading = true;
+    // this.view = view;
+    // console.log(this.view);
     const params = {
-      view: this.view,
+      view: view,
     };
-    this.generalService.nameIdAndIdParams$(serviceName, person_id, user_id, params).subscribe((res: any) => {
-      if (res.success) {
-        this.profile = res.data;
-        this.formHeader.patchValue({
-          codigo: this.profile.person.codigo,
-          nombre: this.profile.person.nombres,
-          apellido_paterno: this.profile.person.apellido_paterno,
-          apellido_materno: this.profile.person.apellido_materno,
-          dni: this.profile.person.dni,
-          correo: this.profile.user.email,
-          genero: this.profile.person.genero || '',
-          nacionalidad: this.profile.person.nacionalidad || '',
-          ubigeo: this.profile.person.ubigeo || '',
-          estado_civil: this.profile.person.estado_civil || '',
-          religion: this.profile.person.religion || '',
-          fecha_nacimiento: new Date(this.profile.person.fecha_nacimiento) || new Date(),
-          presentacion: this.profile.person.resumen || '',
-          foto: this.profile.person.foto || '',
-          profile_photo_path: this.profile.user.profile_photo_path || '',
-        });
+    this.generalService.nameIdAndIdParams$(serviceName, person_id, user_id, params).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.profile = res.data;
+          // console.log(this.profile);
+          this.formHeader.patchValue({
+            codigo: this.profile.person.codigo,
+            nombre: this.profile.person.nombres,
+            apellido_paterno: this.profile.person.apellido_paterno,
+            apellido_materno: this.profile.person.apellido_materno,
+            dni: this.profile.person.dni,
+            correo: this.profile.user.email,
+            genero: this.profile.person.genero || '',
+            nacionalidad: this.profile.person.nacionalidad || '',
+            ubigeo: this.profile.person.ubigeo || '',
+            estado_civil: this.profile.person.estado_civil || '',
+            religion: this.profile.person.religion || '',
+            fecha_nacimiento: new Date(this.profile.person.fecha_nacimiento) || new Date(),
+            presentacion: this.profile.person.resumen || '',
+            foto: this.profile.person.foto || '',
+            profile_photo_path: this.profile.user.profile_photo_path || '',
+          });
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
       }
-    });
+    );
   }
 
   getNews() {
@@ -219,7 +292,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.generalService.nameId$(serviceName, this.userService.user.id).subscribe((res: any) => {
       if (res.success) {
         this.newsList = res.data || [];
-        console.log(this.newsList);
+        // console.log(this.newsList);
       }
     });
   }
@@ -227,34 +300,65 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   saveInfo() {
     const serviceName = END_POINTS.base_back.people;
     const person_id = this.userInfo._user.id;
-    const user_id = this.userInfo._user.person.id;
-    console.log(person_id, user_id);
+    // const user_id = this.userInfo._user.person.id;
+    this.loading = true;
     const data = {
       person: {
-        genero: this.formHeader.controls['genero'].value,
-        nacionalidad: this.formHeader.controls['nacionalidad'].value,
-        ubigeo: this.formHeader.controls['ubigeo'].value,
-        estado_civil: this.formHeader.controls['estado_civil'].value,
-        religion: this.formHeader.controls['religion'].value,
-        fecha_nacimiento: this.formHeader.controls['fecha_nacimiento'].value,
-        resumen: this.formHeader.controls['presentacion'].value,
-        foto: this.formHeader.controls['foto'].value,
+        genero: this.formHeader.controls['genero'].value || '',
+        nacionalidad: this.formHeader.controls['nacionalidad'].value || '',
+        ubigeo: this.formHeader.controls['ubigeo'].value || '',
+        estado_civil: this.formHeader.controls['estado_civil'].value || '',
+        religion: this.formHeader.controls['religion'].value || '',
+        fecha_nacimiento: this.formHeader.controls['fecha_nacimiento'].value || '',
+        resumen: this.formHeader.controls['presentacion'].value || '',
+        foto: this.formHeader.controls['foto'].value || '',
       },
       user: {
-        email: this.formHeader.controls['correo'].value,
-        profile_photo_path: this.formHeader.controls['profile_photo_path'].value,
+        email: this.formHeader.controls['correo'].value || '',
+        profile_photo_path: this.formHeader.controls['profile_photo_path'].value || '',
         // profile_photo_path: this.formHeader.controls['base64_url'].value,
       },
     };
-    this.generalService.updateNameIdData$(serviceName, person_id, data).subscribe((res: any) => {
-      if (res.success) {
-        console.log(res);
+    this.generalService.updateNameIdData$(serviceName, person_id, data).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.formHeader.controls['foto'].setValue('');
+          this.formHeader.controls['profile_photo_path'].setValue('');
+          this.formHeader.controls['base64_url'].setValue('');
+          this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
       }
-    });
+    );
   }
 
   ngOnDestroy(): void {
     this.perfilInfo = false;
     this.subscription$.unsubscribe();
+    this.nombreSubscription.unsubscribe();
+  }
+  syncLamb() {
+    const serviceName = END_POINTS.base_back.config + '/get-info-user';
+    // const person_id = this.userInfo._user.id;
+    const user = this.userInfo._user.usuario_upeu;
+    this.loading = true;
+    this.generalService.nameParams$(serviceName, {user: user}).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
 }

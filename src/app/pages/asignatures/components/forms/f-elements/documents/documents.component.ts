@@ -23,6 +23,9 @@ export class DocumentsComponent implements OnInit, OnChanges {
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
+
+  @Input() destino: any;
+
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   settValuesMore:any;
   key_file:any;
@@ -68,10 +71,12 @@ export class DocumentsComponent implements OnInit, OnChanges {
 
     };
     this.formHeader = this.formBuilder.group(controls);
-    
+
     this.key_file = this.userInfo?.person?.codigo;
 
-    this.setValuesPre();
+    if (this.unidad && this.unidad.course_id) {
+      this.setValuesPre();
+    }
     this.setMenuValues();
     this.setFechaActual();
     if(this.code === 'UPDATE') {
@@ -175,6 +180,7 @@ export class DocumentsComponent implements OnInit, OnChanges {
             value_close: 'ok',
             value: params,
             response: r.data,
+            type_element: this.valueMenu,
           }
           this.saveCloseValue.emit(valueClose);
         }
@@ -186,6 +192,7 @@ export class DocumentsComponent implements OnInit, OnChanges {
             value_close: 'ok',
             value: params,
             response: r.data,
+            type_element: this.valueMenu,
           }
           this.saveCloseValue.emit(valueClose);
         }
@@ -198,6 +205,7 @@ export class DocumentsComponent implements OnInit, OnChanges {
       value_close: 'close',
       value: '',
       response: '',
+      type_element: '',
     }
     this.saveCloseValue.emit(valueClose);
   }

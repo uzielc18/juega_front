@@ -1,0 +1,93 @@
+<nb-card
+  class="scrollModal"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Preparando información"
+>
+  <nb-card-body>
+    <div class="row p-0 m-0">
+      <div class="col-md-3 menu-container p-2 pe-0">
+        <p class="fw-bold menu-title pe-2" style="font-size: 12px">¿ Que recurso o actividad deseas añadir al curso?</p>
+        <app-menu-elements (onSelect)="selectedElement($event)" (loadingsMenu)="loadingsMenu($event)"></app-menu-elements>
+      </div>
+      <div class="col-md-9">
+        <div *ngIf="element" class="col-md-12 px-0 d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <nb-icon [icon]="element?.icono" [ngStyle]="{ color: element?.background }" class="fs-1 me-2"></nb-icon>
+            <div>
+              <p class="fw-bold fs-6 mb-0">{{ element?.nombre }}</p>
+              <small>Completa los datos a continuación</small>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="form mt-4 px-5" *ngIf="['TRAB'].includes(element?.codigo)">
+            <!-- <app-works
+              (loadingsForm)="loadingsForm($event)"
+              [destino]="destino"
+              [valueMenu]="element"
+              [userInfo]="userInfo"
+              [code]="code"
+              [type]="type"
+            ></app-works> -->
+          </div>
+          <div class="form mt-4 px-5" *ngIf="['FOR'].includes(element?.codigo)">
+            <!-- <app-forus (loadingsForm)="loadingsForm($event)" [destino]="destino" [valueMenu]="element" [code]="code"></app-forus> -->
+          </div>
+
+          <div class="form mt-4 px-5" *ngIf="['ENL'].includes(element?.codigo)">
+            <!-- <app-enlace-external
+              (loadingsForm)="loadingsForm($event)"
+              [destino]="destino"
+              [valueMenu]="element"
+              [code]="code"
+            ></app-enlace-external> -->
+          </div>
+
+          <div class="form mt-4 px-5" *ngIf="['VICO'].includes(element?.codigo)">
+            <!-- <app-vidio-conference
+              (loadingsForm)="loadingsForm($event)"
+              [destino]="destino"
+              [valueMenu]="element"
+              [code]="code"
+            ></app-vidio-conference> -->
+          </div>
+
+          <div class="form mt-4 px-5" *ngIf="['EVAL'].includes(element?.codigo)">
+            <!-- <app-evaluations
+              (loadingsForm)="loadingsForm($event)"
+              [destino]="destino"
+              [valueMenu]="element"
+              [code]="code"
+            ></app-evaluations> -->
+          </div>
+
+          <div class="form mt-4 px-5" *ngIf="['DOC'].includes(element?.codigo)">
+            <!-- <app-documents
+              (loadingsForm)="loadingsForm($event)"
+              [destino]="destino"
+              [valueMenu]="element"
+              [userInfo]="userInfo"
+              [code]="code"
+            ></app-documents> -->
+          </div>
+
+          <div class="form mt-4 px-5" *ngIf="['VID'].includes(element?.codigo)">
+            <!-- <app-vidio
+              (loadingsForm)="loadingsForm($event)"
+              [destino]="destino"
+              [valueMenu]="element"
+              [code]="code"
+              [type]="type"
+            ></app-vidio> -->
+          </div>
+
+          <div class="form mt-4 px-5" *ngIf="['CARP'].includes(element?.codigo)">
+            <!-- <app-carpeta (loadingsForm)="loadingsForm($event)" [destino]="destino" [valueMenu]="element" [code]="code"></app-carpeta> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

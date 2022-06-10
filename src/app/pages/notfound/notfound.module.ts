@@ -4,13 +4,15 @@ import { NotfoundComponent } from './notfound.component';
 import { NebularModule } from '../../shared/nebular.module';
 import { NotfoundHomeComponent } from './containers/notfound-home.component';
 import { NotfoundRoutingModule } from './notfound-routing.module';
+import { SvgImageComponent } from './components/svg-image/svg-image.component';
 
 
 
 @NgModule({
   declarations: [
     NotfoundComponent,
-    NotfoundHomeComponent
+    NotfoundHomeComponent,
+    SvgImageComponent
   ],
   imports: [
     CommonModule,

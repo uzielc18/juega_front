@@ -21,7 +21,7 @@ export class VExamViewsComponent implements OnInit, OnChanges {
     this.person_id = JSON.parse(JSON.stringify(this.person_id));
     this.pending_id = JSON.parse(JSON.stringify(this.pending_id));
     this.rol = JSON.parse(JSON.stringify(this.rol));
-    console.log(this.person_id, this.pending_id, this.rol);
+    // console.log(this.person_id, this.pending_id, this.rol);
     this.questions = [];
     this.getViewQuestions();
     
@@ -89,10 +89,10 @@ export class VExamViewsComponent implements OnInit, OnChanges {
   }
   esEntero(numero:number){
     if (numero % 1 == 0) {
-      console.log('par');
+      // console.log('par');
       return Number(numero).toFixed(0);;
     } else {
-      console.log('impar');
+      // console.log('impar');
       
       return Number(numero).toFixed(2);
     }

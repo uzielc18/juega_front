@@ -22,6 +22,9 @@ export class EvaluationsComponent implements OnInit {
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
+
+  @Input() destino: any;
+
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   min: any = Date;
   settValuesMore:any;
@@ -68,7 +71,9 @@ export class EvaluationsComponent implements OnInit {
 
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.setValuesPre();
+    if (this.unidad && this.unidad.course_id) {
+      this.setValuesPre();
+    }
     this.setMenuValues();
     if(this.code === 'UPDATE') {
       this.setObjectUpdate();
@@ -167,6 +172,7 @@ export class EvaluationsComponent implements OnInit {
             value_close: 'ok',
             value: params,
             response: r.data,
+            type_element: this.valueMenu,
           }
           this.saveCloseValue.emit(valueClose);
         }
@@ -178,6 +184,7 @@ export class EvaluationsComponent implements OnInit {
             value_close: 'ok',
             value: params,
             response: r.data,
+            type_element: this.valueMenu,
           }
           this.saveCloseValue.emit(valueClose);
         }
@@ -190,6 +197,7 @@ export class EvaluationsComponent implements OnInit {
       value_close: 'close',
       value: '',
       response: '',
+      type_element: '',
     }
     this.saveCloseValue.emit(valueClose);
   }

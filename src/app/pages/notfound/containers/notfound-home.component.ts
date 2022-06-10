@@ -4,15 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-notfound-home',
   templateUrl: './notfound-home.component.html',
-  styles: [
-  ]
+  styleUrls: ['./notfound-home.component.scss']
 })
 export class NotfoundHomeComponent implements OnInit {
+  constructor(private router: Router) {}
 
-  constructor(private router: Router,) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   navigateToHome() {
     this.router.navigate(['/pages/dashboard']);

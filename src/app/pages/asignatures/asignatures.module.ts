@@ -51,6 +51,16 @@ import { FilterPipeModule } from 'src/app/shared/pipes/filterPipe/filterPipe.mod
 import { PublicConfigQuestionModule } from 'src/app/shared/components/questions/public-config-question/public-config-question.module';
 import { MExamViewModalModule } from 'src/app/shared/components/exam-view/m-exam-view-modal/m-exam-view-modal.module';
 import { VExamViewsModule } from 'src/app/shared/components/exam-view/v-exam-views/v-exam-views.module';
+import { AnswerQuestionsComponent } from './components/modals/answer-questions/answer-questions.component';
+import { SilaboComponent } from './components/c-free/navegacion/silabo/silabo.component';
+import { PreguntasComponent } from './components/c-free/navegacion/preguntas/preguntas.component';
+import { EstudiantesComponent } from './components/c-free/navegacion/estudiantes/estudiantes.component';
+import { FilterModule } from '../../shared/pipes/filter/filter.module';
+import { DirectiveModule } from '../../shared/directives/highlight.module';
+import { ConfiguracionesComponent } from './components/c-free/navegacion/configuraciones/configuraciones.component';
+import { RequestAperturaComponent } from './components/modals/request-apertura/request-apertura.component';
+import { JustificationsComponent } from './components/c-free/navegacion/justifications/justifications.component';
+import { ResponseAperturaComponent } from './components/modals/response-apertura/response-apertura.component';
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -81,7 +91,15 @@ const COMPONENTS: any[] = [
   CalificarElementEstudentComponent,
   CWorksComponent,
   CForumsComponent,
-  QuestionsConfigComponent
+  QuestionsConfigComponent,
+  AnswerQuestionsComponent,
+  SilaboComponent,
+  PreguntasComponent,
+  EstudiantesComponent,
+  ConfiguracionesComponent,
+  RequestAperturaComponent,
+  JustificationsComponent,
+  ResponseAperturaComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -100,13 +118,19 @@ const MODALS: any = [
   HomeworkFormComponent,
   AdminGroupsComponent,
   CalificarElementEstudentComponent,
-  QuestionsConfigComponent
+  QuestionsConfigComponent,
+  RequestAperturaComponent,
+  ResponseAperturaComponent
 ];
 const NGX_MODULES: any = [
 ];
 const PIPES: any = [
   FilterPipeModule,
+  FilterModule
 ];
+const DIRECTIVES: any = [
+  DirectiveModule
+]
 const MODULES: any = [
   PrepareFileProModule,
   MoreOptionsModule,
@@ -138,9 +162,10 @@ const MODULES: any = [
     ...CONTROL_MESSAGGE,
     ...NGX_MODULES,
     ...MODULES,
-    ...PIPES
+    ...PIPES,
+    ...DIRECTIVES
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS ],
   entryComponents: [...MODALS],
 
 })

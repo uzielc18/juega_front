@@ -23,6 +23,9 @@ export class VidioConferenceComponent implements OnInit {
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
+
+  @Input() destino: any;
+
   listIcons:any = [
     {
       checked: false,
@@ -87,7 +90,9 @@ settValuesMore:any;
 
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.setValuesPre();
+    if (this.unidad && this.unidad.course_id) {
+      this.setValuesPre();
+    }
     this.setMenuValues();
     if(this.code === 'UPDATE') {
       this.setObjectUpdate();
@@ -194,6 +199,7 @@ settValuesMore:any;
               value_close: 'ok',
               value: params,
               response: r.data,
+              type_element: this.valueMenu,
             }
             this.saveCloseValue.emit(valueClose);
           }
@@ -205,6 +211,7 @@ settValuesMore:any;
               value_close: 'ok',
               value: params,
               response: r.data,
+              type_element: this.valueMenu,
             }
             this.saveCloseValue.emit(valueClose);
           }
@@ -232,6 +239,7 @@ settValuesMore:any;
       value_close: 'close',
       value: '',
       response: '',
+      type_element: '',
     }
     this.saveCloseValue.emit(valueClose);
   }

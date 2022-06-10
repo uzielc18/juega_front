@@ -1,12 +1,44 @@
-<nb-card status="primary" class="m-0 border-0 h-100" style="border-radius: 15px; overflow: hidden;">
-  <nb-card-header class="d-flex flex-column justify-content-center align-items-start h-100">
-    <h1 class="display-1 fw-bold">404</h1>
-    <h2>Perdido en el campus?</h2>
-    <p>
-      Es posible que haya escrito mal la direccion o que la pagina se haya
-      movido.
+<!-- <nb-layout>
+  <nb-layout-column class="p-0">
+    <nb-card class="h-100 border-0">
+      <nb-card-body
+        class="position-relative d-flex align-items-end justify-content-center"
+        style="background: linear-gradient(to bottom, var(--color-primary-900), var(--color-primary-100))"
+      >
+        <app-svg-image class="w-100"></app-svg-image>
+        <div class="position-absolute text-container">
+          <h1 class="fw-bold text-white mb-0">404</h1>
+          <h2 class="fw-bold text-white mb-3">¿Perdido en el campus?</h2>
+          <p class="text-white">Es posible que haya escrito mal la dirección o que la página se haya movido.</p>
+          <button nbButton (click)="navigateToHome()" class="back-button text-white">Ir al Inicio</button>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout> -->
+
+<nb-layout>
+  <nb-layout-column class="p-0">
+<nb-card class="m-0 h-100 border-0">
+  <body>
+    <div class="text-center">
+      <strong style="font-size: 80px" >404</strong>
+    </div>
+    <img src="https://assets.codepen.io/1538474/meteor.svg" class="meteor" />
+    <p class="title">Lo sentimos</p><br>
+    <p class="subtitle">
+      No se encontró la url
     </p>
-    <button nbButton (click)="navigateToHome()">Ir al Inicio</button>
-    <!-- <a href="pages/dashboard">Ir al Inicio</a> -->
-  </nb-card-header>
+    <div align="center">
+      <button nbButton (click)="navigateToHome()" status="warning">Ir al Inicio</button>
+    </div>
+    <img src="https://assets.codepen.io/1538474/astronaut.svg" class="astronaut" />
+    <img src="https://assets.codepen.io/1538474/spaceship.svg" class="spaceship" />
+    <div style="bottom: 0; position: absolute;">
+      <img  src="assets/logo-lamb-learning-blanco.svg" alt="Lamb" class="logo" height="40px"/>
+
+    </div>
+  </body>
 </nb-card>
+</nb-layout-column>
+</nb-layout>

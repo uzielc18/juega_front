@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgbCarousel, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardListCourseModule } from 'src/app/shared/components/card-list-course/card-list-course.module';
 import { GeneralService } from '../../providers';
 import { PreviewNewsModule } from '../../shared/components/news-comp/preview-news/preview-news.module';
@@ -9,11 +9,14 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { DashboardHomeComponent } from './containers/dashboard-home.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import { ChartTrabajosComponent } from './components/chart-trabajos/chart-trabajos.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 const COMPONENTS: any[] = [
   DashboardComponent,
   DashboardHomeComponent,
-  PerfilComponent
+  PerfilComponent,
+  ChartTrabajosComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -50,6 +53,7 @@ const MODULES: any = [
     ...CONTROL_MESSAGGE,
     ...NGX_MODULES,
     ...MODULES,
+    NgCircleProgressModule.forRoot({}),
   ],
   declarations: [...COMPONENTS, ...PIPES],
   entryComponents: [...MODALS],

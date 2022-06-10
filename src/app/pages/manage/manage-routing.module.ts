@@ -27,11 +27,11 @@ const routes: Routes = [
         loadChildren: () => import('src/app/pages/manage/teacher/teacher.module')
           .then(m => m.TeacherModule),
       },
-      // {
-      //   path: 'student',
-      //   loadChildren: () => import('src/app/pages/manage/student/student.module')
-      //     .then(m => m.StudentModule),
-      // },
+      {
+        path: 'student',
+        loadChildren: () => import('src/app/pages/manage/student/student.module')
+          .then(m => m.StudentModule),
+      },
       {
         path: 'configuration',
         loadChildren: () => import('src/app/pages/manage/configuration/configuration.module')
@@ -42,7 +42,15 @@ const routes: Routes = [
         loadChildren: () => import('src/app/pages/manage/news/news.module')
           .then(m => m.NewsModule),
       },
-
+      {
+        path: 'menu',
+        loadChildren: () => import('src/app/pages/manage/menus/menus.module')
+          .then(m => m.MenusModule),
+      },
+      {
+        path: 'element',
+        loadChildren: () => import('src/app/pages/manage/element/element.module').then(m => m.ElementModule),
+      },
     ]
   }
 ];

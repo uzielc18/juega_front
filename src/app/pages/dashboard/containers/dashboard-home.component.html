@@ -7,46 +7,38 @@
 >
   <nb-card-body class="p-0">
     <div class="main-container">
-      <div
-        *ngIf="collapseLeft"
-        class="perfil"
-        [ngStyle]="perfilInfo ? { 'min-width': '480px' } : { 'min-width': '480px', width: '480px' }"
-      >
+      <div *ngIf="collapseLeft" class="perfil">
+        <!-- [ngStyle]="perfilInfo ? { 'min-width': '361px', width: '361px' } : { 'min-width': '361px', width: '361px' }" -->
         <app-perfil [profile]="profile"></app-perfil>
       </div>
       <div class="cursos" style="background-color: #eeeeee">
         <div *ngIf="collapseTop" class="anuncios" [ngStyle]="{ height: !collapseLeft ? '380px' : '300px' }">
           <ngb-carousel
             #carousel
-            [interval]="5000"
+            [interval]="10000"
             [pauseOnHover]="pauseOnHover"
             [pauseOnFocus]="pauseOnFocus"
             (slide)="onSlide($event)"
-            style="width: 100%; height: 100%"
+            style="height: 100%"
           >
+            <!-- style="width: 100%; height: 100%" -->
             <ng-template ngbSlide *ngFor="let img of newsList; index as i">
-              <a [href]="img?.url" target="_blank" rel="nofollow noopener noreferrer">
-                <div class="picsum-img-wrapper">
-                  <img [src]="img?.imagen" [alt]="img?.titulo" style="width: 100%; object-fit: contain" />
-                </div>
-              </a>
+              <div class="picsum-img-wrapper button-container">
+                <img [src]="img?.imagen_url" [alt]="img?.titulo" style="width: 100%; height: 100%; object-fit: cover" />
+                <a
+                  *ngIf="img?.mostrar_boton"
+                  nbButton
+                  status="warning"
+                  shape="round"
+                  [href]="img?.url"
+                  target="_blank"
+                  rel="nofollow noopener noreferrer"
+                  >{{ img?.nombre_boton }}
+                </a>
+              </div>
             </ng-template>
           </ngb-carousel>
           <hr />
-        </div>
-        <div *ngIf="!collapseTop" style="height: 100px">
-          <ngb-carousel
-            #carousel
-            [interval]="5000"
-            [pauseOnHover]="pauseOnHover"
-            [pauseOnFocus]="pauseOnFocus"
-            (slide)="onSlide($event)"
-            style="width: 100%; height: 100%"
-          >
-            <ng-template ngbSlide *ngFor="let img of images; index as i">
-              Texto
-            </ng-template>
-          </ngb-carousel>
         </div>
         <nb-card class="curso-container" [ngStyle]="{ 'margin-top': !collapseTop ? '0' : '-10px' }">
           <nb-card-body style="background-color: #f7f7f7; position: relative" class="p-0">
@@ -59,13 +51,38 @@
               <nb-icon *ngIf="collapseTop" icon="arrow-ios-upward"></nb-icon>
               <nb-icon *ngIf="!collapseTop" icon="arrow-ios-downward"></nb-icon>
             </span>
+            <div *ngIf="!collapseTop" class="me-5" style="min-height: 90px">
+              <ngb-carousel
+                #carousel
+                [showNavigationArrows]="false"
+                [showNavigationIndicators]="false"
+                [interval]="10000"
+                [pauseOnHover]="pauseOnHover"
+                [pauseOnFocus]="pauseOnFocus"
+                (slide)="onSlide($event)"
+                style="width: 100%; height: 100%"
+              >
+                <ng-template ngbSlide *ngFor="let img of newsList; index as i">
+                  <div class="d-flex align-items-center justify-content-between px-5 py-3">
+                    <div>
+                      <h5 style="font-size: 14px" class="fw-bold mb-0">{{ img?.titulo }}</h5>
+                      <span style="font-size: 11px" class="text-secondary new-content">{{ img?.contenido }}</span>
+                    </div>
+                    <a *ngIf="img?.mostrar_boton" nbButton status="warning" outline size="small" [href]="img?.url" target="_blank">
+                      {{ img?.nombre_boton }}
+                    </a>
+                  </div>
+                </ng-template>
+              </ngb-carousel>
+            </div>
+            <hr class="mt-0" />
             <div class="card-list">
               <app-card-list-course *ngIf="!perfilInfo"></app-card-list-course>
-              <div *ngIf="perfilInfo" class="row p-3 pb-0">
+              <div *ngIf="perfilInfo" class="row p-3 m-0" style="width: 100%">
                 <div class="col-md-6">
                   <nb-card status="primary" class="mb-0">
                     <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
-                      Informacion Principal del Usuario
+                      Información Principal del Usuario
                     </nb-card-header>
                     <nb-card-body>
                       <form [formGroup]="formHeader">
@@ -132,15 +149,7 @@
                         <div class="row">
                           <label class="label col-md-3 d-flex align-items-center">DNI:</label>
                           <div class="col-md-9">
-                            <input
-                              type="number"
-                              nbInput
-                              fullWidth
-                              fieldSize="small"
-                              formControlName="dni"
-                              readonly
-                              placeholder="DNI"
-                            />
+                            <input type="number" nbInput fullWidth fieldSize="small" formControlName="dni" readonly placeholder="DNI" />
                           </div>
                         </div>
                         <br />
@@ -172,8 +181,7 @@
                               status="primary"
                               formControlName="genero"
                             >
-                              <nb-option value="Masculino">Masculino</nb-option>
-                              <nb-option value="Femenino">Femenino</nb-option>
+                              <nb-option *ngFor="let item of generoArray" [value]="item">{{ item }}</nb-option>
                             </nb-select>
                           </div>
                         </div>
@@ -219,13 +227,7 @@
                               status="primary"
                               formControlName="estado_civil"
                             >
-                              <nb-option value="Casado (a)">Casado (a)</nb-option>
-                              <nb-option value="Soltero (a)">Soltero (a)</nb-option>
-                              <nb-option value="Divorciado (a)">Divorciado (a)</nb-option>
-                              <nb-option value="Separado (a)">Separado (a)</nb-option>
-                              <nb-option value="Viudo (a)">Viudo (a)</nb-option>
-                              <nb-option value="Conviviente">Conviviente</nb-option>
-                              <nb-option value="No precisa">No precisa</nb-option>
+                              <nb-option *ngFor="let item of estadoCivilArray" [value]="item">{{ item }}</nb-option>
                             </nb-select>
                           </div>
                         </div>
@@ -241,14 +243,7 @@
                               status="primary"
                               formControlName="religion"
                             >
-                              <nb-option value="Adventista del Séptimo Día">Adventista del Séptimo Día</nb-option>
-                              <nb-option value="Católico">Católico</nb-option>
-                              <nb-option value="Evangélico">Evangélico</nb-option>
-                              <nb-option value="Mormón">Mormón</nb-option>
-                              <nb-option value="Pentecostes">Pentecostes</nb-option>
-                              <nb-option value="Testigo de Jehova">Testigo de Jehova</nb-option>
-                              <nb-option value="Otro">Otro</nb-option>
-                              <nb-option value="Ninguno">Ninguno</nb-option>
+                              <nb-option *ngFor="let item of religionArray" [value]="item">{{ item }}</nb-option>
                             </nb-select>
                           </div>
                         </div>
@@ -276,15 +271,13 @@
                     </nb-card-body>
                     <nb-card-footer style="text-align: right">
                       <button class="me-2" nbButton size="small" status="primary" (click)="saveInfo()">Guardar</button>
-                      <button nbButton size="small" status="primary">Sincronizar</button>
+                      <button nbButton size="small" status="primary" (click)="syncLamb()">Sincronizar</button>
                     </nb-card-footer>
                   </nb-card>
                 </div>
                 <div class="col-md-6">
                   <nb-card status="primary" class="mb-0">
-                    <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
-                      Informacion Adicional
-                    </nb-card-header>
+                    <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Informacion Adicional </nb-card-header>
                     <nb-card-body>
                       <form [formGroup]="formHeader">
                         <div class="row">
@@ -306,15 +299,7 @@
                         <div class="row">
                           <label class="label col-md-3 d-flex align-items-center">Foto:</label>
                           <div class="col-md-9">
-                            <input
-                              type="text"
-                              nbInput
-                              fullWidth
-                              fieldSize="small"
-                              formControlName="foto"
-                              readonly
-                              placeholder="Mi foto"
-                            />
+                            <input type="text" nbInput fullWidth fieldSize="small" formControlName="foto" readonly placeholder="Mi foto" />
                           </div>
                         </div>
                         <br />
@@ -326,17 +311,9 @@
                           }"
                           (resultFile)="fileResult($event)"
                           [aspectRatio]="1 / 1"
-                          [resizeToWidth]="170"
-                          [cropperStaticWidth]="170"
-                          [cropperStaticHeight]="170"
-                          [resizeToHeight]="170"
-                          [heightImg]="170"
-                          [widthImg]="170"
                         ></app-image-recorte>
                         <div class="text-end">
-                          <button nbButton size="small" status="primary" (click)="saveInfo()">
-                            Guardar Informacion
-                          </button>
+                          <button nbButton size="small" status="primary" (click)="saveInfo()">Guardar Informacion</button>
                         </div>
                       </form>
                       <div class="row m-0">
@@ -345,10 +322,7 @@
                           <nb-card-body class="p-3">
                             <div class="row">
                               <div class="col-md-6 d-flex align-items-center">
-                                <div
-                                  class="img-container"
-                                  style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden"
-                                >
+                                <div class="img-container" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden">
                                   <img
                                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                                     alt=""
@@ -373,10 +347,7 @@
                           <nb-card-body class="p-3">
                             <div class="row">
                               <div class="col-md-6 d-flex align-items-center">
-                                <div
-                                  class="img-container"
-                                  style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden"
-                                >
+                                <div class="img-container" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden">
                                   <img
                                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                                     alt=""
@@ -430,7 +401,6 @@
                         </nb-card>
                       </div>
                     </nb-card-body>
-                    <nb-card-footer> </nb-card-footer>
                   </nb-card>
                 </div>
                 <div class="text-end">
@@ -451,11 +421,7 @@
     <nb-card-body>
       <div class="d-flex align-items-center mb-2">
         <div class="img-container" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden">
-          <img
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-            alt=""
-            style="width: 100%"
-          />
+          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" style="width: 100%" />
         </div>
         <div class="nombres ms-3">
           <p class="m-0 fw-bold">Nombres del Estudiante</p>
@@ -464,11 +430,7 @@
       </div>
       <div class="d-flex align-items-center mb-2">
         <div class="img-container" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden">
-          <img
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-            alt=""
-            style="width: 100%"
-          />
+          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" style="width: 100%" />
         </div>
         <div class="nombres ms-3">
           <p class="m-0 fw-bold">Nombres del Estudiante</p>

@@ -63,6 +63,7 @@ export class NewsHomeComponent implements OnInit {
       }
   }
   getFileItem(item:any) {
+    // console.log(item, 'sssss')
     const params:any = {
       type: 'get',
       directory: DIRECTORY.news,
@@ -73,6 +74,7 @@ export class NewsHomeComponent implements OnInit {
     if (params && params.key) {
       this.loading =true;
       this.service.nameParams$(serviceName, params).subscribe(r => {
+        // console.log(r)
         const urlFile = r.data && r.data.url || '';
         if (urlFile) {
           item.base64_url = urlFile;

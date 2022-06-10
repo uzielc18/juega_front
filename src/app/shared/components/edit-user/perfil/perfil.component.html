@@ -1,0 +1,171 @@
+<form [formGroup]="formHeader" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Código:</label>
+    <div class="col-md-9">
+      <input type="number" nbInput fullWidth fieldSize="small" formControlName="codigo" placeholder="Código" readonly />
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Nombres:</label>
+    <div class="col-md-9">
+      <input type="text" nbInput fullWidth fieldSize="small" formControlName="nombre" readonly placeholder="Nombres" />
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Apellido Paterno:</label>
+    <div class="col-md-9">
+      <input
+        type="text"
+        nbInput
+        fullWidth
+        fieldSize="small"
+        formControlName="apellido_paterno"
+        placeholder="Apellido Paterno"
+        readonly
+      />
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Apellido Materno:</label>
+    <div class="col-md-9">
+      <input
+        type="text"
+        nbInput
+        fullWidth
+        fieldSize="small"
+        formControlName="apellido_materno"
+        placeholder="Apellido Materno"
+        readonly
+      />
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">DNI:</label>
+    <div class="col-md-9">
+      <input type="number" nbInput fullWidth fieldSize="small" formControlName="dni" readonly placeholder="DNI" />
+    </div>
+  </div>
+  <br />
+  <hr />
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Correo Institucional:</label>
+    <div class="col-md-9">
+      <input
+        type="email"
+        nbInput
+        fullWidth
+        fieldSize="small"
+        formControlName="correo"
+        status="primary"
+        placeholder="Correo Institucional"
+      />
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Genero:</label>
+    <div class="col-md-9">
+      <nb-select
+        placeholder="Seleccione una opción"
+        selected="0"
+        fullWidth
+        size="small"
+        status="primary"
+        formControlName="genero"
+      >
+        <nb-option *ngFor="let item of generoArray" [value]="item">{{ item }}</nb-option>
+      </nb-select>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Nacionalidad:</label>
+    <div class="col-md-9">
+      <input
+        type="email"
+        nbInput
+        fullWidth
+        fieldSize="small"
+        formControlName="nacionalidad"
+        status="primary"
+        placeholder="Ej: Perú"
+      />
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Ubigeo:</label>
+    <div class="col-md-9">
+      <input
+        type="number"
+        nbInput
+        fullWidth
+        fieldSize="small"
+        formControlName="ubigeo"
+        status="primary"
+        placeholder="Ubigeo"
+      />
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Estado Civil:</label>
+    <div class="col-md-9">
+      <nb-select
+        placeholder="Seleccione una opción"
+        selected="0"
+        fullWidth
+        size="small"
+        status="primary"
+        formControlName="estado_civil"
+      >
+        <nb-option *ngFor="let item of estadoCivilArray" [value]="item">{{ item }}</nb-option>
+      </nb-select>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Religion:</label>
+    <div class="col-md-9">
+      <nb-select
+        placeholder="Seleccione una opción"
+        selected="0"
+        fullWidth
+        size="small"
+        status="primary"
+        formControlName="religion"
+      >
+        <nb-option *ngFor="let item of religionArray" [value]="item">{{ item }}</nb-option>
+      </nb-select>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Fecha de Nacimiento:</label>
+    <div class="col-md-9">
+      <nb-form-field>
+        <input
+          nbInput
+          placeholder="Fecha de Nacimiento"
+          fullWidth
+          [nbDatepicker]="fechaNacimiento"
+          fieldSize="small"
+          status="primary"
+          formControlName="fecha_nacimiento"
+        />
+        <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
+        <nb-datepicker #fechaNacimiento format="dd/MM/yyyy"> </nb-datepicker>
+      </nb-form-field>
+    </div>
+  </div>
+  <div class="mt-4 text-end">
+    <button class="me-2" nbButton size="small" status="primary" (click)="saveInfo()">Guardar</button>
+    <button nbButton size="small" status="primary" (click)="syncLamb()">Sincronizar</button>
+  </div>
+  <br />
+</form>

@@ -1,6 +1,7 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogRef } from '@nebular/theme';
+import { NbComponentStatus, NbDialogRef, NbToastrService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
@@ -34,13 +35,18 @@ export class CalificarElementEstudentComponent implements OnInit {
   userInfo: any;
   listResponses: any = [];
   infor: any = '';
+  timeActual:any = '';
+  fecha_finis:any = '';
   constructor(
     public activeModal: NbDialogRef<CalificarElementEstudentComponent>,
     private formBuilder: FormBuilder,
     private generalServi: GeneralService,
-    private userService: AppService
+    private userService: AppService,
+    private datepipe: DatePipe,
+    private toastrService: NbToastrService
   ) {
     this.searchableList = ['nombres', 'apellido_paterno', 'apellido_materno'];
+    this.timeActual = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
   }
 
   ngOnInit(): void {
@@ -60,9 +66,12 @@ export class CalificarElementEstudentComponent implements OnInit {
   }
   private filedMoreDate() {
     const controls = {
-      fecha_inicio: ['', [Validators.required]],
       fecha_fin: ['', [Validators.required]],
+      hora_fin: ['', [Validators.required]],
+      respuesta: [''],
+      id_justification: [''],
       person_student_id: [''],
+      fechaHoraValid: [''],
       codigo: [''],
     };
     this.formDate = this.formBuilder.group(controls);
@@ -77,7 +86,7 @@ export class CalificarElementEstudentComponent implements OnInit {
       this.generalServi.nameId$(serviceName, this.element.id).subscribe(
         (res: any) => {
           this.headStudent = (res && res.data) || '';
-          console.log(this.headStudent, 'essssss')
+          // console.log(this.headStudent, 'essssss')
           // this.totalAlumnos = res.data && res.data[0].total_students || [];
           // this.listAlumns = res && res.data && res.data[0].total_students || [];
         },
@@ -116,28 +125,90 @@ export class CalificarElementEstudentComponent implements OnInit {
   }
   getPendings(id_person_student: any) {
     const serviceName = END_POINTS.base_back.resourse + '/get-pending-student';
+    this.formDate.patchValue({
+      fecha_fin: '',
+      hora_fin: '',
+      respuesta: '',
+      id_justification: '',
+      fechaHoraValid: '',
+    });
+    this.fecha_finis = '';
+    this.formDate.controls['respuesta'].setValidators([]);
+    this.formDate.controls['respuesta'].updateValueAndValidity();
+    this.formDate.controls['id_justification'].setValidators([]);
+    this.formDate.controls['id_justification'].updateValueAndValidity();
     // this.userInfo.id
     this.loading = true;
-    this.generalServi.nameIdAndId$(serviceName, this.element.id, id_person_student).subscribe(
-      (res: any) => {
+    this.generalServi.nameIdAndId$(serviceName, this.element.id, id_person_student).subscribe((res: any) => {
         this.pending = res.data || '';
+
         if (this.has_rubric) {
           this.getRubric();
         }
-      },
-      () => {
-        if (!this.has_rubric) {
-          this.loading = false;
+        this.formDate.controls['fechaHoraValid'].setValue(res.data.student_pending.fecha_fin);
+        if (res && res.data && res.data.student_pending && (res.data.student_pending.fecha_fin < this.timeActual)) {
+          const f_h_fin = res.data.student_pending.fecha_fin.split(' ');
+          this.formDate.patchValue({
+            fecha_fin: this.renderDate(f_h_fin[0]),
+            hora_fin: this.renderTime(f_h_fin[0], f_h_fin[1]),
+            fechaHoraValid: res.data.student_pending.fecha_fin,
+          });
+          this.fecha_finis = this.renderDate(f_h_fin[0]);
+
+          if (res.data.student_pending.justifications?.length>0) {
+            this.formDate.controls['id_justification'].setValidators([Validators.required]);
+            this.formDate.controls['id_justification'].updateValueAndValidity();
+          }
         }
       },
       () => {
-        if (!this.has_rubric) {
+        // if (!this.has_rubric) {
           this.loading = false;
-        }
+        // }
+      },
+      () => {
+        // if (!this.has_rubric) {
+          this.loading = false;
+        // }
       }
     );
   }
-  updateDateStudent() {}
+  keyFechaF($event:any) {
+    if ($event && !$event.target['value']) {
+      this.formDate.controls['fecha_fin'].setValue('');
+    }
+  }
+  fechaF($event:any) {
+    this.formDate.controls['fecha_fin'].setValue($event);
+  }
+  renderDate(date: any) {
+    // console.log(date);
+    
+    if (date) {
+      const fecha = date.split('-');
+      var n = new Date(`${fecha[0]}-${fecha[1]}-${fecha[2]}`);
+      n.setMinutes(n.getMinutes() + n.getTimezoneOffset()); //para solucionar la diferencia de minutos
+      if (n.getDate()) {
+        return n;
+      } else {
+        return '';
+      }
+    }
+    return '';
+  }
+  renderTime(date: any, time: any) {
+    if (date && time) {
+      const fecha = date.split('-');
+      const f = fecha[0].toString() + '-' + fecha[1].toString() + '-' + fecha[2].toString() + ' ' + time.toString();
+      var n = new Date(f);
+      if (n) {
+        return n;
+      } else {
+        return '';
+      }
+    }
+    return '';
+  }
   changeTabSet($event: any) {
     this.formDate.controls['person_student_id'].setValue('');
     this.formHeader.controls['nota'].setValue(0);
@@ -146,12 +217,13 @@ export class CalificarElementEstudentComponent implements OnInit {
     this.pending = '';
     this.datosStudent = '';
     this.listResponses = [];
+    this.getStudentStatus(idTab);
     switch (idTab) {
       case 'ALL': // Todos
       case 'SC': // Sin calificar
       case 'C': //Calificados
       case 'SE': //Sin enviar
-        this.getStudentStatus(idTab);
+     
         break;
       default:
         break;
@@ -174,14 +246,7 @@ export class CalificarElementEstudentComponent implements OnInit {
           //      }
           //   })
           // }
-        },
-        () => {
-          this.loading = false;
-        },
-        () => {
-          this.loading = false;
-        }
-      );
+        },() => {this.loading = false;},() => { this.loading = false;});
     }
   }
 
@@ -202,7 +267,7 @@ export class CalificarElementEstudentComponent implements OnInit {
           this.checkAllNiveles();
           this.getRubricCalificacion();
         }
-      });
+      },() => {this.loading = false;},() => { this.loading = false;});
     }
   }
 
@@ -215,10 +280,10 @@ export class CalificarElementEstudentComponent implements OnInit {
     this.generalServi.nameParams$(serviceName, params).subscribe(
       (res: any) => {
         if (res.success) {
-          console.log(res);
+          // console.log(res);
           // this.formHeader.controls['nota'].setValue(parseInt(res.data.nota));
           this.formHeader.controls['comentario'].setValue(res.data.comentario_docente);
-          console.log(this.rubrica);
+          // console.log(this.rubrica);
           this.rubrica.criterios.map((rub: any) => {
             rub.niveles.map((niv: any) => {
               res.data.puntos.map((punt: any) => {
@@ -228,7 +293,7 @@ export class CalificarElementEstudentComponent implements OnInit {
               });
             });
           });
-          console.log(this.rubrica, 'lo logre');
+          // console.log(this.rubrica, 'lo logre');
         }
       },
       () => {
@@ -263,7 +328,7 @@ export class CalificarElementEstudentComponent implements OnInit {
   }
 
   selectedPoint(rubrica: any) {
-    console.log(this.formHeader.controls['nota'].value);
+    // console.log(this.formHeader.controls['nota'].value);
     if (this.pending) {
       this.rubrica.criterios.map((criterio: any) => {
         if (criterio.id === rubrica.rubricas.rubricas_criterio_id) {
@@ -281,7 +346,7 @@ export class CalificarElementEstudentComponent implements OnInit {
       rubrica.checked = true;
       this.listRubric.push(rubrica);
       this.formHeader.get('nota').setValue(rubrica.rubricas.puntuacion + this.formHeader.get('nota').value);
-      console.log(this.listRubric);
+      // console.log(this.listRubric);
       // console.log(this.rubrica);
       // console.log(this.pending);
       this.listRubricMod = JSON.parse(JSON.stringify(this.listRubric));
@@ -295,13 +360,13 @@ export class CalificarElementEstudentComponent implements OnInit {
         delete res.checked;
         delete res.rubricas;
       });
-      console.log(this.listRubricMod, 'modded');
+      // console.log(this.listRubricMod, 'modded');
     }
   }
 
   sendCalification() {
-    console.log(this.element, 'element');
-    console.log(this.pending, 'pending');
+    // console.log(this.element, 'element');
+    // console.log(this.pending, 'pending');
     const serviceName = END_POINTS.base_back.rubrics + '/rubricasRegistros';
     const params: any = {
       rubricas_guia_id: this.rubrica.id,
@@ -404,5 +469,62 @@ export class CalificarElementEstudentComponent implements OnInit {
       this.formHeader.controls['nota'].setValue($event.nota);
       this.infor = $event;
     }
+  }
+  saveResponse(state:any) {
+    const serviceName = 'pendings';
+    const forms = this.formDate.value;
+    let f_fin = '';
+    let validFechas = true;
+    if (state === 'aceptado') {
+      f_fin = this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_fin, 'HH:mm:ss');
+      const fechaAct:any = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+      if (f_fin <= fechaAct) {
+        validFechas = false;
+      }
+    }
+    const params = {
+      fecha_fin: f_fin,
+      justification: {
+        id: forms.id_justification,
+        respuesta: forms.respuesta || '',
+        estado_justification: state,
+      } 
+    };
+    if (params && params.fecha_fin && params.justification.id && validFechas) {
+      this.loading = true;
+      this.generalServi.updateNameIdData$(serviceName, this.pending.student_pending.id, params).subscribe((res:any) => {
+        if (res.success) {
+          this.getPendings(res.data.persons_student_id);
+        }
+      }, () => {this.loading = false}, () => {this.loading = false;});
+
+    } else {
+      this.showToast('warning');
+    }
+  }
+  savePendingActulizar() {
+    const serviceName = 'pendings';
+    const forms = this.formDate.value;
+    const f_fin = this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_fin, 'HH:mm:ss');
+
+    const params = {
+      fecha_fin: f_fin,
+    };
+    this.loading = true;
+    this.generalServi.updateNameIdData$(serviceName, this.pending.student_pending.id, params).subscribe((res:any) => {
+      if (res.success) {
+        this.getPendings(res.data.persons_student_id);
+      }
+    }, () => {this.loading = false}, () => {this.loading = false;})
+  }
+  changeJustification($event:any) {
+    this.formDate.controls['respuesta'].setValue();
+    if ($event) {
+      this.formDate.controls['respuesta'].setValidators([Validators.required]);
+      this.formDate.controls['respuesta'].updateValueAndValidity();
+    }
+  }
+  showToast(status: NbComponentStatus) {
+    this.toastrService.show(status, `La fecha y hora debe ser mayor a la fecha actual`, { status });
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-course',
+  selector: 'app-teacher',
   template: `<router-outlet></router-outlet>`,
   styles: [
   ]

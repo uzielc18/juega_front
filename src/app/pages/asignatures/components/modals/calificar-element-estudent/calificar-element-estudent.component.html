@@ -123,32 +123,77 @@
               (loadingsQuestion)="loadings($event)"
               ></app-v-exam-views>
             </div>
-            <ng-template #elseAddDate>
-              <nb-card *ngIf="formDate.value.person_id">
-                <nb-card-header>
-                  ¿ Desea extender la fecha para el participante ?
-                </nb-card-header>
-                <nb-card-body>
-                  <form [formGroup]="formDate">
-                    <div>
-                      <label class="label">Fecha inicio</label>
-                      <input type="text" nbInput fieldSize="small" fullWidth formControlName="fecha_inicio">
+            <!-- {{formDate.value.fechaHoraValid}} - {{timeActual}} -->
+          <div *ngIf="formDate.value.codigo === 'SE' && pending && pending?.student_pending && timeActual && (formDate.value.fechaHoraValid < timeActual)">
+
+            <nb-card status="primary">
+              <nb-card-header>
+                OTROS DATOS 
+              </nb-card-header>
+              <nb-card-body>
+                <label class="label">¿ Desea extender la fecha para el participante ?</label>
+                <br><br>
+                <form [formGroup]="formDate">
+                  <div class="row" *ngIf="pending?.student_pending?.justifications?.length>0">
+                    <label class="label col-md-3">Justificaiones:</label>
+                    <div class="label col-md-9">
+                      <nb-select  placeholder="Seleccione una justificación" size="small" formControlName="id_justification" fullWidth (selectedChange)="changeJustification($event)">
+                      <nb-option *ngFor="let itemss of pending?.student_pending?.justifications; let i = index" [value]="itemss.id">{{ itemss.justification }}</nb-option>
+                    </nb-select>
                     </div>
-                    <br>
-                    <div>
-                      <label class="label">Fecha fin</label>
-                      <input type="text" nbInput fieldSize="small" fullWidth formControlName="fecha_fin">
+                  </div>
+                  <br *ngIf="pending?.student_pending?.justifications?.length>0">
+                  <div class="row">
+                    <label class="label col-md-3">Fecha y hora fin:</label>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <nb-form-field>
+                                    <input nbInput placeholder="Fecha fin" fullWidth [(ngModel)]="fecha_finis" [ngModelOptions]="{standalone: true}"
+                                        [nbDatepicker]="fechaFin" fieldSize="small"
+                                        [ngStyle]="{'border-left': formDate.hasError('required', ['fecha_fin']) ? '3px solid #e74c3c' : ''}"
+                                        (keyup)="keyFechaF($event)"/>
+                                    <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                                        pack="eva"></nb-icon>
+                                    <nb-datepicker #fechaFin format="dd/MM/yyyy" (dateChange)="fechaF($event)">
+                                    </nb-datepicker>
+                                    <control-messages [control]="formDate.get('fecha_fin')">
+                                    </control-messages>
+                                </nb-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <nb-form-field >
+                                    <input nbInput placeholder="Hora Termino" [nbTimepicker]="horaTem" type="text"
+                                    [ngStyle]="{'border-left': formDate.hasError('required', ['hora_fin']) ? '3px solid #e74c3c' : ''}" formControlName="hora_fin"/>
+                                    <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
+                                    <nb-timepicker #horaTem></nb-timepicker>
+                                    </nb-form-field>
+                            </div>
+                        </div>
+                      
                     </div>
-                    <br>
-                    <div class="text-center">
-                     <button nbButton size="small" status="primary" (click)="updateDateStudent()">
-                       Actualizar fecha entrega
-                     </button>
+                </div>
+                <br>
+                <div class="row" *ngIf="pending?.student_pending?.justifications?.length>0">
+                    <label class="label col-md-3">Respuesta:</label>
+                    <div class="col-md-9">
+                        <textarea nbInput fullWidth formControlName="respuesta"></textarea>
+                        <control-messages [control]="formDate.get('respuesta')"></control-messages>
                     </div>
-                  </form>
-                </nb-card-body>
-              </nb-card>
-            </ng-template>
+                </div>
+                  <br>
+                  <div style="text-align: right;" *ngIf="pending?.student_pending?.justifications?.length>0">
+                    <button nbButton size="small" status="danger" (click)="saveResponse('rechazado')"  [disabled]="formDate.invalid">Rechazar</button>&nbsp;&nbsp;
+                    <button nbButton size="small" status="primary" (click)="saveResponse('aceptado')" [disabled]="formDate.invalid">Guardar</button>
+                  </div>
+                  <div style="text-align: right;" *ngIf="pending?.student_pending?.justifications?.length<=0">
+                    <button nbButton size="small" status="primary" (click)="savePendingActulizar()" [disabled]="formDate.invalid">Actualizar</button>
+                  </div>
+                </form>
+              </nb-card-body>
+            </nb-card>
+          </div>
+
           </nb-card-body>
           <nb-card-footer style="font-size: 10px;" *ngIf="element?.type_element?.codigo === 'EVAL'">
             Leyenda: <br>
@@ -180,14 +225,14 @@
                 <label class="label">Rubrica: {{ rubrica?.nombre }}</label><br>
                 <table class="table table-sm table-striped">
                   <thead>
-                    <tr>
+                    <tr style="font-size: 12px;">
                       <th style="width: 100px; max-width: 200px;">Crit/Nivel</th>
                       <th *ngFor="let nivel of rubrica?.criterios[0]?.niveles"></th>
                       <!-- <th *ngFor="let nivel of rubrica?.criterios[0]?.niveles" class="text-center align-middle">{{ nivel?.titulo }}</th> -->
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let crit of rubrica?.criterios; let i = index">
+                    <tr *ngFor="let crit of rubrica?.criterios; let i = index" style="font-size: 11px;">
                       <td class="align-middle">{{ crit?.titulo }}</td>
                       <td *ngFor="let rub of crit?.niveles; let j = index" class="text-center align-middle"  style="width: 30px;">
                         <button nbButton class="py-1 px-2" [ngStyle]="rubricColors(rub, j)" (click)="selectedPoint(rub)">{{ rub?.rubricas?.puntuacion }}</button>

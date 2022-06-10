@@ -1,91 +1,150 @@
-<div class="p-4" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
-  nbSpinnerMessage="Procesando información">
+<div
+  class="p-4"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Procesando información"
+>
   <div class="d-flex align-items-center mb-4">
     <div class="ms-2">
       <div class="d-flex align-items-center">
-        <nb-icon style="width: 62px; height: 62px;" icon="book-open-outline" status="primary"></nb-icon>
+        <nb-icon style="width: 62px; height: 62px" icon="book-open-outline" status="primary"></nb-icon>
         <p class="d-flex flex-column mb-0">
-          <span class="mb-1" style="font-size: 24px; font-weight: bold">{{'MIS_ASIGNATURAS' | translate}}</span>
+          <span class="mb-1" style="font-size: 24px; font-weight: bold">{{ 'MIS_ASIGNATURAS' | translate }}</span>
         </p>
       </div>
     </div>
     <div class="ms-auto d-none d-xxl-block p-3">
-      <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" style="cursor: pointer; font-size: 24px;"
-        icon="list-outline" (click)="cambioTypo('1')" class="me-1"></nb-icon>
-      <nb-icon [status]="form.value.tipo === '2' ? 'primary' : 'basic'" style="cursor: pointer; font-size: 24px"
-        icon="grid-outline" (click)="cambioTypo('2')"></nb-icon>
+      <nb-icon
+        [status]="form.value.tipo === '1' ? 'warning' : 'basic'"
+        style="cursor: pointer; font-size: 24px"
+        icon="list-outline"
+        (click)="cambioTypo('1')"
+        class="me-1"
+      ></nb-icon>
+      <nb-icon
+        [status]="form.value.tipo === '2' ? 'warning' : 'basic'"
+        style="cursor: pointer; font-size: 24px"
+        icon="grid-outline"
+        (click)="cambioTypo('2')"
+      ></nb-icon>
+      <nb-icon
+        [status]="'success'"
+        style="cursor: pointer; font-size: 24px"
+        icon="refresh-outline"
+        (click)="reloadList()"
+      ></nb-icon>
     </div>
   </div>
 
   <!-- Cursos tipo lista -->
   <div class="px-3" *ngIf="form.value.tipo == '1'">
-    <div *ngIf="theRolSemestre?.rol?.name=== 'Docente'">
-      <nb-card class="car-list mb-2" *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)">
-        <div class="d-flex align-items-center">
-          <div>
-            <img src="assets/books.jpg" class="img-fluid" alt="" style="height: 68px; width: 120px;" />
+    <div *ngIf="theRolSemestre?.rol?.name === 'Docente'">
+      <!-- <nb-card  *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)">
+        <div class="row" style="vertical-align: middle !important;">
+          <div class="col-md-1">
+            <img src="assets/books.jpg" width="100%" height="68px" />
           </div>
-          <div class="ms-4">
-            <h6 class="course-name m-0">{{ curso.nombre }}</h6>
-            <p class="course-teacher m-0">
-              {{ curso.persons_teacher_nombre }} -
-              <small class="course-description">Ciclo - {{ curso.ciclo }} -
-                {{ curso.programa_estudio_nombre }}</small>
-            </p>
+          <div class="col-md-7">
+            <strong>{{ curso.nombre }}</strong><br>
+            <label class="label">{{ curso.persons_teacher_nombre }} - </label>
+            <label class="label" style="color: brown;">Ciclo {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</label>
           </div>
-          <div class="ms-auto" style="width: 250px;">
-            <nb-progress-bar size="tiny" [value]="40" status="warning"></nb-progress-bar>
+          <div class="col-md-3">
+            <div class="d-flex align-items-center justify-content-between" style="padding-left: 9px; padding-right: 9px;">
+              <span >
+                <nb-icon style="font-size: 14px;" class="label" icon="people-outline"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.matriculados}}</label>
+              </span>&nbsp;&nbsp;
+              <span>
+              <nb-icon style="font-size: 14px;" class="label" [icon]="curso?.resumen?.trabajos?.icono"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.resumen?.trabajos?.total}}</label>
+              </span>&nbsp;&nbsp;
+              <span>
+              <nb-icon  style="font-size: 14px;" class="label"[icon]="curso?.resumen?.foros?.icono"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.resumen?.foros?.total}}</label>
+              </span>&nbsp;&nbsp;
+              <span>
+              <nb-icon style="font-size: 14px;" class="label" [icon]="curso?.resumen?.evaluaciones?.icono"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.resumen?.evaluaciones?.total}}</label>
+              </span>&nbsp;&nbsp;
+              <span>
+              <nb-icon style="font-size: 14px;" class="label" icon="people-outline"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.resumen?.total_pendientes}}</label>
+              </span>
+            </div>
           </div>
-          <div style="margin-left: 100px; width: 68px;">
-            <img src="assets/play-list.png" class="img-fluid" alt="" style="height: 68px; width: 100%;" />
+          <div class="col-md-1" style="text-align: right;">
+            <img src="assets/play-list.png" width="60%" height="68px" />
+          </div>
+        </div>
+      </nb-card> -->
+      <nb-card class="card-list mb-2" *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)">
+        <div class="main-container">
+          <div class="img-container">
+            <img src="assets/books.jpg" width="100%" height="100%" />
+          </div>
+          <div class="content-container">
+            <div class="course-info">
+              <h6 class="course-name mb-0">{{ curso.nombre }}</h6>
+              <div class="text-course">
+                <span class="course-teacher mb-0">{{ curso.persons_teacher_nombre }} - </span>
+                <span class="course-description mb-0">Ciclo {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</span>
+              </div>
+            </div>
+            <div class="inososs">
+              <div class="d-flex align-items-center justify-content-between" style="padding-left: 9px; padding-right: 9px;">
+                <span nbTooltip="Participantes" nbTooltipStatus="warning">
+                  <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="people-outline"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.matriculados}}</label>
+                </span>&nbsp;&nbsp;
+                <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning">
+                  <nb-icon style="font-size: 14px;" class="label" [icon]="tot?.icono"></nb-icon><label class="label" style="font-size: 12px;">{{tot?.total}}</label>
+                  </span>&nbsp;&nbsp;
+                <span nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning">
+                <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="globe-outline"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.resumen?.realizo}} / {{curso?.resumen?.total_pendientes}}</label>
+                </span>
+              </div>
+              <div style="margin-top: 5px;">
+                <nb-progress-bar  [value]="curso?.resumen?.avance" [status]="status(curso?.resumen?.avance)"></nb-progress-bar>
+              </div>
+            </div>
+          </div>
+          <div class="element-img d-md-block d-none">
+            <img src="assets/play-list.png" width="100%" height="100%" />
           </div>
         </div>
       </nb-card>
     </div>
 
-    <div *ngIf="theRolSemestre?.rol?.name=== 'Estudiante'">
-      <nb-card class="car-list mb-2" *ngFor="let curso of cursosEstudiante; let i = index" (click)="navigate(curso)">
-        <div class="d-flex align-items-center flex-wrap">
-          <div class="">
-            <img src="assets/books.jpg" class="img-fluid" alt="" style="height: 68px; width: 120px;" />
+    <div *ngIf="theRolSemestre?.rol?.name === 'Estudiante'">
+      <nb-card class="card-list mb-2" *ngFor="let curso of cursosEstudiante; let i = index" (click)="navigate(curso)">
+        <div class="main-container">
+          <div class="img-container">
+            <img src="assets/books.jpg" width="100%" height="100%" />
           </div>
-          <div class="ms-4" style="max-width: 500px;">
-            <h6 class="course-name m-0">{{ curso.course_nombre }}</h6>
-            <p class="course-teacher m-0">
-              {{ curso.person_teacher_nombre }} -
-              <small class="course-description">Ciclo - {{ curso.ciclo }} -
-                {{ curso.programa_estudio_nombre }}</small>
-            </p>
-          </div>
-          <div class="ms-auto">
-            <ul class="d-flex justify-content-evenly p-0 mb-2">
-              <li class="mx-3">
-                <nb-icon class="text-muted" icon="people-outline"></nb-icon>
-                <p class="icon-text">1</p>
-              </li>
-              <li class="mx-3">
-                <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
-                <p class="icon-text">1</p>
-              </li>
-              <li class="mx-3">
-                <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
-                <p class="icon-text">1</p>
-              </li>
-              <li class="mx-3">
-                <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
-                <p class="icon-text">1</p>
-              </li>
-              <li class="mx-3">
-                <nb-icon class="text-muted" icon="video-outline"></nb-icon>
-                <p class="icon-text">1</p>
-              </li>
-            </ul>
-            <div style="width: 100%">
-              <nb-progress-bar size="tiny" [value]="40" status="warning"></nb-progress-bar>
+          <div class="content-container">
+            <div class="course-info">
+              <h6 class="course-name mb-0">{{ curso.course_nombre }}</h6>
+              <div class="text-course">
+                <span class="course-teacher mb-0">{{ curso.person_teacher_nombre }} - </span>
+                <span class="course-description mb-0">Ciclo {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</span>
+              </div>
+            </div>
+            <div class="inososs">
+              <div class="d-flex align-items-center justify-content-between" style="padding-left: 9px; padding-right: 9px;">
+                <span nbTooltip="Participantes" nbTooltipStatus="warning">
+                  <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="people-outline"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.matriculados}}</label>
+                </span>&nbsp;&nbsp;
+                <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning">
+                  <nb-icon style="font-size: 14px;" class="label" [icon]="tot?.icono"></nb-icon><label class="label" style="font-size: 12px;">{{tot?.total}}</label>
+                  </span>&nbsp;&nbsp;
+                <span nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning">
+                <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="globe-outline"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.resumen?.realizo}} / {{curso?.resumen?.total_pendientes}}</label>
+                </span>
+              </div>
+              <div style="margin-top: 5px;">
+                <nb-progress-bar  [value]="curso?.resumen?.avance" [status]="status(curso?.resumen?.avance)"></nb-progress-bar>
+
+              </div>
             </div>
           </div>
-          <div class="" style="margin-left: 100px;">
-            <img src="assets/play-list.png" class="img-fluid" alt="" style="height: 68px; width: 68px;" />
+          <div class="element-img d-md-block d-none">
+            <img src="assets/play-list.png" width="100%" height="100%" />
           </div>
         </div>
       </nb-card>
@@ -94,69 +153,73 @@
 
   <!-- Cursos tipo card -->
   <div class="px-3" *ngIf="form.value.tipo == '2'">
-    <div *ngIf="theRolSemestre?.rol?.name=== 'Docente'"
-      class="d-flex flex-wrap justify-content-center justify-content-lg-start" style="gap: 20px;">
+    <div
+      *ngIf="theRolSemestre?.rol?.name === 'Docente'"
+      class="d-flex flex-wrap justify-content-center justify-content-lg-start"
+      style="gap: 20px"
+    >
       <nb-card *ngFor="let curso of cursosDocente; let i = index" (click)="navigate(curso)" class="curso-card">
         <div class="contenedor">
           <img src="assets/books.jpg" class="card-img-top" />
-          <div class="centrado" (click)="enterZoom($event, curso)">
+          <div class="centrado" (click)="enterZoom($event, curso)" *ngIf="curso?.verIconZoom">
             <nb-icon icon="arrow-right"></nb-icon>
           </div>
         </div>
         <div class="card-body">
           <h6 class="course-name mb-0">{{ curso.nombre }}</h6>
           <p class="course-teacher mb-0">{{ curso.persons_teacher_nombre }}</p>
-          <p class="course-description mb-0">
-            Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}
-          </p>
+          <p class="course-description mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</p>
         </div>
         <div>
-          <nb-progress-bar size="tiny" [value]="40" status="warning"></nb-progress-bar>
+          <nb-progress-bar  [value]="curso?.resumen?.avance" [status]="status(curso?.resumen?.avance)"></nb-progress-bar>
         </div>
+  
+            <div class="d-flex align-items-center justify-content-between" style="padding-left: 9px; padding-right: 9px;">
+              <span nbTooltip="Participantes" nbTooltipStatus="warning">
+                <nb-icon style="font-size: 14px;" class="label" icon="people-outline"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.matriculados}}</label>
+              </span>
+              <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning">
+              <nb-icon style="font-size: 14px;" class="label" [icon]="tot?.icono"></nb-icon><label class="label" style="font-size: 12px;">{{tot?.total}}</label>
+              </span>
+              <span  nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning">
+              <nb-icon style="font-size: 14px;" class="label" icon="globe-outline"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.resumen?.realizo}} / {{curso?.resumen?.total_pendientes}}</label>
+              </span>
+            </div>
+        
       </nb-card>
     </div>
 
-    <div *ngIf="theRolSemestre?.rol?.name=== 'Estudiante'"
-      class="d-flex flex-wrap justify-content-center justify-content-lg-start" style="gap: 20px;">
+    <div
+      *ngIf="theRolSemestre?.rol?.name === 'Estudiante'"
+      class="d-flex flex-wrap justify-content-center justify-content-lg-start"
+      style="gap: 20px"
+    >
       <nb-card *ngFor="let curso of cursosEstudiante; let i = index" (click)="navigate(curso)" class="curso-card">
         <div class="contenedor">
           <img src="assets/books.jpg" class="card-img-top" />
-          <div class="centrado" (click)="enterZoom($event, curso)">
+          <div class="centrado" (click)="enterZoom($event, curso)" *ngIf="curso?.verIconZoom">
             <nb-icon icon="arrow-right"></nb-icon>
           </div>
         </div>
         <div class="card-body">
           <h6 class="course-name mb-0">{{ curso.course_nombre }}</h6>
           <p class="course-teacher mb-0">{{ curso.person_teacher_nombre }}</p>
-          <p class="course-description mb-0">
-            Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}
-          </p>
+          <p class="course-description mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</p>
         </div>
         <div>
-          <nb-progress-bar size="tiny" [value]="40" status="warning"></nb-progress-bar>
+          <nb-progress-bar  [value]="curso?.resumen?.avance" [status]="status(curso?.resumen?.avance)"></nb-progress-bar>
         </div>
-        <ul class="d-flex justify-content-evenly p-0 my-2">
-          <li class="">
-            <nb-icon class="text-muted" icon="people-outline"></nb-icon>
-            <p class="icon-text">1</p>
-          </li>
-          <li class="">
-            <nb-icon class="text-muted" icon="checkmark-square-2-outline"></nb-icon>
-            <p class="icon-text">1</p>
-          </li>
-          <li class="">
-            <nb-icon class="text-muted" icon="message-circle-outline"></nb-icon>
-            <p class="icon-text">1</p>
-          </li>
-          <li class="">
-            <nb-icon class="text-muted" icon="checkmark-circle-2-outline"></nb-icon>
-            <p class="icon-text">1</p>
-          </li>
-          <li class="">
-            <nb-icon class="text-muted" icon="video-outline"></nb-icon>
-            <p class="icon-text">1</p>
-          </li>
-        </ul>
+        <div class="d-flex align-items-center justify-content-between" style="padding-left: 9px; padding-right: 9px;">
+          <span nbTooltip="Participantes" nbTooltipStatus="warning">
+            <nb-icon style="font-size: 14px;" class="label" icon="people-outline"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.matriculados}}</label>
+          </span>
+          <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning">
+          <nb-icon style="font-size: 14px;" class="label" [icon]="tot?.icono"></nb-icon><label class="label" style="font-size: 12px;">{{tot?.total}}</label>
+          </span>
+          <span  nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning">
+          <nb-icon style="font-size: 14px;" class="label" icon="globe-outline"></nb-icon><label class="label" style="font-size: 12px;">{{curso?.resumen?.realizo}} / {{curso?.resumen?.total_pendientes}}</label>
+          </span>
+        </div>
       </nb-card>
     </div>
   </div>

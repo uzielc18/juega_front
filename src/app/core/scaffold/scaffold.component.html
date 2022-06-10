@@ -8,6 +8,9 @@
         </nb-action>
       </nb-actions>
       <nb-actions>
+        <nb-action *ngIf="rolSemestre?.rol?.name === 'Docente'">
+          <button nbButton ghost nbTooltip="Crear elementos" nbTooltipStatus="primary" nbTooltipPlacement="left" status="primary" size="medium" (click)="newElements()"><nb-icon icon="plus-outline"></nb-icon></button>
+        </nb-action>
         <nb-action class="p-0">
           <!--  -->
           <form [formGroup]="formHeader">
@@ -21,8 +24,8 @@
               nbPopoverTrigger="noop"
               (click)="open()"
             >
-              {{ paramsSessionStorage?.rol?.name || "Sin rol" }} -
-              {{ paramsSessionStorage?.semestre?.nombre || "Sin semestre" }}
+              {{ paramsSessionStorage?.rol?.name || 'Sin rol' }} -
+              {{ paramsSessionStorage?.semestre?.nombre || 'Sin semestre' }}
             </button>
             <ng-template #templateRef>
               <nb-card style="padding-bottom: 0px">
@@ -41,7 +44,12 @@
                   </div>
                   <div>
                     <label class="label">Semestre</label><br />
-                    <nb-select placeholder="Semestre" size="small" formControlName="id_semestre" (selectedChange)="changeSemestre()">
+                    <nb-select
+                      placeholder="Semestre"
+                      size="small"
+                      formControlName="id_semestre"
+                      (selectedChange)="changeSemestre()"
+                    >
                       <nb-option *ngFor="let semestre of semestres; let i = index" [value]="semestre.id"
                         >Semestre - {{ semestre.nombre }}</nb-option
                       >
@@ -103,7 +111,7 @@
             class="header-user"
             [name]="user?.name"
             [title]="user?.email"
-            [picture]="user?.profile_photo_url"
+            [picture]="user?.profile_photo_path"
             [onlyPicture]="minimum"
             size="large"
           ></nb-user>
@@ -112,8 +120,8 @@
     </nb-layout-header>
     <nb-sidebar responsive tag="core-sidebar">
       <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
-      <nb-sidebar-footer *ngIf="!hidden">
-        <nb-toggle (checkedChange)="changeTheme($event)" *ngIf="!minimum">
+      <nb-sidebar-footer  *ngIf="!minimum">
+        <nb-toggle (checkedChange)="changeTheme($event)">
           <span class="text-white">TEMA</span>
         </nb-toggle>
       </nb-sidebar-footer>
@@ -123,7 +131,7 @@
     </nb-layout-column>
     <nb-layout-footer class="d-block d-md-none header-actions fixed">
       <nb-actions>
-        <nb-action class="text-white">Copyright © {{ date | date: "yyyy" }} UPeU</nb-action>
+        <nb-action class="text-white">Copyright © {{ date | date: 'yyyy' }} UPeU</nb-action>
       </nb-actions>
       <nb-actions class="ms-auto">
         <nb-action>
@@ -161,7 +169,7 @@
             class="header-user"
             [name]="user?.name"
             [title]="user?.email"
-            [picture]="user?.profile_photo_url"
+            [picture]="user?.profile_photo_path"
             [onlyPicture]="minimum"
             size="medium"
           ></nb-user>

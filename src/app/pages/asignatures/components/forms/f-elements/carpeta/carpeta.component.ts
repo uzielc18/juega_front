@@ -21,6 +21,9 @@ export class CarpetaComponent implements OnInit {
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
+
+  @Input() destino: any;
+
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   settValuesMore:any;
   constructor(private formBuilder: FormBuilder, private generalServi: GeneralService,
@@ -58,7 +61,9 @@ export class CarpetaComponent implements OnInit {
 
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.setValuesPre();
+    if (this.unidad && this.unidad.course_id) {
+      this.setValuesPre();
+    }
     this.setMenuValues();
     this.setFechaActual();
     if(this.code === 'UPDATE') {
@@ -158,6 +163,7 @@ export class CarpetaComponent implements OnInit {
             value_close: 'ok',
             value: params,
             response: r.data,
+            type_element: this.valueMenu,
           }
           this.saveCloseValue.emit(valueClose);
         }
@@ -169,6 +175,7 @@ export class CarpetaComponent implements OnInit {
             value_close: 'ok',
             value: params,
             response: r.data,
+            type_element: this.valueMenu,
           }
           this.saveCloseValue.emit(valueClose);
         }
@@ -181,6 +188,7 @@ export class CarpetaComponent implements OnInit {
       value_close: 'close',
       value: '',
       response: '',
+      type_element: '',
     }
     this.saveCloseValue.emit(valueClose);
   }
