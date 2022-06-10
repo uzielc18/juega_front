@@ -126,7 +126,7 @@ export class StudentHomeComponent implements OnInit {
     this.generalServi.nameParams$(serviceName, params).subscribe(
       (res: any) => {
         this.listStudents = res.data.data || [];
-        console.log(this.listStudents);
+        // console.log(this.listStudents);
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;
         if (this.pagination.sizeListData < this.listStudents.length) {

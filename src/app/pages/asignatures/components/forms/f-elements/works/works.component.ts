@@ -184,7 +184,7 @@ export class WorksComponent implements OnInit, OnChanges {
     this.formHeader.patchValue({
       files: $event.arrayFile,
     });
-    console.log($event.arrayFile)
+    // console.log($event.arrayFile)
   }
   moreOptions(value: any) {
     if (value === 'N') {
@@ -268,7 +268,6 @@ export class WorksComponent implements OnInit, OnChanges {
     if (!this.validCampos) {
       this.loadingsForm.emit(true);
       if (this.code === 'NEW') {
-        console.log(params, 'params');
         this.generalServi.addNameData$(serviceName, params).subscribe(
           r => {
             if (r.success) {
@@ -276,6 +275,7 @@ export class WorksComponent implements OnInit, OnChanges {
                 value_close: 'ok',
                 value: params,
                 response: r.data,
+                type_element: this.valueMenu,
               };
               this.saveCloseValue.emit(valueClose);
             }
@@ -295,6 +295,7 @@ export class WorksComponent implements OnInit, OnChanges {
                 value_close: 'ok',
                 value: params,
                 response: r.data,
+                type_element: this.valueMenu,
               };
               this.saveCloseValue.emit(valueClose);
             }
@@ -314,6 +315,7 @@ export class WorksComponent implements OnInit, OnChanges {
       value_close: 'close',
       value: '',
       response: '',
+      type_element: '',
     };
     this.saveCloseValue.emit(valueClose);
   }

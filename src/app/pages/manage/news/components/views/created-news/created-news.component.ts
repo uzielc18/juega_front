@@ -111,14 +111,14 @@ export class CreatedNewsComponent implements OnInit {
     if (events) {
       this.formHeader.controls['area'].setValue(events);
     }
-    console.log(this.formHeader.value.area);
+    // console.log(this.formHeader.value.area);
   }
 
   getProgramNews() {
     const serviceName = END_POINTS.base_back.news + '/mis-programas';
     this.service.nameId$(serviceName, this.userService.user.id).subscribe((res: any) => {
       this.emploreAreas =  [new TreeviewItem(res.data)]
-      console.log(this.emploreAreas)
+      // console.log(this.emploreAreas)
     })
   }
 

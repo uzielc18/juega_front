@@ -15,7 +15,7 @@ export class ConfirmFinishExamComponent implements OnInit {
     private service: GeneralService) { }
 
   ngOnInit(): void {
-    console.log(this.datos);
+    // console.log(this.datos);
     
   }
   closeModal() {

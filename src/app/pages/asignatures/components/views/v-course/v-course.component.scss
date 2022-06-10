@@ -3,7 +3,7 @@ nb-card {
 }
 
 nb-progress-bar {
-  height: 7px;
+  height: 10px;
 }
 .another-color {
   color: var(--color-primary-500);
@@ -75,4 +75,7 @@ p {
       padding: 10px !important;
     }
   }
+}
+nb-accordion nb-accordion-item:hover {
+  background: var(--color-warning-100);
 }

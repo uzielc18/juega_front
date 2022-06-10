@@ -392,7 +392,7 @@ export class LambSyncHomeComponent implements OnInit {
           if (res.data) {
             this.listEstudiantes = res.data.splice(0, 5);
           }
-          console.log(this.listEstudiantes);
+          // console.log(this.listEstudiantes);
         });
     }
   }
@@ -402,7 +402,7 @@ export class LambSyncHomeComponent implements OnInit {
       this.formHeader.controls['termino'].setValue(`${termino.nombres} ${termino.apellido_paterno} ${termino.apellido_materno}`);
       this.formHeader.controls['estudiante'].setValue(termino);
       this.listEstudiantes = [];
-      console.log(this.formHeader.controls['termino'].value);
+      // console.log(this.formHeader.controls['termino'].value);
     }
   }
 
@@ -420,7 +420,7 @@ export class LambSyncHomeComponent implements OnInit {
         )
         .subscribe(
           (res: any) => {
-            console.log(res);
+            // console.log(res);
             this.toastrService.info(status, `${res.message}`);
             this.formHeader.controls['termino'].setValue('');
             this.formHeader.controls['estudiante'].setValue('');

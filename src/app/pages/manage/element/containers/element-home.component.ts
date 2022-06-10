@@ -373,7 +373,7 @@ export class ElementHomeComponent implements OnInit {
   }
 
   setTopic(topic: any) {
-    console.log(topic);
+    // console.log(topic);
     this.getElementsByTopic(topic.id);
   }
 
@@ -384,7 +384,7 @@ export class ElementHomeComponent implements OnInit {
     } else {
       this.selectedElements = this.selectedElements.filter((item: any) => item.id !== element.id);
     }
-    console.log(this.selectedElements);
+    // console.log(this.selectedElements);
   }
 
   saveElements() {

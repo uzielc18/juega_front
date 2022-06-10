@@ -36,8 +36,29 @@ export class VCourseComponent implements OnInit, OnDestroy {
       this.generalService.nameId$(serviceName, this.idCargaCursoDocente).subscribe((data) => {
         this.curso = data.data;
         if (this.curso) {
+          this.getCursoShow(this.curso.id);
           this.updateBreadcrumb();
         }
+        if (this.curso?.units.length>0) {
+          this.curso?.units.map((res:any) => {
+            res.checked = true;
+          });
+        }
+      }, () => { this.loading =false; }, () => { this.loading =false; });
+    }
+  }
+  getCursoShow(couurse_id:any) {
+    const serviceName = 'courses';
+    if (this.idCargaCursoDocente) {
+      this.loading = true;
+      this.generalService.nameId$(serviceName, couurse_id).subscribe((data) => {
+        console.log(data.data);
+        data.data.resumen.avance = Number(data.data.resumen.avance).toFixed(2);
+        this.curso.resumen = data.data.resumen;
+        this.curso.matriculados = data.data.matriculados;
+        console.log(this.curso);
+        
+        // lo
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
   }
@@ -61,6 +82,25 @@ export class VCourseComponent implements OnInit, OnDestroy {
   eventsChangesss($event:any) {
     if ($event === 'ok') {
       this.getUnidades();
+    }
+  }
+  changeColapse($event:any) {
+    this.curso?.units.map((res:any) => {
+      res.checked = true;
+    });
+    $event.checked = false;
+    // console.log($event);
+    
+  }
+  status(value:any) {
+    // console.log(value);
+    
+    if (value <= 33) {
+      return 'danger';
+    } else if (value <= 66) {
+      return 'warning';
+    } else {
+      return 'success';
     }
   }
 }
