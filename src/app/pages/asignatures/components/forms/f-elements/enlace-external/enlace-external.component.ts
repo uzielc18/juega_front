@@ -45,7 +45,7 @@ export class EnlaceExternalComponent implements OnInit {
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
 
-      fecha: [''],
+      fecha: [this.topics.fecha_tema || ''],
       // fecha_inicio: ['', [Validators.required]],
       // hora_inicio: ['', [Validators.required]],
       // fecha_fin: ['', [Validators.required]],
@@ -70,7 +70,7 @@ export class EnlaceExternalComponent implements OnInit {
       this.setValuesPre();
     }
     this.setMenuValues();
-    this.setFechaActual();
+    // this.setFechaActual();
     if(this.code === 'UPDATE') {
       this.setObjectUpdate();
     }
@@ -116,15 +116,15 @@ export class EnlaceExternalComponent implements OnInit {
       return false;
     }
   }
-  setFechaActual() {
-    let date = new Date();
-    let fecha =  date.toISOString().split('T')[0];
-    let hora = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-    const f_h =  fecha + ' ' + hora;
-    this.formHeader.patchValue({
-      fecha: f_h,
-    });
-  }
+  // setFechaActual() {
+  //   let date = new Date();
+  //   let fecha =  date.toISOString().split('T')[0];
+  //   let hora = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+  //   const f_h =  fecha + ' ' + hora;
+  //   this.formHeader.patchValue({
+  //     fecha: f_h,
+  //   });
+  // }
   saveInformtion() {
     const forms = this.formHeader.value;
     const serviceName = END_POINTS.base_back.elements;
