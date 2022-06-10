@@ -163,6 +163,7 @@ export class CarpetaComponent implements OnInit {
             value_close: 'ok',
             value: params,
             response: r.data,
+            type_element: this.valueMenu,
           }
           this.saveCloseValue.emit(valueClose);
         }
@@ -174,6 +175,7 @@ export class CarpetaComponent implements OnInit {
             value_close: 'ok',
             value: params,
             response: r.data,
+            type_element: this.valueMenu,
           }
           this.saveCloseValue.emit(valueClose);
         }
@@ -186,6 +188,7 @@ export class CarpetaComponent implements OnInit {
       value_close: 'close',
       value: '',
       response: '',
+      type_element: '',
     }
     this.saveCloseValue.emit(valueClose);
   }

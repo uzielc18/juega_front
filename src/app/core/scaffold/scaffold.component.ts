@@ -99,7 +99,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     public emitEventsService: EmitEventsService,
     private router: Router
   ) {
-    console.log(this.router);
+    // console.log(this.router);
     
   }
 

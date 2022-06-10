@@ -18,7 +18,7 @@ export class ClosedComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
   savePuntos(item:any) {
-    console.log(item);
+    // console.log(item);
     
     this.saves.emit(item);
   }

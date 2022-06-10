@@ -19,7 +19,7 @@ export class MoreOptionsComponent implements OnInit, OnChanges {
   }
   ngOnInit(): void {
     this.fieldReactive();
-    console.log(this.tipo);
+    // console.log(this.tipo);
     
   }
   private fieldReactive() {

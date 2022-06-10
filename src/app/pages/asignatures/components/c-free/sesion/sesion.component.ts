@@ -30,7 +30,10 @@ export class SesionComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.log(this.sesion, 'sesson');
+    
+  }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     if (sesion) {
@@ -70,22 +73,22 @@ export class SesionComponent implements OnInit {
       })
       .onClose.subscribe(result => {
         if (result.value_close === 'ok') {
-          // console.log(result.response);
-          let valid = false;
+          // console.log(result, 'Response de save');
+          result.type_element.type_element_id = result.type_element.id;
           if (this.sesion.elements.length > 0) {
-            valid = this.sesion.elements.find((r: any) => (r.type_element_id === result.response.type_element_id ? true : false));
-            if (valid) {
-              this.setCheck(result.response.type_element_id);
-              this.listElements(result.response.topic_id, result.response.type_element_id);
+            const exist = this.sesion.elements.find((r: any) => ((r.type_element_id === result.type_element.id) ? true : false));
+            if (exist) {
+              this.cargarCambio(result);
             } else {
-              this.arrayEl = [];
-              this.validaExist.emit();
+              this.sesion.elements.push(result.type_element);
+              this.cargarCambio(result);
             }
+          } else {
+            this.sesion.elements.push(result.type_element);
+            this.cargarCambio(result);
           }
-
+          
           if (result.response && result.response.id && result.value.grupal === '1') {
-            // console.log(result, 'que tenemos');
-            // this.openGroups(result.response);
             const params = {
               id: result.response.id, // id del elemento.
               course_id: this.curso.id,
@@ -94,6 +97,10 @@ export class SesionComponent implements OnInit {
           }
         }
       });
+  }
+  cargarCambio(result:any) {
+    this.setCheck(result.type_element.id);
+    this.listElements(result.response.topic_id, result.type_element.id);
   }
   adminGrupal(el: any) {
     const params = {
@@ -185,6 +192,8 @@ export class SesionComponent implements OnInit {
     );
   }
   setCheck(type_element_id: any) {
+    // console.log(type_element_id, 'ups');
+    
     if (this.sesion.elements.length > 0) {
       this.sesion.elements.map((el: any) => {
         el.check = false;
@@ -213,8 +222,7 @@ export class SesionComponent implements OnInit {
       }).then((result: any) => {
         if (result.isConfirmed) {
           this.loading = true;
-          this.generalService.deleteNameId$(serviceName, el.id).subscribe(
-            r => {
+          this.generalService.deleteNameId$(serviceName, el.id).subscribe(r => {
               if (r.success) {
                 this.listElements(el.topic_id, el.type_element_id);
                 setTimeout(() => {
