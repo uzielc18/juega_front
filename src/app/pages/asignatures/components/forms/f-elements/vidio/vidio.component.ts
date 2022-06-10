@@ -81,13 +81,7 @@ export class VidioComponent implements OnInit {
       tamano_peso: ['', [Validators.required]],
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
-
-      // fecha_inicio: ['', [Validators.required]],
-      // hora_inicio: ['', [Validators.required]],
-      // fecha_fin: ['', [Validators.required]],
-      // hora_fin: ['', [Validators.required]],
-      // fecha_gracia: ['', [Validators.required]],
-      // hora_gracia: ['', [Validators.required]],
+      fecha: [''],
 
       tipo: ['VIDEO', [Validators.required]],
 
@@ -252,7 +246,6 @@ export class VidioComponent implements OnInit {
 
   saveInformtion() {
     const forms = this.formHeader.value;
-
     if (this.code === 'NEW' && this.type === 'MANY') {
       const params = {
         course_id: forms.course_id,
@@ -290,7 +283,7 @@ export class VidioComponent implements OnInit {
 
         destino: this.destino,
       };
-      console.log(params, 'muchossss');
+      // console.log(params, 'muchossss');
       const serviceName = END_POINTS.base_back.default + '.........';
       if (!this.validCampos) {
         // this.generalServi.
@@ -343,6 +336,7 @@ export class VidioComponent implements OnInit {
                   value_close: 'ok',
                   value: params,
                   response: r.data,
+                  type_element: this.valueMenu,
                 };
                 this.saveCloseValue.emit(valueClose);
               }
@@ -362,6 +356,7 @@ export class VidioComponent implements OnInit {
                   value_close: 'ok',
                   value: params,
                   response: r.data,
+                  type_element: this.valueMenu,
                 };
                 this.saveCloseValue.emit(valueClose);
               }
@@ -382,6 +377,7 @@ export class VidioComponent implements OnInit {
       value_close: 'close',
       value: '',
       response: '',
+      type_element: '',
     };
     this.saveCloseValue.emit(valueClose);
   }

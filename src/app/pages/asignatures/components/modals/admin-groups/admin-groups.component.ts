@@ -455,9 +455,10 @@ export class AdminGroupsComponent implements OnInit {
       this.loading = true;
       this.generalServi.addNameData$(serviceName, array).subscribe(r => {
         if (r.success) {
-          this.getListMemberSinGroup();
           this.getListMembGroup(this.formGroup.value.group_id); // id grupo
-            this.calculaNMember();
+          this.getListMemberSinGroup();
+          this.calculaNMember();
+          this.partirArrayPending();
         }
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
@@ -469,7 +470,7 @@ export class AdminGroupsComponent implements OnInit {
           a.group_members_count = this.memberGroup.length;
         }
       });
-    }, 10000);
+    }, 20000);
   }
   deleteMembersGroup(item:any) {
     const serviceName = 'groupMembers';
@@ -493,6 +494,7 @@ export class AdminGroupsComponent implements OnInit {
             this.generalServi.deleteNameId$(serviceName, item.id).subscribe(r => {
               if (r.success) {
                 this.getListMembGroup(this.formGroup.value.group_id); // id grupo
+                this.getListMemberSinGroup();
                 this.calculaNMember();
 
               }

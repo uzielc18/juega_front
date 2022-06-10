@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-chart-trabajos',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chart-trabajos.component.scss']
 })
 export class ChartTrabajosComponent implements OnInit {
-
+  @Input() progressDatos: any = [];
   constructor() { }
 
   ngOnInit(): void {

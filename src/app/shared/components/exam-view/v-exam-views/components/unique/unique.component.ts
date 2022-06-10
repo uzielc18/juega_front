@@ -12,7 +12,7 @@ export class UniqueComponent implements OnInit, OnChanges {
   ngOnChanges():void {
     this.alternativas = JSON.parse(JSON.stringify(this.alternativas));
     this.information = JSON.parse(JSON.stringify(this.information));
-    console.log(this.alternativas);
+    // console.log(this.alternativas);
     
   }
   ngOnInit(): void {
