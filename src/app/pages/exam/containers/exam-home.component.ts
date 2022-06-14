@@ -359,8 +359,6 @@ export class ExamHomeComponent implements OnInit {
             if (this.info && this.info.bloqueo === 1) {
               this.backGo;
             }
-            // console.log(this.questions);
-
           }
         }, () => {this.loading = false;}, () => {this.loading = false;});
       }
