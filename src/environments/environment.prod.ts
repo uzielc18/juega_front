@@ -22,6 +22,7 @@ export const environment = {
   },
   shellApp: `https://lamb-learning.upeu.edu.pe/auth`,
   pages: `https://lamb-learning.upeu.edu.pe/pages`,
+  learning: `https://lamb-learning.upeu.edu.pe`,
   uri: {
     client_id: 'viW1Dl5hS7uSAnxBpBlOw',
     url: `https://lamb-learning.upeu.edu.pe/pages/manage/zoom/validate`,
