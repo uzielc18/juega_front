@@ -353,7 +353,6 @@ export class ExamHomeComponent implements OnInit {
               if (re.nivel === '2'){
                re.numeracion = index;
               }
-              // this.getPosition();
             });
 
             if (this.info && this.info.bloqueo === 1) {
