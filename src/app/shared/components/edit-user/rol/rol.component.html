@@ -8,7 +8,8 @@
     <thead>
       <tr class="text-center" style="font-size: 12px">
         <th style="width: 100px">N<sup>&deg;</sup></th>
-        <th class="text-start">Area / Programa</th>
+        <th class="text-start">Área / Programa</th>
+        <th>Rol</th>
         <th>Estado</th>
         <th>Predefinido</th>
         <th>Acciones</th>
@@ -25,6 +26,7 @@
           {{ areaRol.programa_estudio_nombre ? areaRol.programa_estudio_nombre + ' - ' : ''
           }}{{ areaRol?.area_nombres ? areaRol?.area_nombres + ' - ' : '' }}{{ areaRol?.sede_nombre }}
         </td>
+        <td>{{areaRol?.role_nombre}}</td>
         <td><nb-toggle [checked]="areaRol?.estado === '1'" (click)="statusToggle(areaRol)"></nb-toggle></td>
         <td>
           <nb-toggle [checked]="areaRol?.predefinido === '1'" (click)="predefinedToggle(areaRol)"></nb-toggle>

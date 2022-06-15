@@ -25,6 +25,7 @@ export const environment = {
   },
   shellApp: `${window.location.origin}/auth`,
   pages: `${window.location.origin}/pages`,
+  learning: `${window.location.origin}`,
   uri: {
     client_id: 'vARG7XA1TQuAodHuaU8NuQ',
     url: `${window.location.origin}/pages/manage/zoom/validate`,

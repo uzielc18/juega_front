@@ -265,6 +265,26 @@
                             </div>
                         </div>
                     </div>
+                    <br *ngIf="formHeaderTo.value.inscripcion">
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;" *ngIf="formHeaderTo.value.inscripcion">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Url inscripción:</label>
+                                <div class="col-md-8">
+                                   sllslslssasaassa
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Clave inscripción:</label>
+                                <div class="col-md-8">
+                                        <input type="text" nbInput placeholder="0000" fullWidth maxlength="4"
+                                            fieldSize="small"  formControlName="clave_inscripcion"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <br *ngIf="formHeaderTo.value.pago">
                     <div class="row" style="padding-left: 0px; padding-right: 0px;" *ngIf="formHeaderTo.value.pago">
                         <div class="col-md-4">
@@ -347,7 +367,7 @@
                     <div class="row">
                         <label class="col-md-2 label">Url video introducción:</label>
                         <div class="col-md-10">
-                            <input type="number" placeholder="Ingrese url" fullWidth fieldSize="small" formControlName="url_video_intro" nbInput>
+                            <input type="number" placeholder="Ingrese url" fullWidth fieldSize="small" formControlName="url_video_intro" nbInput maxlength="250">
                         </div>
                     </div>
                     <br>

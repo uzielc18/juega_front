@@ -10,6 +10,7 @@ export class MPortadaMiniaturaComponent implements OnInit {
   loading:boolean = false;
   @Input() keyFile:any;
   @Input() directori:any;
+  @Input() aspect:any = 4 / 1;
   constructor(public activeModal: NbDialogRef<MPortadaMiniaturaComponent>) { }
 
   ngOnInit(): void {

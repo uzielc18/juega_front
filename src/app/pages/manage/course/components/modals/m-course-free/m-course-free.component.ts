@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { DIRECTORY } from 'src/app/shared/directorios/directory';
+import { environment } from 'src/environments/environment';
 import { MPortadaMiniaturaComponent } from '../m-portada-miniatura/m-portada-miniatura.component';
 
 @Component({
@@ -58,6 +59,8 @@ export class MCourseFreeComponent implements OnInit {
       chat: [false],
       fecha_inicio_inscr: [''],
       fecha_fin_inscr: [''],
+      url_inscripcion: [''],
+      clave_inscripcion: [''],
       precio_local: [''],
       precio_dolares: [''],
       porcentaje_descuento: [''],
@@ -107,18 +110,33 @@ export class MCourseFreeComponent implements OnInit {
   toggleChangeInscr($event:any) {
     this.formHeaderTo.controls['fecha_inicio_inscr'].setValue('');
     this.formHeaderTo.controls['fecha_fin_inscr'].setValue('');
+    this.formHeaderTo.controls['url_inscripcion'].setValue('');
+    this.formHeaderTo.controls['clave_inscripcion'].setValue('');
     if ($event) {
+      const ruta = environment.learning + '/v/'
       this.formHeaderTo.controls['fecha_inicio_inscr'].setValidators([Validators.required]);
       this.formHeaderTo.controls['fecha_inicio_inscr'].updateValueAndValidity();
 
       this.formHeaderTo.controls['fecha_fin_inscr'].setValidators([Validators.required]);
       this.formHeaderTo.controls['fecha_fin_inscr'].updateValueAndValidity();
+
+      this.formHeaderTo.controls['url_inscripcion'].setValidators([Validators.required]);
+      this.formHeaderTo.controls['url_inscripcion'].updateValueAndValidity();
+
+      this.formHeaderTo.controls['clave_inscripcion'].setValidators([Validators.required, Validators.maxLength(4)]);
+      this.formHeaderTo.controls['clave_inscripcion'].updateValueAndValidity();
     } else {
       this.formHeaderTo.controls['fecha_inicio_inscr'].setValidators([]);
       this.formHeaderTo.controls['fecha_inicio_inscr'].updateValueAndValidity();
 
       this.formHeaderTo.controls['fecha_fin_inscr'].setValidators([]);
       this.formHeaderTo.controls['fecha_fin_inscr'].updateValueAndValidity();
+
+      this.formHeaderTo.controls['url_inscripcion'].setValidators([]);
+      this.formHeaderTo.controls['url_inscripcion'].updateValueAndValidity();
+
+      this.formHeaderTo.controls['clave_inscripcion'].setValidators([]);
+      this.formHeaderTo.controls['clave_inscripcion'].updateValueAndValidity();
     }
   }
   toggleChangePago($event:any) {
@@ -158,6 +176,8 @@ export class MCourseFreeComponent implements OnInit {
       chat: forms.chat,
       fecha_inicio_inscr: this.datePipe.transform(forms.fecha_inicio_inscr, 'yyyy-MM-dd'),
       fecha_fin_inscr: this.datePipe.transform(forms.fecha_fin_inscr, 'yyyy-MM-dd'),
+      url_inscripcion: forms.url_inscripcion,
+      clave_inscripcion: forms.clave_inscripcion,
       precio_local: forms.precio_local,
       precio_dolares: forms.precio_dolares,
       porcentaje_descuento: forms.porcentaje_descuento,
@@ -212,6 +232,7 @@ export class MCourseFreeComponent implements OnInit {
       context: {
         keyFile: this.keyFile(),
         directori: this.directorioPortadas,
+        aspect: type === 'miniatura' ? (4 / 4) : (4 / 1),
         // userInfo: this.appUserInfo.user,
 
       },
@@ -220,7 +241,7 @@ export class MCourseFreeComponent implements OnInit {
     }).onClose.subscribe(result => {
       if (result && result.close === 'ok') {
         console.log(result, 'eeeeeeeeeeeee');
-        if (type == 'portada') {
+        if (type === 'portada') {
           this.formHeaderTo.controls['file_portada'].setValue('');
           this.formHeaderTo.controls['file_portada_url_base64'].setValue('');
           if (result && result.value) {
@@ -229,7 +250,7 @@ export class MCourseFreeComponent implements OnInit {
           }
         }
 
-        if (type == 'miniatura') {
+        if (type === 'miniatura') {
           this.formHeaderTo.controls['file_miniatura'].setValue('');
           this.formHeaderTo.controls['file_miniatura_url_base64'].setValue('');
           if (result && result.value) {
