@@ -39,7 +39,7 @@ export class EditAreaRolComponent implements OnInit {
       sede: ['', [Validators.required]],
       nivel_ensenanza: [{ value: '', disabled: true }, [Validators.required]],
       facultad: [{ value: '', disabled: true }, [Validators.required]],
-      programa_estudio: [{ value: '', disabled: true }, [Validators.required]],
+      programa_estudio: [{ value: '', disabled: true }],
       rol: ['', [Validators.required]],
       predefinido: [true, [Validators.required]],
       estado: [true, [Validators.required]],
@@ -225,12 +225,13 @@ export class EditAreaRolComponent implements OnInit {
     const serviceName = END_POINTS.base_back.default + 'areasRoles';
     this.loading = true;
     const data = {
-      person_id: this.user.person_id || '',
-      role_id: this.formHeader.get('rol').value || '',
-      sede_id: this.formHeader.get('sede').value || '',
-      nivel_ensenanza_id: this.formHeader.get('nivel_ensenanza').value || '',
+      person_id: this.user.person_id || 0,
+      user_id: this.user.user_id || 0,
+      role_id: this.formHeader.get('rol').value || 0,
+      sede_id: this.formHeader.get('sede').value || 0,
+      nivel_ensenanza_id: this.formHeader.get('nivel_ensenanza').value || 0,
       area_id: this.formHeader.get('facultad').value || '',
-      programa_estudio_id: this.formHeader.get('programa_estudio').value || '',
+      programa_estudio_id: this.formHeader.get('programa_estudio').value || 0,
       predefinido: this.formHeader.get('predefinido').value ? '1' : '0',
       estado: this.formHeader.get('estado').value ? '1' : '0',
     };
