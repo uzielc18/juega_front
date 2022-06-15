@@ -24,7 +24,6 @@ export class MSemestersComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldsReactive();
-    console.log(this.item)
   }
 
   closeModal(){
