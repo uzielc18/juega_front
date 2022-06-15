@@ -28,7 +28,7 @@ export class CourseHomeComponent implements OnInit {
   pagesCount: any[] = [20, 30, 50, 100, 200, 300, 500, 1000];
   litProgramStudy:any = [];
   semestrers:any = [];
-  constructor(private generalServi: GeneralService, private formBuilder: FormBuilder, private dialogService: NbDialogService) { }
+  constructor(private generalServi: GeneralService, private formBuilder: FormBuilder, private dialogService: NbDialogService, private appUserInfo: AppService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -163,7 +163,7 @@ export class CourseHomeComponent implements OnInit {
     this.dialogService.open(MCourseFreeComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
-        // item: items,
+        userInfo: this.appUserInfo.user,
 
       },
       closeOnBackdropClick: false,

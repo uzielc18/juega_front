@@ -18,10 +18,10 @@ export class ImageRecorteComponent implements OnInit, OnChanges {
   @Output() resultFile: any = new EventEmitter<any>();
   @Input() paramsInfoFile: any;
 
-  // @Input() resizeToWidth: any = 894;
-  // @Input() cropperStaticWidth: any = 894;
-  // @Input() cropperStaticHeight: any = 300;
-  // @Input() resizeToHeight: any = 300;
+  // @Input() resizeToWidth: any = 694;
+  // @Input() cropperStaticWidth: any = 694;
+  // @Input() cropperStaticHeight: any = 100;
+  // @Input() resizeToHeight: any = 100;
   // @Input() aspectRatio: any = 15 / 4;
   @Input() aspectRatio: any = 4 / 1;
   @Input() heightImg: any = 300;
