@@ -67,6 +67,7 @@ const COMPONENTS: any[] = [
   NbTimepickerModule.forRoot(),
   NbDateFnsDateModule,
   NbBadgeModule,
+  NbDatepickerModule.forRoot(),
 ];
 
 @NgModule({

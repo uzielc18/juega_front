@@ -2,8 +2,7 @@
   <div>
     <label class="label">Url del vídeo (Presione el botón, después de añadir el link)</label>
     <nb-form-field>
-    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una url" (keyup)="valueLink()"
-    [status]="(formHeader.hasError('required', ['url_externa'])) === true ? 'primary' : 'basic'" formControlName="url_externa"/>
+    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una url" (keyup)="valueLink()" formControlName="url_externa"/>
     <button nbSuffix nbButton status="primary" size="small" [disabled]="!formHeader.value.url_externa" (click)="procesar()">
       <nb-icon  icon="link-2-outline"  pack="eva"></nb-icon></button>
 
@@ -26,14 +25,12 @@
   </div>
   <div>
     <label class="label">Título</label>
-    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa un título"
-    [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="titulo"/>
+    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa un título" formControlName="titulo"/>
     <control-messages [control]="formHeader.get('titulo')"></control-messages>
   </div>
   <div style="padding-top: 4px;">
     <label class="label">Descripción</label>
-    <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una descripción"
-    [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
+    <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa una descripción" formControlName="descripcion"></textarea>
     <control-messages [control]="formHeader.get('descripcion')"></control-messages>
   </div>
   <!-- <div style="padding-top: 4px;">

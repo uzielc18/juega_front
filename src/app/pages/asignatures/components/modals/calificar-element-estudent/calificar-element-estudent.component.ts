@@ -36,7 +36,6 @@ export class CalificarElementEstudentComponent implements OnInit {
   listResponses: any = [];
   infor: any = '';
   timeActual:any = '';
-  fecha_finis:any = '';
   constructor(
     public activeModal: NbDialogRef<CalificarElementEstudentComponent>,
     private formBuilder: FormBuilder,
@@ -132,7 +131,6 @@ export class CalificarElementEstudentComponent implements OnInit {
       id_justification: '',
       fechaHoraValid: '',
     });
-    this.fecha_finis = '';
     this.formDate.controls['respuesta'].setValidators([]);
     this.formDate.controls['respuesta'].updateValueAndValidity();
     this.formDate.controls['id_justification'].setValidators([]);
@@ -153,8 +151,6 @@ export class CalificarElementEstudentComponent implements OnInit {
             hora_fin: this.renderTime(f_h_fin[0], f_h_fin[1]),
             fechaHoraValid: res.data.student_pending.fecha_fin,
           });
-          this.fecha_finis = this.renderDate(f_h_fin[0]);
-
           if (res.data.student_pending.justifications?.length>0) {
             this.formDate.controls['id_justification'].setValidators([Validators.required]);
             this.formDate.controls['id_justification'].updateValueAndValidity();
@@ -172,14 +168,6 @@ export class CalificarElementEstudentComponent implements OnInit {
         // }
       }
     );
-  }
-  keyFechaF($event:any) {
-    if ($event && !$event.target['value']) {
-      this.formDate.controls['fecha_fin'].setValue('');
-    }
-  }
-  fechaF($event:any) {
-    this.formDate.controls['fecha_fin'].setValue($event);
   }
   renderDate(date: any) {
     // console.log(date);

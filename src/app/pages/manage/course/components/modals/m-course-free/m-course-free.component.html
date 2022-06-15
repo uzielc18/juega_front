@@ -1,0 +1,372 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+    nbSpinnerMessage="Procesando información">
+    <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div>
+                CURSOS LIBRES
+            </div>
+            <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body style="padding-right: 35px; padding-left: 35px;">
+        <nb-stepper orientation="horizontal" (stepChange)="changeSteps($event)" #stepper disableStepNavigation>
+            <!-- <nb-step label="Datos del curso" [stepControl]="formHeaderOne" #one> -->
+                <nb-step label="Datos del curso" #one>
+                <form [formGroup]="formHeaderOne">
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Tipo de curso:</label>
+                                <div class="col-md-8">
+                                    <nb-select fullWidth placeholder="Seleccione tipo" size="small" formControlName="id_tipo_curso">
+                                        <nb-option value="1">Todos</nb-option>
+                                    </nb-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Programa de estudio:</label>
+                                <div class="col-md-8">
+                                    <nb-select fullWidth placeholder="Seleccione programa" size="small" formControlName="id_programa_estudio">
+                                        <nb-option value="1">Todos</nb-option>
+                                    </nb-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Nombre:</label>
+                                <div class="col-md-8">
+                                    <input type="text" placeholder="Ingrese nombre" fullWidth fieldSize="small" formControlName="nombre" nbInput>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Docente:</label>
+                                <div class="col-md-8">
+                                    <nb-select fullWidth placeholder="Seleccione docente" size="small" formControlName="id_docente">
+                                        <nb-option value="1">Todos</nb-option>
+                                    </nb-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Horas a la semana:</label>
+                                <div class="col-md-8">
+                                    <input type="number" placeholder="Ingrese horas" fullWidth fieldSize="small" formControlName="horas_semana" nbInput>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Idioma:</label>
+                                <div class="col-md-8">
+                                    <nb-select fullWidth placeholder="Seleccione idioma" size="small" formControlName="id_idioma">
+                                        <nb-option value="1">Todos</nb-option>
+                                    </nb-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Ciclo:</label>
+                                <div class="col-md-8">
+                                    <nb-select fullWidth placeholder="Seleccione ciclo" size="small" formControlName="ciclo">
+                                        <nb-option value="1">Todos</nb-option>
+                                    </nb-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Cupos:</label>
+                                <div class="col-md-8">
+                                    <input type="number" placeholder="Ingrese cupos" fullWidth fieldSize="small" formControlName="cupos" nbInput>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Áula:</label>
+                                <div class="col-md-8">
+                                    <input type="number" placeholder="Ingrese áula" fullWidth fieldSize="small" formControlName="aula" nbInput>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Grupo:</label>
+                                <div class="col-md-8">
+                                    <input type="number" placeholder="Ingrese grupo" fullWidth fieldSize="small" formControlName="grupo" nbInput>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Fecha inicio:</label>
+                                <div class="col-md-8">
+                                    <nb-form-field>
+                                        <input type="text" nbInput placeholder="Fecha Inicio" fullWidth
+                                            [nbDatepicker]="fechaInicio" fieldSize="small" formControlName="fecha_inicio"/>
+                                        <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                                            pack="eva"></nb-icon>
+                                        <nb-datepicker #fechaInicio format="dd/MM/yyyy">
+                                        </nb-datepicker>
+                                    </nb-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Fecha fin:</label>
+                                <div class="col-md-8">
+                                    <nb-form-field>
+                                        <input type="text" nbInput placeholder="Fecha fin" fullWidth
+                                            [nbDatepicker]="fechaFin" fieldSize="small" formControlName="fecha_fin"/>
+                                        <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                                            pack="eva"></nb-icon>
+                                        <nb-datepicker #fechaFin format="dd/MM/yyyy">
+                                        </nb-datepicker>
+                                    </nb-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Tipo nota:</label>
+                                <div class="col-md-8">
+                                    <nb-select fullWidth placeholder="Seleccione tipo" size="small" formControlName="tipo_nota">
+                                        <nb-option value="1">Todos</nb-option>
+                                    </nb-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Nota:</label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="number" placeholder="Mínimo" fullWidth fieldSize="small" formControlName="nota_min" nbInput>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="number" placeholder="Máximo" fullWidth fieldSize="small" formControlName="nota_max" nbInput>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-md-2 label">Descripción:</label>
+                        <div class="col-md-10">
+                            <textarea type="number" placeholder="Ingrese descripción del curso"fullWidth fieldSize="small" formControlName="descripcion" nbInput></textarea>
+                        </div>
+                    </div>
+                  </form>
+                  <hr>
+                  <div style="text-align: right;">
+                    <!-- <button nbButton nbStepperNext>Siguiente</button> -->
+                    <button nbButton (click)="nextPasoOne(stepper, one)"  status="primary">Siguiente</button>
+                    <!-- <button nbButton (click)="nextPasoOne(stepper, one)" [disabled]="formHeaderOne.invalid" status="primary">Siguiente</button> -->
+                    </div>
+            </nb-step>
+                <nb-step label="Datos del curso" [stepControl]="formHeaderTo" #to>
+            <!-- <nb-step label="Información adicional" #to> -->
+                <form [formGroup]="formHeaderTo">
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="col-md-3">
+                            <div class="row">
+                                <label class="col-md-4 label">Inscripción:</label>
+                                <div class="col-md-8" style="text-align: center">
+                                    <nb-toggle formControlName="inscripcion" (checkedChange)="toggleChangeInscr($event)"></nb-toggle>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row">
+                                <label class="col-md-4 label">Consultas:</label>
+                                <div class="col-md-8" style="text-align: center">
+                                    <nb-toggle formControlName="consultas"></nb-toggle>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row">
+                                <label class="col-md-4 label">Pago:</label>
+                                <div class="col-md-8" style="text-align: center">
+                                    <nb-toggle formControlName="pago" (checkedChange)="toggleChangePago($event)"></nb-toggle>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row">
+                                <label class="col-md-4 label">Chat:</label>
+                                <div class="col-md-8" style="text-align: center">
+                                    <nb-toggle formControlName="chat"></nb-toggle>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br *ngIf="formHeaderTo.value.inscripcion">
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;" *ngIf="formHeaderTo.value.inscripcion">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Fecha inicio inscripción:</label>
+                                <div class="col-md-8">
+                                    <nb-form-field>
+                                    <input type="text" [nbDatepicker]="fechaInicioInsc" fullWidth nbInput fieldSize="small"
+                                    formControlName="fecha_inicio_inscr" placeholder="Fecha inicio">
+                                  <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                                  pack="eva"></nb-icon>
+                              <nb-datepicker #fechaInicioInsc format="dd/MM/yyyy">
+                              </nb-datepicker>
+                          </nb-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Fecha fin inscripción:</label>
+                                <div class="col-md-8">
+                                    <nb-form-field>
+                                        <input type="text" nbInput placeholder="Fecha fin" fullWidth 
+                                            [nbDatepicker]="fechaFin" fieldSize="small"  formControlName="fecha_fin_inscr"/>
+                                        <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                                            pack="eva"></nb-icon>
+                                        <nb-datepicker #fechaFin format="dd/MM/yyyy">
+                                        </nb-datepicker>
+                                    </nb-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br *ngIf="formHeaderTo.value.pago">
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;" *ngIf="formHeaderTo.value.pago">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <label class="col-md-4 label">Precio local:</label>
+                                <div class="col-md-8">
+                                    <input type="number" placeholder="Ingrese monto" fullWidth fieldSize="small" formControlName="precio_local" nbInput>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <label class="col-md-4 label">Precio dólares:</label>
+                                <div class="col-md-8">
+                                    <input type="number" placeholder="Ingrese monto" fullWidth fieldSize="small" formControlName="precio_dolares" nbInput>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <label class="col-md-4 label">% descuento:</label>
+                                <div class="col-md-8">
+                                    <input type="number" placeholder="Ingrese decuento" fullWidth fieldSize="small" formControlName="porcentaje_descuento" nbInput>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Sílabo:</label>
+                                <div class="col-md-8">
+                                    <input type="number" placeholder="Ingrese sílabo" fullWidth fieldSize="small" formControlName="file_silabo" nbInput>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 label">Guía curso:</label>
+                                <div class="col-md-8">
+                                    <input type="number" placeholder="Ingrese guía" fullWidth fieldSize="small" formControlName="file_guia_curso" nbInput>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-md-2 label">Url video introducción:</label>
+                        <div class="col-md-10">
+                            <input type="number" placeholder="Ingrese url" fullWidth fieldSize="small" formControlName="url_video_intro" nbInput>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <label class="col-md-3 label">Portada:</label>
+                                <div class="col-md-9">
+                                    <img [src]="formHeaderTo.value.file_portada || 'https://fondosmil.com/fondo/20736.png'" alt="" width="100%" height="130px">
+                                    <div style="text-align: right;">
+                                        <button nbButton size="small" [status]="formHeaderTo.value.file_portada ? 'success' : 'basic'">
+                                            {{formHeaderTo.value.file_portada ? 'Cambiar' : 'Añadir'}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <label class="col-md-4 label">Míniatura:</label>
+                                <div class="col-md-8">
+                                    <img [src]="formHeaderTo.value.file_miniatura || 'https://fondosmil.com/fondo/20736.png'" alt="" width="100%" height="130px">
+                                    <div style="text-align: right;">
+                                        <button nbButton size="small" [status]="formHeaderTo.value.file_miniatura ? 'success' : 'basic'">
+                                            {{formHeaderTo.value.file_miniatura ? 'Cambiar' : 'Añadir'}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div style="text-align: right;">
+                    <button nbButton (click)="backPasoTo(stepper, to)"  status="basic">Atras</button>&nbsp;
+                    <button nbButton (click)="nextPasoTo(stepper, to)"  status="primary">Siguiente</button>
+                    <!-- <button nbButton nbStepperPrevious>prev</button>
+                    <button nbButton nbStepperNext>next</button> -->
+                </div>
+            </nb-step>
+            <nb-step label="Publicar">
+                    step content here
+                    <button nbButton nbStepperPrevious>prev</button>
+                    <button nbButton nbStepperNext>next</button>
+            </nb-step>
+            <nb-step  [hidden]="true" label="Third step">
+                <div class="step-container">
+                  <h3>Wizard completed!</h3>
+                  <button nbButton (click)="stepper.reset()">Try again</button>
+                </div>
+              </nb-step>
+          </nb-stepper>
+    </nb-card-body>
+</nb-card>
