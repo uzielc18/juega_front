@@ -22,7 +22,7 @@
                     <nb-option *ngFor="let item of litProgramStudy" [value]="item.id">{{item.name_programa_estudio}}</nb-option>
                 </nb-select>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label class="label">Ciclo</label>
                 <nb-select fullWidth size="small" formControlName="ciclo">
                     <nb-option value="">Todos</nb-option>
@@ -33,9 +33,17 @@
                 <label class="label">Nombre curso</label>
                 <input type="text" nbInput fullWidth fieldSize="small" placeholder="Ingrese nombre" formControlName="nombre" (keyup)="keyNombre($event)">
             </div>
-            <div class="col-md-2">
-                <label class="label" style="visibility: hidden;">Filtrar</label><br>
-                        <button nbButton fullWidth size="small" status="warning" (click)="refresh()"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="label" style="visibility: hidden;">Filtrar</label><br>
+                                <button nbButton fullWidth size="small" status="warning" (click)="refresh()"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="label" style="visibility: hidden;">Crear</label><br>
+                                <button nbButton fullWidth size="small" status="primary" (click)="openCoursesFree()"><nb-icon icon="plus"></nb-icon>Crear</button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
@@ -66,7 +74,7 @@
                             <nb-icon *ngIf="item?.id_zoom_meetings" icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon>
                         </td>
                         <td class="text-center" style="width: 1px;">
-                            <button nbButton size="tiny" status="primary" (click)="openMatricula(item)">Matricular</button>
+                            <button nbButton size="tiny" status="info" (click)="openMatricula(item)">Matricular</button>
                         </td>
                         <!-- <td class="text-center">
                             <nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>

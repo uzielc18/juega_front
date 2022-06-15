@@ -14,15 +14,13 @@
         <form [formGroup]="formHeader">
             <div>
               <label class="label">Título de la sección</label>
-              <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa título"
-              [status]="(formHeader.hasError('required', ['titulo'])) === true ? 'primary' : 'basic'" formControlName="titulo"/>
+              <input class="w-100" type="text" nbInput fullWidth placeholder="Ingresa título" formControlName="titulo"/>
               <control-messages [control]="formHeader.get('titulo')"></control-messages>
             </div>
             <br>
             <div>
                 <label class="label">Descripción</label>
-                <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa descripción"
-                [status]="(formHeader.hasError('required', ['descripcion'])) === true ? 'primary' : 'basic'" formControlName="descripcion"></textarea>
+                <textarea class="w-100" type="text" nbInput fullWidth placeholder="Ingresa descripción" formControlName="descripcion"></textarea>
                 <control-messages [control]="formHeader.get('descripcion')"></control-messages>
               </div>
         </form>

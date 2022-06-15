@@ -42,7 +42,7 @@ import { CatchErrorInterceptor } from './state/catch-error.interceptor';
 import { AppService, init_app } from './state/app.service';
 import { LoadInterceptor } from './state/load.interceptor';
 import { routesConfig, toastConfig } from './state/config';
-import localePe from '@angular/common/locales/es-PE';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptorService } from './oauth2/interceptor.service';
@@ -50,6 +50,7 @@ import { Oauth2GoogleCallbackComponent } from './oauth2/oauth2google.callback.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GeneralService } from '../providers';
 
+import localePe from '@angular/common/locales/es-PE';
 registerLocaleData(localePe);
 const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
 @NgModule({

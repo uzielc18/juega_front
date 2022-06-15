@@ -66,7 +66,6 @@
     <br>
     <form class="d-flex flex-column" [formGroup]="formHeader">
       <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="giant"
-        [status]="(formHeader.hasError('required', ['comentario'])) === true ? 'primary' : 'basic'"
         formControlName="comentario" style="font-size: 16px;" rows="3"></textarea>
       <button nbButton status="success"  size="tiny" class="ms-auto my-2" (click)="saveComment()"
         [disabled]="formHeader.invalid">Comentar</button>

@@ -4,6 +4,7 @@ import { NbDialogService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { ConfigZoomComponent } from 'src/app/shared/components/config-zoom/config-zoom.component';
+import { MCourseFreeComponent } from '../components/modals/m-course-free/m-course-free.component';
 import { MMatricularComponent } from '../components/modals/m-matricular/m-matricular.component';
 
 @Component({
@@ -27,7 +28,7 @@ export class CourseHomeComponent implements OnInit {
   pagesCount: any[] = [20, 30, 50, 100, 200, 300, 500, 1000];
   litProgramStudy:any = [];
   semestrers:any = [];
-  constructor(private generalServi: GeneralService, private formBuilder: FormBuilder, private dialogService: NbDialogService) { }
+  constructor(private generalServi: GeneralService, private formBuilder: FormBuilder, private dialogService: NbDialogService, private appUserInfo: AppService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -116,19 +117,17 @@ export class CourseHomeComponent implements OnInit {
       page: this.pagination.page,
       paginate: 'S',
     }
-    // if (params && params.programa_estudio_id && params.ciclo && params.grupo) {
-      this.loading = true;
-      this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
-        this.listCourseZoom = res.data || [];
-        this.pagination.sizeListData = res.meta && res.meta.total || 0;
-        this.pagination.sizePage = res.meta && res.meta.per_page || 0;
-        if (this.pagination.sizeListData < this.listCourseZoom.length) {
-          this.pagination.isDisabledPage = true;
-        } else {
-          this.pagination.isDisabledPage = false;
-        }
-      }, () => {this.loading = false}, () => {this.loading = false});
-    // }
+      // this.loading = true;
+      // this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
+      //   this.listCourseZoom = res.data || [];
+      //   this.pagination.sizeListData = res.meta && res.meta.total || 0;
+      //   this.pagination.sizePage = res.meta && res.meta.per_page || 0;
+      //   if (this.pagination.sizeListData < this.listCourseZoom.length) {
+      //     this.pagination.isDisabledPage = true;
+      //   } else {
+      //     this.pagination.isDisabledPage = false;
+      //   }
+      // }, () => {this.loading = false}, () => {this.loading = false});
   }
   openConfig(items:any) {
     this.dialogService.open(ConfigZoomComponent, {
@@ -150,6 +149,21 @@ export class CourseHomeComponent implements OnInit {
       dialogClass: 'dialog-limited-height',
       context: {
         item: items,
+
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.getCourseZoom();
+      }
+    });
+  }
+  openCoursesFree() {
+    this.dialogService.open(MCourseFreeComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        userInfo: this.appUserInfo.user,
 
       },
       closeOnBackdropClick: false,

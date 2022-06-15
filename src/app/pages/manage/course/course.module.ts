@@ -8,16 +8,23 @@ import { CourseComponent } from './course.component';
 import { CourseHomeComponent } from './containers/course-home.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { MMatricularComponent } from './components/modals/m-matricular/m-matricular.component';
-import { NbTagModule } from '@nebular/theme';
+import { NbStepperModule, NbTagModule } from '@nebular/theme';
+import { MCourseFreeComponent } from './components/modals/m-course-free/m-course-free.component';
+import { PrepareFileProModule } from 'src/app/shared/components/prepare-file-pro/prepare-file-pro.module';
+import { MPortadaMiniaturaComponent } from './components/modals/m-portada-miniatura/m-portada-miniatura.component';
+import { ImageRecorteModule } from 'src/app/shared/components/recortes/image-recorte/image-recorte.module';
 
 const COMPONENTS: any[] = [
   CourseComponent,
   CourseHomeComponent,
-  MMatricularComponent
+  MMatricularComponent,
+  MCourseFreeComponent,
+  MPortadaMiniaturaComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
-  NbTagModule
+  NbTagModule,
+  NbStepperModule
 ];
 const NGB_MODULES: any = [
   NgbPaginationModule
@@ -29,11 +36,15 @@ const SERIVCES: any = [
   GeneralService,
 ];
 const MODALS: any = [
-  MMatricularComponent
+  MMatricularComponent,
+  MCourseFreeComponent,
+  MPortadaMiniaturaComponent
 ];
 const NGX_MODULES: any = [
 ];
 const MODULES: any = [
+  PrepareFileProModule,
+  ImageRecorteModule
 ];
 
 @NgModule({
