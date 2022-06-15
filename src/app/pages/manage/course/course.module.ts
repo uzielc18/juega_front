@@ -10,12 +10,16 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { MMatricularComponent } from './components/modals/m-matricular/m-matricular.component';
 import { NbStepperModule, NbTagModule } from '@nebular/theme';
 import { MCourseFreeComponent } from './components/modals/m-course-free/m-course-free.component';
+import { PrepareFileProModule } from 'src/app/shared/components/prepare-file-pro/prepare-file-pro.module';
+import { MPortadaMiniaturaComponent } from './components/modals/m-portada-miniatura/m-portada-miniatura.component';
+import { ImageRecorteModule } from 'src/app/shared/components/recortes/image-recorte/image-recorte.module';
 
 const COMPONENTS: any[] = [
   CourseComponent,
   CourseHomeComponent,
   MMatricularComponent,
-  MCourseFreeComponent
+  MCourseFreeComponent,
+  MPortadaMiniaturaComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -33,11 +37,14 @@ const SERIVCES: any = [
 ];
 const MODALS: any = [
   MMatricularComponent,
-  MCourseFreeComponent
+  MCourseFreeComponent,
+  MPortadaMiniaturaComponent
 ];
 const NGX_MODULES: any = [
 ];
 const MODULES: any = [
+  PrepareFileProModule,
+  ImageRecorteModule
 ];
 
 @NgModule({
