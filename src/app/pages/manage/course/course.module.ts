@@ -8,16 +8,19 @@ import { CourseComponent } from './course.component';
 import { CourseHomeComponent } from './containers/course-home.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { MMatricularComponent } from './components/modals/m-matricular/m-matricular.component';
-import { NbTagModule } from '@nebular/theme';
+import { NbStepperModule, NbTagModule } from '@nebular/theme';
+import { MCourseFreeComponent } from './components/modals/m-course-free/m-course-free.component';
 
 const COMPONENTS: any[] = [
   CourseComponent,
   CourseHomeComponent,
-  MMatricularComponent
+  MMatricularComponent,
+  MCourseFreeComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
-  NbTagModule
+  NbTagModule,
+  NbStepperModule
 ];
 const NGB_MODULES: any = [
   NgbPaginationModule
@@ -29,7 +32,8 @@ const SERIVCES: any = [
   GeneralService,
 ];
 const MODALS: any = [
-  MMatricularComponent
+  MMatricularComponent,
+  MCourseFreeComponent
 ];
 const NGX_MODULES: any = [
 ];

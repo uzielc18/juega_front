@@ -21,13 +21,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <nb-form-field>
-                                <input nbInput placeholder="Fecha Inicio" fullWidth
-                                    [nbDatepicker]="fechaFin" fieldSize="small"
-                                    [ngStyle]="{'border-left': formHeader.hasError('required', ['fecha_fin']) ? '3px solid #e74c3c' : ''}"
-                                    (keyup)="keyFechaF($event)"/>
+                                <input nbInput placeholder="Fecha Inicio" fullWidth formControlName="fecha_fin"
+                                    [nbDatepicker]="fechaFin" fieldSize="small"/>
                                 <nb-icon nbSuffix icon="calendar" status="primary" size="small"
                                     pack="eva"></nb-icon>
-                                <nb-datepicker #fechaFin format="dd/MM/yyyy" [min]="min" (dateChange)="fechaF($event)">
+                                <nb-datepicker #fechaFin format="dd/MM/yyyy" [min]="min">
                                 </nb-datepicker>
                                 <control-messages [control]="formHeader.get('fecha_fin')">
                                 </control-messages>
@@ -35,8 +33,7 @@
                         </div>
                         <div class="col-md-6">
                             <nb-form-field class="hour-input ms-auto">
-                                <input nbInput placeholder="Hora Termino" [nbTimepicker]="horaTem" type="text"
-                                [ngStyle]="{'border-left': formHeader.hasError('required', ['hora_fin']) ? '3px solid #e74c3c' : ''}" formControlName="hora_fin"/>
+                                <input nbInput placeholder="Hora Termino" [nbTimepicker]="horaTem" type="text" formControlName="hora_fin"/>
                                 <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
                                 <nb-timepicker #horaTem></nb-timepicker>
                                 </nb-form-field>

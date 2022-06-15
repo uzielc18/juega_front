@@ -8,7 +8,6 @@
       fieldSize="small"
       fullWidth
       placeholder="Ingresa un título"
-      [status]="formHeader.hasError('required', ['titulo']) === true ? 'primary' : 'basic'"
       formControlName="titulo"
     />
     <control-messages [control]="formHeader.get('titulo')"></control-messages>
@@ -21,7 +20,6 @@
       nbInput
       fullWidth
       placeholder="Ingresa una descripción"
-      [status]="formHeader.hasError('required', ['descripcion']) === true ? 'primary' : 'basic'"
       formControlName="descripcion"
     ></textarea>
     <control-messages [control]="formHeader.get('descripcion')"></control-messages>
@@ -55,7 +53,6 @@
           fullWidth
           [nbDatepicker]="fechaInicio"
           fieldSize="small"
-          [status]="formHeader.hasError('required', ['fecha_inicio']) === true ? 'primary' : 'basic'"
           formControlName="fecha_inicio"
         />
         <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
@@ -69,7 +66,6 @@
           [nbTimepicker]="horaInicio"
           type="text"
           fieldSize="small"
-          [status]="formHeader.hasError('required', ['hora_inicio']) === true ? 'primary' : 'basic'"
           formControlName="hora_inicio"
         />
         <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
@@ -88,7 +84,6 @@
             fullWidth
             [nbDatepicker]="fechaTermino"
             fieldSize="small"
-            [status]="formHeader.hasError('required', ['fecha_fin']) === true ? 'primary' : 'basic'"
             formControlName="fecha_fin"
           />
           <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
@@ -102,7 +97,6 @@
             [nbTimepicker]="horaFin"
             type="text"
             fieldSize="small"
-            [status]="formHeader.hasError('required', ['hora_fin']) === true ? 'primary' : 'basic'"
             formControlName="hora_fin"
           />
           <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
@@ -122,7 +116,6 @@
             fullWidth
             [nbDatepicker]="fechaGracia"
             fieldSize="small"
-            [status]="formHeader.hasError('required', ['fecha_gracia']) === true ? 'primary' : 'basic'"
             formControlName="fecha_gracia"
           />
           <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
@@ -136,7 +129,6 @@
             [nbTimepicker]="horaGracia"
             type="text"
             fieldSize="small"
-            [status]="formHeader.hasError('required', ['hora_gracia']) === true ? 'primary' : 'basic'"
             formControlName="hora_gracia"
           />
           <nb-icon nbSuffix icon="clock-outline" status="primary" size="small" pack="eva"></nb-icon>
@@ -159,7 +151,6 @@
       *ngIf="formHeader.get('rubrica').value"
       placeholder="Seleccionar rúbrica"
       fullWidth
-      [status]="formHeader.hasError('required', ['rubricas_guia_id']) === true ? 'primary' : 'basic'"
       formControlName="rubricas_guia_id"
     >
       <nb-option *ngFor="let rubrica of rubrics" [value]="rubrica?.id" (click)="selectedRubrica(rubrica)">{{

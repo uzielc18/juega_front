@@ -35,14 +35,6 @@ export class ResponseAperturaComponent implements OnInit {
   closeModal() {
     this.activeModal.close('close');
   }
-  keyFechaF($event:any) {
-    if ($event && !$event.target['value']) {
-      this.formHeader.controls['fecha_fin'].setValue('');
-    }
-  }
-  fechaF($event:any) {
-    this.formHeader.controls['fecha_fin'].setValue($event);
-  }
   saveResponse(state:any) {
     const serviceName = 'pendings';
     const forms = this.formHeader.value;

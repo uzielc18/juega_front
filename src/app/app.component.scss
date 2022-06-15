@@ -10,15 +10,15 @@
   max-width: 95vw;
   max-height: 95vh
 }
-// ::ng-deep nb-select.ng-invalid{ // campo requerido
-//   border-left: 3px solid #e74c3c !important;
-// }
-// ::ng-deep input .ng-invalid{
-//   border-left: 3px solid #e74c3c !important;
-// }
-// ::ng-deep select.ng-invalid{ // campo requerido
-//   border-left: 3px solid #e74c3c !important;
-// }
-// ::ng-deep textarea.ng-invalid{ // campo requerido
-//   border-left: 3px solid #e74c3c !important;
-// }
+::ng-deep nb-select.ng-invalid{ // campo requerido
+  border-left: 2px solid #e74c3c !important;
+}
+::ng-deep input.ng-invalid{
+  border-left: 2px solid #e74c3c !important;
+}
+::ng-deep select.ng-invalid{ // campo requerido
+  border-left: 2px solid #e74c3c !important;
+}
+::ng-deep textarea.ng-invalid{ // campo requerido
+  border-left: 2px solid #e74c3c !important;
+}
