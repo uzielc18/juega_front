@@ -54,12 +54,12 @@ export class MSemestersComponent implements OnInit {
   }
 
   saveSemester() {
-    const serviceName = 'semester';
+    const serviceName = 'semesters';
     const forms = this.FormSemestre.value;
     const params = {
       codigo: forms.codigo,
       nombre: forms.nombre,
-      decripcion: forms.decripcion,
+      descripcion: forms.descripcion,
       vigente: forms.vigente === true ? 1 : 0,
     };
     if (this.code === 'NEW') {

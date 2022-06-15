@@ -4,6 +4,7 @@ import {END_POINTS} from "../../../../providers/utils";
 import {NbDialogService} from "@nebular/theme";
 import {MSemestersComponent} from "../components/modals/m-semesters/m-semesters.component";
 import {MMenuMComponent} from "../../../manage/menus/components/modals/m-menu-m/m-menu-m.component";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-semesters-home',
@@ -50,6 +51,32 @@ export class SemestersHomeComponent implements OnInit {
       .onClose.subscribe(result => {
       if (result === 'ok') {
         this.getSemestres();
+      }
+    });
+  }
+  deleteSemester(item:any){
+    const serviceName = 'semesters'
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿ Desea eliminar ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#7f264a',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generService.deleteNameId$(serviceName, item.id).subscribe(r => {
+          if (r.success) {
+           this.getSemestres();
+          }
+        },() => {this.loading = false;},() => {this.loading = false;});
       }
     });
   }
