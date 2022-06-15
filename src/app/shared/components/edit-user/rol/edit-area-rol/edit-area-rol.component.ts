@@ -38,7 +38,7 @@ export class EditAreaRolComponent implements OnInit {
     const controls = {
       sede: ['', [Validators.required]],
       nivel_ensenanza: [{ value: '', disabled: true }, [Validators.required]],
-      facultad: [{ value: '', disabled: true }, [Validators.required]],
+      facultad: [{ value: '', disabled: true }],
       programa_estudio: [{ value: '', disabled: true }],
       rol: ['', [Validators.required]],
       predefinido: [true, [Validators.required]],
@@ -230,7 +230,7 @@ export class EditAreaRolComponent implements OnInit {
       role_id: this.formHeader.get('rol').value || 0,
       sede_id: this.formHeader.get('sede').value || 0,
       nivel_ensenanza_id: this.formHeader.get('nivel_ensenanza').value || 0,
-      area_id: this.formHeader.get('facultad').value || '',
+      area_id: this.formHeader.get('facultad').value || 0,
       programa_estudio_id: this.formHeader.get('programa_estudio').value || 0,
       predefinido: this.formHeader.get('predefinido').value ? '1' : '0',
       estado: this.formHeader.get('estado').value ? '1' : '0',
