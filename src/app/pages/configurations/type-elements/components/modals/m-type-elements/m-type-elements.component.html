@@ -17,9 +17,9 @@
         <div class="col-md-9">
           <form [formGroup]="FormTypeElements">
             <div class="row">
-              <label class="label col-md-3">Codigo:</label>
+              <label class="label col-md-3">Código:</label>
               <div class="col-md-9">
-                <input type="text" placeholder="Ingrese codigo" nbInput fieldSize="small" fullWidth formControlName="codigo">
+                <input type="text" class="codigo" maxlength="4" placeholder="Ingrese código" nbInput fieldSize="small" fullWidth formControlName="codigo">
               </div>
             </div>
             <br>
@@ -31,29 +31,85 @@
             </div>
             <br>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-7">
                 <div class="row">
-                  <label class="label col-md-6">Color active:</label>
-                  <div class="col-md-6">
-                    <input type="color" placeholder="Ingrese color active" nbInput fieldSize="small" fullWidth formControlName="color_active">
+                  <label class="label col-md-5">Background:</label>
+                  <div class="col-md-7">
+                    <input type="color" placeholder="Ingrese color-hex" nbInput fieldSize="small" fullWidth formControlName="background"
+                           [value]="FormTypeElements.value.background">
                   </div>
                 </div>
 
               </div>
-              <div class="col-md-6">
+              <div class="col-md-5">
                 <div class="row">
-                  <label class="label col-md-6">Color border:</label>
-                  <div class="col-md-6">
-                    <input type="color" placeholder="Ingrese color border" nbInput fieldSize="small" fullWidth formControlName="color_border">
+                  <div class="col-md-12">
+                    <input type="text"  placeholder="Ingrese color-hex" nbInput fieldSize="small" fullWidth formControlName="background"
+                           [value]="FormTypeElements.value.background">
                   </div>
                 </div>
               </div>
             </div>
             <br>
             <div class="row">
-              <label class="label col-md-3">Color hover:</label>
-              <div class="col-md-3">
-                <input type="color" placeholder="Ingrese color hove" nbInput fieldSize="small" fullWidth formControlName="color_hover">
+            <div class="col-md-7">
+              <div class="row">
+                <label class="label col-md-5">Color active:</label>
+                <div class="col-md-7">
+                  <input type="color" placeholder="Ingrese color active" nbInput fieldSize="small" fullWidth formControlName="color_active"
+                         [value]="FormTypeElements.value.color_active">
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-5">
+              <div class="row">
+                <div class="col-md-12">
+                  <input type="text"  placeholder="Ingrese color-hex" nbInput fieldSize="small" fullWidth formControlName="color_active"
+                         [value]="FormTypeElements.value.color_active">
+                </div>
+              </div>
+            </div>
+          </div>
+            <br>
+            <div class="row">
+              <div class="col-md-7">
+                <div class="row">
+                  <label class="label col-md-5">Color border:</label>
+                  <div class="col-md-7">
+                    <input type="color" placeholder="Ingrese color border" nbInput fieldSize="small" fullWidth formControlName="color_border"
+                           [value]="FormTypeElements.value.color_border">
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-5">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="text"  placeholder="Ingrese color-hex" nbInput fieldSize="small" fullWidth formControlName="color_border"
+                           [value]="FormTypeElements.value.color_border">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-7">
+                <div class="row">
+                  <label class="label col-md-5">Color hover:</label>
+                  <div class="col-md-7">
+                    <input type="color" placeholder="Ingrese color active" nbInput fieldSize="small" fullWidth formControlName="color_hover"
+                           [value]="FormTypeElements.value.color_hover">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="text"  placeholder="Ingrese color-hex" nbInput fieldSize="small" fullWidth formControlName="color_hover"
+                           [value]="FormTypeElements.value.color_hover">
+                  </div>
+                </div>
               </div>
             </div>
             <br>
@@ -65,9 +121,9 @@
             </div>
             <br>
             <div class="row">
-              <label class="label col-md-3">Icono font size:</label>
+              <label class="label col-md-3">Tamaño de Icono:</label>
               <div class="col-md-9">
-                <input type="text" placeholder="Ingrese tamaño del icono" nbInput fieldSize="small" fullWidth formControlName="icono_font_size">
+                <input type="number" placeholder="Ingrese tamaño del icono" nbInput fieldSize="small" fullWidth formControlName="icono_font_size">
               </div>
             </div>
           </form>

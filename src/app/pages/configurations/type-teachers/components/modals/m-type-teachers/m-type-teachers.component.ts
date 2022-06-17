@@ -24,7 +24,7 @@ export class MTypeTeachersComponent implements OnInit {
   }
   private fieldsReactive(){
     const controls = {
-      codigo: ['', [Validators.required]],
+      codigo: ['', [Validators.required,Validators.maxLength(4)]],
       nombre: ['', [Validators.required]],
       accion: ['', Validators.required],
     }
@@ -44,10 +44,10 @@ export class MTypeTeachersComponent implements OnInit {
     this.activeModal.close('close')
   }
   saveTypeTeacher(){
-    const serviceName = 'semesters';
+    const serviceName = 'typeTeachers';
     const forms = this.FormTypeTeacher.value;
     const params = {
-      codigo: forms.codigo,
+      codigo: forms.codigo.toUpperCase(),
       nombre: forms.nombre,
       accion: forms.accion,
       userid: this.userInfo.id

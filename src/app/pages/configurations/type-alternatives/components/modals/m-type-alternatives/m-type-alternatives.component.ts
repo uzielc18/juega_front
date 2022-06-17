@@ -25,7 +25,7 @@ export class MTypeAlternativesComponent implements OnInit {
   private fielsReactive(){
     const controls = {
       nombre: ['', [Validators.required]],
-      codigo: ['', [Validators.required]],
+      codigo: ['', [Validators.required, Validators.maxLength(4)]],
     };
 
     this.FormTypeAlternatives = this.fb.group(controls)
@@ -47,7 +47,7 @@ export class MTypeAlternativesComponent implements OnInit {
    const forms = this.FormTypeAlternatives.value
    const params ={
       nombre: forms.nombre,
-      codigo: forms.codigo
+      codigo: forms.codigo.toUpperCase()
    };
    if(this.code ==='NEW'){
      this.loading = true

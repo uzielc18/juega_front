@@ -3,3 +3,12 @@
   max-height: 95vh;
   width: 800px;
 }
+.codigo{
+  text-transform: uppercase;
+}
+.codigo::placeholder{
+  text-transform: lowercase;
+}
+::placeholder:first-letter{
+  text-transform: uppercase;
+}

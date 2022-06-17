@@ -25,7 +25,7 @@ export class MCoursesTypesComponent implements OnInit {
   private fieldsReactive(){
     const controls = {
       nombre: ['', [Validators.required]],
-      codigo: ['', [Validators.required]]
+      codigo: ['', [Validators.required,Validators.maxLength(4)]]
     };
     this.FormCourseTypes = this.fb.group(controls)
 
@@ -46,7 +46,7 @@ export class MCoursesTypesComponent implements OnInit {
     const serviceName = 'coursesTypes';
     const forms = this.FormCourseTypes.value;
     const params = {
-      codigo: forms.codigo,
+      codigo: forms.codigo.toUpperCase(),
       nombre: forms.nombre,
     };
     if (this.code === 'NEW') {

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NbDialogRef} from "@nebular/theme";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneralService} from "../../../../../../providers";
 
 @Component({
@@ -13,6 +13,7 @@ export class MTypeElementsComponent implements OnInit {
   loading:boolean = false
   FormTypeElements: any = FormGroup
   defaultIcon:any = 'info-outline';
+  //color_active2 = new FormControl('')
   @Input() item: any;
   @Input() code: any;
   @Input() userInfo: any;
@@ -26,11 +27,12 @@ export class MTypeElementsComponent implements OnInit {
 
   private fielsReactive() {
     const controls = {
-      codigo: ['',[Validators.required]],
+      codigo: ['',[Validators.required, Validators.maxLength(4)]],
       nombre: ['',[Validators.required]],
-      color_active: ['',[Validators.required]],
-      color_border: ['',[Validators.required]],
-      color_hover: ['',[Validators.required]],
+      color_active: ['#000',[Validators.required]],
+      background: ['#000',[Validators.required]],
+      color_border: ['#000',[Validators.required]],
+      color_hover: ['#000',[Validators.required]],
       icono: ['',[Validators.required]],
       icono_font_size: ['',[Validators.required]],
     };
@@ -44,6 +46,7 @@ export class MTypeElementsComponent implements OnInit {
     this.FormTypeElements.patchValue({
       codigo: this.item.codigo,
       nombre: this.item.nombre,
+      background: this.item.background,
       color_active: this.item.color_active,
       color_border: this.item.color_border,
       color_hover: this.item.color_border,
@@ -52,14 +55,15 @@ export class MTypeElementsComponent implements OnInit {
     })
   }
   closeModal(){
-    this.activeModal.close('close')
+    this.activeModal.close('close');
   }
   saveTypeElements(){
     const serviceName = 'typeElements';
     const forms = this.FormTypeElements.value;
     const params = {
-      codigo: forms.codigo,
-      nombre: forms.nombre,
+      codigo: forms.codigo.toUpperCase(),
+      nombre: forms.nombre.toUpperCase(),
+      background: forms.background,
       color_active: forms.color_active,
       color_border: forms.color_border,
       color_hover: forms.color_border,

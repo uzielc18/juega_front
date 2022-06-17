@@ -13,27 +13,27 @@ const routes: Routes = [
           .then(m => m.SemestersModule)
       },
       {
-        path: 'coursesTypes',
+        path: 'courses-types',
         loadChildren: () => import('src/app/pages/configurations/courses-types/courses-types.module')
           .then(m => m.CoursesTypesModule)
       },
       {
-        path: 'typeAlternatives',
+        path: 'type-alternatives',
         loadChildren: () => import('src/app/pages/configurations/type-alternatives/type-alternatives.module')
           .then(m => m.TypeAlternativesModule)
       },
       {
-        path: 'typeElements',
+        path: 'type-elements',
         loadChildren: () => import('src/app/pages/configurations/type-elements/type-elements.module')
           .then(m => m.TypeElementsModule)
       },
       {
-        path: 'typeRatings',
+        path: 'type-ratings',
         loadChildren: () => import('src/app/pages/configurations/type-ratings/type-ratings.module')
           .then(m => m.TypeRatingsModule)
       },
       {
-        path: 'typeTeachers',
+        path: 'type-teachers',
         loadChildren: () => import('src/app/pages/configurations/type-teachers/type-teachers.module')
           .then(m => m.TypeTeachersModule)
       }

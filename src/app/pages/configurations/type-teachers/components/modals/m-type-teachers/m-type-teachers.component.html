@@ -2,7 +2,7 @@
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
-        {{code === 'NEW' ? 'NUEVO SEMESTRE': 'EDITAR SEMESTRE'}}
+        {{code === 'NEW' ? 'NUEVO': 'EDITAR'}}
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
@@ -19,6 +19,8 @@
               type="text"
               nbInput
               fullWidth
+              class="codigo"
+              maxlength="4"
               formControlName="codigo"
               fieldSize="small"
               placeholder="Ingrese código"
@@ -42,7 +44,7 @@
         </div>
         <br>
         <div class="row">
-          <label class="label col-md-3 d-flex align-items-center">Accion:</label>
+          <label class="label col-md-3 d-flex align-items-center">Acción:</label>
           <div class="col-md-9">
             <input
               type="text"
@@ -50,7 +52,7 @@
               fullWidth
               formControlName="accion"
               fieldSize="small"
-              placeholder="Ingrese accion"
+              placeholder="Ingrese acción"
             />
           </div>
         </div>

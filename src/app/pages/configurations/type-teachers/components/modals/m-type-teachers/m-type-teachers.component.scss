@@ -3,3 +3,9 @@
   max-height: 95vh;
   width: 800px;
 }
+.codigo{
+  text-transform: uppercase;
+}
+::placeholder{
+  text-transform: lowercase;
+}
