@@ -22,3 +22,8 @@
 ::ng-deep textarea.ng-invalid{ // campo requerido
   border-left: 2px solid #e74c3c !important;
 }
+::ng-deep .dropdown-item.active, .dropdown-item:active { // color autocomplete
+  background: var(--color-primary-500);
+  color: white;
+  font-size: 12px !important;
+}

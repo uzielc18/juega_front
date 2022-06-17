@@ -52,7 +52,6 @@ export class CourseHomeComponent implements OnInit {
     } else {
       return '';
     }
-
   }
   getSemester() {
     const serviceName = 'semesters';
@@ -67,16 +66,19 @@ export class CourseHomeComponent implements OnInit {
   getProgramStudy() {
     const serviceName = 'list-programa-estudios';
     const ids = {
-      nivel_ensenanza_id: this.rolSemestre.area.nivel_ensenanza_id || '',
-      sede_id: this.rolSemestre.area.sede_id || '',
-      area_id: this.rolSemestre.area.area_id || '',
+      nivel_ensenanza_id: this.rolSemestre.area.nivel_ensenanza_id,
+      sede_id: this.rolSemestre.area.sede_id,
+      area_id: this.rolSemestre.area.area_id,
     };
-    if (ids && ids.nivel_ensenanza_id && ids.sede_id && ids.area_id) {
-      this.generalServi.nameIdAndIdAndId$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id).subscribe((res:any) => {
+    const params = {
+      programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
+    }
+    if (ids && ids.sede_id && ids.nivel_ensenanza_id) {
+      this.generalServi.nameIdAndIdAndIdParams$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id, params).subscribe((res:any) => {
         this.litProgramStudy = res.data || [];
         if (this.litProgramStudy.length>0) {
           this.litProgramStudy.map((r:any) => {
-            r.name_programa_estudio = r.nombre_corto + ' ' + (r.sede_nombre ? r.sede_nombre : '');
+            r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');
             if (r.semiprecencial_nombre) {
               r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
             }
@@ -164,7 +166,8 @@ export class CourseHomeComponent implements OnInit {
       dialogClass: 'dialog-limited-height',
       context: {
         userInfo: this.appUserInfo.user,
-
+        semestre: this.semestrers.find((r:any) => r.id === Number(this.formHeader.value.semester)),
+        rolSemestre: this.rolSemestre,
       },
       closeOnBackdropClick: false,
       closeOnEsc: false

@@ -6,7 +6,7 @@ import { ControlMessagesModule } from 'src/app/shared/components/control-message
 import { GeneralService } from 'src/app/providers';
 import { CourseComponent } from './course.component';
 import { CourseHomeComponent } from './containers/course-home.component';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { MMatricularComponent } from './components/modals/m-matricular/m-matricular.component';
 import { NbStepperModule, NbTagModule } from '@nebular/theme';
 import { MCourseFreeComponent } from './components/modals/m-course-free/m-course-free.component';
@@ -27,7 +27,8 @@ const NG_MODULES: any = [
   NbStepperModule
 ];
 const NGB_MODULES: any = [
-  NgbPaginationModule
+  NgbPaginationModule,
+  NgbTypeaheadModule
 ];
 const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,

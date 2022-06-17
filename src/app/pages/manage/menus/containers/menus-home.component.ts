@@ -3,6 +3,8 @@ import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { MMenuMComponent } from '../components/modals/m-menu-m/m-menu-m.component';
 import Swal from 'sweetalert2';
+import { AppService } from 'src/app/core';
+import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 @Component({
   selector: 'app-menus-home',
   templateUrl: './menus-home.component.html',
@@ -11,10 +13,19 @@ import Swal from 'sweetalert2';
 export class MenusHomeComponent implements OnInit {
   loading:boolean = false;
   list:any = [];
-  constructor( private dialogService: NbDialogService, private generalService: GeneralService) { }
+  constructor( private dialogService: NbDialogService, private generalService: GeneralService, public emitEventsService: EmitEventsService) { }
 
   ngOnInit(): void {
-    this.getMenus();
+    this.getMenusComp();
+  }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol){
+      return val;
+    } else {
+      return '';
+    }
   }
   opemMenus(nivel:any, item:any, code:any) {
     this.dialogService
@@ -30,14 +41,15 @@ export class MenusHomeComponent implements OnInit {
       })
       .onClose.subscribe(result => {
         if (result === 'ok') {
-          this.getMenus();
+          this.getMenusComp();
+          this.emitEventsService.reloadMenuEmit(true);
         }
       });
   }
   refrehsss() {
-    this.getMenus();
+    this.getMenusComp();
   }
-  getMenus() {
+  getMenusComp() {
     const serviceName = 'list-menus';
     this.loading = true;
     this.generalService.nameId$(serviceName, 0).subscribe((res:any) => {
@@ -63,7 +75,8 @@ export class MenusHomeComponent implements OnInit {
         if (result.isConfirmed) {
           this.generalService.deleteNameId$(serviceName, item.id).subscribe((res:any) => {
             if (res.success) {
-              this.getMenus();
+              this.getMenusComp();
+              this.emitEventsService.reloadMenuEmit(true);
             }
            });
           }
