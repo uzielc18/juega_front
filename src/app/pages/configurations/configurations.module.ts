@@ -7,7 +7,7 @@ import { ConfigurationsComponent } from './configurations.component';
 
 @NgModule({
   declarations: [
-    ConfigurationsComponent
+    ConfigurationsComponent,
   ],
   imports: [
     CommonModule,

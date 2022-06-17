@@ -10,7 +10,7 @@
     </div>
   </nb-card-header>
   <nb-card-body class="text-center" >
-    <form [formGroup]="FormSemestre">
+    <form [formGroup]="FormTypeTeacher">
       <div class="p-4">
         <div class="row">
           <label class="label col-md-3 d-flex align-items-center">Código:</label>
@@ -42,27 +42,19 @@
         </div>
         <br>
         <div class="row">
-          <label class="label col-md-3 d-flex align-items-center">Descripción:</label>
+          <label class="label col-md-3 d-flex align-items-center">Accion:</label>
           <div class="col-md-9">
             <input
               type="text"
               nbInput
               fullWidth
-              formControlName="descripcion"
+              formControlName="accion"
               fieldSize="small"
-              placeholder="Ingrese descripción"
+              placeholder="Ingrese accion"
             />
           </div>
         </div>
         <br>
-        <div class="row">
-          <label class="label col-md-3 d-flex align-items-center">Vigente:</label>
-          <div class="col-md-9">
-            <div class="d-flex justify-start">
-              <nb-toggle formControlName="vigente"></nb-toggle>
-            </div>
-          </div>
-        </div>
       </div>
     </form>
   </nb-card-body>
@@ -74,8 +66,8 @@
       nbButton
       size="small"
       status="primary"
-      (click)="saveSemester()"
-      [disabled] = "FormSemestre.invalid">
+      (click)="saveTypeTeacher()"
+      [disabled] = "FormTypeTeacher.invalid">
       Guardar
     </button>
   </nb-card-footer>
