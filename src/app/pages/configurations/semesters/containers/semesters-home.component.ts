@@ -27,7 +27,6 @@ export class SemestersHomeComponent implements OnInit {
     const serviceName = END_POINTS.base_back.semesters
     this.generService.nameAll$(serviceName).subscribe(resp => {
       this.semesters = resp.data
-      console.log(this.semesters)
     },
       () => {
         this.loading = false;
