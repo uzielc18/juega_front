@@ -50,7 +50,8 @@ export class MTypeTeachersComponent implements OnInit {
       codigo: forms.codigo.toUpperCase(),
       nombre: forms.nombre,
       accion: forms.accion,
-      userid: this.userInfo.id
+      userid: this.userInfo.id,
+      id_tipo_docente: "0"
 
     };
     if (this.code === 'NEW') {
