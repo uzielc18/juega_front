@@ -1,21 +1,21 @@
 <nb-card class="h-100 border-0"
-        style="border-radius: 15px"
+         style="border-radius: 15px"
          [nbSpinner]="loading"
          nbSpinnerStatus="primary"
          nbSpinnerSize="small">
   <nb-card-header>
     <div class="d-flex">
       <nb-icon icon="bookmark-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
-      <strong style="padding-top: 7px;">SEMESTRES</strong>
+      <strong style="padding-top: 7px;">Tipo Alternativa</strong>
     </div>
   </nb-card-header>
   <nb-card-body class="pb-0 d-flex flex-column">
     <button
       class="ms-auto"
       nbButton
-      (click)="openSemesters('', 'NEW')"
+      (click)="opentypeAlternatives('', 'NEW')"
       status="primary"
-      nbTooltip="Nuevo Semestre"
+      nbTooltip="Nuevo tipo alternativa"
       size="small">
       <nb-icon icon="plus"></nb-icon>Crear</button>
 
@@ -25,20 +25,16 @@
         <tr style="font-size: 12px;">
           <th>Código</th>
           <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Vigente</th>
           <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
-        <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let item of semesters">
+        <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let item of typeAlernativesData">
           <td>{{item.codigo}}</td>
           <td>{{item.nombre}}</td>
-          <td>{{item.descripcion}}</td>
-          <td>{{item.vigente}}</td>
           <td class="text-center" style="width: 1px; vertical-align: middle;">
-            <nb-icon  icon="edit" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openSemesters(item, 'UPDATE')"></nb-icon>
-            <nb-icon  icon="trash-2-outline" status="danger" style="font-size: 25px; cursor: pointer;" (click)="deleteSemester(item)"></nb-icon>
+            <nb-icon  icon="edit" status="primary" style="font-size: 25px; cursor: pointer;" (click)="opentypeAlternatives(item, 'UPDATE')"></nb-icon>
+            <nb-icon  icon="trash-2-outline" status="danger" style="font-size: 25px; cursor: pointer;" (click)="deleteTypeAlternatives(item)"></nb-icon>
           </td>
         </tr>
         </tbody>
