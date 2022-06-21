@@ -2,7 +2,7 @@
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
-        {{code === 'NEW' ? 'NUEVO SEMESTRE': 'EDITAR SEMESTRE'}}
+        {{code === 'UPDATE' ? 'ACTUALIZAR' : 'NUEVO'}}
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
@@ -10,7 +10,7 @@
     </div>
   </nb-card-header>
   <nb-card-body class="text-center" >
-    <form [formGroup]="FormSemestre">
+    <form [formGroup]="FormCourseTypes">
       <div class="p-4">
         <div class="row">
           <label class="label col-md-3 d-flex align-items-center">Código:</label>
@@ -19,10 +19,11 @@
               type="text"
               nbInput
               fullWidth
+              class="codigo"
+              maxlength="4"
               formControlName="codigo"
               fieldSize="small"
               placeholder="Ingrese código"
-
             />
           </div>
         </div>
@@ -41,28 +42,6 @@
           </div>
         </div>
         <br>
-        <div class="row">
-          <label class="label col-md-3 d-flex align-items-center">Descripción:</label>
-          <div class="col-md-9">
-            <input
-              type="text"
-              nbInput
-              fullWidth
-              formControlName="descripcion"
-              fieldSize="small"
-              placeholder="Ingrese descripción"
-            />
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <label class="label col-md-3 d-flex align-items-center">Vigente:</label>
-          <div class="col-md-9">
-            <div class="d-flex justify-start">
-              <nb-toggle formControlName="vigente"></nb-toggle>
-            </div>
-          </div>
-        </div>
       </div>
     </form>
   </nb-card-body>
@@ -74,8 +53,8 @@
       nbButton
       size="small"
       status="primary"
-      (click)="saveSemester()"
-      [disabled] = "FormSemestre.invalid">
+      (click)="saveCourseTypes()"
+      [disabled] = "FormCourseTypes.invalid">
       Guardar
     </button>
   </nb-card-footer>
