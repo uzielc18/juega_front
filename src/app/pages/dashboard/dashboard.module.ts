@@ -23,6 +23,7 @@ const NG_MODULES: any = [
 ];
 const NGB_MODULES: any = [
   // NgbModule
+  NgbCarouselModule,
 ];
 const CONTROL_MESSAGGE: any = [
 ];
@@ -32,7 +33,6 @@ const SERVICES: any = [
 const MODALS: any = [
 ];
 const NGX_MODULES: any = [
-  NgbCarouselModule
 ];
 const PIPES: any = [
 ];

@@ -83,7 +83,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       id: 3,
     },
   ];
-
+  subcrActuMenu: any = Subscription;
   constructor(
     private nbTokenService: NbTokenService,
     private sidebarService: NbSidebarService,
@@ -241,6 +241,14 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         }, 1000);
       }
     });
+
+    this.subcrActuMenu = this.emitEventsService.reloadMenuResponse().subscribe(value => { // carga desde el acceso de creación de menus
+      if (value) {
+        setTimeout(() => {
+          this.reloadMenu();
+        }, 1000);
+      }
+    });
   }
 
   private fieldReactive() {
@@ -290,6 +298,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
     this.subcript.unsubscribe();
+    this.subcrActuMenu.unsubscribe();
   }
 
   open() {
@@ -414,8 +423,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
             this.emitEventsService.asingDatos(this.paramsSessionStorage);
 
             if(this.formHeader.value.cambioRol === '2') {
-              this.MENU_ITEMS = [];
-              this.appService.getMenus(this.formHeader.value.id_rol);
+              this.reloadMenu();
             }
             if (data && data.data && !data.data.url_valid) {
               this.router.navigate([`/pages/not-found`]);
@@ -437,6 +445,10 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+  reloadMenu() {
+    this.MENU_ITEMS = [];
+    this.appService.getMenus(this.formHeader.value.id_rol);
   }
   validUrlRouter(url:any) {
     const newStr = url.slice(1);

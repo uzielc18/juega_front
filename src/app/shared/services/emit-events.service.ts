@@ -16,6 +16,8 @@ export class EmitEventsService {
 
   profile$ = new Subject<boolean>();
 
+  actMenu$ = new Subject<boolean>();
+
   constructor() {}
   asingDatos(newUser: any) {
     this.rolSemester.next(newUser);
@@ -52,5 +54,12 @@ export class EmitEventsService {
 
   profileInfoReturns(): Observable<any> {
     return this.profile$.asObservable();
+  }
+
+  reloadMenuEmit(value: boolean) {
+    this.actMenu$.next(value);
+  }
+  reloadMenuResponse(): Observable<any> {
+    return this.actMenu$.asObservable();
   }
 }

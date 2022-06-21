@@ -3,7 +3,7 @@
     <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
         <div class=" d-flex align-items-center justify-content-between">
             <div>
-                CURSOS LIBRES
+                CURSOS LIBRES - {{semestre?.nombre}}
             </div>
             <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
                 <span aria-hidden="true">&times;</span>
@@ -12,8 +12,7 @@
     </nb-card-header>
     <nb-card-body style="padding-right: 35px; padding-left: 35px;">
         <nb-stepper orientation="horizontal" (stepChange)="changeSteps($event)" #stepper disableStepNavigation>
-            <!-- <nb-step label="Datos del curso" [stepControl]="formHeaderOne" #one> -->
-                <nb-step label="Datos del curso" #one>
+            <nb-step label="Datos del curso" [stepControl]="formHeaderOne" #one>
                 <form [formGroup]="formHeaderOne">
                     <div class="row" style="padding-left: 0px; padding-right: 0px;">
                         <div class="col-md-6">
@@ -21,7 +20,7 @@
                                 <label class="col-md-4 label">Tipo de curso:</label>
                                 <div class="col-md-8">
                                     <nb-select fullWidth placeholder="Seleccione tipo" size="small" formControlName="id_tipo_curso">
-                                        <nb-option value="1">Todos</nb-option>
+                                        <nb-option *ngFor="let item of typeCourse" [value]="item.id">{{item.nombre}}</nb-option>
                                     </nb-select>
                                 </div>
                             </div>
@@ -31,7 +30,7 @@
                                 <label class="col-md-4 label">Programa de estudio:</label>
                                 <div class="col-md-8">
                                     <nb-select fullWidth placeholder="Seleccione programa" size="small" formControlName="id_programa_estudio">
-                                        <nb-option value="1">Todos</nb-option>
+                                        <nb-option *ngFor="let item of litProgramStudy" [value]="item.id">{{item.name_programa_estudio}}</nb-option>
                                     </nb-select>
                                 </div>
                             </div>
@@ -51,9 +50,25 @@
                             <div class="row">
                                 <label class="col-md-4 label">Docente:</label>
                                 <div class="col-md-8">
-                                    <nb-select fullWidth placeholder="Seleccione docente" size="small" formControlName="id_docente">
-                                        <nb-option value="1">Todos</nb-option>
-                                    </nb-select>
+                                <nb-form-field>
+                                    <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+                                    <input
+                                    formControlName="nombre_docente"
+                                    nbInput
+                                    fullWidth
+                                    fieldSize="small"
+                                    type="text"
+                                    placeholder="Buscar mínimo 3 dígitos, nombre, dni o código"
+                                    [nbAutocomplete]="auto"
+                                    (input)="inputKeyAutocomplete($event)"/>
+                                </nb-form-field>
+                                <nb-autocomplete #auto size="small">
+                                    <nb-option *ngFor="let option of filteredOptions$" [value]="option.nombres_completos" (click)="changeAutocomplete(option)" 
+                                    [ngStyle]="colorAutocompleteSelect(option)">
+                                        {{ option.nombres_completos }} - {{ option.codigo }}
+                                    </nb-option>
+                                </nb-autocomplete>
+                                <span *ngIf="formHeaderOne.hasError('required', ['id_docente'])" style="font-size: 10px; color: brown;">Campo requerido</span>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +88,7 @@
                                 <label class="col-md-4 label">Idioma:</label>
                                 <div class="col-md-8">
                                     <nb-select fullWidth placeholder="Seleccione idioma" size="small" formControlName="id_idioma">
-                                        <nb-option value="1">Todos</nb-option>
+                                        <nb-option *ngFor="let item of idiomas" [value]="item.code"><img [src]="item?.img" height="20px" alt="" />&nbsp;&nbsp; {{item.name}}</nb-option>
                                     </nb-select>
                                 </div>
                             </div>
@@ -86,7 +101,7 @@
                                 <label class="col-md-4 label">Ciclo:</label>
                                 <div class="col-md-8">
                                     <nb-select fullWidth placeholder="Seleccione ciclo" size="small" formControlName="ciclo">
-                                        <nb-option value="1">Todos</nb-option>
+                                        <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{item.ciclo}}</nb-option>
                                     </nb-select>
                                 </div>
                             </div>
@@ -114,7 +129,7 @@
                             <div class="row">
                                 <label class="col-md-4 label">Grupo:</label>
                                 <div class="col-md-8">
-                                    <input type="number" placeholder="Ingrese grupo" fullWidth fieldSize="small" formControlName="grupo" nbInput>
+                                    <input type="text" placeholder="Ingrese grupo" fullWidth fieldSize="small" formControlName="grupo" nbInput>
                                 </div>
                             </div>
                         </div>
@@ -130,13 +145,14 @@
                                             [nbDatepicker]="fechaInicio" fieldSize="small" formControlName="fecha_inicio"/>
                                         <nb-icon nbSuffix icon="calendar" status="primary" size="small"
                                             pack="eva"></nb-icon>
-                                        <nb-datepicker #fechaInicio format="dd/MM/yyyy">
+                                        <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min">
                                         </nb-datepicker>
                                     </nb-form-field>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <fieldset [disabled]="!formHeaderOne.value.fecha_inicio">
                             <div class="row">
                                 <label class="col-md-4 label">Fecha fin:</label>
                                 <div class="col-md-8">
@@ -145,11 +161,12 @@
                                             [nbDatepicker]="fechaFin" fieldSize="small" formControlName="fecha_fin"/>
                                         <nb-icon nbSuffix icon="calendar" status="primary" size="small"
                                             pack="eva"></nb-icon>
-                                        <nb-datepicker #fechaFin format="dd/MM/yyyy">
+                                        <nb-datepicker #fechaFin format="dd/MM/yyyy" [min]="formHeaderOne.value.fecha_inicio">
                                         </nb-datepicker>
                                     </nb-form-field>
                                 </div>
                             </div>
+                        </fieldset>
                         </div>
                     </div>
                     <br>
@@ -158,8 +175,8 @@
                             <div class="row">
                                 <label class="col-md-4 label">Tipo nota:</label>
                                 <div class="col-md-8">
-                                    <nb-select fullWidth placeholder="Seleccione tipo" size="small" formControlName="tipo_nota">
-                                        <nb-option value="1">Todos</nb-option>
+                                    <nb-select fullWidth placeholder="Seleccione tipo" size="small" formControlName="tipo_nota" (selectedChange)="changeTipoNota($event)">
+                                        <nb-option *ngFor="let item of tipoNota" [value]="item.value">{{item.nombre}}</nb-option>
                                     </nb-select>
                                 </div>
                             </div>
@@ -170,10 +187,12 @@
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="number" placeholder="Mínimo" fullWidth fieldSize="small" formControlName="nota_min" nbInput>
+                                            <input type="number" placeholder="Mínimo" fullWidth fieldSize="small" formControlName="nota_min" nbInput 
+                                            [readonly]="formHeaderOne.value.tipo_nota === 'CUALITATIVA'">
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="number" placeholder="Máximo" fullWidth fieldSize="small" formControlName="nota_max" nbInput>
+                                            <input type="number" placeholder="Máximo" fullWidth fieldSize="small" formControlName="nota_max" nbInput
+                                            [readonly]="formHeaderOne.value.tipo_nota === 'CUALITATIVA'">
                                         </div>
                                     </div>
                                 </div>
@@ -191,12 +210,10 @@
                   <hr>
                   <div style="text-align: right;">
                     <!-- <button nbButton nbStepperNext>Siguiente</button> -->
-                    <button nbButton (click)="nextPasoOne(stepper, one)"  status="primary" size="small">Siguiente <nb-icon icon="arrow-forward-outline"></nb-icon></button>
-                    <!-- <button nbButton (click)="nextPasoOne(stepper, one)" [disabled]="formHeaderOne.invalid" status="primary">Siguiente</button> -->
+                    <button nbButton (click)="nextPasoOne(stepper, one)"  status="primary" size="small" [disabled]="formHeaderOne.invalid">Siguiente <nb-icon icon="arrow-forward-outline"></nb-icon></button>
                     </div>
             </nb-step>
-                <nb-step label="Datos del curso" [stepControl]="formHeaderTo" #to>
-            <!-- <nb-step label="Información adicional" #to> -->
+            <nb-step label="Información adicional" [stepControl]="formHeaderTo" #to>
                 <form [formGroup]="formHeaderTo">
                     <div class="row" style="padding-left: 0px; padding-right: 0px;">
                         <div class="col-md-3">
@@ -270,8 +287,8 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <label class="col-md-4 label">Url inscripción:</label>
-                                <div class="col-md-8">
-                                   sllslslssasaassa
+                                <div class="col-md-8" style="font-size: 10px;">
+                                   {{formHeaderTo.value.url_inscripcion}}
                                 </div>
                             </div>
                         </div>
@@ -333,6 +350,7 @@
                                     </lamb-prepare-file-pro>
                                     <div style="text-align: right; font-size: 11px;" *ngIf="formHeaderTo.value.file_silabo">
                                         {{formHeaderTo.value.file_silabo}}&nbsp;&nbsp;
+                                        <nb-icon icon="eye-outline" (click)="viewFileDoc(formHeaderTo.value.file_silabo, directorioSilabo)" style="cursor: pointer;" status="success"></nb-icon>&nbsp;
                                         <nb-icon icon="trash" (click)="clearFileSilabo()" style="cursor: pointer;" status="danger"></nb-icon>
                                     </div>
                                 </div>
@@ -357,6 +375,7 @@
                                     </lamb-prepare-file-pro>
                                     <div style="text-align: right; font-size: 11px;" *ngIf="formHeaderTo.value.file_guia_curso">
                                         {{formHeaderTo.value.file_guia_curso}}&nbsp;&nbsp;
+                                        <nb-icon icon="eye-outline" (click)="viewFileDoc(formHeaderTo.value.file_guia_curso, directorioGuiaEst)" style="cursor: pointer;" status="success"></nb-icon>&nbsp;
                                         <nb-icon icon="trash" (click)="clearFileGuia()" style="cursor: pointer;" status="danger"></nb-icon>
                                     </div>
                                 </div>
@@ -367,7 +386,7 @@
                     <div class="row">
                         <label class="col-md-2 label">Url video introducción:</label>
                         <div class="col-md-10">
-                            <input type="number" placeholder="Ingrese url" fullWidth fieldSize="small" formControlName="url_video_intro" nbInput maxlength="250">
+                            <input type="text" placeholder="Ingrese url" fullWidth fieldSize="small" formControlName="url_video_intro" nbInput maxlength="250">
                         </div>
                     </div>
                     <br>
@@ -376,7 +395,8 @@
                             <div class="row">
                                 <label class="col-md-3 label">Portada:</label>
                                 <div class="col-md-9">
-                                    <img [src]="formHeaderTo.value.file_portada_url_base64 || 'https://fondosmil.com/fondo/20736.png'" alt="" width="100%" height="120px">
+                                    <img [src]="formHeaderTo.value.file_portada_url_base64 || 'https://static.vecteezy.com/system/resources/previews/005/081/831/non_2x/banner-abstract-geometric-white-and-gray-color-background-illustration-free-vector.jpg'" 
+                                    alt="" width="100%" height="120px">
                                     <div style="text-align: right;" *ngIf="!formHeaderTo.value.file_portada">
                                         <button nbButton size="small" status="basic" (click)="openRecortePortadaMin('portada')">
                                             Añadir
@@ -393,7 +413,8 @@
                             <div class="row">
                                 <label class="col-md-4 label">Míniatura:</label>
                                 <div class="col-md-8">
-                                    <img [src]="formHeaderTo.value.file_miniatura_url_base64 || 'https://fondosmil.com/fondo/20736.png'" alt="" width="100%" height="120px">
+                                    <img [src]="formHeaderTo.value.file_miniatura_url_base64 || 'https://static.vecteezy.com/system/resources/previews/005/081/831/non_2x/banner-abstract-geometric-white-and-gray-color-background-illustration-free-vector.jpg'"
+                                     alt="" width="100%" height="120px">
                                     <div style="text-align: right;" *ngIf="!formHeaderTo.value.file_miniatura">
                                         <button nbButton size="small" status="basic" (click)="openRecortePortadaMin('miniatura')">
                                             Añadir
@@ -410,21 +431,49 @@
                 </form>
                 <hr>
                 <div style="text-align: right;">
-                    <button nbButton (click)="backPasoTo(stepper, to)"  status="basic" size="small"><nb-icon icon="arrow-back-outline"></nb-icon> Atras</button>&nbsp;
-                    <button nbButton (click)="nextPasoTo(stepper, to)"  status="primary" size="small">Siguiente <nb-icon icon="arrow-forward-outline"></nb-icon></button>
+                    <button nbButton (click)="backPasoTo(stepper, to)"  status="basic" size="small"><nb-icon icon="arrow-back-outline"></nb-icon> Atrás</button>&nbsp;
+                    <button nbButton (click)="nextPasoTo(stepper, to)"  status="primary" size="small" [disabled]="formHeaderTo.invalid">Siguiente <nb-icon icon="arrow-forward-outline"></nb-icon></button>
                     <!-- <button nbButton nbStepperPrevious>prev</button>
                     <button nbButton nbStepperNext>next</button> -->
                 </div>
             </nb-step>
-            <nb-step label="Publicar">
-                    step content here
-                    <button nbButton nbStepperPrevious>prev</button>
-                    <button nbButton nbStepperNext>next</button>
+            <nb-step label="Publicar" [stepControl]="formHeaderThree" #three>
+                <form [formGroup]="formHeaderThree">
+                    <div>
+                        <img [src]="formHeaderTo.value.file_portada_url_base64 || 'https://static.vecteezy.com/system/resources/previews/005/081/831/non_2x/banner-abstract-geometric-white-and-gray-color-background-illustration-free-vector.jpg'" alt="" height="180px" width="100%">
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img [src]="formHeaderTo.value.file_miniatura_url_base64 || 'https://static.vecteezy.com/system/resources/previews/005/081/831/non_2x/banner-abstract-geometric-white-and-gray-color-background-illustration-free-vector.jpg'" alt="" height="180px" width="100%">
+                            <strong style="font-size: 11px;">{{formHeaderOne.value.nombre}}</strong>
+                        </div>
+                        <div class="col-md-6">
+                            <p style="text-align: justify;">{{formHeaderOne.value.descripcion}}</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: right;">
+                        <nb-toggle formControlName="publicar">Publicar</nb-toggle>
+                    </div>
+                </form>
+                <hr>
+                <div style="text-align: right;">
+                    <button nbButton (click)="backPasoThree(stepper, three)"  status="basic" size="small"><nb-icon icon="arrow-back-outline"></nb-icon> Atrás</button>&nbsp;
+                    <button nbButton (click)="nextPasoThree(stepper, three)" status="primary" size="small">Finalizar <nb-icon icon="arrow-forward-outline"></nb-icon></button>
+                </div>
             </nb-step>
-            <nb-step  [hidden]="true" label="Third step">
-                <div class="step-container">
-                  <h3>Wizard completed!</h3>
-                  <button nbButton (click)="stepper.reset()">Try again</button>
+            <nb-step  [hidden]="true" label="Fin" #finish>
+                <div class="text-center">
+                  <h3>Curso creado</h3>
+                  <br>
+                  <nb-icon status="success" icon="checkmark-circle-2-outline" style="font-size: 150px;"></nb-icon>
+                </div>
+                <hr>
+                <div style="text-align: center;">
+                  <button nbButton (click)="backPasoFinish(stepper, finish)" status="basic" size="small"><nb-icon icon="arrow-back-outline"></nb-icon> Atrás</button>&nbsp;
+                  <button nbButton (click)="nextPasoFinish(stepper, finish)"  status="primary" size="small"><nb-icon icon="plus-outline"></nb-icon> Crear nuevo</button>&nbsp;
+                  <button nbButton (click)="closeModal()"  status="basic" size="small">Salir <nb-icon icon="close-outline"></nb-icon></button>
                 </div>
               </nb-step>
           </nb-stepper>
