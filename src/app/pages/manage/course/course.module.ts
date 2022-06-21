@@ -48,7 +48,6 @@ const NGX_MODULES: any = [
 const MODULES: any = [
   PrepareFileProModule,
   ImageRecorteModule,
-  UnitsSessionsModule,
   MViewFilesModule
 ];
 
