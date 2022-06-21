@@ -11,7 +11,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { NbIconConfig, NbToastrService } from '@nebular/theme';
 import { status } from './status-messages';
 
-const showStatusCodes = [400, 500, 403, 404, 202, 422];
+const showStatusCodes = [400, 500, 403, 404, 202, 422, 409, 0];
 
 @Injectable()
 export class CatchErrorInterceptor implements HttpInterceptor {
@@ -77,8 +77,7 @@ export class CatchErrorInterceptor implements HttpInterceptor {
   }
   private throwErrorToast(err: any): void {
     if (showStatusCodes.includes(err.status)) {
-      const errorMsg = err.error.message || err.statusText;
-      this.toast(`${err.status} ${errorMsg}`, err.statusText);
+      this.toast(`${err.message}`, err.name);
     }
   }
 

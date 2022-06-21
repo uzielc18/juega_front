@@ -50,14 +50,25 @@
                             <div class="row">
                                 <label class="col-md-4 label">Docente:</label>
                                 <div class="col-md-8">
-                                    <nb-form-field>
-                                        <ng-template #rt let-r="result" let-t="term">{{ r.apellido_paterno + ' ' + r.apellido_materno + ' ' + r.nombres}}
-                                        </ng-template>
-                                        <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
-                                        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar mínimo 3 dígitos"
-                                            [ngbTypeahead]="search" [inputFormatter]="formatter" [resultTemplate]="rt"
-                                            formControlName="id_docente">
-                                    </nb-form-field>
+                                <nb-form-field>
+                                    <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+                                    <input
+                                    formControlName="nombre_docente"
+                                    nbInput
+                                    fullWidth
+                                    fieldSize="small"
+                                    type="text"
+                                    placeholder="Buscar mínimo 3 dígitos, nombre, dni o código"
+                                    [nbAutocomplete]="auto"
+                                    (input)="inputKeyAutocomplete($event)"/>
+                                </nb-form-field>
+                                <nb-autocomplete #auto size="small">
+                                    <nb-option *ngFor="let option of filteredOptions$" [value]="option.nombres_completos" (click)="changeAutocomplete(option)" 
+                                    [ngStyle]="colorAutocompleteSelect(option)">
+                                        {{ option.nombres_completos }} - {{ option.codigo }}
+                                    </nb-option>
+                                </nb-autocomplete>
+                                <span *ngIf="formHeaderOne.hasError('required', ['id_docente'])" style="font-size: 10px; color: brown;">Campo requerido</span>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +129,7 @@
                             <div class="row">
                                 <label class="col-md-4 label">Grupo:</label>
                                 <div class="col-md-8">
-                                    <input type="number" placeholder="Ingrese grupo" fullWidth fieldSize="small" formControlName="grupo" nbInput>
+                                    <input type="text" placeholder="Ingrese grupo" fullWidth fieldSize="small" formControlName="grupo" nbInput>
                                 </div>
                             </div>
                         </div>
@@ -134,13 +145,14 @@
                                             [nbDatepicker]="fechaInicio" fieldSize="small" formControlName="fecha_inicio"/>
                                         <nb-icon nbSuffix icon="calendar" status="primary" size="small"
                                             pack="eva"></nb-icon>
-                                        <nb-datepicker #fechaInicio format="dd/MM/yyyy">
+                                        <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min">
                                         </nb-datepicker>
                                     </nb-form-field>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <fieldset [disabled]="!formHeaderOne.value.fecha_inicio">
                             <div class="row">
                                 <label class="col-md-4 label">Fecha fin:</label>
                                 <div class="col-md-8">
@@ -149,11 +161,12 @@
                                             [nbDatepicker]="fechaFin" fieldSize="small" formControlName="fecha_fin"/>
                                         <nb-icon nbSuffix icon="calendar" status="primary" size="small"
                                             pack="eva"></nb-icon>
-                                        <nb-datepicker #fechaFin format="dd/MM/yyyy">
+                                        <nb-datepicker #fechaFin format="dd/MM/yyyy" [min]="formHeaderOne.value.fecha_inicio">
                                         </nb-datepicker>
                                     </nb-form-field>
                                 </div>
                             </div>
+                        </fieldset>
                         </div>
                     </div>
                     <br>
@@ -274,7 +287,7 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <label class="col-md-4 label">Url inscripción:</label>
-                                <div class="col-md-8">
+                                <div class="col-md-8" style="font-size: 10px;">
                                    {{formHeaderTo.value.url_inscripcion}}
                                 </div>
                             </div>
@@ -337,6 +350,7 @@
                                     </lamb-prepare-file-pro>
                                     <div style="text-align: right; font-size: 11px;" *ngIf="formHeaderTo.value.file_silabo">
                                         {{formHeaderTo.value.file_silabo}}&nbsp;&nbsp;
+                                        <nb-icon icon="eye-outline" (click)="viewFileDoc(formHeaderTo.value.file_silabo, directorioSilabo)" style="cursor: pointer;" status="success"></nb-icon>&nbsp;
                                         <nb-icon icon="trash" (click)="clearFileSilabo()" style="cursor: pointer;" status="danger"></nb-icon>
                                     </div>
                                 </div>
@@ -361,6 +375,7 @@
                                     </lamb-prepare-file-pro>
                                     <div style="text-align: right; font-size: 11px;" *ngIf="formHeaderTo.value.file_guia_curso">
                                         {{formHeaderTo.value.file_guia_curso}}&nbsp;&nbsp;
+                                        <nb-icon icon="eye-outline" (click)="viewFileDoc(formHeaderTo.value.file_guia_curso, directorioGuiaEst)" style="cursor: pointer;" status="success"></nb-icon>&nbsp;
                                         <nb-icon icon="trash" (click)="clearFileGuia()" style="cursor: pointer;" status="danger"></nb-icon>
                                     </div>
                                 </div>
@@ -448,7 +463,7 @@
                     <button nbButton (click)="nextPasoThree(stepper, three)" status="primary" size="small">Finalizar <nb-icon icon="arrow-forward-outline"></nb-icon></button>
                 </div>
             </nb-step>
-            <nb-step  [hidden]="true" label="Fin">
+            <nb-step  [hidden]="true" label="Fin" #finish>
                 <div class="text-center">
                   <h3>Curso creado</h3>
                   <br>
@@ -456,8 +471,8 @@
                 </div>
                 <hr>
                 <div style="text-align: center;">
-                  <button nbButton nbStepperPrevious  status="basic" size="small"><nb-icon icon="arrow-back-outline"></nb-icon> Atrás</button>&nbsp;
-                  <button nbButton (click)="stepper.reset()"  status="primary" size="small"><nb-icon icon="plus-outline"></nb-icon> Crear nuevo</button>&nbsp;
+                  <button nbButton (click)="backPasoFinish(stepper, finish)" status="basic" size="small"><nb-icon icon="arrow-back-outline"></nb-icon> Atrás</button>&nbsp;
+                  <button nbButton (click)="nextPasoFinish(stepper, finish)"  status="primary" size="small"><nb-icon icon="plus-outline"></nb-icon> Crear nuevo</button>&nbsp;
                   <button nbButton (click)="closeModal()"  status="basic" size="small">Salir <nb-icon icon="close-outline"></nb-icon></button>
                 </div>
               </nb-step>

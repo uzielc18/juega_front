@@ -13,6 +13,8 @@ import { MCourseFreeComponent } from './components/modals/m-course-free/m-course
 import { PrepareFileProModule } from 'src/app/shared/components/prepare-file-pro/prepare-file-pro.module';
 import { MPortadaMiniaturaComponent } from './components/modals/m-portada-miniatura/m-portada-miniatura.component';
 import { ImageRecorteModule } from 'src/app/shared/components/recortes/image-recorte/image-recorte.module';
+import { UnitsSessionsModule } from 'src/app/shared/components/units-sessions/units-sessions.module';
+import { MViewFilesModule } from 'src/app/shared/components/view-files/m-view-files/m-view-files.module';
 
 const COMPONENTS: any[] = [
   CourseComponent,
@@ -28,7 +30,7 @@ const NG_MODULES: any = [
 ];
 const NGB_MODULES: any = [
   NgbPaginationModule,
-  NgbTypeaheadModule
+  // NgbTypeaheadModule
 ];
 const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,
@@ -45,7 +47,9 @@ const NGX_MODULES: any = [
 ];
 const MODULES: any = [
   PrepareFileProModule,
-  ImageRecorteModule
+  ImageRecorteModule,
+  UnitsSessionsModule,
+  MViewFilesModule
 ];
 
 @NgModule({

@@ -4,6 +4,7 @@ import { NbDialogService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { ConfigZoomComponent } from 'src/app/shared/components/config-zoom/config-zoom.component';
+import Swal from 'sweetalert2';
 import { MCourseFreeComponent } from '../components/modals/m-course-free/m-course-free.component';
 import { MMatricularComponent } from '../components/modals/m-matricular/m-matricular.component';
 
@@ -110,7 +111,7 @@ export class CourseHomeComponent implements OnInit {
     const serviceName = 'courses';
     const forms =  this.formHeader.value;
     const params = {
-      programa_estudio_id: forms.programa_estudio_id || '',
+      programa_estudio_id: forms.programa_estudio_id || 78,
       semester_id: forms.semester || '',
       ciclo: forms.ciclo || '',
       grupo: forms.grupo || '',
@@ -119,17 +120,17 @@ export class CourseHomeComponent implements OnInit {
       page: this.pagination.page,
       paginate: 'S',
     }
-      // this.loading = true;
-      // this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
-      //   this.listCourseZoom = res.data || [];
-      //   this.pagination.sizeListData = res.meta && res.meta.total || 0;
-      //   this.pagination.sizePage = res.meta && res.meta.per_page || 0;
-      //   if (this.pagination.sizeListData < this.listCourseZoom.length) {
-      //     this.pagination.isDisabledPage = true;
-      //   } else {
-      //     this.pagination.isDisabledPage = false;
-      //   }
-      // }, () => {this.loading = false}, () => {this.loading = false});
+      this.loading = true;
+      this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
+        this.listCourseZoom = res.data || [];
+        this.pagination.sizeListData = res.meta && res.meta.total || 0;
+        this.pagination.sizePage = res.meta && res.meta.per_page || 0;
+        if (this.pagination.sizeListData < this.listCourseZoom.length) {
+          this.pagination.isDisabledPage = true;
+        } else {
+          this.pagination.isDisabledPage = false;
+        }
+      }, () => {this.loading = false}, () => {this.loading = false});
   }
   openConfig(items:any) {
     this.dialogService.open(ConfigZoomComponent, {
@@ -161,13 +162,15 @@ export class CourseHomeComponent implements OnInit {
       }
     });
   }
-  openCoursesFree() {
+  openCoursesFree(item:any, code:any) {
     this.dialogService.open(MCourseFreeComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
         userInfo: this.appUserInfo.user,
         semestre: this.semestrers.find((r:any) => r.id === Number(this.formHeader.value.semester)),
         rolSemestre: this.rolSemestre,
+        items: item,
+        code: code,
       },
       closeOnBackdropClick: false,
       closeOnEsc: false
@@ -177,5 +180,29 @@ export class CourseHomeComponent implements OnInit {
       }
     });
   }
-
+  deleteCurso(item:any) {
+    const serviceName = 'courses';
+    Swal.fire({
+      title: 'ELIMINAR',
+      text: '¿ Desea eliminar el curso ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+        if (result.isConfirmed) {
+          this.generalServi.deleteNameId$(serviceName, item.id).subscribe((res:any) => {
+            if (res.success) {
+              this.getCourseZoom();
+            }
+           });
+          }
+        });
+  }
 }

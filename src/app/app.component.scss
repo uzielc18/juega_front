@@ -27,3 +27,16 @@
   color: white;
   font-size: 12px !important;
 }
+::ng-deep nb-dialog-container { // para darle estilo a los modales
+  display: block;
+  animation: custom-dialog-enter 1.3s ease;
+}
+@keyframes custom-dialog-enter {
+  from {
+    transform: scale(0);
+    // transform: scale(0) rotate(360deg);
+  }
+  to {
+    transform: none;
+  }
+}

@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-md-6">
                         <label class="label" style="visibility: hidden;">Crear</label><br>
-                                <button nbButton fullWidth size="small" status="primary" (click)="openCoursesFree()" [disabled]="!formHeader.value.semester"><nb-icon icon="plus"></nb-icon>Crear</button>
+                                <button nbButton fullWidth size="small" status="primary" (click)="openCoursesFree('', 'NEW')" [disabled]="!formHeader.value.semester"><nb-icon icon="plus"></nb-icon>Crear</button>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                         <th>Cod. anfitrión</th>
                         <th>Zoom</th>
                         <th style="width: 1px;"><nb-icon icon="people"></nb-icon></th>
-                        <th class="text-center" style="width: 1px;" colspan="2">Opciones</th>
+                        <th class="text-center" style="width: 1px;" colspan="4">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,7 +78,13 @@
                             <nb-icon *ngIf="item?.id_zoom_meetings" icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon>
                         </td>
                         <td class="text-center" style="width: 1px;">
-                            <button nbButton size="tiny" status="info" (click)="openMatricula(item)">Matricular</button>
+                            <button nbButton size="tiny" status="basic" (click)="openMatricula(item)">Matricular</button>
+                        </td>
+                        <td class="text-center" style="width: 1px;">
+                            <button nbButton size="tiny" status="info" (click)="openCoursesFree(item, 'UPDATE')"><nb-icon icon="edit"></nb-icon></button>
+                        </td>
+                        <td class="text-center" style="width: 1px;">
+                            <button nbButton size="tiny" status="danger" *ngIf="item.matriculados === 0" (click)="deleteCurso(item)"><nb-icon icon="trash"></nb-icon></button>
                         </td>
                         <!-- <td class="text-center">
                             <nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
@@ -99,6 +105,9 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div>
+            <app-v-unit-session></app-v-unit-session>
         </div>
     </nb-card-body>
     <nb-card-footer>
