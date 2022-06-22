@@ -1,0 +1,61 @@
+<nb-card class="h-100 border-0"
+         style="border-radius: 15px"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="small">
+  <nb-card-header>
+    <div class="d-flex">
+      <strong style="padding-top: 7px;">UNIDADES Y SESIONES</strong>
+      <button
+        class="ms-auto"
+        nbButton
+        size="small"
+        status="primary" (click)="openUnit(id_carga_curso_docente, unitSession, 'NEW')"><nb-icon icon="plus" ></nb-icon> Nueva unidad</button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div cdkDropListGroup>
+      <div  class="container" *ngFor="let Unit of unitSession">
+        <div class="d-flex">
+          <strong>{{Unit.nombre}}</strong>
+          <div class="ms-auto">
+            <button nbButton style="margin-right: 4px" status="danger" size="small" (click)="deleteUnit(Unit)"><nb-icon  icon="trash-2" ></nb-icon></button>
+            <button nbButton style="margin-right: 4px" status="info" size="small" (click)="openUnit(Unit, '','UPDATE')"><nb-icon  icon="edit" ></nb-icon></button>
+            <button nbButton size="small" status="primary" (click)="openSession(id_carga_curso_docente, Unit,'NEW')"><nb-icon icon="plus" ></nb-icon>Nueva sesión</button>
+          </div>
+        </div>
+        <br>
+        <div
+          cdkDropList
+          [cdkDropListData]="Unit.topics"
+          (cdkDropListDropped)="drop($event)"
+          class="list">
+          <nb-card class="box border-1" *ngFor="let topcis of Unit.topics" cdkDrag style="margin-bottom: 10px">
+            <nb-card-header>
+              <div class="row">
+                <div class="col-md-7">
+                  <nb-icon icon="move-outline" style="margin-right: 4px"></nb-icon>{{topcis.tema}}
+                </div>
+                <div class="col-md-3">
+                  <p>0 Elementos</p>
+                </div>
+                <div class="col-md-2" style="text-align: right">
+                  <nb-icon icon="edit" style="cursor:pointer;" (click)="openSession(topcis, Unit, 'UPDATE')"></nb-icon>
+                  <nb-icon icon="trash-2" style="cursor:pointer;" (click)="deleteTopics(topcis)" status="danger"></nb-icon>
+                </div>
+              </div>
+            </nb-card-header>
+            </nb-card><br style="visibility: hidden">
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer style="text-align: right">
+      <button
+        (click)="saveOrder()"
+        nbButton status="primary"
+        size="small"
+      [disabled]="unitSession.length == 0">Guardar</button>
+  </nb-card-footer>
+</nb-card>
+

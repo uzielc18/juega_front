@@ -37,8 +37,14 @@
           <td>{{item.descripcion}}</td>
           <td>{{item.vigente}}</td>
           <td class="text-center" style="width: 1px; vertical-align: middle;">
-            <nb-icon  icon="edit" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openSemesters(item, 'UPDATE')"></nb-icon>
-            <nb-icon  icon="trash-2-outline" status="danger" style="font-size: 25px; cursor: pointer;" (click)="deleteSemester(item)"></nb-icon>
+            <div class="d-flex align-items-center justify-content-center">
+            <button nbButton status="info" size="tiny" (click)="openSemesters(item, 'UPDATE')">
+              <nb-icon  icon="edit" style="font-size: 25px; cursor: pointer;" ></nb-icon>
+            </button>
+            <button nbButton status="danger" size="tiny" (click)="deleteSemester(item)">
+              <nb-icon  icon="trash" style="font-size: 25px; cursor: pointer;" ></nb-icon>
+            </button>
+            </div>
           </td>
         </tr>
         </tbody>

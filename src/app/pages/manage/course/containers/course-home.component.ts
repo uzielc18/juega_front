@@ -7,6 +7,7 @@ import { ConfigZoomComponent } from 'src/app/shared/components/config-zoom/confi
 import Swal from 'sweetalert2';
 import { MCourseFreeComponent } from '../components/modals/m-course-free/m-course-free.component';
 import { MMatricularComponent } from '../components/modals/m-matricular/m-matricular.component';
+import {MUnitSessionComponent} from "../../../../shared/components/unit-session/modal/m-unit-session.component";
 
 @Component({
   selector: 'app-course-home',
@@ -111,7 +112,7 @@ export class CourseHomeComponent implements OnInit {
     const serviceName = 'courses';
     const forms =  this.formHeader.value;
     const params = {
-      programa_estudio_id: forms.programa_estudio_id || '',
+      programa_estudio_id: forms.programa_estudio_id || 1,
       semester_id: forms.semester || '',
       ciclo: forms.ciclo || '',
       grupo: forms.grupo || '',
@@ -204,5 +205,20 @@ export class CourseHomeComponent implements OnInit {
            });
           }
         });
+  }
+  openUnitSession(item:any) {
+    this.dialogService.open(MUnitSessionComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        userInfo: this.appUserInfo.user,
+        items: item
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.getCourseZoom();
+      }
+    });
   }
 }

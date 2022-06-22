@@ -33,8 +33,10 @@
           <td>{{item.codigo}}</td>
           <td>{{item.nombre}}</td>
           <td class="text-center" style="width: 1px; vertical-align: middle;">
-            <nb-icon  icon="edit" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openCoursesTypes(item, 'UPDATE')"></nb-icon>
-            <nb-icon  icon="trash-2-outline" status="danger" style="font-size: 25px; cursor: pointer;" (click)="deleteCourseTypes(item)"></nb-icon>
+            <div class="d-flex align-items-center justify-content-center">
+              <button nbButton status="info" size="tiny" (click)="openCoursesTypes(item, 'UPDATE')"><nb-icon  icon="edit"></nb-icon></button>
+              <button nbButton status="danger" size="tiny" (click)="deleteCourseTypes(item)"><nb-icon  icon="trash"></nb-icon></button>
+            </div>
           </td>
         </tr>
         </tbody>
@@ -42,3 +44,4 @@
     </div>
   </nb-card-body>
 </nb-card>
+
