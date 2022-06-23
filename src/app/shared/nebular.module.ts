@@ -34,8 +34,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DialogConfimComponent } from './components/dialog-confim/dialog-confim.component';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
-import { VUnitSessionComponent } from './components/units-sessions/v-unit-session/v-unit-session.component';
-import { MUnitSessionComponent } from './components/units-sessions/m-unit-session/m-unit-session.component';
 const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
 
 const COMPONENTS: any[] = [
@@ -73,8 +71,8 @@ const COMPONENTS: any[] = [
 ];
 
 @NgModule({
-  declarations: [DialogConfimComponent],
-  imports: [...ANGULAR, ...COMPONENTS],
+  declarations: [DialogConfimComponent,],
+    imports: [...ANGULAR, ...COMPONENTS,],
   exports: [...ANGULAR, ...COMPONENTS],
 })
 export class NebularModule {}

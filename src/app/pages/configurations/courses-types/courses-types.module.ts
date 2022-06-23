@@ -8,6 +8,7 @@ import {ControlMessagesModule} from "../../../shared/components/control-messages
 import {GeneralService} from "../../../providers";
 import { CoursesTypeHomeComponent } from './containers/courses-type-home.component';
 import { MCoursesTypesComponent } from './components/modals/m-courses-types/m-courses-types.component';
+import {UnitSessionModule} from "../../../shared/components/unit-session/view/unit-session.module";
 
 const COMPONENTS: any[] = [
   CoursesTypesComponent,
@@ -31,6 +32,7 @@ const MODALS: any = [
 const NGX_MODULES: any = [
 ];
 const MODULES: any = [
+  UnitSessionModule
 ];
 
 @NgModule({

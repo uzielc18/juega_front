@@ -15,6 +15,7 @@ import { MPortadaMiniaturaComponent } from './components/modals/m-portada-miniat
 import { ImageRecorteModule } from 'src/app/shared/components/recortes/image-recorte/image-recorte.module';
 import { UnitsSessionsModule } from 'src/app/shared/components/units-sessions/units-sessions.module';
 import { MViewFilesModule } from 'src/app/shared/components/view-files/m-view-files/m-view-files.module';
+import {MUnitSessionModule} from "../../../shared/components/unit-session/modal/m-unit-session.module";
 
 const COMPONENTS: any[] = [
   CourseComponent,
@@ -48,7 +49,8 @@ const NGX_MODULES: any = [
 const MODULES: any = [
   PrepareFileProModule,
   ImageRecorteModule,
-  MViewFilesModule
+  MViewFilesModule,
+  MUnitSessionModule
 ];
 
 @NgModule({

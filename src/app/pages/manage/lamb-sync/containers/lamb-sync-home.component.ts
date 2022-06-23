@@ -212,13 +212,15 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   showCursos() {
+    console.log(this.formHeader.get('semestre').value);
     const serviceName = END_POINTS.base_back.config + '/cursos';
     this.loading = true;
     if (this.formHeader.get('programa_estudio').value) {
       this.generalService
         .nameIdAndIdAndIdAndId$(
           serviceName,
-          this.rolSemestre.semestre.nombre,
+          //this.rolSemestre.semestre.nombre,
+          this.formHeader.get('semestre').value,
           this.formHeader.get('programa_estudio').value.id_programa_estudio,
           this.id_unidad_academica,
           this.usuario
@@ -259,7 +261,8 @@ export class LambSyncHomeComponent implements OnInit {
       this.generalService
         .nameIdAndIdAndId$(
           serviceName,
-          this.rolSemestre.semestre.nombre,
+          //this.rolSemestre.semestre.nombre,
+          this.formHeader.get('semestre').value,
           this.id_carga_curso,
           this.formHeader.get('programa_estudio').value.id_programa_estudio
         )
@@ -297,7 +300,11 @@ export class LambSyncHomeComponent implements OnInit {
     this.loading = true;
     if (this.formHeader.get('programa_estudio').value) {
       this.generalService
-        .nameIdAndId$(serviceName, this.rolSemestre.semestre.nombre, this.formHeader.get('programa_estudio').value.id_programa_estudio)
+        .nameIdAndId$(
+          serviceName,
+          //this.rolSemestre.semestre.nombre,
+          this.formHeader.get('semestre').value,
+          this.formHeader.get('programa_estudio').value.id_programa_estudio)
         .subscribe(
           (res: any) => {
             this.estudiantes = res.data || [];
@@ -334,7 +341,8 @@ export class LambSyncHomeComponent implements OnInit {
       this.generalService
         .nameIdAndIdAndIdAndId$(
           serviceName,
-          this.rolSemestre.semestre.nombre,
+          //this.rolSemestre.semestre.nombre,
+          this.formHeader.get('semestre').value,
           this.id_carga_curso,
           this.codigo,
           this.formHeader.get('programa_estudio').value.id_programa_estudio
