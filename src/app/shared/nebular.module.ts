@@ -71,8 +71,8 @@ const COMPONENTS: any[] = [
 ];
 
 @NgModule({
-  declarations: [DialogConfimComponent],
-  imports: [...ANGULAR, ...COMPONENTS],
+  declarations: [DialogConfimComponent,],
+    imports: [...ANGULAR, ...COMPONENTS,],
   exports: [...ANGULAR, ...COMPONENTS],
 })
 export class NebularModule {}
