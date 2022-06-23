@@ -1,12 +1,12 @@
 <!-- <ul class="p-0" [class.sticky]="sticky" #stickyMenu [nbSpinner]="loading" nbSpinnerStatus="primary"
 nbSpinnerSize="large"> -->
-<nb-card>
+<nb-card [nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="large">
   <nb-card-header class="text-center" style="padding-top: 5px; padding-bottom: 5px">
     Navegación de contenido
   </nb-card-header>
-  <nb-card-body  style="max-height: 68vh !important">
-    <ul class="p-0" [nbSpinner]="loading" nbSpinnerStatus="primary"
-    nbSpinnerSize="large">
+  <nb-card-body  style="max-height: 68vh !important; width: 100%;">
+    <ul class="p-0" >
   
       <li class="p-0" *ngFor="let element of listElemtChild; let i = index" (click)="recorrerLisElChild(element)" 
         (click)="clickedIndex = i" (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null">

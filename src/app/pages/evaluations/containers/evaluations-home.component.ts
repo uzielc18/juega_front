@@ -52,10 +52,10 @@ export class EvaluationsHomeComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      id_per_page: [this.pagination.per_page || '', [Validators.required]],
-      id_curso: ['', [Validators.required]],
-      id_tipo_elemento: ['', [Validators.required]],
-      id_estado: [this.estados[0].value || '', [Validators.required]],
+      id_per_page: [this.pagination.per_page || ''],
+      id_curso: [''],
+      id_tipo_elemento: [''],
+      id_estado: [this.estados[0].value || ''],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listCursos();

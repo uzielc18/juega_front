@@ -111,7 +111,7 @@ export class CourseHomeComponent implements OnInit {
     const serviceName = 'courses';
     const forms =  this.formHeader.value;
     const params = {
-      programa_estudio_id: forms.programa_estudio_id || '',
+      programa_estudio_id: forms.programa_estudio_id || 78,
       semester_id: forms.semester || '',
       ciclo: forms.ciclo || '',
       grupo: forms.grupo || '',

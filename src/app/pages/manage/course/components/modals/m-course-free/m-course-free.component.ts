@@ -227,7 +227,7 @@ export class MCourseFreeComponent implements OnInit {
     }
   }
   changeSteps($event:any) {
-    console.log($event, 'stepers');
+    // console.log($event, 'stepers');
     
   }
   nextPasoOne(nbStepperNext:any, one:any) {
@@ -259,7 +259,7 @@ export class MCourseFreeComponent implements OnInit {
       this.loading = true;
       this.service.addNameData$(serviceName, params).subscribe((res:any) => {
         if (res.success) {
-          console.log(res);
+          // console.log(res);
           
           this.formHeaderOne.controls['id_curso'].setValue(res.data.id);
           this.formHeaderOne.controls['id_carga_curso_docente'].setValue(res.data.id_carga_curso_docente);
@@ -386,11 +386,11 @@ export class MCourseFreeComponent implements OnInit {
         }
       }, () => {this.loading = false;}, () => {this.loading = false;});
     }
-    console.log(nbStepperNext, 'ehhhhhh=======> ', to, 'values', params);
+    // console.log(nbStepperNext, 'ehhhhhh=======> ', to, 'values', params);
 
   }
   valueFileSilabo($event:any) {
-    console.log($event);
+    // console.log($event);
     
     this.formHeaderTo.controls['file_silabo'].setValue('');
     if ($event) {
@@ -398,7 +398,7 @@ export class MCourseFreeComponent implements OnInit {
     }
   }
   valueFileGuiaEstudio($event:any) {
-    console.log($event);
+    // console.log($event);
     this.formHeaderTo.controls['file_guia_curso'].setValue('');
     if ($event) {
       this.formHeaderTo.controls['file_guia_curso'].setValue($event.value.nombre_s3);
@@ -439,7 +439,7 @@ export class MCourseFreeComponent implements OnInit {
       closeOnEsc: false
     }).onClose.subscribe(result => {
       if (result && result.close === 'ok') {
-        console.log(result, 'eeeeeeeeeeeee');
+        // console.log(result, 'eeeeeeeeeeeee');
         if (type === 'portada') {
           this.formHeaderTo.controls['file_portada'].setValue('');
           this.formHeaderTo.controls['file_portada_url_base64'].setValue('');
@@ -478,7 +478,7 @@ export class MCourseFreeComponent implements OnInit {
         }
       }, () => {this.loading = false;}, () => {this.loading = false;});
     }
-    console.log(nbStepperNext, 'ehhhhhh=======> ', three, 'values', params);
+    // console.log(nbStepperNext, 'ehhhhhh=======> ', three, 'values', params);
   }
   backPasoFinish(nbStepperNext:any, finish:any) {
     nbStepperNext.previous();
