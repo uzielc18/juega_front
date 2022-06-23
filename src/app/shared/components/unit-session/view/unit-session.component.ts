@@ -6,6 +6,7 @@ import {GeneralService} from "../../../../providers";
 import {AppService} from "../../../../core";
 import {MSessionComponent} from "./components/modals/m-session/m-session.component";
 import Swal from "sweetalert2";
+import {newArray} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-unit-session',
@@ -116,33 +117,36 @@ export class UnitSessionComponent implements OnInit {
       }
     });
   }
-  saveOrder(){
-    this.loading = true
+  array(){
     const array =  JSON.parse(JSON.stringify(this.unitSession));
     const newArray:any = [];
-
-    const serviceName = 'save-units-order';
     if(array.length > 0){
+
       array.forEach((res: any, index:any) => {
-          const unit: any = {
-            unit_id: res.id,
-            orden_unidad: index + 1,
-            topics: []
-          }
-          if(res.topics.length > 0){
-            res.topics.forEach((r: any, i:any) =>{
-               const topic: any = {
-                 id: r.id,
-                 orden_tema: i + 1,
-               }
-               unit.topics.push(topic);
-             });
-          }
-          newArray.push(unit);
+        const unit: any = {
+          unit_id: res.id,
+          orden_unidad: index + 1,
+          topics: []
+        }
+        if(res.topics.length > 0){
+          res.topics.forEach((r: any, i:any) =>{
+            const topic: any = {
+              id: r.id,
+              orden_tema: i + 1,
+            }
+            unit.topics.push(topic);
+          });
+        }
+        newArray.push(unit);
       })
     }
+    return newArray
+  }
+  saveOrder(){
+    this.loading = true
+    const serviceName = 'save-units-order';
     const params = {
-      units: newArray
+      units: this.array(),
     }
     this.generalService.updateNameIdData$(serviceName, this.id_carga_curso_docente.id_carga_curso_docente, params).subscribe(resp  => {
     }, () => {this.loading = false}, () => this.loading = false)
