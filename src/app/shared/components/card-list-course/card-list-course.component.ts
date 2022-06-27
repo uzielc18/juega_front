@@ -82,29 +82,19 @@ export class CardListCourseComponent implements OnInit {
       if (this.mysCursos.length>0) {
         this.mysCursos.map((r:any) => {
           // r.link_activo.diferencia = 14;
-          r.cursos.map((a:any) => {
-            const cv = a.link_activo.diferencia;
-            a.verIconZoom = false;
-            if(cv !== '') {
-              if (cv >= -15 && cv <= 15) {
-                a.verIconZoom = true;
+          if (r.cursos.length>0) {
+            r.cursos.map((a:any) => {
+              const cv = a.link_activo.diferencia;
+              a.verIconZoom = false;
+              if(cv !== '') {
+                if (cv >= -15 && cv <= 15) {
+                  a.verIconZoom = true;
+                }
               }
-            }
-        });
+          });
+          }
         });
       }
-      // this.cursosEstudiante = res.data.cursos_estudiante || [];
-      // if (this.cursosEstudiante.length>0) {
-      //   this.cursosEstudiante.map((a:any) => {
-      //     const cv = a.link_activo.diferencia;
-      //     a.verIconZoom = false;
-      //     if(cv !== '') {
-      //       if (cv >= -15 && cv <= 15) {
-      //         a.verIconZoom = true;
-      //       }
-      //     }
-      //   });
-      // }
     }, () => { this.loading =false; }, () => { this.loading =false; });
   }
   navigate(item:any): any {
