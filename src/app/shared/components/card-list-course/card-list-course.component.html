@@ -6,12 +6,12 @@
   nbSpinnerSize="large"
   nbSpinnerMessage="Procesando información"
 >
-  <div class="d-flex align-items-center">
+  <div class="d-flex align-items-center justify-content-between">
     <div class="d-flex" style="align-items: center;">
         <nb-icon style="width: 30px; height: 30px" icon="book-open-outline" status="primary"></nb-icon>
         <span style="font-size: 20px; font-weight: bold">{{ 'MIS_ASIGNATURAS' | translate }}</span>
     </div>
-    <div class="ms-auto d-none d-xxl-block p-3">
+    <div>
       <nb-icon
         [status]="form.value.tipo === '1' ? 'warning' : 'basic'"
         style="cursor: pointer; font-size: 24px"
@@ -47,7 +47,7 @@
                 <div style="position: absolute; right: 0px; top: 5px;"><span class="badge bg-warning" style="text-transform: uppercase; font-size: 8px;">{{curso?.course_type}}</span></div>
               </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <strong class="names mb-0">{{ curso.nombre }}</strong>
                 <p class="teachers mb-0">{{ curso.persons_teacher_nombre }}</p>
                 <p class="descriptions mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</p>
@@ -61,12 +61,15 @@
                   <nb-icon style="font-size: 14px;" class="label" [icon]="tot?.icono"></nb-icon><br><label class="label" style="font-size: 12px;">{{tot?.total}}</label>
                   </span>&nbsp;&nbsp;
                 <span nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning" class="text-center">
-                <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="globe-outline"></nb-icon><br><label class="label" style="font-size: 12px;">{{curso?.resumen?.realizo}} / {{curso?.resumen?.total_pendientes}}</label>
+                <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="globe-outline"></nb-icon><br><label class="label" style="font-size: 12px;">{{curso?.resumen?.total_pendientes}}</label>
                 </span>
               </div>
               <div style="margin-top: 5px;">
                 <nb-progress-bar  [value]="curso?.resumen?.avance" [status]="status(curso?.resumen?.avance)"></nb-progress-bar>
               </div>
+            </div>
+            <div class="col-md-1 text-center">
+              <nb-icon icon="settings-2-outline" status="info"></nb-icon>
             </div>
             <!-- <div class="col-md-1">
               <div class="element-img d-md-block d-none">
@@ -95,10 +98,13 @@
              <div style="position: absolute; right: 0px; top: 10px;"><span class="badge bg-warning" style="text-transform: uppercase;">{{curso?.course_type}}</span></div>
            </div>
          </nb-card-header>
-         <nb-card-body class="bodix">
-          <strong class="names mb-0">{{ curso.nombre }}</strong><br>
-          <label style="padding-left: 10px; padding-right: 10px;" class="teachers mb-0">{{ curso.persons_teacher_nombre }}</label><br>
-          <label style="padding-left: 10px; padding-right: 10px;" class="descriptions mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</label>
+         <nb-card-body >
+          <label class="d-flex align-items-center justify-content-between">
+            <strong style="padding-left: 10px; padding-right: 10px;" class="names">{{ curso.nombre }}</strong><br>
+            <nb-icon icon="settings-2-outline" status="info"></nb-icon>
+          </label>
+          <label style="padding-left: 10px; padding-right: 10px;" class="teachers">{{ curso.persons_teacher_nombre }}</label><br>
+          <label style="padding-left: 10px; padding-right: 10px;" class="descriptions">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</label>
          </nb-card-body>
          <nb-card-footer class="p-0" style="margin-top: 0px;">
             <div>
@@ -112,7 +118,7 @@
                 <nb-icon style="font-size: 14px;" class="label" [icon]="tot?.icono"></nb-icon><br><label class="label" style="font-size: 12px;">{{tot?.total}}</label>
                 </span>&nbsp;&nbsp;
               <span nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning" class="text-center">
-              <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="globe-outline"></nb-icon><br><label class="label" style="font-size: 12px;">{{curso?.resumen?.realizo}} / {{curso?.resumen?.total_pendientes}}</label>
+              <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="globe-outline"></nb-icon><br><label class="label" style="font-size: 12px;">{{curso?.resumen?.total_pendientes}}</label>
               </span>
             </div>
          </nb-card-footer>
