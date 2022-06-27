@@ -133,7 +133,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
   getRubricCalificacion() {
     const serviceName = END_POINTS.base_back.rubrics + '/get-rubricas-calification';
     const params = {
-      pending_id: this.pending.student_pending.id,
+      pending_id: this.pending.student_pending?.id,
       persons_student_id: this.pending.student_pending.persons_student_id,
     };
     this.generalService.nameParams$(serviceName, params).subscribe(
