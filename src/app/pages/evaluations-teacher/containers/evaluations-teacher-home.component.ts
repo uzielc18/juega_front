@@ -58,10 +58,10 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      id_per_page: [this.pagination.per_page || '', [Validators.required]],
-      id_curso: ['', [Validators.required]],
-      id_tipo_elemento: ['', [Validators.required]],
-      id_estado: ['', [Validators.required]],
+      id_per_page: [this.pagination.per_page || ''],
+      id_curso: [''],
+      id_tipo_elemento: [''],
+      id_estado: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listCursos();
@@ -146,8 +146,6 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
             r.dias = Number(t/(1000*60*60*24)).toFixed(0);
           })
         }
-        console.log(this.pendings);
-        
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;
         if (this.pagination.sizeListData < this.pendings.length) {

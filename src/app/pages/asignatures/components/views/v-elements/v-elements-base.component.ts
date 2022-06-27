@@ -133,7 +133,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
   getRubricCalificacion() {
     const serviceName = END_POINTS.base_back.rubrics + '/get-rubricas-calification';
     const params = {
-      pending_id: this.pending.student_pending.id,
+      pending_id: this.pending.student_pending?.id,
       persons_student_id: this.pending.student_pending.persons_student_id,
     };
     this.generalService.nameParams$(serviceName, params).subscribe(
@@ -199,8 +199,10 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     this.router.navigate([`../asignatures/course/${this.idCargaCursoDocente}/element/${$event.id}`], {
       relativeTo: this.activatedRoute.parent,
     });
+    this.obtenerElementSelect();
+  }
+  obtenerElementSelect() {
     this.getElement();
-
     if (this.rolSemestre?.rol?.name === 'Estudiante') {
       this.getPendings();
     } else if (this.rolSemestre?.rol?.name === 'Docente' && this.element.tipo === 'FORO') {
@@ -245,5 +247,25 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.loading = $event;
     }, 1000);
+  }
+  nextElemento(item:any) {
+    if (item.next_page) {
+      this.pending = '';
+      this.elementId = item.next_page;
+      this.router.navigate([`../asignatures/course/${this.idCargaCursoDocente}/element/${item.next_page}`], {
+        relativeTo: this.activatedRoute.parent,
+      });
+      this.obtenerElementSelect();
+    }
+  }
+  prevElemento(item:any) {
+    if (item.prev_page) {
+      this.pending = '';
+      this.elementId = item.prev_page;
+      this.router.navigate([`../asignatures/course/${this.idCargaCursoDocente}/element/${item.prev_page}`], {
+        relativeTo: this.activatedRoute.parent,
+      });
+      this.obtenerElementSelect();
+    }
   }
 }
