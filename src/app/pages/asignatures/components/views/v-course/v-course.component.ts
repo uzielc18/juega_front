@@ -52,11 +52,11 @@ export class VCourseComponent implements OnInit, OnDestroy {
     if (this.idCargaCursoDocente) {
       this.loading = true;
       this.generalService.nameId$(serviceName, couurse_id).subscribe((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         data.data.resumen.avance = Number(data.data.resumen.avance).toFixed(2);
         this.curso.resumen = data.data.resumen;
         this.curso.matriculados = data.data.matriculados;
-        console.log(this.curso);
+        // console.log(this.curso);
         
         // lo
       }, () => { this.loading =false; }, () => { this.loading =false; });

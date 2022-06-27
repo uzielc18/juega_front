@@ -1,0 +1,33 @@
+.padre  {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+ 
+}
+.padreHover {
+    cursor: pointer;
+}
+.hijo {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+}
+.hijoHover {
+    cursor: pointer;
+}
+.nieto {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+}
+.nietoHover {
+    cursor: pointer;
+    :hover {
+        background-color: #f5f5f5;
+    }
+}
+.nietoHoverBlock {
+    background: rgb(196, 195, 195);
+    pointer-events: none;
+    cursor: not-allowed;
+}

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 
@@ -7,11 +7,10 @@ import { END_POINTS } from 'src/app/providers/utils';
   templateUrl: './menu-elements-child.component.html',
   styleUrls: ['./menu-elements-child.component.scss']
 })
-export class MenuElementsChildComponent implements OnInit {
+export class MenuElementsChildComponent implements OnInit, OnChanges {
+  @Input() element:any;
   @Input() topic_id:any;
-  @Input() type_element_id:any;
-  @Input() id_element:any;
-  @Output() elementSelected: EventEmitter<boolean> = new EventEmitter();
+  @Output() elementSelectedGru: EventEmitter<any> = new EventEmitter();
   loading:boolean = false;
   listElemtChild: any = [];
   clickedIndex: number = 0;
@@ -36,9 +35,14 @@ export class MenuElementsChildComponent implements OnInit {
   //   }
 
   constructor(private generalServi: GeneralService) { }
-
+  ngOnChanges():void {
+    if (this.topic_id) {
+      console.log(this.topic_id, 'soy agrupado');
+      this.getElementChild();
+    }
+  }
   ngOnInit(): void {
-    this.getElementChild();
+
   }
   getElementChild() {
       const serviceName = END_POINTS.base_back.resourse + '/topic-element-by-categories';
@@ -55,14 +59,14 @@ export class MenuElementsChildComponent implements OnInit {
   searchInArray() {
     this.listElemtChild.map((r:any) => {
       r.checked = false;
-      if (Number(this.type_element_id) === Number(r.id)) {
+      if (Number(this.element.type_element_id) === Number(r.id)) {
         r.checked = true;
         if (r.elements.length>0) {
           r.elements.map((a:any) => {
             a.color = '';
             a.font_weight = '';
             a.font_size = '';
-            if (Number(this.id_element) === Number(a.id)) {
+            if (Number(this.element.id) === Number(a.id)) {
               a.color = r.background;
               a.font_weight = 'bold';
               a.font_size = '14px';
@@ -119,7 +123,7 @@ export class MenuElementsChildComponent implements OnInit {
           });
         }
       });
-      this.elementSelected.emit(item);
+      this.elementSelectedGru.emit(item);
     }
   }
 }

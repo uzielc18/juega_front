@@ -33,17 +33,16 @@
                       </small>
                       <nb-progress-bar  [value]="curso?.resumen?.avance" [status]="status(curso?.resumen?.avance)"></nb-progress-bar>
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="d-flex align-items-center justify-content-between" style="padding-left: 9px; padding-right: 9px;">
                           <span nbTooltip="Participantes" nbTooltipStatus="warning">
-                            <nb-icon style="font-size: 17px;" class="label" icon="people-outline"></nb-icon><label class="label" style="font-size: 13px;">{{curso?.matriculados}}</label>
+                            <nb-icon style="font-size: 17px;" class="label" icon="people-outline"></nb-icon><br><label class="label" style="font-size: 13px;">{{curso?.matriculados}}</label>
                           </span>
                           <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning">
-                          <nb-icon style="font-size: 17px;" class="label" [icon]="tot?.icono"></nb-icon><label class="label" style="font-size: 13px;">{{tot?.total}}</label>
+                          <nb-icon style="font-size: 17px;" class="label" [icon]="tot?.icono"></nb-icon><br><label class="label" style="font-size: 13px;">{{tot?.total}}</label>
                           </span>
                           <span  nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning">
-                          <nb-icon style="font-size: 17px;" class="label" icon="globe-outline"></nb-icon><label class="label" style="font-size: 13px;">{{curso?.resumen?.realizo}} / {{curso?.resumen?.total_pendientes}}</label>
+                          <nb-icon style="font-size: 17px;" class="label" icon="globe-outline"></nb-icon><br><label class="label" style="font-size: 13px;">{{curso?.resumen?.realizo}} / {{curso?.resumen?.total_pendientes}}</label>
                           </span>
                         </div>
                       <!-- <div class="d-flex align-items-center">
@@ -97,7 +96,7 @@
                       </nb-accordion-item-header>
                       <nb-accordion-item-body class="course-accordion-body">
                         <div class="d-flex flex-column">
-                          <small class="fw-bold another-color">Descripcion</small>
+                          <small class="fw-bold another-color">Descripción</small>
                           <small class="description">
                             Conceptos fundamentales, recopilacion de informacion. Modelo Conceptual y Relacional
                           </small>
