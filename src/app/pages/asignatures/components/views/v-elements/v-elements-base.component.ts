@@ -68,19 +68,25 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
           this.has_rubric = this.element.rubricas_guia_id !== null ? true : false;
           // console.log(this.element, 'elemento');
           if (this.element) {
-            if (this.rolSemestre?.rol?.name === 'Estudiante') {
-              setTimeout(() => {
-                this.getPendings();
-              }, 1000);
-            } else if (this.rolSemestre?.rol?.name === 'Docente' && this.element.tipo === 'FORO') {
-              this.pending = '';
-              setTimeout(() => {
-                this.getResponsesDocen();
-              }, 5000);
+            if (this.element.tiene_permiso === 0) { // no tiene acceso al curso
+              this.router.navigate([`/pages/asignatures`], {relativeTo: this.activatedRoute.parent});
             } else {
-              this.pending = '';
+
+              if (this.rolSemestre?.rol?.name === 'Estudiante') {
+                setTimeout(() => {
+                  this.getPendings();
+                }, 1000);
+              } else if (['Docente', 'Admin'].includes(this.rolSemestre?.rol?.name) && this.element.tipo === 'FORO') {
+                this.pending = '';
+                setTimeout(() => {
+                  this.getResponsesDocen();
+                }, 5000);
+              } else {
+                this.pending = '';
+              }
+              this.updateBreadcrumb();
             }
-            this.updateBreadcrumb();
+
           }
         },
         () => {
@@ -205,7 +211,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     this.getElement();
     if (this.rolSemestre?.rol?.name === 'Estudiante') {
       this.getPendings();
-    } else if (this.rolSemestre?.rol?.name === 'Docente' && this.element.tipo === 'FORO') {
+    } else if (['Docente', 'Admin'].includes(this.rolSemestre?.rol?.name) && this.element.tipo === 'FORO') {
       this.getResponsesDocen();
     }
   }
@@ -239,7 +245,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
   refreshPending() {
     if (this.rolSemestre?.rol?.name === 'Estudiante') {
       this.getPendings();
-    } else if (this.rolSemestre?.rol?.name === 'Docente' && this.element.tipo === 'FORO') {
+    } else if (['Docente', 'Admin'].includes(this.rolSemestre?.rol?.name) && this.element.tipo === 'FORO') {
       this.getResponsesDocen();
     }
   }

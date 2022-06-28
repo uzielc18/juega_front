@@ -284,7 +284,7 @@ export class SesionComponent implements OnInit {
     }
   }
   navigate(element: any): any {
-    if ((element.listo === 1 && this.rolSemestre.rol.name === 'Estudiante' && this.sesion?.modo === 'ordenado') || this.rolSemestre.rol.name === 'Docente' || this.sesion?.modo === 'agrupado') {
+    if ((element.listo === 1 && this.rolSemestre.rol.name === 'Estudiante' && this.sesion?.modo === 'ordenado') || ['Docente', 'Admin'].includes(this.rolSemestre?.rol?.name) || this.sesion?.modo === 'agrupado') {
       this.router.navigate([`../asignatures/course/${this.curso.id_carga_curso_docente}/element/${element.id}`], {
         relativeTo: this.activatedRoute.parent,
       });

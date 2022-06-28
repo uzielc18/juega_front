@@ -24,7 +24,7 @@
                   *ngFor="let elem of sesion?.elements; let i = index"
                   class="d-flex flex-column align-items-center"
                   [ngClass]="{
-                    'p-3': rolSemestre?.rol?.name === 'Docente',
+                    'p-3': ['Docente', 'Admin'].includes(rolSemestre?.rol?.name),
                     'py-2 px-3': rolSemestre?.rol?.name === 'Estudiante'
                   }"
                   (mouseenter)="hoveredIndex = i"
@@ -39,12 +39,9 @@
                   (click)="selectedElement(elem)"
                   style="cursor: pointer"
                 >
-                  <small style="font-size: 10px" *ngIf="rolSemestre?.rol?.name === 'Estudiante'"
-                    >{{ elem.realizo }}-{{
-                      arrayEl.length > 0 && elem.type_element_id === arrayEl[0].type_element_id ? arrayEl.length : elem.count
-                    }}</small
-                  >
-                  <nb-icon [icon]="elem.icono"></nb-icon>
+                  <small style="font-size: 10px" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
+                    {{ elem?.realizo }}-{{arrayEl?.length > 0 && elem?.type_element_id === arrayEl[0]?.type_element_id ? arrayEl?.length : elem?.count}}</small>
+                  <nb-icon [icon]="elem?.icono"></nb-icon>
                   <small class="element-nombre">{{ elem?.nombre }}</small>
                 </div>
               </div>
@@ -55,12 +52,12 @@
                 status="success" outline  (click)="selectedElemenstOrden(sesion)">
                 <nb-icon [icon]="'eye'"></nb-icon>Ver</button>
                 &nbsp;&nbsp;
-                <button nbButton size="tiny" *ngIf="rolSemestre?.rol?.name === 'Docente'"
+                <button nbButton size="tiny" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && arrayEl?.length>0"
                 status="primary" outline (click)="openElementosOrden()">
                 <nb-icon [icon]="'edit'"></nb-icon>Órden</button>
               </div>
 
-              <div class="d-flex align-items-center p-0 ms-auto me-3 my-3" *ngIf="rolSemestre?.rol?.name === 'Docente'">
+              <div class="d-flex align-items-center p-0 ms-auto me-3 my-3" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)">
                 <!-- <nb-button-group> -->
                   <button nbButton size="tiny" 
                   status="warning"
@@ -90,7 +87,7 @@
     </div>
   </nb-card-body>
 </nb-card>
-  <nb-card *ngIf="arrayEl.length > 0" class="list-element">
+  <nb-card *ngIf="arrayEl?.length > 0" class="list-element">
     <nb-list>
       <nb-list-item *ngFor="let el of arrayEl; let i = index" class="d-flex align-items-center justify-content-between">
         <div>
@@ -98,7 +95,7 @@
           <p class="sesion-description">
             {{ el.descripcion }}
           </p>
-          <label class="label" *ngIf="rolSemestre?.rol?.name === 'Docente'">
+          <label class="label" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)">
             <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="basic" ghost class="butonsInfo">
               Sin Calificar: {{ el?.total_entregados - el?.total_revisados }}</button
             >&nbsp;
@@ -120,7 +117,7 @@
 
             <!-- <nb-button-group class="d-flex align-items-center flex-wrap flex-md-nowrap p-0" style="gap: 5px"> -->
               <button
-                *ngIf="rolSemestre?.rol?.name === 'Docente' && el?.grupal === '1'"
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && el?.grupal === '1'"
                 nbButton
                 status="primary"
                 size="tiny"
@@ -132,7 +129,7 @@
                 <nb-icon icon="people-outline"></nb-icon>
               </button>&nbsp;
               <button
-                *ngIf="rolSemestre?.rol?.name === 'Docente' && el?.tipo === 'EVALUACION'"
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && el?.tipo === 'EVALUACION'"
                 nbButton
                 status="info"
                 size="tiny"
@@ -144,7 +141,7 @@
                 <nb-icon icon="question-mark-outline"></nb-icon>
               </button>&nbsp;
               <button
-                *ngIf="rolSemestre?.rol?.name === 'Docente'"
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
                 nbButton
                 status="info"
                 size="tiny"
@@ -156,7 +153,7 @@
                 <nb-icon icon="edit-2-outline"></nb-icon>
               </button>&nbsp;
               <button
-                *ngIf="rolSemestre?.rol?.name === 'Docente'"
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
                 nbButton
                 status="danger"
                 size="tiny"
