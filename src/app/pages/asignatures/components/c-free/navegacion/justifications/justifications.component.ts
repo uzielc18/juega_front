@@ -78,7 +78,7 @@ export class JustificationsComponent implements OnInit {
   }
 
   openRespuesta(item:any) {
-    if (this.rolSemestre.rol.name === 'Docente') {
+    if (['Docente', 'Admin'].includes(this.rolSemestre?.rol?.name)) {
 
       this.dialogService.open(ResponseAperturaComponent, {
           dialogClass: 'dialog-limited-height',

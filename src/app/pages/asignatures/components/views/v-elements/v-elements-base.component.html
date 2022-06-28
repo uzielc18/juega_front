@@ -27,7 +27,7 @@
         <div [ngStyle]="{ height: '5px', 'background-color': element?.type_element?.background }"></div>
         <br>
         <div style="text-align: right;">
-          <label class="label px-4" *ngIf="rolSemestre?.rol?.name === 'Docente'">
+          <label class="label px-4" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)">
             <button *ngIf="['FOR', 'TRAB'].includes(element?.type_element?.codigo)" nbButton size="tiny" outline
               status="basic" ghost class="butonsInfo">Sin Calificar: {{(element?.total_entregados -
               element?.total_revisados )}}</button>&nbsp;
