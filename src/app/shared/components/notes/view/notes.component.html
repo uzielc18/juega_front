@@ -1,0 +1,105 @@
+<nb-card class="border-0"
+         style="border-radius: 15px; margin: 0 30px"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="small">
+  <!--<nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="droplet-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">Tipos de Elementos</strong>
+    </div>
+  </nb-card-header>-->
+  <nb-card-body class="pb-0 d-flex flex-column">
+    <div class="ms-auto">
+      <button
+        nbButton
+        status="info"
+        nbTooltip="Obtener rubros de evaluación desde lamb"
+        size="small" (click)="obtenerRubros()">
+        <nb-icon icon="sync"></nb-icon></button>
+      <button
+        nbButton
+        status="primary"
+        nbTooltip="Obtener notas desde lamb"
+        size="small">
+        <nb-icon icon="swap"></nb-icon></button>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px;">
+          <th>Código</th>
+          <th>Fecha</th>
+          <th>Nombre Evaluación</th>
+          <th>Ponderado</th>
+          <th>Sincronizar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  style="font-size: 10px; vertical-align: middle;">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="text-center" style="width: 1px; vertical-align: middle;">
+            <div class="d-flex align-items-center justify-content-center">
+              <button nbButton size="tiny" status="info" >
+                <nb-icon  icon="refresh" style="font-size: 25px; cursor: pointer;" ></nb-icon>
+              </button>
+              <button nbButton size="tiny" status="basic" (click)="openElement('')">
+                <nb-icon  icon="move" style="font-size: 25px; cursor: pointer;" ></nb-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>
+<br>
+<nb-card class="border-0"
+         style="border-radius: 15px; margin: 0 30px"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="small">
+  <!--<nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="droplet-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">Tipos de Elementos</strong>
+    </div>
+  </nb-card-header>-->
+  <nb-card-body class="pb-0 d-flex flex-column">
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px;">
+          <th>#</th>
+          <th>Código</th>
+          <th>Nombre del Alumno</th>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+          <th>5</th>
+          <th>6</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  style="font-size: 10px; vertical-align: middle;">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>

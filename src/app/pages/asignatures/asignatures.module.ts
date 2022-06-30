@@ -64,6 +64,8 @@ import { ResponseAperturaComponent } from './components/modals/response-apertura
 import { ModoViewComponent } from './components/modals/modo-view/modo-view.component';
 import { OrdenElementsComponent } from './components/modals/orden-elements/orden-elements.component';
 import { MenuUnitTopicElementModule } from 'src/app/shared/components/menu-unit-topic-element/menu-unit-topic-element.module';
+import { VNotesComponent } from './components/views/v-notes/v-notes.component';
+import {NotesModule} from "../../shared/components/notes/view/notes.module";
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -104,7 +106,8 @@ const COMPONENTS: any[] = [
   JustificationsComponent,
   ResponseAperturaComponent,
   ModoViewComponent,
-  OrdenElementsComponent
+  OrdenElementsComponent,
+  VNotesComponent,
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -156,7 +159,8 @@ const MODULES: any = [
   PublicConfigQuestionModule,
   MExamViewModalModule,
   VExamViewsModule,
-  MenuUnitTopicElementModule
+  MenuUnitTopicElementModule,
+  NotesModule
 ]
 
 @NgModule({
@@ -173,7 +177,7 @@ const MODULES: any = [
     ...PIPES,
     ...DIRECTIVES
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS,],
   entryComponents: [...MODALS],
 
 })
