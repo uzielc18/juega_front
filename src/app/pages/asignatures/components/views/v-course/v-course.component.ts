@@ -1,10 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 
+// IMPORTANTE
+// -(rol (docente y admin)  && tiene_permiso = 1 hace todas las acciones del docente)
+// -(rol estudiante && tiene_permiso = 1 hace todas las acciones como estudiante)
+// -rol diferente de (admin, docente y estudiante) && tiene_permiso = 2 solo puede ver hasta elemento.
+// -retornar a asignaturas si tiene_permiso = 0;
 @Component({
   selector: 'app-v-course',
   templateUrl: './v-course.component.html',
@@ -19,7 +24,8 @@ export class VCourseComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private generalService: GeneralService,
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
-    public emitEventsService: EmitEventsService
+    public emitEventsService: EmitEventsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,13 +42,18 @@ export class VCourseComponent implements OnInit, OnDestroy {
       this.generalService.nameId$(serviceName, this.idCargaCursoDocente).subscribe((data) => {
         this.curso = data.data;
         if (this.curso) {
-          this.getCursoShow(this.curso.id);
-          this.updateBreadcrumb();
-        }
-        if (this.curso?.units.length>0) {
-          this.curso?.units.map((res:any) => {
-            res.checked = true;
-          });
+          if (this.curso.tiene_permiso === 0) { // no tiene acceso al curso
+            this.router.navigate([`/pages/asignatures`], {relativeTo: this.activatedRoute.parent});
+          } else {
+            this.getCursoShow(this.curso.id);
+            this.updateBreadcrumb();
+
+            if (this.curso?.units.length>0) {
+              this.curso?.units.map((res:any) => {
+                res.checked = true;
+              });
+            }
+          }
         }
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }

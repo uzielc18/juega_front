@@ -25,7 +25,7 @@
           style="font-size: 15px; text-align: justify">{{element?.forums?.pregunta}}</label>
       </div>
       <div class="col-md-3 col-xxl-2 pe-0">
-        <div class="calification calification-evalue ms-auto" *ngIf="rolSemestre?.rol?.name === 'Docente'"
+        <div class="calification calification-evalue ms-auto" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
           (click)="calificar(element)">
           <nb-icon icon="edit"></nb-icon>
           <span>Calificar</span>
@@ -68,7 +68,7 @@
          [pending]="pending">
         </app-children-comments>
       </nb-card-body>
-      <nb-card-body *ngIf="rolSemestre?.rol?.name === 'Docente'" class="p-3">
+      <nb-card-body *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)" class="p-3">
         <app-children-comments [element]="element" [userInfo]="userInfo" [list]="listResponses"
           (changeEmit)="changeEmit()">
         </app-children-comments>
