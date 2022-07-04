@@ -6,6 +6,10 @@ import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
 import { STRATEGIES } from '../environments/oauth2.strategies';
 import { EmitEventsService } from './shared/services/emit-events.service';
+import { NbTokenStorage, NB_AUTH_TOKEN_INTERCEPTOR_FILTER } from '@nebular/auth';
+import { AuthStorageTokenService } from './core/auth/services/auth-storage-token.service';
+import { HttpRequest } from '@angular/common/http';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -18,7 +22,14 @@ import { EmitEventsService } from './shared/services/emit-events.service';
     RouterModule,
     AppRoutingModule,
   ],
-  providers: [STRATEGIES, EmitEventsService],
+  providers: [
+    STRATEGIES,
+    {provide: NbTokenStorage, useClass: AuthStorageTokenService},
+    {
+      provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
+      useValue: (req: HttpRequest<any>) => !!req.url.match(/(token)/)
+    },
+    EmitEventsService],
   bootstrap: [AppComponent],
   exports: []
 })

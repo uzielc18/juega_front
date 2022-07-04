@@ -7,11 +7,74 @@
   <base href="/" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <style>
+    .centered {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 1;
+      animation: fadein 1.5s;
+      -moz-animation: fadein 1.5s;
+      -webkit-animation: fadein 1.5s;
+      -o-animation: fadein 1.5s
+    }
+
+    @keyframes fadein {
+      from {
+        opacity: 0
+      }
+      to {
+        opacity: 1
+      }
+    }
+
+    @-moz-keyframes fadein {
+      from {
+        opacity: 0
+      }
+      to {
+        opacity: 1
+      }
+    }
+
+    @-webkit-keyframes fadein {
+      from {
+        opacity: 0
+      }
+      to {
+        opacity: 1
+      }
+    }
+
+    @-o-keyframes fadein {
+      from {
+        opacity: 0
+      }
+      to {
+        opacity: 1
+      }
+    }
+  </style>
+
 </head>
 
 <body>
-  <app-root></app-root>
-  <style>
+  
+  <app-root>
+    <div class="centered">
+      <img src="assets/lamb-optimized.svg" alt="" width="70">
+    </div>
+  </app-root>
+  
+  <!--<style>
     @-webkit-keyframes spin {
       0% {
         transform: rotate(0)
@@ -100,11 +163,11 @@
     <div class="blob blob-3"></div>
     <div class="blob blob-4"></div>
     <div class="blob blob-5"></div>
-    <!-- <span style="color: aliceblue; vertical-align: middle;" >
+  <span style="color: aliceblue; vertical-align: middle;" >
       <img src="https://www.educacionadventista.com/wp-content/uploads/2020/07/logo-solo.png" alt="UPeU logo" height="100px"/><br><br>
       LAMB LEARNING
-    </span> -->
-  </div>
+    </span>
+  </div> -->
 </body>
 
 </html>
