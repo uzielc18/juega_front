@@ -27,7 +27,7 @@
       <tr *ngFor="let evaluaciones of items" style="font-size: 12px" class="align-middle">
         <td>{{evaluaciones.descripcion}}</td>
         <td class="text-center">{{evaluaciones.fecha_evaluacion| date: 'shortDate'}}</td>
-        <td class="text-center">{{evaluaciones.ponderado}}</td>
+        <td class="text-center">{{evaluaciones.ponderado}}%</td>
       </tr>
       </tbody>
     </table>

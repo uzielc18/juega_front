@@ -152,22 +152,7 @@
                   </nb-card-body>
                 </nb-card>
               </div>
-              <div class="col-xl-6 col-xxl-4">
-                <nb-card class="mb-3">
-                  <nb-card-body>
-                    <h6 class="fw-bold">Rubro de evaluaciones</h6>
-                    <p>
-                      Este método retorna todos los rubros de evaluaciones del programa seleccionado ({{ programa?.nombre }}) en el
-                      periodo seleccionado
-                      <!--{{ rolSemestre?.semestre?.nombre }}-->
-                      {{formHeader.get('semestre').value }}
-                    </p>
-                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showEvaluations()">
-                      Rubro de evaluaciones
-                    </button>
-                  </nb-card-body>
-                </nb-card>
-              </div>
+
               <div class="col-xl-6 col-xxl-4">
                 <nb-card class="mb-3">
                   <nb-card-body>
@@ -180,6 +165,22 @@
                     </p>
                     <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showSilabus()">
                       Silabus
+                    </button>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+              <div class="col-xl-6 col-xxl-4">
+                <nb-card class="mb-3">
+                  <nb-card-body>
+                    <h6 class="fw-bold">Rubro de evaluaciones</h6>
+                    <p>
+                      Este método retorna todos los rubros de evaluaciones del programa seleccionado ({{ programa?.nombre }}) en el
+                      periodo seleccionado
+                      <!--{{ rolSemestre?.semestre?.nombre }}-->
+                      {{formHeader.get('semestre').value }}
+                    </p>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showEvaluations()">
+                      Rubro de evaluaciones
                     </button>
                   </nb-card-body>
                 </nb-card>

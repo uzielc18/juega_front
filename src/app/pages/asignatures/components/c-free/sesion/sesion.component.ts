@@ -34,8 +34,9 @@ export class SesionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.sesion, 'sesion')
     // console.log(this.sesion, 'sesson');
-    
+
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -221,7 +222,7 @@ export class SesionComponent implements OnInit {
   }
   setCheck(type_element_id: any) {
     // console.log(type_element_id, 'ups');
-    
+
     if (this.sesion.elements.length > 0) {
       this.sesion.elements.map((el: any) => {
         el.check = false;

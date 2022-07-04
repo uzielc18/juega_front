@@ -3,8 +3,8 @@
     <div class="ps-0">
       <div class="d-flex align-items-center" style="overflow: hidden; position: relative; width: 100%">
         <div
-          class="d-flex flex-column align-items-center justify-content-center rounded-start"
-          style="background-color: var(--color-primary-50); height: 100%; width: 80px; position: absolute; left: 0; top: 0"
+          class="d-flex flex-column align-items-center justify-content-center rounded-start fecha"
+          [ngStyle]="{'background-color': unidad.active == 1 && sesion.active == 1? 'var(--color-primary-600)': 'var(--color-primary-50)', 'color': unidad.active == 1 && sesion.active == 1? '#FFFFFF': ''}"
         >
           <span class="fw-bold" style="font-size: 24px">{{ sesion?.fecha_tema | date: 'dd' }}</span
           ><small style="font-size: 14px; color: #898989">{{ sesion?.fecha_tema | date: 'MMM' | titlecase }}</small>
@@ -59,7 +59,7 @@
 
               <div class="d-flex align-items-center p-0 ms-auto me-3 my-3" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)">
                 <!-- <nb-button-group> -->
-                  <button nbButton size="tiny" 
+                  <button nbButton size="tiny"
                   status="warning"
                   [nbTooltip]="sesion?.modo === 'ordenado' ? 'Modo ordenado' : sesion?.modo === 'agrupado' ? 'Modo agrupado' : 'No tiene modo asignado'"
                   nbTooltipPlacement="top"
