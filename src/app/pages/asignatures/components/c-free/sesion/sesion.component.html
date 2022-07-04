@@ -3,8 +3,8 @@
     <div class="ps-0">
       <div class="d-flex align-items-center" style="overflow: hidden; position: relative; width: 100%">
         <div
-          class="d-flex flex-column align-items-center justify-content-center rounded-start"
-          style="background-color: var(--color-primary-50); height: 100%; width: 80px; position: absolute; left: 0; top: 0"
+          class="d-flex flex-column align-items-center justify-content-center rounded-start fecha"
+          [ngStyle]="{'background-color': unidad.active == 1 && sesion.active == 1? 'var(--color-primary-600)': 'var(--color-primary-50)', 'color': unidad.active == 1 && sesion.active == 1? '#FFFFFF': ''}"
         >
           <span class="fw-bold" style="font-size: 24px">{{ sesion?.fecha_tema | date: 'dd' }}</span
           ><small style="font-size: 14px; color: #898989">{{ sesion?.fecha_tema | date: 'MMM' | titlecase }}</small>
@@ -18,12 +18,13 @@
           <hr class="mb-0" style="color: #898989" />
           <div class="list-elements">
             <div class="d-flex align-items-center flex-wrap">
-              <div class="d-flex flex-wrap">
+
+              <div class="d-flex flex-wrap" *ngIf="sesion?.modo === 'agrupado'">
                 <div
                   *ngFor="let elem of sesion?.elements; let i = index"
                   class="d-flex flex-column align-items-center"
                   [ngClass]="{
-                    'p-3': rolSemestre?.rol?.name === 'Docente',
+                    'p-3': ['Docente', 'Admin'].includes(rolSemestre?.rol?.name),
                     'py-2 px-3': rolSemestre?.rol?.name === 'Estudiante'
                   }"
                   (mouseenter)="hoveredIndex = i"
@@ -38,36 +39,46 @@
                   (click)="selectedElement(elem)"
                   style="cursor: pointer"
                 >
-                  <small style="font-size: 10px" *ngIf="rolSemestre?.rol?.name === 'Estudiante'"
-                    >{{ elem.realizo }}-{{
-                      arrayEl.length > 0 && elem.type_element_id === arrayEl[0].type_element_id ? arrayEl.length : elem.count
-                    }}</small
-                  >
-                  <nb-icon [icon]="elem.icono"></nb-icon>
+                  <small style="font-size: 10px" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
+                    {{ elem?.realizo }}-{{arrayEl?.length > 0 && elem?.type_element_id === arrayEl[0]?.type_element_id ? arrayEl?.length : elem?.count}}</small>
+                  <nb-icon [icon]="elem?.icono"></nb-icon>
                   <small class="element-nombre">{{ elem?.nombre }}</small>
                 </div>
               </div>
-              <div class="d-flex align-items-center p-0 ms-auto me-3 my-3">
-                <nb-button-group>
-                  <nb-icon
-                    class="fs-1 play-icon me-2"
-                    icon="arrow-right"
-                    nbTooltip="Entrar a clases"
-                    nbTooltipPlacement="top"
-                    nbTooltipStatus="success"
-                  ></nb-icon>
+
+              <div class="d-flex flex-wrap" *ngIf="sesion?.modo === 'ordenado'">
+                &nbsp;&nbsp;&nbsp;
+                <button nbButton size="tiny"
+                status="success" outline  (click)="selectedElemenstOrden(sesion)">
+                <nb-icon [icon]="'eye'"></nb-icon>Ver</button>
+                &nbsp;&nbsp;
+                <button nbButton size="tiny" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && arrayEl?.length>0"
+                status="primary" outline (click)="openElementosOrden()">
+                <nb-icon [icon]="'edit'"></nb-icon>Órden</button>
+              </div>
+
+              <div class="d-flex align-items-center p-0 ms-auto me-3 my-3" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)">
+                <!-- <nb-button-group> -->
+                  <button nbButton size="tiny"
+                  status="warning"
+                  [nbTooltip]="sesion?.modo === 'ordenado' ? 'Modo ordenado' : sesion?.modo === 'agrupado' ? 'Modo agrupado' : 'No tiene modo asignado'"
+                  nbTooltipPlacement="top"
+                  nbTooltipStatus="warning"
+                  (click)="openModo(sesion)">
+                  <nb-icon *ngIf="sesion?.modo" [icon]="sesion?.modo === 'ordenado' ? 'list-outline' : sesion?.modo === 'agrupado' ? 'grid-outline' : ''"></nb-icon>Modo</button>&nbsp;&nbsp;
                   <button
-                    *ngIf="rolSemestre?.rol?.name === 'Docente'"
                     (click)="newElemnts()"
+                    status="primary"
                     nbButton
+                    size="tiny"
                     class="shadow-sm border-0"
                     nbTooltip="Crear elementos"
                     nbTooltipPlacement="top"
                     nbTooltipStatus="primary"
                   >
-                    <nb-icon icon="plus" status="primary" class="fs-4"></nb-icon>
+                    <nb-icon icon="plus"class="fs-4"></nb-icon>
                   </button>
-                </nb-button-group>
+                <!-- </nb-button-group> -->
               </div>
             </div>
           </div>
@@ -76,89 +87,98 @@
     </div>
   </nb-card-body>
 </nb-card>
-<nb-card *ngIf="arrayEl.length > 0" class="list-element">
-  <nb-list>
-    <nb-list-item *ngFor="let el of arrayEl; let i = index" class="d-flex align-items-center justify-content-between">
-      <div>
-        <h5 class="sesion-title">{{ i + 1 }}. {{ el.titulo }}</h5>
-        <p class="sesion-description">
-          {{ el.descripcion }}
-        </p>
-        <label class="label" *ngIf="rolSemestre?.rol?.name === 'Docente'">
-          <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="basic" ghost class="butonsInfo">
-            Sin Calificar: {{ el?.total_entregados - el?.total_revisados }}</button
-          >&nbsp;
-          <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="success" ghost class="butonsInfo">
-            Calificados: {{ el?.total_revisados }}</button
-          >&nbsp;
-          <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="danger" ghost class="butonsInfo">
-            Sin entregar: {{ el?.total_pendientes - el?.total_entregados }}</button
-          >&nbsp;
-          <button nbButton size="tiny" outline status="warning" ghost class="butonsInfo">Total vistos: {{ el?.total_vistos }}</button>&nbsp;
-          <button nbButton size="tiny" outline status="info" ghost class="butonsInfo">
-            Total alumnos: {{ el?.course?.total_matriculados }}
-          </button>
-        </label>
-      </div>
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <div>
-        <nb-button-group class="d-flex align-items-center flex-wrap flex-md-nowrap p-0" style="gap: 5px">
-          <button
-            *ngIf="rolSemestre?.rol?.name === 'Docente' && el?.grupal === '1'"
-            nbButton
-            class="border-0 shadow-sm"
-            nbTooltip="Administrar grupos"
-            nbTooltipPlacement="top"
-            nbTooltipStatus="primary"
-            (click)="adminGrupal(el)"
-          >
-            <nb-icon icon="people-outline" status="primary" class="fs-4"></nb-icon>
-          </button>
-          <button
-            *ngIf="rolSemestre?.rol?.name === 'Docente' && el?.tipo === 'EVALUACION'"
-            nbButton
-            class="border-0 shadow-sm"
-            nbTooltip="Gestionar preguntas"
-            nbTooltipPlacement="top"
-            nbTooltipStatus="info"
-            (click)="openQuestionConfig(el)"
-          >
-            <nb-icon icon="question-mark-outline" status="info" class="fs-4"></nb-icon>
-          </button>
-          <button
-            nbButton
-            class="border-0 shadow-sm"
-            nbTooltip="Ver"
-            nbTooltipPlacement="top"
-            nbTooltipStatus="success"
-            (click)="navigate(el)"
-          >
-            <nb-icon icon="eye-outline" status="success" class="fs-4"></nb-icon>
-          </button>
-          <button
-            *ngIf="rolSemestre?.rol?.name === 'Docente'"
-            nbButton
-            class="border-0 shadow-sm"
-            nbTooltip="Editar"
-            nbTooltipPlacement="top"
-            nbTooltipStatus="info"
-            (click)="updateElements(el)"
-          >
-            <nb-icon icon="edit-2-outline" status="info" class="fs-4"></nb-icon>
-          </button>
-          <button
-            *ngIf="rolSemestre?.rol?.name === 'Docente'"
-            nbButton
-            class="border-0 shadow-sm"
-            nbTooltip="Eliminar"
-            nbTooltipPlacement="top"
-            nbTooltipStatus="danger"
-            (click)="deleteElements(el)"
-          >
-            <nb-icon icon="trash-2-outline" status="danger" class="fs-4"></nb-icon>
-          </button>
-        </nb-button-group>
-      </div>
-    </nb-list-item>
-  </nb-list>
-</nb-card>
+  <nb-card *ngIf="arrayEl?.length > 0" class="list-element">
+    <nb-list>
+      <nb-list-item *ngFor="let el of arrayEl; let i = index" class="d-flex align-items-center justify-content-between">
+        <div>
+          <h5 class="sesion-title">{{ sesion?.modo === 'ordenado' ? el.orden : (i +1) }}. {{ el.titulo }}</h5>
+          <p class="sesion-description">
+            {{ el.descripcion }}
+          </p>
+          <label class="label" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)">
+            <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="basic" ghost class="butonsInfo">
+              Sin Calificar: {{ el?.total_entregados - el?.total_revisados }}</button
+            >&nbsp;
+            <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="success" ghost class="butonsInfo">
+              Calificados: {{ el?.total_revisados }}</button
+            >&nbsp;
+            <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="danger" ghost class="butonsInfo">
+              Sin entregar: {{ el?.total_pendientes - el?.total_entregados }}</button
+            >&nbsp;
+            <button nbButton size="tiny" outline status="warning" ghost class="butonsInfo">Total vistos: {{ el?.total_vistos }}</button>&nbsp;
+            <button nbButton size="tiny" outline status="info" ghost class="butonsInfo">
+              Total alumnos: {{ el?.course?.total_matriculados }}
+            </button>
+          </label>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <div>
+          <div class="d-flex align-items-center">
+
+            <!-- <nb-button-group class="d-flex align-items-center flex-wrap flex-md-nowrap p-0" style="gap: 5px"> -->
+              <button
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && el?.grupal === '1'"
+                nbButton
+                status="primary"
+                size="tiny"
+                nbTooltip="Administrar grupos"
+                nbTooltipPlacement="top"
+                nbTooltipStatus="primary"
+                (click)="adminGrupal(el)"
+              >
+                <nb-icon icon="people-outline"></nb-icon>
+              </button>&nbsp;
+              <button
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && el?.tipo === 'EVALUACION'"
+                nbButton
+                status="info"
+                size="tiny"
+                nbTooltip="Gestionar preguntas"
+                nbTooltipPlacement="top"
+                nbTooltipStatus="info"
+                (click)="openQuestionConfig(el)"
+              >
+                <nb-icon icon="question-mark-outline"></nb-icon>
+              </button>&nbsp;
+              <button
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
+                nbButton
+                status="info"
+                size="tiny"
+                nbTooltip="Editar"
+                nbTooltipPlacement="top"
+                nbTooltipStatus="info"
+                (click)="updateElements(el)"
+              >
+                <nb-icon icon="edit-2-outline"></nb-icon>
+              </button>&nbsp;
+              <button
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
+                nbButton
+                status="danger"
+                size="tiny"
+                nbTooltip="Eliminar"
+                nbTooltipPlacement="top"
+                nbTooltipStatus="danger"
+                (click)="deleteElements(el)"
+              >
+                <nb-icon icon="trash-2-outline"></nb-icon>
+              </button>&nbsp;
+              <button
+                nbButton
+                status="success"
+                size="tiny"
+                [outline]="el?.pendings?.fecha_visto  ? true : false"
+                nbTooltip="Ver"
+                nbTooltipPlacement="top"
+                nbTooltipStatus="success"
+                (click)="navigate(el)"
+                [disabled]="(rolSemestre?.rol?.name === 'Estudiante' && el?.listo === 0 && sesion?.modo === 'ordenado')">
+                <nb-icon icon="eye-outline"></nb-icon>
+              </button>
+            <!-- </nb-button-group> -->
+          </div>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </nb-card>

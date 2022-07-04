@@ -47,12 +47,16 @@ const routes: Routes = [
         path: 'my-calendar',
         loadChildren: () => import('./pages/my-calendar/my-calendar.module').then(m => m.MyCalendarModule),
       },
-   
+      {
+        path: 'configurations',
+        loadChildren: () => import('./pages/configurations/configurations.module').then(m => m.ConfigurationsModule),
+      },
+
       // {
       //   path: "**",
       //   loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
       // },
-    
+
       // {
       //   path: "pages/not-found",
       //   loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
@@ -62,7 +66,7 @@ const routes: Routes = [
         redirectTo: 'dashboard',
         pathMatch: 'full',
       },
-      
+
     ],
   },
   {

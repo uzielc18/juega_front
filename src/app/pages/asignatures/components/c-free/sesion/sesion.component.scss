@@ -81,3 +81,11 @@ td {
   // cursor: not-allowed !important;
   pointer-events: none;
 }
+.fecha{
+  background-color: var(--color-primary-50);
+  height: 100%;
+  width: 80px;
+  position: absolute;
+  left: 0;
+  top: 0
+}

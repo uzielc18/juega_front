@@ -28,8 +28,7 @@
                   <strong>Grupo manual</strong><br>
                   <div>
                     <label class="label">Nombre del grupo</label>
-                    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingrese nombre del grupo" fieldSize="small"
-                    [status]="(formGroupManual.hasError('required', ['nombre_grupo'])) === true ? 'primary' : 'basic'" formControlName="nombre_grupo"/>
+                    <input class="w-100" type="text" nbInput fullWidth placeholder="Ingrese nombre del grupo" fieldSize="small" formControlName="nombre_grupo"/>
                     <control-messages [control]="formGroupManual.get('nombre_grupo')"></control-messages>
                   </div>
                   <br>
@@ -52,8 +51,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <label class="label">Miembros</label>
-                        <input class="w-100" type="number" nbInput fullWidth placeholder="Ingrese" fieldSize="small" (keyup)="valueMembers()"
-                        [status]="(formGenerar.hasError('required', ['n_miembros'])) === true ? 'primary' : 'basic'" formControlName="n_miembros"/>
+                        <input class="w-100" type="number" nbInput fullWidth placeholder="Ingrese" fieldSize="small" (keyup)="valueMembers()" formControlName="n_miembros"/>
                         <control-messages [control]="formGenerar.get('n_miembros')"></control-messages>
                       </div>
                       <div class="col-md-3">
@@ -101,8 +99,7 @@
                     <strong>Importar grupos</strong><br>
                     <div>
                       <label class="label">Selecciona el trabajo referencial para importar sus grupos</label>
-                       <nb-select placeholder="Seleccionar trabajo"  fullWidth size="small"
-                        [status]="(formImportar.hasError('required', ['selected_element_id'])) === true ? 'primary' : 'basic'" formControlName="selected_element_id">
+                       <nb-select placeholder="Seleccionar trabajo"  fullWidth size="small" formControlName="selected_element_id">
                           <nb-option *ngFor="let item of listTrabajos" [value]="item.id">{{item.titulo}}</nb-option>
                         </nb-select>
                       <control-messages [control]="formImportar.get('selected_element_id')"></control-messages>

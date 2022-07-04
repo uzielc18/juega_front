@@ -61,6 +61,11 @@ import { ConfiguracionesComponent } from './components/c-free/navegacion/configu
 import { RequestAperturaComponent } from './components/modals/request-apertura/request-apertura.component';
 import { JustificationsComponent } from './components/c-free/navegacion/justifications/justifications.component';
 import { ResponseAperturaComponent } from './components/modals/response-apertura/response-apertura.component';
+import { ModoViewComponent } from './components/modals/modo-view/modo-view.component';
+import { OrdenElementsComponent } from './components/modals/orden-elements/orden-elements.component';
+import { MenuUnitTopicElementModule } from 'src/app/shared/components/menu-unit-topic-element/menu-unit-topic-element.module';
+import { VNotesComponent } from './components/views/v-notes/v-notes.component';
+import {NotesModule} from "../../shared/components/notes/view/notes.module";
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -99,7 +104,10 @@ const COMPONENTS: any[] = [
   ConfiguracionesComponent,
   RequestAperturaComponent,
   JustificationsComponent,
-  ResponseAperturaComponent
+  ResponseAperturaComponent,
+  ModoViewComponent,
+  OrdenElementsComponent,
+  VNotesComponent,
 ];
 const NG_MODULES: any = [
   NebularModule,
@@ -120,7 +128,9 @@ const MODALS: any = [
   CalificarElementEstudentComponent,
   QuestionsConfigComponent,
   RequestAperturaComponent,
-  ResponseAperturaComponent
+  ResponseAperturaComponent,
+  ModoViewComponent,
+  OrdenElementsComponent
 ];
 const NGX_MODULES: any = [
 ];
@@ -148,7 +158,9 @@ const MODULES: any = [
   QViewModule,
   PublicConfigQuestionModule,
   MExamViewModalModule,
-  VExamViewsModule
+  VExamViewsModule,
+  MenuUnitTopicElementModule,
+  NotesModule
 ]
 
 @NgModule({
@@ -165,7 +177,7 @@ const MODULES: any = [
     ...PIPES,
     ...DIRECTIVES
   ],
-  declarations: [...COMPONENTS ],
+  declarations: [...COMPONENTS,],
   entryComponents: [...MODALS],
 
 })

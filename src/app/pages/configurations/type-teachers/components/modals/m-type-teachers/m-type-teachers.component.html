@@ -1,0 +1,76 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        {{code === 'NEW' ? 'NUEVO': 'EDITAR'}}
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="text-center" >
+    <form [formGroup]="FormTypeTeacher">
+      <div class="p-4">
+        <div class="row">
+          <label class="label col-md-3 d-flex align-items-center">Código:</label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              nbInput
+              fullWidth
+              class="codigo"
+              maxlength="4"
+              formControlName="codigo"
+              fieldSize="small"
+              placeholder="Ingrese código"
+
+            />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="label col-md-3 d-flex align-items-center">Nombre:</label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              nbInput
+              fullWidth
+              formControlName="nombre"
+              fieldSize="small"
+              placeholder="Ingrese nombre"
+            />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="label col-md-3 d-flex align-items-center">Acción:</label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              nbInput
+              fullWidth
+              formControlName="accion"
+              fieldSize="small"
+              placeholder="Ingrese acción"
+            />
+          </div>
+        </div>
+        <br>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="d-flex">
+    <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
+    <button
+      type="button"
+      class="ms-2"
+      nbButton
+      size="small"
+      status="primary"
+      (click)="saveTypeTeacher()"
+      [disabled] = "FormTypeTeacher.invalid">
+      Guardar
+    </button>
+  </nb-card-footer>
+</nb-card>

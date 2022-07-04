@@ -15,8 +15,9 @@ import { EnterZoomComponent } from './enter-zoom/enter-zoom.component';
   styleUrls: ['./card-list-course.component.scss']
 })
 export class CardListCourseComponent implements OnInit {
-  cursosDocente:any = [];
-  cursosEstudiante:any = [];
+  // cursosDocente:any = [];
+  // cursosEstudiante:any = [];
+  mysCursos:any = [];
   loading:boolean = false;
   form: any = FormGroup;
   nombreSubscription: any = Subscription;
@@ -77,28 +78,20 @@ export class CardListCourseComponent implements OnInit {
     const serviceName = END_POINTS.base_back.resourse + '/enrollment-student';
     this.loading = true;
     this.generalService.nameAll$(serviceName).subscribe((res:any) => {
-      this.cursosDocente = res.data.cursos_docente || [];
-      if (this.cursosDocente.length>0) {
-        this.cursosDocente.map((r:any) => {
+      this.mysCursos = res.data || [];
+      if (this.mysCursos.length>0) {
+        this.mysCursos.map((r:any) => {
           // r.link_activo.diferencia = 14;
-          const cv = r.link_activo.diferencia;
-          r.verIconZoom = false;
-          if(cv !== '') {
-            if (cv >= -15 && cv <= 15) {
-              r.verIconZoom = true;
-            }
-          }
-        });
-      }
-      this.cursosEstudiante = res.data.cursos_estudiante || [];
-      if (this.cursosEstudiante.length>0) {
-        this.cursosEstudiante.map((a:any) => {
-          const cv = a.link_activo.diferencia;
-          a.verIconZoom = false;
-          if(cv !== '') {
-            if (cv >= -15 && cv <= 15) {
-              a.verIconZoom = true;
-            }
+          if (r.cursos.length>0) {
+            r.cursos.map((a:any) => {
+              const cv = a.link_activo.diferencia;
+              a.verIconZoom = false;
+              if(cv !== '') {
+                if (cv >= -15 && cv <= 15) {
+                  a.verIconZoom = true;
+                }
+              }
+          });
           }
         });
       }

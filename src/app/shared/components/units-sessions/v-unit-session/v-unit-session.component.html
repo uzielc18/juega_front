@@ -1,0 +1,58 @@
+<nb-card>
+<nb-card-header>
+    <div class="d-flex align-items-center justify-content-between">
+        <div>
+            UNIDADES Y SESSIONES
+        </div>
+        <div style="text-align: right;" *ngIf="!formHeader.value.drag_drop">
+            <button  nbButton size="tiny" status="primary" (click)="openUnitSess()"><nb-icon icon="plus"></nb-icon> Crear unidad</button>
+        </div>
+    </div>
+  
+</nb-card-header>
+<nb-card-body>
+    <!-- <div  style="padding-top: 0px; padding-bottom: 8px;">
+        <form [formGroup]="formHeader" class=" d-flex align-items-center justify-content-between">
+          <div>
+          </div>
+          <div class="d-flex">
+            <div style="padding-bottom: 0px;">
+              <button  nbButton size="tiny" status="warning" (click)="reloadList()">Refrescar</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <nb-toggle status="primary" formControlName="drag_drop" (checkedChange)="toogleValue($event)">Cambiar órden</nb-toggle> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div *ngIf="formHeader.value.drag_drop" style="padding-bottom: 0px;">
+              <button  nbButton size="tiny" status="primary" (click)="changeOrden()">Guardar orden</button>
+            </div>
+          </div>
+        </form>
+      </div> -->
+    <div *ngIf="formHeader.value.drag_drop" cdkDropList  (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let items of dragList; let i = index" cdkDrag>
+        <nb-card class="hobered"
+            [ngStyle]="{
+            'cursor': 'pointer',
+            'margin-left': items?.nivel === 2 ? '25px' : '',
+            'font-size':  items?.nivel === 1 ? '18px' : '13px',
+            'font-weight':  items?.nivel === 1 ? 'bold' : '',
+            'border-left': '6px solid #00244e'
+            }">
+            <nb-card-body>
+                <div class="d-flex">
+                <div>
+                    {{i+1}})&nbsp;&nbsp;
+                </div>
+                <div>
+                    {{items?.titulo || items?.pregunta}}
+                    <span *ngIf="items?.nivel === 1" style="font-size: 13px;">
+                    <br>
+                    {{items?.descripcion}}
+                    </span>
+                </div>
+                </div><br>
+            </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+
+</nb-card-body>
+</nb-card>

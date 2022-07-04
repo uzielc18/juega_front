@@ -33,44 +33,22 @@
                       </small>
                       <nb-progress-bar  [value]="curso?.resumen?.avance" [status]="status(curso?.resumen?.avance)"></nb-progress-bar>
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="d-flex align-items-center justify-content-between" style="padding-left: 9px; padding-right: 9px;">
                           <span nbTooltip="Participantes" nbTooltipStatus="warning">
-                            <nb-icon style="font-size: 17px;" class="label" icon="people-outline"></nb-icon><label class="label" style="font-size: 13px;">{{curso?.matriculados}}</label>
+                            <nb-icon style="font-size: 17px;" class="label" icon="people-outline"></nb-icon><br><label class="label" style="font-size: 13px;">{{curso?.matriculados}}</label>
                           </span>
                           <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning">
-                          <nb-icon style="font-size: 17px;" class="label" [icon]="tot?.icono"></nb-icon><label class="label" style="font-size: 13px;">{{tot?.total}}</label>
+                          <nb-icon style="font-size: 17px;" class="label" [icon]="tot?.icono"></nb-icon><br><label class="label" style="font-size: 13px;">{{tot?.total}}</label>
                           </span>
                           <span  nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning">
-                          <nb-icon style="font-size: 17px;" class="label" icon="globe-outline"></nb-icon><label class="label" style="font-size: 13px;">{{curso?.resumen?.realizo}} / {{curso?.resumen?.total_pendientes}}</label>
+                          <nb-icon style="font-size: 17px;" class="label" icon="globe-outline"></nb-icon><br><label class="label" style="font-size: 13px;">{{curso?.resumen?.total_pendientes}}</label>
                           </span>
                         </div>
-                      <!-- <div class="d-flex align-items-center">
-                        
-                        <p class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center">
-                          <nb-icon icon="people" class="fs-6"></nb-icon><small class="text-black ms-1">16</small>
-                        </p>
-                        <p class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center">
-                          <nb-icon icon="checkmark-square-2" class="fs-6"></nb-icon
-                          ><small class="text-black ms-1">5</small>
-                        </p>
-                        <p class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center">
-                          <nb-icon icon="message-circle" class="fs-6"></nb-icon
-                          ><small class="text-black ms-1">25</small>
-                        </p>
-                        <p class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center">
-                          <nb-icon icon="checkmark-circle-2" class="fs-6"></nb-icon
-                          ><small class="text-black ms-1">1</small>
-                        </p>
-                        <p class="text-black text-opacity-25 m-0 me-4 d-flex align-items-center">
-                          <nb-icon icon="play-circle" class="fs-6"></nb-icon><small class="text-black ms-1">3</small>
-                        </p>
-                      </div> -->
                     </div>
                   </div>
                   <nb-accordion class="mb-3" *ngFor="let unidad of curso?.units">
-                    <nb-accordion-item (click)="changeColapse(unidad)" [collapsed]="unidad?.checked">
+                    <nb-accordion-item (click)="changeColapse(unidad)" [ngStyle]="{'background': !unidad.checked? 'var(--color-warning-100)': ''}" [collapsed]="unidad?.checked">
                       <nb-accordion-item-header class="p-2 p-md-3">
                         <div class="p-0 pe-4">
                           <div class="d-flex align-items-center">
@@ -97,7 +75,7 @@
                       </nb-accordion-item-header>
                       <nb-accordion-item-body class="course-accordion-body">
                         <div class="d-flex flex-column">
-                          <small class="fw-bold another-color">Descripcion</small>
+                          <small class="fw-bold another-color">Descripción</small>
                           <small class="description">
                             Conceptos fundamentales, recopilacion de informacion. Modelo Conceptual y Relacional
                           </small>

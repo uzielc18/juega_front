@@ -1,0 +1,112 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+          {{code == 'NEW'? 'NUEVO': 'ACTUALIZAR'}}
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body style="padding-right: 35px; padding-left: 35px;" >
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="FormUnit">
+
+          <!--<div class="row" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col-md-12">
+              <div class="row">
+                <label class="col-md-2 label">N° de Unidad:</label>
+                <div class="col-md-10">
+                  <input type="number" placeholder="Ingrese n° de unidad" fullWidth fieldSize="small" formControlName="orden_unidad" nbInput>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>-->
+          <div class="row" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col-md-12">
+              <div class="row">
+                <label class="col-md-2 label">Nombre unidad:</label>
+                <div class="col-md-10">
+                  <input type="text" placeholder="Ingrese nombre" fullWidth fieldSize="small" formControlName="nombre" nbInput>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col-md-6">
+              <div class="row">
+                <label class="col-md-4 label">Fecha inicio:</label>
+                <div class="col-md-8">
+                  <nb-form-field>
+                    <input type="text" nbInput placeholder="Fecha Inicio" fullWidth
+                           [nbDatepicker]="fechaInicio" fieldSize="small" formControlName="fecha_inicio"/>
+                    <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                             pack="eva"></nb-icon>
+                    <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min">
+                    </nb-datepicker>
+                  </nb-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <fieldset [disabled]="!FormUnit.value.fecha_inicio">
+              <div class="row">
+                <label class="col-md-4 label">Fecha fin:</label>
+                <div class="col-md-8">
+                  <nb-form-field>
+                    <input type="text" nbInput placeholder="Fecha Inicio" fullWidth
+                           [nbDatepicker]="fechaFin" fieldSize="small" formControlName="fecha_fin"/>
+                    <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                             pack="eva"></nb-icon>
+                    <nb-datepicker #fechaFin format="dd/MM/yyyy" [min]="FormUnit.value.fecha_inicio">
+                    </nb-datepicker>
+                  </nb-form-field>
+                </div>
+              </div>
+              </fieldset>
+            </div>
+          </div>
+          <br>
+          <div class="row" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col-md-12">
+              <div class="row">
+                <label class="col-md-2 label">Resultado de unidad:</label>
+                <div class="col-md-10">
+                  <textarea nbInput fullWidth placeholder="Textarea" formControlName="resultado_unidad"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row" style="padding-left: 0px; padding-right: 0px;">
+            <div class="col-md-12">
+              <div class="row">
+                <label class="col-md-2 label">Resultado de aprendizaje:</label>
+                <div class="col-md-10">
+                  <textarea nbInput fullWidth placeholder="Textarea" formControlName="resultado_aprendizaje"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+        </form>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="d-flex">
+    <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
+    <button
+      type="button"
+      class="ms-2"
+      nbButton
+      size="small"
+      status="primary"
+      (click)="saveUnit()">
+      Guardar
+    </button>
+  </nb-card-footer>
+</nb-card>

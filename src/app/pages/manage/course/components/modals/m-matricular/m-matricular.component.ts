@@ -19,8 +19,6 @@ export class MMatricularComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldReactive();
-    console.log(this.trees);
-    
   }
   private fieldReactive() {
     const controls = {

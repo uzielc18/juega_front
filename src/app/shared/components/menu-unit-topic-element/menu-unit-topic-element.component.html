@@ -1,0 +1,45 @@
+<div [nbSpinner]="loading" nbSpinnerStatus="primary"
+nbSpinnerSize="small">
+<nb-card style="margin-bottom: 3px;" *ngFor="let item of unitsAndTopics" class="padreHover">
+    <nb-card-header class="padre" (click)="selectedUnit(item)">
+        <div class="row">
+            <div class="col-md-11" style="font-size: 11px; text-transform: uppercase;">{{item.nombre}}</div>
+            <div class="col-md-1 text-center">
+                <nb-icon *ngIf="item?.checked" icon="arrow-back-outline" status="warning" style="cursor: pointer" (click)="backUnits($event, item)"></nb-icon>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body *ngIf="item?.checked" style="padding-right: 0px;">
+        <nb-card *ngFor="let topis of item?.topics" style="margin-bottom: 2px;" class="hijoHover">
+            <nb-card-header  class="hijo" (click)="selectTopic(topis, item)">
+                <div class="row">
+                    <div class="col-md-11" style="font-size: 10px; text-transform: uppercase;">{{topis.tema}}</div>
+                    <div class="col-md-1 text-center">
+                        <nb-icon *ngIf="topis?.checked" icon="arrow-back-outline" status="warning" style="cursor: pointer" (click)="backTopics($event, topis, item)"></nb-icon>
+                    </div>
+                </div>
+            </nb-card-header>
+            <nb-card-body  style="padding-right: 0px;" *ngIf="elemtent && topis?.checked">
+                <div *ngIf="topis?.modo === 'ordenado'">
+                    <nb-card *ngFor="let el of arrElemt" 
+                    [class]="getClass(el, topis)" 
+                    style="margin-bottom: 4px"
+                    (click)="selectedElmtOrdenado(el)">
+                        <nb-card-header  class="nieto" [ngStyle]="getColorSelected(el)">
+                            <nb-icon [icon]="el?.type_elements?.icono" ></nb-icon>&nbsp;{{el?.titulo}}
+                        </nb-card-header>
+                    </nb-card>
+                </div>
+                <div *ngIf="topis?.modo === 'agrupado'">
+                    <app-menu-elements-child
+                        [element]="elemtent"
+                        [topic_id]="topic_id"
+                        (elementSelectedGru)="selectedElemGroup($event)">
+                    </app-menu-elements-child>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </nb-card-body>
+    
+</nb-card>
+</div>

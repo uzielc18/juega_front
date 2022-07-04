@@ -1,41 +1,25 @@
-<nb-card
-  class="h-100 border-0"
-  style="border-radius: 15px"
-  [nbSpinner]="loading"
-  nbSpinnerStatus="primary"
-  nbSpinnerSize="small"
->
+<nb-card class="h-100 border-0" style="border-radius: 15px" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
   <nb-card-header>
     <div class="d-flex">
-      <nb-icon icon="checkmark-circle-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
-      <strong style="padding-top: 7px">MIS EVALUACIONES</strong>
+      <nb-icon icon="edit-2-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px">MIS EVALUACIONES Y ACTIVIDADES</strong>
     </div>
     <hr />
-    <div
-      class="row"
-      [formGroup]="formHeader"
-      [nbSpinner]="loadingFilters"
-      nbSpinnerStatus="primary"
-      nbSpinnerSize="small"
-    >
+    <div class="row" [formGroup]="formHeader" [nbSpinner]="loadingFilters" nbSpinnerStatus="primary" nbSpinnerSize="small">
       <div class="col-md-4">
         <label class="label">Curso</label>
-        <nb-select placeholder="Curso" size="small" status="primary" formControlName="id_curso" fullWidth>
-          <nb-option *ngFor="let curso of cursos" [value]="curso?.id" (click)="selectedCourse(curso)">
+        <nb-select placeholder="Curso" size="small" status="primary" formControlName="id_curso" fullWidth (selectedChange)="selectedCourse($event)">
+          <nb-option value="">Todos</nb-option>
+          <nb-option *ngFor="let curso of cursos" [value]="curso?.id">
             {{ curso?.nombre | titlecase }}
           </nb-option>
         </nb-select>
       </div>
       <div class="col-md-3">
         <label class="label">Tipo Elemento</label>
-        <nb-select
-          placeholder="Tipo Elemento"
-          size="small"
-          status="primary"
-          formControlName="id_tipo_elemento"
-          fullWidth
-        >
-          <nb-option *ngFor="let elemento of tipo_elementos" [value]="elemento?.id" (click)="selectedElement(elemento)">
+        <nb-select placeholder="Tipo Elemento" size="small" status="primary" formControlName="id_tipo_elemento" fullWidth (selectedChange)="selectedElement($event)">
+          <nb-option value="">Todos</nb-option>
+          <nb-option *ngFor="let elemento of tipo_elementos" [value]="elemento?.id">
             {{ elemento?.nombre | titlecase }}
           </nb-option>
         </nb-select>
@@ -43,14 +27,13 @@
       <div class="col-md-3">
         <label class="label">Estado</label>
         <nb-select placeholder="Estado" size="small" status="primary" fullWidth formControlName="id_estado">
-          <nb-option *ngFor="let estado of estados" [value]="estado">{{ estado }}</nb-option>
+          <nb-option value="">Todos</nb-option>
+          <nb-option *ngFor="let estado of estados" [value]="estado.value">{{ estado.nombre }}</nb-option>
         </nb-select>
       </div>
       <div class="col-md-2">
         <label class="label" style="visibility: hidden">Filtrar</label><br />
-        <button nbButton fullWidth size="small" status="warning" (click)="refresh()">
-          <nb-icon icon="funnel"></nb-icon>Filtrar
-        </button>
+        <button nbButton fullWidth size="small" status="warning" (click)="refresh()"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
       </div>
     </div>
   </nb-card-header>
@@ -61,61 +44,61 @@
           <tr style="font-size: 14px" class="fw-bold text-center">
             <th style="width: 50px">ICONO</th>
             <th>NOMBRE ACTIVIDAD</th>
-            <th style="width: 170px">FINALIZA</th>
-            <th style="width: 170px">FECHA DE ENTREGA</th>
-            <th style="width: 150px">ESTADO</th>
+            <th>DESCRIPCIÓN</th>
+            <th style="width: 150px">PER./GRUP.</th>
+            <th style="width: 200px">FINALIZA</th>
+            <!-- <th style="width: 185px">FECHA DE ENTREGA</th> -->
+            <th style="width: 200px">ESTADO</th>
+            <th style="width: 80px">REVISADOS</th>
             <th style="width: 150px">RE-APERTURA</th>
-            <th style="width: 170px">CALIFICACIÓN</th>
-            <th style="width: 100px">VISTO</th>
+            <th style="width: 100px">VISTOS</th>
             <th style="width: 100px">ACCIÓN</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let element of elements" style="font-size: 12px" class="text-center align-middle">
+          <tr *ngFor="let element of pendings" style="font-size: 11px" class="text-center align-middle">
             <td class="p-0" [ngStyle]="iconStyle(element)">
               <div class="d-flex align-items-center justify-content-center" style="height: 60px">
                 <nb-icon style="color: #fff; font-size: 20px" icon="{{ element?.icono }}"></nb-icon>
               </div>
             </td>
             <td>
-              <div class="d-flex flex-column text-start">
-                <span class="fw-bold" style="font-size: 13px">{{ element?.titulo }}</span>
-                <span>{{ element?.curso }}</span>
+              <div class="d-flex flex-column text-start" style="width: 250px; word-break: break-all">
+                <span class="fw-bold" style="font-size: 10px; text-transform: uppercase;">{{ element?.titulo }}</span>
+                <span style="font-size: 10px">{{ element?.nombre_curso }}</span>
               </div>
             </td>
-            <td>{{ element?.fecha_fin | date: "dd/MM/yyyy, h:mm a" }}</td>
+            <td class="text-start" >{{ element?.descripcion }}</td>
             <td>
-              <div *ngIf="element?.fecha_entrega; else noEntregado">
-                {{ element?.fecha_entrega | date: "dd/MM/yyyy, h:mm a" }}
-              </div>
-              <ng-template #noEntregado>
-                <span style="color: red" class="fw-bold">{{ "No entregó" | uppercase }}</span>
-              </ng-template>
+              <nb-icon icon="{{ element?.grupal === '1' ? 'people-outline' : 'person-outline' }}"></nb-icon>
+              {{ element?.grupal === '1' ? 'Grupal' : 'Personal' }}
             </td>
-            <td>{{ element?.estado }}</td>
             <td>
               <div class="d-flex align-items-center justify-content-center">
-                <button nbButton ghost size="small"><nb-icon icon="clock-outline"></nb-icon>Solicitar</button>
+                <div class="d-flex flex-column text-start">
+                  <span>{{ element?.fecha_fin | date: 'dd/MM/yyyy, h:mm a' }}</span>
+                  <span *ngIf="element?.dias >= 0" class="fw-bold">Faltan {{element?.dias}} días</span>
+                  <span *ngIf="element?.dias < 0 && !element?.fecha_visto" class="fw-bold" style="color: brown;">Pasaron {{element?.dias * -1}} días</span>
+                </div>
+                <div class="status-end ms-3"></div>
               </div>
             </td>
             <td>
-              <div class="d-flex align-items-center justify-content-center fw-bold">
-                <span *ngIf="element?.nota && element?.nota_max" class="calification">
-                  {{ element?.nota }} / {{ element?.nota_max }}
-                </span>
-                <span *ngIf="!element?.nota && element?.nota_max" class="calification"
-                  >-- / {{ element?.nota_max }}</span
-                >
-                <span *ngIf="!element?.nota && !element?.nota_max" class="calification">-- / --</span>
+              {{element?.total_entregados}} Entregados / {{element?.total_pendientes}} Péndientes
+            </td>
+            <td style="color: brown; font-weight: bold; font-size: 14px;">{{element?.total_revisados}}</td>
+            <!-- <td>
+              <div *ngIf="element?.fecha_entrega; else noEntregado">
+                {{ element?.fecha_entrega | date: 'dd/MM/yyyy, h:mm a' }}
               </div>
-            </td>
+              <ng-template #noEntregado>
+                <span style="color: red" class="fw-bold">{{ 'No entregó' | uppercase }}</span>
+              </ng-template>
+            </td> -->
+            <td style="color: rgb(81, 165, 42); font-weight: bold; font-size: 14px;">{{element?.total_justification}}</td>
+            <td style="color: rgb(238, 121, 12); font-weight: bold; font-size: 14px;">{{element?.total_vistos}}</td>
             <td>
-              <nb-icon style="color: #47da82" icon="checkmark-circle-2-outline"></nb-icon>
-            </td>
-            <td>
-              <button nbButton ghost size="small" (click)="navigate(element)">
-                <nb-icon icon="eye-outline"></nb-icon>
-              </button>
+              <nb-icon icon="eye-outline" status="warning" style="cursor: pointer" (click)="navigate(element)"></nb-icon>
             </td>
           </tr>
         </tbody>

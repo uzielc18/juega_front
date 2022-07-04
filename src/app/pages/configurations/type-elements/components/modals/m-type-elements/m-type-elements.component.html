@@ -1,0 +1,146 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        {{code === 'NEW' ? 'NUEVO': 'EDITAR'}}
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="text-center" >
+      <div class="row">
+        <div class="col-md-3 text-center">
+          <nb-icon [icon]="FormTypeElements.value.icono ? FormTypeElements.value.icono : defaultIcon"  status="primary" style="font-size: 100px;"></nb-icon>
+        </div>
+        <div class="col-md-9">
+          <form [formGroup]="FormTypeElements">
+            <div class="row">
+              <label class="label col-md-3">Código:</label>
+              <div class="col-md-9">
+                <input type="text" class="codigo" maxlength="4" placeholder="Ingrese código" nbInput fieldSize="small" fullWidth formControlName="codigo">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="label col-md-3">Nombre:</label>
+              <div class="col-md-9">
+                <input type="text" placeholder="Ingrese nombre" nbInput fieldSize="small" fullWidth formControlName="nombre">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-7">
+                <div class="row">
+                  <label class="label col-md-5">Background:</label>
+                  <div class="col-md-7">
+                    <input type="color" placeholder="Ingrese color-hex" nbInput fieldSize="small" fullWidth formControlName="background"
+                           [value]="FormTypeElements.value.background">
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-5">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="text"  placeholder="Ingrese color-hex" nbInput fieldSize="small" fullWidth formControlName="background"
+                           [value]="FormTypeElements.value.background">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+            <div class="col-md-7">
+              <div class="row">
+                <label class="label col-md-5">Color active:</label>
+                <div class="col-md-7">
+                  <input type="color" placeholder="Ingrese color active" nbInput fieldSize="small" fullWidth formControlName="color_active"
+                         [value]="FormTypeElements.value.color_active">
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-5">
+              <div class="row">
+                <div class="col-md-12">
+                  <input type="text"  placeholder="Ingrese color-hex" nbInput fieldSize="small" fullWidth formControlName="color_active"
+                         [value]="FormTypeElements.value.color_active">
+                </div>
+              </div>
+            </div>
+          </div>
+            <br>
+            <div class="row">
+              <div class="col-md-7">
+                <div class="row">
+                  <label class="label col-md-5">Color border:</label>
+                  <div class="col-md-7">
+                    <input type="color" placeholder="Ingrese color border" nbInput fieldSize="small" fullWidth formControlName="color_border"
+                           [value]="FormTypeElements.value.color_border">
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-5">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="text"  placeholder="Ingrese color-hex" nbInput fieldSize="small" fullWidth formControlName="color_border"
+                           [value]="FormTypeElements.value.color_border">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-7">
+                <div class="row">
+                  <label class="label col-md-5">Color hover:</label>
+                  <div class="col-md-7">
+                    <input type="color" placeholder="Ingrese color active" nbInput fieldSize="small" fullWidth formControlName="color_hover"
+                           [value]="FormTypeElements.value.color_hover">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="text"  placeholder="Ingrese color-hex" nbInput fieldSize="small" fullWidth formControlName="color_hover"
+                           [value]="FormTypeElements.value.color_hover">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="label col-md-3">icono:</label>
+              <div class="col-md-9">
+                <input type="text" placeholder="Ingrese icono" nbInput fieldSize="small" fullWidth formControlName="icono">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <label class="label col-md-3">Tamaño de Icono:</label>
+              <div class="col-md-9">
+                <input type="number" placeholder="Ingrese tamaño del icono" nbInput fieldSize="small" fullWidth formControlName="icono_font_size">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+  </nb-card-body>
+  <nb-card-footer class="d-flex">
+    <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
+    <button
+      type="button"
+      class="ms-2"
+      nbButton
+      size="small"
+      status="primary"
+      (click)="saveTypeElements()"
+      [disabled] = "FormTypeElements.invalid">
+      Guardar
+    </button>
+  </nb-card-footer>
+</nb-card>

@@ -69,22 +69,7 @@ export class CreatedNewsComponent implements OnInit {
     this.formHeader = this.formBuilder.group(controls);
     this.key_file = this.userService?.user?.person?.codigo;
   }
-  fechaIn($event:any) {
-    this.formHeader.controls['fecha_inicio'].setValue($event);
-  }
-  fechaF($event:any) {
-    this.formHeader.controls['fecha_fin'].setValue($event);
-  }
-  keyFechaIni($event:any) {
-    if ($event && !$event.target['value']) {
-      this.formHeader.controls['fecha_inicio'].setValue('');
-    }
-  }
-  fFinKey($event:any) {
-    if ($event && !$event.target['value']) {
-      this.formHeader.controls['fecha_fin'].setValue('');
-    }
-  }
+
   changeMBoton($event:any) {
     // console.log($event);
     this.formHeader.controls['nombre_boton'].setValue('');

@@ -1,179 +1,52 @@
-nb-card {
+.animations {
   box-shadow: 0px 2px 10px #00000012;
   transition: all 0.2s;
+  cursor: pointer;
+
+  animation: vision 1.1s ease;
+  display: block;
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 10px #00000012;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 15px #00000012;
   }
 }
-
+@keyframes vision {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: none;
+  }
+}
 // Curso card
-.curso-card {
-  width: 270px;
-  cursor: pointer;
-  border-radius: 10px 10px 4px 4px;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  border: none;
-
-  .card-body {
-    padding: 10px;
-  }
-}
-
-.list-group-item {
-  nb-icon {
-    width: 20px;
-    height: 15px;
-  }
-}
-
-.icon-text {
-  font-size: 14px;
-}
 
 nb-progress-bar {
-  height: 5px;
+  height: 10px;
   width: 100%;
 }
 
-.course {
-  &-name {
-    font-size: 16px;
+.names {
+    font-size: 12px;
     font-weight: bold;
     color: #575756;
   }
-
-  &-teacher {
-    font-size: 12px;
+.teachers {
+    font-size: 11px;
     color: #898989;
   }
 
-  &-description {
-    font-size: 12px;
+.descriptions {
+    font-size: 10px;
     color: var(--color-primary-400);
   }
-}
 
-li {
-  font-size: 14px;
-  display: flex;
-
-  p {
-    margin-bottom: 0;
-  }
-}
 
 // Curso list
 
-.card-list {
-  cursor: pointer;
-  border-radius: 7px;
-  overflow: hidden;
-}
-
-.main-container {
-  display: flex;
-  height: 100%;
-
-  .content-container {
-    display: flex;
-    align-items: center;
-    flex: 1 1 auto;
-    padding: 20px;
-
-    .course-info {
-      flex: 1 1 auto;
-    }
-
-    .progress-icon {
-      display: flex;
-      flex-direction: column-reverse;
-      justify-content: center;
-      margin-left: auto;
-
-      .progress-bar-container {
-      }
-
-      .icons-container {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        padding: 10px;
-
-        .icon {
-          display: flex;
-          align-items: center;
-          gap: 2px;
-        }
-      }
-    }
-  }
-
-  .img-container {
-    height: auto;
-    width: 120px;
-
-    img {
-      object-fit: cover;
-    }
-  }
-
-  .element-img {
-    height: auto;
-    width: 84px;
-
-    img {
-      object-fit: cover;
-    }
-  }
-  .inososs {
-    height: auto;
-    width: 180px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .main-container {
-    .content-container {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 10px;
-
-      .progress-icon {
-        margin-left: 0px;
-        flex-direction: column;
-
-        .progress-bar-container {
-          margin: 10px 0px;
-        }
-
-        .icons-container {
-          padding: 0px;
-        }
-      }
-
-      .course {
-        &-name {
-          line-height: 20px;
-        }
-      }
-
-      .text-course {
-        line-height: 14px;
-      }
-    }
-    .img-container {
-      width: 140px;
-    }
-  }
-}
 
 .contenedor {
   position: relative;
-
   .centrado {
     opacity: 0.75;
     align-items: center;
@@ -200,3 +73,20 @@ li {
     }
   }
 }
+/////////////
+.cardSty {
+  border-top-left-radius: 1rem; 
+  border-top-right-radius: 1rem; 
+  padding-left: 0px; 
+  padding-right: 0px; 
+  padding-top: 0px; cursor: pointer;
+}
+
+// .bodix {
+//   padding-left: 10px;
+//   padding-right: 10px;
+//   // padding-top: 5px;
+//   padding-bottom: 0px;
+//   margin-top: 0px;
+//   margin-bottom: 0px;
+// }

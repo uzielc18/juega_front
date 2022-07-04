@@ -70,6 +70,7 @@ nb-select ::ng-deep {
 ngb-pagination ::ng-deep {
   .page-item.active .page-link {
     border-color: var(--color-primary-500) !important;
+    // background-color: #e5c4cf !important;
     background-color: var(--color-primary-300) !important;
   }
 
@@ -87,28 +88,9 @@ ngb-pagination ::ng-deep {
   }
 }
 
-.calification {
-  background-color: #eceff6;
-  padding: 5px 25px;
-  border-radius: 20px;
-  color: #000000;
-
-  &-good {
-    background-color: #44da80;
-  }
-
-  &-regular {
-    background-color: #ecdc41;
-  }
-
-  &-bad {
-    background-color: #eb0000;
-    color: #ffffff;
-  }
-}
-
 .table-responsive {
   max-height: 58vh;
+  // overflow-y: scroll;
 }
 
 thead tr th {

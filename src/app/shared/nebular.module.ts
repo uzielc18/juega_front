@@ -67,11 +67,12 @@ const COMPONENTS: any[] = [
   NbTimepickerModule.forRoot(),
   NbDateFnsDateModule,
   NbBadgeModule,
+  NbDatepickerModule.forRoot(),
 ];
 
 @NgModule({
-  declarations: [DialogConfimComponent],
-  imports: [...ANGULAR, ...COMPONENTS],
+  declarations: [DialogConfimComponent,],
+    imports: [...ANGULAR, ...COMPONENTS,],
   exports: [...ANGULAR, ...COMPONENTS],
 })
 export class NebularModule {}

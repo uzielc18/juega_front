@@ -1,0 +1,56 @@
+<nb-card class="h-100 border-0"
+         style="border-radius: 15px"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="small">
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="award-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">Tipo Ratings</strong>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="pb-0 d-flex flex-column">
+    <button
+      class="ms-auto"
+      nbButton
+      (click)="openTypeRanting('', 'NEW')"
+      status="primary"
+      nbTooltip="Nuevo tipo ratings"
+      size="small">
+      <nb-icon icon="plus"></nb-icon>Crear</button>
+
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px;">
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Máximo valor</th>
+          <th>Mínimo valor</th>
+          <th>Icono</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let item of typeRatinsData">
+          <td>{{item.codigo}}</td>
+          <td>{{item.nombre}}</td>
+          <td>{{item.min_valor}}</td>
+          <td>{{item.max_valor}}</td>
+          <td><nb-icon [icon]="item.icono"></nb-icon></td>
+          <td class="text-center" style="width: 1px; vertical-align: middle;">
+            <div class="d-flex align-items-center justify-content-center">
+            <button nbButton size="tiny" status="info" (click)="openTypeRanting(item, 'UPDATE')">
+              <nb-icon  icon="edit" style="font-size: 25px; cursor: pointer;" ></nb-icon>
+            </button>
+              <button nbButton size="tiny" status="danger" (click)="deleteTypeRatings(item)">
+                <nb-icon  icon="trash"  style="font-size: 25px; cursor: pointer;" ></nb-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>

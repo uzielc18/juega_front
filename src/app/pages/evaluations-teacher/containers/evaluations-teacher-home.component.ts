@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppService } from 'src/app/core';
 import { GeneralService } from '../../../providers';
 import { END_POINTS } from '../../../providers/utils';
 
@@ -13,12 +15,18 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
   cursos: any[] = [];
   tipo_elementos: any[] = [];
 
-  elements: any[] = [];
+  pendings: any[] = [];
 
-  curso_id: any;
-  elemento_id: any;
+  // curso_id: any;
+  // elemento_id: any;
   pagesCount: any[] = [20, 50, 100, 300, 500];
-  estados: any[] = ["Calificados", "Pendientes", "Próximo", "Re-apertura"];
+  estados: any[] = [
+    {nombre: 'Calificados', value: 'CA'},
+    {nombre: 'Sin calificar', value: 'SC'},
+    {nombre: 'Próximos', value: 'PX'},
+    {nombre: 'Re-Apertura', value: 'RA'},
+    {nombre: 'Vencidos', value: 'V'}
+  ];
 
   formHeader: any = FormGroup;
   loading: boolean = false;
@@ -33,13 +41,15 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
     isDisabledPage: false,
   };
 
-  collectionSize = this.elements.length;
+  collectionSize = this.pendings.length;
 
   constructor(
     private generalService: GeneralService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public datepipe: DatePipe,
+    private appService: AppService
   ) {}
 
   ngOnInit(): void {
@@ -48,10 +58,10 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      id_per_page: [this.pagination.per_page || "", [Validators.required]],
-      id_curso: ["", [Validators.required]],
-      id_tipo_elemento: ["", [Validators.required]],
-      id_estado: [this.estados[0] || "", [Validators.required]],
+      id_per_page: [this.pagination.per_page || ''],
+      id_curso: [''],
+      id_tipo_elemento: [''],
+      id_estado: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listCursos();
@@ -59,23 +69,18 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
 
   iconStyle(element: any) {
     return {
-      "background-color": element?.background,
+      'background-color': element?.background,
     };
   }
 
   listCursos() {
     this.listTypeElements();
-    const serviceName = END_POINTS.base_back.activities_evaluations + "/get-courses-list";
+    const serviceName = END_POINTS.base_back.activities_evaluations + '/get-courses-list';
     this.loadingFilters = true;
     this.generalService.nameAll$(serviceName).subscribe(
       (res: any) => {
         this.cursos = res.data || [];
-        this.cursos.unshift({ id: "ALL", nombre: "TODOS" });
         if (this.cursos.length > 0) {
-          this.formHeader.patchValue({
-            id_curso: this.cursos[0].id,
-          });
-          this.curso_id = this.cursos[0];
           this.listElements();
         }
       },
@@ -89,16 +94,9 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
   }
 
   listTypeElements() {
-    const serviceName = END_POINTS.base_back.activities_evaluations + "/get-elements-types";
+    const serviceName = END_POINTS.base_back.activities_evaluations + '/get-elements-types';
     this.generalService.nameAll$(serviceName).subscribe((res: any) => {
       this.tipo_elementos = res.data || [];
-      this.tipo_elementos.unshift({ id: "ALL", nombre: "TODOS" });
-      if (this.tipo_elementos.length > 0) {
-        this.formHeader.patchValue({
-          id_tipo_elemento: this.tipo_elementos[0].id,
-        });
-        this.elemento_id = this.tipo_elementos[0];
-      }
     });
   }
 
@@ -108,33 +106,49 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
   }
 
   selectedCourse(curso: any) {
-    this.curso_id = curso;
+    // this.curso_id = curso;
     this.listElements();
   }
 
   selectedElement(element: any) {
-    this.elemento_id = element;
+    // this.elemento_id = element;
     this.listElements();
   }
 
   // table
   listElements() {
-    this.elements = [];
+    this.pendings = [];
     const params = {
-      calificable: 1,
-      course_id: this.curso_id.id,
+      persons_teacher_id: this.appService.user.person.id,
+      course_id: this.formHeader.value.id_curso,
       page: this.pagination.page,
       per_page: this.pagination.per_page,
-      type_element_id: this.elemento_id.id,
+      type_element_id: this.formHeader.value.id_tipo_elemento,
+      filterEstado: this.formHeader.value.id_estado,
     };
-    const serviceName = END_POINTS.base_back.activities_evaluations + "/get-my-activities";
+    const serviceName = END_POINTS.base_back.activities_evaluations + '/get-activ-eval-doc';
     this.loading = true;
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
-        this.elements = res.data.data || [];
+        this.pendings = res.data.data || [];
+        if(this.pendings.length>0) {
+          this.pendings.map((r:any) => {
+            r.reapertura = false;
+            r.fecha_actual = this.datepipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
+            if (r.total_justification === 0 && (r.fecha_fin <= r.fecha_actual)) {
+              r.reapertura = true;
+            }
+            const a = r.fecha_actual.split(' ');
+            const f = r.fecha_fin.split(' ');
+            const aa = new Date(a[0]).getTime();
+            const ff = new Date(f[0]).getTime();
+            const t = ff - aa;
+            r.dias = Number(t/(1000*60*60*24)).toFixed(0);
+          })
+        }
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;
-        if (this.pagination.sizeListData < this.elements.length) {
+        if (this.pagination.sizeListData < this.pendings.length) {
           this.pagination.isDisabledPage = true;
         } else {
           this.pagination.isDisabledPage = false;
@@ -154,11 +168,11 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
     this.listElements();
   }
 
-  navigate(element: any): any {
-    // this.router.navigate([`../asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`], {
-    // relativeTo: this.activatedRoute.parent,
-    // });
-    window.open(`../pages/asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`, "_blank");
+  navigate(pending: any): any {
+    this.router.navigate([`../asignatures/course/${pending.id_carga_curso_docente}/element/${pending.element_id}`], {
+      relativeTo: this.activatedRoute.parent,
+    });
+    // window.open(`../pages/asignatures/course/${element.id_carga_curso_docente}/element/${element.id}`, "_blank");
   }
 
   refresh() {

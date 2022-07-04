@@ -8,18 +8,18 @@
     <div class="row" [formGroup]="formHeader" [nbSpinner]="loadingFilters" nbSpinnerStatus="primary" nbSpinnerSize="small">
       <div class="col-md-4">
         <label class="label">Curso</label>
-        <nb-select placeholder="Curso" size="small" status="primary" formControlName="id_curso" fullWidth>
+        <nb-select placeholder="Curso" size="small" status="primary" formControlName="id_curso" fullWidth (selectedChange)="selectedCourse($event)">
           <nb-option value="">Todos</nb-option>
-          <nb-option *ngFor="let curso of cursos" [value]="curso?.id" (click)="selectedCourse(curso)">
+          <nb-option *ngFor="let curso of cursos" [value]="curso?.id">
             {{ curso?.nombre | titlecase }}
           </nb-option>
         </nb-select>
       </div>
       <div class="col-md-3">
         <label class="label">Tipo Elemento</label>
-        <nb-select placeholder="Tipo Elemento" size="small" status="primary" formControlName="id_tipo_elemento" fullWidth>
+        <nb-select placeholder="Tipo Elemento" size="small" status="primary" formControlName="id_tipo_elemento" fullWidth (selectedChange)="selectedElement($event)">
           <nb-option value="">Todos</nb-option>
-          <nb-option *ngFor="let elemento of tipo_elementos" [value]="elemento?.id" (click)="selectedElement(elemento)">
+          <nb-option *ngFor="let elemento of tipo_elementos" [value]="elemento?.id">
             {{ elemento?.nombre | titlecase }}
           </nb-option>
         </nb-select>
