@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NbDialogRef} from "@nebular/theme";
+import {NbDateService, NbDialogRef} from "@nebular/theme";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GeneralService} from "../../../../../../../providers";
 
@@ -12,6 +12,7 @@ export class MUnitComponent implements OnInit {
 
   loading:boolean = false
   FormUnit: any = FormGroup;
+  min: any = Date;
   @Input() item: any;
   @Input() unit:any;
   @Input() code: any;
@@ -19,7 +20,14 @@ export class MUnitComponent implements OnInit {
   @Input() idCargarDocente: any;
   constructor(public activeModal: NbDialogRef<MUnitComponent>,
               private fb: FormBuilder,
-              private generalService: GeneralService) { }
+              private generalService: GeneralService,
+              dateService: NbDateService<Date>) {
+
+    let date: any;
+    date = dateService.today();
+    console.log(date)
+    this.min = dateService.addDay(date, -1);
+  }
 
   ngOnInit(): void {
     this.reactiveForm();

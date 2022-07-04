@@ -12,6 +12,7 @@ import { ListSilabusComponent } from './components/modals/list-silabus/list-sila
 import { ListEstudiantesComponent } from './components/modals/list-estudiantes/list-estudiantes.component';
 import { FormsModule } from '@angular/forms';
 import { ListMatriculasComponent } from './components/modals/list-matriculas/list-matriculas.component';
+import { ListEvaluationsComponent } from './components/modals/list-evaluations/list-evaluations.component';
 
 const COMPONENTS: any[] = [
   LambSyncComponent,
@@ -51,7 +52,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS, ListDocenteComponent, ListCursosComponent, ListSilabusComponent, ListEstudiantesComponent, ListMatriculasComponent],
+  declarations: [...COMPONENTS, ListDocenteComponent, ListCursosComponent, ListSilabusComponent, ListEstudiantesComponent, ListMatriculasComponent, ListEvaluationsComponent],
   entryComponents: [...MODALS],
 })
 export class LambSyncModule { }

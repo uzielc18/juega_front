@@ -8,6 +8,8 @@ import { ListCursosComponent } from '../components/modals/list-cursos/list-curso
 import { ListEstudiantesComponent } from '../components/modals/list-estudiantes/list-estudiantes.component';
 import { ListMatriculasComponent } from '../components/modals/list-matriculas/list-matriculas.component';
 import { ListSilabusComponent } from '../components/modals/list-silabus/list-silabus.component';
+import {ListDocenteComponent} from "../components/modals/list-docente/list-docente.component";
+import {ListEvaluationsComponent} from "../components/modals/list-evaluations/list-evaluations.component";
 
 @Component({
   selector: 'app-lamb-sync-home',
@@ -34,6 +36,7 @@ export class LambSyncHomeComponent implements OnInit {
   cursos: any = [];
   silabus: any = [];
   estudiantes: any = [];
+  evaluaciones: any = [];
   matriculas: any = [];
 
   loading: boolean = false;
@@ -376,6 +379,80 @@ export class LambSyncHomeComponent implements OnInit {
     }
   }
 
+  showDocentes(){
+    const serviceName = END_POINTS.base_back.config + '/docentes';
+    this.loading = true;
+    if (this.formHeader.get('programa_estudio').value) {
+      this.generalService
+        .nameId$(
+          serviceName,
+          //this.rolSemestre.semestre.nombre,
+          this.formHeader.get('semestre').value)
+        .subscribe(
+          (res: any) => {
+            this.docentes = res.data || [];
+            this.dialogService
+              .open(ListDocenteComponent, {
+                dialogClass: 'dialog-limited-height',
+                context: {
+                  item: this.docentes,
+                },
+                closeOnBackdropClick: false,
+                closeOnEsc: false,
+              })
+              .onClose.subscribe(result => {
+              if (result === 'ok') {
+                this.changeEmit.emit();
+              }
+            });
+          },
+          () => {
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
+    }
+  }
+
+  showEvaluations(){
+    const serviceName = END_POINTS.base_back.config + '/get-evaluations/0';
+    this.loading = true;
+    if (this.formHeader.get('programa_estudio').value) {
+      this.generalService
+        .nameIdAndId$(
+          serviceName,
+          this.formHeader.get('programa_estudio').value.id_programa_estudio,
+          this.formHeader.get('semestre').value
+          )
+        .subscribe(
+          (res: any) => {
+            this.evaluaciones = res.data || [];
+            this.dialogService
+              .open(ListEvaluationsComponent, {
+                dialogClass: 'dialog-limited-height',
+                context: {
+                  item: this.evaluaciones,
+                },
+                closeOnBackdropClick: false,
+                closeOnEsc: false,
+              })
+              .onClose.subscribe(result => {
+              if (result === 'ok') {
+                this.changeEmit.emit();
+              }
+            });
+          },
+          () => {
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
+    }
+  }
   searchStudent() {
     const serviceName = END_POINTS.base_back.default + 'person-search';
     if (this.formHeader.get('termino').value !== '') {

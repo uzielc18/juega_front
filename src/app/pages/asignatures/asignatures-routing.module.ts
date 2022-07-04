@@ -5,6 +5,7 @@ import { AsignaturesComponent } from './asignatures.component';
 import { VCourseComponent } from './components/views/v-course/v-course.component';
 import { VElementsBaseComponent } from './components/views/v-elements/v-elements-base.component';
 import { AsignaturesHomeComponent } from './containers/asignatures-home.component';
+import {VNotesComponent} from "./components/views/v-notes/v-notes.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
         {
           path: 'course/:id_carga_curso_docente/element/:id',
           component: VElementsBaseComponent
+        },
+        {
+          path: 'course/:id_carga_curso_docente/notes',
+          component: VNotesComponent
         },
       ]
     }

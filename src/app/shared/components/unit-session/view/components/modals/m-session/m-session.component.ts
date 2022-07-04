@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NbDialogRef} from "@nebular/theme";
+import {NbDateService, NbDialogRef} from "@nebular/theme";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GeneralService} from "../../../../../../../providers";
 
@@ -12,13 +12,19 @@ export class MSessionComponent implements OnInit {
 
   loading: any = false;
   FormSession:any = FormGroup;
+  min:any;
   @Input()unit: any;
   @Input()topics: any;
   @Input()code: any;
   @Input()userInfo: any;
   constructor(public activeModal: NbDialogRef<MSessionComponent>,
               private fb: FormBuilder,
-              private generalService: GeneralService) { }
+              private generalService: GeneralService,
+              dateService: NbDateService<Date>) {
+    let date: any;
+    date = dateService.today();
+    this.min = dateService.addDay(date, -1);
+  }
 
   ngOnInit(): void {
     this.reactiveForms();
