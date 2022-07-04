@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
-// import { Oauth2Component } from '../oauth2/oauth2.component';
-import { Oauth2CallbackComponent } from '../oauth2/oauth2.callback.component';
-import { Oauth2GoogleCallbackComponent } from '../oauth2/oauth2google.callback.component';
+import { AuthRouteGoogleComponent } from '../auth/contents/auth-route-google/auth-route-google.component';
+import { AuthRouteLambComponent } from '../auth/contents/auth-route-lamb/auth-route-lamb.component';
+import { AuthRouteLoginComponent } from '../auth/contents/auth-route-login/auth-route-login.component';
+
 
 export const toastConfig: any = {
   hasIcon: true,
@@ -9,16 +10,21 @@ export const toastConfig: any = {
 };
 
 export const routesConfig: Routes = [
-  // {
-  //   path: 'oauth2',
-  //   component: Oauth2Component,
-  // },
   {
-    path: 'oauth2/callback',
-    component: Oauth2CallbackComponent,
+    path: 'auth',
+    component: AuthRouteLoginComponent,
   },
   {
-    path: 'oauth2/google/callback',
-    component: Oauth2GoogleCallbackComponent,
+    path: 'auth/lamb/callback',
+    component: AuthRouteLambComponent
   },
+  {
+    path: 'auth/google/callback',
+    component: AuthRouteGoogleComponent
+  },
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full'
+  }
 ];

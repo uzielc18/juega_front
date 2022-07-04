@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
   NbAuthModule,
+  NbAuthOAuth2Token,
   NbAuthStrategyClass,
   NbOAuth2AuthStrategy,
   NbOAuth2AuthStrategyOptions,
+  NbOAuth2ClientAuthMethod,
   NbOAuth2GrantType,
   NbOAuth2ResponseType,
 } from '@nebular/auth';
@@ -32,34 +34,59 @@ export const STRATEGIES = [
       NbAuthLambStrategy.setup({
         name: environment.authStrategy.name,
         clientId: environment.authStrategy.clientId,
+        clientSecret: environment.authStrategy.clientSecret,
+        clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
         baseEndpoint: `${environment.authStrategy.baseEndpoint}/oauth`,
         authorize: {
           endpoint: '/authorize',
-          responseType: NbOAuth2ResponseType.TOKEN,
+          responseType: NbOAuth2ResponseType.CODE,
           redirectUri: `${environment.authStrategy.redirectUri}`,
-          scope: 'read introspection',
+          scope: 'read',
         },
-        redirect: {
-          success: environment.authStrategy.success,
+        token: {
+          endpoint: '/token/',
+          grantType: NbOAuth2GrantType.AUTHORIZATION_CODE,
+          redirectUri: `${environment.authStrategy.redirectUri}`,
+          class: NbAuthOAuth2Token
         },
         refresh: {
           endpoint: '/token/',
-          grantType: NbOAuth2GrantType.REFRESH_TOKEN,
+          grantType: NbOAuth2GrantType.REFRESH_TOKEN
         },
+        redirect: {
+          success: environment.authStrategy.success
+        },     
       }),
       NbAuthGoogleStrategy.setup({
         name: environment.authGoogleStrategy.name,
         clientId: environment.authGoogleStrategy.clientId,
-        clientSecret: '',
+        clientSecret: environment.authGoogleStrategy.clientSecret,
+        clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
         authorize: {
           endpoint: environment.authGoogleStrategy.endpoint,
-          responseType: NbOAuth2ResponseType.TOKEN,
-          scope: 'email profile openid',
+          responseType: NbOAuth2ResponseType.CODE,
           redirectUri: environment.authGoogleStrategy.redirectUri,
+          scope: 'openid profile email',
+          params: {
+            access_type: 'offline',
+            prompt: 'consent',
+            hd: 'upeu.edu.pe'
+          },
+        },
+        token: {
+          endpoint: environment.authGoogleStrategy.tokenEndpoint,
+          grantType: NbOAuth2GrantType.AUTHORIZATION_CODE,
+          redirectUri: environment.authGoogleStrategy.redirectUri,
+          class: NbAuthOAuth2Token
+        },
+        refresh: {
+          endpoint: environment.authGoogleStrategy.refreshTokenEndpoint,
+          grantType: NbOAuth2GrantType.REFRESH_TOKEN,
         },
         redirect: {
-          success: environment.authGoogleStrategy.success,
+          success: environment.authGoogleStrategy.success
         },
+        
       }),
     ],
   }).providers,

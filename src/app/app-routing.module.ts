@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
-import { Auth2Guard, ScaffoldComponent } from './core';
+import { ScaffoldComponent } from './core';
+import { AuthGuard } from './core/auth/guards/auth.guard';
 
 const config: ExtraOptions = {
   useHash: false,
 };
 const routes: Routes = [
-  {
-    path: 'auth',
-    loadChildren: () => import('../app/core/auth/auth.module').then(m => m.AuthModule),
-  },
+ 
   {
     path: 'pages',
-    canActivate: [Auth2Guard],
+    canActivate: [AuthGuard],
     component: ScaffoldComponent,
     children: [
       {
@@ -71,7 +69,7 @@ const routes: Routes = [
   },
   {
     path: 'exam/:pending_id/:person_id',
-    canActivate: [Auth2Guard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/exam/exam.module').then(m => m.ExamModule),
   },
   {
@@ -81,13 +79,13 @@ const routes: Routes = [
   },
   {
     path: "**",
-    canActivate: [Auth2Guard],
+    canActivate: [AuthGuard],
     loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
   },
 
   {
     path: "pages/not-found",
-    canActivate: [Auth2Guard],
+    canActivate: [AuthGuard],
     loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
   },
 ];

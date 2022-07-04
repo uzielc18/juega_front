@@ -1,0 +1,71 @@
+<nb-layout>
+  <nb-layout-column [nbSpinner]="spinner" nbSpinnerSize="giant"
+                    nbSpinnerStatus="primary" [ngStyle]="background"
+                    class="d-flex align-items-center justify-content-center">
+
+
+                        
+                   
+    <nb-card class="col-md-10 col-lg-8 col-xl-8 col-xxl-6 col-12 mx-auto my-auto border-0 radius opacity"
+             status="primary">
+      <nb-card-header class="top-radius">
+        <img src="assets/logo-lamb-learning-blanco.svg" alt="Lamb" width="100"/>
+      </nb-card-header>
+      <nb-card-body *ngIf="(isAuthenticated | async)" >
+        <nb-alert>
+          Esta en una sesión activa, cierre sesión para ingresar nuevamente.
+        </nb-alert>
+      </nb-card-body>
+      <nb-card-body *ngIf="!(isAuthenticated | async)">
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-2">
+          <div class="col d-flex align-items-center justify-content-center">
+            <img
+              src="https://upeu.edu.pe/fce/wp-content/uploads/sites/2/2022/03/logo-upeu-2022-dark_Mesa-de-trabajo-1.png"
+              alt="UPeU logo" class="w-75"/>
+          </div>
+
+          <div class="col">
+
+            <nb-list>
+              <nb-list-item class="d-flex flex-column justify-content-start align-items-start border-top-0">
+                <h2 class="p-0 m-0">Hola</h2>
+                <span class="paragraph">¿Eres Estudiante o Docente?</span>
+              </nb-list-item>
+              <nb-list-item class="border-bottom-0">
+                <button nbButton fullWidth status="primary" shape="semi-round" (click)="lamb()">
+                  <nb-icon icon="layers-outline"></nb-icon>
+                  Iniciar sesión
+                </button>
+              </nb-list-item>
+
+              <nb-list-item class="border-bottom-0">
+                <div class="w-100">
+                  <p>Inicia sesión con:</p>
+                  <div class="d-flex flex-column gap-3">
+                    <button nbButton fullWidth status="danger" shape="semi-round" (click)="google()">
+                      <nb-icon icon="google-outline"></nb-icon>
+                      Google
+                    </button>
+                    <button nbButton fullWidth shape="semi-round" nbTooltip="En desarrollo...">
+                      <img src="https://c1-odc-15.cdn.office.net:443/start/s/161541341023_resources\favicon_outlook.ico"
+                           alt="" width="20"> &nbsp;
+                      Outlook
+                    </button>
+                  </div>
+                </div>
+              </nb-list-item>
+
+            </nb-list>
+
+
+          </div>
+
+        </div>
+      </nb-card-body>
+    </nb-card>
+
+  </nb-layout-column>
+</nb-layout>
+
+
+
