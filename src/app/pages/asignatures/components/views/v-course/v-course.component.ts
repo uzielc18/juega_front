@@ -50,7 +50,12 @@ export class VCourseComponent implements OnInit, OnDestroy {
 
             if (this.curso?.units.length>0) {
               this.curso?.units.map((res:any) => {
-                res.checked = true;
+                console.log(res)
+                if(res.orden_unidad == 1){
+                  res.checked = false
+                }else{
+                  res.checked = true;
+                }
               });
             }
           }
@@ -68,7 +73,7 @@ export class VCourseComponent implements OnInit, OnDestroy {
         this.curso.resumen = data.data.resumen;
         this.curso.matriculados = data.data.matriculados;
         // console.log(this.curso);
-        
+
         // lo
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
@@ -96,16 +101,17 @@ export class VCourseComponent implements OnInit, OnDestroy {
     }
   }
   changeColapse($event:any) {
+    console.log($event)
     this.curso?.units.map((res:any) => {
       res.checked = true;
     });
     $event.checked = false;
     // console.log($event);
-    
+
   }
   status(value:any) {
     // console.log(value);
-    
+
     if (value <= 33) {
       return 'danger';
     } else if (value <= 66) {

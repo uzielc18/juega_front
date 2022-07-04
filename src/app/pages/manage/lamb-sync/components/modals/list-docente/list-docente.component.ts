@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {NbDialogRef} from "@nebular/theme";
 
 @Component({
   selector: 'app-list-docente',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListDocenteComponent implements OnInit {
 
-  constructor() { }
+  @Input() item:any
+  constructor(public activeModal: NbDialogRef<ListDocenteComponent>,) { }
 
   ngOnInit(): void {
   }

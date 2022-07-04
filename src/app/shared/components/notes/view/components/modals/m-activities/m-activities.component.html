@@ -1,0 +1,101 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="text-center" >
+    <div class="text-header">
+      <strong>Seleccione la(s) actividad(es) que va a promediar el rubro del sílabo.</strong>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px;">
+          <th>#</th>
+          <th>Unidad</th>
+          <th>Sesion</th>
+          <th>Actividad</th>
+          <th>Tipo</th>
+          <th>Marcar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items; let i = index" style="font-size: 10px; vertical-align: middle;">
+          <td>{{i +1}}</td>
+          <td>{{item.unidad}}</td>
+          <td>{{item.session}}</td>
+          <td> <div style="width: 250px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden">{{item.descripcion}}</div></td>
+          <td>{{item.tipo}}</td>
+          <td><nb-checkbox [(ngModel)]="item.checked"></nb-checkbox></td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="item == [] || ''" class="text-center" style="border: 1px solid #E3EBF3; padding: 8px 0">No existen elementos de evaluación asignados para este rubro.</div>
+    </div>
+    <div class="d-flex">
+      <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
+      <button
+        type="button"
+        class="ms-2"
+        nbButton
+        size="small"
+        status="primary"
+        (click)="calcular()"
+        [disabled]="checkedValidate"
+      >
+        Calcular
+
+      </button>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+  </nb-card-footer>
+  <nb-card *ngIf="students.length > 0">
+    <nb-card-body class="text-center" >
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead>
+          <tr style="font-size: 12px;">
+            <th>#</th>
+            <th>codigo</th>
+            <th>Nombres y Apellidos</th>
+            <th>Notas</th>
+            <th>Promedio</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of students; let i = index" style="font-size: 10px; vertical-align: middle;">
+            <td>{{i +1}}</td>
+            <td>{{item.codigo}}</td>
+            <td>{{item.nombres_completos}}</td>
+            <td>{{item.notas}}</td>
+            <td>{{item.promedio}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <!-- <div *ngIf="students.length == 0" class="text-center" style="border: 1px solid #E3EBF3; padding: 8px 0">No existen elementos de evaluación asignados para este rubro.</div>-->
+      </div>
+    </nb-card-body>
+    <div class="d-flex">
+      <div class="ms-auto">
+        <button
+          type="button"
+          class="ms-2"
+          nbButton
+          size="small"
+          status="primary"
+          (click)="saveNotes()">
+          GUARDAR NOTAS
+
+        </button>
+      </div>
+    </div>
+  </nb-card>
+</nb-card>

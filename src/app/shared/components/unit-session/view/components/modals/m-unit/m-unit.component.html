@@ -46,13 +46,14 @@
                            [nbDatepicker]="fechaInicio" fieldSize="small" formControlName="fecha_inicio"/>
                     <nb-icon nbSuffix icon="calendar" status="primary" size="small"
                              pack="eva"></nb-icon>
-                    <nb-datepicker #fechaInicio format="dd/MM/yyyy">
+                    <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min">
                     </nb-datepicker>
                   </nb-form-field>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
+              <fieldset [disabled]="!FormUnit.value.fecha_inicio">
               <div class="row">
                 <label class="col-md-4 label">Fecha fin:</label>
                 <div class="col-md-8">
@@ -61,11 +62,12 @@
                            [nbDatepicker]="fechaFin" fieldSize="small" formControlName="fecha_fin"/>
                     <nb-icon nbSuffix icon="calendar" status="primary" size="small"
                              pack="eva"></nb-icon>
-                    <nb-datepicker #fechaFin format="dd/MM/yyyy">
+                    <nb-datepicker #fechaFin format="dd/MM/yyyy" [min]="FormUnit.value.fecha_inicio">
                     </nb-datepicker>
                   </nb-form-field>
                 </div>
               </div>
+              </fieldset>
             </div>
           </div>
           <br>

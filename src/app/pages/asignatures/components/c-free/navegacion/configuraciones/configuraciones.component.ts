@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import Swal from 'sweetalert2';
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-configuraciones',
   templateUrl: './configuraciones.component.html',
@@ -10,7 +11,8 @@ import Swal from 'sweetalert2';
 export class ConfiguracionesComponent implements OnInit {
   @Input() curso:any;
   @Output() changeLoad: EventEmitter<any> = new EventEmitter();
-  constructor(private generalService: GeneralService) { }
+  constructor(private generalService: GeneralService,
+              private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -114,5 +116,8 @@ export class ConfiguracionesComponent implements OnInit {
       }
     });
      }
+  }
+  syncNotes(){
+    this.router.navigate([`/pages/asignatures/course/${this.curso.id_carga_curso_docente}/notes`],);
   }
 }

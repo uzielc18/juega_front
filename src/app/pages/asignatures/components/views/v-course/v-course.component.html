@@ -48,7 +48,7 @@
                     </div>
                   </div>
                   <nb-accordion class="mb-3" *ngFor="let unidad of curso?.units">
-                    <nb-accordion-item (click)="changeColapse(unidad)" [collapsed]="unidad?.checked">
+                    <nb-accordion-item (click)="changeColapse(unidad)" [ngStyle]="{'background': !unidad.checked? 'var(--color-warning-100)': ''}" [collapsed]="unidad?.checked">
                       <nb-accordion-item-header class="p-2 p-md-3">
                         <div class="p-0 pe-4">
                           <div class="d-flex align-items-center">
