@@ -20,7 +20,7 @@ import { API } from './vhost';
 export const environment = {
   production: false,
   module_id: 1050,
-  authStrategy: {
+  /*authStrategy: {
     name: 'lamb',
     clientId: 'SDR74A0tHgbCgqOctjdC36eMaHqs4pE6II37uzQW',
     baseEndpoint: 'https://oauth.upeu.edu.pe',
@@ -33,6 +33,26 @@ export const environment = {
       '649461344129-0thst4vl3n9aj0j7njie8nd73psls419.apps.googleusercontent.com',
     endpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
     redirectUri: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/oauth2/google/callback`,
+    success: '/lamb-patmos/fronts/patmos-upeu-base-front/pages/dashboard',
+  }, */
+
+  authStrategy: {
+    name: '_lamb_strategy',
+    clientId: 'OECdqAkEwvd9gEEDnX7vsaYLFAtqiBZwwJg4ztQB',
+    clientSecret:'oKLfJo1ut09TzLcb7vfWFhBqQWsbU4tgBWWPdUge802miZ3pZvjg8X6QZ4xB1EUznq5giqUOGNeSKAMwuy3bRgOTojQjbvnjv4y5AqsfJcVESl6rQLsgejMANL456Qa4',
+    baseEndpoint: 'https://oauth.upeu.edu.pe',
+    redirectUri: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/auth/lamb/callback`,
+    success: '/lamb-patmos/fronts/patmos-upeu-base-front/pages/dashboard',
+  },
+  authGoogleStrategy: {
+    name: '_google_strategy',
+    clientId:
+      '649461344129-0thst4vl3n9aj0j7njie8nd73psls419.apps.googleusercontent.com',
+    clientSecret: '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',
+    endpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
+    tokenEndpoint: 'https://oauth2.googleapis.com/token',
+    refreshTokenEndpoint: 'https://oauth2.googleapis.com/token',
+    redirectUri: `https://www.upeu.dev/lamb-patmos/fronts/patmos-upeu-base-front/auth/google/callback`,
     success: '/lamb-patmos/fronts/patmos-upeu-base-front/pages/dashboard',
   },
   apiUrls: {
