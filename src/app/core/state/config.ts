@@ -21,10 +21,6 @@ export const routesConfig: Routes = [
   {
     path: 'auth/google/callback',
     component: AuthRouteGoogleComponent
-  },
-  {
-    path: '',
-    redirectTo: 'auth',
-    pathMatch: 'full'
   }
+  
 ];
