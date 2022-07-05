@@ -10,8 +10,8 @@ const routes: Routes = [
  
   {
     path: 'pages',
-    canActivate: [AuthGuard],
     component: ScaffoldComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',
@@ -64,6 +64,11 @@ const routes: Routes = [
         redirectTo: 'dashboard',
         pathMatch: 'full',
       },
+      {
+        path: '**',
+        loadChildren: () => import('./pages/notfound/notfound.module').then(m => m.NotfoundModule),
+      },
+
 
     ],
   },
@@ -77,9 +82,8 @@ const routes: Routes = [
     redirectTo: 'pages',
     pathMatch: 'full',
   },
-  {
+  /*{
     path: "**",
-    canActivate: [AuthGuard],
     loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
   },
 
@@ -87,7 +91,7 @@ const routes: Routes = [
     path: "pages/not-found",
     canActivate: [AuthGuard],
     loadChildren: () => import("./pages/notfound/notfound.module").then((m) => m.NotfoundModule),
-  },
+  }, */
 ];
 
 @NgModule({
