@@ -23,9 +23,9 @@ export const environment = {
     success: '/pages/dashboard',
   },
   apiUrls: {
-    auth: API.auth.local,
-    setup: API.setup.local,
-    base: API.base.local,
+    auth: API.auth.dev,
+    setup: API.setup.dev,
+    base: API.base.dev,
   },
   shellApp: `${window.location.origin}/auth`,
   pages: `${window.location.origin}/pages`,

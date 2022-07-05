@@ -127,102 +127,20 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         if (data.item.subtag === 'logout') {
-          this.loading = true;
-          // this.appService.start();
-          this.tokenService
-            .logout()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(
-              (value: any) => {
-                if (value.hasOwnProperty('success') && value.success) {
-                  this.nbAuthService
-                    .getToken()
-                    .pipe(takeUntil(this.destroy$))
-                    .subscribe((value: NbAuthToken) => {
-                      if (['lamb'].includes(value.getOwnerStrategyName())) {
-                        // lamb
-                        this.tokenService
-                          .logoutLamb()
-                          .pipe(takeUntil(this.destroy$))
-                          .subscribe(
-                            (result: any) => {
-                              if (result && result.hasOwnProperty('logout') && result.logout) {
-                                this.nbAuthService
-                                  .logout(this.options.strategyName)
-                                  .pipe(takeUntil(this.destroy$))
-                                  .subscribe((authResult: NbAuthResult) => {
-                                    if (authResult.isSuccess()) {
-                                      // this.appService.stop();
-                                      sessionStorage.removeItem('rolSemesterLeng');
-                                      sessionStorage.removeItem('configAssign');
-                                      this.router.navigate([`/auth`]);
-                                      // window.location.href = environment.shellApp;
-                                    }
-                                  });
-                              } else {
-                                this.loading = false;
-                                // this.appService.stop();
-                              }
-                            },
-                            () => {
-                              this.nbAuthService
-                                .logout(this.options.strategyName)
-                                .pipe(takeUntil(this.destroy$))
-                                .subscribe((authResult: NbAuthResult) => {
-                                  if (authResult.isSuccess()) {
-                                    // this.appService.stop();
-                                    sessionStorage.removeItem('rolSemesterLeng');
-                                    sessionStorage.removeItem('configAssign');
-                                    this.router.navigate([`/auth`]);
-                                    // window.location.href = environment.shellApp;
-                                  }
-                                });
-                              this.loading = false;
-                            },
-                            () => {
-                              this.loading = false;
-                            }
-                          );
-                      }
 
-                      if (['google'].includes(value.getOwnerStrategyName())) {
-                        // google
-                        this.nbAuthService
-                          .logout(this.options.strategyGoogleName)
-                          .pipe(takeUntil(this.destroy$))
-                          .subscribe(
-                            (authResult: NbAuthResult) => {
-                              if (authResult.isSuccess()) {
-                                // this.appService.stop();
-                                sessionStorage.removeItem('rolSemesterLeng');
-                                sessionStorage.removeItem('configAssign');
-                                this.router.navigate([`/auth`]);
-                                // window.location.href = environment.shellApp;
-                              }
-                            },
-                            () => {
-                              this.loading = false;
-                            },
-                            () => {
-                              this.loading = false;
-                            }
-                          );
-                      }
-                    });
-                } else {
-                  this.loading = false;
-                  // this.appService.stop();
-                }
-              },
-              () => {
-                // this.loading = false;
-                // this.appService.stop();
-              },
-              () => {
-                // this.loading = false;
-                // this.appService.stop();
-              }
-            );
+          this.tokenService
+            .logout().subscribe(_ => {
+              this.nbTokenService.get().subscribe((resp: NbAuthToken) => {
+                this.nbAuthService.logout(resp.getOwnerStrategyName())
+                .subscribe((authResult: NbAuthResult) => {
+                  if (authResult.isSuccess()) {
+                    sessionStorage.clear();
+                    this.router.navigate([`/auth`]);
+                  }
+                });
+              });
+            });
+          
         } else if (data.item.subtag === 'profile') {
           this.emitEventsService.profileInfo(true);
           this.router.navigate([`/pages/dashboard`]);
