@@ -19,6 +19,7 @@ import { END_POINTS } from 'src/app/providers/utils';
 import { GeneralService } from 'src/app/providers';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 import { Router } from '@angular/router';
+import { SpinnerService } from '../auth/services/spinner.service';
 
 @Component({
   selector: 'app-scaffold',
@@ -85,6 +86,12 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     },
   ];
   subcrActuMenu: any = Subscription;
+
+
+  private spinnerSub: Subscription;
+  
+
+
   constructor(
     private nbTokenService: NbTokenService,
     private sidebarService: NbSidebarService,
@@ -98,11 +105,18 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private generalService: GeneralService,
     public emitEventsService: EmitEventsService,
-    private router: Router
+    private router: Router,
+    private spinnerService: SpinnerService,
   ) {
+    this.spinnerSub = this.onSpinner();
     // console.log(this.router);
 
   }
+
+  onSpinner(): Subscription {
+    return this.spinnerService.onLoader().subscribe((status: boolean) => this.spinner = status);
+  }
+
 
   ngOnInit(): void {
     this.setConfiguartion();
@@ -214,10 +228,12 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.spinnerSub.unsubscribe();
     this.destroy$.next();
     this.destroy$.complete();
     this.subcript.unsubscribe();
     this.subcrActuMenu.unsubscribe();
+    
   }
 
   open() {

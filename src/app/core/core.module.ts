@@ -56,6 +56,8 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { NbAuthJWTInterceptor } from '@nebular/auth';
 import { AuthStrategyInterceptor } from './auth/interceptors/auth-strategy.interceptor';
 import {NebularModule} from "../shared/nebular.module";
+import { SpinnerService } from './auth/services/spinner.service';
+import { SpinnerInterceptor } from './auth/interceptors/spinner.interceptor';
 registerLocaleData(localePe);
 const ANGULAR: any[] = [
   CommonModule,
@@ -110,10 +112,12 @@ const ANGULAR: any[] = [
     LoadInterceptor,
     AppValidateTokenService,
     AuthGuard,
+    SpinnerService,
     { provide: LOCALE_ID, useValue: 'es-Pe' },
     {provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: AuthStrategyInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: CatchErrorInterceptor, multi: true, deps: [NbToastrService]},
+    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
     {
       provide: APP_INITIALIZER,
       useFactory: init_app,
