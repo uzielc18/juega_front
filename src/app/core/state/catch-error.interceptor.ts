@@ -11,7 +11,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { NbIconConfig, NbToastrService } from '@nebular/theme';
 import { status } from './status-messages';
 
-const showStatusCodes = [400, 500, 403, 404, 202, 422, 409, 0];
+const showStatusCodes = [400, 500, 403, 404, 202, 422, 409, 0, 405];
 
 @Injectable()
 export class CatchErrorInterceptor implements HttpInterceptor {
@@ -53,7 +53,7 @@ export class CatchErrorInterceptor implements HttpInterceptor {
           (res: HttpEvent<any>) => {
               if (res && req.method !== 'GET') {
                 this.interceptResponse(res, req.method);
-              }    
+              }
           },
        ),
       catchError((err: HttpErrorResponse) => {
@@ -92,7 +92,7 @@ export class CatchErrorInterceptor implements HttpInterceptor {
     this.service.show(msg, title, iconConfig);
   }
 
-  
+
 }
 // import { environment } from 'src/environments/environment';
 // import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';

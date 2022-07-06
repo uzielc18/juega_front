@@ -50,7 +50,6 @@ export class VCourseComponent implements OnInit, OnDestroy {
 
             if (this.curso?.units.length>0) {
               this.curso?.units.map((res:any) => {
-                console.log(res)
                 if(res.orden_unidad == 1){
                   res.checked = false
                 }else{
@@ -101,7 +100,6 @@ export class VCourseComponent implements OnInit, OnDestroy {
     }
   }
   changeColapse($event:any) {
-    console.log($event)
     this.curso?.units.map((res:any) => {
       res.checked = true;
     });

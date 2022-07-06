@@ -28,6 +28,7 @@ import { Router } from '@angular/router';
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
   MENU_ITEMS: NbMenuItem[] = [];
+  statusSearch: boolean = false;
   minimum = false;
   hidden = false;
   user: any;
@@ -100,7 +101,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     // console.log(this.router);
-    
+
   }
 
   ngOnInit(): void {
@@ -294,7 +295,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                 this.updateSemestre(this.semestres[0], rol);
               }
             }
-           
+
           }
         }
       }, () => {this.loading = false;}, () => {this.loading = false;});
@@ -323,7 +324,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       const params = {
         url: this.validUrlRouter(this.router.url),
       };
-      
+
       // console.log(this.router.url);
       this.generalService.addNameIdAndIdData$(serviceName, id, id_rol, params).subscribe(
       // this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe(
@@ -421,5 +422,22 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   newElements() {
     this.router.navigate(['/pages/manage/element']);
   }
- 
+  openSearch(event:any){
+    if(!event){
+      this.statusSearch = true;
+    }else if(event){
+      this.statusSearch = false;
+    }
+  }
+  searchElements(event:any){
+    if(event.target.value === ''){
+      return
+    }else{
+      console.log(event.target.value)
+    }
+    setTimeout(() => {
+      event.target.value = '';
+    },100)
+  }
+
 }

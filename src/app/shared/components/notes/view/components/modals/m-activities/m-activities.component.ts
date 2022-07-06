@@ -52,7 +52,6 @@ export class MActivitiesComponent implements OnInit {
     this.loading = true;
     const serviceName = END_POINTS.base_back.evaluations_Registry + '/get-notes-elements';
     const array = this.items.filter((res:any) => res.checked === true);
-    console.log(array);
     const ids:any = [];
     if(array.length > 0){
       array.map((a:any) => {

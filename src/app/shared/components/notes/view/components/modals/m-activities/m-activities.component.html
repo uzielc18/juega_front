@@ -57,8 +57,7 @@
   </nb-card-body>
   <nb-card-footer>
   </nb-card-footer>
-  <nb-card *ngIf="students.length > 0">
-    <nb-card-body class="text-center" >
+    <nb-card-body class="text-center" *ngIf="students.length > 0">
       <div class="table-responsive">
         <table class="table table-sm">
           <thead>
@@ -97,5 +96,5 @@
         </button>
       </div>
     </div>
-  </nb-card>
+
 </nb-card>
