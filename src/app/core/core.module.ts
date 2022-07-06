@@ -55,6 +55,9 @@ import { AuthRouteGoogleComponent } from './auth/contents/auth-route-google/auth
 import { AuthGuard } from './auth/guards/auth.guard';
 import { NbAuthJWTInterceptor } from '@nebular/auth';
 import { AuthStrategyInterceptor } from './auth/interceptors/auth-strategy.interceptor';
+import {NebularModule} from "../shared/nebular.module";
+import { SpinnerService } from './auth/services/spinner.service';
+import { SpinnerInterceptor } from './auth/interceptors/spinner.interceptor';
 registerLocaleData(localePe);
 const ANGULAR: any[] = [
   CommonModule,
@@ -68,35 +71,36 @@ const ANGULAR: any[] = [
     AuthRouteLambComponent,
     AuthRouteGoogleComponent
   ], // add
-  imports: [
-    ...ANGULAR,
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    NbThemeModule.forRoot({ name: 'theme-2-default'}),
-    NbLayoutModule,
-    NbSidebarModule.forRoot(),
-    NbMenuModule.forRoot(),
-    NbSpinnerModule,
-    NbDatepickerModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbToastrModule.forRoot(toastConfig),
-    NbEvaIconsModule,
-    NbIconModule,
-    NbUserModule,
-    NbActionsModule,
-    NbToggleModule,
-    NbContextMenuModule,
-    RouterModule.forChild(routesConfig),
-    NbSelectModule,
-    NbButtonModule,
-    NbPopoverModule,
-    NbCardModule,
-    NbRadioModule,
-    NbTooltipModule,
-    NbListModule,
-    NbAlertModule
-  ],
+    imports: [
+        ...ANGULAR,
+        BrowserModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        NbThemeModule.forRoot({name: 'theme-2-default'}),
+        NbLayoutModule,
+        NbSidebarModule.forRoot(),
+        NbMenuModule.forRoot(),
+        NbSpinnerModule,
+        NbDatepickerModule.forRoot(),
+        NbDialogModule.forRoot(),
+        NbToastrModule.forRoot(toastConfig),
+        NbEvaIconsModule,
+        NbIconModule,
+        NbUserModule,
+        NbActionsModule,
+        NbToggleModule,
+        NbContextMenuModule,
+        RouterModule.forChild(routesConfig),
+        NbSelectModule,
+        NbButtonModule,
+        NbPopoverModule,
+        NbCardModule,
+        NbRadioModule,
+        NbTooltipModule,
+        NbListModule,
+        NbAlertModule,
+        NebularModule
+    ],
   exports: [
     AuthRouteLoginComponent,
     AuthRouteLambComponent,
@@ -108,10 +112,12 @@ const ANGULAR: any[] = [
     LoadInterceptor,
     AppValidateTokenService,
     AuthGuard,
+    SpinnerService,
     { provide: LOCALE_ID, useValue: 'es-Pe' },
     {provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: AuthStrategyInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: CatchErrorInterceptor, multi: true, deps: [NbToastrService]},
+    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
     {
       provide: APP_INITIALIZER,
       useFactory: init_app,

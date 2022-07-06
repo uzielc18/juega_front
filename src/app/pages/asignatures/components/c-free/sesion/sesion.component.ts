@@ -34,7 +34,6 @@ export class SesionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.sesion, 'sesion')
     // console.log(this.sesion, 'sesson');
 
   }

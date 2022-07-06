@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { MCourseFreeComponent } from '../components/modals/m-course-free/m-course-free.component';
 import { MMatricularComponent } from '../components/modals/m-matricular/m-matricular.component';
 import {MUnitSessionComponent} from "../../../../shared/components/unit-session/modal/m-unit-session.component";
+import {END_POINTS} from "../../../../providers/utils";
 
 @Component({
   selector: 'app-course-home',
@@ -30,18 +31,21 @@ export class CourseHomeComponent implements OnInit {
   pagesCount: any[] = [20, 30, 50, 100, 200, 300, 500, 1000];
   litProgramStudy:any = [];
   semestrers:any = [];
+  facultades:any = [];
   constructor(private generalServi: GeneralService, private formBuilder: FormBuilder, private dialogService: NbDialogService, private appUserInfo: AppService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
     this.getSemester();
+    this.getFacultadesUnidades();
   }
   private fieldReactive() {
     const controls = {
       semester: [''],
       programa_estudio_id: [''],
       ciclo: [''],
-      nombre: ['']
+      nombre: [''],
+      facultades_unidades: ['', [Validators.required]]
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
@@ -65,6 +69,48 @@ export class CourseHomeComponent implements OnInit {
         }
       });
   }
+  getFacultadesUnidades(){
+    const serviceName = END_POINTS.base_back.sede_areas;
+    this.generalServi.nameIdAndId$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id).subscribe(
+      (res: any) => {
+        this.facultades = res.data || [];
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  selecFacultades(item:any){
+    this.formHeader.controls['facultades_unidades'].setValue(item);
+    this.litProgramStudy = [];
+    this.formHeader.controls['programa_estudio_id'].setValue('');
+    this.listProgramEstudy(this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
+  }
+  listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
+    const serviceName = 'list-programa-estudios';
+    const params = {
+      programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
+    }
+    if (id_sede && id_nive_enseanza) {
+        this.generalServi.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
+          console.log(res, "programaEstudy")
+          this.litProgramStudy = res.data || [];
+          if (this.litProgramStudy.length>0) {
+            this.litProgramStudy.map((r:any) => {
+              r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');
+              if (r.semiprecencial_nombre) {
+                r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+              }
+            })
+            // this.getZoom();
+          }
+        });
+
+    }
+  }
   getProgramStudy() {
     const serviceName = 'list-programa-estudios';
     const ids = {
@@ -76,18 +122,21 @@ export class CourseHomeComponent implements OnInit {
       programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
     }
     if (ids && ids.sede_id && ids.nivel_ensenanza_id) {
-      this.generalServi.nameIdAndIdAndIdParams$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id, params).subscribe((res:any) => {
-        this.litProgramStudy = res.data || [];
-        if (this.litProgramStudy.length>0) {
-          this.litProgramStudy.map((r:any) => {
-            r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');
-            if (r.semiprecencial_nombre) {
-              r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
-            }
-          })
-          // this.getZoom();
-        }
-      });
+      if(ids.area_id !== 0){
+        this.generalServi.nameIdAndIdAndIdParams$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id, params).subscribe((res:any) => {
+          this.litProgramStudy = res.data || [];
+          if (this.litProgramStudy.length>0) {
+            this.litProgramStudy.map((r:any) => {
+              r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');
+              if (r.semiprecencial_nombre) {
+                r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+              }
+            })
+            // this.getZoom();
+          }
+        });
+      }
+
     }
   }
   refresh() {
