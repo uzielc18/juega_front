@@ -5,6 +5,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AppService } from "src/app/core";
 import { GeneralService } from "../../../providers";
 import { END_POINTS } from "../../../providers/utils";
+import {
+  RequestAperturaComponent
+} from "../../asignatures/components/modals/request-apertura/request-apertura.component";
+import {NbDialogService} from "@nebular/theme";
+import {AperturaRequestComponent} from "../../../shared/components/apertura-request/view/apertura-request.component";
 
 @Component({
   selector: "app-evaluations-home",
@@ -14,7 +19,7 @@ import { END_POINTS } from "../../../providers/utils";
 export class EvaluationsHomeComponent implements OnInit {
   cursos: any[] = [];
   tipo_elementos: any[] = [];
-
+  userInfo:any;
   pendings: any[] = [];
 
   // curso_id: any;
@@ -40,6 +45,7 @@ export class EvaluationsHomeComponent implements OnInit {
   constructor(
     private generalService: GeneralService,
     private formBuilder: FormBuilder,
+    private dialogService: NbDialogService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public datepipe: DatePipe,
@@ -48,6 +54,16 @@ export class EvaluationsHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldReactive();
+    this.getUserInfo();
+  }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol) {
+      return val;
+    } else {
+      return '';
+    }
   }
 
   private fieldReactive() {
@@ -59,6 +75,9 @@ export class EvaluationsHomeComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listCursos();
+  }
+  getUserInfo() {
+    return this.userInfo = this.appService.user;
   }
 
   iconStyle(element: any) {
@@ -145,7 +164,7 @@ export class EvaluationsHomeComponent implements OnInit {
           })
         }
         console.log(this.pendings);
-        
+
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;
         if (this.pagination.sizeListData < this.pendings.length) {
@@ -176,5 +195,23 @@ export class EvaluationsHomeComponent implements OnInit {
 
   refresh() {
     this.listElements();
+  }
+  solicitar(element:any){
+    this.dialogService.open(AperturaRequestComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        elemento: element,
+        pendiente: element,
+        rolSemestre: this.rolSemestre,
+        userInfo: this.userInfo,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    })
+      .onClose.subscribe(result => {
+      if (result === 'ok') {
+        //this.refreshPending.emit();
+      }
+    });
   }
 }

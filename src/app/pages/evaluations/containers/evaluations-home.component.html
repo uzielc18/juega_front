@@ -66,7 +66,7 @@
                 <span style="font-size: 10px">{{ element?.curso }}</span>
               </div>
             </td>
-            <td class="text-start" >{{ element?.descripcion }}</td>
+            <td class="text-start" > <div style="width: 300px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden">{{ element?.descripcion }}</div></td>
             <td>
               <nb-icon icon="{{ element?.grupal === '1' ? 'people-outline' : 'person-outline' }}"></nb-icon>
               {{ element?.grupal === '1' ? 'Grupal' : 'Personal' }}
@@ -91,8 +91,9 @@
             </td>
             <td>
               <div class="d-flex align-items-center justify-content-center">
-                <button *ngIf="element?.reapertura" nbButton ghost size="small" status="primary"><nb-icon icon="clock-outline"></nb-icon>Solicitar</button>
-                <button *ngIf="!element?.reapertura" nbButton ghost size="small"><nb-icon icon="clock-outline"></nb-icon>Activo</button>
+                <button *ngIf="element?.reapertura" nbButton ghost size="small" status="primary" (click)="solicitar(element)"><nb-icon icon="clock-outline"></nb-icon>Solicitar</button>
+                <span *ngIf="element.total_justification !== 0"> Justificación enviada</span>
+                <button *ngIf="!element?.reapertura && element.total_justification === 0" nbButton ghost size="small"><nb-icon icon="clock-outline"></nb-icon>Activo</button>
               </div>
             </td>
             <td>
