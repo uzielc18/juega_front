@@ -1,14 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogRef } from '@nebular/theme';
-import { GeneralService } from 'src/app/providers';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {NbDialogRef} from "@nebular/theme";
+import {GeneralService} from "../../../../providers";
 
 @Component({
-  selector: 'app-request-apertura',
-  templateUrl: './request-apertura.component.html',
-  styleUrls: ['./request-apertura.component.scss']
+  selector: 'app-apertura-request',
+  templateUrl: './apertura-request.component.html',
+  styleUrls: ['./apertura-request.component.scss']
 })
-export class RequestAperturaComponent implements OnInit {
+export class AperturaRequestComponent implements OnInit {
+
   @Input() elemento:any;
   @Input() pendiente:any;
   @Input() rolSemestre:any;
@@ -49,8 +50,10 @@ export class RequestAperturaComponent implements OnInit {
   };
   formHeader: any = FormGroup;
 
-  constructor(public activeModal: NbDialogRef<RequestAperturaComponent>,private generalService: GeneralService,
-    private formBuilder: FormBuilder) {
+  constructor(public activeModal: NbDialogRef<AperturaRequestComponent>,
+              private generalService: GeneralService,
+              private fb: FormBuilder) {
+
     setInterval(() => {
       if (this.pendiente) {
         this.countdown(this.pendiente?.fecha_fin);
@@ -59,14 +62,13 @@ export class RequestAperturaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.elemento, 'pen', this.pendiente, 'info', this.userInfo);
     this.fieldReactive();
   }
   private fieldReactive() {
     const controls = {
       justification: ['', [Validators.required]],
     };
-    this.formHeader = this.formBuilder.group(controls);
+    this.formHeader = this.fb.group(controls);
   }
   closeModal() {
     this.activeModal.close('close');
@@ -97,12 +99,13 @@ export class RequestAperturaComponent implements OnInit {
     }
   }
   saveJustificate() {
+    this.loading = true
     const serviceName = 'justifications';
     const params = {
-      pending_id:this.pendiente.student_pending.id,
-      persons_student_id: this.pendiente.student_pending.persons_student_id || '',
-      persons_teacher_id: this.elemento.course.persons_teacher_id || '',
-      element_id: this.elemento.id || '',
+      pending_id:this.pendiente.pending_id,
+      persons_student_id: this.rolSemestre.persons_student.person_id|| '',
+      persons_teacher_id: this.elemento.persons_teacher_id || '',
+      element_id: this.elemento.element_id || '',
       id_carga_curso_docente: this.elemento.id_carga_curso_docente || '',
       estado_justification: 'pendiente',
       justification: this.formHeader.value.justification,

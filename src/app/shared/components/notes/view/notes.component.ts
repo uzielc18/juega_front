@@ -41,8 +41,7 @@ export class NotesComponent implements OnInit {
     }
     const serviceName = END_POINTS.base_back.evaluations_Registry + '/get-evaluations';
     this.generalService.nameParams$(serviceName, params).subscribe(res => {
-      this.items = res.data.evaluations;
-      console.log(this.items[0].id_carga_curso)
+      this.items = res.data.evaluations || '';
       this.itemStudents = res.data.students;
     }, () => {this.loading = false}, () => {this.loading = false});
 

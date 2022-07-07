@@ -6,6 +6,7 @@ import { EvaluationsComponent } from './evaluations.component';
 import { EvaluationsHomeComponent } from './containers/evaluations-home.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NebularModule } from '../../shared/nebular.module';
+import {AperturaRequestModule} from "../../shared/components/apertura-request/view/apertura-request.module";
 
 const COMPONENTS: any = [
   EvaluationsComponent,
@@ -13,7 +14,8 @@ const COMPONENTS: any = [
 ]
 
 const MODULES: any = [
-  NgbPaginationModule
+  NgbPaginationModule,
+  AperturaRequestModule
 ]
 
 const NEBULAR: any = [
