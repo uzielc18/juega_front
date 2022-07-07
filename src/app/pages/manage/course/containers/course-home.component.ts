@@ -90,13 +90,13 @@ export class CourseHomeComponent implements OnInit {
     this.listProgramEstudy(this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
   }
   listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
+    this.loading = true
     const serviceName = 'list-programa-estudios';
     const params = {
       programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
     }
     if (id_sede && id_nive_enseanza) {
         this.generalServi.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
-          console.log(res, "programaEstudy")
           this.litProgramStudy = res.data || [];
           if (this.litProgramStudy.length>0) {
             this.litProgramStudy.map((r:any) => {
@@ -107,7 +107,7 @@ export class CourseHomeComponent implements OnInit {
             })
             // this.getZoom();
           }
-        });
+        }, () => {this.loading = false}, () => {this.loading = false});
 
     }
   }
