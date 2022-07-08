@@ -60,7 +60,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   date = new Date();
   loading: boolean = false;
   @ViewChild(NbPopoverDirective) popover: any = NbPopoverDirective;
-  @ViewChild(NbPopoverDirective) popover2: any = NbPopoverDirective;
   subcript: any = Subscription;
   validBlock: any = { from: '', status: false };
 
@@ -442,14 +441,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   openSearch(event:any){
     if(!event){
       this.statusSearch = true;
-      this.popover2.show();
     }else if(event){
       this.statusSearch = false;
-      this.popover2.hide();
     }
-  }
-  openSearh(e:any){
-    console.log(e)
   }
   searchElements(event:any){
     if(event.target.value === ''){
