@@ -57,7 +57,7 @@
                 <span nbTooltip="Participantes" nbTooltipStatus="warning" class="text-center">
                   <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="people-outline"></nb-icon><br><label class="label" style="font-size: 12px;">{{curso?.matriculados}}</label>
                 </span>&nbsp;&nbsp;
-                <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning" class="text-center"> 
+                <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning" class="text-center">
                   <nb-icon style="font-size: 14px;" class="label" [icon]="tot?.icono"></nb-icon><br><label class="label" style="font-size: 12px;">{{tot?.total}}</label>
                   </span>&nbsp;&nbsp;
                 <span nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning" class="text-center">
@@ -68,9 +68,7 @@
                 <nb-progress-bar  [value]="curso?.resumen?.avance" [status]="status(curso?.resumen?.avance)"></nb-progress-bar>
               </div>
             </div>
-            <div class="col-md-1 text-center">
-              <nb-icon icon="settings-2-outline" status="info"></nb-icon>
-            </div>
+
             <!-- <div class="col-md-1">
               <div class="element-img d-md-block d-none">
                 <img src="assets/play-list.png" width="100%" height="100%" />
@@ -114,7 +112,7 @@
               <span nbTooltip="Participantes" nbTooltipStatus="warning" class="text-center">
                 <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="people-outline"></nb-icon><br><label class="label" style="font-size: 12px;">{{curso?.matriculados}}</label>
               </span>&nbsp;&nbsp;
-              <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning" class="text-center"> 
+              <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning" class="text-center">
                 <nb-icon style="font-size: 14px;" class="label" [icon]="tot?.icono"></nb-icon><br><label class="label" style="font-size: 12px;">{{tot?.total}}</label>
                 </span>&nbsp;&nbsp;
               <span nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning" class="text-center">
@@ -122,7 +120,7 @@
               </span>
             </div>
          </nb-card-footer>
-          
+
         </nb-card>
       </div>
       </div>

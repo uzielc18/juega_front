@@ -89,7 +89,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
 
   private spinnerSub: Subscription;
-  
+
 
 
   constructor(
@@ -155,7 +155,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                 });
               });
             });
-          
+
         } else if (data.item.subtag === 'profile') {
           this.emitEventsService.profileInfo(true);
           this.router.navigate([`/pages/dashboard`]);
@@ -233,7 +233,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
     this.subcript.unsubscribe();
     this.subcrActuMenu.unsubscribe();
-    
+
   }
 
   open() {
