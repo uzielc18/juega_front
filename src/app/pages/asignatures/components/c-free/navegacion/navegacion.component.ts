@@ -29,8 +29,18 @@ export class NavegacionComponent implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
     this.userInfo = this.userService;
+    console.log(this.rolSemestre)
+  }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion) {
+      return JSON.parse(sesion);
+    } else {
+      return '';
+    }
   }
   changeTabs(event:any) {
     const idTab = event.tabId;
