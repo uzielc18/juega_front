@@ -20,6 +20,7 @@ export class VCourseComponent implements OnInit, OnDestroy {
   path: number = 0;
   curso: any = [];
   loading:boolean = false;
+  zoom: any = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private generalService: GeneralService,
@@ -68,6 +69,7 @@ export class VCourseComponent implements OnInit, OnDestroy {
       this.loading = true;
       this.generalService.nameId$(serviceName, couurse_id).subscribe((data) => {
         // console.log(data.data);
+        this.zoom = data.data;
         data.data.resumen.avance = Number(data.data.resumen.avance).toFixed(2);
         this.curso.resumen = data.data.resumen;
         this.curso.matriculados = data.data.matriculados;

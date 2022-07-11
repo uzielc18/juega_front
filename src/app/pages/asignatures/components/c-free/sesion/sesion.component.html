@@ -55,6 +55,7 @@
                 <button nbButton size="tiny" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && arrayEl?.length>0"
                 status="primary" outline (click)="openElementosOrden()">
                 <nb-icon [icon]="'edit'"></nb-icon>Órden</button>
+                <span *ngIf="arrayEl[0]?.orden === null && arrayEl?.length>0" class="orden">Guardar orden*</span>
               </div>
 
               <div class="d-flex align-items-center p-0 ms-auto me-3 my-3" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)">

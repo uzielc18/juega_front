@@ -11,8 +11,11 @@ import { EstudiantesComponent } from './estudiantes/estudiantes.component';
   styleUrls: ['./navegacion.component.scss'],
 })
 export class NavegacionComponent implements OnInit {
+  loading:boolean = false
   @Input() curso: any;
+  @Input() zoom: any;
   userInfo: any;
+  valor: any;
   showText: boolean = false;
   @ViewChild(JustificationsComponent) justifiAct:any;
   @ViewChild(PreguntasComponent) pregunts:any;
@@ -32,7 +35,6 @@ export class NavegacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInfo = this.userService;
-    console.log(this.rolSemestre)
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -62,5 +64,15 @@ export class NavegacionComponent implements OnInit {
     if ($event === 'ok') {
       this.eventsChange.emit($event);
     }
+  }
+  copy(item: any){
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      e.clipboardData?.setData('text/plain', (item));
+      e.preventDefault();
+      // @ts-ignore
+      document.removeEventListener('copy', null)
+    });
+    document.execCommand('copy');
+
   }
 }

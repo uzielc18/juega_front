@@ -63,29 +63,17 @@
                               <small>01 marzo al 04 abril</small>
                             </div>
                           </div>
-                          <hr class="me-3 mt-2" />
-                          <div class="row">
-                            <small class="fw-light text-muted course-description">
-                              <strong style="color: #1e1925; font-weight: bold;">Resultado de aprendizaje:</strong>
-                              {{unidad.resultado_aprendizaje}}
-                            </small>
-                            <br>
-                            <small class="fw-light text-muted course-description">
-                              <strong style="color: #1e1925; font-weight: bold;">Resultado de unidad:</strong>
-                              {{unidad.resultado_unidad}}
-                            </small>
-                          </div>
                         </div>
                       </nb-accordion-item-header>
                       <nb-accordion-item-body class="course-accordion-body">
                         <div class="d-flex flex-column">
                           <small class="fw-bold another-color">Descripción</small>
                           <small class="description">
-                            Conceptos fundamentales, recopilacion de informacion. Modelo Conceptual y Relacional
+                            {{unidad.resultado_unidad}}
                           </small>
                           <small class="fw-bold another-color">Resultado de apredizaje</small>
                           <small class="mb-4 description">
-                            Elabora el modelo Entidad Relacion de la base de datos para un sistema de informacion
+                            {{unidad.resultado_aprendizaje}}
                           </small>
                           <div *ngFor="let sesion of unidad?.topics">
                             <app-sesion
@@ -108,7 +96,7 @@
       </div>
     </div>
     <div class="col-xxl-3 p-0">
-      <app-navegacion [curso]="curso" (eventsChange)="eventsChangesss($event)"></app-navegacion>
+      <app-navegacion [curso]="curso" [zoom]="zoom" (eventsChange)="eventsChangesss($event)"></app-navegacion>
     </div>
   </div>
 </div>
