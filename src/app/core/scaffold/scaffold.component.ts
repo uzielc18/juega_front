@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   NbMediaBreakpointsService,
   NbMenuItem,
@@ -7,19 +7,19 @@ import {
   NbSidebarService,
   NbThemeService,
 } from '@nebular/theme';
-import {  map, takeUntil } from 'rxjs/operators';
-import { Subject, Subscription } from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
+import {Subject, Subscription} from 'rxjs';
 
-import { NbAuthResult, NbAuthService, NbAuthToken, NbTokenService } from '@nebular/auth';
-import { CORE_OPTIONS, CoreOptions } from '../core.options';
-import { AppService } from '../state/app.service';
-import { AppValidateTokenService } from '../state/app-validate-token.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { END_POINTS } from 'src/app/providers/utils';
-import { GeneralService } from 'src/app/providers';
-import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
-import { Router } from '@angular/router';
-import { SpinnerService } from '../auth/services/spinner.service';
+import {NbAuthResult, NbAuthService, NbAuthToken, NbTokenService} from '@nebular/auth';
+import {CORE_OPTIONS, CoreOptions} from '../core.options';
+import {AppService} from '../state/app.service';
+import {AppValidateTokenService} from '../state/app-validate-token.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {END_POINTS} from 'src/app/providers/utils';
+import {GeneralService} from 'src/app/providers';
+import {EmitEventsService} from 'src/app/shared/services/emit-events.service';
+import {Router} from '@angular/router';
+import {SpinnerService} from '../auth/services/spinner.service';
 
 @Component({
   selector: 'app-scaffold',
@@ -34,7 +34,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   hidden = false;
   user: any;
   userMenu: any[] = [];
-
+  termino:any;
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     if (sesion) {
@@ -64,6 +64,33 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   validBlock: any = { from: '', status: false };
 
   logoLangs: any = 'assets/spain.svg';
+  ejemploSugerido: any =[];
+  ejemplo:any = [
+    {
+      id: 1,
+      nombre: 'pepito'
+    },
+    {
+      id: 2,
+      nombre: 'lucas'
+    },
+    {
+      id: 3,
+      nombre: 'juan'
+    },
+    {
+      id: 4,
+      nombre: 'javier'
+    },
+    {
+      id: 4,
+      nombre: 'juango'
+    },
+    {
+      id: 4,
+      nombre: 'jaime'
+    }
+  ]
 
   listLanguages: any = [
     {
@@ -443,13 +470,19 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.statusSearch = true;
     }else if(event){
       this.statusSearch = false;
+        this.termino = ''
+        this.ejemploSugerido = []
     }
   }
   searchElements(event:any){
     if(event.target.value === ''){
       return
     }else{
-      console.log(event.target.value)
+      this.termino = event.target.value
+      this.ejemploSugerido = this.ejemplo.filter((x: any) =>
+        x.nombre.toUpperCase()
+          .includes(event.target.value.toUpperCase()))
+          .slice(0, 2)
     }
     setTimeout(() => {
       event.target.value = '';

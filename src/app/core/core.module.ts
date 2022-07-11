@@ -58,6 +58,7 @@ import { AuthStrategyInterceptor } from './auth/interceptors/auth-strategy.inter
 import {NebularModule} from "../shared/nebular.module";
 import { SpinnerService } from './auth/services/spinner.service';
 import { SpinnerInterceptor } from './auth/interceptors/spinner.interceptor';
+import {FilterModule} from "../shared/pipes/filter/filter.module";
 registerLocaleData(localePe);
 const ANGULAR: any[] = [
   CommonModule,
@@ -71,36 +72,37 @@ const ANGULAR: any[] = [
     AuthRouteLambComponent,
     AuthRouteGoogleComponent
   ], // add
-    imports: [
-        ...ANGULAR,
-        BrowserModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        NbThemeModule.forRoot({name: 'theme-2-default'}),
-        NbLayoutModule,
-        NbSidebarModule.forRoot(),
-        NbMenuModule.forRoot(),
-        NbSpinnerModule,
-        NbDatepickerModule.forRoot(),
-        NbDialogModule.forRoot(),
-        NbToastrModule.forRoot(toastConfig),
-        NbEvaIconsModule,
-        NbIconModule,
-        NbUserModule,
-        NbActionsModule,
-        NbToggleModule,
-        NbContextMenuModule,
-        RouterModule.forChild(routesConfig),
-        NbSelectModule,
-        NbButtonModule,
-        NbPopoverModule,
-        NbCardModule,
-        NbRadioModule,
-        NbTooltipModule,
-        NbListModule,
-        NbAlertModule,
-        NebularModule
-    ],
+  imports: [
+    ...ANGULAR,
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({name: 'theme-2-default'}),
+    NbLayoutModule,
+    NbSidebarModule.forRoot(),
+    NbMenuModule.forRoot(),
+    NbSpinnerModule,
+    NbDatepickerModule.forRoot(),
+    NbDialogModule.forRoot(),
+    NbToastrModule.forRoot(toastConfig),
+    NbEvaIconsModule,
+    NbIconModule,
+    NbUserModule,
+    NbActionsModule,
+    NbToggleModule,
+    NbContextMenuModule,
+    RouterModule.forChild(routesConfig),
+    NbSelectModule,
+    NbButtonModule,
+    NbPopoverModule,
+    NbCardModule,
+    NbRadioModule,
+    NbTooltipModule,
+    NbListModule,
+    NbAlertModule,
+    NebularModule,
+    FilterModule
+  ],
   exports: [
     AuthRouteLoginComponent,
     AuthRouteLambComponent,
