@@ -26,6 +26,13 @@
 //     padding: 0px !important;
 //   }
 }
+.message{
+  align-items: center;
+  font-weight: bold;
+  font-size: 14px;
+  //border: 1px solid #A32B3A;
+  color: var(--color-danger-600);
+}
 
 @media screen and (max-width: 1399px) {
   .tabs-container {

@@ -14,7 +14,7 @@ import {NbAuthResult, NbAuthService, NbAuthToken, NbTokenService} from '@nebular
 import {CORE_OPTIONS, CoreOptions} from '../core.options';
 import {AppService} from '../state/app.service';
 import {AppValidateTokenService} from '../state/app-validate-token.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {END_POINTS} from 'src/app/providers/utils';
 import {GeneralService} from 'src/app/providers';
 import {EmitEventsService} from 'src/app/shared/services/emit-events.service';
@@ -46,6 +46,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   spinner = false;
+  search:any = new FormControl('')
   formHeader: any = FormGroup;
   roles: any = [];
   semestres: any = [];
@@ -468,10 +469,13 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   openSearch(event:any){
     if(!event){
       this.statusSearch = true;
+      if(this.termino !== ''){
+        console.log("gaa")
+      }
     }else if(event){
       this.statusSearch = false;
-        this.termino = ''
-        this.ejemploSugerido = []
+        this.search.value = '';
+        this.ejemploSugerido = [];
     }
   }
   searchElements(event:any){
@@ -482,7 +486,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.ejemploSugerido = this.ejemplo.filter((x: any) =>
         x.nombre.toUpperCase()
           .includes(event.target.value.toUpperCase()))
-          .slice(0, 2)
+          //.slice(0, 2)
+      console.log(this.ejemploSugerido)
     }
     setTimeout(() => {
       event.target.value = '';
