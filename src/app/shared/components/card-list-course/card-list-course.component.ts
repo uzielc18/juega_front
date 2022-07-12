@@ -31,13 +31,7 @@ export class CardListCourseComponent implements OnInit {
     private dialogService: NbDialogService,
     private breakpointObserver: BreakpointObserver,) {
 
-    this.breakpointObserver.observe(['(max-width: 767px)']).subscribe((result: BreakpointState) => {
-      if (result.matches) {
-        this.form.get('tipo').setValue('1')
-      } else {
-        this.form.get('tipo').setValue('2')
-      }
-    });
+
     }
 
 
