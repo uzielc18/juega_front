@@ -4,6 +4,8 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { JustificationsComponent } from './justifications/justifications.component';
 import { PreguntasComponent } from './preguntas/preguntas.component';
 import { EstudiantesComponent } from './estudiantes/estudiantes.component';
+import {END_POINTS} from "../../../../../providers/utils";
+import {GeneralService} from "../../../../../providers";
 
 @Component({
   selector: 'app-navegacion',
@@ -15,6 +17,7 @@ export class NavegacionComponent implements OnInit {
   @Input() curso: any;
   @Input() zoom: any;
   userInfo: any;
+  item: any = [];
   valor: any;
   showText: boolean = false;
   @ViewChild(JustificationsComponent) justifiAct:any;
@@ -22,7 +25,9 @@ export class NavegacionComponent implements OnInit {
   @ViewChild(EstudiantesComponent) estudents:any;
 
   @Output() eventsChange: EventEmitter<any> = new EventEmitter();
-  constructor(private breakpointObserver: BreakpointObserver, private userService: AppService) {
+  constructor(private breakpointObserver: BreakpointObserver,
+              private userService: AppService,
+              private generalService: GeneralService) {
     this.breakpointObserver.observe(['(max-width: 1399px)']).subscribe((result: BreakpointState) => {
       if (result.matches) {
         this.showText = true;
@@ -31,8 +36,6 @@ export class NavegacionComponent implements OnInit {
       }
     });
   }
-
-
   ngOnInit(): void {
     this.userInfo = this.userService;
   }
@@ -44,6 +47,7 @@ export class NavegacionComponent implements OnInit {
       return '';
     }
   }
+
   changeTabs(event:any) {
     const idTab = event.tabId;
     switch (idTab) {
@@ -74,5 +78,12 @@ export class NavegacionComponent implements OnInit {
     });
     document.execCommand('copy');
 
+  }
+  crearSalaZoom(){
+    this.loading = true;
+    const serviceName = '/add-course-zoom';
+    this.generalService.nameId$(serviceName, this.zoom.id_carga_curso_docente).subscribe(res => {
+      this.item = res
+    }, () => {this.loading = false}, () => {this.loading = false})
   }
 }

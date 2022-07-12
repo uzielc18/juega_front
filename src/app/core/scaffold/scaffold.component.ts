@@ -14,7 +14,7 @@ import {NbAuthResult, NbAuthService, NbAuthToken, NbTokenService} from '@nebular
 import {CORE_OPTIONS, CoreOptions} from '../core.options';
 import {AppService} from '../state/app.service';
 import {AppValidateTokenService} from '../state/app-validate-token.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {END_POINTS} from 'src/app/providers/utils';
 import {GeneralService} from 'src/app/providers';
 import {EmitEventsService} from 'src/app/shared/services/emit-events.service';
@@ -46,6 +46,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   spinner = false;
+  search:any = new FormControl('')
   formHeader: any = FormGroup;
   roles: any = [];
   semestres: any = [];
@@ -465,27 +466,40 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   newElements() {
     this.router.navigate(['/pages/manage/element']);
   }
-  openSearch(event:any){
+  searchClic(event:any){
     if(!event){
       this.statusSearch = true;
     }else if(event){
-      this.statusSearch = false;
-        this.termino = ''
-        this.ejemploSugerido = []
+        //this.search.value = '';
+      if(this.search.value !== ''){
+        this.statusSearch = true
+        this.ejemploSugerido = this.ejemplo.filter((x: any) =>
+          x.nombre.toUpperCase()
+            .includes(this.search.value.toUpperCase()))
+        //.slice(0, 2)
+        setTimeout(() => {
+          this.search.setValue('');
+        },100)
+      }else{
+        this.statusSearch = false;
+        this.search.value = '';
+        this.ejemploSugerido = [];
+      }
     }
   }
-  searchElements(event:any){
+  searchEnter(event:any){
     if(event.target.value === ''){
       return
     }else{
-      this.termino = event.target.value
       this.ejemploSugerido = this.ejemplo.filter((x: any) =>
         x.nombre.toUpperCase()
           .includes(event.target.value.toUpperCase()))
-          .slice(0, 2)
+          //.slice(0, 2)
+      console.log(this.ejemploSugerido)
     }
     setTimeout(() => {
       event.target.value = '';
+      this.search.setValue('');
     },100)
   }
 
