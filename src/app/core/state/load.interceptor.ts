@@ -19,5 +19,6 @@ export class LoadInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     this.service.start();
     return next.handle(req).pipe(finalize(() => this.service.stop()));
+        // return next.handle(req).pipe(finalize(() => {}));
   }
 }

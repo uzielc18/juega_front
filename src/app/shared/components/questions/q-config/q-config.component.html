@@ -25,12 +25,12 @@
         'margin-left': quiz?.nivel === 2 ? '25px' : '',
         'font-size':  quiz?.nivel === 1 ? '18px' : '13px',
         'font-weight':  quiz?.nivel === 1 ? 'bold' : '',
-        'border-left': '6px solid #00244e'
+        'border-left': quiz?.nivel === 1 ? '10px solid #014776' : '3px solid #ffaa00'
         }">
-        <nb-card-body>
+        <nb-card-body style="padding-top: 10px; padding-bottom: 5px;">
           <div class="d-flex">
             <div>
-              {{i+1}})&nbsp;&nbsp;
+              {{quiz?.orden}})&nbsp;&nbsp;
             </div>
             <div>
               {{quiz?.titulo || quiz?.pregunta}}
@@ -52,7 +52,7 @@
 
 <div *ngIf="!formHeader.value.drag_drop" style="margin-left: 20px;">
 
-<div  *ngFor="let quiz of questions; let i = index">
+<div  *ngFor="let quiz of questions; let i = index" [class]="'pregunta'+ i">
   <div class="row m-0">
     <div [class]="quiz?.pluss ? 'col-md-11' : 'col-md-12'">
       <nb-card (click)="changePluss(quiz)"
@@ -61,12 +61,12 @@
         'margin-left': quiz?.nivel === 2 ? '25px' : '',
         'font-size':  quiz?.nivel === 1 ? '18px' : '13px',
         'font-weight':  quiz?.nivel === 1 ? 'bold' : '',
-        'border-left': '6px solid #00244e'
+        'border-left': quiz?.nivel === 1 ? '10px solid #014776' : '3px solid #ffaa00'
         }">
-        <nb-card-body *ngIf="!quiz?.editValid">
+        <nb-card-body style="padding-top: 10px; padding-bottom: 5px;" *ngIf="!quiz?.editValid">
           <div class="d-flex">
             <div>
-              {{i+1}})&nbsp;&nbsp;
+              {{quiz?.orden}})&nbsp;&nbsp;
             </div>
             <div>
               {{quiz?.titulo || quiz?.pregunta}}
@@ -88,7 +88,7 @@
           <div *ngIf="quiz?.nivel === 2 && quiz?.editValid">
             MODIFIFICANDO
           </div>
-          <div *ngIf="quiz?.nivel === 1">
+          <div *ngIf="quiz?.nivel === 1 && quiz?.eliminar">
             <button nbButton size="small"  (click)="deleteSection($event, quiz)"><nb-icon icon="trash" status="danger"></nb-icon>Eliminar sección</button>
           </div>
         </nb-card-footer>
@@ -161,7 +161,7 @@
             <div>
               <form [formGroup]="formHeader">
               <label class="label">Orden</label><br>
-              <input type="number" nbInput fieldSize="tiny" style="width: 100px;" formControlName="orden" class="text-center">
+              <input type="number" nbInput fieldSize="tiny" style="width: 100px;" formControlName="orden" class="text-center" [readOnly]="true">
               </form>
             </div>
             <div>
@@ -241,7 +241,7 @@
             <nb-icon class="m-0 mb-2" icon="plus-outline" style="height: 24px; width: 24px;"></nb-icon>
             <span style="font-size: 10px;" class="text-center">Añadir<br>pregunta</span>
           </button>
-          <button *ngIf="quiz?.nivel === 2" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueEdit(quiz)">
+          <button *ngIf="quiz?.nivel === 2" nbButton fullWidth ghost size="small" class="d-flex flex-column" (click)="changeValueEdit(quiz, i)">
             <nb-icon class="m-0 mb-2" icon="edit-outline" style="height: 24px; width: 24px;"></nb-icon>
             <span style="font-size: 10px;" class="text-center">Editar<br>pregunta</span>
           </button>
