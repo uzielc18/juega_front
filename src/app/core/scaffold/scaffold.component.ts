@@ -466,23 +466,31 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   newElements() {
     this.router.navigate(['/pages/manage/element']);
   }
-  openSearch(event:any){
+  searchClic(event:any){
     if(!event){
       this.statusSearch = true;
-      if(this.termino !== ''){
-        console.log("gaa")
-      }
     }else if(event){
-      this.statusSearch = false;
+        //this.search.value = '';
+      if(this.search.value !== ''){
+        this.statusSearch = true
+        this.ejemploSugerido = this.ejemplo.filter((x: any) =>
+          x.nombre.toUpperCase()
+            .includes(this.search.value.toUpperCase()))
+        //.slice(0, 2)
+        setTimeout(() => {
+          this.search.setValue('');
+        },100)
+      }else{
+        this.statusSearch = false;
         this.search.value = '';
         this.ejemploSugerido = [];
+      }
     }
   }
-  searchElements(event:any){
+  searchEnter(event:any){
     if(event.target.value === ''){
       return
     }else{
-      this.termino = event.target.value
       this.ejemploSugerido = this.ejemplo.filter((x: any) =>
         x.nombre.toUpperCase()
           .includes(event.target.value.toUpperCase()))
@@ -491,6 +499,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     }
     setTimeout(() => {
       event.target.value = '';
+      this.search.setValue('');
     },100)
   }
 

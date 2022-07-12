@@ -8,6 +8,7 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { EmitEventsService } from '../../services/emit-events.service';
 import { EnterZoomComponent } from './enter-zoom/enter-zoom.component';
+import {BreakpointObserver, BreakpointState} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-card-list-course',
@@ -27,7 +28,16 @@ export class CardListCourseComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
-    private dialogService: NbDialogService) {
+    private dialogService: NbDialogService,
+    private breakpointObserver: BreakpointObserver,) {
+
+    this.breakpointObserver.observe(['(max-width: 767px)']).subscribe((result: BreakpointState) => {
+      if (result.matches) {
+        this.form.get('tipo').setValue('1')
+      } else {
+        this.form.get('tipo').setValue('2')
+      }
+    });
     }
 
 
@@ -128,7 +138,7 @@ export class CardListCourseComponent implements OnInit {
   }
   status(value:any) {
     // console.log(value);
-    
+
     if (value <= 33) {
       return 'danger';
     } else if (value <= 66) {
@@ -137,4 +147,7 @@ export class CardListCourseComponent implements OnInit {
       return 'success';
     }
   }
+
+
+
 }
