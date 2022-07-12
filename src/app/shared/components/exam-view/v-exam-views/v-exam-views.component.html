@@ -2,14 +2,14 @@
         <div style="width: 100%; max-width: 746px;">
             <nb-card *ngFor="let item of questions; let i = index" [accent]="item?.nivel === '1' ? 'primary' : ''" >
                <nb-card-header *ngIf="item.nivel === '1'">
-                    <h5 class="sections">{{item.titulo}}</h5>
+                    <h5 class="sections">{{item?.orden}}). {{item.titulo}}</h5>
                     <p *ngIf="item.descripcion" style="font-size: 12px; text-align: justify;">{{item.descripcion}}</p>
                 </nb-card-header>
                 <nb-card-body *ngIf="item.nivel === '2'">
                   <div >
                       <div class="row">
                           <div class="col-md-11">
-                            <strong style="font-size: 12px; text-align: justify;">{{item?.numeracion}}). {{item?.pregunta?.pregunta}}</strong>
+                            <strong style="font-size: 12px; text-align: justify;">{{item?.orden}}). {{item?.pregunta?.pregunta}}</strong>
                           </div>
                           <div class="col-md-1" style="font-size: 18px; font-weight: bold; text-align: end;">
                               {{item?.puntos}}

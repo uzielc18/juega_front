@@ -25,7 +25,7 @@ private fieldReactive() {
   const controls = {
     titulo: ['', [Validators.required]],
     descripcion: ['', [Validators.required]],
-    orden: [(this.codes === 'NEW' ? this.index + 2 : this.quiz.orden) || ''],
+    orden: [(this.codes === 'NEW' ? this.index : this.quiz.orden) || ''],
   };
   this.formHeader = this.formBuilder.group(controls);
   if (this.codes === 'UPDATE') {
