@@ -71,7 +71,7 @@
           <div class="col-md-3 d-flex align-items-center">
             <div class="buttons d-md-block d-none ms-auto d-md-flex flex-md-wrap" style="gap: 10px">
               <button nbButton status="primary" size="small" (click)="backGo()"><nb-icon icon="arrow-back-outline"></nb-icon> Salir</button>
-              <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="danger" size="small" (click)="refresquestion()"><nb-icon icon="refresh-outline"></nb-icon> Act. Preguntas</button>
+              <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="danger" size="small" (click)="refresquestion()"><nb-icon icon="refresh-outline"></nb-icon>Actualizar</button>
               <button *ngIf="!tiempoRestante?.tiempo_vencido" nbButton status="success" size="small" (click)="openFinish();"
               >Terminar <nb-icon icon="arrowhead-right-outline"></nb-icon></button>
             </div>

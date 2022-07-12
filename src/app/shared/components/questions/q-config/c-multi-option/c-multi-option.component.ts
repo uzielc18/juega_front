@@ -184,6 +184,9 @@ export class CMultiOptionComponent implements OnInit, OnChanges {
   cancel() {
     this.arrayMultiple = [];
   }
+  valueChange(item:any) {
+    item.puntos = '';
+  }
   shift(index1: number, index2: number): void {
     const data = [...this.arrayMultiple];
     if (index2 > 0 && index1 < data.length - 1) {
