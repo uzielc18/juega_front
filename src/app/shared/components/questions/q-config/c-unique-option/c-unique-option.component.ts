@@ -193,9 +193,11 @@ export class CUniqueOptionComponent implements OnInit, OnChanges {
     this.arrayUnique.map((res:any) => {
       res.correcto = 0;
       res.checked = false;
+      res.puntos = 0;
     });
     item.checked = true;
     item.correcto = 1;
+    item.puntos = '';
   }
   shift(index1: number, index2: number): void {
     const data = [...this.arrayUnique];

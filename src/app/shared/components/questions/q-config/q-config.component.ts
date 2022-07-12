@@ -41,6 +41,9 @@ export class QConfigComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.dragQuestions, event.previousIndex, event.currentIndex);
+    setTimeout(() => {
+      this.armarOrdenLista();
+    }, 1000);
   }
   @Output() loadings: EventEmitter<boolean> = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private dialogService: NbDialogService, private generalServi: GeneralService) { }
@@ -89,12 +92,17 @@ export class QConfigComponent implements OnInit {
             r.editValid = false;
             if (r.nivel === 1) {
               r.section_id = r.id;
+              r.eliminar = true;
             }
 
             if (ultimoRegistro && r.id === ultimoRegistro.id) {
               r.ultimo = true;
             }
           });
+
+          if (this.questions[0].nivel === 1) { // No puedes eliminar la primera sección
+            this.questions[0].eliminar = false;
+          }
 
           if (this.item && this.item?.pendientes_realizados !== 0) { // Solo para no editar cuando es mayor a cero (0)
             this.formHeader.controls['drag_drop'].setValue(true);
@@ -112,14 +120,19 @@ export class QConfigComponent implements OnInit {
     });
     this.fieldReactive();
     item.checked = true;
-    this.formHeader.controls['orden'].setValue(i + 2);
+    const qqq = this.questions.filter((a:any) => a.nivel === 2);
+    this.formHeader.controls['orden'].setValue(item.nivel === 1 ? (item.anterior + 1) : item.nivel === 2 ? (item.orden + 1) : qqq.length +1);
     if (this.optionsType.length>0) {
       this.optionsType.map((res:any) => {
         res.checked = false;
       });
     }
+    setTimeout(() => {
+      this.questionToAgreee(i);
+    }, 100);
+
   }
-  changeValueEdit(item:any) {
+  changeValueEdit(item:any, i:any) {
       this.questions.map((r:any) => {
         r.checked = false;
         r.editValid = false;
@@ -145,6 +158,9 @@ export class QConfigComponent implements OnInit {
           }
         });
       }
+      setTimeout(() => {
+        this.questionToAgreee(i);
+      }, 100);
   }
   changeSection(quiz:any, codes: any, i:any) {
     this.fieldReactive();
@@ -153,12 +169,13 @@ export class QConfigComponent implements OnInit {
         res.checked = false;
       });
     }
+    const settions = this.questions.filter((a:any) => a.nivel === 1);
     this.dialogService.open(MSectionComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
         quiz: quiz,
         codes: codes,
-        index: i,
+        index: settions.length + 1,
       },
       closeOnBackdropClick: false,
       closeOnEsc: false
@@ -367,20 +384,27 @@ export class QConfigComponent implements OnInit {
     // console.log($event);
     if ($event) {
       this.dragQuestions = JSON.parse(JSON.stringify(this.questions));
+      this.armarOrdenLista();
     }
   }
-
-  changeOrden() {
-    if (this.dragQuestions.length>1) {
+  armarOrdenLista() {
+    if (this.dragQuestions.length>0) {
+      let ordenSeccion = 1;
+      let ordenPregunta = 1;
       let idSection = 0;
       this.dragQuestions.map((item:any, index:any) => {
-        item.orden = index + 1;
         if (item.nivel === 1) {
           idSection = item.id;
+          item.orden = ordenSeccion++;
         } else {
           item.id_section = idSection;
+          item.orden = ordenPregunta++;
         }
       });
+    }
+  }
+  changeOrden() {
+    if (this.dragQuestions.length>1) {
       const val = this.dragQuestions[0];
       let valid = false;
       if (val.nivel === 1) {
@@ -404,6 +428,8 @@ export class QConfigComponent implements OnInit {
         const params = {
           drag_and_drop: arrayOrder
         }
+        // console.log(params);
+        
         this.loading = true;
         this.generalServi.addNameData$(serviceName, params).subscribe((res:any) => {
           if (res.success) {
@@ -455,6 +481,12 @@ export class QConfigComponent implements OnInit {
           }, () => { this.loading = false; }, () => { this.loading = false; });
         }
       });
+    }
+  }
+  questionToAgreee(index:any) { //para la siguiente pregunta
+    var elem = document.getElementsByClassName("pregunta"+ (index));
+    if(elem){
+      elem[0].scrollIntoView({block: "center",behavior:"smooth"});
     }
   }
 }

@@ -9,14 +9,24 @@
       </nb-actions>
       <nb-actions class="flex-grow-1">
         <nb-action  class="flex-grow-1 justify-content-end">
-            <input *ngIf="statusSearch"
-                   type="text"
-                   placeholder="Buscar..."
-                   nbInput
-                   fullWidth
-                   fieldSize="small"
-                   (keyup.enter)="searchElements($event)"
-                   >
+
+            <div class="flex-grow-1">
+              <input *ngIf="statusSearch"
+                     type="text"
+                     placeholder="Buscar..."
+                     nbInput
+                     fullWidth
+                     fieldSize="small"
+                     (keyup.enter)="searchElements($event)">
+
+              <div *ngIf="statusSearch" class="position-relative">
+                <ul class="list-group position-absolute top-0 start-0 w-100">
+                  <li class="list-group-item list-group-item-action">Buscando "{{termino}}"</li>
+                  <li class="list-group-item list-group-item-action"
+                      *ngFor="let item of ejemploSugerido">{{item.nombre}}</li>
+                </ul>
+              </div>
+            </div>
             <button nbButton
                     ghost
                     status="primary"
@@ -24,7 +34,9 @@
                     (click)="openSearch(statusSearch)">
               <nb-icon icon="search-outline"></nb-icon>
             </button>
+
         </nb-action>
+
         <nb-action *ngIf="rolSemestre?.rol?.name === 'Docente'">
           <button nbButton ghost nbTooltip="Crear elementos" nbTooltipStatus="primary" nbTooltipPlacement="left" status="primary" size="medium" (click)="newElements()"><nb-icon icon="plus-outline"></nb-icon></button>
         </nb-action>
