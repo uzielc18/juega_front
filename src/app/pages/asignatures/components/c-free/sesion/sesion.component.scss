@@ -89,3 +89,13 @@ td {
   left: 0;
   top: 0
 }
+.orden{
+  //background-color: var(--header-background-color);
+  margin-left: 3px ;
+  padding: 5px 10px 5px 15px;
+  align-items: center;
+  font-weight: bold;
+  font-size: 14px;
+  //border: 1px solid #A32B3A;
+  color: var(--color-danger-600);
+}

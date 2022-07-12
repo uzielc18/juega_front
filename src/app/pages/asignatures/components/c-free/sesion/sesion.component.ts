@@ -34,7 +34,8 @@ export class SesionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // console.log(this.sesion, 'sesson');
+
+    //console.log(this.sesion, 'sesson');
 
   }
   get rolSemestre() {
@@ -165,6 +166,7 @@ export class SesionComponent implements OnInit {
   }
   selectedElemenstOrden(topic: any) {
     this.listElementOrden(topic.id);
+
   }
   addCheck() {
     if (this.sesion.elements.length > 0) {
@@ -194,6 +196,7 @@ export class SesionComponent implements OnInit {
     this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe(
       data => {
         this.arrayEl = data.data || [];
+        console.log(this.arrayEl)
       },
       () => {
         this.loading = false;
@@ -210,6 +213,7 @@ export class SesionComponent implements OnInit {
     this.generalService.nameId$(serviceName, topic_id).subscribe(
       data => {
         this.arrayEl = data.data || [];
+        console.log(this.arrayEl)
       },
       () => {
         this.loading = false;
