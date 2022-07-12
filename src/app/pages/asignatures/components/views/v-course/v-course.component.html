@@ -60,7 +60,7 @@
                                 Unidad {{ unidad.orden_unidad }}: {{ unidad.nombre | titlecase }}
                               </h6>
                               <!-- <small>{{ unidad.fecha_inicio }} al {{ unidad.fecha_fin }}</small> -->
-                              <small>01 marzo al 04 abril</small>
+                              <small *ngIf="unidad.fecha_inicio !== null && unidad.fecha_fin !== null">{{unidad.fecha_inicio| date: 'd MMMM'}} al {{unidad.fecha_fin| date: 'd MMMM, y'}}</small>
                             </div>
                           </div>
                         </div>

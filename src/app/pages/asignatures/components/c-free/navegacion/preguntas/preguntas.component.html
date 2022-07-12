@@ -13,7 +13,7 @@
       ></textarea>
       <div class="d-flex align-items-center justify-content-end">
         <nb-toggle formControlName="mostrar" status="basic" labelPosition="start">
-          {{ formHeader.value.mostrar ? 'Privado' : 'Publico' }}
+          {{ formHeader.value.mostrar ? 'Privado' : 'Público' }}
         </nb-toggle>
         <button nbButton status="primary" size="small" class="ms-2 my-2" (click)="sendQuestion()" [disabled]="!formHeader.valid">
           Preguntar

@@ -9,21 +9,22 @@
       </nb-actions>
       <nb-actions class="flex-grow-1">
         <nb-action  class="flex-grow-1 justify-content-end">
-
             <div class="flex-grow-1">
               <input *ngIf="statusSearch"
                      type="text"
                      placeholder="Buscar..."
                      nbInput
                      fullWidth
+                     [formControl]="search"
                      fieldSize="small"
-                     (keyup.enter)="searchElements($event)">
-
+                     (keyup.enter)="searchEnter($event)">
               <div *ngIf="statusSearch" class="position-relative">
                 <ul class="list-group position-absolute top-0 start-0 w-100">
-                  <li class="list-group-item list-group-item-action">Buscando "{{termino}}"</li>
+                  <li class="list-group-item list-group-item-action" *ngIf="search.value != ''">Buscar "{{search.value}}"</li>
                   <li class="list-group-item list-group-item-action"
-                      *ngFor="let item of ejemploSugerido">{{item.nombre}}</li>
+                      *ngFor="let item of ejemploSugerido"><img alt="">{{item.nombre}}</li>
+                  <li class="list-group-item list-group-item-action" *ngIf="ejemploSugerido == [] && search.value == ''">No se encontraron resultados</li>
+                  {{ejemploSugerido.length|json}}
                 </ul>
               </div>
             </div>
@@ -31,7 +32,7 @@
                     ghost
                     status="primary"
                     size="medium"
-                    (click)="openSearch(statusSearch)">
+                    (click)="searchClic(statusSearch)">
               <nb-icon icon="search-outline"></nb-icon>
             </button>
 

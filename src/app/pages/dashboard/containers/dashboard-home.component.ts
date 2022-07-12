@@ -90,6 +90,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+
     this.emitEventsService.profileInfoReturns().subscribe(value => {
       this.perfilInfo = value;
       // this.getUserInfo();
@@ -246,8 +247,8 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   getUserInfo(view: any) {
     this.userInfo = this.userService;
     const serviceName = END_POINTS.base_back.user + '/perfil';
-    const person_id = this.userInfo._user.id;
-    const user_id = this.userInfo._user.person.id;
+    const person_id = this.userInfo._user.person.id;
+    const user_id = this.userInfo._user.id;
     this.loading = true;
     // this.view = view;
     // console.log(this.view);
@@ -289,7 +290,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
 
   getNews() {
     const serviceName = END_POINTS.base_back.user + '/news';
-    this.generalService.nameId$(serviceName, this.userService.user.id).subscribe((res: any) => {
+    this.generalService.nameId$(serviceName, this.userService.user.person.id).subscribe((res: any) => {
       if (res.success) {
         this.newsList = res.data || [];
         // console.log(this.newsList);

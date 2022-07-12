@@ -1,6 +1,6 @@
 <nb-card >
   <nb-card-header>
-      <div class="row">
+      <div class="row" [nbSpinner]="loading" *ngIf="zoom.length !== 0">
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-12" *ngIf="zoom.id_zoom_meetings !== null">
@@ -10,14 +10,13 @@
                   Iniciar reunión
                 </button>
               </a>
-
             </div>
             <div class="col-md-12" *ngIf="zoom.id_zoom_meetings === null">
-              <button nbButton status="danger" size="small" fullWidth>Crear sala zoom</button>
+              <button nbButton status="danger" size="small" fullWidth (click)="crearSalaZoom()">Crear sala zoom</button>
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="zoom.host_id !== null">
          <strong style="font-size: 14px">Clave de anfitrión</strong>
           <hr class="me-3 mt-2 col-md-12" />
           <div class="row">
@@ -30,6 +29,7 @@
           </div>
         </div>
       </div>
+      <span class="message">{{item.message}}</span>
   </nb-card-header>
   <nb-card-body class="px-0 py-4" >
     <div class="tabs-container">
