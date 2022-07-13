@@ -163,8 +163,11 @@
                       <!--{{ rolSemestre?.semestre?.nombre }}-->
                       {{formHeader.get('semestre').value }}
                     </p>
-                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showSilabus()">
-                      Silabus
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showSilabusUnidades()">
+                      Silabus unidades
+                  </button>
+                    <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="showSilabusTopics()">
+                      Silabus topics
                     </button>
                   </nb-card-body>
                 </nb-card>
