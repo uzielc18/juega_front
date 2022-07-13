@@ -14,6 +14,8 @@ export class TeacherHomeComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
   listTeachers: any = [];
+  facultades:any = [];
+
   ciclos = [
     { ciclo: '1' },
     { ciclo: '2' },
@@ -51,12 +53,14 @@ export class TeacherHomeComponent implements OnInit {
     this.getProgramStudy();
     this.fieldReactive();
     this.getTeachers();
+    this.getFacultadesUnidades();
   }
 
   private fieldReactive() {
     const controls = {
       programa_estudio_id: [''],
       ciclo: [''],
+      facultades_unidades: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
   }
@@ -68,6 +72,48 @@ export class TeacherHomeComponent implements OnInit {
       return val;
     } else {
       return '';
+    }
+  }
+  getFacultadesUnidades(){
+    const serviceName = END_POINTS.base_back.sede_areas;
+    this.generalServi.nameIdAndId$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id).subscribe(
+      (res: any) => {
+        this.facultades = res.data || [];
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  selecFacultades(item:any){
+    this.formHeader.controls['facultades_unidades'].setValue(item);
+    this.litProgramStudy = [];
+    this.formHeader.controls['programa_estudio_id'].setValue('');
+    this.listProgramEstudy(this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
+  }
+  listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
+    this.loading = true
+    const serviceName = 'list-programa-estudios';
+    const params = {
+      programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
+    }
+    if (id_sede && id_nive_enseanza) {
+      this.generalServi.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
+        this.litProgramStudy = res.data || [];
+        if (this.litProgramStudy.length>0) {
+          this.litProgramStudy.map((r:any) => {
+            r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');
+            if (r.semiprecencial_nombre) {
+              r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+            }
+          })
+          // this.getZoom();
+        }
+      }, () => {this.loading = false}, () => {this.loading = false});
+
     }
   }
 

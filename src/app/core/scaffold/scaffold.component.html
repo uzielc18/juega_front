@@ -11,6 +11,7 @@
         <nb-action  class="flex-grow-1 justify-content-end">
             <div class="flex-grow-1">
               <input *ngIf="statusSearch"
+                     class="input-2"
                      type="text"
                      placeholder="Buscar..."
                      nbInput
@@ -151,9 +152,25 @@
     <nb-sidebar responsive tag="core-sidebar">
       <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
       <nb-sidebar-footer  *ngIf="!minimum">
-        <nb-toggle (checkedChange)="changeTheme($event)">
-          <span class="text-white">TEMA</span>
-        </nb-toggle>
+        <div class="row" style="align-items: center">
+          <div class="col-md-8">
+            <nb-toggle (checkedChange)="changeTheme($event)">
+              <span class="text-white">TEMA</span>
+            </nb-toggle>
+          </div>
+          <div class="col-md-4" style="margin-bottom: 5px">
+            <a href="https://helpdesk.upeu.edu.pe" target="_blank">
+              <button nbButton
+                      ghost
+                      status="primary"
+                      size="medium">
+                <nb-icon class="text-white" icon="question-mark-circle"></nb-icon>
+              </button>
+            </a>
+          </div>
+        </div>
+
+
       </nb-sidebar-footer>
     </nb-sidebar>
     <nb-layout-column class="p-2 ps-0 background">
