@@ -31,12 +31,23 @@ export class CardListCourseComponent implements OnInit {
     private dialogService: NbDialogService,
     private breakpointObserver: BreakpointObserver,) {
 
+    //https://helpdesk.upeu.edu.pe
+    //this.form = this.formBuilder.group({
+    //  tipo: '1',
+    // });
+    //this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result: BreakpointState) => {
+    // if (result.matches) {
+    //  this.form.get('tipo').setValue('1')
+    // } else {
+    //    this.form.get('tipo').setValue('2')
+    //  }
+    // });
 
-    }
-
+     }
 
   ngOnInit(): void {
     this.fieldReactive();
+      //this.updateBreadcrumb();
     this.nombreSubscription = this.emitEventsService.returns().subscribe(value => { // para emitir evento desde la cabecera
       if (value && value.rol && value.semestre) {
         this.theRolSemestre =  value;

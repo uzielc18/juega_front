@@ -257,8 +257,8 @@ export class LambSyncHomeComponent implements OnInit {
     }
   }
 
-  showSilabus() {
-    const serviceName = END_POINTS.base_back.config + '/silabus';
+  showSilabusUnidades() {
+    const serviceName = END_POINTS.base_back.config + '/silabus-unidades';
     this.loading = true;
     if (this.formHeader.get('programa_estudio').value) {
       this.generalService
@@ -287,6 +287,46 @@ export class LambSyncHomeComponent implements OnInit {
                   this.changeEmit.emit();
                 }
               });
+          },
+          () => {
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
+    }
+  }
+  showSilabusTopics(){
+    const serviceName = END_POINTS.base_back.config + '/silabus-topics';
+    this.loading = true;
+    if (this.formHeader.get('programa_estudio').value) {
+      this.generalService
+        .nameIdAndIdAndId$(
+          serviceName,
+          //this.rolSemestre.semestre.nombre,
+          this.formHeader.get('semestre').value,
+          this.id_carga_curso,
+          this.formHeader.get('programa_estudio').value.id_programa_estudio
+        )
+        .subscribe(
+          (res: any) => {
+            this.silabus = res.data || [];
+            this.dialogService
+              .open(ListSilabusComponent, {
+                dialogClass: 'dialog-limited-height',
+                context: {
+                  item: this.silabus,
+                  prog: this.formHeader.get('programa_estudio').value,
+                },
+                closeOnBackdropClick: false,
+                closeOnEsc: false,
+              })
+              .onClose.subscribe(result => {
+              if (result === 'ok') {
+                this.changeEmit.emit();
+              }
+            });
           },
           () => {
             this.loading = false;
