@@ -11,7 +11,7 @@
                 </button>
               </a>
             </div>
-            <div class="col-md-12" *ngIf="zoom.id_zoom_meetings === null">
+            <div class="col-md-12" *ngIf="zoom.id_zoom_meetings === null && rolSemestre.rol.name === 'Docente' ">
               <button nbButton status="danger" size="small" fullWidth (click)="crearSalaZoom()">Crear sala zoom</button>
             </div>
           </div>

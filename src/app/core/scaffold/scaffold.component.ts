@@ -20,6 +20,7 @@ import {GeneralService} from 'src/app/providers';
 import {EmitEventsService} from 'src/app/shared/services/emit-events.service';
 import {Router} from '@angular/router';
 import {SpinnerService} from '../auth/services/spinner.service';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-scaffold',
@@ -502,5 +503,4 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.search.setValue('');
     },100)
   }
-
 }

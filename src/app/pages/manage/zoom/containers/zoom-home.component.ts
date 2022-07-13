@@ -10,6 +10,7 @@ import { AppService } from 'src/app/core';
 import { environment } from 'src/environments/environment';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 import { Subscription } from 'rxjs';
+import {END_POINTS} from "../../../../providers/utils";
 @Component({
   selector: 'app-zoom-home',
   templateUrl: './zoom-home.component.html',
@@ -18,6 +19,7 @@ import { Subscription } from 'rxjs';
 export class ZoomHomeComponent implements OnInit {
   loading:boolean = false;
   listZoom:any = [];
+  facultades:any = [];
   formHeader: any = FormGroup;
   listProgramStudy:any = [{
     id: '',
@@ -40,6 +42,7 @@ export class ZoomHomeComponent implements OnInit {
   ngOnInit(): void {
     this.fieldReactive();
     this.getProgramStudy();
+    this.getFacultadesUnidades();
     this.nombreSubscription = this.emitEventsService.returns().subscribe(value => { // para emitir evento desde la cabecera
       if (value && value.rol && value.semestre) {
         // this.theRolSemestre =  value;
@@ -67,6 +70,7 @@ export class ZoomHomeComponent implements OnInit {
   private fieldReactive() {
     const controls = {
       programa_estudio_id: [''],
+      facultades_unidades: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
   }
@@ -79,6 +83,48 @@ export class ZoomHomeComponent implements OnInit {
       return '';
     }
 
+  }
+  getFacultadesUnidades(){
+    const serviceName = END_POINTS.base_back.sede_areas;
+    this.generalServi.nameIdAndId$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id).subscribe(
+      (res: any) => {
+        this.facultades = res.data || [];
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  selecFacultades(item:any){
+    this.formHeader.controls['facultades_unidades'].setValue(item);
+    this.listProgramStudy = [];
+    this.formHeader.controls['programa_estudio_id'].setValue('');
+    this.listProgramEstudy(this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
+  }
+  listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
+    this.loading = true
+    const serviceName = 'list-programa-estudios';
+    const params = {
+      programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
+    }
+    if (id_sede && id_nive_enseanza) {
+      this.generalServi.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
+        this.listProgramStudy = res.data || [];
+        if (this.listProgramStudy.length>0) {
+          this.listProgramStudy.map((r:any) => {
+            r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');
+            if (r.semiprecencial_nombre) {
+              r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+            }
+          })
+          // this.getZoom();
+        }
+      }, () => {this.loading = false}, () => {this.loading = false});
+
+    }
   }
   getProgramStudy() {
     const serviceName = 'mis-programas';
@@ -183,7 +229,7 @@ export class ZoomHomeComponent implements OnInit {
           // location.href = 'https://zoom.us/oauth/authorize?response_type=code&client_id=vARG7XA1TQuAodHuaU8NuQ&redirect_uri=http://localhost:4200/pages/manage/zoom/validate'
 
         }
-      
+
     });
   }
   changeSelected(event:any) {
@@ -212,11 +258,11 @@ export class ZoomHomeComponent implements OnInit {
           this.loading = true;
           this.generalServi.nameId$(serviceName, item.id).subscribe((re:any) => {
             this.getZoom();
-            
+
           }, () => { this.loading =false; }, () => { this.loading =false; });
         }
       });
     }
   }
- 
+
 }

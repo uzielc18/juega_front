@@ -8,6 +8,13 @@
     <form [formGroup]="formHeader">
       <div class="row">
         <!-- <div class="col-md-6"></div> -->
+        <div class="col-md-3" *ngIf="rolSemestre.area.area_id === 0">
+          <label class="label">Facultades/Unidades</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="facultades_unidades">
+            <nb-option value="" disabled>Selecciona</nb-option>
+            <nb-option *ngFor="let item of facultades" [value]="item" (click)="selecFacultades(item)">{{item.nombre}}</nb-option>
+          </nb-select>
+        </div>
         <div class="col-md-3">
           <label class="label">Programa estudio</label>
           <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
@@ -24,10 +31,9 @@
             <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{ item.ciclo }}</nb-option>
           </nb-select>
         </div>
-        <div class="col-md-4"></div>
-        <div class="col-md-2">
+        <div class="col-md-2 ms-auto">
           <label class="label" style="visibility: hidden">Filtrar</label><br />
-          <button nbButton fullWidth size="small" status="warning" (click)="refresh()">
+          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['programa_estudio_id'].value == ''">
             <nb-icon icon="funnel"></nb-icon>Filtrar
           </button>
         </div>
