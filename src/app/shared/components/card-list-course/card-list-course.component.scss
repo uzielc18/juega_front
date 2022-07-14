@@ -113,9 +113,11 @@ nb-progress-bar {
     align-items: center;
     flex: 1 1 auto;
     padding: 20px;
+    width: 100%;
 
     .course-info {
       flex: 1 1 auto;
+      width: 60%;
     }
 
     .progress-icon {
@@ -123,11 +125,13 @@ nb-progress-bar {
       flex-direction: column-reverse;
       justify-content: center;
       margin-left: auto;
+      width: 40%;
 
       .progress-bar-container {
       }
 
       .icons-container {
+
         display: flex;
         justify-content: space-between;
         gap: 10px;
@@ -143,6 +147,7 @@ nb-progress-bar {
   }
 
   .img-container {
+    position: relative;
     height: auto;
     width: 120px;
 
@@ -167,10 +172,12 @@ nb-progress-bar {
       flex-direction: column;
       align-items: flex-start;
       padding: 10px;
+      width: 100%;
 
       .progress-icon {
         margin-left: 0px;
         flex-direction: column;
+        width: 100%;
 
         .progress-bar-container {
           margin: 10px 0px;
