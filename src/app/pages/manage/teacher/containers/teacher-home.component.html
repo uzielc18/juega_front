@@ -33,7 +33,7 @@
         </div>
         <div class="col-md-2 ms-auto">
           <label class="label" style="visibility: hidden">Filtrar</label><br />
-          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['programa_estudio_id'].value == ''">
+          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['facultades_unidades'].value == ''">
             <nb-icon icon="funnel"></nb-icon>Filtrar
           </button>
         </div>
@@ -78,7 +78,7 @@
     </div>
   </nb-card-body>
   <nb-card-footer>
-    <div class="d-flex justify-content-between align-items-center p-2">
+    <div class="d-flex justify-content-between align-items-center p-2 flex-wrap">
       <div style="color: brown; font-weight: bold">Total: {{ pagination.sizeListData }}</div>
       <ngb-pagination
         [collectionSize]="pagination?.sizeListData"
@@ -86,13 +86,13 @@
         [maxSize]="20"
         [disabled]="pagination?.isDisabledPage"
         [pageSize]="pagination?.sizePage"
-        class="d-flex justify-content-center"
+        class="d-flex justify-content-center overflow-auto"
         size="sm"
         [boundaryLinks]="true"
         (pageChange)="loadPage($event)"
       >
       </ngb-pagination>
-      <div>
+      <div class="d-flex justify-content-center">
         <nb-form-field>
           <nb-icon nbPrefix icon="list-outline"></nb-icon>
           <nb-select

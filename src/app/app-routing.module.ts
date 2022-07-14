@@ -7,7 +7,7 @@ const config: ExtraOptions = {
   useHash: false,
 };
 const routes: Routes = [
- 
+
   {
     path: 'pages',
     component: ScaffoldComponent,
@@ -32,6 +32,10 @@ const routes: Routes = [
       {
         path: 'evaluations-teacher',
         loadChildren: () => import('./pages/evaluations-teacher/evaluations-teacher.module').then(m => m.EvaluationsTeacherModule),
+      },
+      {
+        path: 'films',
+        loadChildren: () => import('./pages/films/films.module').then(m => m.FilmsModule),
       },
       {
         path: 'rubrics',
