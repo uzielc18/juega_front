@@ -81,7 +81,7 @@ export class NavegacionComponent implements OnInit {
   }
   crearSalaZoom(){
     this.loading = true;
-    const serviceName = '/add-course-zoom';
+    const serviceName = 'add-course-zoom';
     this.generalService.nameId$(serviceName, this.zoom.id_carga_curso_docente).subscribe(res => {
       this.item = res
     }, () => {this.loading = false}, () => {this.loading = false})
