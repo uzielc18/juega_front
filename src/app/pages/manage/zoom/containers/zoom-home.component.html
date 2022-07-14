@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label class="label" style="visibility: hidden;">Filtrar</label><br>
-                        <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['programa_estudio_id'].value == ''"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+                        <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['facultades_unidades'].value == ''"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
                     </div>
                     <div class="col-md-6">
                         <label class="label" style="visibility: hidden;">Crear</label><br>
@@ -64,7 +64,8 @@
                            <label class="label">Correo: </label>&nbsp;&nbsp;{{item.correo}} <br>
                            <label class="label">Clave: </label>&nbsp;&nbsp;{{item.clave}} <br>
                            <label class="label">Escuela: </label>&nbsp;&nbsp;{{item.programa_estudio_nombre}} <br>
-                           <label class="label">Ciclo: </label>&nbsp;&nbsp;{{item.ciclo}}
+                           <label class="label">Ciclo: </label>&nbsp;&nbsp;{{item.ciclo}} <br>
+                           <label class="label">Host key: </label>&nbsp;&nbsp;{{item.host_key}}
                         </td>
                         <td class="text-center" style="color: brown; font-weight: bold;">{{item.salas}}</td>
                         <td style="vertical-align: middle;">
@@ -103,11 +104,11 @@
                             Salas
                         </td>
                         <td class="text-center" style="width: 70px;">
-                            <span *ngIf="!item?.host_key">
+                            <span *ngIf="!item?.token_access">
                                 <nb-icon icon="flip-2-outline" status="success" style="cursor: pointer; font-size: 25px;" (click)="vincular()"></nb-icon> <br>
                                 Vincular
                             </span>
-                            <span *ngIf="item?.host_key">
+                            <span *ngIf="item?.token_access">
                                 <nb-icon icon="refresh-outline" status="success" style="cursor: pointer; font-size: 25px;" (click)="actualizar(item)"></nb-icon> <br>
                                 Actualizar
                             </span>

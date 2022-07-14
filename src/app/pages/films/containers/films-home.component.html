@@ -1,0 +1,75 @@
+<nb-card class="m-0 h-100 border-0" style="border-radius: 15px;" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="film" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">GRABACIONES</strong>
+    </div>
+    <hr>
+    <form [formGroup]="formHeader">
+      <div class="row">
+        <div class="col-md-3">
+          <label class="label">Cursos</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="cursos">
+            <nb-option *ngFor="let item of items" [value]="item.id"></nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-2 ms-auto">
+              <label class="label" style="visibility: hidden;">Filtrar</label><br>
+              <button nbButton fullWidth size="small" status="warning"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+        </div>
+      </div>
+    </form>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px">
+          <th>Código</th>
+          <th>Fecha</th>
+          <th>Curso</th>
+          <th>Sesión</th>
+          <th>Titulo</th>
+          <th>Duración</th>
+          <th>Link Descarga</th>
+          <th class="text-center" style="width: 1px" colspan="3">Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="font-size: 10px; vertical-align: middle">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' ||rolSemestre.rol.name === 'Docente'">
+            <button nbButton size="tiny"
+                    status="primary"
+                    nbTooltip="Ver">
+              <nb-icon icon="eye"></nb-icon>
+            </button>
+          </td>
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente'">
+            <button nbButton size="tiny" status="danger"
+                    nbTooltip="Eliminar">
+              <nb-icon icon="trash"></nb-icon>
+            </button>
+          </td>
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente'">
+            <button nbButton
+                    size="tiny"
+                    status="primary"
+                    (click)="addSession()">
+              <nb-icon icon="plus"></nb-icon>
+              Agregar a sesión
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </nb-card-body>
+</nb-card>

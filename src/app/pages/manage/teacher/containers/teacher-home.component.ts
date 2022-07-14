@@ -126,20 +126,25 @@ export class TeacherHomeComponent implements OnInit {
     };
     this.loading = true;
     if (ids && ids.nivel_ensenanza_id && ids.sede_id && ids.area_id) {
-      this.generalServi
-        .nameIdAndIdAndId$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id)
-        .subscribe((res: any) => {
-          this.litProgramStudy = res.data || [];
-          if (this.litProgramStudy.length > 0) {
-            this.litProgramStudy.map((r: any) => {
-              r.name_programa_estudio = r.nombre_corto + ' ' + (r.sede_nombre ? r.sede_nombre : '');
-              if (r.semiprecencial_nombre) {
-                r.name_programa_estudio =
-                  r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
-              }
-            });
-          }
-        }, () => { this.loading = false; }, () => { this.loading = false; });
+      if(ids.area_id !== 0) {
+        this.generalServi.nameIdAndIdAndId$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id)
+          .subscribe((res: any) => {
+            this.litProgramStudy = res.data || [];
+            if (this.litProgramStudy.length > 0) {
+              this.litProgramStudy.map((r: any) => {
+                r.name_programa_estudio = r.nombre_corto + ' ' + (r.sede_nombre ? r.sede_nombre : '');
+                if (r.semiprecencial_nombre) {
+                  r.name_programa_estudio =
+                    r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+                }
+              });
+            }
+          }, () => {
+            this.loading = false;
+          }, () => {
+            this.loading = false;
+          });
+      }
     }
   }
 

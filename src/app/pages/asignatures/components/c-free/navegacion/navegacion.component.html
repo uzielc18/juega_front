@@ -16,15 +16,15 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6" *ngIf="zoom.host_id !== null">
+        <div class="col-md-6">
          <strong style="font-size: 14px">Clave de anfitrión</strong>
-          <hr class="me-3 mt-2 col-md-12" />
-          <div class="row">
-            <div class="col-md-7 text-center">
-              <small><strong  value="4HrR76">4HrR76</strong></small>
+          <hr class="me-3 mt-2 "/>
+          <div class="d-flex justify-content-between flex-wrap">
+            <div class="text-center">
+              <small><strong  value="4HrR76">{{zoom.host_key}}</strong></small>
             </div>
-            <div class="col-md-5">
-              <button nbButton status="primary" size="tiny" (click)="copy('4HrR76')"><nb-icon icon="copy-outline"></nb-icon>Copiar</button>
+            <div class=" text-center">
+              <button nbButton status="primary" size="tiny" (click)="copy(zoom.host_key)"><nb-icon icon="copy-outline"></nb-icon>Copiar</button>
             </div>
           </div>
         </div>
