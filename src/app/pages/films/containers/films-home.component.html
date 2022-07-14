@@ -31,25 +31,35 @@
           <th>Sesión</th>
           <th>Titulo</th>
           <th>Duración</th>
-          <th>Link Descarga</th>
           <th class="text-center" style="width: 1px" colspan="3">Acción</th>
         </tr>
         </thead>
         <tbody>
         <tr style="font-size: 11px; vertical-align: middle" *ngFor="let item of grabacionesData">
           <td>{{item.record_id}}</td>
-          <td>{{item.recording_start}}</td>
+          <td>{{item.recording_start| date: 'd/M/y'}}</td>
           <td>{{item.course_nombre}}</td>
           <td>{{item.tema}}</td>
           <td>{{item.titulo}}</td>
-          <td>{{item.zise}}</td>
-          <td>{{item.download_url}}</td>
+          <td>{{item.size}}</td>
+          <!--<td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' ||rolSemestre.rol.name === 'Docente'">
+            <a [href]="item.download_url" target="_blank">
+            <button nbButton size="tiny"
+                    status="primary"
+                    nbTooltip="Ver">
+              <nb-icon icon="download"></nb-icon>
+              Descargar
+            </button>
+            </a>
+          </td>-->
           <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' ||rolSemestre.rol.name === 'Docente'">
+            <a [href]="item.play_url" target="_blank">
             <button nbButton size="tiny"
                     status="primary"
                     nbTooltip="Ver">
               <nb-icon icon="eye"></nb-icon>
             </button>
+            </a>
           </td>
           <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente'">
             <button nbButton size="tiny" status="danger"
