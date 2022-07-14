@@ -1,0 +1,59 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        Nombre del curso
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="text-center" >
+    <form [formGroup]="FormSemestre">
+      <div class="p-4">
+        <div class="row">
+          <label class="label col-md-3 d-flex align-items-center">Sesión:</label>
+          <div class="col-md-9">
+            <input
+              type="number"
+              nbInput
+              fullWidth
+              formControlName="session"
+              fieldSize="small"
+              placeholder="Ingrese sesión"
+
+            />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="label col-md-3 d-flex align-items-center">Titulo:</label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              nbInput
+              fullWidth
+              formControlName="titulo"
+              fieldSize="small"
+              placeholder="Ingrese titulo"
+            />
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="d-flex">
+    <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
+    <button
+      type="button"
+      class="ms-2"
+      nbButton
+      size="small"
+      status="primary"
+     >
+      Guardar
+    </button>
+  </nb-card-footer>
+</nb-card>

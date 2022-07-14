@@ -127,7 +127,8 @@ export class StudentHomeComponent implements OnInit {
       programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
     }
     if (ids && ids.sede_id && ids.nivel_ensenanza_id) {
-      this.generalServi.nameIdAndIdAndIdParams$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id, params).subscribe((res: any) => {
+      if(ids.area_id !== 0){
+        this.generalServi.nameIdAndIdAndIdParams$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id, params).subscribe((res: any) => {
           this.litProgramStudy = res.data || [];
           if (this.litProgramStudy.length > 0) {
             this.litProgramStudy.map((r: any) => {
@@ -139,6 +140,7 @@ export class StudentHomeComponent implements OnInit {
             });
           }
         });
+      }
     }
   }
 
