@@ -18,6 +18,7 @@ export class FilmsHomeComponent implements OnInit {
   formHeader: any = FormGroup;
   user: any;
   items: any = [];
+  grabacionesData: any = [];
   constructor(private fb: FormBuilder,
               private dialogService: NbDialogService,
               private generalService: GeneralService,
@@ -25,7 +26,8 @@ export class FilmsHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldReactive();
-    this.getCoursesList()
+    this.SelectCoursesList();
+    this.getCourseList()
     console.log()
 
   }
@@ -41,12 +43,12 @@ export class FilmsHomeComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      cursos: [''],
+      curso_id: [''],
     };
     this.formHeader = this.fb.group(controls);
   }
 
-getCoursesList(){
+  SelectCoursesList(){
     this.loading = true
     const serviceName = 'select-course';
     const params:any = {
@@ -57,6 +59,22 @@ getCoursesList(){
       },() => {this.loading = false}, ()=>{this.loading = false}
     )
 }
+  listarGrabaciones(){
+    this.loading = true
+    const serviceName = END_POINTS.base_back.config + '/zoom-control';
+    const id = this.formHeader.controls['curso_id'].value;
+    this.generalService.nameIdAndId$(serviceName,id,6).subscribe(res => {
+       this.grabacionesData = res.data
+      }, () => {this.loading = false}, () => {this.loading = false}
+    )
+  }
+  getCourseList(){
+    this.loading = true
+    const serviceName = 'record-zoom-person';
+    this.generalService.nameId$(serviceName, this.userService.user.person.id).subscribe(res => {
+      this.grabacionesData = res.data
+    },() => {this.loading = false}, () => {this.loading = false})
+  }
   addSession(){
     this.dialogService.open(MAddSessionComponent, {
       dialogClass: 'dialog-limited-height',
