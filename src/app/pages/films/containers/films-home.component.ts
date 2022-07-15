@@ -75,7 +75,7 @@ export class FilmsHomeComponent implements OnInit {
       this.grabacionesData = res.data
     },() => {this.loading = false}, () => {this.loading = false})
   }
-  addSession(){
+  addSession(item: any){
     this.dialogService.open(MAddSessionComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
@@ -85,7 +85,7 @@ export class FilmsHomeComponent implements OnInit {
       closeOnEsc: false
     }).onClose.subscribe(result => {
       if (result === 'ok') {
-        //this.getCourseZoom();
+        this.getCourseList();
       }
     });
   }

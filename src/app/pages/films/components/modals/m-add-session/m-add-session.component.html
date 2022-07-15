@@ -10,20 +10,14 @@
     </div>
   </nb-card-header>
   <nb-card-body class="text-center" >
-    <form [formGroup]="FormSemestre">
+    <form [formGroup]="formSession">
       <div class="p-4">
         <div class="row">
           <label class="label col-md-3 d-flex align-items-center">Sesión:</label>
           <div class="col-md-9">
-            <input
-              type="number"
-              nbInput
-              fullWidth
-              formControlName="session"
-              fieldSize="small"
-              placeholder="Ingrese sesión"
-
-            />
+            <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="topic_id">
+              <nb-option *ngFor="let item of topicsData" [value]="item.id">{{item.nombre}}</nb-option>
+            </nb-select>
           </div>
         </div>
         <br>
@@ -52,6 +46,7 @@
       nbButton
       size="small"
       status="primary"
+      (click)="saveElements()"
      >
       Guardar
     </button>

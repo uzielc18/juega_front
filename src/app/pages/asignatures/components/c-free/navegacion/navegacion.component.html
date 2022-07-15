@@ -1,7 +1,7 @@
 <nb-card >
   <nb-card-header>
       <div class="row" [nbSpinner]="loading" *ngIf="zoom.length !== 0">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="row">
             <div class="col-md-12" *ngIf="zoom.id_zoom_meetings !== null">
               <a [href]="zoom.join_url" target="_blank" style="text-decoration: none">
@@ -16,15 +16,17 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-         <strong style="font-size: 14px">Clave de anfitrión</strong>
-          <hr class="me-3 mt-2 "/>
-          <div class="d-flex justify-content-between flex-wrap">
-            <div class="text-center">
-              <small><strong  value="4HrR76">{{zoom.host_key}}</strong></small>
+        <br>
+        <br>
+        <div class="col-md-12" *ngIf="zoom.host_id !==null && rolSemestre.rol.name === 'Docente'">
+          <small class="fw-bold" style="font-size: 12px; font-weight: 700 !important;">Clave de anfitrión</small>
+          <hr class="me-3 mt-2 " style="color:#8F9BB3;"/>
+          <div class="row">
+            <div class="col-md-6 text-center">
+              <small>{{zoom.host_key}}</small>
             </div>
-            <div class=" text-center">
-              <button nbButton status="primary" size="tiny" (click)="copy(zoom.host_key)"><nb-icon icon="copy-outline"></nb-icon>Copiar</button>
+            <div class="col-md-6 text-center">
+              <button nbButton [nbTooltip]="tootipValue" nbTooltipStatus="primary" status="primary" size="tiny" (click)="copy(tooltip, zoom.host_key)"><nb-icon icon="copy-outline"></nb-icon>Copiar</button>
             </div>
           </div>
         </div>
