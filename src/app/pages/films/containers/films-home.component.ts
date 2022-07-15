@@ -75,17 +75,33 @@ export class FilmsHomeComponent implements OnInit {
       this.grabacionesData = res.data
     },() => {this.loading = false}, () => {this.loading = false})
   }
-  addSession(){
+  addSession(item: any,tipo: any){
     this.dialogService.open(MAddSessionComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
-        items: 'item',
+        items: item,
+        tipo: tipo,
       },
       closeOnBackdropClick: false,
       closeOnEsc: false
     }).onClose.subscribe(result => {
       if (result === 'ok') {
-        //this.getCourseZoom();
+        this.getCourseList();
+      }
+    });
+  }
+  updateSession(item: any,tipo: any){
+    this.dialogService.open(MAddSessionComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        items: item,
+        tipo: tipo,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.getCourseList();
       }
     });
   }
