@@ -16,7 +16,7 @@
           <label class="label col-md-3 d-flex align-items-center">Sesión:</label>
           <div class="col-md-9">
             <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="topic_id">
-              <nb-option *ngFor="let item of topicsData" [value]="item.id">{{item.nombre}}</nb-option>
+              <nb-option *ngFor="let item of topicsData" [value]="item.id">{{item.fecha_tema}}-{{item.tema}}</nb-option>
             </nb-select>
           </div>
         </div>

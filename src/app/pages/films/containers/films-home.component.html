@@ -31,7 +31,7 @@
           <th>Sesión</th>
           <th>Titulo</th>
           <th>Duración</th>
-          <th class="text-center" style="width: 1px" colspan="3">Acción</th>
+          <th class="text-center" style="width: 1px" colspan="4">Acción</th>
         </tr>
         </thead>
         <tbody>
@@ -61,19 +61,28 @@
             </button>
             </a>
           </td>
-          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente'">
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente' && item.element_id==0">
             <button nbButton size="tiny" status="danger"
                     nbTooltip="Eliminar">
               <nb-icon icon="trash"></nb-icon>
             </button>
           </td>
-          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente'">
-            <button nbButton
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente' && item.element_id==0">
+            <button n nbButton
                     size="tiny"
                     status="primary"
-                    (click)="addSession(item)">
+                    (click)="addSession(item,'CREAR')">
               <nb-icon icon="plus"></nb-icon>
               Agregar a sesión
+            </button>
+          </td>
+
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente' && item.element_id!==0">
+            <button n nbButton
+                    size="tiny"
+                    status="info"
+                    (click)="updateSession(item,'EDITAR')">
+              <nb-icon icon="edit"></nb-icon>
             </button>
           </td>
         </tr>
