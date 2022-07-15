@@ -17,6 +17,8 @@ export class NavegacionComponent implements OnInit {
   @Input() curso: any;
   @Input() zoom: any;
   userInfo: any;
+  tooltip: boolean = false;
+  tootipValue: any = 'Copiar';
   item: any = [];
   valor: any;
   showText: boolean = false;
@@ -69,7 +71,13 @@ export class NavegacionComponent implements OnInit {
       this.eventsChange.emit($event);
     }
   }
-  copy(item: any){
+  copy(tooltip: any, item: any){
+    if(!tooltip){
+      this.tootipValue = 'Copiado!'
+      setTimeout(() => {
+        this.tootipValue = 'Copiar'
+      },1500)
+    }
     document.addEventListener('copy', (e: ClipboardEvent) => {
       e.clipboardData?.setData('text/plain', (item));
       e.preventDefault();
