@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from 'src/app/core';
 import { GeneralService } from '../../../providers';
 import { END_POINTS } from '../../../providers/utils';
+import {MUnitSessionComponent} from "../../../shared/components/unit-session/modal/m-unit-session.component";
+import {MNoteWorksHomeComponent} from "../../../shared/components/notes-works/modal/m-note-works-home.component";
+import {NbDialogService} from "@nebular/theme";
 
 @Component({
   selector: 'app-evaluations-teacher-home',
@@ -49,7 +52,8 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public datepipe: DatePipe,
-    private appService: AppService
+    private appService: AppService,
+    private dialogService: NbDialogService
   ) {}
 
   ngOnInit(): void {
@@ -177,5 +181,19 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
 
   refresh() {
     this.listElements();
+  }
+  noteWorks(item: any){
+    this.dialogService.open(MNoteWorksHomeComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        items: item
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.listCursos();
+      }
+    });
   }
 }
