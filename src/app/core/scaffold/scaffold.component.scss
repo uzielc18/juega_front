@@ -51,7 +51,28 @@
 .text {
   color: white !important;
 }
+.div-Class-open{
+  display: none;
+  max-width: none;
+}
 @media screen and (max-width: 900px){
+  .div-Class-open{
+    display: flex;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 100%;
+    padding: 0 8px 0 51px;
+  }
+  .div-Class{
+    display: none;
+    max-width: none;
+  }
+  .input2{
+  position: relative;
+  flex-grow:1;
 
+}
 }
 

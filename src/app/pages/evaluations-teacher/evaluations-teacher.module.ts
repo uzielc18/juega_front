@@ -6,13 +6,15 @@ import { EvaluationsTeacherComponent } from './evaluations-teacher.component';
 import { EvaluationsTeacherHomeComponent } from './containers/evaluations-teacher-home.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NebularModule } from '../../shared/nebular.module';
+import {MNoteWorksHomeModule} from "../../shared/components/notes-works/modal/m-note-works-home.module";
 
 const COMPONENTS: any = [
   EvaluationsTeacherComponent,
   EvaluationsTeacherHomeComponent
 ]
 const MODULES: any = [
-  NgbPaginationModule
+  NgbPaginationModule,
+  MNoteWorksHomeModule
 ]
 
 const NEBULAR: any = [

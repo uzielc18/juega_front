@@ -8,8 +8,8 @@
         </nb-action>
       </nb-actions>
       <nb-actions class="flex-grow-1">
-        <nb-action  class="flex-grow-1 justify-content-end">
-            <div class="flex-grow-1">
+        <nb-action  class="flex-grow-1 justify-content-end ">
+            <div class="flex-grow-1 div-Class">
               <input *ngIf="statusSearch"
                      type="text"
                      placeholder="Buscar..."
@@ -24,7 +24,6 @@
                   <li class="list-group-item list-group-item-action"
                       *ngFor="let item of ejemploSugerido"><img alt="">{{item.nombre}}</li>
                   <li class="list-group-item list-group-item-action" *ngIf="ejemploSugerido == [] && search.value == ''">No se encontraron resultados</li>
-                  {{ejemploSugerido.length|json}}
                 </ul>
               </div>
             </div>
@@ -147,7 +146,27 @@
           ></nb-user>
         </nb-action>
       </nb-actions>
+      <div class="div-Class-open">
+        <input *ngIf="statusSearch"
+               class="input2"
+               type="text"
+               placeholder="Buscar..."
+               nbInput
+               fullWidth
+               [formControl]="search"
+               fieldSize="small"
+               (keyup.enter)="searchEnter($event)">
+        <div *ngIf="statusSearch" class="" >
+          <ul class="list-group position-absolute top-100 start-0 w-100" style="padding: 0 8px 0 50px">
+            <li class="list-group-item list-group-item-action" *ngIf="search.value != ''">Buscar "{{search.value}}"</li>
+            <li class="list-group-item list-group-item-action"
+                *ngFor="let item of ejemploSugerido"><img alt="">{{item.nombre}}</li>
+            <li class="list-group-item list-group-item-action" *ngIf="ejemploSugerido == [] && search.value == ''">No se encontraron resultados</li>
+          </ul>
+        </div>
+      </div>
     </nb-layout-header>
+
     <nb-sidebar responsive tag="core-sidebar">
       <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
       <nb-sidebar-footer  *ngIf="!minimum">

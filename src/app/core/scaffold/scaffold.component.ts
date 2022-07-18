@@ -21,6 +21,7 @@ import {EmitEventsService} from 'src/app/shared/services/emit-events.service';
 import {Router} from '@angular/router';
 import {SpinnerService} from '../auth/services/spinner.service';
 import {environment} from "../../../environments/environment";
+import {BreakpointObserver, BreakpointState} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-scaffold',
@@ -128,6 +129,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private nbMenuService: NbMenuService,
     private nbAuthService: NbAuthService,
     private breakpointService: NbMediaBreakpointsService,
+    private breakpointObserver: BreakpointObserver,
     private appService: AppService,
     private tokenService: AppValidateTokenService,
     @Inject(CORE_OPTIONS) protected options: CoreOptions,
@@ -248,6 +250,14 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     return value === 'mes' ? 'mes' : value === 'semana' ? 'semana' : value === 'dia' ? 'dia' : 'mes';
   }
   toggle(): void {
+    this.breakpointObserver.observe(['(max-width: 900px)']).subscribe((result) => {
+      if(result.matches){
+        this.statusSearch = false
+        this.search.value = '';
+        this.ejemploSugerido = [];
+      }
+    })
+
     this.hidden = !this.hidden;
     this.sidebarService.toggle(true, 'core-sidebar');
   }

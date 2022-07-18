@@ -1,0 +1,32 @@
+<nb-card class="border-0"
+         style="border-radius: 15px"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="small">
+  <nb-card-header>
+     <strong style="padding-top: 7px; font-size: 15px">Nombre del curso</strong>
+     <p><strong style="padding-top: 7px;font-size: 12px">Nombre del docente:</strong></p>
+  </nb-card-header>
+  <nb-card-body class="pb-0 d-flex flex-column">
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px;">
+          <th>Código</th>
+          <th>Nombres</th>
+          <th *ngFor="let elements of data.elementos">{{elements.titulo}}</th>
+          <th *ngIf="item.element_id == 0">Promedio</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let students of data.estudiantes; let i = index ">
+          <td>{{students.codigo}}</td>
+          <td>{{students.nombres_completos}}</td>
+          <td *ngFor="let nota of data.notas; let i = index ">{{nota.nota}}</td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>
