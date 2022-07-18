@@ -34,7 +34,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DialogConfimComponent } from './components/dialog-confim/dialog-confim.component';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
-import { MNoteWorksHomeComponent } from './components/notes-works/modal/m-note-works-home.component';
 const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
 
 const COMPONENTS: any[] = [
