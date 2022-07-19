@@ -4,7 +4,7 @@
          nbSpinnerStatus="primary"
          nbSpinnerSize="small">
   <nb-card-header>
-     <strong style="padding-top: 7px; font-size: 15px">Nombre del curso</strong>
+     <strong style="padding-top: 7px; font-size: 15px">{{code == 'ASIG'? item.nombre: item.nombre_curso}}</strong>
      <p><strong style="padding-top: 7px;font-size: 12px">Nombre del docente:</strong></p>
   </nb-card-header>
   <nb-card-body class="pb-0 d-flex flex-column">
@@ -15,7 +15,7 @@
           <th>Código</th>
           <th>Nombres</th>
           <th *ngFor="let elements of data.elementos">{{elements.titulo}}</th>
-          <th *ngIf="item.element_id == 0">Promedio</th>
+          <th *ngIf="code == 'ASIG'">Promedio</th>
         </tr>
         </thead>
         <tbody>

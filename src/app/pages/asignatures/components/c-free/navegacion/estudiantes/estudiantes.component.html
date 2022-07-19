@@ -4,6 +4,9 @@
     <button nbButton ghost status="warning" (click)="syncStudentsLamb()" nbTooltip="Sincronizar" nbTooltipStatus="warning">
       <nb-icon icon="sync-outline"></nb-icon>
     </button>
+    <button nbButton size="tiny" (click)="notesWorks('ASIG')" status="primary">
+      Registro
+    </button>
   </div>
   <nb-form-field [formGroup]="formHeader">
     <input

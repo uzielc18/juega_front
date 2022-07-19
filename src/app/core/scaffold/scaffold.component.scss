@@ -59,11 +59,12 @@
   .div-Class-open{
     display: flex;
     position: absolute;
-    width: 100%;
+    width: auto;
     left: 0;
     right: 0;
     top: 100%;
-    padding: 0 8px 0 51px;
+    margin: 0 0 0 56px;
+    padding: 5px 5px 5px 5px;
   }
   .div-Class{
     display: none;
@@ -74,5 +75,10 @@
   flex-grow:1;
 
 }
+}
+@media screen and (max-width: 575px) {
+  .div-Class-open{
+    margin: 0;
+  }
 }
 

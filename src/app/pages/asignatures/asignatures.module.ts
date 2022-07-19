@@ -66,6 +66,7 @@ import { OrdenElementsComponent } from './components/modals/orden-elements/orden
 import { MenuUnitTopicElementModule } from 'src/app/shared/components/menu-unit-topic-element/menu-unit-topic-element.module';
 import { VNotesComponent } from './components/views/v-notes/v-notes.component';
 import {NotesModule} from "../../shared/components/notes/view/notes.module";
+import {MNoteWorksHomeModule} from "../../shared/components/notes-works/modal/m-note-works-home.module";
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -160,7 +161,8 @@ const MODULES: any = [
   MExamViewModalModule,
   VExamViewsModule,
   MenuUnitTopicElementModule,
-  NotesModule
+  NotesModule,
+  MNoteWorksHomeModule
 ]
 
 @NgModule({

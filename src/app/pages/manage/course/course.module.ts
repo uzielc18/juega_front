@@ -16,6 +16,7 @@ import { ImageRecorteModule } from 'src/app/shared/components/recortes/image-rec
 import { UnitsSessionsModule } from 'src/app/shared/components/units-sessions/units-sessions.module';
 import { MViewFilesModule } from 'src/app/shared/components/view-files/m-view-files/m-view-files.module';
 import {MUnitSessionModule} from "../../../shared/components/unit-session/modal/m-unit-session.module";
+import { VNewWindowComponent } from './components/view/v-new-window/v-new-window.component';
 
 const COMPONENTS: any[] = [
   CourseComponent,
@@ -65,7 +66,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, VNewWindowComponent],
   entryComponents: [...MODALS],
 })
 
