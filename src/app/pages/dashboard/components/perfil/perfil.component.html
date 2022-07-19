@@ -45,7 +45,7 @@
       </div>
       <div class="description">
         <div class="text">
-          <p>Trabajos completados</p>
+          <p>Evaluciones completados</p>
           <nb-progress-bar [value]="(profile?.info?.trabajos_completados / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
         </div>
       </div>
@@ -57,7 +57,7 @@
       </div>
       <div class="description">
         <div class="text">
-          <p>Trabajos vencidos</p>
+          <p>Evaluciones vencidos</p>
           <nb-progress-bar [value]="(profile?.info?.trabajos_vencidos / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
         </div>
       </div>
@@ -69,7 +69,7 @@
       </div>
       <div class="description">
         <div class="text">
-          <p>Trabajos por completar</p>
+          <p>Evaluciones por completar</p>
           <nb-progress-bar [value]="(profile?.info?.trabajos_por_completar / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
         </div>
       </div>
@@ -81,16 +81,16 @@
     <!-- <app-chart-trabajos [progressDatos]="profile?.info"></app-chart-trabajos> -->
     <div class="description">
       <p>{{ profile?.info?.total_trabajos }}</p>
-      <span>Trabajos en total</span>
+      <span>Evaluciones en total</span>
       <ul>
         <li>
-          <span></span><small>{{ profile?.info?.trabajos_por_completar }} Trabajos por completar</small>
+          <span></span><small>{{ profile?.info?.trabajos_por_completar }} Evaluciones por completar</small>
         </li>
         <li>
-          <span></span><small>{{ profile?.info?.trabajos_vencidos }} Trabajos vencidos</small>
+          <span></span><small>{{ profile?.info?.trabajos_vencidos }} Evaluciones vencidos</small>
         </li>
         <li>
-          <span></span><small>{{ profile?.info?.trabajos_completados }} Trabajos completados</small>
+          <span></span><small>{{ profile?.info?.trabajos_completados }} Evaluciones completados</small>
         </li>
       </ul>
     </div>

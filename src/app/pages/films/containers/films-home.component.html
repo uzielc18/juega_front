@@ -15,7 +15,7 @@
         </div>
         <div class="col-md-2 ms-auto">
               <label class="label" style="visibility: hidden;">Listar grabaciones</label><br>
-              <button nbButton fullWidth size="small" status="warning" (click)="listarGrabaciones()"><nb-icon icon="funnel"></nb-icon>Listar grabaciones</button>
+              <button nbButton fullWidth size="small" status="warning" (click)="listarGrabaciones()" [disabled]="formHeader.value.curso_id == ''"><nb-icon icon="funnel"></nb-icon>Listar grabaciones</button>
         </div>
       </div>
     </form>

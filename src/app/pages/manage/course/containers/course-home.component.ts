@@ -9,6 +9,7 @@ import { MCourseFreeComponent } from '../components/modals/m-course-free/m-cours
 import { MMatricularComponent } from '../components/modals/m-matricular/m-matricular.component';
 import {MUnitSessionComponent} from "../../../../shared/components/unit-session/modal/m-unit-session.component";
 import {END_POINTS} from "../../../../providers/utils";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-course-home',
@@ -32,7 +33,7 @@ export class CourseHomeComponent implements OnInit {
   litProgramStudy:any = [];
   semestrers:any = [];
   facultades:any = [];
-  constructor(private generalServi: GeneralService, private formBuilder: FormBuilder, private dialogService: NbDialogService, private appUserInfo: AppService) { }
+  constructor(private generalServi: GeneralService, public router: Router, private formBuilder: FormBuilder, private dialogService: NbDialogService, private appUserInfo: AppService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -269,5 +270,8 @@ export class CourseHomeComponent implements OnInit {
         this.getCourseZoom();
       }
     });
+  }
+  newWindows(){
+    this.router.navigate(['/pages/manage/course/new'])
   }
 }

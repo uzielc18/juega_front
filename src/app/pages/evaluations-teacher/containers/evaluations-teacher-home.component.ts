@@ -182,10 +182,11 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
   refresh() {
     this.listElements();
   }
-  noteWorks(item: any){
+  noteWorks(item: any, code: any){
     this.dialogService.open(MNoteWorksHomeComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
+        code: code,
         items: item
       },
       closeOnBackdropClick: false,

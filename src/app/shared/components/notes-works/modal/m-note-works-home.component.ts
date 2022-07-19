@@ -10,6 +10,7 @@ export class MNoteWorksHomeComponent implements OnInit {
 
   loading: boolean = false;
   @Input() items: any;
+  @Input() code: any;
   constructor(public activeModal: NbDialogRef<MNoteWorksHomeComponent>) { }
 
 
