@@ -1,8 +1,11 @@
 import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbToastrService } from '@nebular/theme';
+import {NbDialogService, NbToastrService} from '@nebular/theme';
 import { GeneralService } from '../../../../../../providers';
 import { END_POINTS } from '../../../../../../providers/utils';
+import {
+  MNoteWorksHomeComponent
+} from "../../../../../../shared/components/notes-works/modal/m-note-works-home.component";
 
 @Component({
   selector: 'app-estudiantes',
@@ -47,7 +50,8 @@ export class EstudiantesComponent implements OnInit, OnChanges {
     private generalService: GeneralService,
     private formBuilder: FormBuilder,
     private renderer: Renderer2,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private dialogService: NbDialogService
   ) {}
 
   ngOnInit(): void {
@@ -159,6 +163,22 @@ export class EstudiantesComponent implements OnInit, OnChanges {
         }
       );
     }
+  }
+  notesWorks(code: any){
+    this.dialogService.open(MNoteWorksHomeComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        code: code,
+        items: this.curso
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+       // this.listCursos();
+      }
+    });
+
   }
 
   searchStudent() {

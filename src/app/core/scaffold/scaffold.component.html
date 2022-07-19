@@ -146,8 +146,8 @@
           ></nb-user>
         </nb-action>
       </nb-actions>
-      <div class="div-Class-open">
-        <input *ngIf="statusSearch"
+      <div *ngIf="statusSearch" class="div-Class-open me-2" style="background-color: #E3E6E8;">
+        <input
                class="input2"
                type="text"
                placeholder="Buscar..."
@@ -157,7 +157,7 @@
                fieldSize="small"
                (keyup.enter)="searchEnter($event)">
         <div *ngIf="statusSearch" class="" >
-          <ul class="list-group position-absolute top-100 start-0 w-100" style="padding: 0 8px 0 50px">
+          <ul class="list-group position-absolute top-100 start-0 w-100">
             <li class="list-group-item list-group-item-action" *ngIf="search.value != ''">Buscar "{{search.value}}"</li>
             <li class="list-group-item list-group-item-action"
                 *ngFor="let item of ejemploSugerido"><img alt="">{{item.nombre}}</li>
