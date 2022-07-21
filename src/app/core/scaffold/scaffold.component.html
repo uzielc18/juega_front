@@ -10,20 +10,54 @@
       <nb-actions class="flex-grow-1">
         <nb-action  class="flex-grow-1 justify-content-end ">
             <div class="flex-grow-1 div-Class">
-              <input *ngIf="statusSearch"
-                     type="text"
-                     placeholder="Buscar..."
-                     nbInput
-                     fullWidth
-                     [formControl]="search"
-                     fieldSize="small"
-                     (keyup.enter)="searchEnter($event)">
-              <div *ngIf="statusSearch" class="position-relative">
-                <ul class="list-group position-absolute top-0 start-0 w-100">
+              <div class="input-wrapper">
+                <input *ngIf="statusSearch"
+                       type="text"
+                       class="input2"
+                       placeholder="Buscar..."
+                       nbInput
+                       fullWidth
+                       [formControl]="search"
+                       fieldSize="small"
+                       (keyup.enter)="searchEnter($event)">
+                <button class="icon-button" *ngIf="search.value !== ''" nbSuffix nbButton size="small" ghost (click)="resetInput()">
+                  <nb-icon icon="close-square-outline" pack="eva" style="color: red"></nb-icon>
+                </button>
+              </div>
+
+              <div *ngIf="statusSearch" class="position-relative" style="height: 0" >
+                <ul class="list-group position-absolute top-0 start-0 w-100" style="z-index: 9999; max-height: 500px; height: 50vh;">
                   <li class="list-group-item list-group-item-action" *ngIf="search.value != ''">Buscar "{{search.value}}"</li>
-                  <li class="list-group-item list-group-item-action"
-                      *ngFor="let item of ejemploSugerido"><img alt="">{{item.nombre}}</li>
-                  <li class="list-group-item list-group-item-action" *ngIf="ejemploSugerido == [] && search.value == ''">No se encontraron resultados</li>
+                  <li class="list-group-item" style="overflow-y: auto"
+                      *ngIf="data.length !== 0">
+                    <div class="d-flex justify-content-between flex-wrap-reverse animations" *ngFor="let item of data" style="border: 1px solid #CED9E6; margin:10px 2px; padding: 8px 0 8px 5px; height: auto; cursor: pointer" (click)="urlEvent(item)">
+                      <div class="d-flex justify-content-start align-items-center" >
+                        <div>
+                          <img [src]="item.imagen" alt="" width="80px">
+                        </div>
+                        <div style="margin-left: 10px">
+                          <small><strong>{{item.titulo | titlecase}}</strong></small><br>
+                          <small class="label" style="font-size: 12px">Ultimo acceso hace</small><br>
+                          <small>detalle{{item.detalle}}</small>
+                        </div>
+                      </div>
+                      <div style="right: 0; top: 5px;">
+                        <span class="badge bg-warning" *ngIf="item.tipo === 'persona'" style="text-transform: uppercase; font-size: 10px;">Persona</span>
+                        <span class="badge bg-success" *ngIf="item.tipo === 'cursos'" style="text-transform: uppercase; font-size: 10px;">Curso</span>
+                      </div>
+                    </div>
+
+                  </li>
+                  <li *ngIf="data.length !== 0" class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap" style="border: 1px dashed #CED9E6; margin:2px 1px; padding: 6px 15px; height: auto">
+                      <small><strong>Coincidencias</strong></small>
+                      <small>Personas: {{countPerson}}</small>
+                      <small>Cursos: {{countCourse}}</small>
+                      <small>Elementos: </small>
+                      <!--<button nbButton size="tiny" status="info">Ver todos</button>-->
+                    </div>
+                  </li>
+                  <li class="list-group-item list-group-item-action" *ngIf="data == [] && search.value == ''">No se encontraron resultados</li>
                 </ul>
               </div>
             </div>
@@ -146,7 +180,7 @@
           ></nb-user>
         </nb-action>
       </nb-actions>
-      <div *ngIf="statusSearch" class="div-Class-open me-2" style="background-color: #E3E6E8;">
+      <div *ngIf="statusSearch" class="div-Class-open me-2">
         <input
                class="input2"
                type="text"
@@ -156,12 +190,39 @@
                [formControl]="search"
                fieldSize="small"
                (keyup.enter)="searchEnter($event)">
-        <div *ngIf="statusSearch" class="" >
-          <ul class="list-group position-absolute top-100 start-0 w-100">
+        <div *ngIf="statusSearch" class="" style="height: 0">
+          <ul class="list-group position-absolute top-100 start-0 w-100" style="z-index: 9999; max-height: 500px; height: 50vh;">
             <li class="list-group-item list-group-item-action" *ngIf="search.value != ''">Buscar "{{search.value}}"</li>
-            <li class="list-group-item list-group-item-action"
-                *ngFor="let item of ejemploSugerido"><img alt="">{{item.nombre}}</li>
-            <li class="list-group-item list-group-item-action" *ngIf="ejemploSugerido == [] && search.value == ''">No se encontraron resultados</li>
+            <li class="list-group-item" style="overflow-y: auto;" *ngIf="data.length !== 0">
+              <div class="d-flex justify-content-between flex-wrap-reverse"
+                   (click)="urlEvent(item)"
+                   *ngFor="let item of data"
+                   style="border: 1px solid #CED9E6; margin:10px 2px; padding: 8px 0 0 5px; cursor: pointer">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div>
+                    <img [src]="item.imagen" alt="" width="40px">
+                  </div>
+                  <div style="margin-left: 10px">
+                    <small><strong>{{item.titulo | titlecase}}</strong></small><br>
+                    <small class="label" style="font-size: 12px">Ultimo acceso hace 23 horas</small><br>
+                    <small>Detalle: {{item.detalle}}</small>
+                  </div>
+                </div>
+                <div style="right: 0; top: 5px;">
+                  <span class="badge bg-warning" *ngIf="item.tipo === 'persona'" style="text-transform: uppercase; font-size: 10px;">Persona</span>
+                  <span class="badge bg-success" *ngIf="item.tipo === 'cursos'" style="text-transform: uppercase; font-size: 10px;">Curso</span>
+                </div>
+              </div>
+            </li>
+            <li *ngIf="data.length !== 0" class="list-group-item list-group-item-action">
+              <div class="d-flex justify-content-between align-items-center flex-wrap" style="border: 1px dashed #CED9E6; margin:2px 1px; padding: 6px 15px; height: auto">
+                <small><strong>Coincidencias</strong></small>
+                <small>Personas: {{countPerson}}</small>
+                <small>Cursos: {{countCourse}}</small>
+                <small>Elementos: -</small>
+              </div>
+            </li>
+            <li class="list-group-item list-group-item-action" *ngIf="data == [] && search.value == ''">No se encontraron resultados</li>
           </ul>
         </div>
       </div>

@@ -1,0 +1,72 @@
+<nb-card class="border-0"
+
+         style="border-radius: 5px; "
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="small">
+  <nb-card-header >
+    <div class="d-flex">
+      <nb-icon icon="file-text" class="iconNB"></nb-icon>
+      <nb-icon icon="printer" class="iconNB" (click)="imprSelect()"></nb-icon>
+    </div>
+    <div class="d-flex flex-column" style="padding: 0 4%" id="print">
+      <div class="d-flex justify-content-between" style="text-align: right;padding-bottom: 50px">
+        <div style="text-align: left">
+          <small class="title">REPORTE DE EVALUACIONES</small>
+        </div>
+        <div class="align-items-end">
+          <small class="subTitle">Nombre de la Facultad</small>
+          <div class="d-flex flex-column">
+            <small class="parrafo mb-0 label">Nombre de la escuela</small>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between">
+          <div >
+            <small class="parrafo label">DATOS DEL ESTUDIANTE</small><br>
+            <small class="subTitle mb-0">Nombres y Apellidos</small><br>
+            <small class="parrafo label">correo@upeu.edu.pe</small><br>
+            <small class="parrafo label">201323193 Ciclo II Grupo único</small>
+          </div>
+          <div style="text-align: right">
+            <small class="parrafo label">REPORTE DE EVALUACIONES</small><br>
+            <small class="subTitle ">#12345678</small><br>
+            <small class="parrafo label">10 de agosto del 2022</small>
+          </div>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div style="padding: 20px 4%" id="print2">
+      <div class="d-flex justify-content-between">
+        <small class="subTitle">Nombre del Curso</small>
+      </div>
+      <div>
+        <hr style="margin-bottom: 3px; height: 2px;">
+        <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-between">
+            <div style="margin-right: 10px">
+              <!--<nb-icon icon="briefcase" style="width: 27px; height: 27px"></nb-icon>-->
+            </div>
+            <div class="d-flex flex-column" >
+              <small class="parrafo">Trabajo 1</small>
+              <small class="description label">Descripcion del trabajo</small><br>
+              <small class="description label">Fecha de entrega</small>
+            </div>
+          </div>
+          <div class="d-flex flex-column" style="border-left: 2px dashed #C8CBD1; padding-left: 14px">
+            <small class="parrafo" style="color: var(--color-warning-500); font-weight: bold">Pendiente</small>
+            <small class="description label">Quendan 3 días</small>
+          </div>
+          <div style="border-right: 2px dashed #C8CBD1"></div>
+          <div class="d-flex align-items-center" style="margin-right: 18px">
+            <small class="parrafo">18</small>
+          </div>
+        </div>
+        <hr style="margin-top: 3px; height: 2px;">
+      </div>
+
+    <!--<hr style="margin: 30px -25px">-->
+    </div>
+  </nb-card-body>
+</nb-card>

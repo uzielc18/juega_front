@@ -24,16 +24,20 @@
             }}</nb-option>
           </nb-select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="label">Ciclo</label>
           <nb-select fullWidth size="small" formControlName="ciclo">
             <nb-option value="">Todos</nb-option>
             <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{ item.ciclo }}</nb-option>
           </nb-select>
         </div>
+        <div class="col-md-2">
+          <label class="label">Buscar</label>
+          <input nbInput type="text" fieldSize="small" fullWidth formControlName="buscar">
+        </div>
         <div class="col-md-2 ms-auto">
           <label class="label" style="visibility: hidden">Filtrar</label><br />
-          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['facultades_unidades'].value == ''">
+          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['facultades_unidades'].value == '' && rolSemestre.area.area_id === 0 && formHeader.controls['buscar'].value === ''">
             <nb-icon icon="funnel"></nb-icon>Filtrar
           </button>
         </div>

@@ -18,7 +18,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {END_POINTS} from 'src/app/providers/utils';
 import {GeneralService} from 'src/app/providers';
 import {EmitEventsService} from 'src/app/shared/services/emit-events.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SpinnerService} from '../auth/services/spinner.service';
 import {environment} from "../../../environments/environment";
 import {BreakpointObserver, BreakpointState} from "@angular/cdk/layout";
@@ -37,6 +37,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   user: any;
   userMenu: any[] = [];
   termino:any;
+
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     if (sesion) {
@@ -67,34 +68,10 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   validBlock: any = { from: '', status: false };
 
   logoLangs: any = 'assets/spain.svg';
-  ejemploSugerido: any =[];
-  ejemplo:any = [
-    {
-      id: 1,
-      nombre: 'pepito'
-    },
-    {
-      id: 2,
-      nombre: 'lucas'
-    },
-    {
-      id: 3,
-      nombre: 'juan'
-    },
-    {
-      id: 4,
-      nombre: 'javier'
-    },
-    {
-      id: 4,
-      nombre: 'juango'
-    },
-    {
-      id: 4,
-      nombre: 'jaime'
-    }
-  ]
-
+  data: any =[];
+  dataPerson: any = [];
+  countPerson: any;
+  countCourse: any;
   listLanguages: any = [
     {
       code: 'es',
@@ -137,6 +114,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private generalService: GeneralService,
     public emitEventsService: EmitEventsService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private spinnerService: SpinnerService,
   ) {
     this.spinnerSub = this.onSpinner();
@@ -254,7 +232,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       if(result.matches){
         this.statusSearch = false
         this.search.value = '';
-        this.ejemploSugerido = [];
+        this.data = [];
       }
     })
 
@@ -272,7 +250,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
     this.subcript.unsubscribe();
     this.subcrActuMenu.unsubscribe();
-
   }
 
   open() {
@@ -481,36 +458,75 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     if(!event){
       this.statusSearch = true;
     }else if(event){
-        //this.search.value = '';
-      if(this.search.value !== ''){
-        this.statusSearch = true
-        this.ejemploSugerido = this.ejemplo.filter((x: any) =>
-          x.nombre.toUpperCase()
-            .includes(this.search.value.toUpperCase()))
-        //.slice(0, 2)
-        setTimeout(() => {
-          this.search.setValue('');
-        },100)
-      }else{
-        this.statusSearch = false;
+      this.statusSearch = false;
+      setTimeout(() => {
+        this.search.setValue('');
         this.search.value = '';
-        this.ejemploSugerido = [];
-      }
+        this.data = [];
+      },100)
+        //this.search.value = '';
+      //if(this.search.value !== ''){
+      // this.statusSearch = true
+      // this.ejemploSugerido = this.ejemplo.filter((x: any) =>
+      //   x.nombre.toUpperCase()
+      //     .includes(this.search.value.toUpperCase()))
+        //.slice(0, 2)
+      //  setTimeout(() => {
+      //   this.search.setValue('');
+      //  },100)
+      // }else{
+      //  this.statusSearch = false;
+      //  this.search.value = '';
+      // this.ejemploSugerido = [];
+      // }
     }
   }
   searchEnter(event:any){
+    const serviceName = '/search';
+    const params = {
+      q: this.search.value
+    }
     if(event.target.value === ''){
       return
     }else{
-      this.ejemploSugerido = this.ejemplo.filter((x: any) =>
-        x.nombre.toUpperCase()
-          .includes(event.target.value.toUpperCase()))
-          //.slice(0, 2)
-      console.log(this.ejemploSugerido)
+
+      this.generalService.nameParams$(serviceName, params).subscribe((res:any) => {
+        this.dataPerson = res.data;
+        this.data = res.data.slice(0, 15);
+        this.countPerson = this.dataPerson.filter((x: any) => {
+          return x.tipo == 'persona'
+        }).length;
+        this.countCourse = this.dataPerson.filter((x: any) => {
+          return x.tipo == 'cursos'
+        }).length;
+      });
     }
     setTimeout(() => {
-      event.target.value = '';
-      this.search.setValue('');
+      //event.target.value = '';
+      //this.search.setValue('');
     },100)
   }
+  resetInput(){
+    this.search.setValue('');
+    this.data = [];
+  }
+  urlEvent(item: any){
+    this.statusSearch = false
+    this.search.setValue('');
+    this.data = [];
+    console.log(item)
+    if(item.url){
+      this.router.navigate([item.url], {relativeTo: this.activatedRoute.parent});
+      if(item.tipo === 'persona'){
+        this.emitEventsService.enviarEmail(item.id_url);
+      }
+      if(item.tipo === 'cursos'){
+        this.emitEventsService.enviarCurso(item.id_url);
+      }
+
+      //this.emitEventsService.reloadMenuEmit(true);
+    }
+
+    }
+
 }

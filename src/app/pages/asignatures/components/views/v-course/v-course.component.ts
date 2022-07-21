@@ -4,6 +4,7 @@ import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
+import {Subscription} from "rxjs";
 
 // IMPORTANTE
 // -(rol (docente y admin)  && tiene_permiso = 1 hace todas las acciones del docente)
@@ -21,6 +22,7 @@ export class VCourseComponent implements OnInit, OnDestroy {
   curso: any = [];
   loading:boolean = false;
   zoom: any = [];
+  datoSubscription: any = Subscription;
   constructor(
     private activatedRoute: ActivatedRoute,
     private generalService: GeneralService,
@@ -32,9 +34,17 @@ export class VCourseComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUnidades();
     this.emitEventsService.blockEnviar({from: 'Asignaturas', status: true});
+    this.datoSubscription = this.emitEventsService.returnsCurso().subscribe(value => { // para emitir evento desde la cabecera
+      console.log(value)
+      if(value){
+        this.idCargaCursoDocente = value;
+        this.getUnidades();
+      }
+    });
   }
   ngOnDestroy(): void {
     this.emitEventsService.blockEnviar({from: 'Asignaturas', status: false});
+    this.datoSubscription.unsubscribe();
   }
   getUnidades() {
     const serviceName = END_POINTS.base_back.resourse + '/elements-course';
