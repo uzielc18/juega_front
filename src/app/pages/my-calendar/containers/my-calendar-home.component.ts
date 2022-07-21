@@ -71,7 +71,7 @@ export class MyCalendarHomeComponent implements OnInit {
   ngOnInit(): void {
     this.getTypeCalendars();
     // console.log(this.userService);
-    
+
   }
   get sessionConfigCalendarType() {
     const sesion: any = sessionStorage.getItem("configAssign");
@@ -121,7 +121,7 @@ export class MyCalendarHomeComponent implements OnInit {
 
               setTimeout(() => {
                 this.getMyEvents(value);
-                
+
               }, 1000);
           }
         }, () => { this.loading = false; }, () => { this.loading = false; });
@@ -152,11 +152,11 @@ export class MyCalendarHomeComponent implements OnInit {
   typeElementCal($event:boolean, item:any) {
     item.checked = $event;
     setTimeout(() => {
-     const value = this.reccore(); 
+     const value = this.reccore();
       this.getMyEvents(value);
     }, 100);
 
-    
+
   }
   reccore() {
     const array:any = [];
@@ -180,7 +180,7 @@ export class MyCalendarHomeComponent implements OnInit {
   }
   getMyEvents(values:any) {
     const serviceName = END_POINTS.base_back.calendar + '/mis-eventos';
-    if (this.userService.user.id) {
+    if (this.userService.user.person.id) {
       const params:any = {
         fecha: this.datepipe.transform(this.date, 'yyyy-MM-dd'),
         calendar: this.sessionConfigCalendarType,
@@ -188,7 +188,7 @@ export class MyCalendarHomeComponent implements OnInit {
         origen: values.origen || '',
       }
       this.loading = true;
-        this.service.nameIdParams$(serviceName, this.userService.user.id, params).subscribe((res:any) => {
+        this.service.nameIdParams$(serviceName, this.userService.user.person.id, params).subscribe((res:any) => {
           this.valueCalendar = res.data  || [];
           if (this.valueCalendar.length>0) {
                 const newArray:any = [];
@@ -219,7 +219,7 @@ export class MyCalendarHomeComponent implements OnInit {
                     structure.end = new Date(value.end);
                   }
                   newArray.push(structure);
-                  
+
                 });
               // setTimeout(() => {
                 this.events = newArray;
@@ -248,7 +248,7 @@ export class MyCalendarHomeComponent implements OnInit {
         }
       });
     }
-    
+
   }
   changeDate($event:any) {
     if ($event) {
