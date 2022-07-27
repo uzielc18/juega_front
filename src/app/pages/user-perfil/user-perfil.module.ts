@@ -9,6 +9,7 @@ import {CardListCourseModule} from "../../shared/components/card-list-course/car
 import { PerfilComponent } from './components/perfil/perfil.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { TabsReporteNotasComponent } from './components/tabs/tabs-reporte-notas/tabs-reporte-notas.component';
+import {NgxPrintModule} from "ngx-print";
 const COMPONENTS: any[] = [
 
 ]
@@ -25,7 +26,8 @@ const COMPONENTS: any[] = [
     UserPerfilRoutingModule,
     NebularModule,
     CardListCourseModule,
-    NgbModule
+    NgbModule,
+    NgxPrintModule
   ]
 })
 export class UserPerfilModule { }

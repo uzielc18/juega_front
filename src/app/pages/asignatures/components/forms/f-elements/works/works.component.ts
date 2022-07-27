@@ -15,6 +15,7 @@ export class WorksComponent implements OnInit, OnChanges {
   loading: boolean = false;
   formHeader: any = FormGroup;
   options: any = 'N';
+  today: any = new Date()
   @Output() saveCloseValue = new EventEmitter<any>();
   @Input() topics: any;
   @Input() unidad: any;
@@ -124,7 +125,7 @@ export class WorksComponent implements OnInit, OnChanges {
       descripcion: ['', [Validators.required]],
 
       fecha_inicio: ['', [Validators.required]],
-      hora_inicio: ['', [Validators.required]],
+      hora_inicio: [this.today, [Validators.required]],
       fecha_fin: ['', [Validators.required]],
       hora_fin: ['', [Validators.required]],
       fecha_gracia: [''],

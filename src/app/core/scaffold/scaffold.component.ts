@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   NbMediaBreakpointsService,
   NbMenuItem,
@@ -96,8 +96,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
 
   private spinnerSub: Subscription;
-
-
 
   constructor(
     private nbTokenService: NbTokenService,
@@ -489,7 +487,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     if(event.target.value === ''){
       return
     }else{
-
+      this.loading = true
       this.generalService.nameParams$(serviceName, params).subscribe((res:any) => {
         this.dataPerson = res.data;
         this.data = res.data.slice(0, 15);
@@ -499,7 +497,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         this.countCourse = this.dataPerson.filter((x: any) => {
           return x.tipo == 'cursos'
         }).length;
-      });
+      }, ()=> {this.loading = false}, ()=>{this.loading = false});
     }
     setTimeout(() => {
       //event.target.value = '';

@@ -13,6 +13,7 @@ import { ControlMessagesModule } from 'src/app/shared/components/control-message
 import { FilterModule } from 'src/app/shared/pipes/filter/filter.module';
 import { DirectiveModule } from 'src/app/shared/directives/highlight.module';
 import { ElementsFormHomeComponent } from './components/elements-form-home/elements-form-home.component';
+import {AsignaturesModule} from "../../asignatures/asignatures.module";
 
 
 const COMPONENTS: any[] = [
@@ -44,14 +45,15 @@ const DIRECTIVES: any = [
 ]
 @NgModule({
   declarations: [...COMPONENTS],
-  imports: [
-    ...NG_MODULES,
-    ...MODULES,
-    ...CONTROL_MESSAGGE,
-    ...PIPES,
-    ...DIRECTIVES,
-    CommonModule,
-    ElementRoutingModule
-  ]
+    imports: [
+        ...NG_MODULES,
+        ...MODULES,
+        ...CONTROL_MESSAGGE,
+        ...PIPES,
+        ...DIRECTIVES,
+        CommonModule,
+        ElementRoutingModule,
+        AsignaturesModule
+    ]
 })
 export class ElementModule { }
