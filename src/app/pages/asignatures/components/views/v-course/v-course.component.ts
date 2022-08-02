@@ -86,6 +86,8 @@ export class VCourseComponent implements OnInit, OnDestroy {
         // console.log(this.curso);
 
         // lo
+
+
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
   }

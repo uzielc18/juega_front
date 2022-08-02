@@ -424,10 +424,11 @@ export class LambSyncHomeComponent implements OnInit {
     this.loading = true;
     if (this.formHeader.get('programa_estudio').value) {
       this.generalService
-        .nameId$(
+        .nameIdAndId$(
           serviceName,
           //this.rolSemestre.semestre.nombre,
-          this.formHeader.get('semestre').value)
+          this.formHeader.get('semestre').value,
+          this.formHeader.get('programa_estudio').value.id_programa_estudio)
         .subscribe(
           (res: any) => {
             this.docentes = res.data || [];
