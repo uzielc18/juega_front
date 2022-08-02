@@ -16,6 +16,8 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
   email: any;
   profile: any;
   loading: boolean = false
+  person: any;
+  notas: any = [];
   datoSubscription: any = Subscription;
   constructor( private generalService: GeneralService,
                private userService: AppService,
@@ -26,7 +28,6 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
     this.email = this.recuperarEmail;
     this.getUser();
     this.datoSubscription = this.emitEventsService.returnsEmail().subscribe(value => { // para emitir evento desde la cabecera
-      console.log(value)
       if(value){
         this.email = value;
         this.getUser();
@@ -45,8 +46,17 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
     this.generalService.nameIdParams$(serviceName, this.email ,params).subscribe((res:any) => {
       if(res.success){
         this.profile = res.data;
+        this.getEvaluaciones(this.profile?.user?.person);
       }
     }, () => {this.loading = false;}, () => {this.loading = false})
+  }
+  getEvaluaciones(person: any){
+    const serviceName = END_POINTS.base_back.persons + '/reporte-notas';
+    this.loading= true
+      this.person = this.profile?.user.person
+      this.generalService.nameId$(serviceName, person?.id).subscribe(res => {
+        this.notas = res.data
+      }, () => {this.loading = false}, () => {this.loading = false})
   }
 
 }

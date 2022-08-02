@@ -5,7 +5,7 @@
          nbSpinnerStatus="primary"
          nbSpinnerSize="small">
   <nb-card-header >
-    <div class="d-flex">
+    <div class="d-flex justify-content-end" style="padding: 0 3%">
       <nb-icon icon="file-text" class="iconNB"></nb-icon>
      <button printSectionId="print-section"
              class="buttonPrint"
@@ -23,135 +23,47 @@
     <div class="d-flex flex-column" style="padding: 0 4%" id="print">
       <div class="d-flex justify-content-between" style="text-align: right;padding-bottom: 50px">
         <div style="text-align: left">
-          <small class="title">REPORTE DE EVALUACIONES</small>
+          <small class="title">REPORTE DE EVALUACIONES</small><br>
+          <small class="description label" style="font-style: italic;">Actividades de evaluación realizadas en el ciclo vigente en Lamb Leearnig.</small><br>
+          <small class="description" style="color: #692040">(*las notas finales se visualizaran en Lamb académico)</small>
         </div>
         <div class="align-items-end">
           <small class="subTitle">Nombre de la Facultad</small>
           <div class="d-flex flex-column">
-            <small class="parrafo mb-0 label">Nombre de la escuela</small>
+            <small class="parrafo mb-0 label">{{profile?.person?.programa_estudio}}</small>
           </div>
         </div>
       </div>
       <div class="d-flex justify-content-between">
           <div >
             <small class="parrafo label">DATOS DEL ESTUDIANTE</small><br>
-            <small class="subTitle mb-0">Nombres y Apellidos</small><br>
-            <small class="parrafo label">correo@upeu.edu.pe</small><br>
-            <small class="parrafo label">201323193 Ciclo II Grupo único</small>
+            <small class="subTitle mb-0">{{profile?.user?.person?.nombres_completos}}</small><br>
+            <small class="parrafo label">{{profile?.user?.email}}</small><br>
+            <small class="parrafo label">{{profile?.user?.person?.codigo}} Ciclo II Grupo único</small>
           </div>
           <div style="text-align: right">
             <small class="parrafo label">REPORTE DE EVALUACIONES</small><br>
             <small class="subTitle ">#12345678</small><br>
-            <small class="parrafo label">10 de agosto del 2022</small>
+            <small class="parrafo label">{{nowDate| date:"d 'de' MMMM 'del' y"}}</small>
           </div>
       </div>
     </div>
   </nb-card-header>
   <nb-card-body >
     <div style="padding: 0 4%;"  class="d-flex flex-column">
-      <div style="margin: 15px 0">
-        <div class="d-flex justify-content-between">
-          <small class="subTitle">Nombre del Curso</small>
+      <div style="margin: 15px 0; border-bottom: 1px solid #8F9BB3; padding: 0 0 15px 0; cursor: pointer"
+           class="d-flex justify-content-between"
+           (click)="openNotas(item)" *ngFor="let item of notas">
+        <div class="">
+          <small class="subTitle">{{item.nombre}} - ciclo: {{item.ciclo}} - grupo: {{item.grupo}}</small><br>
+          <small class="parrafo label">{{item.persons_teacher_nombre}}</small>
         </div>
-        <br>
-        <div style="border-top: 1px solid; border-bottom: 1px solid; padding: 5px 0; margin-bottom: 10px">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex justify-content-between">
-              <div style="margin-right: 10px">
-                <nb-icon icon="briefcase" style="width: 27px; height: 27px"></nb-icon>
-              </div>
-              <div class="d-flex flex-column" >
-                <small class="parrafo">Trabajo 1</small>
-                <small class="description label">Descripcion del trabajo</small><br>
-                <small class="description label">Fecha de entrega</small>
-              </div>
-            </div>
-            <div class="d-flex flex-column" style="border-left: 2px dashed #C8CBD1; padding-left: 14px">
-              <small class="estado">Pendiente</small>
-              <small class="description label">Quendan 3 días</small>
-            </div>
-            <div style="border-right: 2px dashed #C8CBD1"></div>
-            <div class="d-flex align-items-center" style="margin-right: 18px">
-              <small class="parrafo">18</small>
-            </div>
-          </div>
-         </div>
-
-        <div style="border-top: 1px solid; border-bottom: 1px solid; padding: 5px 0">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex justify-content-between">
-              <div style="margin-right: 10px">
-                <nb-icon icon="briefcase" style="width: 27px; height: 27px"></nb-icon>
-              </div>
-              <div class="d-flex flex-column" >
-                <small class="parrafo">Trabajo 1</small>
-                <small class="description label">Descripcion del trabajo</small><br>
-                <small class="description label">Fecha de entrega</small>
-              </div>
-            </div>
-            <div class="d-flex flex-column" style="border-left: 2px dashed #C8CBD1; padding-left: 14px">
-              <small class="estado">Pendiente</small>
-              <small class="description label">Quendan 3 días</small>
-            </div>
-            <div style="border-right: 2px dashed #C8CBD1"></div>
-            <div class="d-flex align-items-center" style="margin-right: 18px">
-              <small class="parrafo">18</small>
-            </div>
-          </div>
-        </div>
-       </div>
-     <!--<hr style="margin: 30px -25px">-->
-      <div style="margin: 15px 0">
-        <div class="d-flex justify-content-between">
-          <small class="subTitle">Nombre del Curso</small>
-        </div>
-        <br>
-        <div style="border-top: 1px solid; border-bottom: 1px solid; padding: 5px 0; margin-bottom: 10px">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex justify-content-between">
-              <div style="margin-right: 10px">
-                <nb-icon icon="briefcase" style="width: 27px; height: 27px"></nb-icon>
-              </div>
-              <div class="d-flex flex-column" >
-                <small class="parrafo">Trabajo 1</small>
-                <small class="description label">Descripcion del trabajo</small><br>
-                <small class="description label">Fecha de entrega</small>
-              </div>
-            </div>
-            <div class="d-flex flex-column" style="border-left: 2px dashed #C8CBD1; padding-left: 14px">
-              <small class="estado">Pendiente</small>
-              <small class="description label">Quendan 3 días</small>
-            </div>
-            <div style="border-right: 2px dashed #C8CBD1"></div>
-            <div class="d-flex align-items-center" style="margin-right: 18px">
-              <small class="parrafo">18</small>
-            </div>
-          </div>
-        </div>
-
-        <div style="border-top: 1px solid; border-bottom: 1px solid; padding: 5px 0">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex justify-content-between">
-              <div style="margin-right: 10px">
-                <nb-icon icon="briefcase" style="width: 27px; height: 27px"></nb-icon>
-              </div>
-              <div class="d-flex flex-column" >
-                <small class="parrafo">Trabajo 1</small>
-                <small class="description label">Descripcion del trabajo</small><br>
-                <small class="description label">Fecha de entrega</small>
-              </div>
-            </div>
-            <div class="d-flex flex-column" style="border-left: 2px dashed #C8CBD1; padding-left: 14px">
-              <small class="estado">Pendiente</small>
-              <small class="description label">Quendan 3 días</small>
-            </div>
-            <div style="border-right: 2px dashed #C8CBD1"></div>
-            <div class="d-flex align-items-center" style="margin-right: 18px">
-              <small class="parrafo">18</small>
-            </div>
-          </div>
+        <div class="text-center">
+          <small class="parrafo label">Promedio</small><br>
+          <small class="subTitle">18</small>
         </div>
       </div>
+     <!--<hr style="margin: 30px -25px">-->
      </div>
 
    </nb-card-body>

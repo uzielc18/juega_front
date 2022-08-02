@@ -10,6 +10,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { TabsReporteNotasComponent } from './components/tabs/tabs-reporte-notas/tabs-reporte-notas.component';
 import {NgxPrintModule} from "ngx-print";
+import { MReporteNotasComponent } from './components/tabs/tabs-reporte-notas/modals/m-reporte-notas/m-reporte-notas.component';
 const COMPONENTS: any[] = [
 
 ]
@@ -19,7 +20,8 @@ const COMPONENTS: any[] = [
     UserPerfilComponent,
     UserPerfilHomeComponent,
     PerfilComponent,
-    TabsReporteNotasComponent
+    TabsReporteNotasComponent,
+    MReporteNotasComponent
   ],
   imports: [
     CommonModule,

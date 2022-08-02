@@ -479,6 +479,29 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       // }
     }
   }
+  caculateTime(fecha: any){
+    const fecha_inicio = new Date(fecha).getTime();
+    const nowDate = new Date().getTime();
+    const gap = nowDate - fecha_inicio;
+    return gap
+  }
+  padTo2Digits(num: any) {
+    return num.toString().padStart(2, '0');
+  }
+
+  convertMsToTime(milliseconds: number) {
+    let seconds = Math.floor(milliseconds / 1000) || 0;
+    let minutes = Math.floor(seconds / 60) || 0;
+    let hours = Math.floor(minutes / 60) || 0;
+    let days = Math.floor(hours / 24) || 0;
+    seconds = seconds % 60;
+    minutes = minutes % 60;
+    hours = hours % 24;
+   // console.log(`${this.padTo2Digits(hours)}:${this.padTo2Digits(minutes)}:${this.padTo2Digits(seconds)}`)
+    //return `${this.padTo2Digits(hours)}:${this.padTo2Digits(minutes)}:${this.padTo2Digits(seconds)}`;
+    return `${this.padTo2Digits(days)} ${this.padTo2Digits(days) === '1' ? 'dia.' : 'dias.'} y
+    ${this.padTo2Digits(hours)} ${this.padTo2Digits(hours) === '1' ? 'hora.' : 'horas.'}`
+  }
   searchEnter(event:any){
     const serviceName = '/search';
     const params = {
@@ -490,6 +513,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.loading = true
       this.generalService.nameParams$(serviceName, params).subscribe((res:any) => {
         this.dataPerson = res.data;
+        this.dataPerson.map((resp:any) => {
+          resp.hora = this.convertMsToTime(this.caculateTime(resp.info_fecha))
+        })
         this.data = res.data.slice(0, 15);
         this.countPerson = this.dataPerson.filter((x: any) => {
           return x.tipo == 'persona'
@@ -512,7 +538,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.statusSearch = false
     this.search.setValue('');
     this.data = [];
-    console.log(item)
     if(item.url){
       this.router.navigate([item.url], {relativeTo: this.activatedRoute.parent});
       if(item.tipo === 'persona'){
