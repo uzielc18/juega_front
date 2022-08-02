@@ -212,7 +212,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         (b: any) => b.nombre === 'CALENDAR-TYPE'
       );
       const params = {
-        type_calendar: typeCalendar ? this.validValueMesSemanaDia(typeCalendar.valor) : 'mes',
+        type_calendar: typeCalendar ? this.validValueMesSemanaDia(typeCalendar?.valor) : 'mes',
       };
       sessionStorage.setItem('configAssign', JSON.stringify(params));
     } else {
@@ -455,6 +455,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   searchClic(event:any){
     if(!event){
       this.statusSearch = true;
+
     }else if(event){
       this.statusSearch = false;
       setTimeout(() => {
@@ -505,7 +506,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     ${this.padTo2Digits(hours)} ${this.padTo2Digits(hours) === '1' ? 'hora.' : 'horas.'}`
   }
   searchEnter(event:any){
-    const serviceName = '/search';
+    const serviceName = 'search';
     const params = {
       q: this.search.value
     }
@@ -555,5 +556,4 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     }
 
     }
-
 }
