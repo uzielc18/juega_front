@@ -166,22 +166,26 @@ const MODULES: any = [
 ]
 
 @NgModule({
-  providers: [
-    ...SERIVCES,
-  ],
-  imports: [
-    AsignaturesRoutingModule,
-    ...NG_MODULES,
-    ...NGB_MODULES,
-    ...CONTROL_MESSAGGE,
-    ...NGX_MODULES,
-    ...MODULES,
-    ...PIPES,
-    ...DIRECTIVES
-  ],
-  declarations: [...COMPONENTS,],
-  entryComponents: [...MODALS],
+    providers: [
+        ...SERIVCES,
+    ],
+    imports: [
+        AsignaturesRoutingModule,
+        ...NG_MODULES,
+        ...NGB_MODULES,
+        ...CONTROL_MESSAGGE,
+        ...NGX_MODULES,
+        ...MODULES,
+        ...PIPES,
+        ...DIRECTIVES
+    ],
+    declarations: [...COMPONENTS,],
+    entryComponents: [...MODALS],
 
+  exports: [
+    WorksComponent,
+    VidioComponent
+  ]
 })
 
 export class AsignaturesModule { }

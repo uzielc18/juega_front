@@ -58,5 +58,8 @@ const MODULES: any = [
   declarations: [...COMPONENTS, ...PIPES],
   entryComponents: [...MODALS],
 
+  exports: [
+    PerfilComponent
+  ]
 })
 export class DashboardModule { }

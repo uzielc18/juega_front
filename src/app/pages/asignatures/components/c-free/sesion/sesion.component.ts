@@ -80,7 +80,9 @@ export class SesionComponent implements OnInit {
 
           if (this.sesion?.modo === 'agrupado') {
             // console.log(result, 'Response de save');
+            this.cargarCambio(result)
             result.type_element.type_element_id = result.type_element.id;
+            console.log(this.sesion.elements)
             if (this.sesion.elements.length > 0) {
               const exist = this.sesion.elements.find((r: any) => ((r.type_element_id === result.type_element.id) ? true : false));
               if (exist) {
@@ -224,8 +226,8 @@ export class SesionComponent implements OnInit {
     );
   }
   setCheck(type_element_id: any) {
-    // console.log(type_element_id, 'ups');
-
+    console.log(type_element_id, 'ups');
+    console.log(this.sesion.elements)
     if (this.sesion.elements.length > 0) {
       this.sesion.elements.map((el: any) => {
         el.check = false;

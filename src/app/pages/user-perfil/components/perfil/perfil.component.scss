@@ -1,0 +1,278 @@
+.perfil-container {
+  padding: 25px 15px 5px 15px;
+  background-color: #eeeeee;
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .perfil-container {
+    padding: 30px 25px;
+  }
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.photo-container {
+  border-radius: 50%;
+  border: 5px solid #c8c504;
+  overflow: hidden;
+  width: 120px;
+  height: 120px;
+
+  img {
+    width: 100%;
+  }
+}
+
+.student {
+  text-align: center;
+  margin-bottom: 10px;
+
+  &-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #414141;
+    margin: 0;
+  }
+
+  &-lastname {
+    font-size: 16px;
+    color: #575756;
+    margin: 0;
+  }
+}
+
+.student-info {
+  text-align: center;
+
+  .ciclo {
+    font-weight: bold;
+    color: var(--color-primary-500);
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .carrera {
+    font-size: 14px;
+    color: var(--color-primary-500);
+    margin: 0;
+  }
+
+  .codigo {
+    color: #898989;
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+.stats-ciclo {
+  display: flex;
+  text-align: center;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+
+  nb-icon {
+    width: 30px;
+    height: 30px;
+    color: var(--color-primary-500);
+  }
+
+  p {
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #575756;
+  }
+
+  span {
+    display: block;
+    color: #575756;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .asignaturas,
+  .avance,
+  .promedio {
+    padding: 15px 20px;
+  }
+}
+
+.stats-percentage {
+  p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #575756;
+  }
+
+  span {
+    font-size: 12px;
+    color: #575756;
+  }
+
+  .participacion,
+  .asistencia,
+  .evaluacion {
+    display: flex;
+    background-color: #fefcf7;
+    margin-bottom: 10px;
+    border-radius: 7px;
+    padding: 10px 20px;
+  }
+
+  .description {
+    width: 50%;
+  }
+
+  .percentage {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #f1f1f0;
+
+    p {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+}
+
+.chart-stats {
+  display: flex;
+  background-color: #f7fafc;
+  border-radius: 7px;
+  margin-bottom: 10px;
+
+  .chart {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 10px solid #e9cb62;
+    margin: 20px;
+  }
+
+  .description {
+    border-left: 1px solid #e6eaee;
+    padding: 15px;
+    flex: 1;
+
+    p {
+      font-size: 24px;
+      font-weight: bold;
+      color: #575756;
+      margin-bottom: 5px;
+    }
+
+    span {
+      display: block;
+      font-size: 16px;
+      font-weight: 600;
+      color: #575756;
+      margin-bottom: 5px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+      }
+
+      span {
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #e9cb62;
+        margin-right: 10px;
+        margin-bottom: 0;
+      }
+
+      small {
+        font-size: 12px;
+        color: #575756;
+      }
+    }
+  }
+}
+
+.trabajos {
+  .count {
+    display: flex;
+    // flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    border-right: 1px solid #e6eaee;
+    width: 100px;
+
+    p {
+      font-size: 24px;
+      font-weight: bold;
+      color: #575756;
+      margin: 0;
+      margin-right: 5px;
+    }
+
+    span {
+      font-size: 12px;
+      color: #575756;
+      margin-bottom: 2px;
+      padding-top: 9px;
+    }
+  }
+
+  .description {
+    padding: 15px 20px;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .text {
+      p {
+        margin-bottom: 3px;
+        font-size: 14px;
+        color: #575756;
+      }
+    }
+  }
+
+  .completados,
+  .vencidos,
+  .por-completar {
+    background-color: #f7fafc;
+    border-radius: 7px;
+    cursor: pointer;
+    display: flex;
+    margin-bottom: 10px;
+  }
+
+  .work:hover {
+    transform: translateY(-1px);
+    background-color: #fefcf7;
+  }
+}
+
+nb-progress-bar {
+  height: 10px;
+  // width: 162px;
+
+  ::ng-deep .progress-container {
+    background-color: #f6eac0 !important;
+  }
+
+  ::ng-deep .progress-value {
+    background-color: #9aacba !important;
+  }
+}

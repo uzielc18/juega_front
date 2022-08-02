@@ -1,0 +1,129 @@
+<div class="perfil-container">
+  <div class="profile mb-1">
+    <div class="photo-container">
+      <!-- <img src="assets/student.jpg" alt=""> -->
+      <img [src]="profile?.user?.profile_photo_url" [alt]="" width="100%" style="object-fit: contain" />
+    </div>
+    <div class="d-flex flex-column" style="flex: 1">
+      <div class="student">
+        <p class="student-name">
+          {{profile?.user?.person?.nombres}}
+        </p>
+        <p class="student-lastname">
+          {{profile?.user?.person?.apellido_paterno}} {{profile?.user?.person?.apellido_materno}}
+        </p>
+      </div>
+      <div class="student-info">
+        <p class="ciclo">{{ profile?.user?.person?.ciclo }}º Ciclo</p>
+        <p class="carrera">{{ profile?.user?.person?.programa_estudio }}</p>
+        <p class="codigo">
+          {{ profile?.user?.person?.codigo }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="stats-ciclo">
+    <div class="asignaturas">
+      <nb-icon icon="book-open"></nb-icon>
+      <p>{{ profile?.info?.total_cursos }}</p>
+      <span>Asignaturas en este ciclo</span>
+    </div>
+    <div class="avance">
+      <nb-icon icon="activity"></nb-icon>
+      <p>{{ profile?.info?.avance_academico }}%</p>
+      <span>Avance Académico</span>
+    </div>
+    <div class="promedio">
+      <nb-icon icon="award"></nb-icon>
+      <p>{{ profile?.info?.promedio_ciclo }}</p>
+      <span>Promedio en este ciclo</span>
+    </div>
+  </div>
+  <div class="trabajos">
+    <div class="completados work">
+      <div class="count">
+        <p>{{ profile?.info?.trabajos_completados }}</p>
+        <span>/ {{ profile?.info?.total_trabajos }}</span>
+      </div>
+      <div class="description">
+        <div class="text">
+          <p>Evaluciones completados</p>
+          <nb-progress-bar [value]="(profile?.info?.trabajos_completados / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
+        </div>
+      </div>
+    </div>
+    <div class="vencidos work">
+      <div class="count">
+        <p>{{ profile?.info?.trabajos_vencidos }}</p>
+        <span>/ {{ profile?.info?.total_trabajos }}</span>
+      </div>
+      <div class="description">
+        <div class="text">
+          <p>Evaluciones vencidos</p>
+          <nb-progress-bar [value]="(profile?.info?.trabajos_vencidos / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
+        </div>
+      </div>
+    </div>
+    <div class="por-completar work">
+      <div class="count">
+        <p>{{ profile?.info?.trabajos_por_completar }}</p>
+        <span>/ {{ profile?.info?.total_trabajos }} </span>
+      </div>
+      <div class="description">
+        <div class="text">
+          <p>Evaluciones por completar</p>
+          <nb-progress-bar [value]="(profile?.info?.trabajos_por_completar / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chart-stats">
+    <div class="chart">
+    </div>
+    <!-- <app-chart-trabajos [progressDatos]="profile?.info"></app-chart-trabajos> -->
+    <div class="description">
+      <p>{{ profile?.info?.total_trabajos }}</p>
+      <span>Evaluciones en total</span>
+      <ul>
+        <li>
+          <span></span><small>{{ profile?.info?.trabajos_por_completar }} Evaluciones por completar</small>
+        </li>
+        <li>
+          <span></span><small>{{ profile?.info?.trabajos_vencidos }} Evaluciones vencidos</small>
+        </li>
+        <li>
+          <span></span><small>{{ profile?.info?.trabajos_completados }} Evaluciones completados</small>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!--<div class="stats-percentage">
+    <div class="participacion">
+      <div class="description">
+        <p>Participación</p>
+        <span>Ciclo: {{ profile?.person?.ciclo }} - Campus: Lima</span>
+      </div>
+      <div class="percentage">
+        <p>{{ profile?.info?.participation }}%</p>
+      </div>
+    </div>
+    <div class="asistencia">
+      <div class="description">
+        <p>Asistencia</p>
+        <span>Ciclo: {{ profile?.person?.ciclo }} - Campus: Lima</span>
+      </div>
+      <div class="percentage">
+        <p>90%</p>
+      </div>
+    </div>
+    <div class="evaluacion">
+      <div class="description">
+        <p>Evaluación</p>
+        <span>Ciclo: {{ profile?.person?.ciclo }} - Campus: Lima</span>
+      </div>
+      <div class="percentage">
+        <p>85%</p>
+      </div>
+    </div>
+  </div>-->
+</div>

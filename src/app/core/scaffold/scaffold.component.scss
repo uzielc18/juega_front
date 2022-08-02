@@ -55,8 +55,27 @@
   display: none;
   max-width: none;
 }
+.animations {
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px #00000012;
+  }
+}
+.input-wrapper{
+  position: relative;
+}
+.icon-button{
+  position: absolute;
+  width: auto;
+  right: 10px;
+  text-align: center;
+  z-index: 99999;
+  top: auto;
+}
 @media screen and (max-width: 900px){
   .div-Class-open{
+    background-color: var(--color-primary-900);
     display: flex;
     position: absolute;
     width: auto;
@@ -64,7 +83,7 @@
     right: 0;
     top: 100%;
     margin: 0 0 0 56px;
-    padding: 5px 5px 5px 5px;
+    padding: 5px 0;
   }
   .div-Class{
     display: none;

@@ -1,0 +1,36 @@
+.title{
+  font-weight: bold;
+  color: var(--color-primary-500);
+  font-size: 16px;
+  margin: 0;
+}
+.subTitle{
+  font-weight: bold;
+  color: var(--color-primary-500);
+  font-size: 14px;
+  margin: 0;
+}
+.estado{
+  font-size: 12px;
+  padding: 0;
+  color: var(--color-warning-500);
+  font-weight: bold
+}
+.parrafo{
+  font-size: 12px;
+  padding: 0;
+}
+.description{
+  font-size: 11px;
+  margin: 0;
+}
+.buttonPrint{
+  border: none !important;
+  background: transparent;
+}
+.iconNB{
+  color: var(--color-primary-500);
+  width: 30px;
+  height: 30px;
+  margin: 0 10px 10px 0;
+}

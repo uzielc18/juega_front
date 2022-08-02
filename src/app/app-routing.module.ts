@@ -53,6 +53,10 @@ const routes: Routes = [
         path: 'configurations',
         loadChildren: () => import('./pages/configurations/configurations.module').then(m => m.ConfigurationsModule),
       },
+      {
+        path: 'user',
+        loadChildren: () => import('./pages/user-perfil/user-perfil.module').then(m => m.UserPerfilModule),
+      },
 
       // {
       //   path: "**",

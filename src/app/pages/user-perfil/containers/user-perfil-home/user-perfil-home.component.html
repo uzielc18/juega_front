@@ -1,0 +1,36 @@
+<nb-card
+  class="m-0 border-0 h-100"
+  style="border-radius: 15px; overflow: hidden"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="small"
+>
+  <nb-card-body class="p-0">
+    <div class="main-container">
+      <div class="perfil">
+        <!-- [ngStyle]="perfilInfo ? { 'min-width': '361px', width: '361px' } : { 'min-width': '361px', width: '361px' }" -->
+        <app-perfil [profile]="profile"></app-perfil>
+      </div>
+      <div class="cursos" style="background-color: #eeeeee">
+        <div class="anuncios" style="height: 300px; ">
+              <div class="picsum-img-wrapper button-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdJsonCXT-PvSq9xC4Bi6tK_ckcrJ0KQKK_g&usqp=CAU" [alt]="" style="width: 100%; height: 100%; object-fit: cover"/>
+              </div>
+          <hr/>
+        </div>
+        <nb-card class="curso-container" style="margin-top: -10px">
+          <nb-card-body style="background-color: #f7f7f7; position: relative" class="p-0">
+            <nb-tabset>
+              <nb-tab tabTitle="Cursos">
+              </nb-tab>
+              <nb-tab tabTitle="Reportes notas">
+                <app-tabs-reporte-notas [profile] = 'profile' [notas]="notas"></app-tabs-reporte-notas>
+              </nb-tab>
+            </nb-tabset>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+

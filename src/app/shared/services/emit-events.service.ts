@@ -18,6 +18,10 @@ export class EmitEventsService {
 
   actMenu$ = new Subject<boolean>();
 
+  valuesEmail$ = new Subject<any>();
+
+  valuesCurso$ = new Subject<any>();
+
   constructor() {}
   asingDatos(newUser: any) {
     this.rolSemester.next(newUser);
@@ -61,5 +65,19 @@ export class EmitEventsService {
   }
   reloadMenuResponse(): Observable<any> {
     return this.actMenu$.asObservable();
+  }
+  enviarEmail(value: any) {
+    this.valuesEmail$.next(value);
+  }
+
+  returnsEmail(): Observable<any> {
+    return this.valuesEmail$.asObservable();
+  }
+  enviarCurso(value: any) {
+    this.valuesCurso$.next(value);
+  }
+
+  returnsCurso(): Observable<any> {
+    return this.valuesCurso$.asObservable();
   }
 }
