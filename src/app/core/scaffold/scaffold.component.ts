@@ -461,6 +461,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         this.search.setValue('');
         this.search.value = '';
         this.data = [];
+        this.countCourse = ''
+        this.countPerson = ''
       },100)
         //this.search.value = '';
       //if(this.search.value !== ''){
@@ -533,6 +535,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   resetInput(){
     this.search.setValue('');
     this.data = [];
+    this.countCourse = ''
+    this.countPerson = ''
   }
   urlEvent(item: any){
     this.statusSearch = false

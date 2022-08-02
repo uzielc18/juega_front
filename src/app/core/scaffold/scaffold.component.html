@@ -57,7 +57,7 @@
                       <!--<button nbButton size="tiny" status="info">Ver todos</button>-->
                     </div>
                   </li>
-                  <li class="list-group-item list-group-item-action" *ngIf="data == [] && search.value == ''">No se encontraron resultados</li>
+                  <li class="list-group-item list-group-item-action" *ngIf="countPerson == 0 && countCourse === 0">No se encontraron resultados</li>
                 </ul>
               </div>
             </div>
@@ -222,7 +222,7 @@
                 <small>Elementos: -</small>
               </div>
             </li>
-            <li class="list-group-item list-group-item-action" *ngIf="data == [] && search.value == ''">No se encontraron resultados</li>
+            <li class="list-group-item list-group-item-action" *ngIf="countPerson == 0 && countCourse === 0">No se encontraron resultados</li>
           </ul>
         </div>
       </div>
