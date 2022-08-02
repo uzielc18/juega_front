@@ -61,6 +61,7 @@ export class TeacherHomeComponent implements OnInit {
       programa_estudio_id: [''],
       ciclo: [''],
       facultades_unidades: [''],
+      buscar: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
   }
@@ -173,6 +174,7 @@ export class TeacherHomeComponent implements OnInit {
       per_page: this.pagination.per_page,
       page: this.pagination.page,
       paginate: 'S',
+      q: forms.buscar || ''
     };
     this.loading = true;
     this.generalServi.nameParams$(serviceName, params).subscribe(

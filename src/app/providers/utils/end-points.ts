@@ -22,6 +22,7 @@ export const END_POINTS = {
     rubrics: 'rubricas',
     calendar: 'calendar',
     evaluations_Registry: 'evaluations-registry',
-    inquiries: 'inquiries'
+    inquiries: 'inquiries',
+    persons: 'persons'
   },
 };
