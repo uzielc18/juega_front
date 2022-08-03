@@ -20,6 +20,7 @@ export class VCourseComponent implements OnInit, OnDestroy {
   idCargaCursoDocente: any = this.activatedRoute.snapshot.paramMap.get('id_carga_curso_docente');
   path: number = 0;
   curso: any = [];
+  imageFront: any;
   loading:boolean = false;
   zoom: any = [];
   datoSubscription: any = Subscription;
@@ -86,6 +87,18 @@ export class VCourseComponent implements OnInit, OnDestroy {
         // console.log(this.curso);
 
         // lo
+        if(this.zoom.portada === null){
+          this.imageFront = 'assets/books.jpg'
+        }
+        if(this.zoom.cod_category !== null && this.zoom.portada === null){
+          this.imageFront = `assets/${this.zoom.cod_category}.png`
+        }
+        if(this.zoom.cod_category === null && this.zoom.portada !== null){
+          this.imageFront = this.zoom.portada
+        }
+        if(this.zoom.cod_category !== null && this.zoom.portada !== null){
+          this.imageFront = this.zoom.portada
+        }
 
 
       }, () => { this.loading =false; }, () => { this.loading =false; });
