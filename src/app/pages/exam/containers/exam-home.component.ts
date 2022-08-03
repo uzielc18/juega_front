@@ -439,17 +439,17 @@ export class ExamHomeComponent implements OnInit {
   nextQuestion(index:any) { //para la siguiente pregunta
     var elem = document.getElementsByClassName("pregunta"+ (index + 1));
     // var elem = document.getElementById("pregunta"+ (index + 1));
-    // console.log(elem);
+     console.log(elem);
     if(elem){
       // elem.scrollIntoView({block: "center",behavior:"smooth"});
-      elem[0].scrollIntoView({block: "center",behavior:"smooth"});
+      elem[0]?.scrollIntoView({block: "center",behavior:"smooth"});
     }
   }
   nextIds(index:any) { //para la siguiente pregunta
     var elem = document.getElementById("pregunta"+ index );
     // console.log(elem);
     if(elem){
-      elem.scrollIntoView({block: "center",behavior:"smooth"});
+      elem?.scrollIntoView({block: "center",behavior:"smooth"});
     }
   }
   deleteItem($event:any) {
