@@ -1,1 +1,54 @@
-<p>list-docente works!</p>
+<nb-card
+  accent="primary"
+  class="scrollModal"
+  [nbSpinner]="loading"
+  nbSpinnerStatus="primary"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Procesando información"
+>
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
+    <div class="d-flex align-items-center justify-content-between">
+      <h4>Docentes</h4>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <table class="table table-sm table-striped">
+      <thead>
+      <tr style="font-size: 14px" class="fw-bold text-center">
+        <th>Apellido y Nombres</th>
+        <th>Código</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let docentes of items" style="font-size: 12px" class="align-middle">
+        <td>{{ docentes?.apellido_paterno | titlecase }} {{ docentes?.apellido_materno | titlecase }}
+          {{ docentes?.nombres | titlecase }}</td>
+        <td class="text-center">{{docentes.codigo}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="d-flex align-items-center justify-content-between p-2">
+      <p class="text-danger fw-bold mb-0">Total: {{item.data.length}}</p>
+      <ngb-pagination
+        [collectionSize]="pagination?.collectionSize"
+        [(page)]="pagination.page"
+        [pageSize]="pagination?.pageSize"
+        (pageChange)="refreshItems()"
+      >
+      </ngb-pagination>
+      <nb-form-field [formGroup]="formHeader">
+        <nb-icon nbPrefix icon="list-outline"></nb-icon>
+        <nb-select size="small" status="primary" formControlName="id_per_page" fullWidth>
+          <nb-option *ngFor="let per of pagesCount" [value]="per" (click)="selectedPerPage(per)"
+          >Paginar de {{ per }} en {{ per }}</nb-option
+          >
+        </nb-select>
+      </nb-form-field>
+    </div>
+  </nb-card-footer>
+</nb-card>

@@ -85,7 +85,7 @@
       <nb-card class="card-list mb-2 animations" *ngFor="let curso of nivelRol.cursos; let i = index" (click)="navigate(curso)">
         <div class="main-container">
           <div class="img-container">
-            <img src="assets/books.jpg" width="100%" height="100%" />
+            <img [src]="curso.imageFront" width="100%" height="100%" />
             <div style="position: absolute; right: 0px; top: 5px;"><span class="badge bg-warning" style="text-transform: uppercase; font-size: 8px;">{{curso?.course_type}}</span></div>
           </div>
           <div class="content-container">
@@ -177,7 +177,7 @@
       style="gap: 20px">
       <nb-card *ngFor="let curso of nivelRol.cursos; let i = index" (click)="navigate(curso)" class="curso-card animations">
         <div class="contenedor">
-          <img src="assets/books.jpg" class="card-img-top" />
+          <img [src]="curso.imageFront" class="card-img-top" height="157px" alt=""/>
           <div class="centrado" (click)="enterZoom($event, curso)" *ngIf="curso?.verIconZoom">
             <nb-icon icon="arrow-right"></nb-icon>
           </div>

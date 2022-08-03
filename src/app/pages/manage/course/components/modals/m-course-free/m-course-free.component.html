@@ -63,7 +63,7 @@
                                     (input)="inputKeyAutocomplete($event)"/>
                                 </nb-form-field>
                                 <nb-autocomplete #auto size="small">
-                                    <nb-option *ngFor="let option of filteredOptions$" [value]="option.nombres_completos" (click)="changeAutocomplete(option)" 
+                                    <nb-option *ngFor="let option of filteredOptions$" [value]="option.nombres_completos" (click)="changeAutocomplete(option)"
                                     [ngStyle]="colorAutocompleteSelect(option)">
                                         {{ option.nombres_completos }} - {{ option.codigo }}
                                     </nb-option>
@@ -145,7 +145,7 @@
                                             [nbDatepicker]="fechaInicio" fieldSize="small" formControlName="fecha_inicio"/>
                                         <nb-icon nbSuffix icon="calendar" status="primary" size="small"
                                             pack="eva"></nb-icon>
-                                        <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min">
+                                        <nb-datepicker #fechaInicio format="dd/MM/yyyy">
                                         </nb-datepicker>
                                     </nb-form-field>
                                 </div>
@@ -187,7 +187,7 @@
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="number" placeholder="Mínimo" fullWidth fieldSize="small" formControlName="nota_min" nbInput 
+                                            <input type="number" placeholder="Mínimo" fullWidth fieldSize="small" formControlName="nota_min" nbInput
                                             [readonly]="formHeaderOne.value.tipo_nota === 'CUALITATIVA'">
                                         </div>
                                         <div class="col-md-6">
@@ -203,7 +203,7 @@
                     <div class="row">
                         <label class="col-md-2 label">Descripción:</label>
                         <div class="col-md-10">
-                            <textarea type="number" placeholder="Ingrese descripción del curso"fullWidth fieldSize="small" formControlName="descripcion" nbInput></textarea>
+                            <textarea type="number" placeholder="Ingrese descripción del curso" fullWidth fieldSize="small" formControlName="descripcion" nbInput></textarea>
                         </div>
                     </div>
                   </form>
@@ -271,7 +271,7 @@
                                 <label class="col-md-4 label">Fecha fin inscripción:</label>
                                 <div class="col-md-8">
                                     <nb-form-field>
-                                        <input type="text" nbInput placeholder="Fecha fin" fullWidth 
+                                        <input type="text" nbInput placeholder="Fecha fin" fullWidth
                                             [nbDatepicker]="fechaFin" fieldSize="small"  formControlName="fecha_fin_inscr"/>
                                         <nb-icon nbSuffix icon="calendar" status="primary" size="small"
                                             pack="eva"></nb-icon>
@@ -395,7 +395,7 @@
                             <div class="row">
                                 <label class="col-md-3 label">Portada:</label>
                                 <div class="col-md-9">
-                                    <img [src]="formHeaderTo.value.file_portada_url_base64 || 'https://static.vecteezy.com/system/resources/previews/005/081/831/non_2x/banner-abstract-geometric-white-and-gray-color-background-illustration-free-vector.jpg'" 
+                                    <img [src]="formHeaderTo.value.file_portada_url_base64 || 'https://static.vecteezy.com/system/resources/previews/005/081/831/non_2x/banner-abstract-geometric-white-and-gray-color-background-illustration-free-vector.jpg'"
                                     alt="" width="100%" height="120px">
                                     <div style="text-align: right;" *ngIf="!formHeaderTo.value.file_portada">
                                         <button nbButton size="small" status="basic" (click)="openRecortePortadaMin('portada')">
