@@ -154,6 +154,7 @@ export class MCourseFreeComponent implements OnInit {
   }
   getProgramStudy() {
     const serviceName = 'list-programa-estudios';
+    let idArea:any;
     const ids = {
       nivel_ensenanza_id: this.rolSemestre.area.nivel_ensenanza_id,
       sede_id: this.rolSemestre.area.sede_id,
@@ -162,8 +163,13 @@ export class MCourseFreeComponent implements OnInit {
     const params = {
       programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
     }
+    if(this.rolSemestre.area.area_id === 0 && this.code === 'UPDATE'){
+       idArea = this.items.area_id;
+    }else{
+      idArea = this.rolSemestre.area.area_id;
+    }
     if (ids && ids.sede_id && ids.nivel_ensenanza_id) {
-      this.service.nameIdAndIdAndIdParams$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, ids.area_id, params).subscribe((res:any) => {
+      this.service.nameIdAndIdAndIdParams$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, idArea, params).subscribe((res:any) => {
         this.litProgramStudy = res.data || [];
         if (this.litProgramStudy.length>0) {
           this.litProgramStudy.map((r:any) => {
@@ -228,7 +234,7 @@ export class MCourseFreeComponent implements OnInit {
   }
   changeSteps($event:any) {
     // console.log($event, 'stepers');
-    
+
   }
   nextPasoOne(nbStepperNext:any, one:any) {
     const serviceName = 'courses';
@@ -237,7 +243,7 @@ export class MCourseFreeComponent implements OnInit {
     const params = {
       programa_estudio_id: forms.id_programa_estudio,
       semester_id : this.semestre.id,
-      sede_area_id: smedeAreaId.sede_area_id,
+      sede_area_id: smedeAreaId?.sede_area_id,
       courses_type_id: forms.id_tipo_curso,
       persons_teacher_id: forms.id_docente,
       nombre: forms.nombre,
@@ -260,7 +266,7 @@ export class MCourseFreeComponent implements OnInit {
       this.service.addNameData$(serviceName, params).subscribe((res:any) => {
         if (res.success) {
           // console.log(res);
-          
+
           this.formHeaderOne.controls['id_curso'].setValue(res.data.id);
           this.formHeaderOne.controls['id_carga_curso_docente'].setValue(res.data.id_carga_curso_docente);
           this.formHeaderThree.controls['publicar'].setValue(this.formHeaderOne.value.estado === '1'  ? true : false);
@@ -315,7 +321,7 @@ export class MCourseFreeComponent implements OnInit {
       this.formHeaderTo.controls['clave_inscripcion'].updateValueAndValidity();
     }
   }
-  quitarAcentoAndSignosToTexto(valuee:any) { 
+  quitarAcentoAndSignosToTexto(valuee:any) {
     let newText = valuee;
     const specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.";
     for (var i = 0; i < specialChars.length; i++) { // quitar signos
@@ -391,7 +397,7 @@ export class MCourseFreeComponent implements OnInit {
   }
   valueFileSilabo($event:any) {
     // console.log($event);
-    
+
     this.formHeaderTo.controls['file_silabo'].setValue('');
     if ($event) {
       this.formHeaderTo.controls['file_silabo'].setValue($event.value.nombre_s3);
@@ -414,7 +420,7 @@ export class MCourseFreeComponent implements OnInit {
     this.formHeaderTo.controls['file_portada'].setValue('');
   }
   clearFileMiniatura() {
-    this.formHeaderTo.controls['file_portada'].setValue('');
+    this.formHeaderTo.controls['file_miniatura'].setValue('');
   }
   keyFile() {
     if (this.formHeaderOne.value.id_carga_curso_docente) {
@@ -431,7 +437,7 @@ export class MCourseFreeComponent implements OnInit {
       context: {
         keyFile: this.keyFile(),
         directori: this.directorioPortadas,
-        aspect: type === 'miniatura' ? (4 / 4) : (4 / 1),
+        aspect: type === 'miniatura' ? (4 / 2) : (4 / 1),
         // userInfo: this.appUserInfo.user,
 
       },
@@ -546,7 +552,7 @@ export class MCourseFreeComponent implements OnInit {
       precio_dolares: this.items.precio2,
       porcentaje_descuento: this.items.descuento,
     });
-   
+
     this.formHeaderThree.patchValue({
       publicar: this.items.estado === '1' ? true : false,
     });
@@ -570,7 +576,7 @@ export class MCourseFreeComponent implements OnInit {
     const params:any = {
       type: 'get',
       directory: this.directorioPortadas,
-      key: name, 
+      key: name,
     };
     const serviceName = END_POINTS.base_back.resourse + '/files-upload/get-signed-url';
     if (params && params.key) {

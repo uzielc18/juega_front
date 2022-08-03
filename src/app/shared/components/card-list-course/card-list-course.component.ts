@@ -109,7 +109,26 @@ export class CardListCourseComponent implements OnInit {
           });
           }
         });
+        this.mysCursos.map((m:any) => {
+          if(m.cursos.length > 0){
+            m.cursos.map((c: any) => {
+              if(c.cod_category === null && c.portada_miniatura === null){
+                c.imageFront = 'assets/books.jpg'
+              }
+              if(c.cod_category !== null && c.portada_miniatura === null){
+                c.imageFront = `assets/${c.cod_category}.png`
+              }
+              if(c.cod_category === null && c.portada_miniatura !== null){
+                c.imageFront = c.portada_miniatura
+              }
+              if(c.cod_category !== null && c.portada_miniatura !== null){
+                c.imageFront = c.portada_miniatura
+              }
+            })
+          }
+        })
       }
+
     }, () => { this.loading =false; }, () => { this.loading =false; });
   }
   navigate(item:any): any {
