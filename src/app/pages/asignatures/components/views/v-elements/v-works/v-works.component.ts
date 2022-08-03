@@ -69,10 +69,10 @@ export class VWorksComponent implements OnInit, OnChanges {
     private appService: AppService,
     private generalServi: GeneralService
   ) {
-    
+
     setInterval(() => {
       if (this.pending) {
-        this.countdown(this.pending?.fecha_fin);
+        this.countdown(this.pending?.student_pending?.fecha_fin);
       }
     }, 1000);
   }
@@ -87,7 +87,7 @@ export class VWorksComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.pending = this.pending;
+    //this.pending = this.pending;
     if (changes.rubrica) {
       this.rubrica = changes.rubrica.currentValue;
     }
@@ -103,6 +103,7 @@ export class VWorksComponent implements OnInit, OnChanges {
     }
   }
   countdown(fecha_fin: any) {
+    //console.log('fecha_fin',fecha_fin);
     const countDate = new Date(fecha_fin).getTime();
     const now = new Date().getTime();
     const left = countDate - now;
