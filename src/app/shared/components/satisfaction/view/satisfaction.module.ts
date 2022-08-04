@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SatisfactionComponent } from './satisfaction.component';
+import {NebularModule} from "../../../nebular.module";
 
 
 
@@ -8,8 +9,12 @@ import { SatisfactionComponent } from './satisfaction.component';
   declarations: [
     SatisfactionComponent
   ],
+  exports: [
+    SatisfactionComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    NebularModule
   ]
 })
 export class SatisfactionModule { }

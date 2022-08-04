@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionsConfigComponent } from '../../modals/questions-config/questions-config.component';
 import { ModoViewComponent } from '../../modals/modo-view/modo-view.component';
 import { OrdenElementsComponent } from '../../modals/orden-elements/orden-elements.component';
+import {MSatisfactionComponent} from "../../../../../shared/components/satisfaction/modal/m-satisfaction.component";
 @Component({
   selector: 'app-sesion',
   templateUrl: './sesion.component.html',
@@ -364,5 +365,21 @@ export class SesionComponent implements OnInit {
           this.validaExist.emit();
         }
       });
+  }
+  openSatisfaction(){
+    this.dialogService.open(MSatisfactionComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        item: '',
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    })
+      .onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.arrayEl = [];
+        this.validaExist.emit();
+      }
+    });
   }
 }
