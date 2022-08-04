@@ -50,9 +50,10 @@
     </div>
   </nb-card-header>
   <nb-card-body >
-    <div style="padding: 0 4%;"  class="d-flex flex-column">
-      <div style="margin: 15px 0; border-bottom: 1px solid #8F9BB3; padding: 0 0 15px 0; cursor: pointer"
-           class="d-flex justify-content-between"
+    <br>
+    <div style="margin: 0 3%;"  class="d-flex flex-column divClss">
+      <div style="margin: 5px 0; padding: 25px 13px; cursor: pointer"
+           class="d-flex justify-content-between animations"
            (click)="openNotas(item)" *ngFor="let item of notas">
         <div class="">
           <small class="subTitle">{{item.nombre}} - ciclo: {{item.ciclo}} - grupo: {{item.grupo}}</small><br>

@@ -1,0 +1,22 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class="d-flex align-items-center">
+      <nb-icon icon="checkmark-circle-2" class="iconNB"></nb-icon>
+      <strong style="padding-top: 7px; color: var(--color-primary-500);">EVALUAMOS PARA MEJORAR</strong>
+    </div>
+    <br>
+    <div>
+      <small>Estimado estudiante:</small>
+      <p>Después de haver participado en las clases programadas por el docente, pedimos valores tu
+        <strong>nivel de satisfación</strong>, en funcion a tres indicadores</p>
+      <ul>
+        <li>Puntualidad</li>
+        <li>Explicación</li>
+        <li>Interacción</li>
+      </ul>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <app-satisfaction></app-satisfaction>
+  </nb-card-body>
+</nb-card>

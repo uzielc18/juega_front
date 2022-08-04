@@ -9,6 +9,7 @@ import { END_POINTS } from 'src/app/providers/utils';
 import { EmitEventsService } from '../../services/emit-events.service';
 import { EnterZoomComponent } from './enter-zoom/enter-zoom.component';
 import {BreakpointObserver, BreakpointState} from "@angular/cdk/layout";
+import {AppService} from "../../../core";
 
 @Component({
   selector: 'app-card-list-course',
@@ -24,8 +25,17 @@ export class CardListCourseComponent implements OnInit {
   nombreSubscription: any = Subscription;
   theRolSemestre:any;
   valida: boolean = false;
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion) {
+      return JSON.parse(sesion);
+    } else {
+      return '';
+    }
+  }
   constructor( private formBuilder: FormBuilder,   private generalService: GeneralService, private emitEventsService: EmitEventsService,
     private router: Router,
+    private userService: AppService,
     private activatedRoute: ActivatedRoute,
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
     private dialogService: NbDialogService,
@@ -87,7 +97,18 @@ export class CardListCourseComponent implements OnInit {
     });
   }
   reloadList() {
-    this.getCourses();
+    const serviceName = END_POINTS.base_back.config + '/cursos';
+    if(this.rolSemestre.rol.name === 'Docente'){
+      this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.rolSemestre.semestre.codigo, 0, 0, this.userService.user.usuario_upeu).subscribe(res => {
+        if(res.success){
+          this.getCourses();
+        }
+      })
+    }else{
+      this.getCourses();
+    }
+
+
   }
   getCourses() {
     const serviceName = END_POINTS.base_back.resourse + '/enrollment-student';

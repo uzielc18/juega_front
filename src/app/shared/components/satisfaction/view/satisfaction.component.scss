@@ -1,0 +1,11 @@
+.animations {
+  transition: all 0.2s;
+  cursor: pointer;
+  animation: vision 1.1s ease;
+  display: block;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px #00000012;
+  }
+}

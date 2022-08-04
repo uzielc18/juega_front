@@ -44,15 +44,16 @@
           <small class="parrafo label">{{item?.persons_teacher_nombre}}</small>
         </div>
         <div>
-          <nb-icon icon="file-text" class="iconNB"></nb-icon>
+          <nb-icon icon="file-text" class="iconNB" *ngIf="data.length !== 0"></nb-icon>
           <button printSectionId="print-section2"
+                  *ngIf="data.length !== 0"
                   class="buttonPrint"
                   [useExistingCss]="true"
                   [printStyle]="
              {'.iconNB' : {'display': 'none !important'},
              '.title': {'color': '#014776 !important'},
              '.subTitle': {'color': '#014776 !important'},
-             '.estado':{'color': '#FFAA00 !important'},
+             '.estado':{ 'color': data.estado === 'Pendiente'? '#FFAA00 !important': data.estado === 'Entregado'? '#3B8262 !important': '#AA1D29 !important'},
              '.padd': {'padding': '0 4% !important'}
              }"
                   ngxPrint
@@ -81,13 +82,18 @@
             </div>
           </div>
           <div class="d-flex flex-column" style="border-left: 2px dashed #C8CBD1; padding-left: 14px;">
-            <small class="estado" [ngStyle]="{'color': evaluaciones.estado === 'Pendiente'? 'var(--color-warning-500)': 'var(--color-danger-600)'} ">{{evaluaciones.estado}}</small>
+            <small class="estado" [ngStyle]="{'color': evaluaciones.estado === 'Pendiente'? 'var(--color-warning-500)': evaluaciones.estado === 'Vencido'? 'var(--color-danger-600)': 'var(--color-success-600)'} ">{{evaluaciones.estado}}</small>
             <small class="description label">{{evaluaciones.estado === 'Pendiente'? 'quedan': 'hace'}} {{evaluaciones.fechaEstado}} {{evaluaciones.fechaEstado === ' 1'? 'dia.': 'dias.'}}</small>
           </div>
           <div style="border-right: 2px dashed #C8CBD1"></div>
           <div class="d-flex align-items-center" style="margin-right: 18px;">
             <small class="parrafo">{{evaluaciones.nota}}</small>
           </div>
+        </div>
+      </div>
+      <div style="border-top: 1px solid; border-bottom: 1px solid; padding: 5px 0; margin-bottom: 10px" *ngIf="data.length === 0">
+        <div class="text-center" style="width: 100%" >
+          <small class="subTitle">No cuentas con evaluaciones</small>
         </div>
       </div>
 

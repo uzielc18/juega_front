@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {NbDialogRef} from "@nebular/theme";
 
 @Component({
   selector: 'app-satisfaction',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SatisfactionComponent implements OnInit {
 
+  loading: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
 
 }
