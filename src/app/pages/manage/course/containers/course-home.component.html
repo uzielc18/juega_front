@@ -65,6 +65,7 @@
                         <th>Nombre</th>
                         <th>Docente</th>
                         <th>Ciclo</th>
+                        <th>Grupo</th>
                         <th>Cod. anfitrión</th>
                         <th>Zoom</th>
                         <th style="width: 1px;"><nb-icon icon="people"></nb-icon></th>
@@ -78,6 +79,7 @@
                       <td><a [routerLink]="['/pages/asignatures/course', item.id_carga_curso_docente]"  target="_blank">{{item.nombre}}</a></td>
                         <td><img [src]="item.persons_teacher_foto" alt="" height="20px" width="20px" style="border-radius: 3rem;">&nbsp; {{item.persons_teacher_nombre}}</td>
                         <td>{{item.ciclo}}</td>
+                        <td>{{item.grupo}}</td>
                         <td>{{item.meeting_id}}</td>
                         <td style="color: brown;">{{item.join_url}}</td>
                         <td style="color: brown; font-size: 14px; font-weight: bold;" class="text-center">{{item?.matriculados}}</td>
