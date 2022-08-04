@@ -102,7 +102,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     const serviceName = END_POINTS.base_back.resourse + '/get-pending-student';
     // this.userInfo.id
     this.loading = true;
-    this.generalService.nameIdAndId$(serviceName, this.elementId, this.userInfo.id).subscribe(
+    this.generalService.nameIdAndId$(serviceName, this.elementId, this.userInfo.person.id).subscribe(
       (res: any) => {
         this.pending = res.data || '';
         if (this.has_rubric) {
