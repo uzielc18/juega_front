@@ -78,7 +78,7 @@
                   <span *ngIf="element?.dias >= 0" class="fw-bold">Faltan {{element?.dias}} días</span>
                   <span *ngIf="element?.dias < 0" class="fw-bold" style="color: brown;">Pasaron {{element?.dias * -1}} días</span>
                 </div>
-                <div class="status-end ms-3"></div>
+                <!--<div class="status-end ms-3"></div>-->
               </div>
             </td>
             <td>
@@ -91,8 +91,14 @@
             </td>
             <td>
               <div class="d-flex align-items-center justify-content-center">
-                <button *ngIf="element?.reapertura" nbButton ghost size="small" status="primary" (click)="solicitar(element)"><nb-icon icon="clock-outline"></nb-icon>Solicitar</button>
-                <span *ngIf="element.total_justification !== 0"> Justificación enviada</span>
+                <button *ngIf="element?.reapertura"
+                        nbButton
+                        ghost
+                        size="small"
+                        status="primary"
+                        (click)="solicitar(element)">
+                  <nb-icon icon="clock-outline"></nb-icon>Solicitar</button>
+                <span *ngIf="element.total_justification !== 0" style="color: #A52A8A"> Justificación enviada</span>
                 <button *ngIf="!element?.reapertura && element.total_justification === 0" nbButton ghost size="small"><nb-icon icon="clock-outline"></nb-icon>Activo</button>
               </div>
             </td>

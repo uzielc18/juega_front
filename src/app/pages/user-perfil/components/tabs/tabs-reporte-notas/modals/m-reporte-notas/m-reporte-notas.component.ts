@@ -28,13 +28,19 @@ export class MReporteNotasComponent implements OnInit {
       let fecha_fin = new Date(x.fecha_fin).getTime()
       let fecha = now - fecha_fin;
 
-      if(now > fecha_fin){
-        x.estado = 'Vigente'
-        x.fechaEstado = this.convertMsToTime(fecha)
-      }else{
-        x.estado = 'Pendiente'
-        x.fechaEstado = this.convertMsToTime(fecha)
+      if(x.fecha_entrega !== null){
+        x.estado = 'Entregado';
+      } else{
+        if(now > fecha_fin){
+          x.estado = 'Vencido';
+          x.fechaEstado = this.convertMsToTime(fecha);
+        }else{
+          x.estado = 'Pendiente';
+          x.fechaEstado = this.convertMsToTime(fecha);
+        }
       }
+
+
     })
     console.log(this.data)
 

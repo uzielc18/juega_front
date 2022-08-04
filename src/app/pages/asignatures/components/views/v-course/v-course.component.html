@@ -40,7 +40,7 @@
                     <div class="col-md-6">
                         <div class="d-flex align-items-center justify-content-between" style="padding-left: 9px; padding-right: 9px;">
                           <span nbTooltip="Participantes" nbTooltipStatus="warning">
-                            <nb-icon style="font-size: 17px;" class="label" icon="people-outline"></nb-icon><br><label class="label" style="font-size: 13px;">{{curso?.matriculados}}</label>
+                              <nb-icon style="font-size: 17px;" class="label" icon="people-outline"></nb-icon><br><label class="label" style="font-size: 13px;">{{curso?.matriculados}}</label>
                           </span>
                           <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning">
                           <nb-icon style="font-size: 17px;" class="label" [icon]="tot?.icono"></nb-icon><br><label class="label" style="font-size: 13px;">{{tot?.total}}</label>
