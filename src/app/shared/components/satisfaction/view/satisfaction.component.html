@@ -1,70 +1,70 @@
-<nb-card class="h-100"
-         style="border-radius: 10px; border: 1px solid #00000012; box-shadow: 1px 1px 5px 1px #00000012;"
-         [nbSpinner]="loading"
-         nbSpinnerStatus="primary"
-         nbSpinnerSize="small">
-  <nb-card-header>
-    <h6>2022-06-06 17:10:00 Clase</h6>
-  </nb-card-header>
-  <nb-card-body>
-    <div class="table-responsive">
-      <table class="table table-sm">
-        <tr class="text-center">
-          <td>
-            <div class="d-flex flex-column align-items-center animations  ">
-              <img src="https://s3.amazonaws.com/files.patmos.upeu.edu.pe/img/icons/MM.png" width="50%" alt="">
-              <br>
-              <small>
-                Muy mala<br>
-                No cumple tres Indicadores
-              </small>
-            </div>
-          </td>
-          <td >
-            <div class="d-flex flex-column align-items-center animations">
-              <img src="https://s3.amazonaws.com/files.patmos.upeu.edu.pe/img/icons/M.png" width="50%" alt="">
-              <br>
-              <small>
-                Mala <br>
-                Cumple un Indicador parcialmente
-              </small>
-            </div>
-          </td>
-          <td >
-            <div class="d-flex flex-column align-items-center animations">
-              <img src="https://s3.amazonaws.com/files.patmos.upeu.edu.pe/img/icons/R.png" width="50%" alt="">
-              <br>
-              <small>
-                Regular<br>
-                Cumple un Indicador
-              </small>
-            </div>
-          </td>
-          <td >
-            <div class="d-flex flex-column align-items-center animations">
-              <img src="https://s3.amazonaws.com/files.patmos.upeu.edu.pe/img/icons/B.png" width="50%" alt="">
-              <br>
-              <small>
-                Buena<br>
-                Cumple dos Indicadores
-              </small>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex flex-column align-items-center animations">
-              <img src="https://s3.amazonaws.com/files.patmos.upeu.edu.pe/img/icons/MB.png" width="50%" alt="">
-              <br>
-              <small>
-                Muy buena<br>
-                Cumple tres Indicadores
-              </small>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </nb-card-body>
-  <nb-card-footer style="text-align: center">
-    <h5>¡Gracias por tu valiosa opinión!</h5>
-  </nb-card-footer>
-</nb-card>
+  <nb-card class="h-100"
+           style="border-radius: 10px; border: 1px solid #00000012; box-shadow: 1px 1px 5px 1px #00000012;"
+           [nbSpinner]="loading"
+           nbSpinnerStatus="primary"
+           nbSpinnerSize="small" *ngFor="let item of items">
+    <nb-card-header>
+      <h6>{{item.curso_nombre}} - {{item.fecha | date: 'yyyy/M/dd'}} de {{item.hora_inicio}} a {{item.hora_fin}} Clase</h6>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <tr class="text-center">
+            <td>
+              <div class="d-flex flex-column align-items-center animations" (click)="satisfactionFace(1, item)">
+                <img src="https://s3.amazonaws.com/files.patmos.upeu.edu.pe/img/icons/MM.png" width="50%" alt="">
+                <br>
+                <small>
+                  Muy mala<br>
+                  No cumple tres Indicadores
+                </small>
+              </div>
+            </td>
+            <td >
+              <div class="d-flex flex-column align-items-center animations" (click)="satisfactionFace(2, item)">
+                <img src="https://s3.amazonaws.com/files.patmos.upeu.edu.pe/img/icons/M.png" width="50%" alt="">
+                <br>
+                <small>
+                  Mala <br>
+                  Cumple un Indicador parcialmente
+                </small>
+              </div>
+            </td>
+            <td >
+              <div class="d-flex flex-column align-items-center animations" (click)="satisfactionFace(3, item)">
+                <img src="https://s3.amazonaws.com/files.patmos.upeu.edu.pe/img/icons/R.png" width="50%" alt="">
+                <br>
+                <small>
+                  Regular<br>
+                  Cumple un Indicador
+                </small>
+              </div>
+            </td>
+            <td >
+              <div class="d-flex flex-column align-items-center animations" (click)="satisfactionFace(4, item)">
+                <img src="https://s3.amazonaws.com/files.patmos.upeu.edu.pe/img/icons/B.png" width="50%" alt="">
+                <br>
+                <small>
+                  Buena<br>
+                  Cumple dos Indicadores
+                </small>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex flex-column align-items-center animations" (click)="satisfactionFace(5, item)">
+                <img src="https://s3.amazonaws.com/files.patmos.upeu.edu.pe/img/icons/MB.png" width="50%" alt="">
+                <br>
+                <small>
+                  Muy buena<br>
+                  Cumple tres Indicadores
+                </small>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </nb-card-body>
+    <nb-card-footer style="text-align: center">
+      <h5>¡Gracias por tu valiosa opinión!</h5>
+    </nb-card-footer>
+  </nb-card>

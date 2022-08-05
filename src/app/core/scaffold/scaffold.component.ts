@@ -1,5 +1,6 @@
 import {Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
+  NbDialogService,
   NbMediaBreakpointsService,
   NbMenuItem,
   NbMenuService,
@@ -22,6 +23,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SpinnerService} from '../auth/services/spinner.service';
 import {environment} from "../../../environments/environment";
 import {BreakpointObserver, BreakpointState} from "@angular/cdk/layout";
+import {MSatisfactionComponent} from "../../shared/components/satisfaction/modal/m-satisfaction.component";
 
 @Component({
   selector: 'app-scaffold',
@@ -106,6 +108,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private breakpointService: NbMediaBreakpointsService,
     private breakpointObserver: BreakpointObserver,
     private appService: AppService,
+    private dialogService: NbDialogService,
     private tokenService: AppValidateTokenService,
     @Inject(CORE_OPTIONS) protected options: CoreOptions,
     private formBuilder: FormBuilder,
@@ -149,7 +152,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         if (data.item.subtag === 'logout') {
-
+          this.loading = true;
           this.tokenService
             .logout().subscribe(_ => {
               this.nbTokenService.get().subscribe((resp: NbAuthToken) => {
@@ -161,7 +164,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
                   }
                 });
               });
-            });
+            }, () => {this.loading = false}, () => this.loading = false);
 
         } else if (data.item.subtag === 'profile') {
           this.emitEventsService.profileInfo(true);
@@ -330,6 +333,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         }
       }, () => {this.loading = false;}, () => {this.loading = false;});
     }
+
   }
 
   changeRol($event: any) {
@@ -360,6 +364,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       // this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe(
         (data: any) => {
           if (data.success) {
+            if(this.rolSemestre.rol?.name === 'Estudiante'){
+              this.satisfaction();
+            }
             this.paramsSessionStorage.rol = rol;
             this.paramsSessionStorage.semestre = value;
             this.paramsSessionStorage.lenguaje = (this.appService.user && this.appService.user.lang) || '';
@@ -556,4 +563,30 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     }
 
     }
+  satisfaction(){
+    const serviceName = '/sin-perception-count';
+    const user = this.appService.user.person;
+    const today = new Date();
+    let date = today.toISOString().split('T')[0];
+    let hour = today.getHours();
+    let sec = today.getMinutes();
+    let fullHour = hour +':'+ sec
+    this.generalService.nameIdAndIdAndIdAndId$(serviceName, user.id, user.codigo, date, fullHour).subscribe(res => {
+        if(res.data.success > 0){
+          this.dialogService.open(MSatisfactionComponent, {
+            dialogClass: 'dialog-limited-height',
+            context: {
+              item: '',
+            },
+            closeOnBackdropClick: false,
+            closeOnEsc: false,
+          })
+            .onClose.subscribe(result => {
+            if (result === 'ok') {
+            }
+          });
+        }
+    });
+
+  }
 }
