@@ -21,7 +21,8 @@ export class SatisfactionComponent implements OnInit {
     this.getData();
   }
   getData(){
-    this.loading = true
+
+    this.loading = true;
     const serviceName = 'sin-perception';
     const today = new Date();
     let date = today.toISOString().split('T')[0];
@@ -64,13 +65,10 @@ export class SatisfactionComponent implements OnInit {
       person_id: this.user.person.id
     }
     this.generalService.addNameData$(serviceName, params).subscribe(res => {
-      this.loading = true;
       if(res.success){
-        this.loading = false;
         this.getData();
-
       }
-    }, () => {this.loading = false}, () => {this.loading = false});
+    });
 
   }
 
