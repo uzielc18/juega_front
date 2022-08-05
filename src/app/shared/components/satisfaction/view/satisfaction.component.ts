@@ -21,7 +21,8 @@ export class SatisfactionComponent implements OnInit {
     this.getData();
   }
   getData(){
-    this.loading = true
+
+    this.loading = true;
     const serviceName = 'sin-perception';
     const today = new Date();
     let date = today.toISOString().split('T')[0];
@@ -67,7 +68,7 @@ export class SatisfactionComponent implements OnInit {
       if(res.success){
         this.getData();
       }
-    }, () => {this.loading = false}, () => {this.loading = false});
+    });
 
   }
 
