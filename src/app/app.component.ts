@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 
+//declare const gtag: Function;
 @Component({
   selector: 'app-root',
   template: ` <router-outlet></router-outlet>`,
@@ -7,5 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'core';
-  constructor() {}
+  constructor(public router: Router) {
+
+  }
 }
