@@ -9,6 +9,7 @@ import { EmitEventsService } from './shared/services/emit-events.service';
 import { NbTokenStorage, NB_AUTH_TOKEN_INTERCEPTOR_FILTER } from '@nebular/auth';
 import { AuthStorageTokenService } from './core/auth/services/auth-storage-token.service';
 import { HttpRequest } from '@angular/common/http';
+import {NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule} from "ngx-google-analytics";
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,8 @@ import { HttpRequest } from '@angular/common/http';
     }),
     RouterModule,
     AppRoutingModule,
+    NgxGoogleAnalyticsModule.forRoot('G-WTC08NZJXC'),
+    NgxGoogleAnalyticsRouterModule,
   ],
   providers: [
     STRATEGIES,
