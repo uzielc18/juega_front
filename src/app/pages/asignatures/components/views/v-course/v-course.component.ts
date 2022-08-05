@@ -5,6 +5,7 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 import {Subscription} from "rxjs";
+import Swal from "sweetalert2";
 
 // IMPORTANTE
 // -(rol (docente y admin)  && tiene_permiso = 1 hace todas las acciones del docente)
@@ -42,6 +43,14 @@ export class VCourseComponent implements OnInit, OnDestroy {
         this.getUnidades();
       }
     });
+  }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion) {
+      return JSON.parse(sesion);
+    } else {
+      return '';
+    }
   }
   ngOnDestroy(): void {
     this.emitEventsService.blockEnviar({from: 'Asignaturas', status: false});
@@ -143,6 +152,38 @@ export class VCourseComponent implements OnInit, OnDestroy {
       return 'warning';
     } else {
       return 'success';
+    }
+  }
+  syncSessionesLamb() {
+    const serviceName = END_POINTS.base_back.config + '/silabus';
+    const params = {
+      semestre: this.rolSemestre.semestre.codigo || '',
+      idCargCurDoc: this.curso.id_carga_curso_docente || '',
+      id_1: '0',
+    }
+    if(params && params.semestre && params.idCargCurDoc) {
+      Swal.fire({
+        title: 'Sincronizar',
+        text: '¿ Desea sincronizar sesiones lamb ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#00244E',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+        if (result.isConfirmed) {
+          this.generalService.nameIdAndIdAndId$(serviceName, params.semestre, params.idCargCurDoc, params.id_1).subscribe((res:any) => {
+            if (res.success) {
+              this.getUnidades();
+            }
+          });
+        }
+      });
     }
   }
 }
