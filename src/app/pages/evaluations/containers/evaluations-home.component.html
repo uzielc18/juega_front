@@ -50,6 +50,7 @@
             <th style="width: 185px">FECHA DE ENTREGA</th>
             <th style="width: 150px">RE-APERTURA</th>
             <th style="width: 100px">VISTO</th>
+            <th style="width: 100px">NOTA</th>
             <th style="width: 100px">ACCIÓN</th>
           </tr>
         </thead>
@@ -75,8 +76,8 @@
               <div class="d-flex align-items-center justify-content-center">
                 <div class="d-flex flex-column text-start">
                   <span>{{ element?.fecha_fin | date: 'dd/MM/yyyy, h:mm a' }}</span>
-                  <span *ngIf="element?.dias >= 0" class="fw-bold">Faltan {{element?.dias}} días</span>
-                  <span *ngIf="element?.dias < 0" class="fw-bold" style="color: brown;">Pasaron {{element?.dias * -1}} días</span>
+                  <span *ngIf="element?.dias >= 0 && element?.fecha_entrega===null" class="fw-bold">Faltan {{element?.dias}} días</span>
+                  <span *ngIf="element?.dias < 0 && element?.fecha_entrega===null" class="fw-bold" style="color: brown;">Pasaron {{element?.dias * -1}} días</span>
                 </div>
                 <!--<div class="status-end ms-3"></div>-->
               </div>
@@ -90,7 +91,7 @@
               </ng-template>
             </td>
             <td>
-              <div class="d-flex align-items-center justify-content-center">
+              <div class="d-flex align-items-center justify-content-center" *ngIf="element?.fecha_entrega===null">
                 <button *ngIf="element?.reapertura"
                         nbButton
                         ghost
@@ -103,8 +104,12 @@
               </div>
             </td>
             <td>
-              <nb-icon *ngIf="element?.fecha_visto" style="color: #47da82" icon="checkmark-circle-2-outline"></nb-icon>
-              <nb-icon *ngIf="!element?.fecha_visto" icon="checkmark-circle-2-outline"></nb-icon>
+              <nb-icon *ngIf="element?.fecha_visto && element?.fecha_entrega===null" style="color: #47da82" icon="checkmark-circle-2-outline"></nb-icon>
+              <nb-icon *ngIf="!element?.fecha_visto && element?.fecha_entrega===null" icon="checkmark-circle-2-outline"></nb-icon>
+              <nb-icon *ngIf="element?.fecha_visto && element?.fecha_entrega" style="color: #47da82" icon="done-all-outline"></nb-icon>
+            </td>
+            <td>
+              {{ element.nota }}
             </td>
             <td>
               <nb-icon icon="eye-outline" status="warning" style="cursor: pointer" (click)="navigate(element)"></nb-icon>
