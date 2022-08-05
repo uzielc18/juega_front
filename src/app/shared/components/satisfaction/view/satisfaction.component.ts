@@ -53,6 +53,7 @@ export class SatisfactionComponent implements OnInit {
     if(code == 5){
       this.valor = 5
     }
+    this.loading = true
     const serviceName = 'ratings';
     const params = {
       codigo: 'caritas',
@@ -66,7 +67,7 @@ export class SatisfactionComponent implements OnInit {
       if(res.success){
         this.getData();
       }
-    });
+    }, () => {this.loading = false}, () => {this.loading = false});
 
   }
 
