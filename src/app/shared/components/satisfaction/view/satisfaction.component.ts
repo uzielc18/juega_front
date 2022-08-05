@@ -64,8 +64,11 @@ export class SatisfactionComponent implements OnInit {
       person_id: this.user.person.id
     }
     this.generalService.addNameData$(serviceName, params).subscribe(res => {
+      this.loading = true;
       if(res.success){
+        this.loading = false;
         this.getData();
+
       }
     }, () => {this.loading = false}, () => {this.loading = false});
 
