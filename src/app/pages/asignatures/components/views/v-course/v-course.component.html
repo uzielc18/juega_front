@@ -92,6 +92,17 @@
                       </nb-accordion-item
                     ><br />
                   </nb-accordion>
+
+                  <div class="d-flex flex-column align-items-center" style="margin-top: 5%" *ngIf="curso?.units?.length === 0 && rolSemestre?.rol?.name !== 'Estudiante'">
+                    <div>
+                      <small style="font-size: 15px; color: var(--color-danger-500); font-weight: bold">¡Al parecer no se sincronizó el sílabo!</small>
+                    </div>
+                    <br>
+                    <div>
+                      <button nbButton status="primary" (click)="syncSessionesLamb()">Sincronizar sílabo</button>
+                    </div>
+                  </div>
+
                 </nb-card-body>
               </nb-card>
             </div>

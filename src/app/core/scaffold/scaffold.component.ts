@@ -564,7 +564,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
     }
   satisfaction(){
-    const serviceName = '/sin-perception-count';
+    const serviceName = 'sin-perception-count';
     const user = this.appService.user.person;
     const today = new Date();
     let date = today.toISOString().split('T')[0];

@@ -80,7 +80,7 @@
                   <span *ngIf="element?.dias >= 0" class="fw-bold">Faltan {{element?.dias}} días</span>
                   <span *ngIf="element?.dias < 0 && !element?.fecha_visto" class="fw-bold" style="color: brown;">Pasaron {{element?.dias * -1}} días</span>
                 </div>
-                <div class="status-end ms-3"></div>
+                <!--<div class="status-end ms-3"></div>-->
               </div>
             </td>
             <td>
@@ -99,8 +99,8 @@
             <td style="color: rgb(238, 121, 12); font-weight: bold; font-size: 14px;">{{element?.total_vistos}}</td>
             <td>
               <nb-icon icon="eye-outline" status="warning" style="cursor: pointer" (click)="navigate(element)"></nb-icon>
-              <nb-icon icon="briefcase" status="primary" style="cursor: pointer" (click)="noteWorks(element, 'EVA')"
-                       nbTooltip="Reporte notas"
+              <nb-icon icon="file-add-outline" status="primary" style="cursor: pointer" (click)="noteWorks(element, 'EVA')"
+                       nbTooltip="Reporte"
                        nbTooltipStatus="primary"></nb-icon>
             </td>
           </tr>
