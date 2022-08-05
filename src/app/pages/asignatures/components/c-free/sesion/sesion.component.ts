@@ -77,6 +77,7 @@ export class SesionComponent implements OnInit {
         closeOnEsc: false,
       })
       .onClose.subscribe(result => {
+        console.log(result)
         if (result.value_close === 'ok') {
 
           if (this.sesion?.modo === 'agrupado') {
@@ -84,7 +85,7 @@ export class SesionComponent implements OnInit {
             this.cargarCambio(result)
             result.type_element.type_element_id = result.type_element.id;
             console.log(this.sesion.elements)
-            if (this.sesion.elements.length > 0) {
+            if (this.sesion.elements?.length > 0) {
               const exist = this.sesion.elements.find((r: any) => ((r.type_element_id === result.type_element.id) ? true : false));
               if (exist) {
                 this.cargarCambio(result);
@@ -93,7 +94,8 @@ export class SesionComponent implements OnInit {
                 this.cargarCambio(result);
               }
             } else {
-              this.sesion.elements.push(result.type_element);
+              this.sesion.elements = [];
+              this.sesion?.elements?.push(result.type_element);
               this.cargarCambio(result);
             }
           }
@@ -229,7 +231,7 @@ export class SesionComponent implements OnInit {
   setCheck(type_element_id: any) {
     console.log(type_element_id, 'ups');
     console.log(this.sesion.elements)
-    if (this.sesion.elements.length > 0) {
+    if (this.sesion.elements?.length > 0) {
       this.sesion.elements.map((el: any) => {
         el.check = false;
         if (Number(el.type_element_id) === Number(type_element_id)) {
@@ -365,21 +367,5 @@ export class SesionComponent implements OnInit {
           this.validaExist.emit();
         }
       });
-  }
-  openSatisfaction(){
-    this.dialogService.open(MSatisfactionComponent, {
-      dialogClass: 'dialog-limited-height',
-      context: {
-        item: '',
-      },
-      closeOnBackdropClick: false,
-      closeOnEsc: false,
-    })
-      .onClose.subscribe(result => {
-      if (result === 'ok') {
-        this.arrayEl = [];
-        this.validaExist.emit();
-      }
-    });
   }
 }
