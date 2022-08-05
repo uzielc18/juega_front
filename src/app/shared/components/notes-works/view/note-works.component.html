@@ -1,5 +1,6 @@
 <nb-card class="border-0"
          style="border-radius: 15px"
+         id="print-note"
          [nbSpinner]="loading"
          nbSpinnerStatus="primary"
          nbSpinnerSize="small">
@@ -10,7 +11,15 @@
         <p><strong style="padding-top: 7px;font-size: 12px">Nombre del docente:</strong></p>
       </div>
       <div>
-
+        <button printSectionId="print-note"
+                class="buttonPrint"
+                [useExistingCss]="true"
+                ngxPrint
+                [printStyle]="
+             {'.iconNB' : {'display': 'none !important'}}"
+        >
+          <nb-icon type="button" icon="printer" class="iconNB"></nb-icon>
+        </button>
       </div>
     </div>
   </nb-card-header>
