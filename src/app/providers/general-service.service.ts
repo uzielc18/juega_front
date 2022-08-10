@@ -2,6 +2,7 @@ import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/comm
 import {Injectable, NgZone} from '@angular/core';
 import { Observable } from 'rxjs';
 import { EntityDataService, IResponse, END_POINTS } from '../providers/utils';
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class GeneralService extends EntityDataService<IResponse> {
@@ -80,22 +81,24 @@ export class GeneralService extends EntityDataService<IResponse> {
         });
       return http.request(req);
     }
-  getServerSentEvent(url: string): Observable<any> {
-    return Observable.create((observer: any) => {
-      const eventSource = this.getEventSource(`${this.endPoint}/${url}`);
-      eventSource.onmessage = event => {
-        this._zone.run(() => {
-          observer.next(event);
-        });
-      };
-      eventSource.onerror = error => {
-        this._zone.run(() => {
-          observer.error(error);
-        });
-      };
-    });
-  }
-  private getEventSource(url: string): EventSource {
-    return new EventSource(url);
-  }
+    public getServerSentEvent(url: string): Observable<any> {
+
+      return Observable.create((observer: any) => {
+        const eventSource = this.getEventSource(`${this.endPoint}/${url}`);
+        eventSource.onmessage = event => {
+          this._zone.run(() => {
+            observer.next(event);
+          });
+        };
+        eventSource.onerror = error => {
+          this._zone.run(() => {
+            observer.error(error);
+          });
+        };
+      });
+    }
+    private getEventSource(url: string): EventSource {
+      return new EventSource(environment.apiUrls.base + '/noticias/stream');
+      //return new EventSource(url);
+    }
 }

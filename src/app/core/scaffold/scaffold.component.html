@@ -70,7 +70,7 @@
             </button>
 
         </nb-action>
-        <!--<nb-action class="p-1">
+        <nb-action class="p-1">
           <div class="d-flex align-items-center">
             <button nbButton
                     ghost
@@ -87,7 +87,7 @@
           <ng-template #notificationsRef style="width: 60%">
             <app-m-notifications></app-m-notifications>
           </ng-template>
-        </nb-action>-->
+        </nb-action>
         <nb-action *ngIf="rolSemestre?.rol?.name !== 'Estudiante'">
           <button nbButton ghost nbTooltip="Crear elementos" nbTooltipStatus="primary" nbTooltipPlacement="left" status="primary" size="medium" (click)="newElements()"><nb-icon icon="plus-outline"></nb-icon></button>
         </nb-action>
