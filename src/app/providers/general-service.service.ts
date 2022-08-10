@@ -98,7 +98,7 @@ export class GeneralService extends EntityDataService<IResponse> {
       });
     }
     private getEventSource(url: string): EventSource {
-      return new EventSource(environment.apiUrls.base + '/noticias/stream');
+      return new EventSource(environment.apiUrls.base + '/stream/1');
       //return new EventSource(url);
     }
 }
