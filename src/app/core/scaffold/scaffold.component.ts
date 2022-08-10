@@ -134,7 +134,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setConfiguartion();
     this.fieldReactive();
-    //this.countNotifications();
+    this.countNotifications();
     this.appService
       .onLoader()
       .pipe(takeUntil(this.destroy$))
@@ -595,7 +595,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   }
   countNotifications(){
-    const serviceName = END_POINTS.base_back.news + '/stream'
+    const serviceName = END_POINTS + 'noticias/stream'
     console.log(serviceName)
     this.generalService.getServerSentEvent(serviceName).subscribe(data => console.log(data));
   }
