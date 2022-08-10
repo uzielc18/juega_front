@@ -134,7 +134,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setConfiguartion();
     this.fieldReactive();
-    this.countNotifications();
+    //this.countNotifications();
     this.appService
       .onLoader()
       .pipe(takeUntil(this.destroy$))
