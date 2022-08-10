@@ -10,6 +10,7 @@ import { END_POINTS } from '../../../../providers/utils';
 })
 export class PerfilComponent implements OnInit {
   @Input() user: any;
+  @Input() rol: any
   profile: any;
 
   generoArray: any[] = ['Masculino', 'Femenino'];
@@ -64,8 +65,16 @@ export class PerfilComponent implements OnInit {
 
   getUserInfo() {
     const serviceName = END_POINTS.base_back.user + '/perfil';
-    const person_id = this.user.person_id;
-    const user_id = this.user.user_id;
+    let person_id: any = '';
+    let user_id: any = '';
+
+    if(this.rol === 'user'){
+        person_id = this.user?.person?.id;
+        user_id = this.user?.user?.id;
+    }else{
+       person_id = this.user.person_id;
+       user_id = this.user.user_id;
+    }
     const params = {
       view: this.view,
     };

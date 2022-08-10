@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {END_POINTS} from "../../../../providers/utils";
 import {GeneralService} from "../../../../providers";
+import {EditUserComponent} from "../../../../shared/components/edit-user/edit-user.component";
+import {NbDialogService} from "@nebular/theme";
 
 @Component({
   selector: 'app-perfil',
@@ -13,8 +15,52 @@ export class PerfilComponent implements OnInit {
 
   loading: boolean = false
 
-  constructor( private generalService: GeneralService,) { }
+  constructor( private generalService: GeneralService,
+               private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
+  }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion) {
+      return JSON.parse(sesion);
+    } else {
+      return '';
+    }
+  }
+
+  editUser(){
+    this.dialogService
+      .open(EditUserComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          user: this.profile,
+          rol: 'user' },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
+      if (result === 'ok') {
+        //this.getTeachers();
+      }
+    });
+  }
+  sincCourse(){
+    this.loading = true
+    const serviceName = END_POINTS.base_back.config + '/cursos';
+      this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.profile.person.codigo, 0, 0, this.profile.user.usuario_upeu).subscribe(res => {
+        if(res.success){
+        }
+      }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  sincronizarDatos(){
+    this.loading = true
+    const serviceName = END_POINTS.base_back.config + '/get-info-user';
+    const params = {
+      user: this.profile.user.usuario_upeu,
+    }
+    this.generalService.nameParams$(serviceName, params).subscribe(res => {
+      console.log(res)
+    })
   }
 }

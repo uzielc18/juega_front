@@ -4,6 +4,7 @@ import { NbSelectComponent } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
+import {AppService} from "../../../../core";
 
 @Component({
   selector: 'app-element-home',
@@ -35,31 +36,31 @@ export class ElementHomeComponent implements OnInit {
   resetTeacherImportButton: boolean = false;
 
   // rol temporal como admin
-  rolSemestre = {
-    rol: {
-      name: 'Admin',
-    },
-    semestre: {
-      id: 2,
-    },
-  };
+  //rolSemestre = {
+  //  rol: {
+  //   name: 'Admin',
+  //  },
+  //  semestre: {
+  //    id: 2,
+  //  },
+  //};
 
   @ViewChildren('secondSelect') select2!: QueryList<NbSelectComponent>;
 
-  constructor(private generalService: GeneralService, private formBuilder: FormBuilder) {}
+  constructor(private generalService: GeneralService, private formBuilder: FormBuilder, private appService: AppService) {}
 
   ngOnInit(): void {
     this.fieldReactive();
   }
 
-  // get rolSemestre() {
-  //   const sesion: any = sessionStorage.getItem('rolSemesterLeng');
-  //   if (sesion) {
-  //     return JSON.parse(sesion);
-  //   } else {
-  //     return '';
-  //   }
-  // }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion) {
+      return JSON.parse(sesion);
+     } else {
+      return '';
+    }
+  }
 
   fieldReactive() {
     const controls = {
@@ -83,6 +84,9 @@ export class ElementHomeComponent implements OnInit {
     });
     this.getSemesters();
     this.getListOfTeachers();
+    if(this.rolSemestre.rol.name === 'Docente'){
+      this.getListOfCourses('')
+    }
   }
 
   // Buttons to toggle between import and create
@@ -186,7 +190,7 @@ export class ElementHomeComponent implements OnInit {
     const serviceName = END_POINTS.base_back.default + 'get-courses-topics';
     this.loading = true;
     const params = {
-      person_id: this.rolSemestre.rol.name === 'Admin' ? teacher_id : '',
+      person_id: this.rolSemestre.rol.name === 'Admin' ? teacher_id : this.appService.user.person.id,
     };
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {

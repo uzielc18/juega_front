@@ -60,6 +60,7 @@ import { SpinnerService } from './auth/services/spinner.service';
 import { SpinnerInterceptor } from './auth/interceptors/spinner.interceptor';
 import {FilterModule} from "../shared/pipes/filter/filter.module";
 import {MSatisfactionModule} from "../shared/components/satisfaction/modal/m-satisfaction.module";
+import {MNotificationsModule} from "../shared/components/notifications/modal/m-notifications.module";
 registerLocaleData(localePe);
 const ANGULAR: any[] = [
   CommonModule,
@@ -103,7 +104,8 @@ const ANGULAR: any[] = [
     NbAlertModule,
     NebularModule,
     FilterModule,
-    MSatisfactionModule
+    MSatisfactionModule,
+    MNotificationsModule
   ],
   exports: [
     AuthRouteLoginComponent,

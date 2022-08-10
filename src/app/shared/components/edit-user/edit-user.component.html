@@ -3,6 +3,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <div *ngIf="rol === 'teacher'">Editar Docente</div>
       <div *ngIf="rol === 'student'">Editar Estudiante</div>
+      <div *ngIf="rol === 'user'">Editar Usuario</div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -11,13 +12,13 @@
   <nb-card-body>
     <nb-tabset>
       <nb-tab tabTitle="Perfil">
-        <app-perfil [user]="user"></app-perfil>
+        <app-perfil [user]="user" [rol] = "rol"></app-perfil>
       </nb-tab>
       <nb-tab tabTitle="Roles">
-        <app-rol [user]="user"></app-rol>
+        <app-rol [user]="user" [rol] = "rol"></app-rol>
       </nb-tab>
       <nb-tab tabTitle="Cursos">
-        <app-curso [user]="user"></app-curso>
+        <app-curso [user]="user" [rol] = "rol"></app-curso>
       </nb-tab>
     </nb-tabset>
   </nb-card-body>

@@ -20,6 +20,7 @@ export class NavegacionComponent implements OnInit {
   tooltip: boolean = false;
   tootipValue: any = 'Copiar';
   item: any = [];
+  justificatiosn:any = [];
   valor: any;
   showText: boolean = false;
   @ViewChild(JustificationsComponent) justifiAct:any;
@@ -40,6 +41,7 @@ export class NavegacionComponent implements OnInit {
   }
   ngOnInit(): void {
     this.userInfo = this.userService;
+    this.listJustificate();
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -50,6 +52,11 @@ export class NavegacionComponent implements OnInit {
     }
   }
 
+  badgeNumber(){
+    if(this.curso.length > 0){
+
+    }
+  }
   changeTabs(event:any) {
     const idTab = event.tabId;
     switch (idTab) {
@@ -87,6 +94,17 @@ export class NavegacionComponent implements OnInit {
     document.execCommand('copy');
 
   }
+    listJustificate() {
+      const serviceName = 'list-justifications';
+      const params = {
+        estado_justification : 'pendiente',
+        person_id: this.userInfo.user.person.id,
+      };
+      this.loading = true;
+      this.generalService.nameIdAndIdParams$(serviceName, this.curso.id_carga_curso_docente, this.rolSemestre.rol.id, params).subscribe((res:any) => {
+        this.justificatiosn = res.data || [];
+      }, () => {this.loading = false;}, () => {this.loading = false;})
+    }
   crearSalaZoom(){
     this.loading = true;
     const serviceName = 'add-course-zoom';

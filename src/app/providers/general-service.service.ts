@@ -1,11 +1,12 @@
 import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import { Observable } from 'rxjs';
 import { EntityDataService, IResponse, END_POINTS } from '../providers/utils';
 
 @Injectable()
 export class GeneralService extends EntityDataService<IResponse> {
     constructor(protected httpClient: HttpClient,
+                private _zone: NgZone,
       private handler: HttpBackend) {
         super(httpClient, END_POINTS.patmos_base);
     }
@@ -79,4 +80,22 @@ export class GeneralService extends EntityDataService<IResponse> {
         });
       return http.request(req);
     }
+  getServerSentEvent(url: string): Observable<any> {
+    return Observable.create((observer: any) => {
+      const eventSource = this.getEventSource(`${this.endPoint}/${url}`);
+      eventSource.onmessage = event => {
+        this._zone.run(() => {
+          observer.next(event);
+        });
+      };
+      eventSource.onerror = error => {
+        this._zone.run(() => {
+          observer.error(error);
+        });
+      };
+    });
+  }
+  private getEventSource(url: string): EventSource {
+    return new EventSource(url);
+  }
 }
