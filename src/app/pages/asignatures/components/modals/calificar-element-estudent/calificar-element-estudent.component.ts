@@ -19,6 +19,7 @@ export class CalificarElementEstudentComponent implements OnInit {
   @Input() directore:any;
   listAlumns:any = [];
   formHeader: any = FormGroup;
+  notesState: boolean = false;
   pending: any;
   has_rubric: boolean = false;
   rubrica: any;
@@ -99,6 +100,7 @@ export class CalificarElementEstudentComponent implements OnInit {
     }
   }
   selectedStudent(item: any) {
+    this.notesState = true;
     this.formDate.controls['person_student_id'].setValue('');
     this.formHeader.controls['nota'].setValue(0);
     this.pending = '';
@@ -171,7 +173,7 @@ export class CalificarElementEstudentComponent implements OnInit {
   }
   renderDate(date: any) {
     // console.log(date);
-    
+
     if (date) {
       const fecha = date.split('-');
       var n = new Date(`${fecha[0]}-${fecha[1]}-${fecha[2]}`);
@@ -211,7 +213,7 @@ export class CalificarElementEstudentComponent implements OnInit {
       case 'SC': // Sin calificar
       case 'C': //Calificados
       case 'SE': //Sin enviar
-     
+
         break;
       default:
         break;
@@ -476,7 +478,7 @@ export class CalificarElementEstudentComponent implements OnInit {
         id: forms.id_justification,
         respuesta: forms.respuesta || '',
         estado_justification: state,
-      } 
+      }
     };
     if (params && params.fecha_fin && params.justification.id && validFechas) {
       this.loading = true;

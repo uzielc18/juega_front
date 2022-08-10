@@ -24,6 +24,8 @@ import {SpinnerService} from '../auth/services/spinner.service';
 import {environment} from "../../../environments/environment";
 import {BreakpointObserver, BreakpointState} from "@angular/cdk/layout";
 import {MSatisfactionComponent} from "../../shared/components/satisfaction/modal/m-satisfaction.component";
+import {MNotificationsComponent} from "../../shared/components/notifications/modal/m-notifications.component";
+import {SseService} from "../../providers/sse.service";
 
 @Component({
   selector: 'app-scaffold',
@@ -117,6 +119,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private spinnerService: SpinnerService,
+    private sseService: SseService
   ) {
     this.spinnerSub = this.onSpinner();
     // console.log(this.router);
@@ -131,6 +134,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setConfiguartion();
     this.fieldReactive();
+    this.countNotifications();
     this.appService
       .onLoader()
       .pipe(takeUntil(this.destroy$))
@@ -254,6 +258,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   open() {
+    console.log('open')
     this.popover.show();
   }
 
@@ -582,11 +587,17 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
             closeOnEsc: false,
           })
             .onClose.subscribe(result => {
-            if (result === 'ok') {
+              if (result === 'ok') {
             }
           });
         }
     });
 
   }
+  countNotifications(){
+    const serviceName = END_POINTS.base_back.news + '/stream'
+    console.log(serviceName)
+    this.generalService.getServerSentEvent(serviceName).subscribe(data => console.log(data));
+  }
+
 }

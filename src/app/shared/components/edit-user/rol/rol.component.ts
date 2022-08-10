@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class RolComponent implements OnInit {
   @Input() user: any;
+  @Input() rol: any;
 
   areasRoles: any;
   loading: boolean = false;
@@ -24,9 +25,16 @@ export class RolComponent implements OnInit {
 
   getAreasRoles() {
     const serviceName = END_POINTS.base_back.default + 'areasRoles';
-    const params = {
-      person_id: this.user.person_id,
-    };
+    let params: any = {};
+    if(this.rol === 'user'){
+      params = {
+        person_id: this.user.person.id,
+      }
+    }else{
+      params = {
+        person_id: this.user.person_id,
+      }
+    }
     this.loading = true;
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {

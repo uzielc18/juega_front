@@ -8,7 +8,7 @@
         </nb-action>
       </nb-actions>
       <nb-actions class="flex-grow-1">
-        <nb-action  class="flex-grow-1 justify-content-end ">
+        <nb-action  class="flex-grow-1 justify-content-end">
             <div class="flex-grow-1 div-Class">
               <div class="input-wrapper">
                 <input *ngIf="statusSearch"
@@ -70,8 +70,25 @@
             </button>
 
         </nb-action>
-
-        <nb-action *ngIf="rolSemestre?.rol?.name === 'Docente'">
+        <!--<nb-action class="p-1">
+          <div class="d-flex align-items-center">
+            <button nbButton
+                    ghost
+                    size="medium"
+                    nbPopoverPlacement="bottom"
+                    [nbPopover]="notificationsRef"
+                    >
+              <nb-icon icon="bell-outline"></nb-icon>
+            </button>
+            <div style="" class="notifications">
+              <small style="color: #FFFFFF; font-size: 11px">9+</small>
+            </div>
+          </div>
+          <ng-template #notificationsRef style="width: 60%">
+            <app-m-notifications></app-m-notifications>
+          </ng-template>
+        </nb-action>-->
+        <nb-action *ngIf="rolSemestre?.rol?.name !== 'Estudiante'">
           <button nbButton ghost nbTooltip="Crear elementos" nbTooltipStatus="primary" nbTooltipPlacement="left" status="primary" size="medium" (click)="newElements()"><nb-icon icon="plus-outline"></nb-icon></button>
         </nb-action>
         <nb-action class="p-0">
@@ -85,8 +102,7 @@
               [nbPopover]="templateRef"
               nbPopoverPlacement="bottom"
               nbPopoverTrigger="noop"
-              (click)="open()"
-            >
+              (click)="open()">
               {{ paramsSessionStorage?.rol?.name || 'Sin rol' }} -
               {{ paramsSessionStorage?.semestre?.nombre || 'Sin semestre' }}
             </button>
@@ -139,7 +155,7 @@
           </form>
         </nb-action>
 
-        <nb-action class="d-none d-md-flex">
+        <!--<nb-action class="d-none d-md-flex">
           <form [formGroup]="formHeader">
             <div [nbPopover]="templat" nbPopoverPlacement="bottom" style="cursor: pointer">
               <img [src]="logoLangs" height="20px" alt="" />
@@ -159,16 +175,16 @@
                     </nb-radio-group>
                   </div>
                 </nb-card-body>
-                <!-- <br>
+                 <br>
                     <div class="text-center">
                         <button nbButton outline size="tiny" hero status="primary">
                           Guardar
                         </button>
-                      </div> -->
+                      </div>
               </nb-card>
             </ng-template>
           </form>
-        </nb-action>
+        </nb-action>-->
         <nb-action [nbContextMenu]="userMenu" class="d-none d-md-flex">
           <nb-user
             class="header-user"
