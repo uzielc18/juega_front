@@ -202,7 +202,7 @@
         </nb-card>
       </div>
       <div class="p-1" [ngClass]="has_rubric ? 'col-md-4' : 'col-md-2'">
-        <nb-card>
+        <nb-card *ngIf="notesState">
           <nb-card-header>
             Ingresar nota
           </nb-card-header>
@@ -213,12 +213,12 @@
                 <textarea nbInput fullWidth placeholder="Ingrese un comentario" formControlName="comentario"></textarea>
                 <control-messages [control]="formHeader.get('comentario')"></control-messages>
               </div>
-              <div *ngIf="!has_rubric">
+              <div *ngIf="!has_rubric && pending?.student_pending?.realizo !== '0' && pending?.tipo !== 'EVALUACION'">
                 <label class="label">Nota</label><br>
                 <input type="number" maxlength="2" nbInput fullWidth placeholder="Ingrese una nota" formControlName="nota">
                 <control-messages [control]="formHeader.get('nota')"></control-messages>
-              </div> <br>
-              <div *ngIf="has_rubric">
+              </div><br>
+              <div *ngIf="has_rubric && pending?.student_pending?.realizo !== '0' && pending?.tipo !== 'EVALUACION'">
                 <label class="label">Rubrica: {{ rubrica?.nombre }}</label><br>
                 <table class="table table-sm table-striped">
                   <thead>
@@ -237,12 +237,13 @@
                     </tr>
                   </tbody>
                 </table>
+
                 <input type="number" maxlength="2" nbInput fullWidth placeholder="Nota" formControlName="nota" [readonly]="true">
                 <control-messages [control]="formHeader.get('nota')"></control-messages>
               </div>
               <div class="text-center">
-                <button *ngIf="has_rubric" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="sendCalification()">Calificar</button>
-                <button *ngIf="!has_rubric" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()">Calificar</button>
+                <button *ngIf="has_rubric && pending?.student_pending?.realizo !== '0' && pending?.tipo !== 'EVALUACION'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="sendCalification()">Calificar</button>
+                <button *ngIf="!has_rubric && pending?.student_pending?.realizo !== '0' && pending?.tipo !== 'EVALUACION'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()">Calificar</button>
               </div>
             </form>
           </nb-card-body>

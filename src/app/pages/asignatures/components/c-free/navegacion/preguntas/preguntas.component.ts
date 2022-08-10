@@ -14,7 +14,7 @@ export class PreguntasComponent implements OnInit {
   @Input() curso: any;
   @Input() userInfo: any;
   loading: boolean = false;
-
+  showQuestion: boolean = false;
   mostrar: any;
   questions: any[] = [];
 
@@ -42,11 +42,19 @@ export class PreguntasComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldReactive();
-  }
 
+  }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion) {
+      return JSON.parse(sesion);
+    } else {
+      return '';
+    }
+  }
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(changes, 'golas');
-    
+
     // if (changes.curso) {
     //   this.getQuestions();
     // }
@@ -120,9 +128,11 @@ export class PreguntasComponent implements OnInit {
         id_carga_curso_docente: this.curso.id_carga_curso_docente || '',
       };
       this.loading = true;
+      this.showQuestion = false
       this.generalService.nameParams$(serviceName, params).subscribe(
         (res: any) => {
           if (res.success) {
+
             this.questions = res.data;
             this.questions.forEach(question => {
               question.expiredDays = 0;
@@ -188,5 +198,8 @@ export class PreguntasComponent implements OnInit {
           this.getQuestions();
         }
       });
+  }
+  preguntar(){
+    this.showQuestion = true
   }
 }

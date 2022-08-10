@@ -263,6 +263,19 @@
     background-color: #fefcf7;
   }
 }
+.options{
+  background-color: #f7fafc;
+  border-radius: 7px;
+  padding: 10px 20px;
+  .title-name{
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+  .items{
+    padding: 2px 20px;
+  }
+}
 
 nb-progress-bar {
   height: 10px;

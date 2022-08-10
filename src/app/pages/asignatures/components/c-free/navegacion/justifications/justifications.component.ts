@@ -51,7 +51,7 @@ export class JustificationsComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log(this.userInfo.user.person.id);
-    
+
     // setTimeout(() => {
     //   this.listJustificate();
     // }, 5000);
@@ -115,7 +115,7 @@ export class JustificationsComponent implements OnInit {
     this.expiredHours = Math.floor((expired % day) / hour);
     this.expiredMinutes = Math.floor((expired % hour) / minute);
     this.expiredSeconds = Math.floor((expired % minute) / second);
-    
+
     // return  this.expiredDays + ' día(s)' + ' ' + this.expiredHours + ' hora(s)' + ' ' + this.expiredMinutes + ' minuto(s)' + ' '  + this.expiredSeconds + ' segundo(s)';
     return  this.expiredDays + ' día(s)' + ' ' + this.expiredHours + ' hora(s)';
   }

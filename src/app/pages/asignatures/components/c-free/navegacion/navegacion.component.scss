@@ -33,7 +33,9 @@
   //border: 1px solid #A32B3A;
   color: var(--color-danger-600);
 }
-
+:host nb-tab {
+  padding: 1.25rem;
+}
 @media screen and (max-width: 1399px) {
   .tabs-container {
     padding: 20px;

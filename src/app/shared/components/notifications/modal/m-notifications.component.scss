@@ -1,0 +1,11 @@
+.scrollModal {
+  max-width: 95vw;
+  max-height: 80vh;
+  width: 600px;
+}
+@media screen and (max-width: 768px) {
+  .scrollModal{
+    width: auto;
+  }
+
+}

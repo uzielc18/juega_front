@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class CursoComponent implements OnInit {
   @Input() user: any;
+  @Input() rol: any;
 
   loading: boolean = false;
 
@@ -37,7 +38,12 @@ export class CursoComponent implements OnInit {
     const params = {
       semester_id: this.rolSemestre.semestre.id,
     };
-    const person_id = this.user.person_id;
+    let person_id = ''
+    if(this.rol === 'user'){
+      person_id = this.user?.person?.id;
+    }else{
+      person_id = this.user.person_id;
+    }
     this.loading = true;
     this.generalService.nameIdParams$(serviceName, person_id, params).subscribe(
       (res: any) => {
