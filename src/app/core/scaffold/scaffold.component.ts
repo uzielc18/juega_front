@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {
   NbDialogService,
   NbMediaBreakpointsService,
@@ -41,7 +41,10 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   user: any;
   userMenu: any[] = [];
   termino:any;
+  notificationCount: any;
 
+  @ViewChild('searhEvent') searhEvent: any = ElementRef;
+  @ViewChild('searhEvent2') searhEvent2: any = ElementRef;
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     if (sesion) {
@@ -119,17 +122,27 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private spinnerService: SpinnerService,
-    private sseService: SseService
+    private sseService: SseService,
   ) {
     this.spinnerSub = this.onSpinner();
     // console.log(this.router);
+
+
+
 
   }
 
   onSpinner(): Subscription {
     return this.spinnerService.onLoader().subscribe((status: boolean) => this.spinner = status);
   }
-
+  @HostListener('document:mousedown', ['$event'])
+  onGlobalClick(event: any): void {
+    if (!this.searhEvent?.nativeElement.contains(event.target) && !this.searhEvent2?.nativeElement.contains(event.target)) {
+      // clicked outside => close dropdown list
+      this.statusSearch = false;
+      console.log('asdasdasdasdasd')
+    }
+  }
 
   ngOnInit(): void {
     this.setConfiguartion();
@@ -255,6 +268,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
     this.subcript.unsubscribe();
     this.subcrActuMenu.unsubscribe();
+  }
+  openNoti(){
+    this.popover.show();
   }
 
   open() {
@@ -464,34 +480,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   newElements() {
     this.router.navigate(['/pages/manage/element']);
   }
-  searchClic(event:any){
+  searchClicOpen(event:any){
     if(!event){
       this.statusSearch = true;
-
-    }else if(event){
-      this.statusSearch = false;
-      setTimeout(() => {
-        this.search.setValue('');
-        this.search.value = '';
-        this.data = [];
-        this.countCourse = ''
-        this.countPerson = ''
-      },100)
-        //this.search.value = '';
-      //if(this.search.value !== ''){
-      // this.statusSearch = true
-      // this.ejemploSugerido = this.ejemplo.filter((x: any) =>
-      //   x.nombre.toUpperCase()
-      //     .includes(this.search.value.toUpperCase()))
-        //.slice(0, 2)
-      //  setTimeout(() => {
-      //   this.search.setValue('');
-      //  },100)
-      // }else{
-      //  this.statusSearch = false;
-      //  this.search.value = '';
-      // this.ejemploSugerido = [];
-      // }
     }
   }
   caculateTime(fecha: any){
@@ -595,9 +586,12 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   }
   countNotifications(){
-    const serviceName = END_POINTS + 'noticias/stream'
-    console.log(serviceName)
-    this.generalService.getServerSentEvent(serviceName).subscribe(data => console.log(data));
+    const serviceName =  '/stream/' + this.appService.user.id
+    this.generalService.getServerSentEvent(serviceName).subscribe(data =>{
+      this.notificationCount = data.total
+      console.log(data.total, "hola");
+    })
+
   }
 
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationsComponent } from './notifications.component';
 import {NebularModule} from "../../../nebular.module";
+import {RouterModule} from "@angular/router";
 
 
 
@@ -12,9 +13,10 @@ import {NebularModule} from "../../../nebular.module";
   exports:[
     NotificationsComponent
   ],
-  imports: [
-    CommonModule,
-    NebularModule
-  ]
+    imports: [
+        CommonModule,
+        NebularModule,
+        RouterModule
+    ]
 })
 export class NotificationsModule { }

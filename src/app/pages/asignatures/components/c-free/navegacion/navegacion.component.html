@@ -42,7 +42,7 @@
         <nb-tab [tabTitle]="showText ? 'Preguntas' : ''" tabIcon="question-mark-outline" responsive tabId="pregunta" style="max-height: 70vh;">
           <app-preguntas [userInfo]="userInfo" [curso]="curso"></app-preguntas>
         </nb-tab>
-        <nb-tab [tabTitle]="showText ? 'Justificación' : ''" tabIcon="bell-outline" responsive badgeText="{{this.justificatiosn.length}}" badgeStatus="danger" badgePosition="top right" tabId="justifications" style="max-height: 70vh;">
+        <nb-tab  *ngIf="rolSemestre.rol.name !== 'Estudiante' " [tabTitle]="showText ? 'Justificación' : ''" tabIcon="bell-outline" responsive badgeText="{{this.justificatiosn.length}}" badgeStatus="danger" badgePosition="top right" tabId="justifications" style="max-height: 70vh;">
           <app-justifications [userInfo]="userInfo" [curso]="curso"></app-justifications>
         </nb-tab>
         <nb-tab [tabTitle]="showText ? 'Estudiantes' : ''" tabIcon="people-outline" responsive tabId="estudiantes" style="max-height: 70vh;">

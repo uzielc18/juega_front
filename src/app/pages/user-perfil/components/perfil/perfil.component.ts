@@ -3,6 +3,7 @@ import {END_POINTS} from "../../../../providers/utils";
 import {GeneralService} from "../../../../providers";
 import {EditUserComponent} from "../../../../shared/components/edit-user/edit-user.component";
 import {NbDialogService} from "@nebular/theme";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-perfil',
@@ -46,21 +47,58 @@ export class PerfilComponent implements OnInit {
     });
   }
   sincCourse(){
-    this.loading = true
     const serviceName = END_POINTS.base_back.config + '/cursos';
-      this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.profile.person.codigo, 0, 0, this.profile.user.usuario_upeu).subscribe(res => {
-        if(res.success){
-        }
-      }, () => {this.loading = false}, () => {this.loading = false})
+    Swal.fire({
+      title: 'Sincronizar curso',
+      text: '¿ Desea sincronizar ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#014776',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.profile.person.codigo, 0, 0, this.profile.user.usuario_upeu).subscribe(res => {
+          if(res.success){
+          }
+        }, () => {this.loading = false}, () => {this.loading = false})
+      }
+    });
+
   }
   sincronizarDatos(){
-    this.loading = true
     const serviceName = END_POINTS.base_back.config + '/get-info-user';
     const params = {
       user: this.profile.user.usuario_upeu,
     }
-    this.generalService.nameParams$(serviceName, params).subscribe(res => {
-      console.log(res)
-    })
+    Swal.fire({
+      title: 'Sincronizar datos',
+      text: '¿ Desea sincronizar ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#014776',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService.nameParams$(serviceName, params).subscribe(res => {
+          console.log(res)
+        },() =>{this.loading = false}, () => {this.loading = false})
+      }
+    });
+
+
   }
 }

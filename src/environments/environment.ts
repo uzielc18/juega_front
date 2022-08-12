@@ -25,7 +25,7 @@ export const environment = {
   apiUrls: {
     auth: API.auth.dev,
     setup: API.setup.dev,
-    base: API.base.local,
+    base: API.base.dev,
   },
   shellApp: `${window.location.origin}/auth`,
   pages: `${window.location.origin}/pages`,
