@@ -1,94 +1,20 @@
-<div class="content">
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
+<div class="text-center noNTF" *ngIf="noTNF === 0">
+  <small>*No se encontraron notificaciones</small>
+</div>
+<div class="content" *ngFor="let item of data" >
+  <div class="d-flex justify-content-between align-items-center animations card-2" (click)="navigation(item)" [ngStyle]="{
+        'border-left':item.estado ==='1' ? '3px solid var(--color-warning-400)': ''}">
+    <div class="card-icon">
+      <nb-icon [icon]="item.iconName"></nb-icon>
+    </div>
+    <div class="d-flex flex-column flex-grow-1">
+      <small class="titulo">Tienes un trabajo nuevo</small>
+      <small><strong style="color: var(--color-primary-500)">{{item.course_name}}</strong>{{item.contenido}}</small>
+      <div class="ms-auto">
+        <small>Hace 24 horas</small>
+      </div>
     </div>
   </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
-  <div class="d-flex flex-column card" >
-    <small class="titulo">Tienes un trabajo nuevo</small>
-    <small><strong style="color: var(--color-primary-500)">Nombre del curso</strong>,docente, fecha de entrega</small>
-    <div class="ms-auto">
-      <small>Hace 24 horas</small>
-    </div>
-  </div>
+
 </div>
 

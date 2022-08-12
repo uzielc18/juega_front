@@ -1,6 +1,6 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <div class="work work-expired" style="margin-left: 20px; margin-right: 20px;"
-   *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && !pending?.student_pending?.nota">
+   *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && pending?.student_pending?.nota === null">
     <span>
       <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu Trabajo: {{ element?.titulo }} acaba de caducar hace {{
       expiredDays |
@@ -15,6 +15,15 @@
       <!-- <nb-icon class="work-expired-close" icon="close-outline"></nb-icon> -->
     </div>
   </div>
+    <div class="work work-vence" style="margin-left: 20px; margin-right: 20px;"
+    *ngIf="!tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota === null">
+      <span>
+          <p>Hola {{ userInfo.name }}!</p>, su trabajo: {{ element?.titulo }} vence en: {{
+        venceDays |
+          i18nPlural:daysMap }} {{ venceHours | i18nPlural:hoursMap }} {{ venceMinutes | i18nPlural:minutesMap }} {{
+        venceSeconds | i18nPlural:secondsMap }}
+        </span>
+    </div>
 <nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">
   <nb-card-body>
     <div class="row">
@@ -59,19 +68,19 @@
                 <tbody style="font-size: 11px;">
                   <tr>
                     <th>* Duración del examen :</th>
-                    <th>{{element?.duracion}} minutos</th>
+                    <th>{{pending?.duracion}} minutos</th>
                   </tr>
                   <tr>
                     <th>* N° de preguntas :</th>
-                    <th>{{element?.exam?.aleatorio === '0' ? element?.exam?.count_preguntas : element?.exam?.aleatorio}}</th>
+                    <th>{{element?.exam?.aleatorio === '0' ? pending?.validaciones?.preguntas_count: element?.exam?.aleatorio}}</th>
                   </tr>
                   <tr>
                     <th>* Fecha y hora inicio :</th>
-                    <th>{{element?.fecha_inicio}}</th>
+                    <th>{{pending?.student_pending?.fecha_inicio}}</th>
                   </tr>
                   <tr>
                     <th>* Fecha y hora fin :</th>
-                    <th>{{element?.fecha_fin}}</th>
+                    <th>{{pending?.student_pending?.fecha_fin}}</th>
                   </tr>
                 </tbody>
               </table>
@@ -80,7 +89,7 @@
               <nb-alert outline="primary" style="padding: 2px; font-size: 12px;">
                 - {{element?.exam?.mostrar_respuestas === 'SI' ? 'Si' : 'No'}} se mostrara las respuestas al finalizar el examen.
                 <hr style="padding: 0px;">
-                - {{element?.exam?.mostrar_nota === 'SI' ? 'Si' : 'No'}} se mostrara el nota al finalizar el examen.
+                - {{element?.exam?.mostrar_nota === 'SI' ? 'Si' : 'No'}} se mostrara la nota al finalizar el examen.
               </nb-alert>
             </div>
           </nb-card-body>

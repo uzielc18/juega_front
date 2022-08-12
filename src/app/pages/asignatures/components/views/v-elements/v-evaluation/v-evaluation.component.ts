@@ -20,7 +20,7 @@ export class VEvaluationComponent implements OnInit, OnChanges {
   ip:any = '';
   @Output() loadingss: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
-  
+
   daysLeft: any;
   hoursLeft: any;
   minutesLeft: any;
@@ -29,6 +29,10 @@ export class VEvaluationComponent implements OnInit, OnChanges {
   expiredHours: any;
   expiredMinutes: any;
   expiredSeconds: any;
+  venceDays: any;
+  venceHours: any;
+  venceMinutes: any;
+  venceSeconds: any;
 
   tiempo_vencido: boolean = false;
   // tiempo_calificado: any;
@@ -57,16 +61,23 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     other: '# segundos.',
   };
   constructor(private service: GeneralService, private router: Router, public datepipe: DatePipe,
-    private dialogService: NbDialogService) { }
+    private dialogService: NbDialogService) {
+    setInterval(() => {
+      if (this.pending) {
+        this.countdown(this.pending?.student_pending?.fecha_fin);
+      }
+    }, 1000);
+  }
   ngOnChanges():void {
     this.pending = this.pending;
     // console.log(this.pending, this.element, 'elllllllllll', this.userInfo);
-    
+
   }
   ngOnInit(): void {
     this.getIp();
+
     // console.log(this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss'));
-    
+
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -82,11 +93,13 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     const now = new Date().getTime();
     const left = countDate - now;
     const expired = now - countDate;
+    const vence = countDate - now
 
     const second = 1000;
     const minute = second * 60;
     const hour = minute * 60;
     const day = hour * 24;
+
 
     this.daysLeft = Math.floor(left / day);
     this.hoursLeft = Math.floor((left % day) / hour);
@@ -98,8 +111,15 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     this.expiredMinutes = Math.floor((expired % hour) / minute);
     this.expiredSeconds = Math.floor((expired % minute) / second);
 
+    this.venceDays = Math.floor(vence / day);
+    this.venceHours = Math.floor((vence % day) / hour);
+    this.venceMinutes = Math.floor((vence % hour) / minute);
+    this.venceSeconds = Math.floor((vence % minute) / second);
+
     if (this.daysLeft <= 0 && this.hoursLeft <= 0 && this.minutesLeft <= 0 && this.secondsLeft <= 0) {
       this.tiempo_vencido = true;
+    }else{
+      this.tiempo_vencido = false;
     }
   }
   justifications() {
@@ -183,7 +203,7 @@ export class VEvaluationComponent implements OnInit, OnChanges {
           }
       });
     }
-    
+
   }
   backQuestions() {
     const values = this.pending?.student_pending || '';
@@ -202,7 +222,7 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     }
     if(flag) {
       return 'Ordenador';
-    } else { 
+    } else {
       return 'Movil';
     }
   }

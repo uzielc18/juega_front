@@ -6,6 +6,7 @@ import {environment} from "../../environments/environment";
 
 @Injectable()
 export class GeneralService extends EntityDataService<IResponse> {
+      eventSource: any = window['EventSource'];
     constructor(protected httpClient: HttpClient,
                 private _zone: NgZone,
       private handler: HttpBackend) {
@@ -81,24 +82,21 @@ export class GeneralService extends EntityDataService<IResponse> {
         });
       return http.request(req);
     }
-    public getServerSentEvent(url: string): Observable<any> {
+    getServerSentEvent(url: string): Observable<any> {
+      return new Observable<any>(obs => {
 
-      return Observable.create((observer: any) => {
-        const eventSource = this.getEventSource(`${this.endPoint}/${url}`);
-        eventSource.onmessage = event => {
-          this._zone.run(() => {
-            observer.next(event);
-          });
+        const eventSource = new this.eventSource(environment.apiUrls.base + url);
+
+        eventSource.onmessage = (event: any) => {
+
+          let data = JSON.parse(event.data);
+
+          // $apply external (window.EventSource) event data
+          this._zone.run(() => obs.next(data));
+
         };
-        eventSource.onerror = error => {
-          this._zone.run(() => {
-            observer.error(error);
-          });
-        };
+        // close connection when observer unsubscribe
+        return () => eventSource.close();
       });
-    }
-    private getEventSource(url: string): EventSource {
-      return new EventSource(environment.apiUrls.base + '/noticias/stream');
-      //return new EventSource(url);
     }
 }
