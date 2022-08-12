@@ -140,7 +140,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     if (!this.searhEvent?.nativeElement.contains(event.target) && !this.searhEvent2?.nativeElement.contains(event.target)) {
       // clicked outside => close dropdown list
       this.statusSearch = false;
-      console.log('asdasdasdasdasd')
     }
   }
 
@@ -589,7 +588,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     const serviceName =  '/stream/' + this.appService.user.id
     this.generalService.getServerSentEvent(serviceName).subscribe(data =>{
       this.notificationCount = data.total
-      console.log(data.total, "hola");
     })
 
   }

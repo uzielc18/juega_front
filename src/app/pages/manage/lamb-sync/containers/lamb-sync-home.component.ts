@@ -560,4 +560,27 @@ export class LambSyncHomeComponent implements OnInit {
         );
     }
   }
+  syncDatos(){
+    this.loading = true;
+    const serviceName = END_POINTS.base_back.config + '/get-info-user'
+    const params = {
+     user: this.formHeader.get('estudiante').value.usuario_upeu,
+    }
+    if(this.formHeader.get('estudiante').value){
+      this.generalService.nameParams$(serviceName, params).subscribe(res => {
+        console.log(res)
+      },() =>{this.loading = false}, () => {this.loading = false})
+    }
+
+  }
+  syncCourse(){
+    this.loading = true;
+    const serviceName = END_POINTS.base_back.config + '/cursos';
+    if(this.formHeader.get('estudiante').value){
+      this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.formHeader.get('semestre').value, 0, 0, this.formHeader.get('estudiante').value.usuario_upeu).subscribe(res => {
+        if(res.success){
+        }
+      }, () => {this.loading = false}, () => {this.loading = false})
+    }
+  }
 }
