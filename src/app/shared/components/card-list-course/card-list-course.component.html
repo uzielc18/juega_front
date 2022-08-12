@@ -92,10 +92,11 @@
           </div>
           <div class="content-container">
             <div class="course-info">
-              <h6 class="names mb-0"> {{ curso.nombre }}</h6>
+              <h6 class="names mb-0"> {{ curso.nombre }} - {{curso.type_teachers_code}}</h6>
               <div class="text-course">
                 <span class="teachers mb-0"> {{ curso.persons_teacher_nombre }}</span><br>
-                <span class="descriptions mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</span>
+                <span class="descriptions mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</span><br>
+                <span class="descriptions mb-0"> Grupo - {{ curso.grupo }}</span><br>
               </div>
             </div>
             <div class="progress-icon">
@@ -186,9 +187,10 @@
           <div style="position: absolute; right: 0px; top: 10px;"><span class="badge bg-warning" style="text-transform: uppercase;">{{curso?.course_type}}</span></div>
         </div>
         <div class="card-body">
-          <h6 class="names mb-0">{{ curso.nombre }}</h6>
+          <h6 class="names mb-0">{{ curso.nombre }} - {{curso.type_teachers_code}}</h6>
           <p class="teachers mb-0">{{ curso.persons_teacher_nombre }}</p>
           <p class="descriptions mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</p>
+          <p class="descriptions mb-0">Grupo - {{ curso.grupo }}</p>
         </div>
         <nb-card-footer class="p-0" style="margin-top: 0px;">
           <div>

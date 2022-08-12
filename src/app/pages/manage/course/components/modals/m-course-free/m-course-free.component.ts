@@ -19,6 +19,7 @@ export class MCourseFreeComponent implements OnInit {
   formHeaderOne: any = FormGroup;
   formHeaderTo: any = FormGroup;
   formHeaderThree: any = FormGroup;
+  facultades:any = [];
   @Input() userInfo:any;
   @Input() semestre:any;
   @Input() rolSemestre:any;
@@ -77,9 +78,9 @@ export class MCourseFreeComponent implements OnInit {
   ngOnInit(): void {
     this.fieldReactiveOne();
     this.gettypeCourse();
-    this.getProgramStudy();
     this.fieldReactiveTo();
     this.fieldReactiveThree();
+    this.getFacultadesUnidades();
     if (this.code === 'UPDATE') {
       this.setUpdate();
     }
@@ -100,6 +101,7 @@ export class MCourseFreeComponent implements OnInit {
       aula: ['', [Validators.required]],
       grupo: ['unico', [Validators.required]],
       fecha_inicio: ['', [Validators.required]],
+      facultades_unidades: ['', [Validators.required]],
       fecha_fin: ['', [Validators.required]],
       tipo_nota: ['CUANTITATIVA', [Validators.required]],
       nota_min: [''],
@@ -109,6 +111,7 @@ export class MCourseFreeComponent implements OnInit {
     };
     this.formHeaderOne = this.formBuilder.group(controls);
     this.changeTipoNota(this.formHeaderOne.value.tipo_nota);
+
   }
   private fieldReactiveTo() {
     const controls = {
@@ -181,6 +184,50 @@ export class MCourseFreeComponent implements OnInit {
           // this.getZoom();
         }
       });
+    }
+  }
+  getFacultadesUnidades(){
+    const serviceName = END_POINTS.base_back.sede_areas;
+    this.service.nameIdAndId$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id).subscribe(
+      (res: any) => {
+        this.facultades = res.data || [];
+        this.getProgramStudy()
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  selecFacultades(item: any){
+    this.formHeaderOne.controls['facultades_unidades'].setValue(item);
+    this.litProgramStudy = [];
+    this.formHeaderOne.controls['id_programa_estudio'].setValue('');
+    this.listProgramEstudy(this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
+  }
+  listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
+    this.loading = true
+    const serviceName = 'list-programa-estudios';
+    const params = {
+      programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
+    }
+    if (id_sede && id_nive_enseanza) {
+      this.service.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
+        this.litProgramStudy = res.data || [];
+        console.log(this.litProgramStudy)
+        if (this.litProgramStudy.length>0) {
+          this.litProgramStudy.map((r:any) => {
+            r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');
+            if (r.semiprecencial_nombre) {
+              r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+            }
+          })
+          // this.getZoom();
+        }
+      }, () => {this.loading = false}, () => {this.loading = false});
+
     }
   }
   inputKeyAutocomplete($event:any) {
@@ -501,6 +548,7 @@ export class MCourseFreeComponent implements OnInit {
       id_carga_curso_docente: this.items.id_carga_curso_docente,
       id_tipo_curso: this.items.courses_type_id,
       id_programa_estudio: this.items.programa_estudio_id,
+      facultades_unidades: this.items.area_id,
       nombre: this.items.nombre,
       id_docente: this.items.persons_teacher_id,
       nombre_docente: this.items.persons_teacher_nombre,

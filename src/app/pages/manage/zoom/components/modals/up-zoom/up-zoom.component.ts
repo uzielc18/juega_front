@@ -42,7 +42,7 @@ export class UpZoomComponent implements OnInit {
   getProgramStudy() {
     const serviceName = 'mis-programas';
     const ids = {
-      person_id: this.datosMe.user.id || '',
+      person_id: this.datosMe.user.person.id || '',
     };
     if (ids && ids.person_id) {
       this.generalServi.nameId$(serviceName, ids.person_id).subscribe((res:any) => {

@@ -15,12 +15,28 @@
             <nb-step label="Datos del curso" [stepControl]="formHeaderOne" #one>
                 <form [formGroup]="formHeaderOne">
                     <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                      <div class="col-md-12">
+                        <div class="row">
+                          <label class="col-md-2 label">Tipo de curso:</label>
+                          <div class="col-md-10">
+                            <nb-select fullWidth placeholder="Seleccione tipo" size="small" formControlName="id_tipo_curso">
+                              <nb-option *ngFor="let item of typeCourse" [value]="item.id">{{item.nombre}}</nb-option>
+                            </nb-select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                  <div class="row" style="padding-left: 0px; padding-right: 0px;">
                         <div class="col-md-6">
                             <div class="row">
-                                <label class="col-md-4 label">Tipo de curso:</label>
+                                <label class="col-md-4 label">Facultad unidad:</label>
                                 <div class="col-md-8">
-                                    <nb-select fullWidth placeholder="Seleccione tipo" size="small" formControlName="id_tipo_curso">
-                                        <nb-option *ngFor="let item of typeCourse" [value]="item.id">{{item.nombre}}</nb-option>
+                                    <nb-select fullWidth placeholder="Seleccione tipo" size="small" formControlName="facultades_unidades">
+                                      <nb-option *ngFor="let item of facultades" [value]="item.id" (click)="selecFacultades(item)">{{item.nombre}}
+
+                                      </nb-option>
+
                                     </nb-select>
                                 </div>
                             </div>

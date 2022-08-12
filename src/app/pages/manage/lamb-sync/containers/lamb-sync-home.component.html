@@ -98,11 +98,11 @@
                 </li>
               </ul>
               <!-- <div *ngIf="listEstudiantes.length === 0" class="alert alert-danger py-2">No se encontró nada con el término</div> -->
-              <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="matriculaByStudent()">
+              <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="matriculaByStudent()" [disabled]="formHeader.get('termino').invalid">
                 Matriculas
               </button>
-              <button class="mt-2" nbButton status="primary" size="small" fullWidth>Datos</button>
-              <button class="mt-2" nbButton status="primary" size="small" fullWidth>Cursos</button>
+              <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="syncDatos()" [disabled]="formHeader.get('termino').invalid">Datos</button>
+              <button class="mt-2" nbButton status="primary" size="small" fullWidth (click)="syncCourse()" [disabled]="formHeader.get('termino').invalid">Cursos</button>
             </div>
           </nb-card-body>
         </nb-card>
