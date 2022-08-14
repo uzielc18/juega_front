@@ -10,6 +10,8 @@ import { MMatricularComponent } from '../components/modals/m-matricular/m-matric
 import {MUnitSessionComponent} from "../../../../shared/components/unit-session/modal/m-unit-session.component";
 import {END_POINTS} from "../../../../providers/utils";
 import {Router} from "@angular/router";
+import {MTutoresComponent} from "../components/modals/m-tutores/m-tutores.component";
+import {MHomeTutoresComponent} from "../components/modals/m-tutores/m-home-tutores/m-home-tutores.component";
 
 @Component({
   selector: 'app-course-home',
@@ -61,6 +63,7 @@ export class CourseHomeComponent implements OnInit {
     }
   }
   getSemester() {
+    this.loading = true
     const serviceName = 'semesters';
       this.generalServi.nameAll$(serviceName).subscribe((res:any) => {
         this.semestrers = res.data || [];
@@ -71,16 +74,11 @@ export class CourseHomeComponent implements OnInit {
       });
   }
   getFacultadesUnidades(){
+    this.loading = true
     const serviceName = END_POINTS.base_back.sede_areas;
     this.generalServi.nameIdAndId$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
-      },
-      () => {
-        this.loading = false;
-      },
-      () => {
-        this.loading = false;
       }
     );
   }
@@ -141,6 +139,7 @@ export class CourseHomeComponent implements OnInit {
     }
   }
   refresh() {
+    this.loading = true;
     this.pagination.page = 1;
     this.getCourseZoom();
   }
@@ -171,7 +170,6 @@ export class CourseHomeComponent implements OnInit {
       page: this.pagination.page,
       paginate: 'S',
     }
-      this.loading = true;
       this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
         this.listCourseZoom = res.data || [];
         this.pagination.sizeListData = res.meta && res.meta.total || 0;
@@ -181,7 +179,7 @@ export class CourseHomeComponent implements OnInit {
         } else {
           this.pagination.isDisabledPage = false;
         }
-      }, () => {this.loading = false}, () => {this.loading = false});
+      },() => {this.loading = false}, () =>  {this.loading = false});
   }
   openConfig(items:any) {
     this.dialogService.open(ConfigZoomComponent, {
@@ -252,7 +250,7 @@ export class CourseHomeComponent implements OnInit {
             if (res.success) {
               this.getCourseZoom();
             }
-           });
+           }, () => {this.loading = false}, () => {this.loading = false});
           }
         });
   }
@@ -273,5 +271,20 @@ export class CourseHomeComponent implements OnInit {
   }
   newWindows(){
     this.router.navigate(['/pages/manage/course/new'])
+  }
+  openTutores(item: any){
+    this.dialogService.open(MHomeTutoresComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        userInfo: this.appUserInfo.user,
+        items: item
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.getCourseZoom();
+      }
+    });
   }
 }

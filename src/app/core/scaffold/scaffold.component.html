@@ -80,7 +80,7 @@
         <nb-action *ngIf="rolSemestre?.rol?.name !== 'Estudiante'">
           <button nbButton ghost nbTooltip="Crear elementos" nbTooltipStatus="primary" nbTooltipPlacement="left" status="primary" size="medium" (click)="newElements()"><nb-icon icon="plus-outline"></nb-icon></button>
         </nb-action>
-        <nb-action class="p-0">
+        <nb-action class="p-0 d-none d-sm-flex">
           <!--  -->
           <form [formGroup]="formHeader">
             <button
@@ -143,7 +143,7 @@
             </ng-template>
           </form>
         </nb-action>
-        <nb-action class="p-1">
+        <nb-action class="p-1 d-none d-sm-flex">
           <div>
             <div class="d-flex align-items-center">
               <button nbButton
@@ -156,7 +156,7 @@
                 <nb-icon icon="bell-outline"></nb-icon>
               </button>
               <div class="notifications" *ngIf="notificationCount > 0">
-                <small style="color: #FFFFFF; font-size: 11px">{{notificationCount}}</small>
+                <small style="color: #FFFFFF; font-size: 12px">{{notificationCount >= 99? '99+': notificationCount}}</small>
               </div>
             </div>
             <ng-template #notificationsRef style="width: 60%">
@@ -164,8 +164,8 @@
             </ng-template>
           </div>
         </nb-action>
-        <!--<nb-action class="d-none d-md-flex">
-          <form [formGroup]="formHeader">
+       <!-- <nb-action class="d-none d-md-flex">
+          <form [formGroup]="formHeader" >
             <div [nbPopover]="templat" nbPopoverPlacement="bottom" style="cursor: pointer">
               <img [src]="logoLangs" height="20px" alt="" />
             </div>
@@ -205,6 +205,7 @@
           ></nb-user>
         </nb-action>
       </nb-actions>
+      <!-- --------------------buscador-------------------- -->
       <div *ngIf="statusSearch" class="div-Class-open me-2" #searhEvent2>
         <input
                class="input2"
@@ -251,6 +252,115 @@
           </ul>
         </div>
       </div>
+      <!-- -------------------- termina buscador-------------------- -->
+
+      <!-- --------------------------boton flotante------------------ -->
+      <div class="container-movile d-block d-sm-none">
+        <input type="checkbox" id="btn-mas">
+        <div class="btn-mas">
+          <label for="btn-mas"><nb-icon class="icon-mas2" icon="more-vertical-outline"></nb-icon></label>
+        </div>
+        <div class="icon-conteiner">
+          <div class="iconCC" [nbPopover]="templat" nbPopoverPlacement="left" style="cursor: pointer">
+            <form [formGroup]="formHeader" >
+              <img [src]="logoLangs" height="20px" alt="" />
+              <ng-template #templat>
+                <nb-card style="padding-bottom: 0px">
+                  <nb-card-header style="padding-top: 8px; padding-bottom: 8px"> Cambiar idioma </nb-card-header>
+                  <nb-card-body style="padding-top: 3px; padding-bottom: 0px">
+                    <div>
+                      <label class="label">Lenguaje</label><br />
+                      <nb-radio-group formControlName="lenguaje" (ngModelChange)="changesLangs()">
+                        <nb-radio *ngFor="let item of listLanguages" [value]="item.code"
+                        >&nbsp;&nbsp;&nbsp;&nbsp;<img [src]="item?.img" height="20px" alt="" />&nbsp;&nbsp;{{
+                          item?.name
+                          }}</nb-radio
+                        >
+                      </nb-radio-group>
+                    </div>
+                  </nb-card-body>
+                  <br>
+                  <div class="text-center">
+                    <button nbButton outline size="tiny" hero status="primary">
+                      Guardar
+                    </button>
+                  </div>
+                </nb-card>
+              </ng-template>
+            </form>
+          </div>
+          <!-- notificaciones -->
+          <div class="iconCC " nbPopoverPlacement="left" [nbPopover]="notificationsRef">
+            <div class="d-flex align-items-center">
+              <nb-icon class="icon-administrar" icon="bell-outline" style="margin-left: 4px"></nb-icon>
+              <div *ngIf="notificationCount > 0">
+                <small style="color: #FFFFFF; font-size: 12px; padding: 1px; border-radius: 20px; background-color: red; position: absolute; margin-top: -17px">
+                  {{notificationCount >= 99? '99+': notificationCount}}</small>
+              </div>
+
+            </div>
+            <ng-template #notificationsRef style="width: 20%">
+              <app-m-notifications></app-m-notifications>
+            </ng-template>
+          </div>
+          <!-- termina notificaciones -->
+          <div class="iconCC"
+               [nbPopover]="templateRef2"
+               nbPopoverPlacement="left"
+               nbPopoverTrigger="noop"
+               (click)="open()">
+            <nb-icon class="notiF" icon="person-outline"></nb-icon>
+            <ng-template #templateRef2>
+              <nb-card style="padding-bottom: 0px">
+                <nb-card-header style="padding-top: 8px; padding-bottom: 8px"> Cambiar datos </nb-card-header>
+                <nb-card-body style="padding-top: 3px; padding-bottom: 0px">
+                  <div>
+                    <label class="label">Rol</label><br />
+                    <nb-select
+                      placeholder="Rol"
+                      size="small"
+                      formControlName="id_rol"
+                      (selectedChange)="changeRol($event)"
+                    >
+                      <nb-option *ngFor="let rol of roles; let i = index" [value]="rol.id">{{ rol.name }}</nb-option>
+                    </nb-select>
+                  </div>
+                  <div>
+                    <label class="label">Semestre</label><br />
+                    <nb-select
+                      placeholder="Semestre"
+                      size="small"
+                      formControlName="id_semestre"
+                      (selectedChange)="changeSemestre()"
+                    >
+                      <nb-option *ngFor="let semestre of semestres; let i = index" [value]="semestre.id"
+                      >Semestre - {{ semestre.nombre }}</nb-option
+                      >
+                    </nb-select>
+                  </div>
+                </nb-card-body>
+                <br />
+                <div class="text-center">
+                  <button nbButton outline size="tiny" ghost (click)="close()">Cerrar</button>&nbsp;
+                  <button
+                    nbButton
+                    outline
+                    size="tiny"
+                    hero
+                    status="primary"
+                    (click)="saveChanges()"
+                    [disabled]="formHeader.invalid"
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </nb-card>
+            </ng-template>
+            </div>
+        </div>
+
+      </div>
+      <!-- -------------------------- termina boton flotante------------------ -->
     </nb-layout-header>
 
     <nb-sidebar responsive tag="core-sidebar">

@@ -268,12 +268,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.subcript.unsubscribe();
     this.subcrActuMenu.unsubscribe();
   }
-  openNoti(){
-    this.popover.show();
-  }
-
   open() {
-    console.log('open')
     this.popover.show();
   }
 

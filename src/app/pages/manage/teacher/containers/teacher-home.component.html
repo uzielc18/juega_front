@@ -82,12 +82,12 @@
     </div>
   </nb-card-body>
   <nb-card-footer>
-    <div class="d-flex justify-content-between align-items-center p-2 flex-wrap">
-      <div style="color: brown; font-weight: bold">Total: {{ pagination.sizeListData }}</div>
+    <div class="d-flex justify-content-lg-between justify-content-center align-items-center p-2 flex-wrap">
+      <div style="color: brown; font-weight: bold; margin-right: 10px">Total: {{ pagination.sizeListData }}</div>
       <ngb-pagination
         [collectionSize]="pagination?.sizeListData"
         [(page)]="pagination.page"
-        [maxSize]="20"
+        [maxSize]="10"
         [disabled]="pagination?.isDisabledPage"
         [pageSize]="pagination?.sizePage"
         class="d-flex justify-content-center overflow-auto"

@@ -17,6 +17,10 @@ import { UnitsSessionsModule } from 'src/app/shared/components/units-sessions/un
 import { MViewFilesModule } from 'src/app/shared/components/view-files/m-view-files/m-view-files.module';
 import {MUnitSessionModule} from "../../../shared/components/unit-session/modal/m-unit-session.module";
 import { VNewWindowComponent } from './components/view/v-new-window/v-new-window.component';
+import { MTutoresComponent } from './components/modals/m-tutores/m-tutores.component';
+import {FilterModule} from "../../../shared/pipes/filter/filter.module";
+import {DirectiveModule} from "../../../shared/directives/highlight.module";
+import { MHomeTutoresComponent } from './components/modals/m-tutores/m-home-tutores/m-home-tutores.component';
 
 const COMPONENTS: any[] = [
   CourseComponent,
@@ -65,8 +69,10 @@ const MODULES: any = [
     ...CONTROL_MESSAGGE,
     ...NGX_MODULES,
     ...MODULES,
+    FilterModule,
+    DirectiveModule,
   ],
-  declarations: [...COMPONENTS, VNewWindowComponent],
+  declarations: [...COMPONENTS, VNewWindowComponent, MTutoresComponent, MHomeTutoresComponent],
   entryComponents: [...MODALS],
 })
 
