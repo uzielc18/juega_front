@@ -164,7 +164,10 @@
                 (click)="deleteElements(el)"
               >
                 <nb-icon icon="trash-2-outline"></nb-icon>
-              </button>&nbsp;
+              </button>
+            <nb-icon icon="checkmark-outline" *ngIf="el?.pendings?.fecha_visto===null && el?.pendings?.fecha_entrega===null "></nb-icon>
+            <nb-icon icon="done-all-outline" *ngIf="el?.pendings?.fecha_visto!==null && el?.pendings?.fecha_entrega===null "></nb-icon>
+            <nb-icon icon="done-all-outline" [style]="'color:green;'" *ngIf="el?.pendings?.fecha_visto && el?.pendings?.fecha_entrega"></nb-icon>
               <button
                 nbButton
                 status="success"
