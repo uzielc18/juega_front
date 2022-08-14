@@ -83,6 +83,7 @@ export class MCourseFreeComponent implements OnInit {
     this.getFacultadesUnidades();
     if (this.code === 'UPDATE') {
       this.setUpdate();
+      this.getProgramStudy()
     }
   }
   private fieldReactiveOne() {
@@ -191,7 +192,7 @@ export class MCourseFreeComponent implements OnInit {
     this.service.nameIdAndId$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
-        this.getProgramStudy()
+
       },
       () => {
         this.loading = false;
@@ -202,7 +203,7 @@ export class MCourseFreeComponent implements OnInit {
     );
   }
   selecFacultades(item: any){
-    this.formHeaderOne.controls['facultades_unidades'].setValue(item);
+    this.formHeaderOne.controls['facultades_unidades'].setValue(item.id);
     this.litProgramStudy = [];
     this.formHeaderOne.controls['id_programa_estudio'].setValue('');
     this.listProgramEstudy(this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)

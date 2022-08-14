@@ -1,0 +1,80 @@
+<nb-card class="border-0 pb-0 scrollModal"
+         style="border-radius: 15px"
+         id="print-note"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="small">
+  <nb-card-header>
+    <form [formGroup]="formHeader">
+      <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex flex-column">
+              <label class="label">Seleccione un(a) Docente:</label>
+              <nb-form-field>
+                <nb-icon nbPrefix icon="search" pack="eva"></nb-icon>
+                <input
+                  type="text"
+                  status="primary"
+                  fieldSize="small"
+                  placeholder="Buscar Docente"
+                  formControlName="teacherToImportName"
+                  (keypress)="searchTeachersToImport()"
+                  nbInput
+                  fullWidth
+                />
+                <button nbSuffix nbButton ghost status="danger">
+                  <nb-icon icon="close-square-outline" pack="eva"> </nb-icon>
+                </button>
+              </nb-form-field>
+              <div *ngIf="showTeachersToImport" class="position-relative" style="height: 0px">
+                <ul
+                  class="list-group position-absolute top-0 start-0 w-100"
+                  style="z-index: 9999; max-height: 500px; height: 50vh; overflow-y: auto"
+                >
+                  <li
+                    *ngFor="let item of listOfTeachers | appFilter: formHeader.value.teacherToImportName:'nombres_completos'"
+                    appHighlight
+                    [searchedWord]="formHeader.value.teacherToImportName"
+                    [content]="item.nombres_completos | titlecase"
+                    [classToApply]="'fw-bold'"
+                    [setTitle]="true"
+                    class="list-group-item list-group-item-action py-1"
+                    style="cursor: pointer"
+                    (click)="setTeacherToImport(item)"
+                  >
+                    {{ item.nombres_completos | titlecase }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="d-flex flex-column">
+                  <label class="label">Visible</label>
+                  <nb-toggle formControlName="checkbox"></nb-toggle>
+            </div>
+            <div class="d-flex flex-column">
+              <button nbButton status="primary" size="small" (click)="newTutores()">Agregar</button>
+            </div>
+      </div>
+    </form>
+  </nb-card-header>
+  <nb-card-body class="pb-0 d-flex flex-column">
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px;">
+          <th>Código</th>
+          <th>Nombres</th>
+          <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let item of data">
+          <td>{{item.codigo}}</td>
+          <td>{{item.persons_teacher_nombre}}</td>
+          <td><nb-icon icon="trash" (click)="deleteTutor(item)" status="danger"></nb-icon></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>

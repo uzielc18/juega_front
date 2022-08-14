@@ -8,14 +8,14 @@
     <form [formGroup]="formHeader">
       <div class="row">
         <!-- <div class="col-md-6"></div> -->
-        <div class="col-md-3" *ngIf="rolSemestre.area.area_id === 0">
+        <div class="col-lg-3" *ngIf="rolSemestre.area.area_id === 0">
           <label class="label">Facultades/Unidades</label>
           <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="facultades_unidades">
             <nb-option value="" disabled>Selecciona</nb-option>
             <nb-option *ngFor="let item of facultades" [value]="item" (click)="selecFacultades(item)">{{item.nombre}}</nb-option>
           </nb-select>
         </div>
-        <div class="col-md-3">
+        <div class="col-lg-3">
           <label class="label">Programa estudio</label>
           <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
             <nb-option value="">Todos</nb-option>
@@ -24,14 +24,14 @@
             }}</nb-option>
           </nb-select>
         </div>
-        <div class="col-md-2">
+        <div class="col-lg-3">
           <label class="label">Ciclo</label>
           <nb-select fullWidth size="small" formControlName="ciclo">
             <nb-option value="">Todos</nb-option>
             <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{ item.ciclo }}</nb-option>
           </nb-select>
         </div>
-        <div class="col-md-2">
+        <div class="col-lg-3">
           <label class="label">Buscar</label>
           <input nbInput type="text" fieldSize="small" fullWidth formControlName="buscar">
         </div>
@@ -82,21 +82,21 @@
     </div>
   </nb-card-body>
   <nb-card-footer>
-    <div class="d-flex justify-content-between align-items-center p-2">
+    <div class="d-flex justify-content-md-between justify-content-center align-items-center flex-wrap p-2">
       <div style="color: brown; font-weight: bold">Total: {{ pagination.sizeListData }}</div>
       <ngb-pagination
         [collectionSize]="pagination?.sizeListData"
         [(page)]="pagination.page"
-        [maxSize]="20"
+        [maxSize]="10"
         [disabled]="pagination?.isDisabledPage"
         [pageSize]="pagination?.sizePage"
-        class="d-flex justify-content-center"
+        class="d-flex justify-content-center flex-wrap"
         size="sm"
         [boundaryLinks]="true"
         (pageChange)="loadPage($event)"
       >
       </ngb-pagination>
-      <div>
+      <div class="d-flex justify-content-center">
         <nb-form-field>
           <nb-icon nbPrefix icon="list-outline"></nb-icon>
           <nb-select
