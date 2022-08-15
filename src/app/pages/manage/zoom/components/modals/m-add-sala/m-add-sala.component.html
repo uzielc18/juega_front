@@ -1,0 +1,62 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        Crear salas de zoom
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <br>
+      <div class="d-flex justify-content-between align-items-start">
+        <small style="font-weight: bold">Id carga curso docente</small>
+        <div class="flex-grow-1" style="margin: -21px 5px 0 8px">
+          <div style="margin-bottom: 6px">
+            <label style="color: #df8005" class="description">Ingrese los códigos y presionar enter.</label>
+            <nb-tag-list (tagRemove)="onTagRemove($event)">
+              <nb-tag *ngFor="let tree of trees" [text]="tree" removable status="info" appearance="outline" text="info"></nb-tag>
+              <input type="text" nbTagInput (tagAdd)="onTagAdd($event)" fullWidth size="small">
+            </nb-tag-list>
+          </div>
+          <div class="conteiner-state" *ngIf="data.length !== 0">
+            <div class="contenedor d-flex justify-content-between align-items-center" *ngFor="let item of data">
+              <div class="flex-grow-1 conteiner-div" style=" border: 1px solid #9EADBA; background-color: #DFE6ED"
+              [ngStyle]="{'border': item.estado === 0? '1px solid #FF3D71': item.estado === 1? '1px solid #2FC974': '1px solid #9EADBA',
+                          'background-color': item.estado === 0? '#FFF0F4': item.estado=== 1 ? '#EBFCF6': '#DFE6ED',
+                           'color': item.estado === 0? '#FF3D71': item.estado === 1 ? '#2FC974': ''}
+                          ">
+                <small class="description ">{{item.id_carga_curso_docente}} {{item.nombre}}</small>
+              </div>
+              <small style="margin-left:10px; color: #9EADBA" [ngStyle]="{'color': item.estado === 0? '#FF3D71': item.estado === 1 ? '#2FC974': ''}">2</small>
+            </div>
+            <!--<div class="contenedor d-flex justify-content-between align-items-center">
+              <div class="flex-grow-1 conteiner-div" style=" border: 1px solid #2FC974; background-color: #EBFCF6; color: #2FC974">
+                <small class="description ">id_carga_curso docente Nombre del curso</small>
+              </div>
+              <small style="margin-left:10px; color:#2FC974 ">2</small>
+            </div>
+            <div class=" d-flex justify-content-between align-items-center">
+              <div class="flex-grow-1 conteiner-div" style=" border: 1px solid #FF3D71; background-color: #FFF0F4; color: #FF3D71">
+                <small class="description ">id_carga_curso docente Nombre del curso</small>
+              </div>
+              <small style="margin-left:10px; color: #FF3D71">2</small>
+            </div>-->
+          </div>
+          <br>
+          <div>
+            <small style="color: #D3455B">Los códigos en rojo están equivocados!</small><br>
+            <small style="color: #9EADBA">El curso ya tiene sala</small><br>
+            <small style="color: #1AAE9F">Cursos listos para crear salas</small>
+          </div>
+        </div>
+        <button nbButton outline  status="success" size="small" (click)="procesar()" [disabled]="trees.size<=0">Procesar</button>
+      </div>
+    <div class="ms-auto d-flex justify-content-between">
+      <div></div>
+      <button nbButton status="primary" size="small" (click)="addSalas()">Crear salas</button>
+    </div>
+  </nb-card-body>
+</nb-card>

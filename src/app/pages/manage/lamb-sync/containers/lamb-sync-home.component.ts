@@ -258,7 +258,7 @@ export class LambSyncHomeComponent implements OnInit {
   }
 
   showSilabusUnidades() {
-    const serviceName = END_POINTS.base_back.config + '/silabus-unidades';
+    const serviceName = END_POINTS.base_back.config + '/silabu-unidades';
     this.loading = true;
     if (this.formHeader.get('programa_estudio').value) {
       this.generalService
@@ -298,7 +298,7 @@ export class LambSyncHomeComponent implements OnInit {
     }
   }
   showSilabusTopics(){
-    const serviceName = END_POINTS.base_back.config + '/silabus-topics';
+    const serviceName = END_POINTS.base_back.config + '/silabu-topics';
     this.loading = true;
     if (this.formHeader.get('programa_estudio').value) {
       this.generalService

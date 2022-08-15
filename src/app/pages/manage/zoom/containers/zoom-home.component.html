@@ -53,7 +53,7 @@
                         <th style="width: 100px;" class="text-center">N° salas</th>
                         <th style="width: 300px;">Salas en línea</th>
                         <!-- <th style="width: 1px;">Estado</th> -->
-                        <th colspan="3" class="text-center" style="width: 10px;">Opciones</th>
+                        <th colspan="4" class="text-center" style="width: 10px;">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -113,6 +113,10 @@
                                 <nb-icon icon="refresh-outline" status="success" style="cursor: pointer; font-size: 25px;" (click)="actualizar(item)"></nb-icon> <br>
                                 Actualizar
                             </span>
+                        </td>
+                        <td class="text-center" style="width: 70px;">
+                          <nb-icon icon="plus-circle-outline" status="primary" style="cursor: pointer; font-size: 25px;" (click)="openAddNew(item)"></nb-icon> <br>
+                            Crear sala
                         </td>
                     </tr>
                 </tbody>
