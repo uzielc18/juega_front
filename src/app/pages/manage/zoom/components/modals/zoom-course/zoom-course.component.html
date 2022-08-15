@@ -47,7 +47,7 @@
                         <th>Cod. anfitrión</th>
                         <th>Zoom</th>
                         <th style="width: 1px;"><nb-icon icon="people" style="font-size: 20px;"></nb-icon></th>
-                        <th class="text-center" style="width: 1px;">Zoom</th>
+                        <th class="text-center" style="width: 1px;" colspan="4">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,11 +56,17 @@
                         <td>{{item.nombre}}</td>
                         <td>{{item.persons_teacher_nombre}} - {{item.type_teachers_code}}</td>
                         <td>{{item.host_key}}</td>
-                        <td style="color: brown;">{{item.join_url}}</td>
+                        <td  style="color: brown;">
+                          {{item.join_url}}
+                        </td>
                         <td>{{item?.matriculados}}</td>
                         <td class="text-center">
-                            <nb-icon icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon> <br>
+                          <nb-icon icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon>
+                          <nb-icon nbTooltip="Unirte" nbTooltipPlacement="top" nbTooltipStatus="success" icon="phone-call-outline" status="success" style="font-size: 25px; cursor: pointer;" (click)="joins(item)"></nb-icon>
+                          <nb-icon nbTooltip="Actualizar" nbTooltipPlacement="top" nbTooltipStatus="info" icon="refresh-outline" status="info" style="font-size: 25px; cursor: pointer;" (click)="zoomOperator(99, item)"></nb-icon>
+                          <nb-icon nbTooltip="Forzar descarga" nbTooltipPlacement="top" nbTooltipStatus="basic" icon="cloud-download-outline" status="basic" style="font-size: 25px; cursor: pointer;" (click)="zoomOperator(61, item)"></nb-icon>
                         </td>
+
                         <!-- <td class="text-center">
                             <nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
                             Unidades

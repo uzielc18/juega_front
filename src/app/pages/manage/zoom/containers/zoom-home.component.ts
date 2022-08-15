@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 import { Subscription } from 'rxjs';
 import {END_POINTS} from "../../../../providers/utils";
+import {MAddSalaComponent} from "../components/modals/m-add-sala/m-add-sala.component";
 @Component({
   selector: 'app-zoom-home',
   templateUrl: './zoom-home.component.html',
@@ -263,6 +264,21 @@ export class ZoomHomeComponent implements OnInit {
         }
       });
     }
+  }
+  openAddNew(items: any){
+    this.dialogService.open(MAddSalaComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        item: items,
+
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        // this.filtrar();
+      }
+    });
   }
 
 }

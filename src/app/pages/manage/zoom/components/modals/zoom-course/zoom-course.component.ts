@@ -14,6 +14,7 @@ export class ZoomCourseComponent implements OnInit {
   @Input() item:any;
   formHeader: any = FormGroup;
   listCourseZoom:any = [];
+  zoomMeets:any;
   // listProgramStudy:any = [];
   // ciclos = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
   constructor(public activeModal: NbDialogRef<ZoomCourseComponent>, private generalServi: GeneralService, private formBuilder: FormBuilder,
@@ -102,6 +103,26 @@ export class ZoomCourseComponent implements OnInit {
         this.getCourseZoom();
       }
     }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  joins(item: any){
+    const serviceName = 'zoomMeetings';
+    this.loading = true;
+    this.generalServi.nameId$(serviceName, item.id_zoom_meetings).subscribe((res:any) => {
+      this.zoomMeets = res.data || '';
+      if(res.success){
+        window.open(this.zoomMeets.join_url, '_blank');
+      }
+    }, () => {this.loading = false}, () => {this.loading = false});
+  }
+  zoomOperator(option: any, item: any){
+    const serviceName = 'zoom-operador';
+    const ids = item;
+    this.loading = true;
+    this.generalServi.nameIdAndId$(serviceName, ids.id, option).subscribe((res:any) => {
+      // this.listCourseZoom = res.data || [];
+      // console.log(res);
+
+    }, () => {this.loading = false}, () => {this.loading = false});
   }
 
 }

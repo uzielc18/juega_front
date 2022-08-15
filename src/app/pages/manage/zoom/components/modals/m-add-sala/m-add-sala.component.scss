@@ -1,0 +1,24 @@
+.scrollModal {
+  max-width: 95vw;
+  max-height: 95vh;
+  width: 700px;
+}
+.description{
+  font-size: 12px;
+}
+.conteiner-state{
+  border: 1px solid #C3CFD9;
+  border-radius: 4px;
+  padding:  10px;
+
+  .conteiner-div{
+    padding: 2px;
+    margin-right: 3px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .contenedor{
+    margin: 10px 0;
+  }
+}
