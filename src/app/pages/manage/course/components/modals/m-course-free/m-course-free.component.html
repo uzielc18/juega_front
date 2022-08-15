@@ -20,7 +20,7 @@
                           <label class="col-md-2 label">Tipo de curso:</label>
                           <div class="col-md-10">
                             <nb-select fullWidth placeholder="Seleccione tipo" size="small" formControlName="id_tipo_curso">
-                              <nb-option *ngFor="let item of typeCourse" [value]="item">
+                              <nb-option *ngFor="let item of typeCourse" [value]="item.id">
                                 {{item.nombre}}</nb-option>
                             </nb-select>
                           </div>

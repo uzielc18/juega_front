@@ -21,7 +21,7 @@ export class ZoomCourseComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log(this.item.programa_estudio_id);
-    
+
     this.fieldReactive();
   }
   private fieldReactive() {
@@ -93,6 +93,15 @@ export class ZoomCourseComponent implements OnInit {
         this.listCourseZoom = res.data || [];
       }, () => {this.loading = false}, () => {this.loading = false});
     }
+  }
+  actualizarCursosZoom(){
+    const serviceName = 'actualizar-cursos';
+    this.loading = true;
+    this.generalServi.nameId$(serviceName, this.item.id).subscribe(res => {
+      if(res.success){
+        this.getCourseZoom();
+      }
+    }, () => {this.loading = false}, () => {this.loading = false})
   }
 
 }
