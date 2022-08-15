@@ -21,8 +21,8 @@
                   nbInput
                   fullWidth
                 />
-                <button nbSuffix nbButton ghost status="danger">
-                  <nb-icon icon="close-square-outline" pack="eva"> </nb-icon>
+                <button *ngIf="resetTeacherImportButton" nbSuffix nbButton ghost status="danger" (click)="resetTeachersToImport()">
+                  <nb-icon icon="close-square-outline" pack="eva" > </nb-icon>
                 </button>
               </nb-form-field>
               <div *ngIf="showTeachersToImport" class="position-relative" style="height: 0px">

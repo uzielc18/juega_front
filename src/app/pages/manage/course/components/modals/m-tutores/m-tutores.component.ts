@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 })
 export class MTutoresComponent implements OnInit {
   showTeachersToImport: boolean = false;
+  resetTeacherImportButton: boolean = false;
   loading: boolean = false;
   data: any = [];
   listOfTeachers: any = [];
@@ -50,13 +51,18 @@ export class MTutoresComponent implements OnInit {
   // to import teachers
   searchTeachersToImport() {
     this.showTeachersToImport = true;
+    this.resetTeacherImportButton = true;
   }
   setTeacherToImport(teacher: any) {
     this.showTeachersToImport = false;
     this.formHeader.controls['teacherToImportName'].setValue(teacher.nombres_completos);
     this.formHeader.controls['idteacherToImportName'].setValue(teacher.id)
   }
+  resetTeachersToImport(){
+      this.resetTeacherImportButton = false;
+      this.showTeachersToImport = false;
 
+  }
 
   getData(){
     const serviceName = 'tutors';
