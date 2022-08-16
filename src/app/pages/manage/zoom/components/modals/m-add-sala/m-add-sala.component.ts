@@ -12,6 +12,9 @@ export class MAddSalaComponent implements OnInit {
 
   data: any = [];
   loading: boolean = false;
+  countCodigoEquivocados: any;
+  countCodigoCrear: any;
+  countCodigoSala: any;
   @Input() item: any;
   trees: Set<any> = new Set([]);
   constructor(public activeModal: NbDialogRef<MAddSalaComponent>,
@@ -46,6 +49,15 @@ export class MAddSalaComponent implements OnInit {
     }
     this.generalService.nameParams$(serviceName, params).subscribe(res => {
         this.data = res.data;
+        this.countCodigoEquivocados = this.data.filter((f: any) => {
+           return f.estado === 0;
+        })
+        this.countCodigoCrear = this.data.filter((f: any) => {
+          return f.estado === 1;
+        })
+        this.countCodigoSala = this.data.filter((f: any) => {
+          return f.estado === 2;
+        })
     }, () => {this.loading = false}, () => {this.loading = false})
   }
 
