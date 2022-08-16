@@ -177,11 +177,25 @@ export class VCourseComponent implements OnInit, OnDestroy {
         // timer: 2000,
       }).then((result:any) => {
         if (result.isConfirmed) {
+          this.loading = true;
           this.generalService.nameIdAndIdAndId$(serviceName, params.semestre, params.idCargCurDoc, params.id_1).subscribe((res:any) => {
-            if (res.success) {
+            if(res.data.length === 0 ){
+              Swal.fire({
+                title: 'ERROR',
+                text: 'Usted no tiene sílabo configurado en lamb académico ',
+                backdrop: true,
+                icon: 'error',
+                // animation: true,
+                showCloseButton: true,
+                showConfirmButton: true,
+                confirmButtonColor: '#00244E',
+                confirmButtonText: 'Ok',
+              })
+            }else if(res.data.length !== 0 && res.success){
               this.getUnidades();
+
             }
-          });
+          }, () => {this.loading = false}, () => {this.loading = false});
         }
       });
     }
