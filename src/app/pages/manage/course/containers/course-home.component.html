@@ -87,19 +87,19 @@
                             <nb-icon *ngIf="item?.id_zoom_meetings" icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon>
                         </td>
                         <td class="text-center" style="width: 1px;">
-                            <button nbButton size="tiny" status="basic" (click)="openMatricula(item)">Matricular</button>
+                            <button nbButton size="tiny" status="basic" (click)="openMatricula(item)" nbTooltip="Matricular por códigos" nbTooltipStatus="basic"><nb-icon icon="person-add-outline"></nb-icon></button>
                         </td>
                         <td class="text-center" style="width: 1px;">
-                          <button nbButton size="tiny" status="primary" (click)="openUnitSession(item)"><nb-icon icon="plus"></nb-icon>Unidades</button>
+                          <button nbButton size="tiny" status="primary" (click)="openUnitSession(item)" nbTooltip="Gestionar Unidades" nbTooltipStatus="primary"><nb-icon icon="plus"></nb-icon></button>
                         </td>
                         <td class="text-center" style="width: 1px;">
-                            <button nbButton size="tiny" status="info" (click)="openCoursesFree(item, 'UPDATE')"><nb-icon icon="edit"></nb-icon></button>
+                            <button nbButton size="tiny" status="info" (click)="openCoursesFree(item, 'UPDATE')" nbTooltip="Editar la información del curso" nbTooltipStatus="info"><nb-icon icon="edit"></nb-icon></button>
                         </td>
                         <td class="text-center" style="width: 1px;">
-                            <button nbButton size="tiny" status="danger" *ngIf="item.matriculados === 0" (click)="deleteCurso(item)"><nb-icon icon="trash"></nb-icon></button>
+                            <button nbButton size="tiny" status="danger" *ngIf="item.matriculados === 0" (click)="deleteCurso(item)" nbTooltip="Eliminar el curso" nbTooltipStatus="danger"><nb-icon icon="trash"></nb-icon></button>
                         </td>
                         <td class="text-center" style="width: 1px;">
-                          <button nbButton size="tiny" status="primary" (click)="openTutores(item)"><nb-icon icon="person"></nb-icon></button>
+                          <button nbButton size="tiny" status="primary" (click)="openTutores(item)" nbTooltip="Gestionar tutores del curso" nbTooltipStatus="primary"><nb-icon icon="person"></nb-icon></button>
                         </td>
                         <!-- <td class="text-center">
                             <nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>
