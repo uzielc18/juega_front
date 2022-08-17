@@ -16,7 +16,7 @@
     <control-messages [control]="formHeader.get('calificable')"></control-messages>
   </div>
   <div style="padding-top: 4px;">
-    <label class="label">¿ Vísivilidad ?</label>
+    <label class="label">¿ Visibilidad ?</label>
     <nb-select placeholder="Mostrar al estudiante"  fullWidth formControlName="visibilidad" (selectedChange)="setEmiter()" [disabled]="tipo==='EVALUACION'">
       <nb-option value="S">Si mostrar al estudiante</nb-option>
       <nb-option value="N">No mostrar al estudiante</nb-option>

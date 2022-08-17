@@ -61,7 +61,7 @@ export class MTutoresComponent implements OnInit {
   resetTeachersToImport(){
       this.resetTeacherImportButton = false;
       this.showTeachersToImport = false;
-
+      this.formHeader.controls['teacherToImportName'].setValue('')
   }
 
   getData(){
@@ -85,6 +85,8 @@ export class MTutoresComponent implements OnInit {
     this.generalService.addNameData$(serviceName, data).subscribe(res => {
       if(res.success){
         this.getData();
+        this.formHeader.controls['teacherToImportName'].setValue('');
+        this.formHeader.controls['checkbox'].setValue(false)
       }
     })
 

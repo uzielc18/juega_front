@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { NbDialogService } from '@nebular/theme';
+import {
+  NbComponentStatus,
+  NbDialogService,
+  NbGlobalLogicalPosition,
+  NbGlobalPhysicalPosition,
+  NbToastrService
+} from '@nebular/theme';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { ConfigZoomComponent } from 'src/app/shared/components/config-zoom/config-zoom.component';
@@ -35,7 +41,11 @@ export class CourseHomeComponent implements OnInit {
   litProgramStudy:any = [];
   semestrers:any = [];
   facultades:any = [];
-  constructor(private generalServi: GeneralService, public router: Router, private formBuilder: FormBuilder, private dialogService: NbDialogService, private appUserInfo: AppService) { }
+  ///////////////////////////////
+  private index: number = 0;
+  physicalPositions = NbGlobalPhysicalPosition;
+  logicalPositions = NbGlobalLogicalPosition;
+  constructor(private generalServi: GeneralService, public router: Router, private formBuilder: FormBuilder, private dialogService: NbDialogService, private appUserInfo: AppService, private toastrService: NbToastrService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -286,5 +296,75 @@ export class CourseHomeComponent implements OnInit {
         this.getCourseZoom();
       }
     });
+  }
+
+  syncEstLamb(item: any, status: NbComponentStatus) {
+    const serviceName = END_POINTS.base_back.config + '/get-enrollments';
+    const duration = 3000
+    const params = {
+      semestre: this.rolSemestre.semestre.codigo || '',
+      idCargCurDoc: item.id_carga_curso_docente || '',
+      id_1: '0',
+      id_2: '0',
+    }
+    if(params && params.semestre && params.idCargCurDoc) {
+      Swal.fire({
+        title: 'Sincronizar',
+        text: '¿ Desea sincronizar estudiantes lamb ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#00244E',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+        if (result.isConfirmed) {
+          this.loading = true
+          this.generalServi.nameIdAndIdAndIdAndId$(serviceName, params.semestre, params.idCargCurDoc, params.id_1, params.id_2).subscribe((res:any) => {
+            if (res.success) {
+              this.getCourseZoom();
+              this.toastrService.show( {},`${res.message}`,{status})
+            }
+          }, () => {this.loading = false}, () => {this.loading = false});
+        }
+      });
+    }
+  }
+  syncSessionesLamb(item: any) {
+    const serviceName = END_POINTS.base_back.config + '/silabus';
+    const params = {
+      semestre: this.rolSemestre.semestre.codigo || '',
+      idCargCurDoc: item.id_carga_curso_docente || '',
+      id_1: '0',
+    }
+    if(params && params.semestre && params.idCargCurDoc) {
+      Swal.fire({
+        title: 'Sincronizar',
+        text: '¿ Desea sincronizar sesiones lamb ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#00244E',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+        if (result.isConfirmed) {
+          this.loading = true;
+          this.generalServi.nameIdAndIdAndId$(serviceName, params.semestre, params.idCargCurDoc, params.id_1).subscribe((res:any) => {
+            if (res.success) {
+              this.getCourseZoom();
+            }
+          }, () => {this.loading = false}, () => {this.loading = false});
+        }
+      });
+    }
   }
 }

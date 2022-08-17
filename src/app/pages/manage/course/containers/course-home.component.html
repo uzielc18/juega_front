@@ -69,7 +69,7 @@
                         <th>Cod. anfitrión</th>
                         <th>Zoom</th>
                         <th style="width: 1px;"><nb-icon icon="people"></nb-icon></th>
-                        <th class="text-center" style="width: 1px;" colspan="6">Opciones</th>
+                        <th class="text-center" style="width: 1px;" colspan="8">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,7 +87,7 @@
                             <nb-icon *ngIf="item?.id_zoom_meetings" icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon>
                         </td>
                         <td class="text-center" style="width: 1px;">
-                            <button nbButton size="tiny" status="basic" (click)="openMatricula(item)" nbTooltip="Matricular por códigos" nbTooltipStatus="basic"><nb-icon icon="person-add-outline"></nb-icon></button>
+                            <button nbButton size="tiny" status="basic" (click)="openMatricula(item)" nbTooltip="Matricular por códigos" nbTooltipStatus="basic"><nb-icon icon="person-add"></nb-icon></button>
                         </td>
                         <td class="text-center" style="width: 1px;">
                           <button nbButton size="tiny" status="primary" (click)="openUnitSession(item)" nbTooltip="Gestionar Unidades" nbTooltipStatus="primary"><nb-icon icon="plus"></nb-icon></button>
@@ -99,7 +99,13 @@
                             <button nbButton size="tiny" status="danger" *ngIf="item.matriculados === 0" (click)="deleteCurso(item)" nbTooltip="Eliminar el curso" nbTooltipStatus="danger"><nb-icon icon="trash"></nb-icon></button>
                         </td>
                         <td class="text-center" style="width: 1px;">
-                          <button nbButton size="tiny" status="primary" (click)="openTutores(item)" nbTooltip="Gestionar tutores del curso" nbTooltipStatus="primary"><nb-icon icon="person"></nb-icon></button>
+                          <button nbButton size="tiny" status="primary" (click)="openTutores(item)" nbTooltip="Gestionar tutores del curso" nbTooltipStatus="primary"><nb-icon icon="people"></nb-icon></button>
+                        </td>
+                        <td class="text-center" style="width: 1px;">
+                          <button nbButton size="tiny" status="info" (click)="syncEstLamb(item, 'success')" nbTooltip="Sincronizar estudiante" nbTooltipStatus="info"><nb-icon icon="sync"></nb-icon></button>
+                        </td>
+                        <td class="text-center" style="width: 1px;">
+                          <button nbButton size="tiny" status="primary" (click)="syncSessionesLamb(item)" nbTooltip="Sincronizar sílabo" nbTooltipStatus="primary"><nb-icon icon="sync"></nb-icon></button>
                         </td>
                         <!-- <td class="text-center">
                             <nb-icon icon="list-outline" status="primary" style="font-size: 25px; cursor: pointer;"></nb-icon> <br>

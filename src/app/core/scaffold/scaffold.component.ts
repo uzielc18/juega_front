@@ -580,11 +580,12 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   }
   countNotifications(){
-    const serviceName =  '/stream/' + this.appService.user.id
-    this.generalService.getServerSentEvent(serviceName).subscribe(data =>{
-      this.notificationCount = data.total
+    const serviceName =  'notifications-users/' + this.appService.user.id
+    this.generalService.pollNotification(serviceName).subscribe((res: any) =>{
+      this.notificationCount = res.data.total
     })
-
   }
+
+
 
 }
