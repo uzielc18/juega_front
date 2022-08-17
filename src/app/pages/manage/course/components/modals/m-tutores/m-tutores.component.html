@@ -52,7 +52,7 @@
                   <nb-toggle formControlName="checkbox"></nb-toggle>
             </div>
             <div class="d-flex flex-column">
-              <button nbButton status="primary" size="small" (click)="newTutores()">Agregar</button>
+              <button nbButton status="primary" size="small" (click)="newTutores()" [disabled]="formHeader.invalid">Agregar</button>
             </div>
       </div>
     </form>
@@ -71,7 +71,7 @@
         <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let item of data">
           <td>{{item.codigo}}</td>
           <td>{{item.persons_teacher_nombre_tutor}}</td>
-          <td><nb-icon icon="trash" (click)="deleteTutor(item)" status="danger"></nb-icon></td>
+          <td><nb-icon icon="trash" (click)="deleteTutor(item)" style="cursor: pointer" status="danger"></nb-icon></td>
         </tr>
         </tbody>
       </table>

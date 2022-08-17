@@ -1,9 +1,11 @@
 import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import {Injectable, NgZone} from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, timer} from 'rxjs';
 import { EntityDataService, IResponse, END_POINTS } from '../providers/utils';
 import {environment} from "../../environments/environment";
+import { switchMap, debounceTime, catchError } from 'rxjs/operators';
 
+const TIME=10000; //milisegundos
 @Injectable()
 export class GeneralService extends EntityDataService<IResponse> {
       eventSource: any = window['EventSource'];
@@ -70,6 +72,14 @@ export class GeneralService extends EntityDataService<IResponse> {
     public nameIdParams$(serviceName: any, id: any, params:any): Observable<IResponse> {
       return this.httpClient.get<IResponse>(`${this.endPoint}/${serviceName}/${id}`, {params});
     }
+
+      getNotification(url: any):Observable<any[]>{
+        return this.httpClient.get<any[]>(url);
+      }
+      pollNotification(url: any): Observable<any[]> {
+        return timer(0,TIME).pipe(
+          switchMap(() => this.getNotification(`${this.endPoint}/${url}`)));
+      }
     public apisExternas$(methos:any, url:any, paramsHeaders?:any): Observable<any> {
       const http = new HttpClient(this.handler);
       const headers = new HttpHeaders(

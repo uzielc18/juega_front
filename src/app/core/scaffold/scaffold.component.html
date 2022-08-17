@@ -365,20 +365,27 @@
 
     <nb-sidebar responsive tag="core-sidebar">
       <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
-      <nb-sidebar-footer  *ngIf="!minimum">
-        <div class="row" style="align-items: center">
-          <div class="col-md-8">
+      <nb-sidebar-footer  *ngIf="!minimum" style="padding: inherit">
+        <div class="d-flex justify-content-between align-items-center" style="align-items: center">
+          <!--<div class="col-md-8">
             <nb-toggle (checkedChange)="changeTheme($event)">
               <span class="text-white">TEMA</span>
             </nb-toggle>
+          </div>-->
+          <div>
+            <button nbButton size="medium" status="primary" ghost nbTooltip="Lamb Académico" nbTooltipStatus="primary">
+              <a href="https://lamb-academic.upeu.edu.pe" target="_blank">
+                <img src="https://lamb-academic.upeu.edu.pe/teacher-portal/assets/logos/lamb-logo-white.svg" width="65px"  alt="">
+              </a>
+            </button>
           </div>
-          <div class="col-md-4" style="margin-bottom: 5px" nbTooltip="Ayuda" nbTooltipStatus="primary">
+          <div class="" style="margin-bottom: 5px" nbTooltip="Ayuda" nbTooltipStatus="primary">
             <a href="https://helpdesk.upeu.edu.pe/lamb-learning" target="_blank">
               <button nbButton
                       ghost
                       status="primary"
                       size="medium">
-                <nb-icon class="text-white" icon="question-mark-circle"></nb-icon>
+                <nb-icon style="width: 30px; height: 30px" class="text-white" icon="question-mark-circle"></nb-icon>
               </button>
             </a>
           </div>

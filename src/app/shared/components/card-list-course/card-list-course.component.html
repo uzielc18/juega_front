@@ -182,7 +182,8 @@
         <div class="contenedor">
           <img [src]="curso.imageFront" class="card-img-top" height="157px" alt=""/>
           <div class="centrado" (click)="enterZoom($event, curso)" *ngIf="curso?.verIconZoom">
-            <nb-icon icon="arrow-right"></nb-icon>
+            <nb-icon icon="video-outline"></nb-icon><br>
+            <small style="color: #FFFFFF; font-size: 10px">Live</small>
           </div>
           <div style="position: absolute; right: 0px; top: 10px;"><span class="badge bg-warning" style="text-transform: uppercase;">{{curso?.course_type}}</span></div>
         </div>

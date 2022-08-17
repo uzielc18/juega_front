@@ -31,7 +31,7 @@ export class EnterZoomComponent implements OnInit {
     this.activeModal.close('ok');
   }
   irUrl() {
-    if (this.item && this.item.join_url) {
+    if (this.item && this.item.join_url !== null) {
       window.open(this.item.join_url, '_blank');
     }
   }
