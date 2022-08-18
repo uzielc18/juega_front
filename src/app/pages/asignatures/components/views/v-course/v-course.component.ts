@@ -6,6 +6,7 @@ import { END_POINTS } from 'src/app/providers/utils';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 import {Subscription} from "rxjs";
 import Swal from "sweetalert2";
+import {AppService} from "../../../../../core";
 
 // IMPORTANTE
 // -(rol (docente y admin)  && tiene_permiso = 1 hace todas las acciones del docente)
@@ -30,7 +31,7 @@ export class VCourseComponent implements OnInit, OnDestroy {
     private generalService: GeneralService,
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
     public emitEventsService: EmitEventsService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -113,6 +114,7 @@ export class VCourseComponent implements OnInit, OnDestroy {
       }, () => { this.loading =false; }, () => { this.loading =false; });
     }
   }
+
   validaExist() {
     this.getUnidades();
   }

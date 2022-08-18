@@ -56,7 +56,7 @@ export class RolComponent implements OnInit {
   newAreaRol() {
     const dialogConfig = {
       dialogClass: 'dialog-limited-height',
-      context: { action: 'new', user: this.user },
+      context: { action: 'new', user: this.user, rol: this.rol },
       closeOnBackdropClick: false,
       closeOnEsc: false,
     };
