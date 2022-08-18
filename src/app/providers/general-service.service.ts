@@ -5,7 +5,7 @@ import { EntityDataService, IResponse, END_POINTS } from '../providers/utils';
 import {environment} from "../../environments/environment";
 import { switchMap, debounceTime, catchError } from 'rxjs/operators';
 
-const TIME=10000; //milisegundos
+const TIME=30000; //milisegundos
 @Injectable()
 export class GeneralService extends EntityDataService<IResponse> {
       eventSource: any = window['EventSource'];

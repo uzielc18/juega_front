@@ -193,12 +193,13 @@
               </nb-card>
             </ng-template>
           </form>
+          ///email [title]="user?.email"
         </nb-action>-->
         <nb-action [nbContextMenu]="userMenu" class="d-none d-md-flex">
           <nb-user
             class="header-user"
             [name]="user?.name"
-            [title]="user?.email"
+
             [picture]="user?.profile_photo_path"
             [onlyPicture]="minimum"
             size="large"
