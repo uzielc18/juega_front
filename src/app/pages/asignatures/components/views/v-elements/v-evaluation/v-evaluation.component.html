@@ -1,8 +1,8 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <div class="work work-expired" style="margin-left: 20px; margin-right: 20px;"
-   *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && pending?.student_pending?.nota === null">
+   *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && pending?.student_pending?.realizo === 0">
     <span>
-      <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu Trabajo: {{ element?.titulo }} acaba de caducar hace {{
+      <p>Hola {{ userInfo.name }}!</p>, Lo sentimos, su actividad de evaluación: {{ element?.titulo }} acaba de caducar hace {{
       expiredDays |
       i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
       expiredSeconds | i18nPlural:secondsMap }}

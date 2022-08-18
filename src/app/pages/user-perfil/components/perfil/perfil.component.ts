@@ -64,7 +64,7 @@ export class PerfilComponent implements OnInit {
     }).then((result: any) => {
       if (result.isConfirmed) {
         this.loading = true;
-        this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.profile.person.codigo, 0, 0, this.profile.user.usuario_upeu).subscribe(res => {
+        this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.rolSemestre?.semestre?.nombre, 0, 0, this.profile.user.usuario_upeu).subscribe(res => {
           if(res.success){
           }
         }, () => {this.loading = false}, () => {this.loading = false})

@@ -26,6 +26,12 @@
   </div>  -->
   <nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">
     <nb-card-body>
+      <div class="ms-auto  d-flex justify-content-between" *ngIf="pending?.grupal === '1'" >
+        <small></small>
+        <div class="conteiner-grupal">
+          <small>Este trabajo es grupal</small>
+        </div>
+      </div>
       <form [formGroup]="form">
       <div class="row">
         <div class="instructions col-md-9 col-xxl-10">

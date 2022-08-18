@@ -6,6 +6,7 @@ import { PreguntasComponent } from './preguntas/preguntas.component';
 import { EstudiantesComponent } from './estudiantes/estudiantes.component';
 import {END_POINTS} from "../../../../../providers/utils";
 import {GeneralService} from "../../../../../providers";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-navegacion',
@@ -14,13 +15,14 @@ import {GeneralService} from "../../../../../providers";
 })
 export class NavegacionComponent implements OnInit {
   loading:boolean = false
+  idCargaCursoDocente: any = this.activatedRoute.snapshot.paramMap.get('id_carga_curso_docente');
   @Input() curso: any;
   @Input() zoom: any;
   userInfo: any;
+  justificatiosn:any = [];
   tooltip: boolean = false;
   tootipValue: any = 'Copiar';
   item: any = [];
-  justificatiosn:any = [];
   valor: any;
   showText: boolean = false;
   @ViewChild(JustificationsComponent) justifiAct:any;
@@ -30,6 +32,7 @@ export class NavegacionComponent implements OnInit {
   @Output() eventsChange: EventEmitter<any> = new EventEmitter();
   constructor(private breakpointObserver: BreakpointObserver,
               private userService: AppService,
+              private activatedRoute: ActivatedRoute,
               private generalService: GeneralService) {
     this.breakpointObserver.observe(['(max-width: 1399px)']).subscribe((result: BreakpointState) => {
       if (result.matches) {
@@ -40,8 +43,8 @@ export class NavegacionComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.userInfo = this.userService;
     this.listJustificate();
+    this.userInfo = this.userService;
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -94,18 +97,18 @@ export class NavegacionComponent implements OnInit {
     document.execCommand('copy');
 
   }
-    listJustificate() {
-      const serviceName = 'list-justifications';
-      const params = {
-        estado_justification : 'pendiente',
-        person_id: this.userInfo.user.person.id,
-      };
-      this.loading = true;
-      this.generalService.nameIdAndIdParams$(serviceName, this.curso.id_carga_curso_docente, this.rolSemestre?.rol?.id, params).subscribe((res:any) => {
-        this.justificatiosn = res.data || [];
-        console.log(this.justificatiosn)
-      }, () => {this.loading = false;}, () => {this.loading = false;})
-    }
+  listJustificate() {
+    const serviceName = 'list-justifications';
+    const params = {
+      estado_justification : 'pendiente',
+      person_id: this.userService?.user?.person.id,
+    };
+    this.loading = true;
+    this.generalService.nameIdAndIdParams$(serviceName, this.idCargaCursoDocente, this.rolSemestre?.rol?.id, params).subscribe((res:any) => {
+      this.justificatiosn = res.data || [];
+      console.log(this.justificatiosn)
+    }, () => {this.loading = false;}, () => {this.loading = false;})
+  }
   crearSalaZoom(){
     this.loading = true;
     const serviceName = 'add-course-zoom';
