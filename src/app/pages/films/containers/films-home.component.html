@@ -52,7 +52,7 @@
             </button>
             </a>
           </td>-->
-          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' ||rolSemestre.rol.name === 'Docente'">
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' || rolSemestre.rol.name === 'Docente' || rolSemestre.rol.name === 'Admin'">
             <a [href]="item.play_url" target="_blank">
             <button nbButton size="tiny"
                     status="primary"
@@ -61,13 +61,13 @@
             </button>
             </a>
           </td>
-          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente' && item.element_id==0">
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name !== 'Estudiante' && item.element_id==0">
             <button nbButton size="tiny" status="danger"
                     nbTooltip="Eliminar">
               <nb-icon icon="trash"></nb-icon>
             </button>
           </td>
-          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente' && item.element_id==0">
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name !== 'Estudiante' && item.element_id==0">
             <button nbButton
                     size="tiny"
                     status="primary"
@@ -77,8 +77,8 @@
             </button>
           </td>
 
-          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Docente' && item.element_id!==0">
-            <button n nbButton
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name !== 'Estudiante' && item.element_id!==0">
+            <button  nbButton
                     size="tiny"
                     status="info"
                     (click)="updateSession(item,'EDITAR')">
