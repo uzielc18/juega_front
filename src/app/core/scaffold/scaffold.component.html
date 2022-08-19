@@ -92,7 +92,7 @@
               nbPopoverPlacement="bottom"
               nbPopoverTrigger="noop"
               (click)="open()">
-              {{ paramsSessionStorage?.rol?.name || 'Sin rol' }} -
+              {{ paramsSessionStorage?.rol?.name || 'Sin rol' }} {{paramsSessionStorage?.rol?.area_name !== ""? '-': '' }} {{paramsSessionStorage?.rol?.area_name}} -
               {{ paramsSessionStorage?.semestre?.nombre || 'Sin semestre' }}
             </button>
             <ng-template #templateRef>
@@ -107,7 +107,7 @@
                       formControlName="id_rol"
                       (selectedChange)="changeRol($event)"
                     >
-                      <nb-option *ngFor="let rol of roles; let i = index" [value]="rol.id">{{ rol.name }}</nb-option>
+                      <nb-option *ngFor="let rol of roles; let i = index" [value]="rol.id">{{ rol.name }}{{rol.area_name !== ""? '-': ''}}{{rol.area_name}}</nb-option>
                     </nb-select>
                   </div>
                   <div>
@@ -323,7 +323,7 @@
                       formControlName="id_rol"
                       (selectedChange)="changeRol($event)"
                     >
-                      <nb-option *ngFor="let rol of roles; let i = index" [value]="rol.id">{{ rol.name }}</nb-option>
+                      <nb-option *ngFor="let rol of roles; let i = index" [value]="rol.id">{{ rol.name }}{{rol.area_name !== ""? '-': ''}}{{rol.area_name}}</nb-option>
                     </nb-select>
                   </div>
                   <div>

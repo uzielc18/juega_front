@@ -367,6 +367,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   updateSemestre(value: any, rol?: any) {
     const id = value.id || '';
     const id_rol = rol.id || '';
+    const id_rol_area = rol?.id_area_rol || 0
+
     const serviceName = END_POINTS.base_back.user + '/updatesemester';
     if (id) {
       this.loading = true;
@@ -375,7 +377,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       };
 
       // console.log(this.router.url);
-      this.generalService.addNameIdAndIdData$(serviceName, id, id_rol, params).subscribe(
+      this.generalService.addNameIdAndIdAndIdData$(serviceName, id, id_rol, id_rol_area, params).subscribe(
       // this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe(
         (data: any) => {
           if (data.success) {
