@@ -34,8 +34,18 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   ngOnDestroy(): void {
       this.datoSubscription.unsubscribe();
+  }
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol) {
+      return val;
+    } else {
+      return '';
+    }
   }
   getUser(){
     this.loading = true

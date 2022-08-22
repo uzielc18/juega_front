@@ -25,13 +25,12 @@ export class MUnitComponent implements OnInit {
 
     let date: any;
     date = dateService.today();
-    console.log(date)
     this.min = dateService.addDay(date, -1);
   }
 
   ngOnInit(): void {
     this.reactiveForm();
-    console.log(this.item)
+    //console.log(this.item)
   }
 
   private reactiveForm(){

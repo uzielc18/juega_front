@@ -198,11 +198,19 @@
     margin: 0;
   }
 }
-.conteiner-grupal{
-  align-items: center;
-  padding: 5px 10px 5px 15px;
-  border: 1px solid #099463;
-  background-color: #E2F9E3;
-  color: #099463;
-  border-radius: 5px;
+.container-grupo-card{
+  //border: 1px solid #E4E9F2;
+  //border-radius: 5px;
+  padding: 0 10px 10px 10px;
+  //box-shadow: 0 2px 10px #00000012;
+
+  .conteiner-grupal{
+    align-items: center;
+    padding: 5px 10px 5px 15px;
+    border: 1px solid #099463;
+    background-color: #E2F9E3;
+    color: #099463;
+    border-radius: 5px;
+  }
 }
+
