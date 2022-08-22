@@ -77,7 +77,10 @@ export class TeacherHomeComponent implements OnInit {
   }
   getFacultadesUnidades(){
     const serviceName = END_POINTS.base_back.sede_areas;
-    this.generalServi.nameIdAndId$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id).subscribe(
+    const params = {
+      all: 1
+    }
+    this.generalServi.nameIdAndIdParams$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, params).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
       },

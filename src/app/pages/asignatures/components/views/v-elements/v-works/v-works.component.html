@@ -26,12 +26,7 @@
   </div>  -->
   <nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">
     <nb-card-body>
-      <div class="ms-auto  d-flex justify-content-between" *ngIf="pending?.grupal === '1'" >
-        <small></small>
-        <div class="conteiner-grupal">
-          <small>Este trabajo es grupal</small>
-        </div>
-      </div>
+
       <form [formGroup]="form">
       <div class="row">
         <div class="instructions col-md-9 col-xxl-10">
@@ -53,11 +48,27 @@
           </div>
         </div>
       </div>
-      <div>
-        <br>
-        <h4 class="attached-files-title">Archivos de apoyo</h4> <br>
-        <app-list-view-files [arrayFiles]="element?.element_files || []" [director]="getDirectoy()"></app-list-view-files>
+      <div class="d-flex flex-wrap">
+        <div>
+          <br>
+          <h4 class="attached-files-title">Archivos de apoyo</h4> <br>
+          <app-list-view-files [arrayFiles]="element?.element_files || []" [director]="getDirectoy()"></app-list-view-files>
+        </div>
+        <div class="container-grupo-card" *ngIf="pending?.grupal === '1' && rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length !== 0" >
+          <br>
+          <div  >
+            <h4 class="attached-files-title">Mi grupo</h4>
+            <div *ngFor="let item of pending?.mi_grupo">
+              <small style="color: var(--color-danger-600)">- {{item.nombres}} {{item.apellido_paterno}} {{item.apellido_materno}}</small><br>
+            </div>
+
+            <!--<div class="conteiner-grupal">
+              <small>Este trabajo es grupal</small>
+            </div>-->
+          </div>
+        </div>
       </div>
+
       <div *ngIf="has_rubric">
         <br>
         <div class="d-flex">
@@ -66,16 +77,23 @@
         </div>
         <app-rubricas [rubrica]="rubrica" [calification]="calification"></app-rubricas>
       </div>
+
       <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending && !tiempo_vencido">
-        <div class="d-flex">
+         <div class="d-flex">
           <h4 class="send-work-title">Entrega de trabajo</h4>
           <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon" style="font-size: 25px;" nbTooltip="Subir archivo" nbTooltipPlacement="top" nbTooltipStatus="primary"
             icon="cloud-upload-outline" (click)="cambioTypo('1')"></nb-icon>
           <nb-icon [status]="form.value.tipo === '2' ? 'primary' : 'basic'" class="send-work-icon" style="font-size: 25px;" nbTooltip="Subir url" nbTooltipPlacement="top" nbTooltipStatus="primary"
             icon="external-link-outline" (click)="cambioTypo('2')"></nb-icon>
         </div>
+
         <div *ngIf="form.value.tipo == '1'">
+
+          <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length === 0 && pending?.grupal === '1'">
+            <small style="font-weight: bold; color: var(--color-danger-600)">Usted no tiene grupo, consulte a su docente. </small>
+          </div>
           <lamb-prepare-file-pro
+            *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length !== 0 && pending?.grupal === '1' || rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length === 0 && pending?.grupal !== '1'"
           [paramsInfo]="{
             key_file: key_file,
             directory: getDirectoy(),

@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./configuraciones.component.scss']
 })
 export class ConfiguracionesComponent implements OnInit {
+  loading: boolean = false
   @Input() curso:any;
   @Output() changeLoad: EventEmitter<any> = new EventEmitter();
   constructor(private generalService: GeneralService,
@@ -81,11 +82,13 @@ export class ConfiguracionesComponent implements OnInit {
         // timer: 2000,
       }).then((result:any) => {
           if (result.isConfirmed) {
+            this.loading = true
        this.generalService.nameIdAndIdAndId$(serviceName, params.semestre, params.idCargCurDoc, params.id_1).subscribe((res:any) => {
         if (res.success) {
+
           this.changeLoad.emit('ok');
         }
-       });
+       }, () => {this.loading = false}, () => {this.loading = false});
       }
     });
      }

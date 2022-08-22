@@ -77,14 +77,13 @@ export class SesionComponent implements OnInit {
         closeOnEsc: false,
       })
       .onClose.subscribe(result => {
-        console.log(result)
+        //console.log(result)
         if (result.value_close === 'ok') {
 
           if (this.sesion?.modo === 'agrupado') {
             // console.log(result, 'Response de save');
             this.cargarCambio(result)
             result.type_element.type_element_id = result.type_element.id;
-            console.log(this.sesion.elements)
             if (this.sesion.elements?.length > 0) {
               const exist = this.sesion.elements.find((r: any) => ((r.type_element_id === result.type_element.id) ? true : false));
               if (exist) {
@@ -201,7 +200,6 @@ export class SesionComponent implements OnInit {
     this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe(
       data => {
         this.arrayEl = data.data || [];
-        console.log(this.arrayEl)
       },
       () => {
         this.loading = false;
@@ -218,7 +216,6 @@ export class SesionComponent implements OnInit {
     this.generalService.nameId$(serviceName, topic_id).subscribe(
       data => {
         this.arrayEl = data.data || [];
-        console.log(this.arrayEl)
       },
       () => {
         this.loading = false;

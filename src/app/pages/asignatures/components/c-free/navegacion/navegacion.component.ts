@@ -106,7 +106,7 @@ export class NavegacionComponent implements OnInit {
     this.loading = true;
     this.generalService.nameIdAndIdParams$(serviceName, this.idCargaCursoDocente, this.rolSemestre?.rol?.id, params).subscribe((res:any) => {
       this.justificatiosn = res.data || [];
-      console.log(this.justificatiosn)
+      //console.log(this.justificatiosn)
     }, () => {this.loading = false;}, () => {this.loading = false;})
   }
   crearSalaZoom(){

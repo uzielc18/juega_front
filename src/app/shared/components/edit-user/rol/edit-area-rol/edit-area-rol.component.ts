@@ -108,9 +108,12 @@ export class EditAreaRolComponent implements OnInit {
 
   listFacultades(nivel_ense_id: any, sede_id: any) {
     const serviceName = END_POINTS.base_back.sede_areas;
+    const params = {
+      all: 1
+    }
     if (this.nivelEnsenanza.length > 0) {
       this.loading = true;
-      this.generalService.nameIdAndId$(serviceName, nivel_ense_id, sede_id).subscribe(
+      this.generalService.nameIdAndIdParams$(serviceName, nivel_ense_id, sede_id, params).subscribe(
         (res: any) => {
           this.facultades = res.data || [];
           if (this.action === 'edit') {

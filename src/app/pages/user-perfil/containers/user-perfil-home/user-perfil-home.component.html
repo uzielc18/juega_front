@@ -23,7 +23,7 @@
             <nb-tabset>
               <nb-tab tabTitle="Cursos">
               </nb-tab>
-              <nb-tab tabTitle="Reportes notas">
+              <nb-tab tabTitle="Reportes notas" *ngIf="rolSemestre?.rol?.name === 'Admin'">
                 <app-tabs-reporte-notas [profile] = 'profile' [notas]="notas"></app-tabs-reporte-notas>
               </nb-tab>
             </nb-tabset>

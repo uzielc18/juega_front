@@ -44,7 +44,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label class="label" style="visibility: hidden;">Filtrar</label><br>
-                                <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['facultades_unidades'].value == ''"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+                                <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['facultades_unidades'].value == '' && rolSemestre.area.area_id === 0 && formHeader.controls['nombre'].value === '' "><nb-icon icon="funnel"></nb-icon>Filtrar</button>
                     </div>
                     <div class="col-sm-6">
                         <label class="label" style="visibility: hidden;">Crear</label><br>
@@ -80,7 +80,7 @@
                         <td><img [src]="item.persons_teacher_foto" alt="" height="20px" width="20px" style="border-radius: 3rem;">&nbsp; {{item.persons_teacher_nombre}}</td>
                         <td>{{item.ciclo}}</td>
                         <td>{{item.grupo}}</td>
-                        <td>{{item.meeting_id}}</td>
+                        <td>{{item.host_key}}</td>
                         <td style="color: brown;">{{item.join_url}}</td>
                         <td style="color: brown; font-size: 14px; font-weight: bold;" class="text-center">{{item?.matriculados}}</td>
                         <td class="text-center" style="width: 1px; vertical-align: middle;">

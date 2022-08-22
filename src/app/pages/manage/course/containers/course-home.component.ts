@@ -58,7 +58,7 @@ export class CourseHomeComponent implements OnInit {
       programa_estudio_id: [''],
       ciclo: [''],
       nombre: [''],
-      facultades_unidades: ['', [Validators.required]]
+      facultades_unidades: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
@@ -86,7 +86,10 @@ export class CourseHomeComponent implements OnInit {
   getFacultadesUnidades(){
     this.loading = true
     const serviceName = END_POINTS.base_back.sede_areas;
-    this.generalServi.nameIdAndId$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id).subscribe(
+    const params = {
+      all: 1
+    }
+    this.generalServi.nameIdAndIdParams$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, params).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
       }
@@ -154,6 +157,7 @@ export class CourseHomeComponent implements OnInit {
     this.getCourseZoom();
   }
   loadPage($event: any): any {
+    this.loading = true;
     this.pagination.page = $event;
     this.getCourseZoom();
   }
