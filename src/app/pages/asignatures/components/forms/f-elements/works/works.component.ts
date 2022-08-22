@@ -217,6 +217,9 @@ export class WorksComponent implements OnInit, OnChanges {
 
   saveInformtion() {
     const forms = this.formHeader.value;
+    if(this.destino === ''){
+
+    }
     const serviceName = END_POINTS.base_back.elements;
 
     const f_inicio =

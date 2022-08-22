@@ -17,11 +17,9 @@ export class EnlaceExternalComponent implements OnInit {
   @Input() topics: any;
   @Input() unidad: any;
   @Input() curso: any;
-
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
-
   @Input() destino: any;
 
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
@@ -45,7 +43,7 @@ export class EnlaceExternalComponent implements OnInit {
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
 
-      fecha: [this.topics.fecha_tema || ''],
+      fecha: [this.topics?.fecha_tema || ''],
       // fecha_inicio: ['', [Validators.required]],
       // hora_inicio: ['', [Validators.required]],
       // fecha_fin: ['', [Validators.required]],

@@ -17,6 +17,7 @@ export class ElementsFormHomeComponent implements OnInit {
   userInfo: any;
   code: any = 'NEW';
   type: any = 'MANY';
+  item: any = ''
 
   loading: boolean = false;
 

@@ -24,12 +24,15 @@ const NEBULAR: any = [
 
 
 @NgModule({
-  declarations: [...COMPONENTS],
-  imports: [
-    CommonModule,
-    EvaluationsRoutingModule,
-    ...NEBULAR,
-    ...MODULES,
-  ]
+    declarations: [...COMPONENTS],
+    exports: [
+        EvaluationsComponent
+    ],
+    imports: [
+        CommonModule,
+        EvaluationsRoutingModule,
+        ...NEBULAR,
+        ...MODULES,
+    ]
 })
 export class EvaluationsModule { }

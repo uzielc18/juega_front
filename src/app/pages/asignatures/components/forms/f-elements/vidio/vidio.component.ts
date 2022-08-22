@@ -81,7 +81,7 @@ export class VidioComponent implements OnInit {
       tamano_peso: ['', [Validators.required]],
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
-      fecha: [this.topics.fecha_tema || ''],
+      fecha: [this.topics?.fecha_tema || ''],
 
       tipo: ['VIDEO', [Validators.required]],
 
@@ -284,9 +284,29 @@ export class VidioComponent implements OnInit {
         destino: this.destino,
       };
       // console.log(params, 'muchossss');
-      const serviceName = END_POINTS.base_back.default + '.........';
+      const serviceName = END_POINTS.base_back.default + 'save-element-in-courses';
       if (!this.validCampos) {
-        // this.generalServi.
+        this.loadingsForm.emit(true);
+        this.generalServi.addNameData$(serviceName, params).subscribe(
+          (r: any) => {
+            console.log(r)
+            if (r.success) {
+              const valueClose = {
+                value_close: 'ok',
+                value: params,
+                response: r.data,
+                type_element: this.valueMenu,
+              };
+              this.saveCloseValue.emit(valueClose);
+            }
+          },
+          () => {
+            this.loadingsForm.emit(false);
+          },
+          () => {
+            this.loadingsForm.emit(false);
+          }
+        );
       }
     }
 
