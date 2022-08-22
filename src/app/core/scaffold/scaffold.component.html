@@ -92,7 +92,7 @@
               nbPopoverPlacement="bottom"
               nbPopoverTrigger="noop"
               (click)="open()">
-              {{ paramsSessionStorage?.rol?.name || 'Sin rol' }} {{paramsSessionStorage?.rol?.area_name !== ""? '-': '' }} {{paramsSessionStorage?.rol?.area_name}} -
+              {{ paramsSessionStorage?.rol?.name || 'Sin rol' }} {{paramsSessionStorage?.rol?.area_name !== ""? '-': '' }} {{paramsSessionStorage?.rol?.area_name}} <br>
               {{ paramsSessionStorage?.semestre?.nombre || 'Sin semestre' }}
             </button>
             <ng-template #templateRef>

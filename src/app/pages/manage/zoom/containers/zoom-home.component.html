@@ -31,7 +31,8 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label class="label" style="visibility: hidden;">Filtrar</label><br>
-                        <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['facultades_unidades'].value == ''"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+                        <button nbButton fullWidth size="small" status="warning" (click)="refresh()" *ngIf="rolSemestre.area.area_id === 0" [disabled]="formHeader.controls['facultades_unidades'].value == ''"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+                        <button nbButton fullWidth size="small" status="warning" (click)="refresh()" *ngIf="rolSemestre.area.area_id !== 0"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
                     </div>
                     <div class="col-sm-6">
                         <label class="label" style="visibility: hidden;">Crear</label><br>

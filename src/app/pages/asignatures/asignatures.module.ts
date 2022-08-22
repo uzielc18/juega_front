@@ -186,7 +186,13 @@ const MODULES: any = [
 
   exports: [
     WorksComponent,
-    VidioComponent
+    VidioComponent,
+    EnlaceExternalComponent,
+    ForusComponent,
+    DocumentsComponent,
+    VidioConferenceComponent,
+    CarpetaComponent,
+    EvaluationsComponent
   ]
 })
 

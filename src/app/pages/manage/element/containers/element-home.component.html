@@ -115,7 +115,7 @@
           <nb-card-header style="padding-top: 5px; padding-bottom: 5px" class="text-center">Origen</nb-card-header>
           <nb-card-body>
             <div *ngIf="elementAction === 'new'">
-              <app-elements-form-home [destino]="destino"></app-elements-form-home>
+              <app-elements-form-home [destino]="selectedTopics"></app-elements-form-home>
             </div>
             <div *ngIf="elementAction === 'import'">
               <div class="row" [formGroup]="formHeader">

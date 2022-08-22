@@ -14,6 +14,7 @@ import { FilterModule } from 'src/app/shared/pipes/filter/filter.module';
 import { DirectiveModule } from 'src/app/shared/directives/highlight.module';
 import { ElementsFormHomeComponent } from './components/elements-form-home/elements-form-home.component';
 import {AsignaturesModule} from "../../asignatures/asignatures.module";
+import {EvaluationsModule} from "../../evaluations/evaluations.module";
 
 
 const COMPONENTS: any[] = [
@@ -53,7 +54,7 @@ const DIRECTIVES: any = [
         ...DIRECTIVES,
         CommonModule,
         ElementRoutingModule,
-        AsignaturesModule
+        AsignaturesModule,
     ]
 })
 export class ElementModule { }

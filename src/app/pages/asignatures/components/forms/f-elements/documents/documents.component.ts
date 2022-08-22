@@ -49,7 +49,7 @@ export class DocumentsComponent implements OnInit, OnChanges {
       titulo: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
 
-      fecha: [this.topics.fecha_tema || ''],
+      fecha: [this.topics?.fecha_tema || ''],
       // fecha_inicio: ['', [Validators.required]],
       // hora_inicio: ['', [Validators.required]],
       // fecha_fin: ['', [Validators.required]],
