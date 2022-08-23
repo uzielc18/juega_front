@@ -38,8 +38,8 @@ export class MSessionComponent implements OnInit {
       tema: ['',[Validators.required]],
       contenido: ['',[Validators.required]],
       fecha_tema: ['',[Validators.required]],
-      fecha_inicio: ['',[Validators.required]],
-      fecha_fin: ['',[Validators.required]],
+      //fecha_inicio: ['',[Validators.required]],
+      //fecha_fin: ['',[Validators.required]],
       modo: ['',[Validators.required]],
       numero_semana: ['',[Validators.required]],
       orden_tema: [this.unit.topics.length + 1 || '', [Validators.required]]
