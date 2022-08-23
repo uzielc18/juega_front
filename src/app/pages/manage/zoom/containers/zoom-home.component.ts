@@ -106,7 +106,7 @@ export class ZoomHomeComponent implements OnInit {
     this.formHeader.controls['facultades_unidades'].setValue(item);
     this.listProgramStudy = [];
     this.formHeader.controls['programa_estudio_id'].setValue('');
-    this.listProgramEstudy(this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
+    this.listProgramEstudy(item.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
   }
   listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
     this.loading = true

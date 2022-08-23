@@ -209,7 +209,7 @@ export class MCourseFreeComponent implements OnInit {
     this.formHeaderOne.controls['facultades_unidades'].setValue(item.id);
     this.litProgramStudy = [];
     this.formHeaderOne.controls['id_programa_estudio'].setValue('');
-    this.listProgramEstudy(this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
+    this.listProgramEstudy(item.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
   }
   listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
     this.loading = true
