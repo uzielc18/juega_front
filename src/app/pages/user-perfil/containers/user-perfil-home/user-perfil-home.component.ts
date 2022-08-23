@@ -13,6 +13,7 @@ import {EmitEventsService} from "../../../../shared/services/emit-events.service
 })
 export class UserPerfilHomeComponent implements OnInit, OnDestroy {
   recuperarEmail:any = this.activatedRoute.snapshot.paramMap.get('email');
+  me: any
   email: any;
   profile: any;
   loading: boolean = false
@@ -25,6 +26,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
                private emitEventsService: EmitEventsService,) {}
 
   ngOnInit(): void {
+    this.me = this.userService.user.person.id
     this.email = this.recuperarEmail;
     this.getUser();
     this.datoSubscription = this.emitEventsService.returnsEmail().subscribe(value => { // para emitir evento desde la cabecera

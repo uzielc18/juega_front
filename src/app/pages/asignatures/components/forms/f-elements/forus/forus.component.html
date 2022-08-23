@@ -79,16 +79,21 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <nb-toggle status="basic" class="my-3 d-block" formControlName="autocalificable" (change)="valueAuthentofi()">autocalificable</nb-toggle>
+        <nb-toggle status="basic" class="my-3 d-block" formControlName="autocalificable" [disabled]="formHeader.value.editor" (change)="valueAuthentofi()">autocalificable</nb-toggle>
       </div>
       <div class="col-md-6">
-        <nb-toggle status="basic" class="my-3 d-block" formControlName="editor">Texto enriquecido</nb-toggle>
+        <nb-toggle status="basic" class="my-3 d-block" formControlName="editor" [disabled]="formHeader.value.autocalificable">Texto enriquecido</nb-toggle>
       </div>
     </div>
   </div>
   <div style="padding-top: 4px;" *ngIf="formHeader.value.autocalificable">
+    <label class="label">Respuesta sugerida</label>
+    <textarea nbInput  class="w-100" fullWidth placeholder="Respuesta sugerida" formControlName="respuestaSugerida"></textarea>
+    <control-messages [control]="formHeader.get('respuestaSugerida')"></control-messages>
+  </div>
+  <div style="padding-top: 4px;" *ngIf="formHeader.value.autocalificable">
     <label class="label">Nota sugerida</label>
-    <input class="w-100" type="number" nbInput fullWidth placeholder="Nota" formControlName="nota"/>
+    <input class="w-100" type="number" nbInput fullWidth placeholder="Nota" formControlName="nota" min="0"/>
     <control-messages [control]="formHeader.get('nota')"></control-messages>
   </div>
 

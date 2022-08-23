@@ -62,6 +62,7 @@ export class ForusComponent implements OnInit {
       autocalificable: [false],
       editor: [false],
 
+      respuestaSugerida: ['', Validators.required],
       nota: [''],
       tipo: ['FORO', [Validators.required]],
 
