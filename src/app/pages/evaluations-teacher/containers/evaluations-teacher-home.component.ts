@@ -28,7 +28,7 @@ export class EvaluationsTeacherHomeComponent implements OnInit {
     {nombre: 'Sin calificar', value: 'SC'},
     {nombre: 'Próximos', value: 'PX'},
     {nombre: 'Re-Apertura', value: 'RA'},
-    {nombre: 'Vencidos', value: 'V'}
+    //{nombre: 'Vencidos', value: 'V'}
   ];
 
   formHeader: any = FormGroup;

@@ -47,7 +47,7 @@ export class LambSyncHomeComponent implements OnInit {
     private generalService: GeneralService,
     private formBuilder: FormBuilder,
     private dialogService: NbDialogService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -233,6 +233,7 @@ export class LambSyncHomeComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this.cursos = res.data || [];
+            this.toastrService.success(status, `Se sincronizó correctamente`);
             this.dialogService
               .open(ListCursosComponent, {
                 dialogClass: 'dialog-limited-height',
@@ -274,6 +275,7 @@ export class LambSyncHomeComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this.silabus = res.data || [];
+            this.toastrService.success(status, `Se sincronizó correctamente`);
             this.dialogService
               .open(ListSilabusComponent, {
                 dialogClass: 'dialog-limited-height',
@@ -314,6 +316,7 @@ export class LambSyncHomeComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this.silabus = res.data || [];
+            this.toastrService.success(status, `Se sincronizó correctamente`);
             this.dialogService
               .open(ListSilabusComponent, {
                 dialogClass: 'dialog-limited-height',
@@ -353,6 +356,7 @@ export class LambSyncHomeComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this.estudiantes = res.data || [];
+            this.toastrService.success(status, `Se sincronizó correctamente`);
             this.dialogService
               .open(ListEstudiantesComponent, {
                 dialogClass: 'dialog-limited-height',
@@ -395,6 +399,7 @@ export class LambSyncHomeComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this.matriculas = res.data || [];
+            this.toastrService.success(status, `Se sincronizó correctamente`);
             this.dialogService
               .open(ListMatriculasComponent, {
                 dialogClass: 'dialog-limited-height',
@@ -434,6 +439,7 @@ export class LambSyncHomeComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this.docentes = res.data || [];
+              this.toastrService.success(status, `Se sincronizó correctamente`);
             this.dialogService
               .open(ListDocenteComponent, {
                 dialogClass: 'dialog-limited-height',
@@ -472,6 +478,7 @@ export class LambSyncHomeComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this.evaluaciones = res.data || [];
+            this.toastrService.success(status, `Se sincronizó correctamente`);
             this.dialogService
               .open(ListEvaluationsComponent, {
                 dialogClass: 'dialog-limited-height',
