@@ -123,7 +123,7 @@ export class LambSyncHomeComponent implements OnInit {
   listFacultades(nivel_ense_id: any, sede_id: any) {
     const serviceName = END_POINTS.base_back.sede_areas;
     const params = {
-      all: 1
+      all: 0
     }
     if (this.nivelEnsenanza.length > 0) {
       this.loading = true;
