@@ -57,6 +57,10 @@ const routes: Routes = [
         path: 'user',
         loadChildren: () => import('./pages/user-perfil/user-perfil.module').then(m => m.UserPerfilModule),
       },
+      {
+        path: 'reports',
+        loadChildren: () => import('./pages/reports/reports.module').then(m => m.ReportsModule),
+      },
 
       // {
       //   path: "**",
