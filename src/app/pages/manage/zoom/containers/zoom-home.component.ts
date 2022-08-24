@@ -202,7 +202,7 @@ export class ZoomHomeComponent implements OnInit {
     const forms = this.formHeader.value;
     const params:any = {
       programa_estudio_id: forms.programa_estudio_id || '',
-      person_id: this.datosMe.user.id || '',
+      person_id: this.datosMe.user?.person?.id || '',
     };
     if (params && params.person_id) {
       this.generalServi.nameParams$(serviceName, params).subscribe((re:any) => {

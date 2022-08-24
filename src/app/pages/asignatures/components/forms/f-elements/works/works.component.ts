@@ -95,7 +95,7 @@ export class WorksComponent implements OnInit, OnChanges {
     const serviceName = END_POINTS.base_back.rubrics + '/list-guias';
     this.loading = true;
     const params = {
-      person_id: this.userInfo.id,
+      person_id: this.userInfo?.person?.id,
     };
     this.generalServi.nameParams$(serviceName, params).subscribe(
       r => {
