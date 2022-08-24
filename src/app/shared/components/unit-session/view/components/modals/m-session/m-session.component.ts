@@ -35,7 +35,7 @@ export class MSessionComponent implements OnInit {
 
   private reactiveForms(){
     const controls = {
-      tema: ['',[Validators.required]],
+      tema: [''],
       contenido: ['',[Validators.required]],
       fecha_tema: ['',[Validators.required]],
       //fecha_inicio: ['',[Validators.required]],

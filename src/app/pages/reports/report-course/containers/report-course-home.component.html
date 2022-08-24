@@ -1,0 +1,58 @@
+<nb-card class="m-0 h-100 border-0" style="border-radius: 15px;" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="shopping-bag-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">REPORTE - CONTENIDO DE ASIGNATURAS</strong>
+    </div>
+    <hr>
+    <form [formGroup]="formHeader">
+      <div class="row">
+        <!--<div class="col-lg-3">
+          <label class="label">Buscar cuenta</label>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar cuenta por correo" >
+        </div>-->
+        <div class="col-lg-3">
+          <label class="label">Facultades/Unidades</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="facultades_unidades">
+            <nb-option value="" disabled>Selecciona</nb-option>
+            <nb-option></nb-option>
+          </nb-select>
+        </div>
+        <div class="col-lg-3">
+          <label class="label">Programa estudio</label>
+          <!-- <app-input-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-input-select-search>
+          <app-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-select-search>  -->
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
+            <!-- <nb-option value="">Todos</nb-option> -->
+            <nb-option ></nb-option>
+          </nb-select>
+        </div>
+        <div class="col-lg-3">
+          <label class="label">Ciclo</label>
+          <nb-select fullWidth size="small" formControlName="ciclo">
+            <nb-option value="">Todos</nb-option>
+            <nb-option *ngFor="let item of ciclos" [value]="item?.ciclo">{{item.ciclo}}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-lg-3">
+          <label class="label">Elemento</label>
+          <nb-select placeholder="Estado" size="small" status="primary" fullWidth formControlName="id_estado">
+            <nb-option value="">Todos</nb-option>
+            <nb-option *ngFor="let estado of estados" [value]="estado?.value">{{ estado.nombre }}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-lg-3">
+          <div class="row">
+            <div class="col-sm-6">
+              <label class="label" style="visibility: hidden;">Filtrar</label><br>
+              <button nbButton fullWidth size="small" status="warning" ><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-header>
+  <nb-card-body>
+
+  </nb-card-body>
+</nb-card>

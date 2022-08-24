@@ -352,7 +352,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   changeRol($event: any) {
-    const rol = this.roles.find((r: any) => r.id === $event);
+    console.log($event)
+    //const rol = this.roles.find((r: any) => r.id_select === $event.id_select);
+    const rol = this.roles.find((r: any) => r.id === $event.id);
     this.semestres = [];
     this.formHeader.controls['id_semestre'].setValue('');
     this.formHeader.controls['carga'].setValue('2');
