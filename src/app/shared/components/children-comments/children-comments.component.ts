@@ -80,7 +80,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
     // const f_h = fecha + ' ' + hora;
     const params = {
       forum_id : this.element.forums.id || '',
-      person_id: this.userInfo.id,
+      person_id: this.userInfo?.person?.id,
       forums_response_id: item.id,
       respuesta: item.enviar_comentario,
       pending_id: '',
@@ -165,7 +165,7 @@ export class ChildrenCommentsComponent implements OnInit, OnChanges {
     // const f_h = fecha + ' ' + hora;
     const params = {
       forum_id : this.element.forums.id || '',
-      person_id: this.userInfo.id,
+      person_id: this.userInfo?.person?.id,
       forums_response_id: 0,
       respuesta: forms.comentario,
       pending_id: this.pending?.student_pending?.id || '',
