@@ -107,7 +107,7 @@
                       formControlName="id_rol"
 
                     >
-                      <nb-option *ngFor="let rol of roles; let i = index" [value]="rol.id" (click)="changeRol(rol)">{{ rol.name }}{{rol.area_name !== ""? '-': ''}}{{rol.area_name}}</nb-option>
+                      <nb-option *ngFor="let rol of roles; let i = index" [value]="rol" (click)="changeRol(rol)">{{ rol.name }}{{rol.area_name !== ""? '-': ''}}{{rol.area_name}}</nb-option>
                     </nb-select>
                   </div>
                   <div>

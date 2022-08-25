@@ -29,7 +29,8 @@ export class ReportCourseHomeComponent implements OnInit {
       facultades_unidades: [''],
       programa_estudio_id: [''],
       ciclo: [''],
-      id_estado: ['']
+      id_estado: [''],
+      buscar: ['']
     };
     this.formHeader = this.fb.group(controls);
   }

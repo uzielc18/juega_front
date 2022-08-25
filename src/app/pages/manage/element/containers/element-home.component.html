@@ -78,7 +78,13 @@
                     [value]="course.nombre"
                     (click)="toggleOption(course, i)"
                   >
-                    <div class="mb-1">{{ course.nombre }}</div>
+                    <div class="mb-1">
+                      <div style="width: 350px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden">{{ course.nombre }}</div>
+                      <div style="width: 300px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden">
+                        <small  class="label">{{course.programa_estudio_nombre}}</small><br>
+                      </div>
+                      <small class="label">ciclo: {{course.ciclo}} - {{course.grupo}}</small>
+                    </div>
                     <nb-select
                       size="small"
                       status="primary"
