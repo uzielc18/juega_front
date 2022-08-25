@@ -16,7 +16,6 @@ export class ReportCourseHomeComponent implements OnInit {
     {nombre: 'Sin calificar', value: 'SC'},
     {nombre: 'Próximos', value: 'PX'},
     {nombre: 'Re-Apertura', value: 'RA'},
-    //{nombre: 'Vencidos', value: 'V'}
   ];
   constructor(private fb: FormBuilder) { }
 
