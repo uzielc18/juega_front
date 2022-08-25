@@ -57,8 +57,8 @@
                 <control-messages [control]="formHeader.get('grupo')"></control-messages>
             </div>
         </div>
-        <br *ngIf="formHeader.value.host_key">
-        <div class="row" *ngIf="formHeader.value.host_key">
+        <br>
+        <div class="row">
             <label class="label col-md-4">Host key:</label>
             <div class="col-md-8">
                 <input type="text" fullWidth nbInput placeholder="Host" formControlName="host_key" fieldSize="small">
