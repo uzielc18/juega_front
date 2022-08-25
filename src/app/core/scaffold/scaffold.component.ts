@@ -284,10 +284,10 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     // this.roles = this.appService.rol.filter((rol: any) => ['Estudiante', 'Docente'].includes(rol.name));
     this.roles = this.appService.rol;
     if (this.roles.length > 0) {
-      const rolDefault = this.appService.user.person.role_id || '';
-      const rolDef = this.roles.find((r: any) => r.id === rolDefault);
-      if (rolDef && rolDef.id) {
-        this.formHeader.get('id_rol').patchValue(rolDef.id);
+      const rolDefault = this.appService.user.person.id_select || '';
+      const rolDef = this.roles.find((r: any) => r.id_select === rolDefault);
+      if (rolDef && rolDef.id_select) {
+        this.formHeader.get('id_rol').patchValue(rolDef);
         this.paramsSessionStorage.rol = rolDef;
         this.getSemestres(rolDef);
       } else {
@@ -352,10 +352,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   changeRol($event: any) {
-    console.log($event)
-    //const rol = this.roles.find((r: any) => r.id_select === $event.id_select);
-    const rol = this.roles.find((r: any) => r.id === $event.id);
+    const rol = this.roles.find((r: any) => r.id_select === $event.id_select);
     this.semestres = [];
+    this.formHeader.controls['id_rol'].setValue($event);
     this.formHeader.controls['id_semestre'].setValue('');
     this.formHeader.controls['carga'].setValue('2');
     this.formHeader.controls['cambioRol'].setValue('2');
@@ -423,7 +422,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
   reloadMenu() {
     this.MENU_ITEMS = [];
-    this.appService.getMenus(this.formHeader.value.id_rol);
+    this.appService.getMenus(this.formHeader.value.id_rol.id);
   }
   validUrlRouter(url:any) {
     const newStr = url.slice(1);
@@ -449,8 +448,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   saveChanges() {
     const object = this.semestres.find((r: any) => r.id === this.formHeader.value.id_semestre);
-    const rol = this.roles.find((r: any) => r.id === this.formHeader.value.id_rol);
-    if (object && object.id && rol && rol.id) {
+    const rol = this.roles.find((r: any) => r.id_select === this.formHeader.value.id_rol.id_select);
+    if (object && object.id && rol && rol.id_select) {
       this.updateSemestre(object, rol);
 
       if (this.validBlock.from === 'Asignaturas' && this.validBlock.status === true) {

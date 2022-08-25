@@ -11,14 +11,21 @@
           <label class="label">Buscar cuenta</label>
           <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar cuenta por correo" >
         </div>-->
-        <div class="col-lg-3">
+        <div class="col-md-4 mb-2 mb-md-0">
+          <label class="label">Filial</label>
+          <nb-select placeholder="Filial" size="small" status="primary" fullWidth formControlName="sede">
+            <nb-option>
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Facultades/Unidades</label>
           <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="facultades_unidades">
             <nb-option value="" disabled>Selecciona</nb-option>
             <nb-option></nb-option>
           </nb-select>
         </div>
-        <div class="col-lg-3">
+        <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Programa estudio</label>
           <!-- <app-input-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-input-select-search>
           <app-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-select-search>  -->
@@ -27,23 +34,29 @@
             <nb-option ></nb-option>
           </nb-select>
         </div>
-        <div class="col-lg-3">
+        <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Ciclo</label>
           <nb-select fullWidth size="small" formControlName="ciclo">
             <nb-option value="">Todos</nb-option>
             <nb-option *ngFor="let item of ciclos" [value]="item?.ciclo">{{item.ciclo}}</nb-option>
           </nb-select>
         </div>
-        <div class="col-lg-3">
+        <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Elemento</label>
           <nb-select placeholder="Estado" size="small" status="primary" fullWidth formControlName="id_estado">
             <nb-option value="">Todos</nb-option>
             <nb-option *ngFor="let estado of estados" [value]="estado?.value">{{ estado.nombre }}</nb-option>
           </nb-select>
         </div>
-        <div class="col-lg-3">
+
+        <div class="col-md-4 mb-2 mb-md-0">
+          <label class="label">Buscar</label>
+          <input nbInput type="text" fieldSize="small" fullWidth formControlName="buscar">
+        </div>
+        <div class="col-md-4 mb-2 mb-md-0 ms-auto">
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 mb-2 mb-md-0"></div>
+            <div class="col-sm-6 mb-2 mb-md-0">
               <label class="label" style="visibility: hidden;">Filtrar</label><br>
               <button nbButton fullWidth size="small" status="warning" ><nb-icon icon="funnel"></nb-icon>Filtrar</button>
             </div>
@@ -53,6 +66,56 @@
     </form>
   </nb-card-header>
   <nb-card-body>
-
+    <div class="d-flex justify-content-end" style="margin-bottom: 5px">
+      <button style="margin-right: 4px" nbButton size="tiny">csv</button>
+      <button style="margin-right: 4px" nbButton size="tiny">excel</button>
+      <button style="margin-right: 4px" nbButton size="tiny">pdf</button>
+      <button nbButton size="tiny">print</button>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px;">
+          <!-- <th style="width: 1px;">#</th> -->
+          <th style="width: 50px;" class="text-center">#</th>
+          <th style="width: 100px;">PR</th>
+          <th style="width: 100px;" class="text-center">Curso</th>
+          <th style="width: 100px;">Docente</th>
+          <th style="width: 100px;">H</th>
+          <th style="width: 100px;">Ciclo</th>
+          <th style="width: 100px;">Gr</th>
+          <!-- <th style="width: 1px;">Estado</th> -->
+          <th colspan="14" class="text-center" style="width: 10px;">
+            <div class="d-flex flex-grow-1 align-items-center text-center" style="background-color: #EFEFF1">
+              <small class="text-center flex-grow-1">semana</small><br>
+            </div>
+            <div class="d-flex justify-content-between">
+              <small>1</small>
+              <small>2</small>
+              <small>3</small>
+              <small>4</small>
+              <small>5</small>
+              <small>6</small>
+              <small>7</small>
+              <small>8</small>
+              <small>9</small>
+            </div>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="font-size: 12px; vertical-align: middle;">
+          <td class="text-center"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="text-center" style="color: brown; font-weight: bold;"></td>
+          <td style="vertical-align: middle;"> </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </nb-card-body>
 </nb-card>

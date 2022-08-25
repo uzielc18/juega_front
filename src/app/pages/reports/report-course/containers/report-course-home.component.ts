@@ -16,7 +16,6 @@ export class ReportCourseHomeComponent implements OnInit {
     {nombre: 'Sin calificar', value: 'SC'},
     {nombre: 'Próximos', value: 'PX'},
     {nombre: 'Re-Apertura', value: 'RA'},
-    //{nombre: 'Vencidos', value: 'V'}
   ];
   constructor(private fb: FormBuilder) { }
 
@@ -29,7 +28,8 @@ export class ReportCourseHomeComponent implements OnInit {
       facultades_unidades: [''],
       programa_estudio_id: [''],
       ciclo: [''],
-      id_estado: ['']
+      id_estado: [''],
+      buscar: ['']
     };
     this.formHeader = this.fb.group(controls);
   }
