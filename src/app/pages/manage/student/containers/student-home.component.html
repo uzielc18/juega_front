@@ -80,6 +80,11 @@
         </tbody>
       </table>
     </div>
+    <div class="text-center" *ngIf="listStudents.length === 0 && loading === false">
+      <h4 style="color: var(--color-primary-700)">Ups!!</h4>
+      <h6>No se encontraron resultados</h6>
+      <img src="assets/busqueda.png" alt="busqueda-upeu" width="300px">
+    </div>
   </nb-card-body>
   <nb-card-footer>
     <div class="d-flex justify-content-md-between justify-content-center align-items-center flex-wrap p-2">

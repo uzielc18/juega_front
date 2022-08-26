@@ -10,6 +10,8 @@ import {ControlMessagesModule} from "../../../shared/components/control-messages
 import {GeneralService} from "../../../providers";
 import {FilterPipeModule} from "../../../shared/pipes/filterPipe/filterPipe.module";
 import {NbTagModule} from "@nebular/theme";
+import {FilterModule} from "../../../shared/pipes/filter/filter.module";
+import {DirectiveModule} from "../../../shared/directives/highlight.module";
 
 const COMPONENTS: any[] = [
   ReportCourseComponent,
@@ -50,7 +52,9 @@ const PIPES: any = [
     ...NGX_MODULES,
     ...MODULES,
     ...PIPES,
-    NbTagModule
+    NbTagModule,
+    FilterModule,
+    DirectiveModule
   ],
   declarations: [...COMPONENTS],
   entryComponents: [...MODALS],
