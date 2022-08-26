@@ -14,24 +14,41 @@
         <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Filial</label>
           <nb-select placeholder="Filial" size="small" status="primary" fullWidth formControlName="sede">
-            <nb-option>
+            <nb-option *ngFor="let sede of sedes" [value]="sede" (click)="selectedSede(sede)"
+            >{{ sede?.nombre }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-4 mb-2 mb-md-0">
+          <label class="label">Nivel enseñanza</label>
+          <nb-select
+            placeholder="Nivel enseñanza"
+            size="small"
+            status="primary"
+            fullWidth
+            formControlName="nivel_ensenanza"
+          >
+            <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel" (click)="selectedNivel(nivel)"
+            >{{ nivel?.nombre }}
             </nb-option>
           </nb-select>
         </div>
         <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Facultades/Unidades</label>
-          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="facultades_unidades">
-            <nb-option value="" disabled>Selecciona</nb-option>
-            <nb-option></nb-option>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="facultad">
+            <nb-option *ngFor="let fac of facultades" [value]="fac" (click)="selectedFacultad(fac)"
+            >{{ fac?.nombre }}
+            </nb-option>
           </nb-select>
         </div>
         <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Programa estudio</label>
           <!-- <app-input-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-input-select-search>
           <app-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-select-search>  -->
-          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio">
             <!-- <nb-option value="">Todos</nb-option> -->
-            <nb-option ></nb-option>
+            <nb-option *ngFor="let prog of programa_estudios" [value]="prog" (click)="selectedProgramaEstudio(prog)">
+              {{ prog?.name_programa_estudio }}</nb-option>
           </nb-select>
         </div>
         <div class="col-md-4 mb-2 mb-md-0">
@@ -43,22 +60,62 @@
         </div>
         <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Elemento</label>
-          <nb-select placeholder="Estado" size="small" status="primary" fullWidth formControlName="id_estado">
+          <nb-select placeholder="Estado" size="small" status="primary" fullWidth formControlName="elemento">
             <nb-option value="">Todos</nb-option>
             <nb-option *ngFor="let estado of estados" [value]="estado?.value">{{ estado.nombre }}</nb-option>
           </nb-select>
         </div>
 
         <div class="col-md-4 mb-2 mb-md-0">
-          <label class="label">Buscar</label>
-          <input nbInput type="text" fieldSize="small" fullWidth formControlName="buscar">
+          <div class="row">
+
+          <label class="label">Buscar docente</label>
+            <div class="col-md 12">
+          <nb-form-field>
+            <nb-icon nbPrefix icon="search" pack="eva"></nb-icon>
+            <input
+              type="text"
+              status="primary"
+              fieldSize="small"
+              placeholder="Buscar Docente"
+              formControlName="termino"
+              (keypress)="searchTeachers()"
+              nbInput
+              fullWidth
+            />
+            <button *ngIf="resetTeacherButton" nbSuffix nbButton ghost status="danger" (click)="resetTeachers()">
+              <nb-icon icon="close-square-outline" pack="eva"> </nb-icon>
+            </button>
+          </nb-form-field>
+          <div *ngIf="showTeachers" class="position-relative" style="height: 0px">
+            <ul
+              class="list-group position-absolute top-0 w-100"
+              style="z-index: 9999; max-height: 500px; height: 50vh; overflow-y: auto"
+            >
+              <li
+                *ngFor="let item of listOfTeachers | appFilter: formHeader.value.termino:'nombres_completos'"
+                appHighlight
+                [searchedWord]="formHeader.value.termino"
+                [content]="item.nombres_completos | titlecase"
+                [classToApply]="'fw-bold'"
+                [setTitle]="true"
+                class="list-group-item py-1"
+                style="cursor: pointer"
+                (click)="setTeacher(item)"
+              >
+                {{ item.nombres_completos | titlecase }}
+              </li>
+            </ul>
+          </div>
+            </div>
+          </div>
         </div>
         <div class="col-md-4 mb-2 mb-md-0 ms-auto">
           <div class="row">
             <div class="col-sm-6 mb-2 mb-md-0"></div>
             <div class="col-sm-6 mb-2 mb-md-0">
               <label class="label" style="visibility: hidden;">Filtrar</label><br>
-              <button nbButton fullWidth size="small" status="warning" ><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+              <button nbButton fullWidth size="small" status="warning" (click)="filterReports()"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
             </div>
           </div>
         </div>
@@ -77,45 +134,43 @@
         <thead>
         <tr style="font-size: 12px;">
           <!-- <th style="width: 1px;">#</th> -->
-          <th style="width: 50px;" class="text-center">#</th>
-          <th style="width: 100px;">PR</th>
-          <th style="width: 100px;" class="text-center">Curso</th>
-          <th style="width: 100px;">Docente</th>
-          <th style="width: 100px;">H</th>
-          <th style="width: 100px;">Ciclo</th>
-          <th style="width: 100px;">Gr</th>
+          <th style="width: 5px" class="text-center">#</th>
+          <th style="width: 5px" class="text-center">PR</th>
+          <th style="width: 100px">Curso</th>
+          <th style="width: 100px">Docente</th>
+          <th style="width: 50px">H</th>
+          <th style="width: 50px">Ciclo</th>
+          <th style="width: 50px">Gr</th>
           <!-- <th style="width: 1px;">Estado</th> -->
-          <th colspan="14" class="text-center" style="width: 10px;">
-            <div class="d-flex flex-grow-1 align-items-center text-center" style="background-color: #EFEFF1">
-              <small class="text-center flex-grow-1">semana</small><br>
+          <th class="text-center" style="width: 25px" *ngFor="let i of count; let id = index">
+            <!--<div class="d-flex flex-grow-1 align-items-center text-center" style="background-color: #EFEFF1">
+              <small class="text-center flex-grow-1" style="font-weight: bold">SEMANAS DEL CICLO</small><br>
             </div>
-            <div class="d-flex justify-content-between">
-              <small>1</small>
-              <small>2</small>
-              <small>3</small>
-              <small>4</small>
-              <small>5</small>
-              <small>6</small>
-              <small>7</small>
-              <small>8</small>
-              <small>9</small>
-            </div>
+            <div class="d-flex justify-content-between ">
+              <small class="text-center flex-grow-1" ></small>
+            </div>-->
+            {{id + 1}}
           </th>
         </tr>
         </thead>
         <tbody>
-        <tr style="font-size: 12px; vertical-align: middle;">
-          <td class="text-center"></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td class="text-center" style="color: brown; font-weight: bold;"></td>
-          <td style="vertical-align: middle;"> </td>
+        <tr style="font-size: 12px; vertical-align: middle;" *ngFor="let item of data; let i = index">
+          <td class="text-center">{{i + 1}}</td>
+          <td >asd</td>
+          <td >{{item.course_nombre}}</td>
+          <td>{{item.teacher_nombre}}</td>
+          <td >{{item.ht}}</td>
+          <td >{{item.ciclo}}</td>
+          <td class="text-center" style="color: brown; font-weight: bold;">{{item.grupo}}</td>
+          <td class="text-center" style="vertical-align: middle;" *ngFor="let topcis of item.topics">-</td>
         </tr>
         </tbody>
       </table>
+    </div>
+    <div class="text-center" *ngIf="data.length === 0 && loading === false && success === true">
+      <h4 style="color: var(--color-primary-700)">Ups!!</h4>
+      <h6>No se encontraron resultados</h6>
+      <img src="assets/busqueda.png" alt="busqueda-upeu" width="300px">
     </div>
   </nb-card-body>
 </nb-card>

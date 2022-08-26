@@ -15,7 +15,7 @@
         <div class="row m-0" style="min-height: 100%">
           <div class="col px-0 px-md-3">
             <div class="row m-0 px-4">
-              <h2 class="fs-2 text-white mx-1">{{ curso?.nombre }}</h2>
+              <h2 class="fs-2 text-white mx-1">{{ curso?.nombre }} {{curso?.ciclo !== null? 'Ciclo:': ''}} {{curso?.ciclo}} - {{curso?.grupo}}</h2>
               <small
                 style="
                   background: linear-gradient(to right, var(--text-primary-color), transparent);

@@ -21,6 +21,7 @@ export const END_POINTS = {
     activities_evaluations: 'activities-evaluations-resume',
     rubrics: 'rubricas',
     calendar: 'calendar',
+    reportes: 'reportes',
     evaluations_Registry: 'evaluations-registry',
     inquiries: 'inquiries',
     persons: 'persons'
