@@ -13,6 +13,7 @@ export class ReportCourseHomeComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
   count: any = [];
+  countTD: any = [];
   success: any;
   data: any = [];
   sedes: any = [];
@@ -27,16 +28,21 @@ export class ReportCourseHomeComponent implements OnInit {
 
   ciclos: any = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
   estados: any[] = [
-    {nombre: 'Calificados', value: 'CA'},
-    {nombre: 'Sin calificar', value: 'SC'},
-    {nombre: 'Próximos', value: 'PX'},
-    {nombre: 'Re-Apertura', value: 'RA'},
+    {nombre: 'Trabajo', value: 'TRA'},
+    {nombre: 'Video', value: 'VIDE'},
+    {nombre: 'Enlace', value: 'ENLA'},
+    {nombre: 'Foro', value: 'FORO'},
+    {nombre: 'Documento', value: 'DOC'},
+    {nombre: 'Clase grabada', value: 'CLG'},
+    {nombre: 'Evaluación', value: 'EVA'}
+
   ];
   constructor(private fb: FormBuilder,
               private generalService: GeneralService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
+
   }
 
   private fieldReactive() {
@@ -49,13 +55,14 @@ export class ReportCourseHomeComponent implements OnInit {
       ciclo: [''],
       elemento:[''],
       termino: [''],
-      id_docente: ['']
+      id_docente: [''],
+      id_programa_estudio: ['']
     };
     this.formHeader = this.fb.group(controls);
     this.listSedes();
     this.getListOfTeachers();
-      for (let i = 0; i < 20; i++) {
-        this.count.push(i)
+    for (let i = 0; i < 17; i++) {
+      this.count.push(i)
     }
   }
   get rolSemestre() {
@@ -171,6 +178,7 @@ export class ReportCourseHomeComponent implements OnInit {
       );
     }
   }
+
   selectedSede(sede: any) {
     this.formHeader.controls['sede'].setValue(sede);
     this.formHeader.controls['nivel_ensenanza'].enable();
@@ -201,6 +209,7 @@ export class ReportCourseHomeComponent implements OnInit {
   }
   selectedProgramaEstudio(prog: any) {
     this.formHeader.controls['programa_estudio'].setValue(prog);
+    this.formHeader.controls['id_programa_estudio'].setValue(prog.id)
   }
   searchTeachers() {
     this.showTeachers = true;
@@ -209,6 +218,7 @@ export class ReportCourseHomeComponent implements OnInit {
 
   resetTeachers() {
     this.formHeader.controls['termino'].setValue('');
+    this.formHeader.controls['id_docente'].setValue('');
     this.resetTeacherButton = false;
     this.showTeachers = false;
   }
@@ -217,22 +227,84 @@ export class ReportCourseHomeComponent implements OnInit {
     this.formHeader.controls['termino'].setValue(teacher.nombres_completos);
     this.formHeader.controls['id_docente'].setValue(teacher.id);
   }
+  selectElement(element: any){
+      const a = this.data.map((m: any) => {
+          m.topics.map((t: any) => {
+            if(element.value === 'TRA'){
+              t.elementoEST = t.trabajo
+            }
+            if(element.value === 'VIDE'){
+              t.elementoEST = t.video
+            }
+            if(element.value === 'ENLA'){
+              t.elementoEST = t.enlace
+            }
+            if(element.value === 'FORO'){
+              t.elementoEST = t.foro
+            }
+            if(element.value === 'DOC'){
+              t.elementoEST = t.documento
+            }
+            if(element.value === 'CLG'){
+              t.elementoEST = t.clase_grabada
+            }
+            if(element.value === 'EVA'){
+              t.elementoEST = t.evaluacion
+            }
+          })
+      })
+  }
     filterReports(){
-    console.log(this.formHeader.get('termino').value)
     const serviceName = END_POINTS.base_back.reportes + '/cursos';
     const sede = this.formHeader.get('sede').value.id;
     const nivel_ensenanza = this.formHeader.get('nivel_ensenanza').value.id;
     const sede_area = this.formHeader.get('facultad').value.id;
     const params = {
       semester_id: this.rolSemestre.semestre.id,
-      docente : this.formHeader.get('id_docente').value
+      programa_estudio_id: this.formHeader.get('id_programa_estudio').value || '',
+      docente : this.formHeader.get('id_docente').value || '',
+      ciclo: this.formHeader.value.ciclo || ''
     }
     this.loading = true;
     this.generalService.nameIdAndIdAndIdParams$(serviceName, sede, nivel_ensenanza, sede_area, params).subscribe(res => {
-        this.data = res.data
-       if(res.success){
-         this.success = true
-       }
+        this.data = res.data;
+        this.data.map((m: any) => {
+              if(m.topics.length === 0){
+                m.guion = '-'
+              }
+              return m.topics.map((t: any) => {
+                t.elementoEST = t.trabajo;
+              })
+        })
+             if(res.success){
+               this.success = true;
+               this.count = [];
+               this.elemetsFor(this.data);
+
+
+             }
     }, ()=> {this.loading = false}, () => {this.loading = false})
+  }
+  elemetsFor(item: any){
+    const arr: any = [];
+    item.forEach((m: any) => {
+      arr.push(m.topics.length);
+    })
+    let v = Math.max(...arr)
+    for (let i = 0; i < v; i++) {
+      this.count.push(i)
+    }
+    item.map((m: any) => {
+      let s = v - m.topics.length;
+      m.tdGuion = 0
+      if(m.topics.length !== 0){
+        m.tdGuion = s
+        for (let i = 0; i < m.tdGuion; i++) {
+          this.countTD.push(i)
+        }
+      }
+      console.log(m.tdGuion)
+    })
+
   }
 }
