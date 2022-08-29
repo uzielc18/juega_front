@@ -12,6 +12,7 @@ import {FilterPipeModule} from "../../../shared/pipes/filterPipe/filterPipe.modu
 import {NbTagModule} from "@nebular/theme";
 import {FilterModule} from "../../../shared/pipes/filter/filter.module";
 import {DirectiveModule} from "../../../shared/directives/highlight.module";
+import {NgxPrintModule} from "ngx-print";
 
 const COMPONENTS: any[] = [
   ReportCourseComponent,
@@ -43,19 +44,20 @@ const PIPES: any = [
   providers: [
     ...SERIVCES,
   ],
-  imports: [
-    ReportCourseRoutingModule,
-    CommonModule,
-    ...NG_MODULES,
-    ...NGB_MODULES,
-    ...CONTROL_MESSAGGE,
-    ...NGX_MODULES,
-    ...MODULES,
-    ...PIPES,
-    NbTagModule,
-    FilterModule,
-    DirectiveModule
-  ],
+    imports: [
+        ReportCourseRoutingModule,
+        CommonModule,
+        ...NG_MODULES,
+        ...NGB_MODULES,
+        ...CONTROL_MESSAGGE,
+        ...NGX_MODULES,
+        ...MODULES,
+        ...PIPES,
+        NbTagModule,
+        FilterModule,
+        DirectiveModule,
+        NgxPrintModule
+    ],
   declarations: [...COMPONENTS],
   entryComponents: [...MODALS],
 })
