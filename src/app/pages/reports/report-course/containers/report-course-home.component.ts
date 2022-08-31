@@ -303,7 +303,6 @@ export class ReportCourseHomeComponent implements OnInit {
           this.countTD.push(i)
         }
       }
-      console.log(m.tdGuion)
     })
 
   }

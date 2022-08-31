@@ -115,7 +115,7 @@
             <div class="col-sm-6 mb-2 mb-md-0"></div>
             <div class="col-sm-6 mb-2 mb-md-0">
               <label class="label" style="visibility: hidden;">Filtrar</label><br>
-              <button nbButton fullWidth size="small" status="warning" (click)="filterReports()" [disabled]="formHeader.invalid"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+              <button nbButton fullWidth size="small" status="warning" (click)="filterReports()" [disabled]="formHeader.controls['termino'].value || formHeader.invalid"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
             </div>
           </div>
         </div>
@@ -182,7 +182,7 @@
               <div ></div>
               </td>
           </ng-container>
-          <td class="text-center">0</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500); font-size: 15px">0</td>
 
         </tr>
         </tbody>
