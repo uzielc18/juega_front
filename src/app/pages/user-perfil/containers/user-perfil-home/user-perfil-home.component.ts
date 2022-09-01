@@ -19,6 +19,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
   loading: boolean = false
   person: any;
   notas: any = [];
+  listCourses: any = [];
   datoSubscription: any = Subscription;
   constructor( private generalService: GeneralService,
                private userService: AppService,
@@ -59,16 +60,36 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
       if(res.success){
         this.profile = res.data;
         this.getEvaluaciones(this.profile?.user?.person);
+        this.getCourses(this.profile?.person.id)
       }
-    }, () => {this.loading = false;}, () => {this.loading = false})
+    })
   }
   getEvaluaciones(person: any){
     const serviceName = END_POINTS.base_back.persons + '/reporte-notas';
-    this.loading= true
       this.person = this.profile?.user.person
       this.generalService.nameId$(serviceName, person?.id).subscribe(res => {
         this.notas = res.data
-      }, () => {this.loading = false}, () => {this.loading = false})
+      })
+  }
+  getCourses(person: any) {
+    const serviceName = END_POINTS.base_back.default + 'course-list';
+    const params = {
+      semester_id: this.rolSemestre.semestre.id,
+    };
+    const person_id = person;
+    this.generalService.nameIdParams$(serviceName, person_id, params).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.listCourses = res.data
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
 
 }

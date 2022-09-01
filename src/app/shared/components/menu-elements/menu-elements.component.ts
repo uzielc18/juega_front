@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { GeneralService } from '../../../providers';
 import { END_POINTS } from '../../../providers/utils';
 
@@ -13,6 +13,7 @@ export class MenuElementsComponent implements OnInit {
   clickedIndex: number = 0;
   hoveredIndex: any;
   @Output() loadingsMenu: EventEmitter<boolean> = new EventEmitter();
+  @Input() cod: any;
   constructor(private menuElements: GeneralService) {}
 
   ngOnInit(): void {
@@ -24,6 +25,11 @@ export class MenuElementsComponent implements OnInit {
     this.loadingsMenu.emit(true);
     this.menuElements.nameAll$(serviceName).subscribe(({ data: elements }) => {
       this.elements = elements || [];
+      if(this.cod === 'cod'){
+        this.elements = this.elements.filter((f: any) => {
+          return f.codigo !== 'EVAL'
+        })
+      }
       if (this.elements.length>0) {
           this.selectedElement(this.elements[0]);
       }
