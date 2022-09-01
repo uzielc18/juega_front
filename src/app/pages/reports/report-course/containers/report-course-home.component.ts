@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {END_POINTS} from "../../../../providers/utils";
 import {GeneralService} from "../../../../providers";
 
@@ -28,7 +28,7 @@ export class ReportCourseHomeComponent implements OnInit {
 
   ciclos: any = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
   estados: any[] = [
-    {nombre: 'todos', values: 'TODO'},
+    {nombre: 'Todos', value: 'TODO'},
     {nombre: 'Trabajo', value: 'TRA'},
     {nombre: 'Video', value: 'VIDE'},
     {nombre: 'Enlace', value: 'ENLA'},
@@ -38,6 +38,7 @@ export class ReportCourseHomeComponent implements OnInit {
     {nombre: 'Evaluación', value: 'EVA'}
 
   ];
+  elemento: any = new FormControl('');
   constructor(private fb: FormBuilder,
               private generalService: GeneralService) { }
 
@@ -54,7 +55,6 @@ export class ReportCourseHomeComponent implements OnInit {
       programa_estudio: [{ value: '', disabled: true }],
       semestre: [this.rolSemestre.semestre.nombre || '', [Validators.required]],
       ciclo: [''],
-      elemento:[''],
       termino: [''],
       id_docente: [''],
       id_programa_estudio: ['']
