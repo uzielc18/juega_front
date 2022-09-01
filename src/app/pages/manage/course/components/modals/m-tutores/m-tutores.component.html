@@ -31,17 +31,17 @@
                   style="z-index: 9999; max-height: 500px; height: 50vh; overflow-y: auto"
                 >
                   <li
-                    *ngFor="let item of listOfTeachers | appFilter: formHeader.value.teacherToImportName:'nombres_completos'"
+                    *ngFor="let item of listOfTeachers | appFilter: formHeader.value.teacherToImportName:'nombreCompletos'"
                     appHighlight
                     [searchedWord]="formHeader.value.teacherToImportName"
-                    [content]="item.nombres_completos | titlecase"
+                    [content]="item.nombreCompletos | titlecase"
                     [classToApply]="'fw-bold'"
                     [setTitle]="true"
                     class="list-group-item list-group-item-action py-1"
                     style="cursor: pointer"
                     (click)="setTeacherToImport(item)"
                   >
-                    {{ item.nombres_completos | titlecase }}
+                    {{item.nombreCompletos | titlecase }}
                   </li>
                 </ul>
               </div>

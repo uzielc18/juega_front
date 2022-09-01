@@ -30,11 +30,11 @@ export class PublicConfigQuestionComponent implements OnInit, OnChanges {
       this.examInfo = JSON.parse(JSON.stringify(this.examInfo));
       // console.log(this.examInfo, 'daos');
     }
-    
+
   }
   ngOnInit(): void {
     this.fieldReactive();
-    
+
   }
   private fieldReactive() {
     const controls = {
@@ -61,7 +61,7 @@ export class PublicConfigQuestionComponent implements OnInit, OnChanges {
       this.setObjectUpdate();
     }
   }
- 
+
   setObjectUpdate() {
     if (this.item) {
           const f_h_ini = this.item.fecha_inicio.split(' ');
@@ -120,7 +120,7 @@ export class PublicConfigQuestionComponent implements OnInit, OnChanges {
     return '';
   }
   valueToogle($event:any) {
-    // console.log($event);
+     //console.log($event);
     if (!$event) {
       this.formHeader.controls['tipo_supervisado'].setValue('0');
     }

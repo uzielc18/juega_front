@@ -9,7 +9,7 @@
     <div class="row p-0 m-0">
       <div class="col-md-3 menu-container p-2 pe-0">
         <p class="fw-bold menu-title pe-2" style="font-size: 12px">¿ Que recurso o actividad deseas añadir al curso?</p>
-        <app-menu-elements (onSelect)="selectedElement($event)" (loadingsMenu)="loadingsMenu($event)"></app-menu-elements>
+        <app-menu-elements [cod] = "'cod'" (onSelect)="selectedElement($event)" (loadingsMenu)="loadingsMenu($event)"></app-menu-elements>
       </div>
       <div class="col-md-9">
         <div *ngIf="element" class="col-md-12 px-0 d-flex align-items-center justify-content-between">
@@ -60,7 +60,7 @@
             ></app-vidio-conference>
           </div>
 
-          <div class="form mt-4 px-5" *ngIf="['EVAL'].includes(element?.codigo)">
+          <!--<div class="form mt-4 px-5" *ngIf="['EVAL'].includes(element?.codigo)">
 
              <app-evaluations
               (loadingsForm)="loadingsForm($event)"
@@ -68,7 +68,7 @@
               [valueMenu]="element"
               [code]="code"
             ></app-evaluations>
-          </div>
+          </div>-->
 
           <div class="form mt-4 px-5" *ngIf="['DOC'].includes(element?.codigo)">
              <app-documents

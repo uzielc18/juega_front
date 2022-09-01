@@ -28,6 +28,7 @@ export class ReportCourseHomeComponent implements OnInit {
 
   ciclos: any = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
   estados: any[] = [
+    {nombre: 'todos', values: 'TODO'},
     {nombre: 'Trabajo', value: 'TRA'},
     {nombre: 'Video', value: 'VIDE'},
     {nombre: 'Enlace', value: 'ENLA'},
@@ -230,6 +231,9 @@ export class ReportCourseHomeComponent implements OnInit {
   selectElement(element: any){
       const a = this.data.map((m: any) => {
           m.topics.map((t: any) => {
+            if(element.value === 'TODO'){
+              t.elementoEST = t.total
+            }
             if(element.value === 'TRA'){
               t.elementoEST = t.trabajo
             }
@@ -256,9 +260,9 @@ export class ReportCourseHomeComponent implements OnInit {
   }
     filterReports(){
     const serviceName = END_POINTS.base_back.reportes + '/cursos';
-    const sede = this.formHeader.get('sede').value.id;
-    const nivel_ensenanza = this.formHeader.get('nivel_ensenanza').value.id;
-    const sede_area = this.formHeader.get('facultad').value.id;
+    const sede = this.formHeader.get('sede').value.id || 0;
+    const nivel_ensenanza = this.formHeader.get('nivel_ensenanza').value.id || 0;
+    const sede_area = this.formHeader.get('facultad').value.id || 0;
     const params = {
       semester_id: this.rolSemestre.semestre.id,
       programa_estudio_id: this.formHeader.get('id_programa_estudio').value || '',
@@ -273,7 +277,7 @@ export class ReportCourseHomeComponent implements OnInit {
                 m.guion = '-'
               }
               return m.topics.map((t: any) => {
-                t.elementoEST = t.trabajo;
+                t.elementoEST = t.total;
               })
         })
              if(res.success){
@@ -298,9 +302,10 @@ export class ReportCourseHomeComponent implements OnInit {
       let s = v - m.topics.length;
       m.tdGuion = 0
       if(m.topics.length !== 0){
-        m.tdGuion = s
-        for (let i = 0; i < m.tdGuion; i++) {
-          this.countTD.push(i)
+        m.tdGuion = [];
+
+        for (let i = 0; i < s; i++) {
+          m.tdGuion.push(i);
         }
       }
     })

@@ -1,5 +1,6 @@
 
 <form [formGroup]="formHeader">
+  {{item|json}}
     <div>
         <label class="label">Título</label>
         <input type="text" nbInput fullWidth formControlName="titulo" fieldSize="small">
@@ -75,7 +76,7 @@
             <nb-toggle status="basic" formControlName="mostrar_nota">Mostrar nota</nb-toggle>
         </div>
         <div class="col-md-4">
-            <nb-toggle status="basic" formControlName="supervisado" (checkedChange)="valueToogle($event)">Supervisado</nb-toggle>
+            <nb-toggle status="basic" formControlName="supervisado" (checkedChange)="valueToogle($event)" [disabled]="item.id_programa_estudio !== 78 ||item.id_programa_estudio !== 20 ">Supervisado</nb-toggle>
         </div>
     </div>
     <div class="row">
@@ -91,8 +92,7 @@
             <label class="label">Tipo de supervisión</label>
             <nb-select fullWidth size="small" formControlName="tipo_supervisado" [disabled]="!formHeader.value.supervisado">
                 <nb-option value="0">Sin supervisión</nb-option>
-                <nb-option value="1">Examen de admisión</nb-option>
-                <nb-option value="2">Examen</nb-option>
+                <nb-option value="PROCTORIZER">Supervisado por proctorizer</nb-option>
             </nb-select>
             <control-messages [control]="formHeader.get('tipo_supervisado')"></control-messages>
         </div>

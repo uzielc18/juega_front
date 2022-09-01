@@ -243,7 +243,7 @@ export class MCourseFreeComponent implements OnInit {
         this.filteredOptions$ = [];
         let serviceName = 'search-teach-student';
         const params = {
-          datos: $event.target.value,
+          q: $event.target.value,
         };
         this.service.nameParams$(serviceName, params).subscribe((res:any) => {
           this.filteredOptions$ = res.data || [];

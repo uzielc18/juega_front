@@ -58,13 +58,7 @@
             <nb-option *ngFor="let item of ciclos" [value]="item?.ciclo">{{item.ciclo}}</nb-option>
           </nb-select>
         </div>
-        <div class="col-md-4 mb-2 mb-md-0">
-          <label class="label">Elemento</label>
-          <nb-select placeholder="Estado" size="small" status="primary" fullWidth formControlName="elemento">
-            <nb-option value="" disabled>Seleccione</nb-option>
-            <nb-option *ngFor="let estado of estados" [value]="estado?.value" (click)="selectElement(estado)">{{ estado.nombre }}</nb-option>
-          </nb-select>
-        </div>
+
 
         <div class="col-md-4 mb-2 mb-md-0">
           <div class="row">
@@ -123,7 +117,12 @@
     </form>
   </nb-card-header>
   <nb-card-body>
-    <div class="d-flex justify-content-end" style="margin-bottom: 5px">
+    <div class="d-flex justify-content-end align-items-center" style="margin-bottom: 5px">
+      <div class="col-md-2 mb-2 mb-md-0" style="margin-right: 4px">
+        <nb-select placeholder="Elemento" size="tiny" status="primary" fullWidth formControlName="elemento">
+          <nb-option *ngFor="let estado of estados" [value]="estado?.value" (click)="selectElement(estado)">{{ estado.nombre }}</nb-option>
+        </nb-select>
+      </div>
       <button style="margin-right: 4px" nbButton size="tiny">csv</button>
       <button style="margin-right: 4px" nbButton size="tiny">excel</button>
       <!--<button style="margin-right: 4px" nbButton size="tiny">pdf</button>-->
@@ -134,7 +133,9 @@
     </div>
     <div class="table-responsive" id="print-report-course">
       <table class="table table-sm">
+
         <thead>
+
         <tr style="font-size: 12px;">
           <!-- <th style="width: 1px;">#</th> -->
           <th style="width: 2px" class="text-center">#</th>
@@ -144,17 +145,19 @@
           <th class="text-center" style="width: 5px">H</th>
           <th  class="text-center" style="width: 50px">Ciclo</th>
           <th  class="text-center" style="width: 50px">Gr</th>
-          <!-- <th style="width: 1px;">Estado</th> -->
-          <th style="width: 25px" *ngFor="let i of count; let id = index">
-            {{i + 1}}
+          <th class="text-center" style="background-color: #F7F9FC">
+            <small style="font-weight: bold; "> SEMANAS DEL CICLO</small>
+            <div class="table-responsive">
+            <table class="table table-sm" style="margin: 0">
+              <tr>
+                <th class="text-center" style="width: 50px" *ngFor="let i of count; let id = index">
+                  {{i + 1}}
+                </th>
+              </tr>
+            </table>
+            </div>
           </th>
-          <th style="width: 25px" class="text-center">Total</th>
-          <!-- <div class="d-flex flex-grow-1 align-items-center text-center" style="background-color: #EFEFF1">
-             <small class="text-center flex-grow-1" style="font-weight: bold">SEMANAS DEL CICLO</small><br>
-           </div>
-           <div class="d-flex justify-content-between flex-row" >
-             <small  *ngFor="let i of count; let id = index">{{i + 1}}</small>
-           </div>-->
+          <th class="text-center">Total</th>
         </tr>
         </thead>
         <tbody>
@@ -166,23 +169,31 @@
           <td class="text-center">{{item.ht}}</td>
           <td class="text-center">{{item.ciclo}}</td>
           <td class="text-center" style="color: brown; font-weight: bold;">{{item.grupo}}</td>
-          <ng-container *ngIf="item.topics.length === 0">
-            <td *ngFor="let i of count; let id = index">
-             {{item.guion}}
+            <td  *ngIf="item.topics.length === 0">
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <tr>
+                    <td  class="text-center" style="width: 50px" *ngFor="let i of count; let id = index">
+                      {{item.guion}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
             </td>
-          </ng-container>
+          <td  style="vertical-align: middle;" *ngIf="item.topics.length !== 0">
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <tr>
+                  <td class="text-center" style="width: 50px" *ngFor="let topics of item.topics">{{topics.elementoEST}}</td>
+                  <ng-container *ngIf="item.tdGuion !== 0 && item.topics.length !== 0">
+                    <td class="text-center" style="width: 50px" *ngFor="let count of item.tdGuion ;let  i = index">-</td>
+                  </ng-container>
 
-          <td style="vertical-align: middle;" *ngFor="let topics of item.topics">
-            <div>
-              {{topics.elementoEST}}
+                </tr>
+              </table>
             </div>
           </td>
-          <ng-container *ngIf="item.tdGuion !== 0 && item.topics.length !== 0">
-            <td [colSpan]="item.tdGuion">
-              <div ></div>
-              </td>
-          </ng-container>
-          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500); font-size: 15px">0</td>
+          <td class="text-center" style="font-size: 15px; font-weight: bold; color: var(--color-primary-500)">0</td>
 
         </tr>
         </tbody>

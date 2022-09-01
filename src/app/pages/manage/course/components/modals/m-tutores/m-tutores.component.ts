@@ -38,12 +38,15 @@ export class MTutoresComponent implements OnInit {
   }
 
   getListOfTeachers() {
-      const serviceName = END_POINTS.base_back.default + 'get-teachers';
+      const serviceName = END_POINTS.base_back.default + 'person-teach';
       this.loading = true;
       this.generalService.nameAll$(serviceName).subscribe(
         (res: any) => {
           if (res.success) {
             this.listOfTeachers = res.data;
+            this.listOfTeachers.map((m: any) => {
+              m.nombreCompletos = m.apellido_paterno + ' ' + m.apellido_materno + ' ' +  m.nombres;
+            })
           }
         });
 
@@ -55,7 +58,7 @@ export class MTutoresComponent implements OnInit {
   }
   setTeacherToImport(teacher: any) {
     this.showTeachersToImport = false;
-    this.formHeader.controls['teacherToImportName'].setValue(teacher.nombres_completos);
+    this.formHeader.controls['teacherToImportName'].setValue(teacher.nombreCompletos);
     this.formHeader.controls['idteacherToImportName'].setValue(teacher.id)
   }
   resetTeachersToImport(){

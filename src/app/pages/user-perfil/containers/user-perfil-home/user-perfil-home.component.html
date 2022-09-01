@@ -21,6 +21,9 @@
         <nb-card class="curso-container" style="margin-top: -10px">
           <nb-card-body style="background-color: #f7f7f7; position: relative" class="p-0">
             <nb-tabset>
+              <nb-tab tabTitle="Cursos" *ngIf="rolSemestre?.rol?.name !== 'Estudiante' && rolSemestre?.rol?.name !== 'Docente' || profile?.user?.person?.id === me">
+                <app-tabs-cursos *ngIf="loading === false" [profile] = "profile" [listCourses]="listCourses"></app-tabs-cursos>
+              </nb-tab>
               <nb-tab tabTitle="Reportes notas" *ngIf="rolSemestre?.rol?.name !== 'Estudiante' && rolSemestre?.rol?.name !== 'Docente' || profile?.user?.person?.id === me ">
                 <app-tabs-reporte-notas [profile] = 'profile' [notas]="notas"></app-tabs-reporte-notas>
               </nb-tab>

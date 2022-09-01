@@ -1,9 +1,9 @@
 <div class="row" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
   <div class="col-md-8">
-    <nb-card status="primary">
+    <nb-card status="primary" *ngIf="listCourses.cursos_estudiante?.length !== 0">
       <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Cursos Estudiante </nb-card-header>
       <nb-card-body>
-        <nb-card *ngFor="let cursoEst of studentCourses" class="mb-2">
+        <nb-card *ngFor="let cursoEst of listCourses.cursos_estudiante" class="mb-2">
           <nb-card-body class="p-2 ps-0">
             <div class="row m-0">
               <div class="col-md-2 p-0">
@@ -21,14 +21,14 @@
               </div>
               <div class="col-md-9 p-0">
                 <div class="d-flex flex-column">
-                  <p class="mb-0 fw-bold" style="font-size: 16px">({{cursoEst?.id_carga_curso}}) {{ cursoEst?.course_nombre }}</p>
+                  <p class="mb-0 fw-bold" style="font-size: 16px"> ({{cursoEst?.id_carga_curso}}) {{ cursoEst?.course_nombre }}</p>
                   <span class="text-secondary" style="font-size: 12px">{{ cursoEst?.person_teacher_nombre }}</span>
                   <span class="text-secondary" style="font-size: 12px">
                     {{ cursoEst?.programa_estudio_nombre }} - Ciclo {{ cursoEst?.ciclo }} - Grupo {{ cursoEst?.grupo }}
                   </span>
                 </div>
               </div>
-              <div class="col-md-1">
+              <!--<div class="col-md-1" *ngIf="rolSemestre?.rol?.name === 'Admin'">
                 <div
                   style="cursor: pointer"
                   class="d-flex h-100 justify-content-end align-items-center"
@@ -38,16 +38,16 @@
                 >
                   <nb-icon icon="trash-2-outline" status="danger" style="font-size: 30px"></nb-icon>
                 </div>
-              </div>
+              </div>-->
             </div>
           </nb-card-body>
         </nb-card>
       </nb-card-body>
     </nb-card>
-    <nb-card status="primary">
+    <nb-card status="primary" *ngIf="listCourses.cursos_docente?.length !== 0">
       <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Cursos Docente </nb-card-header>
       <nb-card-body>
-        <nb-card *ngFor="let cursoDoc of teacherCourses" class="mb-2">
+        <nb-card *ngFor="let cursoDoc of listCourses.cursos_docente" class="mb-2">
           <nb-card-body class="p-2 ps-0">
             <div class="row m-0">
               <div class="col-md-2 p-0">
@@ -78,10 +78,10 @@
         </nb-card>
       </nb-card-body>
     </nb-card>
-    <nb-card status="primary">
+    <nb-card status="primary" *ngIf="listCourses.cursos_tutor?.length !== 0">
       <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Cursos Tutor </nb-card-header>
       <nb-card-body>
-        <nb-card *ngFor="let cursoTut of tutorCourses" class="mb-2">
+        <nb-card *ngFor="let cursoTut of listCourses.cursos_tutor" class="mb-2">
           <nb-card-body class="p-2 ps-0">
             <div class="row m-0">
               <div class="col-md-2 p-0">
@@ -106,37 +106,21 @@
                   </span>
                 </div>
               </div>
-              <div class="col-md-1">
+              <!--<div class="col-md-1" *ngIf="rolSemestre?.rol?.name === 'Admin'">
                 <div
                   style="cursor: pointer"
                   class="d-flex h-100 justify-content-end align-items-center"
-                  (click)="deleteTutorEnrollment(cursoTut)"
                   nbTooltip="Eliminar matricula"
+                  (click)="deleteTutorEnrollment(cursoTut)"
                   nbTooltipStatus="danger"
                 >
                   <nb-icon icon="trash-2-outline" status="danger" style="font-size: 30px"></nb-icon>
                 </div>
-              </div>
+              </div>-->
             </div>
           </nb-card-body>
         </nb-card>
       </nb-card-body>
     </nb-card>
-  </div>
-  <div class="col-md-4">
-    <div class="row">
-      <div class="col-12">
-        <nb-card status="primary">
-          <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Progreso del Estudiante </nb-card-header>
-          <nb-card-body></nb-card-body>
-        </nb-card>
-      </div>
-      <div class="col-12">
-        <nb-card status="primary">
-          <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Preguntas sin Responder </nb-card-header>
-          <nb-card-body></nb-card-body>
-        </nb-card>
-      </div>
-    </div>
   </div>
 </div>

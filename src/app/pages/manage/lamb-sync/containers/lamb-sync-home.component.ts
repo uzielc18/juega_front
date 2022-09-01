@@ -504,7 +504,7 @@ export class LambSyncHomeComponent implements OnInit {
     }
   }
   searchStudent() {
-    const serviceName = END_POINTS.base_back.default + 'person-search';
+    const serviceName = END_POINTS.base_back.default + '/search-teach-student';
     if (this.formHeader.get('termino').value !== '') {
       this.formHeader.controls['termino'].valueChanges
         .pipe(
