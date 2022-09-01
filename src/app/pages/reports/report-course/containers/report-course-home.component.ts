@@ -13,7 +13,7 @@ export class ReportCourseHomeComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
   count: any = [];
-  countTD: any = [];
+  maxValor: any = 17;
   success: any;
   data: any = [];
   sedes: any = [];
@@ -23,8 +23,7 @@ export class ReportCourseHomeComponent implements OnInit {
   listOfTeachers: any = [];
   showTeachers: boolean = false;
   resetTeacherButton: boolean = false;
-  showTeachersToImport: boolean = false;
-  resetTeacherImportButton: boolean = false;
+
 
   ciclos: any = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
   estados: any[] = [
@@ -44,7 +43,6 @@ export class ReportCourseHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldReactive();
-
   }
 
   private fieldReactive() {
@@ -65,6 +63,7 @@ export class ReportCourseHomeComponent implements OnInit {
     for (let i = 0; i < 17; i++) {
       this.count.push(i)
     }
+
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -294,7 +293,8 @@ export class ReportCourseHomeComponent implements OnInit {
     item.forEach((m: any) => {
       arr.push(m.topics.length);
     })
-    let v = Math.max(...arr)
+     let v = Math.max(...arr)
+    this.maxValor = v
     for (let i = 0; i < v; i++) {
       this.count.push(i)
     }

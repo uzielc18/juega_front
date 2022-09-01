@@ -118,9 +118,9 @@
   </nb-card-header>
   <nb-card-body>
     <div class="d-flex justify-content-end align-items-center" style="margin-bottom: 5px">
-      <div class="col-md-2 mb-2 mb-md-0" style="margin-right: 4px">
+      <div class="" style="margin-right: 4px">
         <nb-select placeholder="Elemento" size="tiny" status="primary" fullWidth [formControl]="elemento">
-          <nb-option *ngFor="let estado of estados" [value]="estado?.value" (click)="selectElement(estado)">{{ estado.nombre }}</nb-option>
+          <nb-option *ngFor="let estado of estados"  [value]="estado?.value" (click)="selectElement(estado)">{{ estado.nombre }}</nb-option>
         </nb-select>
       </div>
       <button style="margin-right: 4px" nbButton size="tiny">csv</button>
@@ -138,26 +138,22 @@
 
         <tr style="font-size: 12px;">
           <!-- <th style="width: 1px;">#</th> -->
-          <th style="width: 2px" class="text-center">#</th>
-          <th style="width: 2px" class="text-center">PR</th>
-          <th style="width: 100px">Curso</th>
-          <th style="width: 100px">Docente</th>
-          <th class="text-center" style="width: 5px">H</th>
-          <th  class="text-center" style="width: 50px">Ciclo</th>
-          <th  class="text-center" style="width: 50px">Gr</th>
-          <th class="text-center" style="background-color: #F7F9FC">
-            <small style="font-weight: bold; "> SEMANAS DEL CICLO</small>
-            <div class="table-responsive">
-            <table class="table table-sm" style="margin: 0">
-              <tr>
-                <th class="text-center" style="width: 50px" *ngFor="let i of count; let id = index">
-                  {{i + 1}}
-                </th>
-              </tr>
-            </table>
-            </div>
-          </th>
-          <th class="text-center">Total</th>
+          <th rowspan="2" style="width: 2px" class="text-center">#</th>
+          <th rowspan="2" style="width: 2px" class="text-center">PR</th>
+          <th rowspan="2" style="width: 100px">Curso</th>
+          <th rowspan="2" style="width: 100px">Docente</th>
+          <th rowspan="2" class="text-center" style="width: 5px">H</th>
+          <th rowspan="2" class="text-center" style="width: 50px">Ciclo</th>
+          <th rowspan="2" class="text-center" style="width: 50px">Gr</th>
+          <th class="text-center" [colSpan]="maxValor === 17? '17': maxValor" style="background-color: #EFEFF1">Semanas del ciclo</th>
+          <th rowspan="2" style="width: 50px" class="text-center">Total</th>
+        </tr>
+        <tr style="font-size: 12px;">
+          <ng-container>
+            <th class="text-center" style=" width: 25px" *ngFor="let i of count; let id = index">
+              {{i + 1}}
+            </th>
+          </ng-container>
         </tr>
         </thead>
         <tbody>
@@ -169,31 +165,18 @@
           <td class="text-center">{{item.ht}}</td>
           <td class="text-center">{{item.ciclo}}</td>
           <td class="text-center" style="color: brown; font-weight: bold;">{{item.grupo}}</td>
-            <td  *ngIf="item.topics.length === 0">
-              <div class="table-responsive">
-                <table class="table table-sm">
-                  <tr>
-                    <td  class="text-center" style="width: 50px" *ngFor="let i of count; let id = index">
-                      {{item.guion}}
-                    </td>
-                  </tr>
-                </table>
-              </div>
+          <ng-container *ngIf="item.topics.length === 0">
+            <td class="text-center" *ngFor="let i of count; let id = index">
+              {{item.guion}}
             </td>
-          <td  style="vertical-align: middle;" *ngIf="item.topics.length !== 0">
-            <div class="table-responsive">
-              <table class="table table-sm">
-                <tr>
-                  <td class="text-center" style="width: 50px" *ngFor="let topics of item.topics">{{topics.elementoEST}}</td>
-                  <ng-container *ngIf="item.tdGuion !== 0 && item.topics.length !== 0">
-                    <td class="text-center" style="width: 50px" *ngFor="let count of item.tdGuion ;let  i = index">-</td>
-                  </ng-container>
-
-                </tr>
-              </table>
-            </div>
+          </ng-container>
+          <td class="text-center" *ngFor="let topics of item.topics">
+              {{topics.elementoEST}}
           </td>
-          <td class="text-center" style="font-size: 15px; font-weight: bold; color: var(--color-primary-500)">0</td>
+          <ng-container *ngIf="item.tdGuion !== 0 && item.topics.length !== 0">
+            <td class="text-center" *ngFor="let count of item.tdGuion ;let  i = index">-</td>
+          </ng-container>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">0</td>
 
         </tr>
         </tbody>
