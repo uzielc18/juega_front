@@ -1,0 +1,40 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        COPIAR O MOVER ELEMENTO
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+
+    <div>
+      <small class="title">{{item?.titulo}}</small><br>
+      <small class="description"><strong>Descripción del elemento:</strong> {{item?.descripcion}}</small>
+    </div>
+    <br>
+    <div class="d-flex flex-column">
+      <nb-toggle formControlName="copiar" status="primary" labelPosition="start">Copiar</nb-toggle><br>
+      <nb-toggle formControlName="mover" status="primary" labelPosition="start">Mover</nb-toggle>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-8">
+
+        </div>
+      </div>
+
+    </div>
+  </nb-card-body>
+  <nb-card-footer style="text-align: right;">
+  </nb-card-footer>
+</nb-card>

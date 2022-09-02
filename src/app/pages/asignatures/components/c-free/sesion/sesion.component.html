@@ -116,7 +116,19 @@
         <div>
           <div class="d-flex align-items-center">
 
-            <!-- <nb-button-group class="d-flex align-items-center flex-wrap flex-md-nowrap p-0" style="gap: 5px"> -->
+            <!-- <nb-button-group class="d-flex align-items-center flex-wrap flex-md-nowrap p-0" style="gap: 5px">
+              <button
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
+                nbButton
+                status="primary"
+                size="tiny"
+                nbTooltip="Duplicar o mover elemento"
+                nbTooltipPlacement="top"
+                nbTooltipStatus="warning"
+                (click)="openCopyAndMoveElement(el)"
+              >
+                <nb-icon icon="copy"></nb-icon>
+              </button>&nbsp;-->
               <button
                 *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && el?.grupal === '1'"
                 nbButton

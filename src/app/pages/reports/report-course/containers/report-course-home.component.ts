@@ -264,9 +264,9 @@ export class ReportCourseHomeComponent implements OnInit {
     const sede_area = this.formHeader.get('facultad').value.id || 0;
     const params = {
       semester_id: this.rolSemestre.semestre.id,
-      programa_estudio_id: this.formHeader.get('id_programa_estudio').value || '',
-      docente : this.formHeader.get('id_docente').value || '',
-      ciclo: this.formHeader.value.ciclo || ''
+      programa_estudio_id: this.formHeader.get('id_programa_estudio').value || 0,
+      docente : this.formHeader.get('id_docente').value || 0,
+      ciclo: this.formHeader.value.ciclo || 0
     }
     this.loading = true;
     this.generalService.nameIdAndIdAndIdParams$(serviceName, sede, nivel_ensenanza, sede_area, params).subscribe(res => {

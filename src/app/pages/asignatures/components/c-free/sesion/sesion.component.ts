@@ -10,6 +10,7 @@ import { QuestionsConfigComponent } from '../../modals/questions-config/question
 import { ModoViewComponent } from '../../modals/modo-view/modo-view.component';
 import { OrdenElementsComponent } from '../../modals/orden-elements/orden-elements.component';
 import {MSatisfactionComponent} from "../../../../../shared/components/satisfaction/modal/m-satisfaction.component";
+import {CopyElementsComponent} from "../../modals/copy-elements/copy-elements.component";
 @Component({
   selector: 'app-sesion',
   templateUrl: './sesion.component.html',
@@ -364,5 +365,19 @@ export class SesionComponent implements OnInit {
           this.validaExist.emit();
         }
       });
+  }
+  openCopyAndMoveElement(item: any){
+    this.dialogService.open(CopyElementsComponent,{
+      dialogClass: 'dialog-limited-height',
+      context: {
+        item: item
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    })
+      .onClose.subscribe(result => {
+      if (result === 'ok') {
+      }
+    });
   }
 }
