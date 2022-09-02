@@ -60,9 +60,12 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
       if(res.success){
         this.profile = res.data;
         this.getEvaluaciones(this.profile?.user?.person);
-        this.getCourses(this.profile?.person.id)
+        if(this.rolSemestre?.rol?.name !== 'Estudiante' && this.rolSemestre?.rol?.name !== 'Docente' || this.profile?.user?.person?.id === this.me){
+          this.getCourses(this.profile?.person.id)
+        }
+
       }
-    })
+    }, () => {this.loading = false}, () => {this.loading = false})
   }
   getEvaluaciones(person: any){
     const serviceName = END_POINTS.base_back.persons + '/reporte-notas';
