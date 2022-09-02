@@ -307,7 +307,7 @@ export class CourseHomeComponent implements OnInit {
     const duration = 3000
     const params = {
       semestre: this.rolSemestre.semestre.codigo || '',
-      idCargCurDoc: item.id_carga_curso_docente || '',
+      idCargCurDoc: item.id_carga_curso || '',
       id_1: '0',
       id_2: '0',
     }
@@ -331,7 +331,7 @@ export class CourseHomeComponent implements OnInit {
           this.generalServi.nameIdAndIdAndIdAndId$(serviceName, params.semestre, params.idCargCurDoc, params.id_1, params.id_2).subscribe((res:any) => {
             if (res.success) {
               this.getCourseZoom();
-              this.toastrService.show( {},`${res.message}`,{status})
+              this.toastrService.info(status, `${res.message}`);
             }
           }, () => {this.loading = false}, () => {this.loading = false});
         }

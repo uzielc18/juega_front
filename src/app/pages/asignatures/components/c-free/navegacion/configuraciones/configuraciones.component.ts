@@ -30,7 +30,7 @@ export class ConfiguracionesComponent implements OnInit {
     const serviceName = END_POINTS.base_back.config + '/get-enrollments';
     const params = {
       semestre: this.rolSemestre.semestre.codigo || '',
-      idCargCurDoc: this.curso.id_carga_curso_docente || '',
+      idCargCurDoc: this.curso.id_carga_curso || '',
       id_1: '0',
       id_2: '0',
     }
