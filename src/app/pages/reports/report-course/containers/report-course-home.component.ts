@@ -50,7 +50,7 @@ export class ReportCourseHomeComponent implements OnInit {
       sede: ['', [Validators.required]],
       nivel_ensenanza: [{ value: '', disabled: true }, [Validators.required]],
       facultad: [{ value: '', disabled: true }, [Validators.required]],
-      programa_estudio: [{ value: '', disabled: true }],
+      programa_estudio: [{ value: '', disabled: true }, [Validators.required]],
       semestre: [this.rolSemestre.semestre.nombre || '', [Validators.required]],
       ciclo: [''],
       termino: [''],

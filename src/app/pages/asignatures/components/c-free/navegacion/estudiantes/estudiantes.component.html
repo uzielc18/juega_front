@@ -1,10 +1,10 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small" class="h-100">
   <div class="d-flex align-items-center mb-2">
     <h5 class="fw-bold text-start mb-0 me-2" style="font-size: 16px">Lista de estudiantes</h5>
-    <button nbButton ghost status="warning" *ngIf="rolSemestre.rol.name !== 'Estudiante'" (click)="syncStudentsLamb()" nbTooltip="Sincronizar" nbTooltipStatus="warning">
+    <button nbButton ghost status="warning" *ngIf="rolSemestre?.rol?.name !== 'Estudiante'" (click)="syncStudentsLamb()" nbTooltip="Sincronizar" nbTooltipStatus="warning">
       <nb-icon icon="sync-outline"></nb-icon>
     </button>
-    <button *ngIf="rolSemestre.rol.name !== 'Estudiante'" nbButton size="tiny" (click)="notesWorks('ASIG')" status="primary">
+    <button *ngIf="rolSemestre?.rol?.name !== 'Estudiante'" nbButton size="tiny" (click)="notesWorks('ASIG')" status="primary">
       Registro
     </button>
   </div>
