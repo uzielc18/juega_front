@@ -12,29 +12,43 @@
   <nb-card-body>
 
     <div>
-      <small class="title">{{item?.titulo}}</small><br>
+      <small class="title">{{item?.titulo}}</small><br><br>
       <small class="description"><strong>Descripción del elemento:</strong> {{item?.descripcion}}</small>
     </div>
     <br>
-    <div class="d-flex flex-column">
-      <nb-toggle formControlName="copiar" status="primary" labelPosition="start">Copiar</nb-toggle><br>
-      <nb-toggle formControlName="mover" status="primary" labelPosition="start">Mover</nb-toggle>
-    </div>
+    <br>
     <div class="container">
-      <div class="row">
-        <div class="col-md-8">
+      <form [formGroup]="formHeader">
 
+        <div class="d-flex flex-row">
+          <nb-toggle formControlName="copiar" status="primary" labelPosition="start" style="margin-right: 10px">Copiar</nb-toggle>
+          <nb-toggle formControlName="mover" status="primary" labelPosition="start">Mover</nb-toggle>
         </div>
-        <div class="col-md-8">
-
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label class="label">Cursos</label>
+            <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="course_id">
+              <nb-option></nb-option>
+            </nb-select>
+          </div>
+          <div class="col-md-12">
+            <label class="label">Unidades</label>
+            <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="unit_id">
+              <nb-option></nb-option>
+            </nb-select>
+          </div>
+          <div class="col-md-12">
+            <label class="label">Sesiones</label>
+            <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="section_id">
+              <nb-option></nb-option>
+            </nb-select>
+          </div>
         </div>
-        <div class="col-md-8">
-
-        </div>
-      </div>
-
+      </form>
     </div>
   </nb-card-body>
   <nb-card-footer style="text-align: right;">
+    <button nbButton size="small" status="primary">Procesar</button>
   </nb-card-footer>
 </nb-card>
