@@ -126,7 +126,7 @@ export class CourseHomeComponent implements OnInit {
   getProgramStudy() {
     const serviceName = 'list-programa-estudios';
     const ids = {
-      nivel_ensenanza_id: this.rolSemestre.area.nivel_ensenanza_id,
+      nivel_ensenanza_id: this.rolSemestre?.area?.nivel_ensenanza_id,
       sede_id: this.rolSemestre.area.sede_id,
       area_id: this.rolSemestre.area.area_id,
     };

@@ -59,13 +59,15 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
     this.generalService.nameIdParams$(serviceName, this.email ,params).subscribe((res:any) => {
       if(res.success){
         this.profile = res.data;
-        this.getEvaluaciones(this.profile?.user?.person);
         if(this.rolSemestre?.rol?.name !== 'Estudiante' && this.rolSemestre?.rol?.name !== 'Docente' || this.profile?.user?.person?.id === this.me){
+          this.getEvaluaciones(this.profile?.user?.person);
           this.getCourses(this.profile?.person.id)
+        }else{
+          this.loading = false
         }
 
       }
-    }, () => {this.loading = false}, () => {this.loading = false})
+    }, () => {this.loading = false})
   }
   getEvaluaciones(person: any){
     const serviceName = END_POINTS.base_back.persons + '/reporte-notas';
@@ -79,8 +81,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
     const params = {
       semester_id: this.rolSemestre.semestre.id,
     };
-    const person_id = person;
-    this.generalService.nameIdParams$(serviceName, person_id, params).subscribe(
+    this.generalService.nameIdParams$(serviceName, person, params).subscribe(
       (res: any) => {
         if (res.success) {
           this.listCourses = res.data

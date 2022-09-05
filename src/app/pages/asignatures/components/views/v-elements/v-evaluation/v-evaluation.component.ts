@@ -178,6 +178,7 @@ export class VEvaluationComponent implements OnInit, OnChanges {
       ip_student: this.ip,
       device: this.verifyDevice(),
     }
+    console.log(params , params.pending_id , params.exam_id , params.persons_student_id , params.codigo_student, params.ip_student, params.device)
     if (params && params.pending_id && params.exam_id && params.persons_student_id && params.codigo_student && params.ip_student && params.device) {
       Swal.fire({
         title: 'Evaluación',

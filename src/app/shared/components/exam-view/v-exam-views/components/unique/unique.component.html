@@ -5,7 +5,7 @@
             <table class="table table-sm">
                 <tbody style="font-size: 12px;">
                     <tr *ngFor="let item of alternativas" style="vertical-align: middle;">
-                        <td 
+                        <td
                         [ngStyle]="{'color': item?.correcto?.length === 0 && item?.checked ? 'rgb(36, 151, 21)'
                         : item?.checked && item?.correcto === 1 ? 'rgb(36, 151, 21)' : item?.checked && item?.correcto === 0 ? 'red' : ''}">
                             {{item?.orden}} ).&nbsp; {{item?.option}}</td>
@@ -28,7 +28,7 @@
                     <td *ngIf="item?.option" [ngStyle]="{'color': colorSelected(item)}">
                         {{item?.orden}} ).&nbsp; {{item?.option}}
                     </td>
-                        
+
                     <td *ngIf="item?.imagen"
                     class="text-center" [ngStyle]="{'background': colorSelected(item), 'width': '200px'}">
                         <img [src]="item.imagen" alt="" style="max-width: 55%; max-height: 55%">
@@ -37,7 +37,10 @@
 
                         <nb-icon *ngIf="item?.correcto?.length === 0  && item?.checked"  style="color: rgb(36, 151, 21); width: 20px; height: 20px;" icon="checkmark-outline"></nb-icon>
                         <nb-icon *ngIf="item?.correcto === 1 && !item?.checked"  style="color: rgb(36, 151, 21); width: 20px; height: 20px;" icon="checkmark-outline"></nb-icon>
-                        <nb-icon *ngIf="item?.checked && item?.correcto === 1"  style="color: rgb(36, 151, 21); width: 20px; height: 20px;" icon="done-all-outline"></nb-icon>
+                        <div *ngIf="item?.checked && item?.correcto === 1" class="d-flex justify-content-between align-items-center">
+                          <nb-icon  style="color: rgb(36, 151, 21); width: 20px; height: 20px;" icon="done-all-outline"></nb-icon>
+                          <small style="color: rgb(36, 151, 21); width: 20px; height: 20px;">Puntos: {{item.puntos}}</small>
+                        </div>
                         <nb-icon *ngIf="item?.checked && item?.correcto === 0" style="color: red; width: 20px; height: 20px;" icon="close-outline"></nb-icon>
 
                     </td>
@@ -45,8 +48,8 @@
             </tbody>
         </table>
 
-        <!-- <nb-card *ngFor="let item of alternativas" class="text-center col-md-4" 
-        
+        <!-- <nb-card *ngFor="let item of alternativas" class="text-center col-md-4"
+
         style="padding: 10px; margin-bottom: 0px; cursor: pointer;">
         <nb-card-header *ngIf="item?.option" style="padding: 1px;"
         [ngStyle]="{'color': item?.correcto?.length === 0 && item?.checked ? 'rgb(60, 196, 42)'
