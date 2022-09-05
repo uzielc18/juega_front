@@ -23,7 +23,15 @@ export class ReportCourseHomeComponent implements OnInit {
   listOfTeachers: any = [];
   showTeachers: boolean = false;
   resetTeacherButton: boolean = false;
-
+  selectedItem = 20;
+  pagination: any = {
+    page: 1,
+    per_page: 20,
+    sizePage: 0,
+    sizeListData: 0,
+    isDisabledPage: false,
+  };
+  pagesCount: any[] = [20, 30, 50];
 
   ciclos: any = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
   estados: any[] = [
@@ -50,8 +58,8 @@ export class ReportCourseHomeComponent implements OnInit {
       sede: ['', [Validators.required]],
       nivel_ensenanza: [{ value: '', disabled: true }, [Validators.required]],
       facultad: [{ value: '', disabled: true }, [Validators.required]],
-      programa_estudio: [{ value: '', disabled: true }, [Validators.required]],
-      semestre: [this.rolSemestre.semestre.nombre || '', [Validators.required]],
+      programa_estudio: [{ value: '', disabled: true }],
+      semestre: [this.rolSemestre?.semestre?.nombre || '', [Validators.required]],
       ciclo: [''],
       termino: [''],
       id_docente: [''],
@@ -179,6 +187,15 @@ export class ReportCourseHomeComponent implements OnInit {
     }
   }
 
+  loadPage($event: any): any {
+    this.loading = true;
+    this.pagination.page = $event;
+    this.filterReports()
+  }
+  sizeTable($event: any): any {
+    this.pagination.per_page = $event;
+    this.filterReports()
+  }
   selectedSede(sede: any) {
     this.formHeader.controls['sede'].setValue(sede);
     this.formHeader.controls['nivel_ensenanza'].enable();
@@ -266,11 +283,21 @@ export class ReportCourseHomeComponent implements OnInit {
       semester_id: this.rolSemestre.semestre.id,
       programa_estudio_id: this.formHeader.get('id_programa_estudio').value || 0,
       docente : this.formHeader.get('id_docente').value || 0,
-      ciclo: this.formHeader.value.ciclo || 0
+      ciclo: this.formHeader.value.ciclo || 0,
+      per_page: this.pagination.per_page,
+      page: this.pagination.page,
+      paginate: 'S',
     }
     this.loading = true;
     this.generalService.nameIdAndIdAndIdParams$(serviceName, sede, nivel_ensenanza, sede_area, params).subscribe(res => {
-        this.data = res.data;
+        this.data = res.data.data;
+        this.pagination.sizeListData = res.data && res.data.total || 0;
+        this.pagination.sizePage = res.data && res.data.per_page || 0;
+        if (this.pagination.sizeListData < this.data.length) {
+          this.pagination.isDisabledPage = true;
+        } else {
+          this.pagination.isDisabledPage = false;
+        }
         this.data.map((m: any) => {
               if(m.topics.length === 0){
                 m.guion = '-'

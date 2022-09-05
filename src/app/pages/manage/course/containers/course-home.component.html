@@ -15,7 +15,7 @@
                     <nb-option *ngFor="let item of semestrers" [value]="item.id">{{item.nombre}}</nb-option>
                 </nb-select>
             </div>
-            <div class="col-md-3" *ngIf="rolSemestre.area.area_id === 0">
+            <div class="col-md-3" *ngIf="rolSemestre?.area?.area_id === 0">
               <label class="label">Facultades/Unidades</label>
               <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="facultades_unidades">
                 <nb-option value="" disabled>Selecciona</nb-option>

@@ -19,8 +19,8 @@ export class CopyElementsComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      copiar: [''],
-      mover: [''],
+      copiar: [false],
+      mover: [false],
       course_id: ['', [Validators.required]],
       unit_id: ['', [Validators.required]],
       section_id: ['',[Validators.required]],

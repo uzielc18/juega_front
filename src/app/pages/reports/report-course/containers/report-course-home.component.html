@@ -174,6 +174,9 @@
           <ng-container *ngIf="item.tdGuion !== 0 && item.topics.length !== 0">
             <td class="text-center" *ngFor="let count of item.tdGuion ;let  i = index">-</td>
           </ng-container>
+          <td class="text-center" *ngIf="count.length === 0">
+            -
+          </td>
           <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">0</td>
 
         </tr>
@@ -186,4 +189,22 @@
       <img src="assets/busqueda.png" alt="busqueda-upeu" width="300px">
     </div>
   </nb-card-body>
+  <nb-card-footer>
+    <div class="d-flex justify-content-between align-items-center p-2">
+      <div style="color: brown; font-weight: bold;">Total: {{pagination.sizeListData}}</div>
+      <ngb-pagination [collectionSize]="pagination?.sizeListData" [(page)]="pagination.page" [maxSize]="20"
+                      [disabled]="pagination?.isDisabledPage" [pageSize]="pagination?.sizePage"
+                      class="d-flex justify-content-center" size="sm" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+      </ngb-pagination>
+      <div>
+        <nb-form-field>
+          <nb-icon nbPrefix icon="list-outline"></nb-icon>
+          <nb-select placeholder="Paginación" status="success" size="tiny" fullWidth
+                     [(selected)]="selectedItem" (selectedChange)="sizeTable($event)">
+            <nb-option *ngFor="let per of pagesCount" [value]="per">Paginar de {{per}} en {{per}}</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
+    </div>
+  </nb-card-footer>
 </nb-card>

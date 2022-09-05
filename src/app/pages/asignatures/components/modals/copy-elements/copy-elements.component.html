@@ -21,11 +21,11 @@
       <form [formGroup]="formHeader">
 
         <div class="d-flex flex-row">
-          <nb-toggle formControlName="copiar" status="primary" labelPosition="start" style="margin-right: 10px">Copiar</nb-toggle>
-          <nb-toggle formControlName="mover" status="primary" labelPosition="start">Mover</nb-toggle>
+          <nb-toggle formControlName="copiar" status="primary" labelPosition="start" style="margin-right: 10px" [disabled]="formHeader.value.mover">Copiar</nb-toggle>
+          <nb-toggle formControlName="mover" status="primary" labelPosition="start" [disabled]="formHeader.value.copiar">Mover</nb-toggle>
         </div>
         <br>
-        <div class="row">
+        <div class="row" *ngIf="formHeader.get('copiar').value || formHeader.get('mover').value">
           <div class="col-md-12">
             <label class="label">Cursos</label>
             <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="course_id">
