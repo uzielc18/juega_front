@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {END_POINTS} from "../../../../providers/utils";
 import {GeneralService} from "../../../../providers";
 import {EditUserComponent} from "../../../../shared/components/edit-user/edit-user.component";
-import {NbDialogService} from "@nebular/theme";
+import {NbDialogService, NbToastrService} from "@nebular/theme";
 import Swal from "sweetalert2";
 
 @Component({
@@ -12,12 +12,15 @@ import Swal from "sweetalert2";
 })
 export class PerfilComponent implements OnInit {
 
+  id_programa_estudio: any = '0';
+  id_carga_curso: any = '0';
   @Input() profile:any;
 
   loading: boolean = false
 
   constructor( private generalService: GeneralService,
-               private dialogService: NbDialogService) { }
+               private dialogService: NbDialogService,
+               private toastrService: NbToastrService,) { }
 
   ngOnInit(): void {
   }
@@ -66,6 +69,7 @@ export class PerfilComponent implements OnInit {
         this.loading = true;
         this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.rolSemestre?.semestre?.nombre, 0, 0, this.profile.user.usuario_upeu).subscribe(res => {
           if(res.success){
+            this.toastrService.info(status, `${res.message}`);
           }
         }, () => {this.loading = false}, () => {this.loading = false})
       }
@@ -94,11 +98,51 @@ export class PerfilComponent implements OnInit {
       if (result.isConfirmed) {
         this.loading = true;
         this.generalService.nameParams$(serviceName, params).subscribe(res => {
-          console.log(res)
+          this.toastrService.info(status, `${res.message}`);
         },() =>{this.loading = false}, () => {this.loading = false})
       }
     });
-
-
   }
+  matriculaByStudent() {
+    const serviceName = END_POINTS.base_back.config + '/get-enrollments';
+    Swal.fire({
+      title: 'Sincronizar Matrícula',
+      text: '¿ Desea sincronizar ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#014776',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService
+          .nameIdAndIdAndIdAndId$(
+            serviceName,
+            this.rolSemestre.semestre.nombre,
+            this.id_carga_curso,
+            this.profile?.person?.codigo,
+            this.id_programa_estudio
+          )
+          .subscribe(
+            (res: any) => {
+              // console.log(res);
+              this.toastrService.info(status, `${res.message}`);
+            },
+            () => {
+              this.loading = false;
+            },
+            () => {
+              this.loading = false;
+            }
+          );
+      }
+    });
+
+    }
 }

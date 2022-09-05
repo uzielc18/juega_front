@@ -95,7 +95,7 @@
                       #secondSelect
                     >
                       <nb-option *ngFor="let item of course.topics" [value]="item.tema" (click)="saveTopics($event, item)">
-                        - {{ item.tema }}
+                        - {{ item.contenido === null? item.tema: item.contenido }}
                       </nb-option>
                     </nb-select>
                   </nb-option>
@@ -106,7 +106,7 @@
                 <ul class="list-group">
                   <li *ngFor="let topic of selectedTopics" class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                      <div class="fw-bold">{{ topic.tema }}</div>
+                      <div class="fw-bold">{{ topic.contenido === null? topic.tema: topic.contenido }}</div>
                       {{ topic.course_name }}
                     </div>
                   </li>

@@ -577,7 +577,7 @@ export class LambSyncHomeComponent implements OnInit {
     }
     if(this.formHeader.get('estudiante').value){
       this.generalService.nameParams$(serviceName, params).subscribe(res => {
-        console.log(res)
+        this.toastrService.info(status, `${res.message}`);
       },() =>{this.loading = false}, () => {this.loading = false})
     }
 
@@ -588,6 +588,7 @@ export class LambSyncHomeComponent implements OnInit {
     if(this.formHeader.get('estudiante').value){
       this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.formHeader.get('semestre').value, 0, 0, this.formHeader.get('estudiante').value.usuario_upeu).subscribe(res => {
         if(res.success){
+          this.toastrService.info(status, `${res.message}`);
         }
       }, () => {this.loading = false}, () => {this.loading = false})
     }

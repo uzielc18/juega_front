@@ -43,10 +43,8 @@
         </div>
         <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Programa estudio</label>
-          <!-- <app-input-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-input-select-search>
-          <app-select-search [listProgStud]="listProgramStudy" (changeSelected)="changeSelected($event)"></app-select-search>  -->
           <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio">
-            <!-- <nb-option value="">Todos</nb-option> -->
+           <!--<nb-option value="">Todos</nb-option>-->
             <nb-option *ngFor="let prog of programa_estudios" [value]="prog" (click)="selectedProgramaEstudio(prog)">
               {{ prog?.name_programa_estudio }}</nb-option>
           </nb-select>
