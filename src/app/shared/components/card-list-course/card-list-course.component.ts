@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbDialogService } from '@nebular/theme';
+import {NbDialogService, NbToastrService} from '@nebular/theme';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
 import { Subscription } from 'rxjs';
 import { GeneralService } from 'src/app/providers';
@@ -19,6 +19,8 @@ import {AppService} from "../../../core";
 export class CardListCourseComponent implements OnInit {
   // cursosDocente:any = [];
   // cursosEstudiante:any = [];
+  id_programa_estudio: any = '0';
+  id_carga_curso: any = '0';
   mysCursos:any = [];
   loading:boolean = false;
   form: any = FormGroup;
@@ -36,6 +38,7 @@ export class CardListCourseComponent implements OnInit {
   constructor( private formBuilder: FormBuilder,   private generalService: GeneralService, private emitEventsService: EmitEventsService,
     private router: Router,
     private userService: AppService,
+    private toastrService: NbToastrService,
     private activatedRoute: ActivatedRoute,
     private ngDynamicBreadcrumbService: NgDynamicBreadcrumbService,
     private dialogService: NbDialogService,
@@ -99,16 +102,41 @@ export class CardListCourseComponent implements OnInit {
   reloadList() {
     const serviceName = END_POINTS.base_back.config + '/cursos';
     if(this.rolSemestre.rol.name === 'Docente'){
-      this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.rolSemestre.semestre.codigo, 0, 0, this.userService.user.usuario_upeu).subscribe(res => {
+      this.generalService.nameIdAndIdAndIdAndId$(serviceName, this.rolSemestre?.semestre?.codigo, 0, 0, this.userService?.user?.usuario_upeu).subscribe(res => {
         if(res.success){
           this.getCourses();
+          this.matriculaByStudent();
         }
       })
     }else{
       this.getCourses();
+      this.matriculaByStudent()
     }
 
-
+  }
+  matriculaByStudent() {
+    const serviceName = END_POINTS.base_back.config + '/get-enrollments';
+    this.loading = true;
+      this.generalService
+        .nameIdAndIdAndIdAndId$(
+          serviceName,
+          this.rolSemestre.semestre.nombre,
+          this.id_carga_curso,
+          this.userService?.user?.person?.codigo,
+          this.id_programa_estudio
+        )
+        .subscribe(
+          (res: any) => {
+            // console.log(res);
+            this.toastrService.info(status, `${res.message}`);
+          },
+          () => {
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
   }
   getCourses() {
     const serviceName = END_POINTS.base_back.resourse + '/enrollment-student';

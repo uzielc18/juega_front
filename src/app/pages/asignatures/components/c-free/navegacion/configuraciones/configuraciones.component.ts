@@ -68,8 +68,9 @@ export class ConfiguracionesComponent implements OnInit {
     }
      if(params && params.semestre && params.idCargCurDoc) {
       Swal.fire({
-        title: 'Sincronizar',
-        text: '¿ Desea sincronizar sesiones lamb ? ',
+        title: 'Sincronizar sesiones',
+        text: 'Usted está a punto de eliminar todas las unidades, sesiones y contenido del curso.',
+        titleText:'¿ Desea continuar ?',
         backdrop: true,
         icon: 'question',
         // animation: true,
