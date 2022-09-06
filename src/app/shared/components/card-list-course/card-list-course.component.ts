@@ -108,9 +108,11 @@ export class CardListCourseComponent implements OnInit {
           this.matriculaByStudent();
         }
       })
-    }else{
+    }else if(this.rolSemestre.rol.name === 'Estudiante'){
       this.getCourses();
       this.matriculaByStudent()
+    }else{
+      this.getCourses();
     }
 
   }
