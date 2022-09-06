@@ -18,7 +18,7 @@
         </div>
         <br>
         <br>
-        <div class="col-md-12" *ngIf="zoom.host_id !==null && rolSemestre.rol.name === 'Docente'">
+        <div class="col-md-12" *ngIf="zoom.host_id !==null && rolSemestre.rol.name !== 'Estudiante'">
           <small class="fw-bold" style="font-size: 12px; font-weight: 700 !important;">Clave de anfitrión</small>
           <hr class="me-3 mt-2 " style="color:#8F9BB3;"/>
           <div class="row">
