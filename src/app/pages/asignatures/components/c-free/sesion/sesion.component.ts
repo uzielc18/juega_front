@@ -370,7 +370,8 @@ export class SesionComponent implements OnInit {
     this.dialogService.open(CopyElementsComponent,{
       dialogClass: 'dialog-limited-height',
       context: {
-        item: item
+        item: item,
+        curso: this.curso
       },
       closeOnBackdropClick: false,
       closeOnEsc: false,

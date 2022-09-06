@@ -66,12 +66,14 @@ export class MAddSalaComponent implements OnInit {
     let array:any = [];
     this.data.forEach((r:any) => {
       if (Number(r.estado) === 1) {
-        array.push(r.codigo);
+        array.push(r.id_carga_curso_docente);
       }
     });
+    console.log(array)
     const data = {
       codigos: array.join(',') || '',
     }
+    console.log(data)
     if (data && data.codigos) {
       Swal.fire({
         title: 'CREAR SALA',

@@ -10,7 +10,6 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-
     <div>
       <small class="title">{{item?.titulo}}</small><br><br>
       <small class="description"><strong>Descripción del elemento:</strong> {{item?.descripcion}}</small>
@@ -21,27 +20,66 @@
       <form [formGroup]="formHeader">
 
         <div class="d-flex flex-row">
-          <nb-toggle formControlName="copiar" status="primary" labelPosition="start" style="margin-right: 10px" [disabled]="formHeader.value.mover">Copiar</nb-toggle>
-          <nb-toggle formControlName="mover" status="primary" labelPosition="start" [disabled]="formHeader.value.copiar">Mover</nb-toggle>
+          <nb-toggle formControlName="copiar" status="primary" labelPosition="start" style="margin-right: 10px" [disabled]="formHeader.value.mover" (change)="valueChange()">Copiar</nb-toggle>
+          <nb-toggle formControlName="mover" status="primary" labelPosition="start" [disabled]="formHeader.value.copiar" (change)="valueChangemove()">Mover</nb-toggle>
         </div>
         <br>
-        <div class="row" *ngIf="formHeader.get('copiar').value || formHeader.get('mover').value">
-          <div class="col-md-12">
-            <label class="label">Cursos</label>
-            <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="course_id">
-              <nb-option></nb-option>
+        <div class="row" *ngIf="formHeader.get('copiar').value">
+          <div *ngIf="listOfCourses.length > 0" class="mt-2">
+            <label class="label">Seleccionar Unidades:</label>
+            <nb-select formControlName="course_id" status="primary" placeholder="Seleccione Curso" size="small" fullWidth multiple>
+              <nb-option
+                class="flex-wrap"
+                *ngFor="let course of listOfCourses; let i = index"
+                [value]="course.nombre"
+                (click)="toggleOption(course, i)"
+              >
+                <div class="mb-1">
+                  <div style="width: 350px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden">{{ course.nombre }}</div>
+                  <div style="width: 300px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden">
+                    <small  class="label">{{course.programa_estudio_nombre}}</small><br>
+                  </div>
+                  <small class="label">ciclo: {{course.ciclo}} - {{course.grupo}}</small>
+                </div>
+                <nb-select
+                  size="small"
+                  formControlName="topics_id"
+                  status="primary"
+                  [style.display]="course.show ? 'block' : 'none'"
+                  placeholder=" - Seleccione la sesion"
+                  (click)="toggleTopicOption($event, i)"
+                  fullWidth
+                  #secondSelect
+                >
+                  <nb-option *ngFor="let item of course.topics" [value]="item.tema" (click)="saveTopics($event, item)">
+                    {{item.orden_tema}}- {{ item.contenido === null? item.tema: item.contenido }}
+                  </nb-option>
+                </nb-select>
+              </nb-option>
             </nb-select>
           </div>
+          <div *ngIf="selectedTopics.length > 0" class="mt-4">
+            <p class="fw-bold">Items seleccionados:</p>
+            <ul class="list-group">
+              <li *ngFor="let topic of selectedTopics" class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">{{topic.orden_tema}}-{{ topic.contenido === null? topic.tema: topic.contenido }}</div>
+                  {{ topic.course_name }}
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row" *ngIf="formHeader.get('mover').value">
           <div class="col-md-12">
-            <label class="label">Unidades</label>
-            <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="unit_id">
-              <nb-option></nb-option>
-            </nb-select>
+            <small class="label">Curso: {{curso?.nombre}}</small><br>
+            <small class="label">Grupo: {{curso?.grupo}}</small><br>
+            <small class="label">Ciclo: {{curso?.ciclo}}</small><br>
           </div>
           <div class="col-md-12">
-            <label class="label">Sesiones</label>
-            <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="section_id">
-              <nb-option></nb-option>
+            <label class="label">Selecciona la sesion</label>
+            <nb-select placeholder="Selecciona la sesion" size="small" status="primary" fullWidth formControlName="section_id">
+              <nb-option *ngFor="let topics of topicsMove" [value]="topics.contenido === null? topics.tema: topics.contenido" (click)="selectTopicsMove(topics)">{{topics.orden_tema}}- {{topics.contenido === null? topics.tema: topics.contenido}}</nb-option>
             </nb-select>
           </div>
         </div>
@@ -49,6 +87,6 @@
     </div>
   </nb-card-body>
   <nb-card-footer style="text-align: right;">
-    <button nbButton size="small" status="primary">Procesar</button>
+    <button nbButton size="small" status="primary" [disabled]="formHeader.get('section_id').invalid && selectedTopics.length === 0 ">Procesar</button>
   </nb-card-footer>
 </nb-card>
