@@ -43,11 +43,20 @@
         </div>
         <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Programa estudio</label>
-          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio">
-           <!--<nb-option value="">Todos</nb-option>-->
-            <nb-option *ngFor="let prog of programa_estudios" [value]="prog" (click)="selectedProgramaEstudio(prog)">
-              {{ prog?.name_programa_estudio }}</nb-option>
-          </nb-select>
+          <input
+                 nbInput
+                 type="text"
+                 status="primary"
+                 fieldSize="small"
+                 fullWidth
+                 formControlName="programa_estudio"
+                 placeholder="Selecciona"
+                 [nbAutocomplete]="auto" />
+                  <nb-autocomplete #auto size="small">
+                    <nb-option *ngFor="let prog of programa_estudios_filter$ | async" [value]="prog.name_programa_estudio" (click)="selectedProgramaEstudio(prog)" (keyup.enter)="selectedProgramaEstudiok(prog)">
+                      {{ prog?.name_programa_estudio }}
+                    </nb-option>
+                  </nb-autocomplete>
         </div>
         <div class="col-md-4 mb-2 mb-md-0">
           <label class="label">Ciclo</label>
@@ -141,12 +150,12 @@
           <th rowspan="2" class="text-center" style="width: 5px">H</th>
           <th rowspan="2" class="text-center" style="width: 50px">Ciclo</th>
           <th rowspan="2" class="text-center" style="width: 50px">Gr</th>
-          <th class="text-center" [colSpan]="maxValor === 17? '17': maxValor" style="background-color: #EFEFF1">Semanas del ciclo</th>
+          <th class="text-center" [colSpan]="topicsLengthgMaxValor === 17? '17': topicsLengthgMaxValor" style="background-color: #EFEFF1">Semanas del ciclo</th>
           <th rowspan="2" style="width: 50px" class="text-center">Total</th>
         </tr>
         <tr style="font-size: 12px;">
           <ng-container>
-            <th class="text-center" style=" width: 25px" *ngFor="let i of count; let id = index">
+            <th class="text-center" style=" width: 25px" *ngFor="let i of maxValorTopcis; let id = index">
               {{i + 1}}
             </th>
           </ng-container>
@@ -162,17 +171,17 @@
           <td class="text-center">{{item.ciclo}}</td>
           <td class="text-center" style="color: brown; font-weight: bold;">{{item.grupo}}</td>
           <ng-container *ngIf="item.topics.length === 0">
-            <td class="text-center" *ngFor="let i of count; let id = index">
+            <td class="text-center" *ngFor="let i of maxValorTopcis; let id = index">
               {{item.guion}}
             </td>
           </ng-container>
           <td class="text-center" *ngFor="let topics of item.topics">
-              {{topics.elementoEST}}
+              {{topics.elemento_total}}
           </td>
-          <ng-container *ngIf="item.tdGuion !== 0 && item.topics.length !== 0">
-            <td class="text-center" *ngFor="let count of item.tdGuion ;let  i = index">-</td>
+          <ng-container *ngIf="item.td_guiones !== 0 && item.topics.length !== 0">
+            <td class="text-center" *ngFor="let count of item.td_guiones ;let  i = index">-</td>
           </ng-container>
-          <td class="text-center" *ngIf="count.length === 0">
+          <td class="text-center" *ngIf="maxValorTopcis.length === 0">
             -
           </td>
           <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">0</td>

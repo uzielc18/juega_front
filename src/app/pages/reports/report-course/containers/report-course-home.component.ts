@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {END_POINTS} from "../../../../providers/utils";
 import {GeneralService} from "../../../../providers";
+import {Observable, of} from "rxjs";
+import {map, startWith} from "rxjs/operators";
 
 @Component({
   selector: 'app-report-course-home',
@@ -12,14 +14,15 @@ export class ReportCourseHomeComponent implements OnInit {
 
   loading: boolean = false;
   formHeader: any = FormGroup;
-  count: any = [];
-  maxValor: any = 17;
+  maxValorTopcis: any = [];
+  topicsLengthgMaxValor: any = 17;
   success: any;
   data: any = [];
   sedes: any = [];
   nivelEnsenanza: any = [];
   facultades: any = [];
   programa_estudios: any = [];
+  programa_estudios_filter$?: Observable<any[]>;
   listOfTeachers: any = [];
   showTeachers: boolean = false;
   resetTeacherButton: boolean = false;
@@ -69,7 +72,8 @@ export class ReportCourseHomeComponent implements OnInit {
     this.listSedes();
     this.getListOfTeachers();
     for (let i = 0; i < 17; i++) {
-      this.count.push(i)
+      //inicializamos con 17 por defecto
+      this.maxValorTopcis.push(i)
     }
 
   }
@@ -148,6 +152,9 @@ export class ReportCourseHomeComponent implements OnInit {
       this.generalService.nameIdAndIdAndId$(serviceName, nivel_ense_id, sede_id, fac_id).subscribe(
         (res: any) => {
           this.programa_estudios = res.data || [];
+          this.programa_estudios_filter$ = of(this.programa_estudios);
+          this.programa_estudios_filter$ = this.formHeader.get('programa_estudio').valueChanges.pipe(startWith(''),
+            map((filter: any) => this.filter(filter)))
           if (this.programa_estudios.length > 0) {
             this.programa_estudios.map((r: any) => {
               r.name_programa_estudio = r.nombre_corto + ' ' + (r.sede_nombre ? r.sede_nombre : '');
@@ -165,6 +172,10 @@ export class ReportCourseHomeComponent implements OnInit {
         }
       );
     }
+  }
+  private filter(value: any): any[] {
+    const filterValue = value;
+    return this.programa_estudios.filter((optionValue: any) => optionValue.name_programa_estudio.toLowerCase().includes(filterValue));
   }
   // Teachers
   getListOfTeachers() {
@@ -205,6 +216,7 @@ export class ReportCourseHomeComponent implements OnInit {
     this.formHeader.controls['nivel_ensenanza'].setValue('');
     this.formHeader.controls['facultad'].setValue('');
     this.formHeader.controls['programa_estudio'].setValue('');
+    this.formHeader.controls['id_programa_estudio'].setValue('');
     this.listNivelEnsenanza(sede.id);
   }
   selectedNivel(nivel: any) {
@@ -214,6 +226,7 @@ export class ReportCourseHomeComponent implements OnInit {
     this.programa_estudios = [];
     this.formHeader.controls['facultad'].setValue('');
     this.formHeader.controls['programa_estudio'].setValue('');
+    this.formHeader.controls['id_programa_estudio'].setValue('');
     this.listFacultades(nivel.id, this.formHeader.get('sede').value.id);
   }
 
@@ -222,10 +235,16 @@ export class ReportCourseHomeComponent implements OnInit {
     this.formHeader.controls['programa_estudio'].enable();
     this.programa_estudios = [];
     this.formHeader.controls['programa_estudio'].setValue('');
+    this.formHeader.controls['id_programa_estudio'].setValue('');
     this.listProgramaEstudios(this.formHeader.get('nivel_ensenanza').value.id, this.formHeader.get('sede').value.id, fac.id);
   }
   selectedProgramaEstudio(prog: any) {
-    this.formHeader.controls['programa_estudio'].setValue(prog);
+    this.formHeader.controls['programa_estudio'].setValue(prog.name_programa_estudio);
+    this.formHeader.controls['id_programa_estudio'].setValue(prog.id)
+  }
+  selectedProgramaEstudiok(prog: any){
+    console.log(prog)
+    this.formHeader.controls['programa_estudio'].setValue(prog.name_programa_estudio);
     this.formHeader.controls['id_programa_estudio'].setValue(prog.id)
   }
   searchTeachers() {
@@ -248,28 +267,28 @@ export class ReportCourseHomeComponent implements OnInit {
       const a = this.data.map((m: any) => {
           m.topics.map((t: any) => {
             if(element.value === 'TODO'){
-              t.elementoEST = t.total
+              t.elemento_total = t.total
             }
             if(element.value === 'TRA'){
-              t.elementoEST = t.trabajo
+              t.elemento_total = t.trabajo
             }
             if(element.value === 'VIDE'){
-              t.elementoEST = t.video
+              t.elemento_total = t.video
             }
             if(element.value === 'ENLA'){
-              t.elementoEST = t.enlace
+              t.elemento_total = t.enlace
             }
             if(element.value === 'FORO'){
-              t.elementoEST = t.foro
+              t.elemento_total = t.foro
             }
             if(element.value === 'DOC'){
-              t.elementoEST = t.documento
+              t.elemento_total = t.documento
             }
             if(element.value === 'CLG'){
-              t.elementoEST = t.clase_grabada
+              t.elemento_total = t.clase_grabada
             }
             if(element.value === 'EVA'){
-              t.elementoEST = t.evaluacion
+              t.elemento_total = t.evaluacion
             }
           })
       })
@@ -303,36 +322,39 @@ export class ReportCourseHomeComponent implements OnInit {
                 m.guion = '-'
               }
               return m.topics.map((t: any) => {
-                t.elementoEST = t.total;
+                t.elemento_total = t.total;
               })
         })
              if(res.success){
                this.success = true;
-               this.count = [];
-               this.elemetsFor(this.data);
+               this.maxValorTopcis = [];
+               this.elementsSession(this.data);
 
 
              }
     }, ()=> {this.loading = false}, () => {this.loading = false})
   }
-  elemetsFor(item: any){
+  elementsSession(item: any){
     const arr: any = [];
     item.forEach((m: any) => {
       arr.push(m.topics.length);
     })
-     let v = Math.max(...arr)
-    this.maxValor = v
-    for (let i = 0; i < v; i++) {
-      this.count.push(i)
+    //capturamos el maximo valor del arr
+    let topicsLength = Math.max(...arr)
+    this.topicsLengthgMaxValor = topicsLength
+    for (let i = 0; i < topicsLength; i++) {
+      this.maxValorTopcis.push(i)
     }
     item.map((m: any) => {
-      let s = v - m.topics.length;
-      m.tdGuion = 0
+      //Esto es para calcular la diferencia del topic mayor con los demas topics.
+      let topics_diff = this.topicsLengthgMaxValor  - m.topics.length;
+      //los guiones que se pondran en los topics
+        m.td_guiones = 0
       if(m.topics.length !== 0){
-        m.tdGuion = [];
+        m.td_guiones = [];
 
-        for (let i = 0; i < s; i++) {
-          m.tdGuion.push(i);
+        for (let i = 0; i < topics_diff; i++) {
+          m.td_guiones.push(i);
         }
       }
     })
