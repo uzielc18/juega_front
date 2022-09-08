@@ -4,6 +4,7 @@ import {GeneralService} from "../../../../../../providers";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {END_POINTS} from "../../../../../../providers/utils";
 import Swal from "sweetalert2";
+import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-m-tutores',
@@ -13,6 +14,7 @@ import Swal from "sweetalert2";
 export class MTutoresComponent implements OnInit {
   showTeachersToImport: boolean = false;
   resetTeacherImportButton: boolean = false;
+  searchstring: any = [];
   loading: boolean = false;
   data: any = [];
   listOfTeachers: any = [];
@@ -28,28 +30,50 @@ export class MTutoresComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      teacherToImportName: ['', [Validators.required]],
       idteacherToImportName: ['', [Validators.required]],
-      checkbox: [false, [Validators.required]]
+      checkbox: [false, [Validators.required]],
+      termino: ['']
     };
     this.formHeader = this.fb.group(controls);
 
     this.getListOfTeachers()
   }
-
   getListOfTeachers() {
-      const serviceName = END_POINTS.base_back.default + 'person-teach';
-      this.loading = true;
-      this.generalService.nameAll$(serviceName).subscribe(
-        (res: any) => {
-          if (res.success) {
-            this.listOfTeachers = res.data;
-            this.listOfTeachers.map((m: any) => {
-              m.nombreCompletos = m.apellido_paterno + ' ' + m.apellido_materno + ' ' +  m.nombres;
-            })
+    const serviceName = END_POINTS.base_back.default + 'person-teach';
+    if (this.formHeader.get('termino').value !== '') {
+      this.formHeader.controls['termino'].valueChanges
+        .pipe(
+          debounceTime(500),
+          distinctUntilChanged((curr: any, prev: any) => {
+            return curr.toLowerCase() === prev.toLowerCase();
+          }),
+          switchMap(text => {
+            this.searchstring.push(text);
+            if (text !== '' && this.searchstring[this.searchstring.length - 1] !== this.searchstring[this.searchstring.length - 2]) {
+              return this.generalService.nameParams$(serviceName, { q: text });
+            } else {
+              this.searchstring = [];
+              this.listOfTeachers = [];
+              return [];
+            }
+          })
+        )
+        .subscribe((res: any) => {
+          if (res.data) {
+            this.listOfTeachers = res.data.splice(0, 5);
           }
+          // console.log(this.listEstudiantes);
         });
+    }
+  }
 
+  setTermino(termino: any) {
+    if (termino !== '') {
+      this.formHeader.controls['termino'].setValue(`${termino.nombres} ${termino.apellido_paterno} ${termino.apellido_materno}`);
+      this.formHeader.controls['idteacherToImportName'].setValue(termino.id);
+      this.listOfTeachers = [];
+      // console.log(this.formHeader.controls['termino'].value);
+    }
   }
   // to import teachers
   searchTeachersToImport() {
@@ -88,7 +112,7 @@ export class MTutoresComponent implements OnInit {
     this.generalService.addNameData$(serviceName, data).subscribe(res => {
       if(res.success){
         this.getData();
-        this.formHeader.controls['teacherToImportName'].setValue('');
+        this.formHeader.controls['termino'].setValue('');
         this.formHeader.controls['checkbox'].setValue(false)
       }
     })
@@ -122,5 +146,6 @@ export class MTutoresComponent implements OnInit {
       }
     });
   }
+
 
 }

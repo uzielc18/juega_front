@@ -10,41 +10,29 @@
             <div class="d-flex flex-column">
               <label class="label">Seleccione un(a) Docente:</label>
               <nb-form-field>
-                <nb-icon nbPrefix icon="search" pack="eva"></nb-icon>
                 <input
                   type="text"
-                  status="primary"
-                  fieldSize="small"
-                  placeholder="Buscar Docente"
-                  formControlName="teacherToImportName"
-                  (keypress)="searchTeachersToImport()"
                   nbInput
                   fullWidth
+                  status="primary"
+                  formControlName="termino"
+                  placeholder="Nombre / Código"
+                  fieldSize="small"
+                  (keypress)="getListOfTeachers()"
                 />
-                <button *ngIf="resetTeacherImportButton" nbSuffix nbButton ghost status="danger" (click)="resetTeachersToImport()">
-                  <nb-icon icon="close-square-outline" pack="eva" > </nb-icon>
+                <button nbSuffix nbButton ghost>
+                  <nb-icon icon="search-outline" pack="eva"> </nb-icon>
                 </button>
               </nb-form-field>
-              <div *ngIf="showTeachersToImport" class="position-relative" style="height: 0px">
-                <ul
-                  class="list-group position-absolute top-0 start-0 w-100"
-                  style="z-index: 9999; max-height: 500px; height: 50vh; overflow-y: auto"
+              <ul class="list-group">
+                <li
+                  *ngFor="let item of listOfTeachers"
+                  class="list-group-item list-group-item-action py-1"
+                  (click)="setTermino(item)"
                 >
-                  <li
-                    *ngFor="let item of listOfTeachers | appFilter: formHeader.value.teacherToImportName:'nombreCompletos'"
-                    appHighlight
-                    [searchedWord]="formHeader.value.teacherToImportName"
-                    [content]="item.nombreCompletos | titlecase"
-                    [classToApply]="'fw-bold'"
-                    [setTitle]="true"
-                    class="list-group-item list-group-item-action py-1"
-                    style="cursor: pointer"
-                    (click)="setTeacherToImport(item)"
-                  >
-                    {{item.nombreCompletos | titlecase }}
-                  </li>
-                </ul>
-              </div>
+                  {{ item.nombres }} {{ item.apellido_paterno }} {{ item.apellido_materno }}
+                </li>
+              </ul>
             </div>
 
             <div class="d-flex flex-column">
