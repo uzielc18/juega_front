@@ -1,22 +1,25 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbComponentStatus, NbDialogRef, NbToastrService } from '@nebular/theme';
 import { AppService } from 'src/app/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { CForumsComponent } from '../../c-free/calificar-elements/c-forums/c-forums.component';
+import {VExamViewsComponent} from "../../../../../shared/components/exam-view/v-exam-views/v-exam-views.component";
 
 @Component({
   selector: 'app-calificar-element-estudent',
   templateUrl: './calificar-element-estudent.component.html',
   styleUrls: ['./calificar-element-estudent.component.scss'],
 })
-export class CalificarElementEstudentComponent implements OnInit {
+export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
   loading:boolean = false;
   @Input() element:any;
   @Input() rol:any;
   @Input() directore:any;
+  @ViewChild(VExamViewsComponent) question: any;
+  noteQuestion: any;
   listAlumns:any = [];
   formHeader: any = FormGroup;
   notesState: boolean = false;
@@ -55,6 +58,9 @@ export class CalificarElementEstudentComponent implements OnInit {
     this.filedMoreDate();
     this.getListEstudent();
     // console.log(this.formHeader.value);
+  }
+  ngAfterViewInit() {
+    this.noteQuestion = this.question.questions;
   }
   private fieldReactive() {
     const controls = {
