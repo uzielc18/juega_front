@@ -13,6 +13,7 @@ import {EmitEventsService} from "../../../../shared/services/emit-events.service
 })
 export class UserPerfilHomeComponent implements OnInit, OnDestroy {
   recuperarEmail:any = this.activatedRoute.snapshot.paramMap.get('email');
+  status: any;
   me: any
   email: any;
   profile: any;
@@ -58,10 +59,10 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
     }
     this.generalService.nameIdParams$(serviceName, this.email ,params).subscribe((res:any) => {
       if(res.success){
+        this.status = res.success
         this.profile = res.data;
         if(this.rolSemestre?.rol?.name !== 'Estudiante' && this.rolSemestre?.rol?.name !== 'Docente' || this.profile?.user?.person?.id === this.me){
           this.getEvaluaciones(this.profile?.user?.person);
-          this.getCourses(this.profile?.person.id)
         }else{
           this.loading = false
         }
@@ -74,26 +75,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
       this.person = this.profile?.user.person
       this.generalService.nameId$(serviceName, person?.id).subscribe(res => {
         this.notas = res.data
-      })
-  }
-  getCourses(person: any) {
-    const serviceName = END_POINTS.base_back.default + 'course-list';
-    const params = {
-      semester_id: this.rolSemestre.semestre.id,
-    };
-    this.generalService.nameIdParams$(serviceName, person, params).subscribe(
-      (res: any) => {
-        if (res.success) {
-          this.listCourses = res.data
-        }
-      },
-      () => {
-        this.loading = false;
-      },
-      () => {
-        this.loading = false;
-      }
-    );
+      },()=>this.loading = false, () => {this.loading = false})
   }
 
 }

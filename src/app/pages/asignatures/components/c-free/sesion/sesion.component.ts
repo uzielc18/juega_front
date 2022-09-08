@@ -115,8 +115,8 @@ export class SesionComponent implements OnInit {
       });
   }
   cargarCambio(result:any) {
-    this.setCheck(result.type_element.id);
-    this.listElements(result.response.topic_id, result.type_element.id);
+    this.setCheck(result.type_element?.id);
+    this.listElements(result.response?.topic_id, result.type_element?.id);
   }
   adminGrupal(el: any) {
     const params = {
@@ -201,6 +201,26 @@ export class SesionComponent implements OnInit {
     this.generalService.nameIdAndId$(serviceName, topic_id, type_element_id).subscribe(
       data => {
         this.arrayEl = data.data || [];
+        this.arrayEl.map((m: any) => {
+          if(m.tipo === 'TRABAJO'){
+            m.icon = 'list-outline';
+          }
+          if(m.tipo === 'VIDEO'){
+            m.icon = 'play-circle-outline';
+          }
+          if(m.tipo === 'EVALUACION'){
+            m.icon = 'checkmark-circle-outline';
+          }
+          if(m.tipo === 'FORO'){
+            m.icon = 'message-circle-outline';
+          }
+          if(m.tipo === 'ENLACE'){
+            m.icon = 'external-link-outline';
+          }
+          if(m.tipo === 'DOCUMENTO'){
+            m.icon = 'file-text-outline';
+          }
+        })
       },
       () => {
         this.loading = false;
@@ -217,6 +237,26 @@ export class SesionComponent implements OnInit {
     this.generalService.nameId$(serviceName, topic_id).subscribe(
       data => {
         this.arrayEl = data.data || [];
+        this.arrayEl.map((m: any) => {
+          if(m.tipo === 'TRABAJO'){
+            m.icon = 'list-outline';
+          }
+          if(m.tipo === 'VIDEO'){
+            m.icon = 'play-circle-outline';
+          }
+          if(m.tipo === 'EVALUACION'){
+            m.icon = 'checkmark-circle-outline';
+          }
+          if(m.tipo === 'FORO'){
+            m.icon = 'message-circle-outline';
+          }
+          if(m.tipo === 'ENLACE'){
+            m.icon = 'external-link-outline';
+          }
+          if(m.tipo === 'DOCUMENTO'){
+            m.icon = 'file-text-outline';
+          }
+        })
       },
       () => {
         this.loading = false;
@@ -227,8 +267,6 @@ export class SesionComponent implements OnInit {
     );
   }
   setCheck(type_element_id: any) {
-    console.log(type_element_id, 'ups');
-    console.log(this.sesion.elements)
     if (this.sesion.elements?.length > 0) {
       this.sesion.elements.map((el: any) => {
         el.check = false;
@@ -370,13 +408,28 @@ export class SesionComponent implements OnInit {
     this.dialogService.open(CopyElementsComponent,{
       dialogClass: 'dialog-limited-height',
       context: {
-        item: item
+        item: item,
+        curso: this.curso
       },
       closeOnBackdropClick: false,
       closeOnEsc: false,
     })
       .onClose.subscribe(result => {
-      if (result === 'ok') {
+      if (result.value_close === 'ok') {
+
+        if (this.sesion.modo === 'agrupado') {
+          this.listElements(result.topic_id, result.type_element_id);
+          setTimeout(() => {
+            if (this.arrayEl.length <= 0) {
+              this.arrayEl = [];
+              this.validaExist.emit();
+            }
+          }, 5000);
+
+        }
+        if (this.sesion.modo === 'ordenado') {
+          this.listElementOrden(result.values.topic_id);
+        }
       }
     });
   }
