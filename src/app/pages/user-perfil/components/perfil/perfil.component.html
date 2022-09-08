@@ -16,8 +16,8 @@
         </p>
       </div>
       <div class="student-info">
-        <p class="ciclo">{{ profile?.user?.person?.ciclo }}º Ciclo</p>
-        <p class="carrera">{{ profile?.user?.person?.programa_estudio }}</p>
+        <p *ngIf="rolSemestre?.rol?.name === 'Estudiante'" class="ciclo">{{ profile?.user?.person?.ciclo }}º Ciclo</p>
+        <p *ngIf="rolSemestre?.rol?.name === 'Estudiante'" class="carrera">{{ profile?.user?.person?.programa_estudio }}</p>
         <p class="codigo">
           {{ profile?.user?.person?.codigo }}
         </p>

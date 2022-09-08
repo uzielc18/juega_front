@@ -204,11 +204,17 @@
       <div class="p-1" [ngClass]="has_rubric ? 'col-md-4' : 'col-md-2'">
         <nb-card *ngIf="notesState">
           <nb-card-header>
-            Ingresar nota
+            <div class="d-flex justify-content-between align-items-center">
+              <div>Ingresar nota</div>
+              <div style="border: 2px dashed #D5D5D5;padding: 1px 5px">
+                <small style="font-weight: bold; font-size: 16px; color: var(--color-primary-500)">{{noteQuestion?.nota}} </small>
+                <small> pt.</small>
+              </div>
+            </div>
           </nb-card-header>
           <nb-card-body class="p-2">
             <form [formGroup]="formHeader">
-              <div>
+              <div  *ngIf="!has_rubric && pending?.student_pending?.realizo !== '0' && pending?.tipo !== 'EVALUACION'">
                 <label class="label">Comentario</label><br>
                 <textarea nbInput fullWidth placeholder="Ingrese un comentario" formControlName="comentario"></textarea>
                 <control-messages [control]="formHeader.get('comentario')"></control-messages>
@@ -246,7 +252,15 @@
                 <button *ngIf="!has_rubric && pending?.student_pending?.realizo !== '0' && pending?.tipo !== 'EVALUACION'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()">Calificar</button>
               </div>
             </form>
+
           </nb-card-body>
+          <nb-card-footer>
+            <div>
+              <small  style="font-size: 10px"><strong class="label">Preguntas respondidas:</strong>{{noteQuestion.preguntas_respondidas}}</small><br>
+              <small style="font-size: 10px"><strong class="label">Tiempo:</strong>{{noteQuestion.segundo}}</small><br>
+              <small style="font-size: 10px"><strong class="label">Total de preguntas:</strong>{{noteQuestion.total_questions}}</small>
+            </div>
+          </nb-card-footer>
         </nb-card>
       </div>
     </div>
