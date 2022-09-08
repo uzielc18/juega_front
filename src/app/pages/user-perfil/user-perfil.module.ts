@@ -12,6 +12,8 @@ import { TabsReporteNotasComponent } from './components/tabs/tabs-reporte-notas/
 import {NgxPrintModule} from "ngx-print";
 import { MReporteNotasComponent } from './components/tabs/tabs-reporte-notas/modals/m-reporte-notas/m-reporte-notas.component';
 import { TabsCursosComponent } from './components/tabs/tabs-cursos/tabs-cursos.component';
+import { TabsEditPerfilComponent } from './components/tabs/tabs-edit-perfil/tabs-edit-perfil.component';
+import {ImageRecorteModule} from "../../shared/components/recortes/image-recorte/image-recorte.module";
 const COMPONENTS: any[] = [
 
 ]
@@ -23,15 +25,17 @@ const COMPONENTS: any[] = [
     PerfilComponent,
     TabsReporteNotasComponent,
     MReporteNotasComponent,
-    TabsCursosComponent
+    TabsCursosComponent,
+    TabsEditPerfilComponent
   ],
-  imports: [
-    CommonModule,
-    UserPerfilRoutingModule,
-    NebularModule,
-    CardListCourseModule,
-    NgbModule,
-    NgxPrintModule
-  ]
+    imports: [
+        CommonModule,
+        UserPerfilRoutingModule,
+        NebularModule,
+        CardListCourseModule,
+        NgbModule,
+        NgxPrintModule,
+        ImageRecorteModule
+    ]
 })
 export class UserPerfilModule { }

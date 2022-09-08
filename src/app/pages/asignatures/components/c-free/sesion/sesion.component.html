@@ -92,7 +92,7 @@
     <nb-list>
       <nb-list-item *ngFor="let el of arrayEl; let i = index" class="d-flex align-items-center justify-content-between">
         <div>
-          <h5 class="sesion-title">{{ sesion?.modo === 'ordenado' ? el.orden : (i +1) }}. {{ el.titulo }}</h5>
+          <h5 class="sesion-title">{{ sesion?.modo === 'ordenado' ? el.orden : (i +1) }}. <nb-icon [icon]="el.icon"></nb-icon> {{ el.titulo }}</h5>
           <p class="sesion-description">
             {{ el.descripcion }}
           </p>
@@ -116,7 +116,7 @@
         <div>
           <div class="d-flex align-items-center">
 
-            <!-- <nb-button-group class="d-flex align-items-center flex-wrap flex-md-nowrap p-0" style="gap: 5px">nbsp;
+            <!-- <nb-button-group class="d-flex align-items-center flex-wrap flex-md-nowrap p-0" style="gap: 5px">nbsp;-->
               <button
                 *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
                 nbButton
@@ -128,7 +128,7 @@
                 (click)="openCopyAndMoveElement(el)"
               >
                 <nb-icon icon="copy"></nb-icon>
-              </button>-->
+              </button>
               <button
                 *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && el?.grupal === '1'"
                 nbButton

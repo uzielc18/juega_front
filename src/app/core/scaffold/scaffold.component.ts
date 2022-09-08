@@ -184,7 +184,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
         } else if (data.item.subtag === 'profile') {
           this.emitEventsService.profileInfo(true);
-          this.router.navigate([`/pages/dashboard`]);
+          this.router.navigate([`/pages/user/perfil/${this.user.email}`]);
         }
       });
 

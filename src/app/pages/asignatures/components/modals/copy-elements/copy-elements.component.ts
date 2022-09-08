@@ -13,9 +13,14 @@ import {GeneralService} from "../../../../../providers";
 export class CopyElementsComponent implements OnInit {
 
   loading: boolean = false;
+
   listOfCourses: any = [];
   topicsMove: any = [];
   selectedTopics: any = [];
+
+  origen: any[] = [];
+  destino: any[] = [];
+
   @Input() item: any;
   @Input() curso: any;
   formHeader: any = FormGroup;
@@ -35,6 +40,7 @@ export class CopyElementsComponent implements OnInit {
       course_id: [''],
       unit_id: ['', [Validators.required]],
       section_id: ['',[Validators.required]],
+      section_id_select: [''],
       topics_id: ['',[Validators.required]],
     };
     this.formHeader = this.fb.group(controls);
@@ -53,7 +59,7 @@ export class CopyElementsComponent implements OnInit {
     }
   }
   selectTopicsMove(topics: any){
-    console.log(topics)
+    this.formHeader.get('section_id_select').setValue(topics.id)
   }
   toggleOption(course: any, i: any) {
     course.show = !course.show;
@@ -144,5 +150,66 @@ export class CopyElementsComponent implements OnInit {
       }
     })
 
+  }
+
+  copyAndmove(){
+    if(this.formHeader.get('mover').value === false){
+      const datos = {
+        element_id: this.item.id
+      }
+      const arr = []
+      arr.push(datos)
+      this.origen = arr;
+
+      this.destino = this.selectedTopics.map((topic: any) => {
+        return {
+          course_id: topic.course_id,
+          topic_id: topic.id,
+        };
+      });
+      const serviceName = END_POINTS.base_back.default + 'save-elements-imported';
+      const data = {
+        origen: this.origen,
+        destino: this.destino,
+      };
+      this.loading = true;
+      this.generalService.addNameData$(serviceName, data).subscribe(
+        (res: any) => {
+          const valueClose = {
+            value_close: 'ok',
+            value: data,
+            response: res.data,
+          };
+          this.activeModal.close(valueClose);
+        },
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
+    }else{
+      const serviceName = END_POINTS.base_back.elements;
+      const params = {
+        topic_id: this.formHeader.get('section_id_select').value,
+      }
+      if (this.item.id) {
+        this.loading = true;
+        this.generalService.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+          if(r.success){
+            const data = r.data || '';
+            const valueClose = {
+              value_close: 'ok',
+              value: params,
+              response: r.data,
+              type_element: r.data.type_element
+            };
+            this.activeModal.close(valueClose);
+
+          }
+        }, () => { this.loading = false; }, () => { this.loading  = false; });
+    }
+    }
   }
 }
