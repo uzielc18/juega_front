@@ -18,7 +18,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
   @Input() element:any;
   @Input() rol:any;
   @Input() directore:any;
-  @ViewChild(VExamViewsComponent) question: any;
+  @ViewChild(VExamViewsComponent) child: any;
   noteQuestion: any;
   listAlumns:any = [];
   formHeader: any = FormGroup;
@@ -60,7 +60,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
     // console.log(this.formHeader.value);
   }
   ngAfterViewInit() {
-    this.noteQuestion = this.question.questions;
+    this.noteQuestion = this.child.info;
   }
   private fieldReactive() {
     const controls = {
@@ -402,9 +402,10 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
   calificarWork() {
     const serviceName = END_POINTS.base_back.resourse + '/marking-student-work';
     const forms = this.formHeader.value;
+    const nota_student = this.child?.info?.nota
     const params: any = {
       comentario_docente: forms.comentario,
-      nota: forms.nota,
+      nota: this.child?.info?.nota === null? forms.nota: nota_student,
     };
     this.loading = true;
     this.generalServi.addNameIdData$(serviceName, this.pending.student_pending.id, params).subscribe(

@@ -59,7 +59,7 @@
           <div  >
             <h4 class="attached-files-title">Mi grupo</h4>
             <div *ngFor="let item of pending?.mi_grupo">
-              <small style="color: var(--color-danger-600)">- {{item.nombres}} {{item.apellido_paterno}} {{item.apellido_materno}}</small><br>
+              <small class="label">- {{item.nombres}} {{item.apellido_paterno}} {{item.apellido_materno}} {{item.pe_id === null? '* Este alumno no tiene pendiente, actualice la pagina por favor o pida que ingrese a su lamb learnig': ''}} </small><br>
             </div>
 
             <!--<div class="conteiner-grupal">

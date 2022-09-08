@@ -18,11 +18,6 @@ export class TabsCursosComponent implements OnInit {
               private userService: AppService,) { }
 
   ngOnInit(): void {
-
-    this.me = this.userService.user.person.id
-    if(this.rolSemestre?.rol?.name !== 'Estudiante' && this.rolSemestre?.rol?.name !== 'Docente' || this.profile?.user?.person?.id === this.me) {
-      this.getCourses();
-    }
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -34,25 +29,5 @@ export class TabsCursosComponent implements OnInit {
     }
   }
 
-  getCourses() {
-    this.loading = true
-    const serviceName = END_POINTS.base_back.default + 'course-list';
-    const params = {
-      semester_id: this.rolSemestre.semestre.id,
-    };
-    this.generalService.nameIdParams$(serviceName,this.profile?.person.id, params).subscribe(
-      (res: any) => {
-        if (res.success) {
-          this.listCourses = res.data
-        }
-      },
-      () => {
-        this.loading = false;
-      },
-      () => {
-        this.loading = false;
-      }
-    );
-  }
 
 }
