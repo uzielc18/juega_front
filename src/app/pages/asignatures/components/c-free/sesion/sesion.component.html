@@ -97,17 +97,17 @@
             {{ el.descripcion }}
           </p>
           <label class="label" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)">
-            <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="basic" ghost class="butonsInfo">
+            <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="basic" ghost class="butonsInfo" (click)="openCalificarElement(el)">
               Sin Calificar: {{ el?.total_entregados - el?.total_revisados }}</button
             >&nbsp;
-            <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="success" ghost class="butonsInfo">
+            <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="success" ghost class="butonsInfo" (click)="openCalificarElement(el)">
               Calificados: {{ el?.total_revisados }}</button
             >&nbsp;
-            <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="danger" ghost class="butonsInfo">
+            <button *ngIf="['FORO', 'TRABAJO'].includes(el?.tipo)" nbButton size="tiny" outline status="danger" ghost class="butonsInfo" (click)="openCalificarElement(el)">
               Sin entregar: {{ el?.total_pendientes - el?.total_entregados }}</button
             >&nbsp;
-            <button nbButton size="tiny" outline status="warning" ghost class="butonsInfo">Total vistos: {{ el?.total_vistos }}</button>&nbsp;
-            <button nbButton size="tiny" outline status="info" ghost class="butonsInfo">
+            <button nbButton size="tiny" outline status="warning" ghost class="butonsInfo" (click)="openCalificarElement(el)">Total vistos: {{ el?.total_vistos }}</button>&nbsp;
+            <button nbButton size="tiny" outline status="info" ghost class="butonsInfo" (click)="openCalificarElement(el)">
               Total alumnos: {{ el?.course?.total_matriculados }}
             </button>
           </label>

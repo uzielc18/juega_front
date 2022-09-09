@@ -24,7 +24,7 @@ export class VExamViewsComponent implements OnInit, OnChanges {
     // console.log(this.person_id, this.pending_id, this.rol);
     this.questions = [];
     this.getViewQuestions();
-    
+
   }
   ngOnInit(): void {
     setTimeout(() => {
@@ -93,7 +93,7 @@ export class VExamViewsComponent implements OnInit, OnChanges {
       return Number(numero).toFixed(0);;
     } else {
       // console.log('impar');
-      
+
       return Number(numero).toFixed(2);
     }
   }

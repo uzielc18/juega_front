@@ -11,6 +11,10 @@ import { ModoViewComponent } from '../../modals/modo-view/modo-view.component';
 import { OrdenElementsComponent } from '../../modals/orden-elements/orden-elements.component';
 import {MSatisfactionComponent} from "../../../../../shared/components/satisfaction/modal/m-satisfaction.component";
 import {CopyElementsComponent} from "../../modals/copy-elements/copy-elements.component";
+import {
+  CalificarElementEstudentComponent
+} from "../../modals/calificar-element-estudent/calificar-element-estudent.component";
+import {DIRECTORY} from "../../../../../shared/directorios/directory";
 @Component({
   selector: 'app-sesion',
   templateUrl: './sesion.component.html',
@@ -27,6 +31,7 @@ export class SesionComponent implements OnInit {
   clickedIndex: any = true;
   hoveredIndex: any;
 
+  directorio: any = DIRECTORY.courses;
   @Output() validaExist = new EventEmitter<any>();
   constructor(
     private dialogService: NbDialogService,
@@ -432,5 +437,16 @@ export class SesionComponent implements OnInit {
         }
       }
     });
+  }
+  openCalificarElement(element: any){
+    if(element.tipo === 'FORO' || element.tipo === 'TRABAJO' || element.tipo === 'EVALUACION'){
+      if ((element.listo === 1 && this.rolSemestre.rol.name === 'Estudiante' && this.sesion?.modo === 'ordenado') || ['Docente', 'Admin'].includes(this.rolSemestre?.rol?.name) || this.sesion?.modo === 'agrupado') {
+        this.router.navigate([`../asignatures/course/${this.curso.id_carga_curso_docente}/element/${element.id}`], {
+          relativeTo: this.activatedRoute.parent
+        });
+        console.log('code')
+      }
+    }
+
   }
 }
