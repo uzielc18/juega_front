@@ -125,7 +125,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
           url: result.url,
           peso: result.peso,
           tipo: this.paramsInfo.tipo || '',
-          person_id: this.userData.user.id,
+          person_id: this.userData.user?.person.id,
           tabla: this.paramsInfo.tabla,
           tabla_id: '',
         }
