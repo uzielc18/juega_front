@@ -19,6 +19,14 @@ export class FilmsHomeComponent implements OnInit {
   user: any;
   items: any = [];
   grabacionesData: any = [];
+  daysLeft: any;
+  hoursLeft: any;
+  minutesLeft: any;
+  secondsLeft: any;
+  expiredDays: any;
+  expiredHours: any;
+  expiredMinutes: any;
+  expiredSeconds: any;
   constructor(private fb: FormBuilder,
               private dialogService: NbDialogService,
               private generalService: GeneralService,
@@ -73,7 +81,34 @@ export class FilmsHomeComponent implements OnInit {
     const serviceName = 'record-zoom-person';
     this.generalService.nameId$(serviceName, this.userService.user.person.id).subscribe(res => {
       this.grabacionesData = res.data
+      this.durationRecord(this.grabacionesData);
     },() => {this.loading = false}, () => {this.loading = false})
+  }
+  durationRecord(item: any){
+    const start = new Date(item.recording_start).getTime();
+    const end = new Date(item.recording_end).getTime();
+    const duration = start - end;
+    const expired = end - start;
+
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+
+
+    this.daysLeft = Math.floor(duration / day);
+    this.hoursLeft = Math.floor((duration % day) / hour);
+    this.minutesLeft = Math.floor((duration % hour) / minute);
+    this.secondsLeft = Math.floor((duration % minute) / second);
+
+    this.expiredDays = Math.floor(expired / day);
+    this.expiredHours = Math.floor((expired % day) / hour);
+    this.expiredMinutes = Math.floor((expired % hour) / minute);
+    this.expiredSeconds = Math.floor((expired % minute) / second);
+
+    item.map((m: any) => {
+      return m.duration_re = this.expiredMinutes;
+    })
   }
   addSession(item: any,tipo: any){
     this.dialogService.open(MAddSessionComponent, {

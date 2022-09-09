@@ -25,7 +25,7 @@
       <table class="table table-sm">
         <thead>
         <tr style="font-size: 12px">
-          <th>Código</th>
+          <th>Record id</th>
           <th>Fecha</th>
           <th>Curso</th>
           <th>Sesión</th>
@@ -39,9 +39,9 @@
           <td>{{item.record_id}}</td>
           <td>{{item.recording_start| date: 'd/M/y'}}</td>
           <td>{{item.course_nombre}}</td>
-          <td>{{item.tema}}</td>
+          <td>{{item.topic}}</td>
           <td>{{item.titulo}}</td>
-          <td>{{item.size}}</td>
+          <td>{{item.duration_re}} minutos</td>
           <!--<td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' ||rolSemestre.rol.name === 'Docente'">
             <a [href]="item.download_url" target="_blank">
             <button nbButton size="tiny"
