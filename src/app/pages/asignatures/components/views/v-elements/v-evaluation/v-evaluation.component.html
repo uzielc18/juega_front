@@ -1,10 +1,10 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
   <div class="work work-expired" style="margin-left: 20px; margin-right: 20px;"
-   *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && pending?.student_pending?.realizo === 0">
+       *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && pending?.student_pending?.realizo === 0">
     <span>
       <p>Hola {{ userInfo.name }}!</p>, Lo sentimos, su actividad de evaluación: {{ element?.titulo }} acaba de caducar hace {{
       expiredDays |
-      i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
+        i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
       expiredSeconds | i18nPlural:secondsMap }}
     </span>
     <div class="ms-auto d-flex align-items-center">
@@ -15,64 +15,75 @@
       <!-- <nb-icon class="work-expired-close" icon="close-outline"></nb-icon> -->
     </div>
   </div>
-    <div class="work work-vence" style="margin-left: 20px; margin-right: 20px;"
-    *ngIf="!tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota === null">
+  <div class="work work-vence" style="margin-left: 20px; margin-right: 20px;"
+       *ngIf="!tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota === null">
       <span>
-          <p>Hola {{ userInfo.name }}!</p>, su trabajo: {{ element?.titulo }} vence en: {{
+          <p>Hola {{ userInfo.name }}!</p>, su evaluación: {{ element?.titulo }} vence en: {{
         venceDays |
           i18nPlural:daysMap }} {{ venceHours | i18nPlural:hoursMap }} {{ venceMinutes | i18nPlural:minutesMap }} {{
         venceSeconds | i18nPlural:secondsMap }}
         </span>
-    </div>
-<nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">
-  <nb-card-body>
-    <div class="row">
-      <div class="instructions  col-md-9 col-xxl-10">
-        <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
-        <p class="instructions-description">{{ element?.descripcion }}</p>
-      </div>
-      <div class="col-md-3 col-xxl-2 pe-0">
-        <div class="calification calification-evalue ms-auto" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
-          (click)="calificar(element)">
-          <nb-icon icon="edit"></nb-icon>
-          <span>Calificar</span>
+  </div>
+  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;"
+       *ngIf="!pending?.student_pending?.realizo && !pending?.student_pending?.nota">
+    <p>Hola {{ userInfo.name }}!,</p><span>Tu evaluación: {{ element?.titulo }} ya fué calificado</span>
+  </div>
+  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;"
+       *ngIf="!pending?.student_pending?.realizo && !pending?.student_pending?.nota">
+    <p>Felicitaciones {{ userInfo.name }}!,</p><span>Ya entregaste tu evaluación ({{ element?.titulo }})</span>
+  </div>
+  <nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">
+    <nb-card-body>
+      <div class="row">
+        <div class="instructions  col-md-9 col-xxl-10">
+          <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
+          <p class="instructions-description">{{ element?.descripcion }}</p>
         </div>
+        <div class="col-md-3 col-xxl-2 pe-0">
+          <div class="calification calification-evalue ms-auto"
+               *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
+               (click)="calificar(element)">
+            <nb-icon icon="edit"></nb-icon>
+            <span>Calificar</span>
+          </div>
 
-        <div class="calification ms-auto"
-          *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.nota">
-          Aún no tiene calificación
-        </div>
-        <div class="calification calification-evaluated"
-          *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota">
-          <p>{{pending?.student_pending?.nota}}</p>
-          <span>Calificación</span>
+          <div class="calification ms-auto"
+               *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.nota">
+            Aún no tiene calificación
+          </div>
+          <div class="calification calification-evaluated"
+               *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota">
+            <p>{{pending?.student_pending?.nota}}</p>
+            <span>Calificación</span>
+          </div>
         </div>
       </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-8">
-        <nb-card status="primary">
-          <nb-card-header class="text-center" style="padding-top: 8px; padding-bottom: 8px;">
-            INFORMACIÓN DE LA EVALUACIÓN
-          </nb-card-header>
-          <nb-card-body>
-            <span *ngIf="element?.type_element?.codigo === 'EVAL' && pending?.student_pending && rolSemestre?.rol?.name === 'Estudiante'">
-              <nb-alert status="success" class="text-center" *ngIf="pending?.student_pending?.realizo === '1'" style="padding: 3px;">
+      <hr>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <nb-card status="primary">
+            <nb-card-header class="text-center" style="padding-top: 8px; padding-bottom: 8px;">
+              INFORMACIÓN DE LA EVALUACIÓN
+            </nb-card-header>
+            <nb-card-body>
+            <span
+              *ngIf="element?.type_element?.codigo === 'EVAL' && pending?.student_pending && rolSemestre?.rol?.name === 'Estudiante'">
+              <nb-alert status="success" class="text-center" *ngIf="pending?.student_pending?.realizo === '1'"
+                        style="padding: 3px;">
                 EXAMEN FINALIZADO
               </nb-alert>
             </span>
-            <div class="table-responsive" style="padding-top: 0px;">
-              <table class="table table-sm">
-                <tbody style="font-size: 11px;">
+              <div class="table-responsive" style="padding-top: 0px;">
+                <table class="table table-sm">
+                  <tbody style="font-size: 11px;">
                   <tr>
                     <th>* Duración del examen :</th>
                     <th>{{pending?.duracion}} minutos</th>
                   </tr>
                   <tr>
                     <th>* N° de preguntas :</th>
-                    <th>{{element?.exam?.aleatorio === '0' ? pending?.validaciones?.preguntas_count: element?.exam?.aleatorio}}</th>
+                    <th>{{element?.exam?.aleatorio === '0' ? pending?.validaciones?.preguntas_count : element?.exam?.aleatorio}}</th>
                   </tr>
                   <tr>
                     <th>* Fecha y hora inicio :</th>
@@ -82,30 +93,39 @@
                     <th>* Fecha y hora fin :</th>
                     <th>{{pending?.student_pending?.fecha_fin}}</th>
                   </tr>
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <nb-alert outline="primary" style="padding: 2px; font-size: 12px;">
-                - {{element?.exam?.mostrar_respuestas === 'SI' ? 'Si' : 'No'}} se mostrara las respuestas al finalizar el examen.
-                <hr style="padding: 0px;">
-                - {{element?.exam?.mostrar_nota === 'SI' ? 'Si' : 'No'}} se mostrara la nota al finalizar el examen.
-              </nb-alert>
-            </div>
-          </nb-card-body>
-          <nb-card-footer class="text-center">
-            <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && pending?.validaciones?.bloqueo === 0 && pending?.student_pending?.realizo !== '1'">
-              <button *ngIf="!pending?.student_pending?.exam_estudent" nbButton size="small" status="primary" (click)="initEvaluations()">Iniciar evaluación</button>
-              <button *ngIf="pending?.student_pending?.exam_estudent" nbButton size="small" status="primary" (click)="backQuestions()">Volver a la evaluación</button>
-            </div>
-            <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && pending?.student_pending?.realizo === '1'">
-              <button *ngIf="pending?.student_pending?.exam_estudent" nbButton size="small" status="primary" (click)="verEvaluacion()">Ver evaluación</button>
-            </div>
-          </nb-card-footer>
-        </nb-card>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <nb-alert outline="primary" style="padding: 2px; font-size: 12px;">
+                  - {{element?.exam?.mostrar_respuestas === 'SI' ? 'Si' : 'No'}} se mostrara las respuestas al finalizar
+                  el examen.
+                  <hr style="padding: 0px;">
+                  - {{element?.exam?.mostrar_nota === 'SI' ? 'Si' : 'No'}} se mostrara la nota al finalizar el examen.
+                </nb-alert>
+              </div>
+            </nb-card-body>
+            <nb-card-footer class="text-center">
+              <div
+                *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && pending?.validaciones?.bloqueo === 0 && pending?.student_pending?.realizo !== '1'">
+                <button *ngIf="!pending?.student_pending?.exam_estudent" nbButton size="small" status="primary"
+                        (click)="initEvaluations()">Iniciar evaluación
+                </button>
+                <button *ngIf="pending?.student_pending?.exam_estudent" nbButton size="small" status="primary"
+                        (click)="backQuestions()">Volver a la evaluación
+                </button>
+              </div>
+              <div
+                *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && pending?.student_pending?.realizo === '1'">
+                <button *ngIf="pending?.student_pending?.exam_estudent" nbButton size="small" status="primary"
+                        (click)="verEvaluacion()">Ver evaluación
+                </button>
+              </div>
+            </nb-card-footer>
+          </nb-card>
+        </div>
+        <div class="col-md-2"></div>
       </div>
-      <div class="col-md-2"></div>
-    </div>
-  </nb-card-body>
-</nb-card>
+    </nb-card-body>
+  </nb-card>
 </div>
