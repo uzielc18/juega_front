@@ -1,16 +1,16 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
-  <!-- <div class="work work-remember m-4" *ngIf="!tiempo_vencido">
+  <div class="work work-remember" style="margin-left: 20px; margin-right: 20px;" *ngIf="!tiempo_vencido">
     <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Trabajo: {{ element?.titulo }} está por vencer en {{
-      daysLeft |
+    daysLeft |
       i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} {{
-      secondsLeft | i18nPlural:secondsMap }}</span>
-  </div> -->
+    secondsLeft | i18nPlural:secondsMap }}</span>
+  </div>
   <div class="work work-expired" style="margin-left: 20px; margin-right: 20px;"
-  *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && !pending?.student_pending?.nota">
+       *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && !pending?.student_pending?.realizo">
     <span>
-      <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu Trabajo: {{ element?.titulo }} acaba de caducar hace {{
+      <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu evaluación: {{ element?.titulo }} acaba de caducar hace {{
       expiredDays |
-      i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
+        i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
       expiredSeconds | i18nPlural:secondsMap }}
     </span>
     <div class="ms-auto d-flex align-items-center">
@@ -21,153 +21,175 @@
       <!-- <nb-icon class="work-expired-close" icon="close-outline"></nb-icon> -->
     </div>
   </div>
-  <!-- <div class="work work-evaluated m-4">
-    <p>Hola {{ userInfo.name }}!,</p><span>Tu Trabajo: {{ element?.titulo }} fué calificado hace 4 días</span>
-  </div>  -->
+  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf="!pending?.student_pending?.realizo && !pending?.student_pending?.nota">
+    <p>Hola {{ userInfo.name }}!,</p><span>Tu evaluación: {{ element?.titulo }} ya fué calificado</span>
+  </div>
+  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf="pending?.student_pending?.realizo==='1' && !pending?.student_pending?.nota">
+    <p>Felicitaciones {{ userInfo.name }}!,</p><span>Ya entregaste tu Trabajo ({{ element?.titulo }})</span>
+  </div>
   <nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">
     <nb-card-body>
 
       <form [formGroup]="form">
-      <div class="row">
-        <div class="instructions col-md-9 col-xxl-10">
-          <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
-          <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p>
-        </div>
-        <div class="col-md-3 col-xxl-2 pe-0">
-          <div class="calification calification-evalue ms-auto" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)" (click)="calificar(element)">
-            <nb-icon icon="edit"></nb-icon>
-            <span>Calificar</span>
+        <div class="row">
+          <div class="instructions col-md-9 col-xxl-10">
+            <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
+            <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p>
           </div>
-
-          <div class="calification ms-auto" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.nota">
-            Aún no tiene calificación
-          </div>
-          <div class="calification calification-evaluated" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota">
-            <p>{{pending?.student_pending?.nota}}</p>
-            <span>Calificación</span>
-          </div>
-        </div>
-      </div>
-      <div class="d-flex flex-wrap">
-        <div>
-          <br>
-          <h4 class="attached-files-title">Archivos de apoyo</h4> <br>
-          <app-list-view-files [arrayFiles]="element?.element_files || []" [director]="getDirectoy()"></app-list-view-files>
-        </div>
-        <div class="container-grupo-card" *ngIf="pending?.grupal === '1' && rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length !== 0" >
-          <br>
-          <div  >
-            <h4 class="attached-files-title">Mi grupo</h4>
-            <div *ngFor="let item of pending?.mi_grupo">
-              <small class="label">- {{item.nombres}} {{item.apellido_paterno}} {{item.apellido_materno}} {{item.pe_id === null? '* Este alumno no tiene pendiente, actualice la pagina por favor o pida que ingrese a su lamb learnig': ''}} </small><br>
+          <div class="col-md-3 col-xxl-2 pe-0">
+            <div class="calification calification-evalue ms-auto"
+                 *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)" (click)="calificar(element)">
+              <nb-icon icon="edit"></nb-icon>
+              <span>Calificar</span>
             </div>
 
-            <!--<div class="conteiner-grupal">
-              <small>Este trabajo es grupal</small>
-            </div>-->
+            <div class="calification ms-auto"
+                 *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.nota">
+              Aún no tiene calificación
+            </div>
+            <div class="calification calification-evaluated"
+                 *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota">
+              <p>{{pending?.student_pending?.nota}}</p>
+              <span>Calificación</span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div *ngIf="has_rubric">
-        <br>
-        <div class="d-flex">
-          <h4 class="rubrica-title me-2">Rúbrica</h4>
-          <span class="rubrica-title-desc">(Criterios de evaluación)</span>
-        </div>
-        <app-rubricas [rubrica]="rubrica" [calification]="calification"></app-rubricas>
-      </div>
-
-      <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending && !tiempo_vencido">
-         <div class="d-flex">
-          <h4 class="send-work-title">Entrega de trabajo</h4>
-          <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon" style="font-size: 25px;" nbTooltip="Subir archivo" nbTooltipPlacement="top" nbTooltipStatus="primary"
-            icon="cloud-upload-outline" (click)="cambioTypo('1')"></nb-icon>
-          <nb-icon [status]="form.value.tipo === '2' ? 'primary' : 'basic'" class="send-work-icon" style="font-size: 25px;" nbTooltip="Subir url" nbTooltipPlacement="top" nbTooltipStatus="primary"
-            icon="external-link-outline" (click)="cambioTypo('2')"></nb-icon>
-        </div>
-
-        <div *ngIf="form.value.tipo == '1'">
-
-          <div *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length === 0 && pending?.grupal === '1'">
-            <small style="font-weight: bold; color: var(--color-danger-600)">Usted no tiene grupo, consulte a su docente. </small>
+        <div class="d-flex flex-wrap">
+          <div>
+            <br>
+            <h4 class="attached-files-title">Archivos de apoyo</h4> <br>
+            <app-list-view-files [arrayFiles]="element?.element_files || []"
+                                 [director]="getDirectoy()"></app-list-view-files>
           </div>
-          <lamb-prepare-file-pro
-            *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length !== 0 && pending?.grupal === '1' || rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length === 0 && pending?.grupal !== '1'"
-          [paramsInfo]="{
+          <div class="container-grupo-card"
+               *ngIf="pending?.grupal === '1' && rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length !== 0">
+            <br>
+            <div>
+              <h4 class="attached-files-title">Mi grupo</h4>
+              <div *ngFor="let item of pending?.mi_grupo">
+                <small
+                  class="label">- {{item.nombres}} {{item.apellido_paterno}} {{item.apellido_materno}} {{item.pe_id === null ? '* Este alumno no tiene pendiente, actualice la pagina por favor o pida que ingrese a su lamb learnig' : ''}} </small><br>
+              </div>
+
+              <!--<div class="conteiner-grupal">
+                <small>Este trabajo es grupal</small>
+              </div>-->
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="has_rubric">
+          <br>
+          <div class="d-flex">
+            <h4 class="rubrica-title me-2">Rúbrica</h4>
+            <span class="rubrica-title-desc">(Criterios de evaluación)</span>
+          </div>
+          <app-rubricas [rubrica]="rubrica" [calification]="calification"></app-rubricas>
+        </div>
+
+        <div class="mt-4"
+             *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending && !tiempo_vencido">
+          <div class="d-flex">
+            <h4 class="send-work-title">Entrega de trabajo</h4>
+            <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon"
+                     style="font-size: 25px;" nbTooltip="Subir archivo" nbTooltipPlacement="top"
+                     nbTooltipStatus="primary"
+                     icon="cloud-upload-outline" (click)="cambioTypo('1')"></nb-icon>
+            <nb-icon [status]="form.value.tipo === '2' ? 'primary' : 'basic'" class="send-work-icon"
+                     style="font-size: 25px;" nbTooltip="Subir url" nbTooltipPlacement="top" nbTooltipStatus="primary"
+                     icon="external-link-outline" (click)="cambioTypo('2')"></nb-icon>
+          </div>
+
+          <div *ngIf="form.value.tipo == '1'">
+
+            <div
+              *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length === 0 && pending?.grupal === '1'">
+              <small style="font-weight: bold; color: var(--color-danger-600)">Usted no tiene grupo, consulte a su
+                docente. </small>
+            </div>
+            <lamb-prepare-file-pro
+              *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length !== 0 && pending?.grupal === '1' || rolSemestre?.rol?.name === 'Estudiante' && pending?.mi_grupo?.length === 0 && pending?.grupal !== '1'"
+              [paramsInfo]="{
             key_file: key_file,
             directory: getDirectoy(),
             type: 'put',
             tabla: 'pendings',
             tipo: 'DOCUMENTO_TRABAJO'}"
-          [numFiles]="6"
-          (filterValueChange)="valueFile($event)"
-          [listArrayFile]="arrayFile"
-          [isDisabled]="pending?.student_pending?.pending_files?.length === 6"
-          [colorButom]="'primary'"
-          >
-          </lamb-prepare-file-pro>
+              [numFiles]="6"
+              (filterValueChange)="valueFile($event)"
+              [listArrayFile]="arrayFile"
+              [isDisabled]="pending?.student_pending?.pending_files?.length === 6"
+              [colorButom]="'primary'"
+            >
+            </lamb-prepare-file-pro>
+          </div>
+          <div *ngIf="form.value.tipo == '2'">
+            <nb-card>
+              <nb-card-body class="send-work-link d-flex">
+                <input type="text" nbInput fullWidth shape="rectangle" placeholder="Ingrese una url válida por favor"
+                       formControlName="enlace">
+                <nb-select placeholder="Selecciona enlace" status="primary" formControlName="ext_enlace">
+                  <nb-option value="YOUTUBE">YouTube</nb-option>
+                  <nb-option value="SOUNDCLOUD">SoundCloud</nb-option>
+                  <nb-option value="VIMEO">Vimeo</nb-option>
+                  <nb-option value="REFERENCIA">Referencia</nb-option>
+                </nb-select>
+                <button nbButton status="primary" [disabled]="validButtons" (click)="saveEnlace()">Guardar enlace
+                  <nb-icon icon="external-link-outline"></nb-icon>
+                </button>
+              </nb-card-body>
+            </nb-card>
+          </div>
         </div>
-        <div *ngIf="form.value.tipo == '2'">
-          <nb-card>
-            <nb-card-body class="send-work-link d-flex">
-              <input type="text" nbInput fullWidth shape="rectangle" placeholder="Ingrese una url válida por favor" formControlName="enlace">
-              <nb-select placeholder="Selecciona enlace" status="primary" formControlName="ext_enlace">
-                <nb-option value="YOUTUBE">YouTube</nb-option>
-                <nb-option value="SOUNDCLOUD">SoundCloud</nb-option>
-                <nb-option value="VIMEO">Vimeo</nb-option>
-                <nb-option value="REFERENCIA">Referencia</nb-option>
-              </nb-select>
-              <button nbButton status="primary" [disabled]="validButtons" (click)="saveEnlace()">Guardar enlace <nb-icon icon="external-link-outline"></nb-icon>
-              </button>
-            </nb-card-body>
-          </nb-card>
+        <br>
+        <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
+          <h4 class="send-work-title">Documentos entregados</h4> <br>
+          <div *ngIf="pending?.student_pending?.pending_files?.length>0">
+            <app-list-view-files
+              [arrayFiles]="pending?.student_pending?.pending_files || []"
+              [deleteFile]="!pending?.student_pending?.nota"
+              (deleteFileEmit)="deleteFile($event)"
+              [director]="getDirectoy()"
+            ></app-list-view-files>
+          </div>
+          <div class="mt-4" *ngIf="pending?.student_pending?.pending_files?.length<=0">
+            <nb-alert outline="danger" style="font-size: 12px;">No se encontraron archivos adjuntos</nb-alert>
+          </div>
         </div>
-      </div>
-      <br>
-      <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
-        <h4 class="send-work-title">Documentos entregados</h4> <br>
-        <div *ngIf="pending?.student_pending?.pending_files?.length>0">
-          <app-list-view-files
-          [arrayFiles]="pending?.student_pending?.pending_files || []"
-          [deleteFile]="!pending?.student_pending?.nota"
-          (deleteFileEmit)="deleteFile($event)"
-          [director]="getDirectoy()"
-          ></app-list-view-files>
+        <div class="mt-4" *ngIf="!pending?.student_pending && rolSemestre?.rol?.name === 'Estudiante'">
+          <nb-alert outline="danger" style="font-size: 12px;">No se encontraron pendientes</nb-alert>
         </div>
-        <div class="mt-4" *ngIf="pending?.student_pending?.pending_files?.length<=0">
-          <nb-alert outline="danger" style="font-size: 12px;">No se encontraron archivos adjuntos</nb-alert>
-        </div>
-      </div>
-      <div class="mt-4" *ngIf="!pending?.student_pending && rolSemestre?.rol?.name === 'Estudiante'">
-        <nb-alert outline="danger" style="font-size: 12px;">No se encontraron pendientes</nb-alert>
-      </div>
-      <br>
-      <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
-        <h4 class="send-work-title">Mis justificaciones</h4> <br>
-        <div class="table-responsive">
+        <br>
+        <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
+          <h4 class="send-work-title">Mis justificaciones</h4> <br>
+          <div class="table-responsive">
             <table class="table table-sm">
               <thead>
-                <tr style="font-size: 12px;">
-                  <th style="width: 1px;">#</th>
-                  <th>Justificación</th>
-                  <th>Respuesta</th>
-                  <th style="width: 1px;">Opción</th>
-                </tr>
+              <tr style="font-size: 12px;">
+                <th style="width: 1px;">#</th>
+                <th>Justificación</th>
+                <th>Respuesta</th>
+                <th style="width: 1px;">Opción</th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let just of pending?.justification; let i = index" style="font-size: 11px">
-                  <td>{{i+1}}</td>
-                  <td>{{just?.justification}}</td>
-                  <td>{{just?.respuesta}}</td>
-                  <td><button nbButton size="tiny" status="danger" *ngIf="just.estado_justification ===  'pendiente'" (click)="deleteJust(just)"><nb-icon icon="trash"></nb-icon></button></td>
-                </tr>
+              <tr *ngFor="let just of pending?.justification; let i = index" style="font-size: 11px">
+                <td>{{i + 1}}</td>
+                <td>{{just?.justification}}</td>
+                <td>{{just?.respuesta}}</td>
+                <td>
+                  <button nbButton size="tiny" status="danger" *ngIf="just.estado_justification ===  'pendiente'"
+                          (click)="deleteJust(just)">
+                    <nb-icon icon="trash"></nb-icon>
+                  </button>
+                </td>
+              </tr>
               </tbody>
             </table>
+          </div>
         </div>
-      </div>
-      <br>
-    </form>
+        <br>
+      </form>
     </nb-card-body>
   </nb-card>
 </div>
