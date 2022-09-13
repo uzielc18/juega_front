@@ -48,6 +48,11 @@ const routes: Routes = [
           .then(m => m.MenusModule),
       },
       {
+        path: 'poll',
+        loadChildren: () => import('src/app/pages/manage/poll/poll.module')
+          .then(m => m.PollModule),
+      },
+      {
         path: 'element',
         loadChildren: () => import('src/app/pages/manage/element/element.module').then(m => m.ElementModule),
       },
