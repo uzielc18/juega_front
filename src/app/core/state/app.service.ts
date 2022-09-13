@@ -23,6 +23,7 @@ export function init_app(configService: AppService, injector: Injector): any {
 @Injectable()
 export class AppService {
   private _user: any = null;
+  private _usersimular: any = null;
   private _semestre: any = null;
   private _rol: any = null;
   private _area: any = null;
@@ -52,6 +53,12 @@ export class AppService {
     this._usernameMenu = value;
   }
 
+  get usersimular(): any {
+    return this._usersimular;
+  }
+  set usersimular(value: any) {
+    this._usersimular = value;
+  }
   get user(): any {
     return this._user;
   }
@@ -105,6 +112,7 @@ export class AppService {
               this._semestre = data.data.semestre;
               this._rol = data.data.roles;
               this._area = data.data.area;
+              this._usersimular = data.data.user_simular;
               this.getMenus(data.data.user.person.role_id);
               return true;
             } else {
@@ -128,7 +136,7 @@ export class AppService {
       if (res.success) {
         this.nbMenuService.addItems(arrayMenu ? arrayMenu : [], 'core-menu');
         // console.log(arrayMenu);
-        
+
         // if (arrayMenu.length>0) {
         //     this.sessionArrayMenu(arrayMenu);
         // }
@@ -136,7 +144,7 @@ export class AppService {
     });
   }
 
-  // sessionArrayMenu(arrayMenu:any){ 
+  // sessionArrayMenu(arrayMenu:any){
   //   const array:any = [];
   //   arrayMenu.map((res:any) => {
   //     res.nivel = 1;

@@ -42,13 +42,22 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   userMenu: any[] = [];
   termino:any;
   notificationCount: any;
-
+  userSimulate: any;
   @ViewChild('searhEvent') searhEvent: any = ElementRef;
   @ViewChild('searhEvent2') searhEvent2: any = ElementRef;
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     if (sesion) {
       return JSON.parse(sesion);
+    } else {
+      return '';
+    }
+  }
+  get rolSimulate() {
+    const sesion: any = sessionStorage.getItem('simulateUser');
+    const val = JSON.parse(sesion);
+    if (val && val.id) {
+      return val;
     } else {
       return '';
     }
@@ -152,6 +161,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((status: boolean) => (this.spinner = status));
 
+    this.userSimulate = this.appService.usersimular;
     this.user = this.appService.user;
     this.userMenu = this.appService.usernameMenu;
     const { xl } = this.breakpointService.getBreakpointsMap();
@@ -209,6 +219,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 
   private fieldReactive() {
     const controls = {
@@ -589,6 +600,26 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     })
   }
 
-
-
+  logoutSimular(){
+    this.loading = true;
+    const serviceName = END_POINTS.base_back.configurations + '/simular';
+    const data = {
+      estado: 2
+    }
+    this.generalService.updateNameIdData$(serviceName, this.rolSimulate?.id, data).subscribe((res: any) => {
+      if(res.success){
+        this.updateToken();
+      }
+    }, () => {this.loading = false},() => {this.loading = false});
+  }
+  updateToken(){
+    // @ts-ignore
+    const token = JSON.parse(localStorage.getItem('__lamb_learning_token'))
+    let value = JSON.parse(token.value);
+    value.access_token = this.rolSimulate.access_token
+    token.value = JSON.stringify(value)
+    localStorage.setItem('__lamb_learning_token',JSON.stringify(token));
+    sessionStorage.removeItem('simulateUser');
+    window.location.reload();
+  }
 }

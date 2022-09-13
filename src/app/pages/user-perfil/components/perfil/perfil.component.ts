@@ -4,6 +4,11 @@ import {GeneralService} from "../../../../providers";
 import {EditUserComponent} from "../../../../shared/components/edit-user/edit-user.component";
 import {NbDialogService, NbToastrService} from "@nebular/theme";
 import Swal from "sweetalert2";
+import {AppService} from "../../../../core";
+import {map} from "rxjs/operators";
+import {NbAuthService, NbAuthToken, NbTokenService} from "@nebular/auth";
+import {AuthStorageTokenService} from "../../../../core/auth/services/auth-storage-token.service";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-perfil',
@@ -14,15 +19,22 @@ export class PerfilComponent implements OnInit {
 
   id_programa_estudio: any = '0';
   id_carga_curso: any = '0';
+  userSimulate: any;
   @Input() profile:any;
-
+  authToken:any = NbAuthToken;
+  authPrueba: any;
   loading: boolean = false
 
+  private url_me = `https://www.upeu.dev/lamb-patmos/backs/patmos-upeu-base-back/api/user/me`
   constructor( private generalService: GeneralService,
                private dialogService: NbDialogService,
-               private toastrService: NbToastrService,) { }
+               private toastrService: NbToastrService,
+               private appService: AppService,
+               private nbAuthService: NbAuthService,)
+                { }
 
   ngOnInit(): void {
+    this.userSimulate = this.appService.usersimular;
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -32,7 +44,15 @@ export class PerfilComponent implements OnInit {
       return '';
     }
   }
-
+  get rolSimulate() {
+    const sesion: any = sessionStorage.getItem('simulateUser');
+    const val = JSON.parse(sesion);
+    if (val && val.id) {
+      return val;
+    } else {
+      return '';
+    }
+  }
   editUser(){
     this.dialogService
       .open(EditUserComponent, {
@@ -145,4 +165,48 @@ export class PerfilComponent implements OnInit {
     });
 
     }
+  simularUsuario(){
+    this.loading = true;
+    const tokenGet: any = {};
+    const userData = this.appService;
+    const serviceName = END_POINTS.base_back.configurations + '/simular';
+    const data = {
+      person_id: userData.user?.person?.id,
+      nombres: userData.user?.person.nombres_completos,
+      access_token: userData.user?.access_token,
+      person_id_simular: this.profile?.user?.person?.id,
+      nombres_simular:  this.profile?.user?.person?.nombres_completos,
+      access_token_simular: this.profile?.user?.access_token,
+    }
+
+    this.generalService.addNameData$(serviceName, data).subscribe((res: any) => {
+      sessionStorage.setItem('simulateUser', JSON.stringify(res.data))
+
+      this.nbAuthService.getToken().subscribe((item: any) => {
+        const to: any = JSON.parse(JSON.stringify(item));
+        to.token.access_token = res.data.access_token_simular;
+        this.updateToken(res);
+      });
+
+    }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  updateToken(item: any){
+     // @ts-ignore
+    const token = JSON.parse(localStorage.getItem('__lamb_learning_token'))
+    let value = JSON.parse(token.value);
+          value.access_token = item.data.access_token_simular
+         token.value = JSON.stringify(value)
+      localStorage.setItem('__lamb_learning_token',JSON.stringify(token));
+      window.location.reload();
+  }
+  initNew(tokenUser: any ){
+    const serviceName = END_POINTS.patmos_base + '/user/me';
+    console.log(serviceName)
+    const params = {
+      token: tokenUser.data.access_token_simular
+    }
+    this.generalService.apiNewToken$('GET', serviceName, params).subscribe((res: any) => {
+      console.log(res, 'toke_simulate')
+    })
+  }
 }

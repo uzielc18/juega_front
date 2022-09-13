@@ -95,6 +95,19 @@ export class GeneralService extends EntityDataService<IResponse> {
         });
       return http.request(req);
     }
+    public apiNewToken$(methos:any, url:any, paramsHeaders?:any): Observable<any> {
+      const http = new HttpClient(this.handler);
+      const headers = new HttpHeaders(
+        {
+           'Authorization': 'Bearer ' + paramsHeaders.token,
+           'authorizationstrategy': '_lamb_strategy'
+        });
+      const req = new HttpRequest(methos, url,
+        {
+          headers: headers,
+        });
+      return http.request(req);
+    }
     getServerSentEvent(url: string): Observable<any> {
       return new Observable<any>(obs => {
 

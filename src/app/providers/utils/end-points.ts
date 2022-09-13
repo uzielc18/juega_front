@@ -12,6 +12,7 @@ export const END_POINTS = {
     user: 'user',
     people: 'people',
     config: 'config',
+    configurations: 'configurations',
     news: 'noticias',
     quiz: 'quiz',
     nivel_ensenanza: 'list-nivel-ensenanzas',
