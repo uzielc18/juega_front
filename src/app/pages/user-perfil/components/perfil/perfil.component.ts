@@ -19,10 +19,12 @@ export class PerfilComponent implements OnInit {
 
   id_programa_estudio: any = '0';
   id_carga_curso: any = '0';
+  userSimulate: any;
   @Input() profile:any;
   authToken:any = NbAuthToken;
   authPrueba: any;
   loading: boolean = false
+
   private url_me = `https://www.upeu.dev/lamb-patmos/backs/patmos-upeu-base-back/api/user/me`
   constructor( private generalService: GeneralService,
                private dialogService: NbDialogService,
@@ -32,6 +34,7 @@ export class PerfilComponent implements OnInit {
                 { }
 
   ngOnInit(): void {
+    this.userSimulate = this.appService.usersimular;
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -41,7 +44,15 @@ export class PerfilComponent implements OnInit {
       return '';
     }
   }
-
+  get rolSimulate() {
+    const sesion: any = sessionStorage.getItem('simulateUser');
+    const val = JSON.parse(sesion);
+    if (val && val.id) {
+      return val;
+    } else {
+      return '';
+    }
+  }
   editUser(){
     this.dialogService
       .open(EditUserComponent, {

@@ -9,7 +9,7 @@
       </nb-actions>
       <nb-actions class="flex-grow-1" >
         <nb-action  class="flex-grow-1 justify-content-end" >
-            <div class="flex-grow-1 div-Class" #searhEvent *ngIf="this.userSimulate?.id !== this.rolSimulate?.id && this.userSimulate === null">
+            <div class="flex-grow-1 div-Class" #searhEvent *ngIf="userSimulate?.id !== rolSimulate?.id && userSimulate === null">
               <div class="input-wrapper">
                 <input *ngIf="statusSearch"
 
@@ -78,7 +78,7 @@
 
         </nb-action>
 
-        <nb-action *ngIf="this.userSimulate?.id === this.rolSimulate?.id && this.userSimulate !== null">
+        <nb-action *ngIf="userSimulate?.id === rolSimulate?.id && userSimulate !== null && rolSemestre?.rol?.name === 'Admin'">
               <button nbButton size="small" status="warning" (click)="logoutSimular()">Dejar de simular</button>
         </nb-action>
         <nb-action *ngIf="rolSemestre?.rol?.name !== 'Estudiante'">
