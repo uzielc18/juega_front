@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {GeneralService} from "../../../../providers";
 
 @Component({
   selector: 'app-poll-home',
@@ -9,13 +10,28 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class PollHomeComponent implements OnInit {
 
   loading: boolean = false;
-  constructor(private router: Router,private activatedRoute: ActivatedRoute) { }
+  data: any = [];
+  constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private generalService: GeneralService) { }
 
   ngOnInit(): void {
+    this.getData();
   }
   crearView() {
     this.router.navigate([`created`], { relativeTo: this.activatedRoute.parent});
   }
 
+  getData(){
+    const serviceName = 'inquiries';
+    const params = {
+      tabla: 'tutoria'
+    }
+    this.generalService.nameParams$(serviceName, params).subscribe(res => {
+      if(res.success){
+        this.data = res.data
+      }
+    })
+  }
 
 }
