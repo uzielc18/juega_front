@@ -93,6 +93,7 @@
       <nb-list-item *ngFor="let el of arrayEl; let i = index" class="d-flex align-items-center justify-content-between">
         <div>
           <h5 class="sesion-title">{{ sesion?.modo === 'ordenado' ? el.orden : (i +1) }}. <nb-icon [icon]="el.icon"></nb-icon> {{ el.titulo }}</h5>
+          <p class="label sesion-description">{{el.fecha_inicio | date: 'MMMM d, y, h:mm:ss a' | titlecase}} / {{el.fecha_fin | date: 'MMMM d, y, h:mm:ss a' | titlecase}}</p>
           <p class="sesion-description">
             {{ el.descripcion }}
           </p>
