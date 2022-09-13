@@ -1,15 +1,20 @@
 <div class="table-responsive">
     <div *ngFor="let item of alternativas" class=" d-flex align-items-center justify-content-between">
         <div>
-            <span *ngIf="item?.correcto !== 1">
-                <nb-icon icon="square-outline"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.option}}</label> 
-            </span>
-            <span *ngIf="item?.correcto === 1">
-                <nb-icon icon="checkmark-square-2-outline" status="primary"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.option}}</label> 
-            </span>    
+            <div *ngIf="item?.correcto !== 1" class="d-flex align-items-center">
+              <div>
+                <nb-icon icon="square-outline"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.option}}</label>
+              </div>
             </div>
+            <div *ngIf="item?.correcto === 1" class="d-flex align-items-center">
+              <div>
+                <nb-icon icon="checkmark-square-2-outline" status="primary"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.option}}</label>
+              </div>
+              <img width="30px" [src]="item.imagen" alt="">
+            </div>
+        </div>
         <div>
-            <nb-icon *ngIf="item?.correcto === 1" icon="done-all-outline" status="success"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.puntos}} pts.</label> 
+            <nb-icon *ngIf="item?.correcto === 1" icon="done-all-outline" status="success"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.puntos}} pts.</label>
         </div>
     </div>
     <!-- <table class="table table-sm">

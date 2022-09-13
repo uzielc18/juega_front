@@ -2,7 +2,10 @@
   <div class="col-sm-4 col-5">
     <ul style="display: inline-block;">
       <li *ngFor="let rel of relationList; let i = index;" [ngStyle]="{'background-color': colors[i]}">
-        <label class="label" style="color: '#fff'">{{ rel?.relacion }}</label>
+        <div class="d-flex align-items-center">
+          <img *ngIf="rel.imagen !== null" width="30px" [src]="rel.imagen" alt="">
+          <label class="label" style="color: '#fff'">{{ rel?.relacion }}</label>
+        </div>
       </li>
     </ul>
   </div>
@@ -10,7 +13,10 @@
     <div class="d-flex justify-content-between">
       <ul>
         <li *ngFor="let item of randomList; let i = index;" [ngStyle]="{'background-color': colors[item.order]}">
-          <label class="label" style="color: '#fff'">{{ item?.relacion }}</label>
+          <div class="d-flex align-items-center">
+            <img *ngIf="item.imagen !== null" width="30px" [src]="item.imagen" alt="">
+            <label class="label" style="color: '#fff'">{{ item?.relacion }}</label>
+          </div>
         </li>
       </ul>
       <ul>

@@ -604,7 +604,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.loading = true;
     const serviceName = END_POINTS.base_back.configurations + '/simular';
     const data = {
-      estado: 2
+      estado: '2'
     }
     this.generalService.updateNameIdData$(serviceName, this.rolSimulate?.id, data).subscribe((res: any) => {
       if(res.success){
