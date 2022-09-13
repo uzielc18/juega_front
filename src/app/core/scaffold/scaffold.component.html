@@ -78,7 +78,7 @@
 
         </nb-action>
 
-        <nb-action *ngIf="userSimulate?.id === rolSimulate?.id && userSimulate !== null && rolSemestre?.rol?.name === 'Admin'">
+        <nb-action *ngIf="userSimulate?.id === rolSimulate?.id && userSimulate !== null">
               <button nbButton size="small" status="warning" (click)="logoutSimular()">Dejar de simular</button>
         </nb-action>
         <nb-action *ngIf="rolSemestre?.rol?.name !== 'Estudiante'">
