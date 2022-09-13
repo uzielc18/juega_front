@@ -53,7 +53,19 @@ export class MUnitComponent implements OnInit {
     const params = {
       id_carga_curso_docente: this.item.id_carga_curso_docente,
       course_id: this.item.id,
-      id_unidad: 0,
+      id_unidad:  0,
+      userid: this.userInfo.id,
+      orden_unidad: Number(forms.orden_unidad),
+      nombre: forms.nombre,
+      fecha_inicio: forms.fecha_inicio,
+      fecha_fin: forms.fecha_fin,
+      resultado_unidad: forms.resultado_unidad,
+      resultado_aprendizaje: forms.resultado_aprendizaje
+    };
+    const paramsEdit = {
+      id_carga_curso_docente: this.item.id_carga_curso_docente,
+      course_id: this.item.course_id,
+      id_unidad:  this.item.id_unidad,
       userid: this.userInfo.id,
       orden_unidad: Number(forms.orden_unidad),
       nombre: forms.nombre,
@@ -72,7 +84,7 @@ export class MUnitComponent implements OnInit {
 
     } else {
       this.loading = true;
-      this.generalService.updateNameIdData$(serviceName, this.item.id, params).subscribe((res:any) => {
+      this.generalService.updateNameIdData$(serviceName, this.item.id, paramsEdit).subscribe((res:any) => {
         if (res.success) {
           this.activeModal.close('ok');
         }

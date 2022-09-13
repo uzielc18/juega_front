@@ -21,6 +21,7 @@ export class VEvaluationComponent implements OnInit, OnChanges {
   @Output() loadingss: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
 
+  ValidateDateI : boolean = false;
   daysLeft: any;
   hoursLeft: any;
   minutesLeft: any;
@@ -65,8 +66,10 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     setInterval(() => {
       if (this.pending) {
         this.countdown(this.pending?.student_pending?.fecha_fin);
+        this.dateValidate(this.pending?.student_pending?.fecha_inicio)
       }
     }, 1000);
+
   }
   ngOnChanges():void {
     this.pending = this.pending;
@@ -86,6 +89,13 @@ export class VEvaluationComponent implements OnInit, OnChanges {
       return val;
     } else {
       return '';
+    }
+  }
+  dateValidate(fechaInicio: any){
+    const dateI = new Date(fechaInicio).getTime();
+    const now = new Date().getTime();
+    if(now >= dateI){
+        this.ValidateDateI = true;
     }
   }
   countdown(fecha_fin: any) {
