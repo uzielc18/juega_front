@@ -5,17 +5,20 @@
                 <span *ngIf="item?.option === 'VERDADERO'" class="d-flex">
                     <nb-icon *ngIf="item?.correcto !== 1"  icon="radio-button-off-outline"></nb-icon>
                     <nb-icon *ngIf="item?.correcto === 1"  icon="radio-button-on-outline" status="primary"></nb-icon>
-                    &nbsp;&nbsp;<button  nbButton outline  status="success" size="tiny">{{item?.option}}</button>
+                    &nbsp;&nbsp;<button  nbButton outline  status="success" size="tiny">{{item?.option}}</button>&nbsp;
+                  <img width="30px" [src]="item.imagen" alt="">
                 </span>
                 <span *ngIf="item?.option === 'FALSO'" class="d-flex">
                     <nb-icon *ngIf="item?.correcto !== 1"  icon="radio-button-off-outline"></nb-icon>
                     <nb-icon *ngIf="item?.correcto === 1"  icon="radio-button-on-outline" status="primary"></nb-icon>
-                    &nbsp;&nbsp;<button  nbButton outline  status="danger" size="tiny">{{item?.option}}</button>
+                    &nbsp;&nbsp;<button  nbButton outline  status="danger" size="tiny">{{item?.option}}</button>&nbsp;
+                    <img width="30px" [src]="item.imagen" alt="">
                 </span>
             </div>
             <div>
-                <nb-icon *ngIf="item?.correcto === 1" icon="done-all-outline" status="success"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.puntos}} pts.</label> 
+                <nb-icon *ngIf="item?.correcto === 1" icon="done-all-outline" status="success"></nb-icon>&nbsp;&nbsp;<label class="label">{{item?.puntos}} pts.</label>
             </div>
         </div>
         <br>
     </div>
+</div>
