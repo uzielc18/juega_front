@@ -108,7 +108,7 @@
             <nb-card-footer class="text-center">
               <div
                 *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && pending?.validaciones?.bloqueo === 0 && pending?.student_pending?.realizo !== '1'">
-                <button *ngIf="!pending?.student_pending?.exam_estudent" nbButton size="small" status="primary"
+                <button *ngIf="!pending?.student_pending?.exam_estudent && ValidateDateI === true" nbButton size="small" status="primary"
                         (click)="initEvaluations()">Iniciar evaluación
                 </button>
                 <button *ngIf="pending?.student_pending?.exam_estudent" nbButton size="small" status="primary"

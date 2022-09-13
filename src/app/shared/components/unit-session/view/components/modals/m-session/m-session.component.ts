@@ -95,6 +95,20 @@ export class MSessionComponent implements OnInit {
       modo: forms.modo,
       numero_semana: 2,
     };
+    const paramsEdit = {
+      unit_id: this.unit.unit_id,
+      id_carga_curso_docente: this.unit.id_carga_curso_docente,
+      id_carga_curso: this.unit.id_carga_curso,
+      id_carga_tema: this.unit.id_carga_tema,
+      orden_tema: forms.orden_tema,
+      tema: forms.tema,
+      contenido: forms.contenido,
+      fecha_tema: forms.fecha_tema,
+      fecha_inicio: forms.fecha_inicio,
+      fecha_fin: forms.fecha_fin,
+      modo: forms.modo,
+      numero_semana: 2,
+    };
     if (this.code === 'NEW') {
       this.loading = true;
       this.generalService.addNameData$(serviceName, params).subscribe((res:any) => {
@@ -105,7 +119,7 @@ export class MSessionComponent implements OnInit {
 
     } else {
       this.loading = true;
-      this.generalService.updateNameIdData$(serviceName, this.topics.id, params).subscribe((res:any) => {
+      this.generalService.updateNameIdData$(serviceName, this.topics.id, paramsEdit).subscribe((res:any) => {
         if (res.success) {
           this.activeModal.close('ok');
         }

@@ -28,6 +28,7 @@ export class CourseHomeComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
   listCourseZoom:any = [];
+  success : any;
   ciclos = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
   selectedItem = 20;
   pagination: any = {
@@ -79,9 +80,8 @@ export class CourseHomeComponent implements OnInit {
         this.semestrers = res.data || [];
         if (this.semestrers.length>0) {
           this.formHeader.controls['semester'].setValue(this.rolSemestre.semestre.id);
-          this.getCourseZoom();
         }
-      });
+      }, () => {this.loading = false}, () => {this.loading = false});
   }
   getFacultadesUnidades(){
     this.loading = true
@@ -152,12 +152,10 @@ export class CourseHomeComponent implements OnInit {
     }
   }
   refresh() {
-    this.loading = true;
     this.pagination.page = 1;
     this.getCourseZoom();
   }
   loadPage($event: any): any {
-    this.loading = true;
     this.pagination.page = $event;
     this.getCourseZoom();
   }
@@ -172,6 +170,7 @@ export class CourseHomeComponent implements OnInit {
     }
   }
   getCourseZoom() {
+    this.loading = true;
     const serviceName = 'courses';
     const forms =  this.formHeader.value;
     const params = {
@@ -192,6 +191,9 @@ export class CourseHomeComponent implements OnInit {
           this.pagination.isDisabledPage = true;
         } else {
           this.pagination.isDisabledPage = false;
+        }
+        if(res.success){
+          this.success = true;
         }
       },() => {this.loading = false}, () =>  {this.loading = false});
   }
