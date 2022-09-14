@@ -576,7 +576,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     let sec = today.getMinutes();
     let fullHour = hour +':'+ sec
     this.generalService.nameIdAndIdAndIdAndId$(serviceName, user.id, user.codigo, date, fullHour).subscribe(res => {
-        if(res.data.success > 0){
+        if(res.data.success !== 0){
           this.dialogService.open(MSatisfactionComponent, {
             dialogClass: 'dialog-limited-height',
             context: {

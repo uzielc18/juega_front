@@ -60,7 +60,7 @@ export class VVideoConferenceComponent implements OnInit {
   }
 
   countdown(fecha_fin: any) {
-    const countDate = new Date(fecha_fin).getTime();
+    const countDate = new Date(fecha_fin?.replace(' ', 'T')).getTime();
     const now = new Date().getTime();
     const left = countDate - now;
     const expired = now - countDate;
