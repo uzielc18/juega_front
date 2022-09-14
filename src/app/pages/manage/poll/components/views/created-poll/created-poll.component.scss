@@ -1,0 +1,15 @@
+::ng-deep .form-inline label {   //para darle estilo al al contenido  del ngx-tree
+  font-size: 14px !important;
+  color: var(--color-primary-900) !important;
+}
+
+
+::ng-deep .btn-outline-light {  // para darle estilo cajon al ngx-tree
+  color: var(--text-hint-color) !important;
+  border: 1px solid var(--input-basic-border-color) !important;
+  background-color: var(--input-basic-background-color) !important;
+  text-align: center !important;
+}
+::ng-deep .dropdown-menu.show {
+  width: 100% !important;
+}

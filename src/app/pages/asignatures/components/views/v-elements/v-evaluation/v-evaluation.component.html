@@ -93,6 +93,14 @@
                     <th>* Fecha y hora fin :</th>
                     <th>{{pending?.student_pending?.fecha_fin}}</th>
                   </tr>
+                  <tr *ngIf="pending?.student_pending?.exam_estudent !== null" style="color: var(--color-warning-500)">
+                    <th>* Usted inicio su evaluación:</th>
+                    <th>{{pending?.student_pending?.exam_estudent?.fecha_inicio}}</th>
+                  </tr>
+                  <tr *ngIf="pending?.student_pending?.exam_estudent !== null && pending?.student_pending?.exam_estudent?.fecha_fin === null" style="color: var(--color-warning-500)">
+                    <th>* Minutos transcurridos:</th>
+                    <th>{{elapsedMinutes | i18nPlural:minutesMap}}</th>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -104,10 +112,14 @@
                   - {{element?.exam?.mostrar_nota === 'SI' ? 'Si' : 'No'}} se mostrara la nota al finalizar el examen.
                 </nb-alert>
               </div>
+
             </nb-card-body>
             <nb-card-footer class="text-center">
               <div
                 *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && pending?.validaciones?.bloqueo === 0 && pending?.student_pending?.realizo !== '1'">
+              <span *ngIf="!pending?.student_pending?.exam_estudent && ValidateDateI === true" class="text-center" style="color: var(--color-danger-500); font-size: 11px;padding: 0px;"><strong class="text-center">¿Estás seguro de iniciar el examen?</strong><br>
+              <label class="text-center">Si su respuesta es “sí”, ya no habrá oportunidad de volver a realizar este examen.</label>
+              </span> <br><br>
                 <button *ngIf="!pending?.student_pending?.exam_estudent && ValidateDateI === true" nbButton size="small" status="primary"
                         (click)="initEvaluations()">Iniciar evaluación
                 </button>
