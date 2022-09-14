@@ -7,6 +7,7 @@ import { PollHomeComponent } from './containers/poll-home.component';
 import {NebularModule} from "../../../shared/nebular.module";
 import { CreatedPollComponent } from './components/views/created-poll/created-poll.component';
 import {ControlMessagesModule} from "../../../shared/components/control-messages/control-messages.module";
+import {TreeviewModule} from "ngx-treeview";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {ControlMessagesModule} from "../../../shared/components/control-messages
     CommonModule,
     PollRoutingModule,
     NebularModule,
-    ControlMessagesModule
+    ControlMessagesModule,
+    TreeviewModule.forRoot(),
   ]
 })
 export class PollModule { }

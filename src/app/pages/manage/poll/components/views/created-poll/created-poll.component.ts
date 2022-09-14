@@ -2,11 +2,17 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {END_POINTS} from "../../../../../../providers/utils";
 import {GeneralService} from "../../../../../../providers";
+import {TreeviewConfig, TreeviewI18n, TreeviewItem} from "ngx-treeview";
+import {AppService} from "../../../../../../core";
+import {DropdownTreeviewSelectI18n} from "../../../../../../shared/injectables/tree/dropdown-treeview-select-i18n";
 
 @Component({
   selector: 'app-created-poll',
   templateUrl: './created-poll.component.html',
-  styleUrls: ['./created-poll.component.scss']
+  styleUrls: ['./created-poll.component.scss'],
+  providers: [
+    { provide: TreeviewI18n, useClass: DropdownTreeviewSelectI18n }
+  ]
 })
 export class CreatedPollComponent implements OnInit {
 
@@ -14,6 +20,18 @@ export class CreatedPollComponent implements OnInit {
   formHeader2: any = FormGroup;
   formHeader: any = FormGroup;
   disable: boolean = true;
+  emploreAreas: TreeviewItem[] =  [];
+  buttonClasses = [
+    'btn-outline-light btn-sm',
+  ];
+  buttonClass = this.buttonClasses[0];
+  config = TreeviewConfig.create({
+    hasAllCheckBox: true,
+    hasFilter: true,
+    hasCollapseExpand: true,
+    decoupleChildFromParent: false,
+    maxHeight: 350,
+  });
   listIcons: any = [
     {
       checked: false,
@@ -46,11 +64,13 @@ export class CreatedPollComponent implements OnInit {
   ];
 
   constructor(private formBuilder: FormBuilder,
-              private generalService: GeneralService) { }
+              private generalService: GeneralService,
+              private userService: AppService) { }
 
   ngOnInit(): void {
     this.fieldReactive();
     this.fieldReactive2();
+    this.getProgramNews();
   }
   private fieldReactive2() {
     const controls = {
@@ -60,7 +80,6 @@ export class CreatedPollComponent implements OnInit {
       todos: [false],
       edad_desde: [''],
       edad_hasta: [''],
-      url: [''],
       fecha_inicio: ['', [Validators.required]],
       fecha_fin: ['', [Validators.required]],
       area: [''],
@@ -122,6 +141,12 @@ export class CreatedPollComponent implements OnInit {
     }
   }
 
+  onSelectedChange(events:any){
+    if (events) {
+      this.formHeader2.controls['area'].setValue(events);
+    }
+    // console.log(this.formHeader.value.area);
+  }
   vaciarCamps() {
     this.formHeader.patchValue({
       tamano_peso: '',
@@ -145,5 +170,58 @@ export class CreatedPollComponent implements OnInit {
     });
     item.checked = true;
     this.formHeader.controls['tamano_peso'].setValue(item.name);
+  }
+  changeType($event:any) {
+    this.formHeader2.controls['area'].setValue('');
+    this.formHeader2.controls['edad_desde'].setValue('');
+    this.formHeader2.controls['edad_hasta'].setValue('');
+    this.formHeader2.controls['todos'].setValue(false);
+    if ($event === 'edad') {
+      this.formHeader2.controls['edad_desde'.toString()].setValidators([Validators.required]);
+      this.formHeader2.controls['edad_desde'.toString()].updateValueAndValidity();
+
+      this.formHeader2.controls['edad_hasta'.toString()].setValidators([Validators.required]);
+      this.formHeader2.controls['edad_hasta'.toString()].updateValueAndValidity();
+
+      this.formHeader2.controls['area'.toString()].setValidators([]);
+      this.formHeader2.controls['area'.toString()].updateValueAndValidity();
+    } else {
+      this.formHeader2.controls['edad_desde'.toString()].setValidators([]);
+      this.formHeader2.controls['edad_desde'.toString()].updateValueAndValidity();
+
+      this.formHeader2.controls['edad_hasta'.toString()].setValidators([]);
+      this.formHeader2.controls['edad_hasta'.toString()].updateValueAndValidity();
+
+      this.formHeader2.controls['area'.toString()].setValidators([Validators.required]);
+      this.formHeader2.controls['area'.toString()].updateValueAndValidity();
+    }
+  }
+  changeTodos($event:any) {
+    this.formHeader2.controls['area'].setValue('');
+    if ($event) {
+      this.formHeader2.controls['area'.toString()].setValidators([]);
+      this.formHeader2.controls['area'.toString()].updateValueAndValidity();
+    } else {
+      this.formHeader2.controls['area'.toString()].setValidators([Validators.required]);
+      this.formHeader2.controls['area'.toString()].updateValueAndValidity();
+    }
+  }
+  getProgramNews() {
+    const serviceName = END_POINTS.base_back.news + '/mis-programas';
+    this.generalService.nameId$(serviceName, this.userService.user.id).subscribe((res: any) => {
+      this.emploreAreas =  [new TreeviewItem(res.data)]
+      // console.log(this.emploreAreas)
+    })
+  }
+  getData(){
+    const serviceName = 'inquiries';
+    const data = {
+      tabla: 'tutoria'
+      
+    }
+    this.generalService.addNameData$(serviceName, data).subscribe(res => {
+      if(res.success){
+      }
+    })
   }
 }

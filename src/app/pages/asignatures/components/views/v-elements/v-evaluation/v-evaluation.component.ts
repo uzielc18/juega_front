@@ -21,6 +21,7 @@ export class VEvaluationComponent implements OnInit, OnChanges {
   @Output() loadingss: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
 
+  elapsedMinutes: any;
   ValidateDateI : boolean = false;
   daysLeft: any;
   hoursLeft: any;
@@ -66,7 +67,8 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     setInterval(() => {
       if (this.pending) {
         this.countdown(this.pending?.student_pending?.fecha_fin);
-        this.dateValidate(this.pending?.student_pending?.fecha_inicio)
+        this.dateValidate(this.pending?.student_pending?.fecha_inicio);
+        this.minuteTrascurridoEvaluacion(this.pending?.student_pending?.exam_estudent?.fecha_inicio);
       }
     }, 1000);
 
@@ -97,6 +99,18 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     if(now >= dateI){
         this.ValidateDateI = true;
     }
+  }
+  minuteTrascurridoEvaluacion(fechaIniciEvaluacion: any){
+    const fecha_inicio = new Date(fechaIniciEvaluacion).getTime();
+    const now = new Date().getTime();
+    const minutesTrans =  now - fecha_inicio;
+
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+
+    this.elapsedMinutes = Math.floor((minutesTrans % day)/minute);
   }
   countdown(fecha_fin: any) {
     const countDate = new Date(fecha_fin).getTime();
