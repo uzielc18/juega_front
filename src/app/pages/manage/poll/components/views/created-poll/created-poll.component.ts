@@ -5,6 +5,9 @@ import {GeneralService} from "../../../../../../providers";
 import {TreeviewConfig, TreeviewI18n, TreeviewItem} from "ngx-treeview";
 import {AppService} from "../../../../../../core";
 import {DropdownTreeviewSelectI18n} from "../../../../../../shared/injectables/tree/dropdown-treeview-select-i18n";
+import {NbDateService} from "@nebular/theme";
+import {ActivatedRoute, Router} from "@angular/router";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-created-poll',
@@ -20,6 +23,7 @@ export class CreatedPollComponent implements OnInit {
   formHeader2: any = FormGroup;
   formHeader: any = FormGroup;
   disable: boolean = true;
+  min: any = Date;
   emploreAreas: TreeviewItem[] =  [];
   buttonClasses = [
     'btn-outline-light btn-sm',
@@ -65,7 +69,16 @@ export class CreatedPollComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private generalService: GeneralService,
-              private userService: AppService) { }
+              private userService: AppService,
+              dateService: NbDateService<Date>,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              public datepipe: DatePipe) {
+
+      let date:any = Date;
+      date = dateService.today();
+      this.min = dateService.addDay(date, 0);
+  }
 
   ngOnInit(): void {
     this.fieldReactive();
@@ -213,15 +226,53 @@ export class CreatedPollComponent implements OnInit {
       // console.log(this.emploreAreas)
     })
   }
+  back() {
+    this.router.navigate([`../`], { relativeTo: this.activatedRoute });
+  }
   getData(){
     const serviceName = 'inquiries';
     const data = {
       tabla: 'tutoria'
-      
+
     }
     this.generalService.addNameData$(serviceName, data).subscribe(res => {
       if(res.success){
       }
     })
+  }
+  newPoll(){
+    const serviceName = 'inquiries';
+    const forms = this.formHeader2.value;
+    const forms2 = this.formHeader.value;
+    let filtros = '';
+    if (forms.tipo_filtro === 'edad') {
+      filtros = forms.edad_desde + '-' + forms.edad_hasta
+    }
+    if (forms.tipo_filtro === 'area' && forms.todos === false) {
+      filtros = forms.area.join(',');
+    }
+    if (forms.tipo_filtro === 'area' && forms.todos === true) {
+      filtros = 'all';
+    }
+    const params = {
+      titulo: forms.titulo,
+      fecha_inicio: this.datepipe.transform(forms.fecha_inicio, 'yyyy-MM-dd'),
+      fecha_fin: this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd'),
+      consulta: forms.contenido,
+      mostrar: 'publico',
+      tabla: 'tutoria',
+      tabla_id: 0,
+      person_id: this.userService?.user?.person?.id,
+      codigo: filtros,
+      url_video: forms2.url_externa,
+      titulo_video: forms2.titulo,
+      descripcion_video: forms2.descripcion
+    }
+    this.loading = true;
+    this.generalService.addNameData$(serviceName, params).subscribe((res:any) => {
+      if (res.success) {
+        this.back();
+      }
+    }, () => {this.loading = false}, ()=> {this.loading=false});
   }
 }

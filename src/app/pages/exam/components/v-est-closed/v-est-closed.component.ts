@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class VEstClosedComponent implements OnInit {
   @Input() alternativas:any = [];
+  @Input() pregunta: any;
   @Output() saveValues = new EventEmitter<any>();
   constructor() { }
   ngOnChanges():void {

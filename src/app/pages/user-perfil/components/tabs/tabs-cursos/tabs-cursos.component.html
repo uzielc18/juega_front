@@ -1,9 +1,9 @@
 <div class="row" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
   <div class="col-md-8">
-    <nb-card status="primary" *ngIf="listCourses.cursos_estudiante?.length !== 0">
+    <nb-card status="primary" *ngIf="listCourses?.cursos_estudiante?.length !== 0">
       <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Cursos Estudiante </nb-card-header>
       <nb-card-body>
-        <nb-card *ngFor="let cursoEst of listCourses.cursos_estudiante" class="mb-2">
+        <nb-card *ngFor="let cursoEst of listCourses?.cursos_estudiante" class="mb-2">
           <nb-card-body class="p-2 ps-0">
             <div class="row m-0">
               <div class="col-md-2 p-0">
@@ -44,10 +44,10 @@
         </nb-card>
       </nb-card-body>
     </nb-card>
-    <nb-card status="primary" *ngIf="listCourses.cursos_docente?.length !== 0">
+    <nb-card status="primary" *ngIf="listCourses?.cursos_docente?.length !== 0">
       <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Cursos Docente </nb-card-header>
       <nb-card-body>
-        <nb-card *ngFor="let cursoDoc of listCourses.cursos_docente" class="mb-2">
+        <nb-card *ngFor="let cursoDoc of listCourses?.cursos_docente" class="mb-2">
           <nb-card-body class="p-2 ps-0">
             <div class="row m-0">
               <div class="col-md-2 p-0">
@@ -78,10 +78,10 @@
         </nb-card>
       </nb-card-body>
     </nb-card>
-    <nb-card status="primary" *ngIf="listCourses.cursos_tutor?.length !== 0">
+    <nb-card status="primary" *ngIf="listCourses?.cursos_tutor?.length !== 0">
       <nb-card-header style="padding-top: 5px; padding-bottom: 5px"> Cursos Tutor </nb-card-header>
       <nb-card-body>
-        <nb-card *ngFor="let cursoTut of listCourses.cursos_tutor" class="mb-2">
+        <nb-card *ngFor="let cursoTut of listCourses?.cursos_tutor" class="mb-2">
           <nb-card-body class="p-2 ps-0">
             <div class="row m-0">
               <div class="col-md-2 p-0">

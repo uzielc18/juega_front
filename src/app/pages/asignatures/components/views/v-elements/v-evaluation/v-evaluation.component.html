@@ -120,7 +120,7 @@
               <span *ngIf="!pending?.student_pending?.exam_estudent && ValidateDateI === true" class="text-center" style="color: var(--color-danger-500); font-size: 11px;padding: 0px;"><strong class="text-center">¿Estás seguro de iniciar el examen?</strong><br>
               <label class="text-center">Si su respuesta es “sí”, ya no habrá oportunidad de volver a realizar este examen.</label>
               </span> <br><br>
-                <button *ngIf="!pending?.student_pending?.exam_estudent && ValidateDateI === true" nbButton size="small" status="primary"
+                <button *ngIf="pending?.student_pending?.exam_estudent === null && ValidateDateI === true" nbButton size="small" status="primary"
                         (click)="initEvaluations()">Iniciar evaluación
                 </button>
                 <button *ngIf="pending?.student_pending?.exam_estudent" nbButton size="small" status="primary"

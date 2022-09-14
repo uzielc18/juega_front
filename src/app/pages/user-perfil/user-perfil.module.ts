@@ -14,6 +14,8 @@ import { MReporteNotasComponent } from './components/tabs/tabs-reporte-notas/mod
 import { TabsCursosComponent } from './components/tabs/tabs-cursos/tabs-cursos.component';
 import { TabsEditPerfilComponent } from './components/tabs/tabs-edit-perfil/tabs-edit-perfil.component';
 import {ImageRecorteModule} from "../../shared/components/recortes/image-recorte/image-recorte.module";
+import { TabsMuroComponent } from './components/tabs/tabs-muro/tabs-muro.component';
+import {VideoPlayerModule} from "../../shared/components/video-player/video-player.module";
 const COMPONENTS: any[] = [
 
 ]
@@ -26,16 +28,18 @@ const COMPONENTS: any[] = [
     TabsReporteNotasComponent,
     MReporteNotasComponent,
     TabsCursosComponent,
-    TabsEditPerfilComponent
+    TabsEditPerfilComponent,
+    TabsMuroComponent,
   ],
-    imports: [
-        CommonModule,
-        UserPerfilRoutingModule,
-        NebularModule,
-        CardListCourseModule,
-        NgbModule,
-        NgxPrintModule,
-        ImageRecorteModule
-    ]
+  imports: [
+    CommonModule,
+    UserPerfilRoutingModule,
+    NebularModule,
+    CardListCourseModule,
+    NgbModule,
+    NgxPrintModule,
+    ImageRecorteModule,
+    VideoPlayerModule
+  ]
 })
 export class UserPerfilModule { }

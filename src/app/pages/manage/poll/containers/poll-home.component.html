@@ -17,31 +17,29 @@
     <div class="table-responsive">
       <table class="table table-sm">
         <thead>
-        <tr>
-          <th style="width: 1px">#</th>
-          <th>Título</th>
-          <th>Contenido</th>
-          <th>Fecha inicio</th>
-          <th>Fecha fin</th>
-          <th>Tipo</th>
-          <th>Filtro</th>
+        <tr style="font-size: 12px;">
+          <th class="text-center" style="width: 1px">#</th>
+          <th class="text-center">Título</th>
+          <th class="text-center">Consulta</th>
+          <th class="text-center">Fecha inicio</th>
+          <th class="text-center">Fecha fin</th>
+          <th class="text-center">Numero de respuestas</th>
           <th style="width: 1px" colspan="2">Acción</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of data">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr *ngFor="let item of data;  let i = index" style="font-size: 12px; vertical-align: middle">
+          <td class="text-center">{{i+ 1}}</td>
+          <td class="text-center">{{item.titulo}}</td>
+          <td class="text-center">{{item.consulta}}</td>
+          <td class="text-center">{{item.fecha_inicio}}</td>
+          <td class="text-center">{{item.fecha_fin}}</td>
+          <td class="text-center">{{item.count_answers}}</td>
           <th style="width: 1px">
-            <button nbButton fullWidth size="tiny" status="warning" ><nb-icon icon="eye-outline"></nb-icon></button>
+            <button nbButton size="tiny" status="primary" ><nb-icon icon="edit"></nb-icon></button>
           </th>
           <th style="width: 1px">
-            <button nbButton fullWidth size="tiny" status="danger" ><nb-icon icon="trash-outline"></nb-icon></button>
+            <button nbButton size="tiny" status="danger" (click)="deleteInquiries(item)"><nb-icon icon="trash"></nb-icon></button>
           </th>
         </tr>
         </tbody>
