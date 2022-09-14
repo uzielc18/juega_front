@@ -32,11 +32,15 @@ export class TabsCursosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-     this.getCourses(this.profile?.user?.person.id);
+    this.me = this.userService.user.person.id
+    if(this.rolSemestre?.rol?.name !== 'Estudiante' && this.rolSemestre?.rol?.name !== 'Docente' || this.profile?.user?.person?.id === this.me){
+      this.getCourses(this.profile?.user?.person.id);
+    }
+
     this.datoSubscription = this.emitEventsService.returnsEmail().subscribe(value => { // para emitir evento desde la cabecera
       if(value){
         this.email = value;
-        if(!this.loading){
+        if(!this.loading && this.rolSemestre?.rol?.name !== 'Estudiante' && this.rolSemestre?.rol?.name !== 'Docente' || this.profile?.user?.person?.id === this.me){
           this.getCourses(this.profile?.user?.person.id);
         }
       }
