@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 })
 export class VEstMultiOptionComponent implements OnInit, OnChanges {
   @Input() alternativas:any = [];
+  @Input() pregunta: any;
   @Output() saveValues = new EventEmitter<any>();
   @Output() saveValueDelete = new EventEmitter<any>();
   constructor() { }

@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class VEstRelationComponent implements OnInit {
   @Input() alternativas: any = [];
+  @Input() pregunta: any;
   @Output() saveValues = new EventEmitter<any>();
 
   form: any = FormGroup;
@@ -69,7 +70,7 @@ export class VEstRelationComponent implements OnInit {
   //     }
   //   });
   // }
-  
+
   selectedA(item:any, i:any) {
     if (item?.checked) {
       item.checked = false;
@@ -122,11 +123,11 @@ export class VEstRelationComponent implements OnInit {
       }
     });
   }
-  
+
   styles(item: any) {
     if (item && item.checked) {
       // console.log(item.color);
-      
+
       return {
         'background-color': item.color,
         color: 'white',

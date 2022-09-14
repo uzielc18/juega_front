@@ -1,9 +1,12 @@
 <div>
+    <div style="display: block">
+      <img [src]="pregunta?.adjunto" alt="" style="max-width: 100%; max-height: 100%">
+    </div>
     <label class="label">Alternativas: </label><br><br>
     <div *ngIf="alternativesMov">
         <div class="row">
             <div *ngFor="let item of alternativas" class="col-md-6">
-                <button style="font-size: 10px;" nbButton 
+                <button style="font-size: 10px;" nbButton
                 [status]="item?.checked && item.option_select ? 'primary' :
                             item?.checked && !item.option_select ? 'info' : 'basic'"
                 size="small" fullWidth (click)="changeValue(item)"
@@ -13,7 +16,7 @@
     </div>
     <!-- // solo imagenes -->
     <div *ngIf="!alternativesMov" class="row" style="display: flex; justify-content: center;">
-        <nb-card *ngFor="let item of alternativas" class="text-center col-md-4" (click)="changeValue(item)"  [ngClass]="{'optionSelect': item?.checked}" 
+        <nb-card *ngFor="let item of alternativas" class="text-center col-md-4" (click)="changeValue(item)"  [ngClass]="{'optionSelect': item?.checked}"
         style="padding: 10px; margin-bottom: 0px; cursor: pointer;">
         <nb-card-header *ngIf="item?.option" style="padding: 5px;">
             <strong style="font-size: 10px;">

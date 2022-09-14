@@ -124,7 +124,7 @@
             <nb-card *ngFor="let item of questions; let i = index" [accent]="item?.nivel === '1' ? 'primary' : ''" [class]="'pregunta'+ i" [id]="'pregunta'+ item.id" >
               <a :name="'section'{{item.id}}" class="sr-only sr-only-focusable"></a>
               <nb-card-header *ngIf="item.nivel === '1'">
-                  <h5 class="sections">{{item.titulo}} {{item.id}}</h5>
+                  <h5 class="sections">{{item.titulo}}</h5>
                   <p *ngIf="item.descripcion" style="font-size: 12px; text-align: justify;">{{item.descripcion}}</p>
               </nb-card-header>
               <nb-card-body *ngIf="item.nivel === '2'">
@@ -136,22 +136,22 @@
                 <strong style="font-size: 12px; text-align: justify;">{{item?.orden}}). {{item?.pregunta?.pregunta}}</strong>
                   <br>
                   <div *ngIf="['07'].includes(item.codigo)">
-                    <app-v-est-multi-option [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)" (saveValueDelete)="deleteItem($event)"></app-v-est-multi-option>
+                    <app-v-est-multi-option [alternativas]="item?.alternativas" [pregunta]= "item.pregunta" (saveValues)="save($event, item, i)" (saveValueDelete)="deleteItem($event)"></app-v-est-multi-option>
                   </div>
                   <div *ngIf="['01'].includes(item.codigo)">
-                    <app-v-est-unique-option [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)"></app-v-est-unique-option>
+                    <app-v-est-unique-option [alternativas]="item?.alternativas" [pregunta]= "item.pregunta" (saveValues)="save($event, item, i)"></app-v-est-unique-option>
                   </div>
                   <div *ngIf="['03'].includes(item.codigo)">
-                    <app-v-est-open [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)"></app-v-est-open>
+                    <app-v-est-open [alternativas]="item?.alternativas" [pregunta]= "item.pregunta" (saveValues)="save($event, item, i)"></app-v-est-open>
                   </div>
                   <div *ngIf="['04'].includes(item.codigo)">
-                    <app-v-est-closed [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)"></app-v-est-closed>
+                    <app-v-est-closed [alternativas]="item?.alternativas" [pregunta]= "item.pregunta" (saveValues)="save($event, item, i)"></app-v-est-closed>
                   </div>
                   <div *ngIf="['02'].includes(item.codigo)">
-                    <app-v-est-true-false [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)"></app-v-est-true-false>
+                    <app-v-est-true-false [alternativas]="item?.alternativas" [pregunta]= "item.pregunta" (saveValues)="save($event, item, i)"></app-v-est-true-false>
                   </div>
                   <div *ngIf="['05'].includes(item.codigo)">
-                    <app-v-est-relation [alternativas]="item?.alternativas" (saveValues)="save($event, item, i)"></app-v-est-relation>
+                    <app-v-est-relation [alternativas]="item?.alternativas" [pregunta]= "item.pregunta" (saveValues)="save($event, item, i)"></app-v-est-relation>
                   </div>
                 </div>
                 <!-- <button (click)="valueScroll(i+'box')">ssssss</button> -->

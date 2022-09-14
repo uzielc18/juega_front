@@ -39,6 +39,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
     });
   }
 
+
   ngOnDestroy(): void {
       this.datoSubscription.unsubscribe();
   }
@@ -63,7 +64,6 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
         this.profile = res.data;
         if(this.rolSemestre?.rol?.name !== 'Estudiante' && this.rolSemestre?.rol?.name !== 'Docente' || this.profile?.user?.person?.id === this.me){
           this.getEvaluaciones(this.profile?.user?.person);
-          this.getCourses(this.profile?.person.id)
         }else{
           this.loading = false
         }
@@ -76,27 +76,11 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
       this.person = this.profile?.user.person
       this.generalService.nameId$(serviceName, person?.id).subscribe(res => {
         this.notas = res.data
-      },()=>this.loading = false)
+      },()=> {
+        this.loading = false
+      }, () => {this.loading = false})
   }
 
-  getCourses(person_id: any) {
-    const serviceName = END_POINTS.base_back.default + 'course-list';
-    const params = {
-      semester_id: this.rolSemestre.semestre.id,
-    };
-    this.generalService.nameIdParams$(serviceName,person_id, params).subscribe(
-      (res: any) => {
-        if (res.success) {
-          this.listCourses = res.data
-        }
-      },
-      () => {
-        this.loading = false;
-      },
-      () => {
-        this.loading = false;
-      }
-    );
-  }
+
 
 }

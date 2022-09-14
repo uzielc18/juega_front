@@ -79,6 +79,40 @@
               </div>
               <br>
               <div class="row">
+                <label class="label col-md-3">Fechas:</label>
+                <div class="col-md-9">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <nb-form-field>
+                        <input type="text" nbInput placeholder="Fecha Inicio" fullWidth
+                               [nbDatepicker]="fechaInicio" fieldSize="small" formControlName="fecha_inicio"/>
+                        <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                                 pack="eva"></nb-icon>
+                        <nb-datepicker #fechaInicio format="dd/MM/yyyy" [min]="min">
+                        </nb-datepicker>
+                        <control-messages [control]="formHeader2.get('fecha_inicio')">
+                        </control-messages>
+                      </nb-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <fieldset [disabled]="!formHeader2.value.fecha_inicio">
+                        <nb-form-field>
+                          <input type="text" nbInput placeholder="Fecha fin" fullWidth
+                                 [nbDatepicker]="fechaFin" fieldSize="small" formControlName="fecha_fin"/>
+                          <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                                   pack="eva"></nb-icon>
+                          <nb-datepicker #fechaFin format="dd/MM/yyyy" [min]="formHeader2.value.fecha_inicio">
+                          </nb-datepicker>
+                          <control-messages [control]="formHeader2.get('fecha_fin')">
+                          </control-messages>
+                        </nb-form-field>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
                 <label class="label col-md-3">Contenido:</label>
                 <div class="col-md-9">
                                     <textarea type="text" placeholder="Ingrese contenido" nbInput fullWidth fieldSize="small" formControlName="contenido"
@@ -137,7 +171,7 @@
     </div>
   </nb-card-body>
   <nb-card-footer style="text-align: right">
-    <button nbButton size="small" status="info" >Salir</button>&nbsp;&nbsp;
-    <button nbButton size="small" status="primary">Guardar</button>
+    <button nbButton size="small" status="info" (click)="back()">Salir</button>&nbsp;&nbsp;
+    <button nbButton size="small" status="primary" (click)="newPoll()">Guardar</button>
   </nb-card-footer>
 </nb-card>

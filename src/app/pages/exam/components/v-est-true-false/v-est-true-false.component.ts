@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 })
 export class VEstTrueFalseComponent implements OnInit, OnChanges {
   @Input() alternativas:any = [];
+  @Input() pregunta: any;
   @Output() saveValues = new EventEmitter<any>();
   constructor() { }
   ngOnChanges():void {
