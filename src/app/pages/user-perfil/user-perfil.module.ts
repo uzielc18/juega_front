@@ -16,6 +16,7 @@ import { TabsEditPerfilComponent } from './components/tabs/tabs-edit-perfil/tabs
 import {ImageRecorteModule} from "../../shared/components/recortes/image-recorte/image-recorte.module";
 import { TabsMuroComponent } from './components/tabs/tabs-muro/tabs-muro.component';
 import {VideoPlayerModule} from "../../shared/components/video-player/video-player.module";
+import {AnswersQuestionsModule} from "../../shared/components/answers-questions/view/answers-questions.module";
 const COMPONENTS: any[] = [
 
 ]
@@ -39,7 +40,8 @@ const COMPONENTS: any[] = [
     NgbModule,
     NgxPrintModule,
     ImageRecorteModule,
-    VideoPlayerModule
+    VideoPlayerModule,
+    AnswersQuestionsModule
   ]
 })
 export class UserPerfilModule { }

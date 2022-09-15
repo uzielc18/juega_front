@@ -22,7 +22,7 @@
           <nb-card-body style="background-color: #f7f7f7; position: relative" class="p-0">
             <nb-tabset>
               <nb-tab tabTitle="Muro">
-                <!--<app-tabs-muro></app-tabs-muro>-->
+                <!--<app-tabs-muro [profile] = "profile" [listInquiries] = "listInquiries"></app-tabs-muro>-->
               </nb-tab>
               <nb-tab tabTitle="Cursos" *ngIf="rolSemestre?.rol?.name !== 'Estudiante' && rolSemestre?.rol?.name !== 'Docente' || profile?.user?.person?.id === me">
                 <app-tabs-cursos *ngIf="this.status === true && this.loading === false" [profile] = "profile" [listCourses]="listCourses"></app-tabs-cursos>

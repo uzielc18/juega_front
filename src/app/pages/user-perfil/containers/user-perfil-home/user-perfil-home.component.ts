@@ -21,6 +21,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
   person: any;
   notas: any = [];
   listCourses: any = [];
+  listInquiries: any = [];
   datoSubscription: any = Subscription;
   constructor( private generalService: GeneralService,
                private userService: AppService,
@@ -62,6 +63,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
       if(res.success){
         this.status = res.success
         this.profile = res.data;
+        this.getInquiries(this.profile?.user?.person.id);
         if(this.rolSemestre?.rol?.name !== 'Estudiante' && this.rolSemestre?.rol?.name !== 'Docente' || this.profile?.user?.person?.id === this.me){
           this.getEvaluaciones(this.profile?.user?.person);
         }else{
@@ -81,6 +83,12 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
       }, () => {this.loading = false})
   }
 
-
+  getInquiries(person_id: any){
+    const serviceName = 'inquiries-tutoria';
+    this.generalService.nameId$(serviceName, person_id).subscribe( res => {
+        this.listInquiries = res.data
+    }
+    )
+  }
 
 }
