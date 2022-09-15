@@ -1,19 +1,5 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small" class="h-100">
-  <div class="d-flex justify-content-between align-items-center">
-    <h5 class="fw-bold text-start" style="font-size: 16px">Preguntas</h5>
-    <button
-      *ngIf="showQuestion !== true && rolSemestre?.rol?.name === 'Estudiante'"
-      nbButton
-      status="primary"
-      shape="round"
-      size="tiny"
-      outline
-      (click)="preguntar()"
-    >
-      Preguntar
-    </button>
-  </div>
-  <div class="question-container" style="text-align: justify; padding-top: 5px" [formGroup]="formHeader" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && showQuestion === true">
+  <div class="question-container" style="text-align: justify; padding-top: 5px" [formGroup]="formHeader">
     <div class="d-flex flex-column">
       <textarea
         nbInput
@@ -25,11 +11,8 @@
         formControlName="consulta"
       ></textarea>
       <div class="d-flex align-items-center justify-content-end">
-        <nb-toggle formControlName="mostrar" status="basic" labelPosition="start">
-          {{ formHeader.value.mostrar ? 'Privado' : 'Público' }}
-        </nb-toggle>
         <button nbButton status="primary" size="small" class="ms-2 my-2" (click)="sendQuestion()" [disabled]="!formHeader.valid">
-          Preguntar
+          COMENTAR
         </button>
       </div>
     </div>
@@ -80,7 +63,6 @@
           status="basic"
           class="custom-button"
           [ngClass]="{ 'custom-button-public': item?.mostrar !== 'help' }"
-          (click)="answerQuestionOnModal(item)"
         >
           Responder
         </button>

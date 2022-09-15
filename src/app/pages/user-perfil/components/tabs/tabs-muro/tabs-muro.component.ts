@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {GeneralService} from "../../../../../providers";
 
 @Component({
   selector: 'app-tabs-muro',
@@ -7,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsMuroComponent implements OnInit {
 
+  @Input() profile: any;
+  @Input() listInquiries: any
   loading: boolean = false
-  constructor() { }
+  constructor(private generalService: GeneralService) { }
 
   ngOnInit(): void {
   }
@@ -18,5 +21,6 @@ export class TabsMuroComponent implements OnInit {
       this.loading = $event;
     }, 200);
   }
+
 
 }

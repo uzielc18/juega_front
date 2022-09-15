@@ -104,7 +104,7 @@ export class VWorksComponent implements OnInit, OnChanges {
   }
   countdown(fecha_fin: any) {
     //console.log('fecha_fin',fecha_fin);
-    const countDate = new Date(fecha_fin).getTime();
+    const countDate = new Date(fecha_fin?.replace(' ', 'T')).getTime();
     const now = new Date().getTime();
     const left = countDate - now;
     const expired = now - countDate;

@@ -94,14 +94,14 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     }
   }
   dateValidate(fechaInicio: any){
-    const dateI = new Date(fechaInicio.replace(' ', 'T')).getTime();
+    const dateI = new Date(fechaInicio?.replace(' ', 'T')).getTime();
     const now = new Date().getTime();
     if(now >= dateI){
         this.ValidateDateI = true;
     }
   }
   minuteTrascurridoEvaluacion(fechaIniciEvaluacion: any){
-    const fecha_inicio = new Date(fechaIniciEvaluacion.replace(' ', 'T')).getTime();
+    const fecha_inicio = new Date(fechaIniciEvaluacion?.replace(' ', 'T')).getTime();
     const now = new Date().getTime();
     const minutesTrans =  now - fecha_inicio;
 
@@ -113,7 +113,7 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     this.elapsedMinutes = Math.floor((minutesTrans % day)/minute);
   }
   countdown(fecha_fin: any) {
-    const countDate = new Date(fecha_fin).getTime();
+    const countDate = new Date(fecha_fin?.replace(' ', 'T')).getTime();
     const now = new Date().getTime();
     const left = countDate - now;
     const expired = now - countDate;

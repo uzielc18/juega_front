@@ -133,7 +133,7 @@
                     <h5 class="sections">{{item?.section?.titulo}}</h5>
                     <br>
                   </div>
-                <strong style="font-size: 12px; text-align: justify;">{{item?.orden}}). {{item?.pregunta?.pregunta}}</strong>
+                <strong style="font-size: 12px; text-align: justify; white-space: pre-line">{{item?.orden}}). {{item?.pregunta?.pregunta}}</strong>
                   <br>
                   <div *ngIf="['07'].includes(item.codigo)">
                     <app-v-est-multi-option [alternativas]="item?.alternativas" [pregunta]= "item.pregunta" (saveValues)="save($event, item, i)" (saveValueDelete)="deleteItem($event)"></app-v-est-multi-option>
