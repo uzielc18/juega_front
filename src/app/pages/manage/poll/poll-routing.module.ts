@@ -16,6 +16,10 @@ const routes: Routes = [
       {
         path: 'created',
         component: CreatedPollComponent
+      },
+      {
+        path: 'edit/:id',
+        component: CreatedPollComponent
       }
     ]
   }

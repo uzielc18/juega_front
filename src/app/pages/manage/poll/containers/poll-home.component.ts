@@ -64,5 +64,8 @@ export class PollHomeComponent implements OnInit {
       });
     }
   }
+  editInquiries(item: any){
+    this.router.navigate([`edit`, item.id], { relativeTo: this.activatedRoute.parent});
+  }
 
 }

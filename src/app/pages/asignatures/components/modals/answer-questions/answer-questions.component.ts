@@ -266,4 +266,5 @@ export class AnswerQuestionsComponent implements OnInit {
     }
     this.activeModal.close('ok');
   }
+
 }

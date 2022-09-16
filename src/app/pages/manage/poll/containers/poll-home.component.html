@@ -36,7 +36,7 @@
           <td class="text-center">{{item.fecha_fin}}</td>
           <td class="text-center">{{item.count_answers}}</td>
           <th style="width: 1px">
-            <button nbButton size="tiny" status="primary" ><nb-icon icon="edit"></nb-icon></button>
+            <button nbButton size="tiny" status="primary" (click)="editInquiries(item)"><nb-icon icon="edit"></nb-icon></button>
           </th>
           <th style="width: 1px">
             <button nbButton size="tiny" status="danger" (click)="deleteInquiries(item)"><nb-icon icon="trash"></nb-icon></button>

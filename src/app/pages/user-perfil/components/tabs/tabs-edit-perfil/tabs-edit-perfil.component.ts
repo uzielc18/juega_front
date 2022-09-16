@@ -161,7 +161,7 @@ export class TabsEditPerfilComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.key_file = this.userService?.user?.person?.codigo;
-    this.directorio = DIRECTORY.users + `/${this.userInfo?._user.person.codigo}`;
+    this.directorio = DIRECTORY.users + `/${this.userService?.user?.person?.codigo}`;
   }
 
   backToProfile() {

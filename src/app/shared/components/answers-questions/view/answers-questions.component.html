@@ -1,72 +1,81 @@
-<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small" class="h-100">
-  <div class="question-container" style="text-align: justify; padding-top: 5px" [formGroup]="formHeader">
-    <div class="d-flex flex-column">
-      <textarea
-        nbInput
-        fullWidth
-        placeholder="Tienes alguna duda?"
-        fieldSize="small"
-        style="font-size: 12px"
-        rows="4"
-        formControlName="consulta"
-      ></textarea>
-      <div class="d-flex align-items-center justify-content-end">
-        <button nbButton status="primary" size="small" class="ms-2 my-2" (click)="sendQuestion()" [disabled]="!formHeader.valid">
-          COMENTAR
-        </button>
-      </div>
-    </div>
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <div style="width: 100%;" *ngIf="emmitComment === true">
+    <form class="d-flex flex-column" [formGroup]="formHeader">
+      <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="giant"
+                formControlName="comentario" style="font-size: 16px;" rows="3"></textarea>
+      <button nbButton status="success"  size="tiny" class="ms-auto my-2" (click)="comentar()"
+              [disabled]="formHeader.invalid">Comentar</button>
+    </form>
   </div>
-  <div
-    *ngFor="let item of questions; let i = index"
-    class="comment-container row mt-3"
-    [ngClass]="{ 'comment-container-public': item?.mostrar !== 'help' }"
-  >
-    <div class="photo-name col-2 col-md-1 col-xxl-3 p-0">
-      <div class="photo-container">
-        <img [src]="item?.person_foto" style="object-fit: cover" width="100%" height="100%" />
-      </div>
-      <div class="name-container my-1">
-        <span class="name">{{ item?.person_nombre }} {{ item.codigo ? '(' + item.codigo + ')' : '' }}</span>
-      </div>
-      <span class="puntos-info">+ {{ item?.puntos }}</span>
-    </div>
-    <div class="text-comment col-10 col-md-11 col-xxl-9 pe-0" [ngClass]="{ 'text-comment-public': item?.mostrar !== 'help' }">
-      <span>{{ item?.consulta }}</span>
-      <span *ngIf="item.created_at" class="text-secondary ms-auto mt-auto" style="font-size: 10px">
-        Hace {{ item?.expiredDays | i18nPlural: daysMap }} {{ item?.expiredHours | i18nPlural: hoursMap }}
-        {{ item?.expiredMinutes | i18nPlural: minutesMap }}
-      </span>
-      <div class="d-flex align-items-center">
-        <button
-          nbButton
-          shape="round"
-          size="tiny"
-          outline
-          status="basic"
-          class="me-2 custom-button"
-          [ngClass]="{
-            'custom-button-public': item?.mostrar !== 'help',
-            'button-votado': item?.puntos_activo === 0 && item?.mostrar === 'help',
-            'button-votado-public': item?.puntos_activo === 0 && item?.mostrar !== 'help'
-          }"
-          (click)="upVoteQuestion(item)"
-          [disabled]="item?.puntos_activo === 0"
-        >
-          + 1
-        </button>
-        <button
-          nbButton
-          shape="round"
-          size="tiny"
-          outline
-          status="basic"
-          class="custom-button"
-          [ngClass]="{ 'custom-button-public': item?.mostrar !== 'help' }"
-        >
-          Responder
-        </button>
-      </div>
-    </div>
+  <div *ngIf="emmitComment === true">
+    <small class="label instructions-description" style="margin-right: 10px">Respuestas</small>
+    <button
+      *ngIf="answers?.length > 0"
+      nbButton size="tiny" status="primary" (click)="actualizarComentarios()">
+      <nb-icon icon="refresh-outline"></nb-icon> Actualizar comentarios
+    </button>
+    <ng-template #recursiveList let-list >
+      <ul  id="comments-list" class="comments-list">
+        <li *ngFor="let item of list">
+          <div class="comment-main-level">
+            <!-- Avatar -->
+            <div class="comment-avatar ms-1"><img [src]="item.person_foto || 'https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg'" alt=""></div>
+            <!-- Contenedor del Comentario -->
+            <div class="comment-box "  style="padding-left: 70px !important;">
+              <div class="animations">
+              <div class="comment-head"  style="padding-bottom: 0px;">
+                <!-- <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6> -->
+                <div class="d-flex justify-content-between align-items-center">
+                  <div >
+                    <p style="font-size: 14px; font-weight: bold;" class="comment-name m-0">{{item.person_nombre || item.nombres + ' ' + item.apellido_paterno + ' ' + item.apellido_materno}} <label class="label" style="font-size: 11px;">&nbsp;&nbsp;&nbsp;&nbsp;Fecha {{formatDate(item?.created_at)}}</label> </p>
+                    <i class="fa fa-reply"></i>
+                    <i class="fa fa-heart"></i>
+                  </div>
+                  <div  class="d-flex" *ngIf="me?.user?.person.id === (item.person_id || item.userid) ">
+                    <button class="me-2" style="height: 25px;" nbButton size="tiny" status="basic"
+                             nbTooltip="Editar comentario" nbTooltipPlacement="top"
+                            nbTooltipStatus="info" (click)="editComment()">
+                      <nb-icon icon="edit" status="info"></nb-icon>
+                    </button>
+                    <button style="height: 25px;" nbButton size="tiny" status="basic"
+                             nbTooltip="Eliminar comentario" nbTooltipPlacement="top"
+                            nbTooltipStatus="danger" (click)="deleteComment(item)">
+                      <nb-icon icon="trash" status="danger"></nb-icon>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+              <div  class="comment-content" style="text-align: justify; padding-top: 5px;">
+                <p style="font-size: 12px; text-align: justify;">{{ item?.respuesta }} <br>
+                  <span style="color: brown; font-size: 11px; font-weight: bold; cursor: pointer; margin-right: 13px"
+                        nbTooltip="Responder comentario" nbTooltipPlacement="top" nbTooltipStatus="primary"
+                        (click)="responderComentario(item)">Responder</span>
+                  <span *ngIf="item.child_responses.length > 0" style="color: var(--color-primary-500); font-size: 11px; font-weight: bold; cursor: pointer;"
+                        (click)="verMasRespuestas(item)">Ver mas {{item.child_responses.length === 1? ' respuesta': ' respuestas'}} ({{item.child_responses.length}})</span>
+                </p>
+                <div *ngIf="item?.checked">
+                  <hr>
+                  <div class="d-flex flex-column">
+                    <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="small"
+                              [formControl]="respuesta"  style="font-size: 16px;" rows="3"></textarea>
+                    <button nbButton status="success" size="tiny" class="ms-auto my-2"
+                            (click)="answerQuestion(item)" [disabled]="respuesta.invalid">Comentar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <ul *ngIf="item?.child_responses?.length > 0 && item.validateVerMas" class="comments-list reply-list">
+            <li>
+              <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item?.child_responses }"></ng-container>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </ng-template>
+    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: answers }"></ng-container>
   </div>
 </div>
