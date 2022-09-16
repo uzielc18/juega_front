@@ -38,7 +38,7 @@
         <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let students of data.estudiantes; let i = index ">
           <td>{{students.codigo}}</td>
           <td>{{students.nombres_completos}}</td>
-          <td *ngFor="let nota of data.notas; let i = index ">{{nota.nota}}</td>
+            <td *ngFor="let nota of data.notas; let i = index ">{{nota.nota}}</td>
           <td *ngIf="code == 'ASIG'"></td>
         </tr>
         </tbody>

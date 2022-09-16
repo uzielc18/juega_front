@@ -38,6 +38,9 @@ export class NoteWorksComponent implements OnInit {
       }
       this.generalService.nameParams$(serviceName, params).subscribe(res => {
         this.data = res.data;
+        this.data.filter((f: any) => {
+          console.log(f)
+        })
 
 
       }, () => {this.loading = false}, () => {this.loading = false})

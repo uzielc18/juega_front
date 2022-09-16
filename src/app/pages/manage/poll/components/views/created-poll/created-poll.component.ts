@@ -19,10 +19,13 @@ import {DatePipe} from "@angular/common";
 })
 export class CreatedPollComponent implements OnInit {
 
+  recuperarId:any = this.activatedRoute.snapshot.paramMap.get('id');
+  recuperar:any = this.activatedRoute.snapshot.paramMap;
   loading: boolean = false
   formHeader2: any = FormGroup;
   formHeader: any = FormGroup;
   disable: boolean = true;
+  dataEdit: any;
   min: any = Date;
   emploreAreas: TreeviewItem[] =  [];
   buttonClasses = [
@@ -81,6 +84,7 @@ export class CreatedPollComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.recuperar)
     this.fieldReactive();
     this.fieldReactive2();
     this.getProgramNews();
@@ -112,6 +116,9 @@ export class CreatedPollComponent implements OnInit {
       descripcion: ['', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
+    if(this.recuperarId){
+      this.setValue();
+    }
   }
 
   procesar() {
@@ -227,7 +234,11 @@ export class CreatedPollComponent implements OnInit {
     })
   }
   back() {
-    this.router.navigate([`../`], { relativeTo: this.activatedRoute });
+    if(this.recuperarId){
+      this.router.navigate([`../../`], { relativeTo: this.activatedRoute });
+    }else{
+      this.router.navigate([`../`], { relativeTo: this.activatedRoute });
+    }
   }
   getData(){
     const serviceName = 'inquiries';
@@ -274,5 +285,29 @@ export class CreatedPollComponent implements OnInit {
         this.back();
       }
     }, () => {this.loading = false}, ()=> {this.loading=false});
+  }
+  setValue(){
+    const serviceName = 'inquiries';
+    const inquiries_id = this.recuperarId
+    this.generalService.nameId$(serviceName, inquiries_id).subscribe(res => {
+          this.dataEdit = res.data;
+        this.formHeader.patchValue({
+            url_externa: this.dataEdit.url_video,
+            titulo: this.dataEdit.titulo_video,
+            descripcion: this.dataEdit.descripcion_video,
+          })
+      this.formHeader2.patchValue({
+        titulo: this.dataEdit.titulo,
+        tipo_filtro:  this.dataEdit.codigo === 'all'? 'area': 'edad' ,
+        publicar: true,
+        todos:  this.dataEdit.codigo === 'all'? true: false,
+        edad_desde: this.dataEdit.titulo,
+        edad_hasta: this.dataEdit.titulo,
+        fecha_inicio: new Date(this.dataEdit.fecha_inicio),
+        fecha_fin: new Date(this.dataEdit.fecha_fin) ,
+        area: this.dataEdit.titulo,
+        contenido:  this.dataEdit.consulta,
+      })
+    })
   }
 }

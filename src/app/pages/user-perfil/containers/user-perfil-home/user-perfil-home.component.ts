@@ -87,6 +87,10 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
     const serviceName = 'inquiries-tutoria';
     this.generalService.nameId$(serviceName, person_id).subscribe( res => {
         this.listInquiries = res.data
+        this.listInquiries.map((m: any) => {
+          m.checked = false
+          m.vermas = false
+        })
     }
     )
   }
