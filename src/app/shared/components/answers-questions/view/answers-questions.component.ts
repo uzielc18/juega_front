@@ -154,6 +154,7 @@ export class AnswersQuestionsComponent implements OnInit {
     const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
     const data = {
       person_id: this.userService?.user?.person?.id || '',
+      userid: this.userService?.user?.id || '',
       tabla: 'tutoria' || '',
       inquirie_answer_id: 0,
       tabla_id: 0,
@@ -227,5 +228,8 @@ export class AnswersQuestionsComponent implements OnInit {
   actualizarComentarios(){
     this.loading = true;
     this.getAnswers();
+  }
+  showMoreAnswers(){
+
   }
 }

@@ -27,19 +27,22 @@
     <div class="table-responsive">
       <table class="table table-sm">
         <thead>
-        <tr style="font-size: 12px;">
+        <tr style="font-size: 10px;">
           <th>Código</th>
           <th>Nombres</th>
-          <th *ngFor="let elements of data.elementos">{{elements.titulo}}</th>
-          <th *ngIf="code == 'ASIG'">Promedio</th>
+          <th class="text-center" *ngFor="let elements of data.elementos">{{elements.titulo}}</th>
+          <th class="text-center" *ngIf="code == 'ASIG'">Promedio</th>
         </tr>
         </thead>
         <tbody>
-        <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let students of data.estudiantes; let i = index ">
+        <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let students of data.registro; let i = index ">
           <td>{{students.codigo}}</td>
           <td>{{students.nombres_completos}}</td>
-            <td *ngFor="let nota of data.notas; let i = index ">{{nota.nota}}</td>
-          <td *ngIf="code == 'ASIG'"></td>
+          <ng-container *ngFor="let nota of students.notas; let i = index ">
+            <td class="text-center" *ngIf="nota !== null">{{nota}}</td>
+            <td class="text-center" *ngIf="nota === null">-</td>
+          </ng-container>
+          <td class="text-center" *ngIf="code == 'ASIG'"></td>
         </tr>
         </tbody>
       </table>
