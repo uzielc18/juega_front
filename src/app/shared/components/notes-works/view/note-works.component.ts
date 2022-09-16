@@ -38,12 +38,21 @@ export class NoteWorksComponent implements OnInit {
       }
       this.generalService.nameParams$(serviceName, params).subscribe(res => {
         this.data = res.data;
-        this.data.filter((f: any) => {
-          console.log(f)
-        })
-
-
       }, () => {this.loading = false}, () => {this.loading = false})
     }
+  }
+  searchNota(data: any){
+    const arr: any = []
+    const arr2: any = []
+    const as: any = data.notas.forEach((f: any) => {
+      const a: any = f.element_id
+        return as === a
+      })
+    console.log(as)
+
+  }
+  get validate(){
+
+    return
   }
 }

@@ -77,22 +77,22 @@ export class TabsMuroComponent implements OnInit {
       item.vermas = false;
     }
   }
-  upVoteQuestion(question: any) {
+  upVoteQuestion(item: any) {
     const serviceName = END_POINTS.base_back.default + 'ratings';
     const data = {
       codigo: 'mas_uno' || '',
       type_rating_id: 1 || '',
       valor: 1 || '',
       tabla: 'inquiries' || '',
-      tabla_id: question.id || '',
-      person_id: this.profile?.user?.person?.id || '',
+      tabla_id: item.id || '',
+      person_id: this.userService?.user?.person?.id || '',
     };
     this.loading = true;
     this.generalService.addNameData$(serviceName, data).subscribe(
       (res: any) => {
         if (res.success) {
-          question.puntos = question.puntos + 1;
-          question.puntos_activo = 0;
+          item.puntos = item.puntos + 1;
+          item.puntos_activo = 0;
         }
       },
       () => {

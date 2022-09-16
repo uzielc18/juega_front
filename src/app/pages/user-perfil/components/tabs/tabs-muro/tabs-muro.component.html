@@ -21,8 +21,8 @@
     </div>
     <br>
     <div class="d-flex align-items-center flex-wrap">
-      <div style="margin-right: 10px"><button nbButton status="success" size="tiny" outline ><nb-icon icon="heart"></nb-icon>20</button></div>
-      <div style="margin-right: 10px"><button nbButton status="primary" size="tiny" outline (click)="showComment(item)"><nb-icon icon="eye-off" *ngIf="item.checked"></nb-icon> Responder</button></div>
+      <div style="margin-right: 10px"><button nbButton status="success" size="tiny" outline (click)="upVoteQuestion(item)"><nb-icon icon="heart"></nb-icon>{{item.puntos}}</button></div>
+      <div style="margin-right: 10px"><button nbButton status="primary" size="tiny" outline (click)="showComment(item)"><nb-icon icon="eye-off" *ngIf="item.checked"></nb-icon> {{item.checked? 'Ocultar respuestas': 'Responder'}}</button></div>
       <div style="margin-right: 5px"><small class="label instructions-description">Número de respuestas ({{item.count_answers}})</small></div>
     </div>
     <br>
