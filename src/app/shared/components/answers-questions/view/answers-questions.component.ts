@@ -155,7 +155,6 @@ export class AnswersQuestionsComponent implements OnInit {
               m.validateVerMas = false
             })
           }
-          console.log(this.answers);
           this.answers.forEach((answer: any) => {
             answer.expiredDays = 0;
             answer.expiredHours = 0;
