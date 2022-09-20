@@ -540,7 +540,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
 
     Swal.fire({
       title: 'Eliminar',
-      text: '¿ Usten esta eliminando el examen del estudiante ? ',
+      text: '¿ Esta seguro en eliminar el examen ? ',
       backdrop: true,
       icon: 'question',
       // animation: true,
@@ -563,7 +563,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
             this.datosStudent = '';
             this.listResponses = [];
           }
-        })
+        },() => {this.loading = false})
       }
     });
   }
