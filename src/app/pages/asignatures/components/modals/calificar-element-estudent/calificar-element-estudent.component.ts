@@ -534,7 +534,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
     this.toastrService.show(status, `La fecha y hora debe ser mayor a la fecha actual`, { status });
   }
   deleteExam(){
-    const serviceName = '';
+    const serviceName = END_POINTS.base_back.quiz + '/examStudents';
 
     Swal.fire({
       title: 'Eliminar',
