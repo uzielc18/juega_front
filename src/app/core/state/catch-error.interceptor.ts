@@ -11,8 +11,8 @@ import { catchError, tap } from 'rxjs/operators';
 import { NbIconConfig, NbToastrService } from '@nebular/theme';
 import { status } from './status-messages';
 
-const showStatusCodes = [400, 500, 403, 404, 202, 422, 409, 0, 405];
-
+const showStatusCodes = [500, 0];
+const showStatusCodesWarning = [400, 403, 404, 202, 422, 409, 405, 401 ];
 @Injectable()
 export class CatchErrorInterceptor implements HttpInterceptor {
   constructor(public service: NbToastrService) {}
@@ -58,6 +58,7 @@ export class CatchErrorInterceptor implements HttpInterceptor {
        ),
       catchError((err: HttpErrorResponse) => {
         this.throwErrorToast(err);
+        this.throwErrorToastWarning(err)
         return throwError(err);
       })
     );
@@ -76,6 +77,7 @@ export class CatchErrorInterceptor implements HttpInterceptor {
       }
   }
   private throwErrorToast(err: any): void {
+    console.log(err, "hola mundo")
     if (showStatusCodes.includes(err.status)) {
       this.toast(`${err.message}`, err.name);
     }
@@ -83,6 +85,18 @@ export class CatchErrorInterceptor implements HttpInterceptor {
 
   private toast(msg: any, title: any): void {
     this.service.danger(msg, title, {
+      duration: 4000,
+      icon: 'alert-circle-outline',
+    });
+  }
+  private throwErrorToastWarning(err: any): void {
+    console.log(err, "hola mundo")
+    if (showStatusCodesWarning.includes(err.status)) {
+      this.toast2(`${err.error.message}`, err.name);
+    }
+  }
+  private toast2(msg: any, title: any): void {
+    this.service.warning(msg, title, {
       duration: 4000,
       icon: 'alert-circle-outline',
     });

@@ -12,6 +12,7 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
 export class PrepareFileProComponent implements OnInit, OnChanges {
   userData: any;
   formHeaders: any = FormGroup;
+  resultado2: any = []
   @Input() paramsInfo: any;
   @Input() typeFile: string = 'all'; // no modificar
   @Output() filterValueChange: any = new EventEmitter<any>();
@@ -104,6 +105,8 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
         // codAleatory: Math.floor(Math.random() * 90000) + 10000,
         directory: this.paramsInfo.directory,
         type: this.paramsInfo.type,
+        id_carga_curso_docente_array: this.paramsInfo.id_carga_curso_docente_array?.join(',') || '0'
+
       }
     }
     this.modalServiceNebular.open(UploadFileComponent, {
@@ -112,18 +115,18 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
       closeOnEsc: false,
       autoFocus: true,
     }).onClose.subscribe(result => {
-      if (result && result.close === 'save') {
-        this.formHeaders.controls['file_archivo'].setValue(result.archivo);
-        this.formHeaders.controls['name_file'].setValue(result.name);
-        this.formHeaders.controls['ext_file'].setValue(result.ext);
-        this.formHeaders.controls['base64'].setValue(result.base64);
-        this.formHeaders.controls['nombre_s3'].setValue(result.nombre);
+      if (result && (result[0]?.close || result.close) === 'save') {
+        this.formHeaders.controls['file_archivo'].setValue(result[0]?.archivo || result.archivo);
+        this.formHeaders.controls['name_file'].setValue(result[0]?.name || result.name);
+        this.formHeaders.controls['ext_file'].setValue(result[0]?.ext || result.ext);
+        this.formHeaders.controls['base64'].setValue(result[0]?.base64 || result.base64);
+        this.formHeaders.controls['nombre_s3'].setValue(result[0]?.nombre || result.nombre);
         const datos = {
-          ext: result.ext,
-          nombre: result.nombre,
-          nombre_original: result.nombre_original,
-          url: result.url,
-          peso: result.peso,
+          ext: result[0]?.ext || result.ext,
+          nombre: result[0]?.nombre || result.nombre,
+          nombre_original: result[0]?.nombre_original || result.nombre_original,
+          url: result[0]?.url || result.url,
+          peso: result[0]?.peso || result.peso,
           tipo: this.paramsInfo.tipo || '',
           person_id: this.userData.user?.person.id,
           tabla: this.paramsInfo.tabla,

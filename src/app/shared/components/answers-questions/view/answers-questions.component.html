@@ -34,7 +34,7 @@
                   <div  class="d-flex" *ngIf="me?.user?.person.id === (item.person_id || item.userid) ">
                     <button class="me-2" style="height: 25px;" nbButton size="tiny" status="basic"
                              nbTooltip="Editar comentario" nbTooltipPlacement="top"
-                            nbTooltipStatus="info" (click)="editComment()">
+                            nbTooltipStatus="info" (click)="editComment(item)">
                       <nb-icon icon="edit" status="info"></nb-icon>
                     </button>
                     <button style="height: 25px;" nbButton size="tiny" status="basic"
@@ -51,8 +51,8 @@
                   <span style="color: brown; font-size: 11px; font-weight: bold; cursor: pointer; margin-right: 13px"
                         nbTooltip="Responder comentario" nbTooltipPlacement="top" nbTooltipStatus="primary"
                         (click)="responderComentario(item)">Responder</span>
-                  <span *ngIf="item.child_responses.length > 0" style="color: var(--color-primary-500); font-size: 11px; font-weight: bold; cursor: pointer;"
-                        (click)="verMasRespuestas(item)">Ver mas {{item.child_responses.length === 1? ' respuesta': ' respuestas'}} ({{item.child_responses.length}})</span>
+                  <!--<span *ngIf="item.child_responses.length > 0" style="color: var(--color-primary-500); font-size: 11px; font-weight: bold; cursor: pointer;"
+                        (click)="verMasRespuestas(item)">Ver mas {{item.child_responses.length === 1? ' respuesta': ' respuestas'}} ({{item.child_responses.length}})</span>-->
                 </p>
                 <div *ngIf="item?.checked">
                   <hr>
@@ -68,7 +68,7 @@
           </div>
           </div>
 
-          <ul *ngIf="item?.child_responses?.length > 0 && item.validateVerMas" class="comments-list reply-list">
+          <ul *ngIf="item?.child_responses?.length > 0" class="comments-list reply-list">
             <li>
               <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item?.child_responses }"></ng-container>
             </li>
