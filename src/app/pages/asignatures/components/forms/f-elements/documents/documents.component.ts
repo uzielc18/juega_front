@@ -25,7 +25,7 @@ export class DocumentsComponent implements OnInit, OnChanges {
   @Input() valueMenu: any;
 
   @Input() destino: any;
-
+  @Input() type: any = 'ONE';
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   settValuesMore:any;
   key_file:any;
@@ -138,66 +138,126 @@ export class DocumentsComponent implements OnInit, OnChanges {
   // }
   saveInformtion() {
     const forms = this.formHeader.value;
-    const serviceName = END_POINTS.base_back.elements;
+    if(this.code === 'NEW' && this.type === 'MANY'){
+      const params = {
+        course_id:                forms.course_id,
+        element_id:                0,
+        topic_id:                 forms.topic_id,
+        type_element_id:          forms.type_element_id,
+        id_carga_curso_docente:   forms.id_carga_curso_docente,
+        id_programa_estudio:      forms.id_programa_estudio,
 
-    const params = {
-      course_id:                forms.course_id,
-      element_id:                0,
-      topic_id:                 forms.topic_id,
-      type_element_id:          forms.type_element_id,
-      id_carga_curso_docente:   forms.id_carga_curso_docente,
-      id_programa_estudio:      forms.id_programa_estudio,
+        grupal:                   '0',
+        intentos:                 1,
 
-      grupal:                   '0',
-      intentos:                 1,
+        titulo:                   forms.titulo,
+        descripcion:              forms.descripcion,
 
-      titulo:                   forms.titulo,
-      descripcion:              forms.descripcion,
+        tipo:                     forms.tipo,
 
-      tipo:                     forms.tipo,
+        fecha_inicio:             forms.fecha,
+        fecha_fin:                forms.fecha,
+        fecha_gracia:             forms.fecha,
 
-      fecha_inicio:             forms.fecha,
-      fecha_fin:                forms.fecha,
-      fecha_gracia:             forms.fecha,
+        // element_id:               forms.element_id,
+        visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
+        calificable:              forms.calificable  === true ? '1' : '0',
+        duracion:                 forms.duracion,
+        permitir_comentarios:     forms.permitir_comentarios  === true ? '1' : '0',
 
-      // element_id:               forms.element_id,
-      visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
-      calificable:              forms.calificable  === true ? '1' : '0',
-      duracion:                 forms.duracion,
-      permitir_comentarios:     forms.permitir_comentarios  === true ? '1' : '0',
+        estado:                   forms.estado,
+        userid:                   forms.userid || 1,
 
-      estado:                   forms.estado,
-      userid:                   forms.userid || 1,
+        files:                    forms.files || [],
+        destino: this.destino
+      };
 
-      files:                    forms.files || [],
-    };
-    if (!this.validCampos) {
-      this.loadingsForm.emit(true);
-      if (this.code === 'NEW') {
-      this.generalServi.addNameData$(serviceName, params).subscribe(r => {
-        if (r.success) {
-          const valueClose = {
-            value_close: 'ok',
-            value: params,
-            response: r.data,
-            type_element: this.valueMenu,
+      const serviceName = END_POINTS.base_back.default + 'save-element-in-courses';
+      if (!this.validCampos) {
+        this.loadingsForm.emit(true);
+        this.generalServi.addNameData$(serviceName, params).subscribe(
+          (r: any) => {
+            if (r.success) {
+              const valueClose = {
+                value_close: 'ok',
+                value: params,
+                response: r.data,
+                type_element: this.valueMenu,
+              };
+              this.saveCloseValue.emit(valueClose);
+            }
+          },
+          () => {
+            this.loadingsForm.emit(false);
+          },
+          () => {
+            this.loadingsForm.emit(false);
           }
-          this.saveCloseValue.emit(valueClose);
-        }
-      }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
-    } else {
-      this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
-        if (r.success) {
-          const valueClose = {
-            value_close: 'ok',
-            value: params,
-            response: r.data,
-            type_element: this.valueMenu,
-          }
-          this.saveCloseValue.emit(valueClose);
-        }
-      }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
+        );
+      }
     }
+    if (this.type === 'ONE') {
+      const serviceName = END_POINTS.base_back.elements;
+
+      const params = {
+        course_id:                forms.course_id,
+        element_id:                0,
+        topic_id:                 forms.topic_id,
+        type_element_id:          forms.type_element_id,
+        id_carga_curso_docente:   forms.id_carga_curso_docente,
+        id_programa_estudio:      forms.id_programa_estudio,
+
+        grupal:                   '0',
+        intentos:                 1,
+
+        titulo:                   forms.titulo,
+        descripcion:              forms.descripcion,
+
+        tipo:                     forms.tipo,
+
+        fecha_inicio:             forms.fecha,
+        fecha_fin:                forms.fecha,
+        fecha_gracia:             forms.fecha,
+
+        // element_id:               forms.element_id,
+        visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
+        calificable:              forms.calificable  === true ? '1' : '0',
+        duracion:                 forms.duracion,
+        permitir_comentarios:     forms.permitir_comentarios  === true ? '1' : '0',
+
+        estado:                   forms.estado,
+        userid:                   forms.userid || 1,
+
+        files:                    forms.files || [],
+      };
+      if (!this.validCampos) {
+        this.loadingsForm.emit(true);
+        if (this.code === 'NEW') {
+          this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+            if (r.success) {
+              const valueClose = {
+                value_close: 'ok',
+                value: params,
+                response: r.data,
+                type_element: this.valueMenu,
+              }
+              this.saveCloseValue.emit(valueClose);
+            }
+          }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
+        } else {
+          this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+            if (r.success) {
+              const valueClose = {
+                value_close: 'ok',
+                value: params,
+                response: r.data,
+                type_element: this.valueMenu,
+              }
+              this.saveCloseValue.emit(valueClose);
+            }
+          }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
+        }
+      }
     }
   }
   closeModal() {
@@ -261,8 +321,20 @@ export class DocumentsComponent implements OnInit, OnChanges {
   getDirectoy() {
     if (this.topics && this.topics?.id_carga_curso_docente) {
       return this.directorio + '/' + this.topics?.id_carga_curso_docente + '/documents';
+    }else if(this.destino && this.destino[0]?.id_carga_curso_docente) {
+      return this.directorio + '/' + this.destino[0]?.id_carga_curso_docente + '/works';
     } else {
       return '';
     }
+  }
+  getIdCargaCursoDocenteArr(){
+    const arr: any = []
+    this.destino?.forEach((f:any) => {
+      const item = {
+        id: f.id_carga_curso_docente,
+      }
+      arr.push(item.id)
+    })
+    return arr
   }
 }

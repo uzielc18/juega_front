@@ -7,6 +7,7 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { CForumsComponent } from '../../c-free/calificar-elements/c-forums/c-forums.component';
 import {VExamViewsComponent} from "../../../../../shared/components/exam-view/v-exam-views/v-exam-views.component";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-calificar-element-estudent',
@@ -531,5 +532,37 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
   }
   showToast(status: NbComponentStatus) {
     this.toastrService.show(status, `La fecha y hora debe ser mayor a la fecha actual`, { status });
+  }
+  deleteExam(){
+    const serviceName = '';
+
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿ Usten esta eliminando el examen del estudiante ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalServi.deleteNameId$(serviceName, this.pending?.student_pending?.exam_estudent?.id).subscribe(res => {
+          if(res.success){
+            this.fieldReactive();
+            this.getListEstudent();
+            this.getStudentStatus(this.formDate.value.codigo);
+            this.pending = '';
+            this.datosStudent = '';
+            this.listResponses = [];
+          }
+        })
+      }
+    });
   }
 }

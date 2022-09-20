@@ -4,6 +4,9 @@ import {END_POINTS} from "../../../../providers/utils";
 import {GeneralService} from "../../../../providers";
 import {AppService} from "../../../../core";
 import Swal from "sweetalert2";
+import {EditCommentForumComponent} from "../../children-comments/edit-comment-forum/edit-comment-forum.component";
+import {NbDialogService} from "@nebular/theme";
+import {MAnswersQuestionsComponent} from "./components/modals/m-answers-questions/m-answers-questions.component";
 
 @Component({
   selector: 'app-answers-questions',
@@ -43,7 +46,8 @@ export class AnswersQuestionsComponent implements OnInit {
   };
   constructor(private formBuilder: FormBuilder,
               private generalService: GeneralService,
-              private userService: AppService,) { }
+              private userService: AppService,
+              private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
     this.me = this.userService
@@ -192,8 +196,21 @@ export class AnswersQuestionsComponent implements OnInit {
       item.validateVerMas = true;
     }
   }
-  editComment(){
+  editComment(item: any){
 
+    this.dialogService.open(MAnswersQuestionsComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        item: item,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.loading = true;
+        this.getAnswers();
+      }
+    });
   }
   deleteComment(item: any){
     const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
@@ -216,11 +233,10 @@ export class AnswersQuestionsComponent implements OnInit {
           this.loading = true;
           this.generalService.deleteNameId$(serviceName, item.id).subscribe(r => {
             if (r.success) {
-              this.getAnswers();
               item.validateVerMas
 
             }
-          },() => {this.loading = false});
+          },() => {this.loading = false}, () => {this.loading = false});
         }
       });
     }

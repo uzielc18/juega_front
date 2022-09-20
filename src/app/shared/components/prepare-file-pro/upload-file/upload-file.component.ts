@@ -96,6 +96,7 @@ export class UploadFileComponent implements OnInit {
       type: this.params.type,
       directory: this.params.directory,
       key: key,
+      id_carga_curso_docente_array: this.params?.id_carga_curso_docente_array
     }
     if (prams && prams.type && prams.directory && prams.key) {
       this.loading = true;
@@ -104,25 +105,57 @@ export class UploadFileComponent implements OnInit {
             const data = new FormData();
             data.append('file', form.file);
             const valore = data;
-            const u = r.data.url.split('?');
-            const urls = u[0];
-            this.s3ServiceServ.addS3$(r.data.url, form.file.type, form.file).subscribe(r => {
+            //const u = r.data.url.split('?');
 
-              if (r.status === 200) {
-                const parameter:any = {
-                  base64: form.base64,
-                  archivo: form.file,
-                  name: form.name,
-                  ext: form.ext,
-                  nombre: key,
-                  nombre_original: form.name,
-                  url: urls,
-                  peso: form.size,
-                  close: 'save',
-                };
+            if( this.params?.id_carga_curso_docente_array !== '0'){
+              const arr: any = []
+              r.data.url.forEach((f: any) => {
+                const u = f.split('?');
+                const urls = u[0];
+                this.s3ServiceServ.addS3$(f, form.file.type, form.file).subscribe(r => {
+                  if (r.status === 200) {
+
+                    const parameter:any = {
+                      base64: form.base64,
+                      archivo: form.file,
+                      name: form.name,
+                      ext: form.ext,
+                      nombre: key,
+                      nombre_original: form.name,
+                      url: urls,
+                      peso: form.size,
+                      close: 'save',
+                    };
+                    arr.push(parameter);
+
+
+                    this.activeModal.close(arr);
+                  }
+                }, () => { this.loading = false }, () => { this.loading = false });
+              })
+            }
+            if(this.params?.id_carga_curso_docente_array === '0'){
+              console.log(r.data)
+              const u = r.data.url.split('?');
+              const urls = u[0];
+              this.s3ServiceServ.addS3$(r.data.url, form.file.type, form.file).subscribe(r => {
+
+                if (r.status === 200) {
+                  const parameter:any = {
+                    base64: form.base64,
+                    archivo: form.file,
+                    name: form.name,
+                    ext: form.ext,
+                    nombre: key,
+                    nombre_original: form.name,
+                    url: urls,
+                    peso: form.size,
+                    close: 'save',
+                  };
                   this.activeModal.close(parameter);
-              }
-            }, () => { this.loading = false }, () => { this.loading = false });
+                }
+              }, () => { this.loading = false }, () => { this.loading = false });
+            }
           }
         });
     }

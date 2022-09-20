@@ -1,0 +1,24 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large"
+         nbSpinnerMessage="Procesando información">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        Editar comentario
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="formHeader">
+      <div>
+        <label class="label">Comentario</label><br>
+        <textarea nbInput fullWidth style="height: 140px;" formControlName="comentario" ></textarea>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="text-center">
+    <button nbButton size="small" status="primary" [disabled]="formHeader.invalid" (click)="update()">{{'EDITAR' | translate}}</button>
+  </nb-card-footer>
+</nb-card>

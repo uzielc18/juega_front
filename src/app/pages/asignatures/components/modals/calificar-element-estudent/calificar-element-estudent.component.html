@@ -123,12 +123,12 @@
               (loadingsQuestion)="loadings($event)"
               ></app-v-exam-views>
             </div>
-            <!-- {{formDate.value.fechaHoraValid}} - {{timeActual}} -->
-          <div *ngIf="formDate.value.codigo === 'SE' && pending && pending?.student_pending && timeActual && (formDate.value.fechaHoraValid < timeActual)">
+            <!-- {{formDate.value.fechaHoraValid}} - {{timeActual}}  formDate.value.codigo === 'SE' && -->
+          <div *ngIf="(formDate.value.codigo === 'SE' || formDate.value.codigo === 'ALL' ) &&pending && pending?.student_pending && timeActual && (formDate.value.fechaHoraValid < timeActual)">
 
             <nb-card status="primary">
               <nb-card-header>
-                OTROS DATOS
+                EXTENDER FECHA DEL PENDIENTE
               </nb-card-header>
               <nb-card-body>
                 <label class="label">¿ Desea extender la fecha para el participante ?</label>
@@ -207,7 +207,7 @@
             <div class="d-flex justify-content-between align-items-center">
               <div>Ingresar nota</div>
               <div style="border: 2px dashed #D5D5D5;padding: 1px 5px" *ngIf="pending?.tipo === 'EVALUACION'">
-                <small style="font-weight: bold; font-size: 16px; color: var(--color-primary-500)">{{child?.info?.nota}} </small>
+                <small style="font-weight: bold; font-size: 16px; color: var(--color-primary-500)">{{infor?.nota}} </small>
                 <small> pt.</small>
               </div>
             </div>
@@ -249,16 +249,17 @@
               </div>
               <div class="text-center">
                 <button *ngIf="has_rubric && pending?.student_pending?.realizo !== '0' && pending?.tipo !== 'EVALUACION'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="sendCalification()">Calificar</button>
-                <button *ngIf="!has_rubric && pending?.student_pending?.realizo !== '0'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()">Calificar</button>
+                <button *ngIf="!has_rubric && pending?.student_pending?.realizo !== '0'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()">Calificar</button><br>
+                <button *ngIf="rol?.name !== 'Estudiante' && pending?.tipo === 'EVALUACION' && pending?.student_pending?.realizo !== '0'" nbButton size="small" status="danger" fullWidth (click)="deleteExam()">Eliminar examen</button>
               </div>
             </form>
 
           </nb-card-body>
           <nb-card-footer style="font-size: 10px;" *ngIf="pending?.tipo === 'EVALUACION'">
             <div >
-              <strong> Preguntas respondidas:</strong> &nbsp;<span>{{child?.info?.preguntas_respondidas}}</span><br>
-              <strong> Tiempo:</strong> &nbsp;<span>{{child?.info?.segundos}}</span><br>
-              <strong> Total de preguntas:</strong>&nbsp; <span>{{child?.info?.total_questions}}</span>
+              <strong> Preguntas respondidas:</strong> &nbsp;<span>{{infor?.preguntas_respondidas || 0}}</span><br>
+              <strong> Tiempo:</strong> &nbsp;<span>{{infor?.segundos || 0}}</span><br>
+              <strong> Total de preguntas:</strong>&nbsp; <span>{{infor?.total_questions || 0}}</span>
             </div>
           </nb-card-footer>
         </nb-card>
