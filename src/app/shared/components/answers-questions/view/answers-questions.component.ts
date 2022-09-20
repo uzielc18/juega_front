@@ -20,6 +20,9 @@ export class AnswersQuestionsComponent implements OnInit {
   @Input() emmitComment: any;
   @Input() visibilidad: any;
   formHeader: any = FormGroup;
+  page:any = 1
+  next: any;
+  list: any = [];
   respuesta: any = new FormControl('', Validators.required)
   loading: boolean = false;
   questions: any[] = [];
@@ -119,14 +122,28 @@ export class AnswersQuestionsComponent implements OnInit {
     );
   }
   getAnswers() {
+
+    this.loading = true
     const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
     const params = {
       inquirie_id: this.asnwerQuestions?.id,
+      per_page: 10,
+      page: this.page,
+      paginate: true
     };
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
         if (res.success) {
-          this.answers = res.data;
+          this.page += 1
+          this.next = res.links.next
+          if(res.meta.from === 1){
+            this.list = res.data
+            this.answers = this.list;
+          }else{
+            this.list = this.list.concat(res.data);
+            this.answers = this.list
+          }
+
           this.answers.map((m: any) => {
             m.checked = false
             m.validateVerMas = false
