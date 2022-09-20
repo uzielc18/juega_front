@@ -76,7 +76,7 @@
   </div>
   <div style="padding-top: 4px">
     <label class="label">Fecha y hora de término</label>
-    <fieldset [disabled]="!formHeader.value.fecha_inicio">
+    <fieldset [disabled]="!formHeader.value.fecha_inicio || (code == 'UPDATE' && item.total_entregados !== 0)">
       <div class="d-flex">
         <nb-form-field class="date-input">
           <input
@@ -90,6 +90,7 @@
           <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
           <nb-datepicker #fechaTermino format="dd/MM/yyyy" [min]="formHeader.value.fecha_inicio"></nb-datepicker>
           <control-messages [control]="formHeader.get('fecha_fin')"></control-messages>
+          <span *ngIf="code == 'UPDATE' && item.total_entregados !== 0" style="font-size: 11px; color: var(--color-warning-500)">*Usted no puede extender la fecha fin porque ya se adjuntaron documentos (extender fecha de gracia)</span>
         </nb-form-field>
         <nb-form-field class="hour-input ms-auto">
           <input
@@ -108,7 +109,7 @@
   </div>
   <div style="padding-top: 4px">
     <label class="label">Fecha y hora de gracia</label>
-    <fieldset [disabled]="!formHeader.value.fecha_fin">
+    <fieldset [disabled]="!formHeader.value.fecha_fin ">
       <div class="d-flex">
         <nb-form-field class="date-input">
           <input
@@ -122,6 +123,7 @@
           <nb-icon nbSuffix icon="calendar" status="primary" size="small" pack="eva"></nb-icon>
           <nb-datepicker #fechaGracia format="dd/MM/yyyy" [min]="formHeader.value.fecha_fin"></nb-datepicker>
           <control-messages [control]="formHeader.get('fecha_gracia')"></control-messages>
+          <span *ngIf="validarFechaGracia == true" style="font-size: 11px; color: brown">*La fecha fin no puede ser mayor a la fecha de gracia </span>
         </nb-form-field>
         <nb-form-field class="hour-input ms-auto">
           <input

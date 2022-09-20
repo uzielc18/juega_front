@@ -121,7 +121,7 @@ export class NavegacionComponent implements OnInit {
     this.loading = true;
     const serviceName = 'zoom-operador';
     if(this.curso.id) {
-          this.generalService.nameIdAndId$(serviceName, this.curso.id, 99).subscribe((res:any) => {
+          this.generalService.nameIdAndId$(serviceName, this.curso.id, 8).subscribe((res:any) => {
             if(res.success){ }
     }, () => {this.loading = false}, () => {this.loading = false});
 
