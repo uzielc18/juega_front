@@ -19,8 +19,15 @@ export class AnswersQuestionsComponent implements OnInit {
   @Input() asnwerQuestions: any;
   @Input() emmitComment: any;
   @Input() visibilidad: any;
+  @Input() code: any;
   formHeader: any = FormGroup;
-  page:any = 1
+  pagination: any = {
+    page: 1,
+    per_page: 20,
+    sizePage: 0,
+    sizeListData: 0,
+    isDisabledPage: false,
+  };
   next: any;
   list: any = [];
   respuesta: any = new FormControl('', Validators.required)
@@ -63,7 +70,7 @@ export class AnswersQuestionsComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.loading = true
-    this.getAnswers();
+    this.getAnswers('');
   }
   countdownAnswers(answer: any) {
     if (answer && answer.created_at) {
@@ -113,7 +120,7 @@ export class AnswersQuestionsComponent implements OnInit {
     this.generalService.addNameData$(serviceName, data).subscribe(
       (res: any) => {
         if (res.success) {
-          this.getAnswers();
+          this.getAnswers('');
         }
       },
       () => {
@@ -121,33 +128,33 @@ export class AnswersQuestionsComponent implements OnInit {
       }
     );
   }
-  getAnswers() {
-
+  getAnswers(code: any) {
     this.loading = true
     const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
     const params = {
       inquirie_id: this.asnwerQuestions?.id,
-      per_page: 10,
-      page: this.page,
-      paginate: true
+      per_page: 2,
+      page: this.pagination.page,
+      paginate: 'S'
     };
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
         if (res.success) {
-          this.page += 1
-          this.next = res.links.next
-          if(res.meta.from === 1){
-            this.list = res.data
-            this.answers = this.list;
-          }else{
-            this.list = this.list.concat(res.data);
-            this.answers = this.list
+          if(code){
+            code
+            this.next = res.links.next
+            if(res.meta.from === 1){
+              this.list = res.data
+              this.answers = this.list;
+            }else{
+              this.list = this.list.concat(res.data);
+              this.answers = this.list
+            }
+            this.answers.map((m: any) => {
+              m.checked = false
+              m.validateVerMas = false
+            })
           }
-
-          this.answers.map((m: any) => {
-            m.checked = false
-            m.validateVerMas = false
-          })
           console.log(this.answers);
           this.answers.forEach((answer: any) => {
             answer.expiredDays = 0;
@@ -170,7 +177,12 @@ export class AnswersQuestionsComponent implements OnInit {
       }
     );
   }
-
+  loadPage($event: any): any {
+    console.log($event)
+    this.loading = true;
+    const v = this.pagination.page += 1;
+    this.getAnswers(v)
+  }
   comentar() {
     const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
     const data = {
@@ -190,7 +202,7 @@ export class AnswersQuestionsComponent implements OnInit {
       (res: any) => {
         if (res.success) {
           this.formHeader.controls['comentario'].setValue('');
-          this.getAnswers();
+          this.getAnswers('');
         }
       },
       () => {
@@ -225,7 +237,7 @@ export class AnswersQuestionsComponent implements OnInit {
     }).onClose.subscribe(result => {
       if (result === 'ok') {
         this.loading = true;
-        this.getAnswers();
+        this.getAnswers('');
       }
     });
   }
@@ -250,7 +262,7 @@ export class AnswersQuestionsComponent implements OnInit {
           this.loading = true;
           this.generalService.deleteNameId$(serviceName, item.id).subscribe(r => {
             if (r.success) {
-              item.validateVerMas
+              this.getAnswers('');
 
             }
           },() => {this.loading = false}, () => {this.loading = false});
@@ -260,7 +272,8 @@ export class AnswersQuestionsComponent implements OnInit {
   }
   actualizarComentarios(){
     this.loading = true;
-    this.getAnswers();
+    this.pagination.page = 1
+    this.getAnswers('');
   }
   showMoreAnswers(){
 

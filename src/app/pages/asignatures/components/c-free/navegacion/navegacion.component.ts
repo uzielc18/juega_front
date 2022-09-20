@@ -7,6 +7,7 @@ import { EstudiantesComponent } from './estudiantes/estudiantes.component';
 import {END_POINTS} from "../../../../../providers/utils";
 import {GeneralService} from "../../../../../providers";
 import {ActivatedRoute} from "@angular/router";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-navegacion',
@@ -115,5 +116,15 @@ export class NavegacionComponent implements OnInit {
     this.generalService.nameId$(serviceName, this.zoom.id_carga_curso_docente).subscribe(res => {
       this.item = res
     }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  routingZoom(){
+    this.loading = true;
+    const serviceName = 'zoom-operador';
+    if(this.curso.id) {
+          this.generalService.nameIdAndId$(serviceName, this.curso.id, 99).subscribe((res:any) => {
+            if(res.success){ }
+    }, () => {this.loading = false}, () => {this.loading = false});
+
+    }
   }
 }

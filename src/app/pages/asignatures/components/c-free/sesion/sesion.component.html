@@ -156,7 +156,7 @@
                 <nb-icon icon="copy"></nb-icon>
               </button>
               <button
-                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && ((el.total_entregados === 0 && el.tipo === 'EVALUACION') || el.tipo !== 'EVALUACION')"
                 nbButton
                 status="info"
                 size="tiny"
@@ -168,7 +168,7 @@
                 <nb-icon icon="edit-2-outline"></nb-icon>
               </button>&nbsp;
               <button
-                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && ((el.total_entregados === 0 && el.tipo === 'EVALUACION') || el.tipo !== 'EVALUACION')"
                 nbButton
                 status="danger"
                 size="tiny"

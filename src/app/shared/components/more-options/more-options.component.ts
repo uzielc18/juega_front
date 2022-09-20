@@ -20,7 +20,7 @@ export class MoreOptionsComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.fieldReactive();
     // console.log(this.tipo);
-    
+
   }
   private fieldReactive() {
     const controls = {
@@ -47,11 +47,12 @@ export class MoreOptionsComponent implements OnInit, OnChanges {
     }
   }
   updateValues() {
+    console.log(this.setValues, "more")
     this.formHeader.patchValue({
       permitir_comentarios: this.setValues.permitir_comentarios  === '1' ? true : false,
       duration: this.setValues.duracion,
       calificable: this.setValues.calificable  === '1' ? true : false,
-      visibilidad: this.setValues.visibilidad,
+      visibilidad: this.setValues.visibilidad === '1'? 'S': 'N' ,
     });
   }
 }

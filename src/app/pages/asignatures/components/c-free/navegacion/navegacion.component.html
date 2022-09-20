@@ -6,7 +6,7 @@
             <div class="col-md-12" *ngIf="zoom.id_zoom_meetings !== null">
               <a [href]="zoom.join_url" target="_blank" style="text-decoration: none">
                 <button nbButton status="primary" size="small" fullWidth>
-                  <nb-icon icon="video"></nb-icon>
+                  <nb-icon icon="video" (click)="routingZoom()"></nb-icon>
                   Iniciar reunión
                 </button>
               </a>
