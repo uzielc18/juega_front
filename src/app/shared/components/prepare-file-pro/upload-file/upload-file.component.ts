@@ -98,6 +98,7 @@ export class UploadFileComponent implements OnInit {
       key: key,
       id_carga_curso_docente_array: this.params?.id_carga_curso_docente_array
     }
+    console.log(prams, "paramsssssss")
     if (prams && prams.type && prams.directory && prams.key) {
       this.loading = true;
         this.s3ServiceServ.addFimadoS3$(prams).subscribe(r => {
@@ -157,7 +158,7 @@ export class UploadFileComponent implements OnInit {
               }, () => { this.loading = false }, () => { this.loading = false });
             }
           }
-        });
+        }, () => { this.loading = false }, () => { this.loading = false });
     }
   } else {
     Swal.fire({

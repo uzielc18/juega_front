@@ -6,6 +6,7 @@ import { END_POINTS } from 'src/app/providers/utils';
 import { PreviewNewsComponent } from 'src/app/shared/components/news-comp/preview-news/preview-news.component';
 import { DIRECTORY } from 'src/app/shared/directorios/directory';
 import Swal from 'sweetalert2';
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-news-home',
@@ -15,24 +16,13 @@ import Swal from 'sweetalert2';
 export class NewsHomeComponent implements OnInit {
   loading: boolean = false;
   listNews:any = [];
+  eventsSubject: Subject<void> = new Subject<void>();
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private service: GeneralService, private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
-    this.getNews();
   }
   crearView() {
     this.router.navigate([`created`], { relativeTo: this.activatedRoute.parent});
-  }
-  tabChange($event:any) {
-    this.listNews = [];
-    this.getNews();
-  }
-  getNews() {
-    const serviceName = END_POINTS.base_back.news + '/news';
-    this.loading = true;
-    this.service.nameAll$(serviceName).subscribe((res:any) => {
-      this.listNews = res.data || [];
-    }, () => {this.loading = false}, ()=> {this.loading=false});
   }
   deleteNews(item:any) {
     const serviceName = END_POINTS.base_back.news + '/news';
@@ -55,7 +45,7 @@ export class NewsHomeComponent implements OnInit {
             this.loading = true;
             this.service.deleteNameId$(serviceName, item.id).subscribe(r => {
               if (r.success) {
-                this.getNews();
+                this.emitEventToChild();
               }
             }, () => { this.loading =false; }, () => { this.loading =false; });
           }
@@ -96,4 +86,45 @@ export class NewsHomeComponent implements OnInit {
       }
     });
 }
+  postNews(item: any){
+    const serviceName = END_POINTS.base_back.news + '/news';
+    const data = {
+      publicar: 1
+    }
+    Swal.fire({
+      title: 'Publicar noticia',
+      text: '¿ Desea publicar la noticia ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.service.updateNameIdData$(serviceName, item.id, data).subscribe((res: any) => {
+          if(res.success){
+            this.emitEventToChild();
+          }
+        },() => {this.loading = false}, () => {this.loading = false})
+      }
+    });
+
+  }
+  loadingsForm($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
+  }
+  emitEventToChild() {
+    this.eventsSubject.next();
+  }
+  editFileItem(item: any){
+
+  }
 }

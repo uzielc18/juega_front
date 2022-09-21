@@ -106,9 +106,10 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
         directory: this.paramsInfo.directory,
         type: this.paramsInfo.type,
         id_carga_curso_docente_array: this.paramsInfo.id_carga_curso_docente_array?.join(',') || '0'
-
       }
+
     }
+    console.log(param)
     this.modalServiceNebular.open(UploadFileComponent, {
       closeOnBackdropClick: false,
       context: param,

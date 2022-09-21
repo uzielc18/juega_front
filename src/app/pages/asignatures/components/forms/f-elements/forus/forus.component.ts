@@ -22,6 +22,7 @@ export class ForusComponent implements OnInit {
   @Input() item: any;
   @Input() code: any;
   @Input() valueMenu: any;
+  @Input() type: any = 'ONE';
 
   @Input() destino: any;
 
@@ -146,7 +147,6 @@ export class ForusComponent implements OnInit {
 
   saveInformtion() {
     const forms = this.formHeader.value;
-    const serviceName = END_POINTS.base_back.elements;
 
     const f_inicio = this.datepipe.transform(forms.fecha_inicio, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_inicio, 'HH:mm');
     const f_fin = this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_fin, 'HH:mm');
@@ -154,71 +154,141 @@ export class ForusComponent implements OnInit {
     if (forms.fecha_gracia) {
       f_gracia = this.datepipe.transform(forms.fecha_gracia, 'yyyy-MM-dd') + ' ' + this.datepipe.transform(forms.hora_gracia, 'HH:mm');
     }
-    const params = {
-      course_id:                forms.course_id,
-      element_id:                0,
-      topic_id:                 forms.topic_id,
-      type_element_id:          forms.type_element_id,
-      id_carga_curso_docente:   forms.id_carga_curso_docente,
-      id_programa_estudio:      forms.id_programa_estudio,
+    if(this.code === 'NEW' && this.type === 'MANY'){
 
-      grupal:                   '0',
-      intentos:                 1,
+      const params = {
+        course_id:                forms.course_id,
+        element_id:                0,
+        topic_id:                 forms.topic_id,
+        type_element_id:          forms.type_element_id,
+        id_carga_curso_docente:   forms.id_carga_curso_docente,
+        id_programa_estudio:      forms.id_programa_estudio,
 
-      titulo:                   forms.titulo,
-      descripcion:              forms.descripcion,
+        grupal:                   '0',
+        intentos:                 1,
 
-      nota:                     forms.nota || 0,
-      tipo:                     forms.tipo,
+        titulo:                   forms.titulo,
+        descripcion:              forms.descripcion,
 
-      fecha_inicio:             f_inicio,
-      fecha_fin:                f_fin,
-      fecha_gracia:             f_gracia || f_fin,
+        nota:                     forms.nota || 0,
+        tipo:                     forms.tipo,
 
-      // element_id:               forms.element_id,
-      visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
-      calificable:              forms.calificable  === true ? '1' : '0',
-      duracion:                 forms.duracion,
-      permitir_comentarios:     forms.permitir_comentarios2  === true ? '1' : '0',
+        fecha_inicio:             f_inicio,
+        fecha_fin:                f_fin,
+        fecha_gracia:             f_gracia || f_fin,
 
-      estado:                   forms.estado,
-      userid:                   forms.userid || 1,
+        // element_id:               forms.element_id,
+        visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
+        calificable:              forms.calificable  === true ? '1' : '0',
+        duracion:                 forms.duracion,
+        permitir_comentarios:     forms.permitir_comentarios2  === true ? '1' : '0',
 
-      foro: {
-        pregunta:                 forms.pregunta,
-        ver_respuestas:           forms.ver_respuestas === true ? 'SI' : 'NO',
-        permitir_comentarios:     forms.permitir_comentarios === true ? 'SI' : 'NO',
-        autocalificable:          forms.autocalificable === true ? 'SI' : 'NO',
-        // editor:                   forms.editor === true ? 'SI' : 'NO',
+        estado:                   forms.estado,
+        userid:                   forms.userid || 1,
+
+        foro: {
+          pregunta:                 forms.pregunta,
+          ver_respuestas:           forms.ver_respuestas === true ? 'SI' : 'NO',
+          permitir_comentarios:     forms.permitir_comentarios === true ? 'SI' : 'NO',
+          autocalificable:          forms.autocalificable === true ? 'SI' : 'NO',
+          // editor:                   forms.editor === true ? 'SI' : 'NO',
+        }
+      };
+      const serviceName = END_POINTS.base_back.default + 'save-element-in-courses';
+      if (!this.validCampos) {
+        this.loadingsForm.emit(true);
+        this.generalServi.addNameData$(serviceName, params).subscribe(
+          (r: any) => {
+            console.log(r)
+            if (r.success) {
+              const valueClose = {
+                value_close: 'ok',
+                value: params,
+                response: r.data,
+                type_element: this.valueMenu,
+              };
+              this.saveCloseValue.emit(valueClose);
+            }
+          },
+          () => {
+            this.loadingsForm.emit(false);
+          },
+          () => {
+            this.loadingsForm.emit(false);
+          }
+        );
       }
-    };
-    if (!this.validCampos) {
-      this.loadingsForm.emit(true);
-      if (this.code === 'NEW') {
-      this.generalServi.addNameData$(serviceName, params).subscribe(r => {
-        if (r.success) {
-          const valueClose = {
-            value_close: 'ok',
-            value: params,
-            response: r.data,
-            type_element: this.valueMenu,
-          }
-          this.saveCloseValue.emit(valueClose);
-        }
-      }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
-    } else
-      this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
-        if (r.success) {
-          const valueClose = {
-            value_close: 'ok',
-            value: params,
-            response: r.data,
-            type_element: this.valueMenu,
-          }
-          this.saveCloseValue.emit(valueClose);
-        }
-      }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
     }
+    if (this.type === 'ONE') {
+      const serviceName = END_POINTS.base_back.elements;
+
+      const params = {
+        course_id:                forms.course_id,
+        element_id:                0,
+        topic_id:                 forms.topic_id,
+        type_element_id:          forms.type_element_id,
+        id_carga_curso_docente:   forms.id_carga_curso_docente,
+        id_programa_estudio:      forms.id_programa_estudio,
+
+        grupal:                   '0',
+        intentos:                 1,
+
+        titulo:                   forms.titulo,
+        descripcion:              forms.descripcion,
+
+        nota:                     forms.nota || 0,
+        tipo:                     forms.tipo,
+
+        fecha_inicio:             f_inicio,
+        fecha_fin:                f_fin,
+        fecha_gracia:             f_gracia || f_fin,
+
+        // element_id:               forms.element_id,
+        visibilidad:              forms.visibilidad === 'S' ? '1' : '0',
+        calificable:              forms.calificable  === true ? '1' : '0',
+        duracion:                 forms.duracion,
+        permitir_comentarios:     forms.permitir_comentarios2  === true ? '1' : '0',
+
+        estado:                   forms.estado,
+        userid:                   forms.userid || 1,
+
+        foro: {
+          pregunta:                 forms.pregunta,
+          ver_respuestas:           forms.ver_respuestas === true ? 'SI' : 'NO',
+          permitir_comentarios:     forms.permitir_comentarios === true ? 'SI' : 'NO',
+          autocalificable:          forms.autocalificable === true ? 'SI' : 'NO',
+          // editor:                   forms.editor === true ? 'SI' : 'NO',
+        }
+      };
+      if (!this.validCampos) {
+        this.loadingsForm.emit(true);
+        if (this.code === 'NEW') {
+          this.generalServi.addNameData$(serviceName, params).subscribe(r => {
+            if (r.success) {
+              const valueClose = {
+                value_close: 'ok',
+                value: params,
+                response: r.data,
+                type_element: this.valueMenu,
+              }
+              this.saveCloseValue.emit(valueClose);
+            }
+          }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
+        } else
+          this.generalServi.updateNameIdData$(serviceName, this.item.id, params).subscribe(r => {
+            if (r.success) {
+              const valueClose = {
+                value_close: 'ok',
+                value: params,
+                response: r.data,
+                type_element: this.valueMenu,
+              }
+              this.saveCloseValue.emit(valueClose);
+            }
+          }, () => { this.loadingsForm.emit(false); }, () => { this.loadingsForm.emit(false); });
+      }
+    }
+
   }
   closeModal() {
     const valueClose = {
@@ -273,6 +343,34 @@ export class ForusComponent implements OnInit {
           }
           this.settValuesMore = values;
         }
+  }
+  cleanData(){
+      this.formHeader.controls['course_id'].setValue('');
+      this.formHeader.controls['topic_id'].setValue('');
+      this.formHeader.controls['type_element_id'].setValue('');
+      this.formHeader.controls['id_carga_curso_docente'].setValue('');
+      this.formHeader.controls['id_programa_estudio'].setValue('');
+      this.formHeader.controls['descripcion'].setValue('');
+      this.formHeader.controls['pregunta'].setValue('');
+      this.formHeader.controls['fecha_inicio'].setValue('');
+      this.formHeader.controls['hora_inicio'].setValue('');
+      this.formHeader.controls['fecha_fin'].setValue('');
+      this.formHeader.controls['hora_fin'].setValue('');
+      this.formHeader.controls['fecha_gracia'].setValue('');
+      this.formHeader.controls['hora_gracia'].setValue('');
+      this.formHeader.controls['ver_respuestas'].setValue('');
+      this.formHeader.controls['permitir_comentarios'].setValue('');
+      this.formHeader.controls['autocalificable'].setValue('');
+      this.formHeader.controls['editor'].setValue('');
+      this.formHeader.controls['respuestaSugerida'].setValue('');
+      this.formHeader.controls['nota'].setValue('');
+      this.formHeader.controls['tipo'].setValue('');
+      this.formHeader.controls['visibilidad'].setValue('');
+      this.formHeader.controls['calificable'].setValue('');
+      this.formHeader.controls['duracion'].setValue('');
+      this.formHeader.controls['permitir_comentarios2'].setValue('');
+      this.formHeader.controls['estado'].setValue('');
+      this.formHeader.controls['userid'].setValue('');
   }
   renderDate(date: any) {
     if (date) {
