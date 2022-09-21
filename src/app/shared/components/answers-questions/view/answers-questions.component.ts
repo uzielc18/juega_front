@@ -140,7 +140,6 @@ export class AnswersQuestionsComponent implements OnInit {
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
         if (res.success) {
-          if(code){
             code
             this.next = res.links.next
             if(res.meta.from === 1){
@@ -154,7 +153,7 @@ export class AnswersQuestionsComponent implements OnInit {
               m.checked = false
               m.validateVerMas = false
             })
-          }
+
           this.answers.forEach((answer: any) => {
             answer.expiredDays = 0;
             answer.expiredHours = 0;

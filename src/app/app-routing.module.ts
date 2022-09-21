@@ -90,6 +90,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/exam/exam.module').then(m => m.ExamModule),
   },
   {
+    path: 'exam/:pending_id/:person_id/:exam_id',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/exam/exam.module').then(m => m.ExamModule),
+  },
+  {
     path: '',
     redirectTo: 'pages',
     pathMatch: 'full',
