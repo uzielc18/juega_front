@@ -17,7 +17,7 @@
     </button>
     <ng-template #recursiveList let-list >
       <ul  id="comments-list" class="comments-list">
-        <li *ngFor="let item of list">
+        <li *ngFor="let item of list; let i = index">
           <div class="comment-main-level">
             <!-- Avatar -->
             <div class="comment-avatar ms-1"><img [src]="item.person_foto || 'https://st.depositphotos.com/2101611/4338/v/600/depositphotos_43381243-stock-illustration-male-avatar-profile-picture.jpg'" alt=""></div>
@@ -61,7 +61,7 @@
                     <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="small"
                               [formControl]="respuesta"  style="font-size: 16px;" rows="3"></textarea>
                     <button nbButton status="success" size="tiny" class="ms-auto my-2"
-                            (click)="answerQuestion(item)" [disabled]="respuesta.invalid">Comentar</button>
+                            (click)="answerQuestion(item, i)" [disabled]="respuesta.invalid">Comentar</button>
                   </div>
                 </div>
               </div>
@@ -79,7 +79,8 @@
     </ng-template>
     <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: answers }"></ng-container>
     <span style="color: var(--color-primary-500); font-size: 11px; font-weight: bold; cursor: pointer;"
-          (click)="loadPage($event)" *ngIf="next !== null">Ver mas 5 respuestas</span>
+
+          (click)="loadPage($event)" *ngIf="next !== null">Ver mas respuestas</span>
 
   </div>
 

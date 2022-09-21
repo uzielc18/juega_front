@@ -108,7 +108,7 @@ export class AnswersQuestionsComponent implements OnInit {
       return 'Sin fecha';
     }
   }
-  answerQuestion(item: any) {
+  answerQuestion(item: any, index: any) {
     this.loading = true
     const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
     const data = {
@@ -120,12 +120,15 @@ export class AnswersQuestionsComponent implements OnInit {
     this.generalService.addNameData$(serviceName, data).subscribe(
       (res: any) => {
         if (res.success) {
-          this.getAnswers('');
+          this.respuesta.setValue('')
+            item.checked = false
+            item.child_responses.unshift(res.data)
+            console.log(res)
         }
       },
       () => {
         this.loading = false;
-      }
+      }, () => {this.loading = false}
     );
   }
   getAnswers(code: any) {
@@ -133,9 +136,9 @@ export class AnswersQuestionsComponent implements OnInit {
     const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
     const params = {
       inquirie_id: this.asnwerQuestions?.id,
-      per_page: 2,
+      per_page: 10,
       page: this.pagination.page,
-      paginate: 'S'
+      paginate: true
     };
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
@@ -200,12 +203,12 @@ export class AnswersQuestionsComponent implements OnInit {
       (res: any) => {
         if (res.success) {
           this.formHeader.controls['comentario'].setValue('');
-          this.getAnswers('');
+          this.answers.unshift(res.data)
         }
       },
       () => {
         this.loading = false;
-      }
+      },() => {this.loading = false}
     );
   }
   responderComentario(comentario:any) {
