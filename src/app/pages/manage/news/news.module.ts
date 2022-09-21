@@ -11,6 +11,9 @@ import { CreatedNewsComponent } from './components/views/created-news/created-ne
 import { ImageRecorteModule } from 'src/app/shared/components/recortes/image-recorte/image-recorte.module';
 import { TreeviewModule } from 'ngx-treeview';
 import { PreviewNewsModule } from 'src/app/shared/components/news-comp/preview-news/preview-news.module';
+import { TNewFutureComponent } from './components/tabs/t-new-future/t-new-future.component';
+import { TNewPastComponent } from './components/tabs/t-new-past/t-new-past.component';
+import { TNewActiveComponent } from './components/tabs/t-new-active/t-new-active.component';
 
 const COMPONENTS: any[] = [
   NewsComponent,
@@ -50,7 +53,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, TNewFutureComponent, TNewPastComponent, TNewActiveComponent],
   entryComponents: [...MODALS],
 })
 

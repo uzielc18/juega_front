@@ -322,7 +322,7 @@ export class DocumentsComponent implements OnInit, OnChanges {
     if (this.topics && this.topics?.id_carga_curso_docente) {
       return this.directorio + '/' + this.topics?.id_carga_curso_docente + '/documents';
     }else if(this.destino && this.destino[0]?.id_carga_curso_docente) {
-      return this.directorio + '/' + this.destino[0]?.id_carga_curso_docente + '/works';
+      return this.directorio + '/' + this.destino[0]?.id_carga_curso_docente + '/documents';
     } else {
       return '';
     }

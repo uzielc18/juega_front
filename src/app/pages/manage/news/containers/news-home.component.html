@@ -14,47 +14,26 @@
             </div>
         </div>
         <hr>
-        <nb-tabset (changeTab)="tabChange($event)">
+        <nb-tabset>
             <nb-tab tabTitle="Notcias activas">
-              <div class="table-responsive">
-                <table class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th style="width: 1px">#</th>
-                            <th>Título</th>
-                            <th>Contenido</th>
-                            <th>Fecha inicio</th>
-                            <th>Fecha fin</th>
-                            <th>Tipo</th>
-                            <th>Filtro</th>
-                            <th style="width: 1px" colspan="2">Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of listNews; let i = index">
-                            <td>{{i+1}}</td>
-                            <td>{{item.titulo}}</td>
-                            <td>{{item.contenido}}</td>
-                            <td>{{item.fecha_inicio}}</td>
-                            <td>{{item.fecha_fin}}</td>
-                            <td>{{item.type_filtro}}</td>
-                            <td>{{item.filtro}}</td>
-                            <th style="width: 1px">
-                                <button nbButton fullWidth size="tiny" status="warning" (click)="getFileItem(item)"><nb-icon icon="eye-outline"></nb-icon></button>
-                            </th>
-                            <th style="width: 1px">
-                                <button nbButton fullWidth size="tiny" status="danger" (click)="deleteNews(item)"><nb-icon icon="trash-outline"></nb-icon></button>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-              </div>
+              <app-t-new-active (loadingsForm) = loadingsForm($event)
+                                (clickGetFileItem) = getFileItem($event)
+                                (clickDeleteNews) = deleteNews($event)
+                                [events]="eventsSubject.asObservable()"></app-t-new-active>
             </nb-tab>
             <nb-tab tabTitle="Noticias futuras">
-              Tab content 2
+              <app-t-new-future (loadingsForm) = loadingsForm($event)
+                                (clickGetFileItem) = getFileItem($event)
+                                (clickDeleteNews) = deleteNews($event)
+                                (clickGetPostNews) = postNews($event)
+                                [events]="eventsSubject.asObservable()"></app-t-new-future>
             </nb-tab>
             <nb-tab tabTitle="Noticias pasadas">
-                Tab content 2
+                <app-t-new-past (loadingsForm) = loadingsForm($event)
+                                (clickGetFileItem) = getFileItem($event)
+                                (clickDeleteNews) = deleteNews($event)
+                                (clickGetPostNews) = postNews($event)
+                                [events]="eventsSubject.asObservable()"></app-t-new-past>
               </nb-tab>
            </nb-tabset>
     </nb-card-body>
