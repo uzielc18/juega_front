@@ -39,34 +39,34 @@
             <button nbButton size="tiny" outline status="warning" ghost class="butonsInfo">Total vistos:
               {{(element?.total_vistos)}}</button>&nbsp;
             <button nbButton size="tiny" outline status="info" ghost class="butonsInfo">Total alumnos:
-              {{(element?.total_pendientes - element?.total_entregados ) + (element?.total_vistos)}}</button>
+              {{element?.total_pendientes}}</button>
           </label>
         </div>
-  
+
         <app-v-document *ngIf="['DOC'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo">
         </app-v-document>
-  
+
         <app-v-evaluation *ngIf="['EVAL'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"
         [pending]="pending" (loadingss)="changeLoading($event)"></app-v-evaluation>
-  
+
         <app-v-folder *ngIf="['CARP'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo">
         </app-v-folder>
-  
+
         <app-v-forum *ngIf="['FOR'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"
           [pending]="pending" (refreshPending)="refreshPending()" [listResponses]="listResponses"></app-v-forum>
-  
+
         <app-v-link *ngIf="['ENL'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo">
         </app-v-link>
-  
+
         <app-v-recorded-class *ngIf="['CLGR'].includes(element?.type_element?.codigo)" [element]="element"
           [userInfo]="userInfo"></app-v-recorded-class>
-  
+
         <app-v-video *ngIf="['VID'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo">
         </app-v-video>
-  
+
         <app-v-video-conference *ngIf="['VICO'].includes(element?.type_element?.codigo)" [element]="element"
           [userInfo]="userInfo"></app-v-video-conference>
-  
+
         <app-v-works *ngIf="['TRAB'].includes(element?.type_element?.codigo)" [element]="element" [userInfo]="userInfo"
           [pending]="pending" (refreshPending)="refreshPending()" [rubrica]="rubrica" [has_rubric]="has_rubric" [calification]="calification"></app-v-works>
         <hr>

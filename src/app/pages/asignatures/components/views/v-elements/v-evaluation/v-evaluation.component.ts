@@ -286,5 +286,16 @@ export class VEvaluationComponent implements OnInit, OnChanges {
       }
     });
   }
+  initEvaluationsSupervisado(){
+    const serviceName = END_POINTS.base_back.quiz + '/supervisado';
+    const params = {
+      course: this.pending?.course_id,
+      pending: this.pending?.student_pending?.id || '',
+      person: this.pending?.student_pending?.persons_student_id || '',
+    }
+    this.service.nameIdAndIdAndId$(serviceName, params.course, params.pending, params.person).subscribe((res: any) => {
+      this.router.navigate([`/exam/${params.pending}/${params.person}/${this.pending.exam.id}`]);
+    })
+  }
 
 }

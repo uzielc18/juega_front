@@ -4,6 +4,8 @@ import { NbDialogService } from "@nebular/theme";
 import { GeneralService } from "src/app/providers";
 import { END_POINTS } from "src/app/providers/utils";
 import { ConfirmFinishExamComponent } from "../components/modals/confirm-finish-exam/confirm-finish-exam.component";
+import Swal from "sweetalert2";
+import {AppService} from "../../../core";
 
 @Component({
   selector: "app-exam-home",
@@ -13,217 +15,11 @@ import { ConfirmFinishExamComponent } from "../components/modals/confirm-finish-
 export class ExamHomeComponent implements OnInit {
   pending_id: any = this.activatedRoute.snapshot.paramMap.get('pending_id');
   person_id: any = this.activatedRoute.snapshot.paramMap.get('person_id');
+  exam_id: any = this.activatedRoute.snapshot.paramMap.get('exam_id');
   page: any = this.activatedRoute.snapshot.queryParams['page'] || 1;
   collapsed: boolean = false;
   loading: boolean = false;
-  textImg = [
-    {
-      option: "Comprensivo",
-      id: 1,
-      selected: 0,
-      checked: false,
-      imagen: "https://imagenes.20minutos.es/files/article_amp/uploads/imagenes/2022/01/12/vaca.jpeg",
-    },
-    {
-      option: "Pasivo",
-      id: 2,
-      selected: 0,
-      checked: false,
-      imagen: "https://cdn.pixabay.com/photo/2018/05/03/22/34/lion-3372720_1280.jpg",
-    },
-    {
-      option: "Sentimental",
-      id: 3,
-      selected: 0,
-      checked: false,
-      imagen: "https://definicion.de/wp-content/uploads/2015/02/ganado.jpg",
-    },
-    {
-      option: "Dinámico",
-      id: 4,
-      selected: 0,
-      checked: false,
-      imagen: "https://www.lavanguardia.com/files/og_thumbnail/uploads/2021/04/26/60868c00d04fc.jpeg",
-    },
-    {
-      option: "Adaptativo",
-      id: 5,
-      selected: 0,
-      checked: false,
-      imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7MjEcbf2UEaJlkunkvFYf3Xm6d61Gcabluw&usqp=CAU",
-    },
-  ];
-  images = [
-    {
-      option: "",
-      id: 1,
-      selected: 0,
-      checked: false,
-      imagen: "https://imagenes.20minutos.es/files/article_amp/uploads/imagenes/2022/01/12/vaca.jpeg",
-    },
-    {
-      option: "",
-      id: 2,
-      selected: 0,
-      checked: false,
-      imagen: "https://cdn.pixabay.com/photo/2018/05/03/22/34/lion-3372720_1280.jpg",
-    },
-    {
-      option: "",
-      id: 3,
-      selected: 0,
-      checked: false,
-      imagen: "https://definicion.de/wp-content/uploads/2015/02/ganado.jpg",
-    },
-    {
-      option: "",
-      id: 4,
-      selected: 0,
-      checked: false,
-      imagen: "https://www.lavanguardia.com/files/og_thumbnail/uploads/2021/04/26/60868c00d04fc.jpeg",
-    },
-    {
-      option: "",
-      id: 5,
-      selected: 0,
-      checked: false,
-      imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7MjEcbf2UEaJlkunkvFYf3Xm6d61Gcabluw&usqp=CAU",
-    },
-  ];
-  texts = [
-    {
-      option: "Comprensivo",
-      id: 1,
-      selected: 0,
-      checked: false,
-      imagen: "",
-    },
-    {
-      option: "Pasivo",
-      id: 2,
-      selected: 0,
-      checked: false,
-      imagen: "",
-    },
-    {
-      option: "Sentimental",
-      id: 3,
-      selected: 0,
-      checked: false,
-      imagen: "",
-    },
-    {
-      option: "Dinámico",
-      id: 4,
-      selected: 0,
-      checked: false,
-      imagen: "",
-    },
-    {
-      option: "Adaptativo",
-      id: 5,
-      selected: 0,
-      checked: false,
-      imagen: "",
-    },
-  ];
-
-  relation = {
-    arrayA: [
-      {
-        id: 119,
-        relacion: "happy",
-        imagen: "https://www.livehappy.com/wp-content/uploads/2018/02/happy.jpg",
-      },
-      {
-        id: 121,
-        relacion: "down",
-        imagen: "https://www.pngitem.com/pimgs/m/71-715425_down-arrow-png-transparent-icon-transparent-arrow-down.png",
-      },
-      {
-        id: 123,
-        relacion: "day",
-        imagen:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmvz-l_AQzoRZ7wihLlDZBE-uEw3KqgydDc_WRA5yVi4ja1j8KsXu7JOJ3hdxywT4DxtM&usqp=CAU",
-      },
-      {
-        id: 125,
-        relacion: "kid",
-        imagen: "https://en.pimg.jp/040/904/171/1/40904171.jpg",
-      },
-    ],
-    arrayB: [
-      {
-        id: 120,
-        relacion: "sad",
-        imagen: "https://whatemoji.org/wp-content/uploads/2020/07/Frowning-Face-Emoji-1024x1024.png",
-      },
-      {
-        id: 122,
-        relacion: "up",
-        imagen: "https://www.pngitem.com/pimgs/m/512-5126598_transparent-arrow-pointing-up-png-png-download.png",
-      },
-      {
-        id: 124,
-        relacion: "night",
-        imagen:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/%D0%A1%D0%B2%D0%B5%D1%82_%D0%BE%D1%82_%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BD%D0%B8_-_panoramio.jpg/640px-%D0%A1%D0%B2%D0%B5%D1%82_%D0%BE%D1%82_%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BD%D0%B8_-_panoramio.jpg",
-      },
-      {
-        id: 126,
-        relacion: "old",
-        imagen:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT02-1XKSVkVIGKmyI9CDt9IvSgkJFIxI2DSxJsBV4CBX2f6Se9f80fne861jV3kO5awvE&usqp=CAU",
-      },
-    ],
-  };
-
-  relationText = {
-    arrayA: [
-      {
-        id: 119,
-        relacion: "happy",
-        imagen: null,
-      },
-      {
-        id: 121,
-        relacion: "down",
-        imagen: null,
-      },
-      {
-        id: 123,
-        relacion: "day",
-        imagen: null,
-      },
-      {
-        id: 125,
-        relacion: "kid",
-        imagen: null,
-      },
-    ],
-    arrayB: [
-      {
-        id: 120,
-        relacion: "sad",
-        imagen: null,
-      },
-      {
-        id: 122,
-        relacion: "up",
-        imagen: null,
-      },
-      {
-        id: 124,
-        relacion: "night",
-        imagen: null,
-      },
-      {
-        id: 126,
-        relacion: "old",
-        imagen: null,
-      },
-    ],
-  };
+  ip:any = '';
   questions:any = [];
   info:any = '';
   tiempoRestante:any = {
@@ -240,7 +36,7 @@ export class ExamHomeComponent implements OnInit {
   private scrollHeight = 500;
   showButtom:boolean = true;
   constructor(private activatedRoute: ActivatedRoute, private service: GeneralService, public router: Router, private rou: ActivatedRoute,
-    private dialogService: NbDialogService) {
+    private dialogService: NbDialogService, private userService: AppService,) {
       setInterval(() => {
         if (this.info) {
           this.countdown();
@@ -345,23 +141,77 @@ export class ExamHomeComponent implements OnInit {
           page: this.page
         }
         this.service.nameIdAndIdParams$(serviceName, this.pending_id, this.person_id, params).subscribe(res => {
-          this.questions = res.data && res.data.data || [];
-          this.info = res.data && res.data.info || '';
-          this.questionResponse = res.data && res.data.info.preguntas_respondidas || 0;
-          if (this.questions.length>0) {
-            this.questions.map((re:any, index:any) => {
-              if (re.nivel === '2'){
-               re.numeracion = index;
-              }
-            });
+          if(res.data.info === null && res.data.data.length === 0 && res.data.exam_student_id === 0){
+            this.initEvaluations();
+          }else{
+            this.questions = res.data && res.data.data || [];
+            this.info = res.data && res.data.info || '';
+            this.questionResponse = res.data && res.data.info.preguntas_respondidas || 0;
+            if (this.questions.length>0) {
+              this.questions.map((re:any, index:any) => {
+                if (re.nivel === '2'){
+                  re.numeracion = index;
+                }
+              });
 
-            if (this.info && this.info.bloqueo === 1) {
-              this.backGo;
+              if (this.info && this.info.bloqueo === 1) {
+                this.backGo;
+              }
             }
           }
         }, () => {this.loading = false;}, () => {this.loading = false;});
       }
     }
+  }
+  getIp() {
+    this.service.apisExternas$('GET', 'https://api.ipify.org/?format=json', {}).subscribe(res => {
+      if (res && res['status'] === 200) {
+        this.ip = res.body && res.body['ip'] || '';
+      }
+    })
+    // fetch('https://api.ipify.org/?format=json').then(result => {
+    //   if (result && result['status'] === 200) {
+    //       result.json().then(r => {
+    //         this.ip = r['ip'];
+    //       });
+    //   }
+    // });
+  }
+  verifyDevice() {
+    let a = navigator.userAgent;
+    let agents = new Array("iPhone","iPad","Android","SymbianOS", "Windows Phone","iPod");
+    let flag = true;
+    for(let i = 0; i < agents.length; i++) {
+      if(a.indexOf(agents[i]) > 0) {
+        flag = false;
+      }
+    }
+    if(flag) {
+      return 'Ordenador';
+    } else {
+      return 'Movil';
+    }
+  }
+  initEvaluations() {
+    const serviceName = END_POINTS.base_back.quiz + '/examStudents';
+    const params = {
+      pending_id: this.pending_id || '',
+      exam_id: this.exam_id || '',
+      persons_student_id:this.pending_id || '',
+      codigo_student: this.userService?.user?.person?.codigo || '',
+      ip_student: this.ip,
+      device: this.verifyDevice(),
+    }
+    console.log(params , params.pending_id , params.exam_id , params.persons_student_id , params.codigo_student, params.ip_student, params.device)
+      if (params && params.pending_id && params.exam_id && params.persons_student_id && params.codigo_student && params.ip_student && params.device) {
+            this.loading = true;
+            this.service.addNameData$(serviceName, params).subscribe(res => {
+              if (res.success) {
+                this.getQuestions()
+              }
+            }, () => {this.loading= false;}, () => {this.loading = false;});
+      }
+
   }
   get questionsNoResponse():any {
     if (this.questions.length > 0) {
