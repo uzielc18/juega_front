@@ -53,6 +53,10 @@
               <span>Calificación</span>
             </div>
           </div>
+          <div class="comentario-style" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.comentario_docente">
+          <span style="font-size: 12px"><small class="label">Comentario del docente: </small>
+            <small class="label"> {{pending?.student_pending?.comentario_docente}}</small></span>
+          </div>
         </div>
         <div class="d-flex flex-wrap">
           <div>

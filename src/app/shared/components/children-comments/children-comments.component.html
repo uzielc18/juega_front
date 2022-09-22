@@ -34,7 +34,7 @@
 
           </div>
           <div  class="comment-content" style="text-align: justify; padding-top: 5px;">
-            <p style="font-size: 12px; text-align: justify;">{{ item?.respuesta }} <br>
+            <p style="font-size: 12px; text-align: justify; white-space: pre-line">{{ item?.respuesta }} <br>
               <span *ngIf="viewRespond && valiNota && !validFecha" style="color: brown; font-size: 11px; font-weight: bold; cursor: pointer;"
                 nbTooltip="Responder comentario" nbTooltipPlacement="top" nbTooltipStatus="primary"
                 (click)="responder(item)">Responder</span>

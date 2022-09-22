@@ -119,7 +119,7 @@
 
             </nb-card-body>
             <nb-card-footer class="text-center">
-              <div *ngIf="pending?.exam?.supervisado === null">
+              <div *ngIf="pending?.exam?.supervisado === '0'">
                 <div
                   *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && pending?.validaciones?.bloqueo === 0 && pending?.student_pending?.realizo !== '1'">
               <span *ngIf="!pending?.student_pending?.exam_estudent && ValidateDateI === true" class="text-center" style="color: var(--color-danger-500); font-size: 11px;padding: 0px;"><strong class="text-center">¿Estás seguro de iniciar el examen?</strong><br>

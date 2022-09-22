@@ -115,7 +115,8 @@ export class AnswersQuestionsComponent implements OnInit {
       inquirie_id: this.asnwerQuestions.id,
       respuesta: this.respuesta.value,
       inquirie_answer_id: item.id,
-      person_id: this.userService.user.person.id
+      person_id: this.userService.user.person.id,
+      userid: this.userService?.user?.id || '',
     };
     this.generalService.addNameData$(serviceName, data).subscribe(
       (res: any) => {
@@ -139,6 +140,7 @@ export class AnswersQuestionsComponent implements OnInit {
       per_page: 10,
       page: this.pagination.page,
       paginate: true
+
     };
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
@@ -204,6 +206,7 @@ export class AnswersQuestionsComponent implements OnInit {
         if (res.success) {
           this.formHeader.controls['comentario'].setValue('');
           this.answers.unshift(res.data)
+          console.log(res)
         }
       },
       () => {
@@ -242,7 +245,7 @@ export class AnswersQuestionsComponent implements OnInit {
       }
     });
   }
-  deleteComment(item: any){
+  deleteComment(item: any, index: any) {
     const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
     if (item.id) {
       Swal.fire({
@@ -263,8 +266,12 @@ export class AnswersQuestionsComponent implements OnInit {
           this.loading = true;
           this.generalService.deleteNameId$(serviceName, item.id).subscribe(r => {
             if (r.success) {
-              this.getAnswers('');
 
+              if(item.inquirie_answer_id === 0){
+                this.answers.splice(index, 1);
+              }else{
+                //this.answers[index].child_responses[index].child_responses.splice(index, 1)
+              }
             }
           },() => {this.loading = false}, () => {this.loading = false});
         }

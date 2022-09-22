@@ -92,7 +92,7 @@
     <nb-list>
       <nb-list-item *ngFor="let el of arrayEl; let i = index" class="d-flex align-items-center justify-content-between">
         <div>
-          <h5 class="sesion-title">{{ sesion?.modo === 'ordenado' ? el.orden : (i +1) }}. <nb-icon [icon]="el.icon"></nb-icon> {{ el.titulo }} - <nb-icon icon="eye-off-outline" *ngIf="el.visibilidad === 0 && rolSemestre?.rol?.name === 'Admin'"></nb-icon><small class="label" style="font-size: 10px" *ngIf="el.visibilidad === 0 && rolSemestre?.rol?.name === 'Admin'">(Oculto para el estudiante)</small></h5>
+          <h5 class="sesion-title">{{ sesion?.modo === 'ordenado' ? el.orden : (i +1) }}. <nb-icon [icon]="el.icon"></nb-icon> {{ el.titulo }} - <small class="label" style="font-size: 10px" *ngIf="el.visibilidad === '0' && rolSemestre?.rol?.name !== 'Estudiante'">(Oculto para el estudiante)</small><nb-icon icon="eye-off-outline" *ngIf="el.visibilidad === '0' && rolSemestre?.rol?.name !== 'Estudiante'"></nb-icon></h5>
           <p class="label sesion-description">{{el.fecha_inicio | date: 'MMMM d, y, h:mm:ss a' | titlecase}} / {{el.fecha_fin | date: 'MMMM d, y, h:mm:ss a' | titlecase}}</p>
           <p class="sesion-description">
             {{ el.descripcion }}
@@ -156,7 +156,7 @@
                 <nb-icon icon="copy"></nb-icon>
               </button>
               <button
-                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name) && ((el.total_entregados === 0 && el.tipo === 'EVALUACION') || el.tipo !== 'EVALUACION')"
+                *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)"
                 nbButton
                 status="info"
                 size="tiny"
