@@ -126,10 +126,26 @@ export class ForusComponent implements OnInit {
       type_element_id: this.valueMenu.id,
     })
   }
+  get validarFechaGracia(){
+    const form = this.formHeader.value;
+    let v: boolean = false
+    const fechaFin = new Date(form.fecha_fin).getTime()
+    const fechaGracia = new Date(form.fecha_gracia).getTime()
+    if(fechaFin > fechaGracia){
+      return v = true
+    }else{
+      return false
+    }
+  }
   get validCampos(): any {
     const form = this.formHeader.value;
     const validAut = (form.autocalificable &&  !form.nota) ? true : false;
-
+    let v: boolean = false
+    const fechaFin = new Date(form.fecha_fin).getTime()
+    const fechaGracia = new Date(form.fecha_gracia).getTime()
+    if(fechaFin > fechaGracia){
+      v = true
+    }
     if (!form.titulo ||
        !form.descripcion ||
        !form.pregunta ||
@@ -137,7 +153,8 @@ export class ForusComponent implements OnInit {
        !form.fecha_fin ||
        !form.hora_inicio ||
        !form.hora_fin ||
-       validAut
+       validAut ||
+        v
        ) {
       return true;
     } else {

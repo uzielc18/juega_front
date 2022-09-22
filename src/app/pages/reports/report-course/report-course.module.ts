@@ -23,6 +23,10 @@ const NG_MODULES: any = [
 ];
 const NGB_MODULES: any = [
   NgbModule,
+  NbTagModule,
+  FilterModule,
+  DirectiveModule,
+  NgxPrintModule
 ];
 const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,
@@ -53,10 +57,6 @@ const PIPES: any = [
         ...NGX_MODULES,
         ...MODULES,
         ...PIPES,
-        NbTagModule,
-        FilterModule,
-        DirectiveModule,
-        NgxPrintModule
     ],
   declarations: [...COMPONENTS],
   entryComponents: [...MODALS],

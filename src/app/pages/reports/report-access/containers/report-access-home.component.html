@@ -1,0 +1,145 @@
+<nb-card class="m-0 h-100 border-0" style="border-radius: 15px;" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="folder-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">REPORTE ACCESOS</strong>
+    </div>
+    <hr>
+    <form [formGroup]="formHeader">
+      <div class="row">
+        <!--<div class="col-lg-3">
+          <label class="label">Buscar cuenta</label>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar cuenta por correo" >
+        </div>-->
+        <div class="col-md-4 mb-2 mb-md-0">
+          <label class="label">Filial</label>
+          <nb-select placeholder="Filial" size="small" status="primary" fullWidth formControlName="sede">
+            <nb-option *ngFor="let sede of sedes" [value]="sede" (click)="selectedSede(sede)"
+            >{{ sede?.nombre }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-4 mb-2 mb-md-0">
+          <label class="label">Nivel enseñanza</label>
+          <nb-select
+            placeholder="Nivel enseñanza"
+            size="small"
+            status="primary"
+            fullWidth
+            formControlName="nivel_ensenanza"
+          >
+            <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel" (click)="selectedNivel(nivel)"
+            >{{ nivel?.nombre }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-4 mb-2 mb-md-0">
+          <label class="label">Facultades/Unidades</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="facultad">
+            <nb-option *ngFor="let fac of facultades" [value]="fac" (click)="selectedFacultad(fac)"
+            >{{ fac?.nombre }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-4 mb-2 mb-md-0">
+          <label class="label">Programa estudio</label>
+          <input
+            nbInput
+            type="text"
+            status="primary"
+            fieldSize="small"
+            fullWidth
+            formControlName="programa_estudio"
+            placeholder="Selecciona"
+            [nbAutocomplete]="auto" />
+          <nb-autocomplete #auto size="small">
+            <nb-option *ngFor="let prog of programa_estudios_filter$ | async" [value]="prog.name_programa_estudio" (click)="selectedProgramaEstudio(prog)" (keyup.enter)="selectedProgramaEstudiok(prog)">
+              {{ prog?.name_programa_estudio }}
+            </nb-option>
+          </nb-autocomplete>
+        </div>
+        <div class="col-md-4 mb-2 mb-md-0">
+          <label class="label">Ciclo</label>
+          <nb-select fullWidth size="small" formControlName="ciclo">
+            <nb-option value="">Todos</nb-option>
+            <nb-option *ngFor="let item of ciclos" [value]="item?.ciclo">{{item.ciclo}}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-4 mb-2 mb-md-0 ms-auto">
+          <div class="row">
+            <div class="col-sm-6 mb-2 mb-md-0"></div>
+            <div class="col-sm-6 mb-2 mb-md-0">
+              <label class="label" style="visibility: hidden;">Filtrar</label><br>
+              <button nbButton fullWidth size="small" status="warning"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="d-flex justify-content-end align-items-center" style="margin-bottom: 5px">
+      <button style="margin-right: 4px" nbButton size="tiny">csv</button>
+      <button style="margin-right: 4px" nbButton size="tiny">excel</button>
+      <!--<button style="margin-right: 4px" nbButton size="tiny">pdf</button>-->
+      <button nbButton size="tiny"
+              printSectionId="print-report-access"
+              [useExistingCss]="true"
+              ngxPrint>print</button>
+    </div>
+    <div class="table-responsive" id="print-report-access">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px;">
+          <th style="width: 50px">Codigo</th>
+          <th>Nombres</th>
+          <th class="text-center">Pendientes</th>
+          <th class="text-center">Entregados</th>
+          <th class="text-center">Vencidos</th>
+          <th class="text-center">Estado</th>
+          <th class="text-center">Ultimo acceso</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="font-size: 12px; vertical-align: middle;">
+          <td>123213</td>
+          <td style="font-weight: bold">Ever Saul Hilasaca Apaza</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">12</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">1</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">2</td>
+          <td class="text-center">
+            <nb-icon style="width: 27px; height: 27px;" icon="arrow-circle-up" status="success"></nb-icon>
+            <nb-icon style="width: 27px; height: 27px;" icon="arrow-circle-down" status="danger"></nb-icon>
+            <nb-icon style="width: 27px; height: 27px;" icon="arrow-circle-right" status="warning"></nb-icon>
+          </td>
+          <td class="text-center"> Ingreso hace 10 minutos</td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+   <!-- <div class="text-center" *ngIf="data.length === 0 && loading === false && success === true">
+      <h4 style="color: var(--color-primary-700)">Ups!!</h4>
+      <h6>No se encontraron resultados</h6>
+      <img src="assets/busqueda.png" alt="busqueda-upeu" width="300px">
+    </div>-->
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="d-flex justify-content-between align-items-center p-2">
+      <div style="color: brown; font-weight: bold;">Total: {{pagination.sizeListData}}</div>
+      <ngb-pagination [collectionSize]="pagination?.sizeListData" [(page)]="pagination.page" [maxSize]="20"
+                      [disabled]="pagination?.isDisabledPage" [pageSize]="pagination?.sizePage"
+                      class="d-flex justify-content-center" size="sm" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+      </ngb-pagination>
+      <div>
+        <nb-form-field>
+          <nb-icon nbPrefix icon="list-outline"></nb-icon>
+          <nb-select placeholder="Paginación" status="success" size="tiny" fullWidth
+                     [(selected)]="selectedItem" (selectedChange)="sizeTable($event)">
+            <nb-option *ngFor="let per of pagesCount" [value]="per">Paginar de {{per}} en {{per}}</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
+    </div>
+  </nb-card-footer>
+</nb-card>

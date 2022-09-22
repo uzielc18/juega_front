@@ -3,7 +3,7 @@ import {END_POINTS} from "../../../../providers/utils";
 import {GeneralService} from "../../../../providers";
 import {AppService} from "../../../../core";
 import {ActivatedRoute} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {EmitEventsService} from "../../../../shared/services/emit-events.service";
 
 @Component({
@@ -93,6 +93,9 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
         })
     }
     )
+  }
+  emitEventToChild($event: any) {
+    this.getUser()
   }
 
 }
