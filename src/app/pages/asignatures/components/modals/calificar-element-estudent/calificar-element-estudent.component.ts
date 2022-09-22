@@ -107,6 +107,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
     }
   }
   selectedStudent(item: any) {
+    console.log(this.listAlumns)
     console.log(item)
     this.notesState = true;
     this.formDate.controls['person_student_id'].setValue('');
@@ -238,6 +239,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
       this.generalServi.nameIdParams$(serviceName, this.element.id, params).subscribe(
         (res: any) => {
           this.listAlumns = (res && res.data) || [];
+          console.log(res)
           // if (this.listAlumns.length>0) {
           //   this.listAlumns.map((re:any) => {
           //     if (re.persons_student_id === 909) {
