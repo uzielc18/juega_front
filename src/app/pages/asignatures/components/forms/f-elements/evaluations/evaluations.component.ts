@@ -111,13 +111,20 @@ export class EvaluationsComponent implements OnInit {
   }
   get validCampos(): any {
     const form = this.formHeader.value;
+    let v: boolean = false
+    const fechaFin = new Date(form.fecha_fin).getTime()
+    const fechaGracia = new Date(form.fecha_gracia).getTime()
+    if(fechaFin > fechaGracia){
+      v = true
+    }
     if (
        !form.titulo ||
        !form.descripcion ||
        !form.fecha_inicio ||
        !form.fecha_fin ||
        !form.hora_inicio ||
-       !form.hora_fin) {
+       !form.hora_fin||
+        v === true) {
       return true;
     } else {
       return false;

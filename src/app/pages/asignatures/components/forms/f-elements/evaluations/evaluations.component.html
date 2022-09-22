@@ -29,7 +29,7 @@
   </div>
   <div style="padding-top: 4px;">
     <label class="label">Fecha y hora de término</label>
-    <fieldset [disabled]="!formHeader.value.fecha_inicio">
+    <fieldset [disabled]="!formHeader.value.fecha_inicio ">
     <div class="d-flex">
       <nb-form-field  class="date-input">
       <input nbInput placeholder="Fecha Termino" fullWidth [nbDatepicker]="fechaTermino" formControlName="fecha_fin"/>

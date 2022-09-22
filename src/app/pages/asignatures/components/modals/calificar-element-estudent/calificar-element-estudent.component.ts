@@ -124,6 +124,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
     this.getPendings(item.persons_student_id);
     this.formDate.controls['person_student_id'].setValue(item.person_student_id);
     this.formHeader.controls['nota'].setValue(item.nota || 0);
+    this.formHeader.controls['comentario'].setValue(item.comentario_docente || '');
     this.datosStudent = item;
     if (this.element?.type_element?.codigo === 'FOR') {
       // SI ES FORO
