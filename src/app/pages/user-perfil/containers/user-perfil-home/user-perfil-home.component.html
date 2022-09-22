@@ -31,7 +31,7 @@
                 <app-tabs-reporte-notas [profile] = 'profile' [notas]="notas"></app-tabs-reporte-notas>
               </nb-tab>
               <nb-tab tabTitle="Editar perfil"  *ngIf="profile?.user?.person?.id === me ">
-                <app-tabs-edit-perfil [profile_id] = 'profile'></app-tabs-edit-perfil>
+                <app-tabs-edit-perfil [profile_id] = 'profile' (saveInfoUser)="emitEventToChild($event)"></app-tabs-edit-perfil>
               </nb-tab>
             </nb-tabset>
           </nb-card-body>

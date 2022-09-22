@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {END_POINTS} from "../../../../../providers/utils";
 import {GeneralService} from "../../../../../providers";
@@ -24,6 +24,7 @@ export class TabsEditPerfilComponent implements OnInit {
   idCollapseTop: number = 0;
   idCollapseLeft: number = 0;
   @Input() profile_id: any;
+  @Output() saveInfoUser: EventEmitter<any> = new EventEmitter();
   generoArray: any[] = ['Masculino', 'Femenino'];
   estadoCivilArray: any[] = ['Casado(a)', 'Soltero(a)', 'Divorciado(a)', 'Viudo(a)', 'Separado(a)', 'Conviviente', 'No precisa'];
   religionArray: any[] = [
@@ -100,11 +101,9 @@ export class TabsEditPerfilComponent implements OnInit {
 
       this.showProfileInfo();
       this.setCollapse();
-      this.getNews();
     if(this.profile_id?.user?.person?.id === this.me) {
       this.fieldReactive();
-      this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
-
+      this.setValueUserInfo()
     }
       this.nombreSubscription = this.emitEventsService.returns().subscribe(value => {
         // para emitir evento desde la cabecera
@@ -112,7 +111,7 @@ export class TabsEditPerfilComponent implements OnInit {
           this.theRolSemestre = value;
           this.valida = true;
           // setTimeout(() => {
-          this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
+          //this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
           // }, 1000);
         } else {
           this.valida = false;
@@ -186,25 +185,6 @@ export class TabsEditPerfilComponent implements OnInit {
       // }
     });
   }
-
-  get isCollapseTop() {
-    const sesion = sessionStorage.getItem('collapseTop');
-    if (sesion) {
-      return sesion;
-    } else {
-      return '1';
-    }
-  }
-
-  get isCollapseLeft() {
-    const sesion = sessionStorage.getItem('collapseLeft');
-    if (sesion) {
-      return sesion;
-    } else {
-      return '1';
-    }
-  }
-
   setCollapse() {
     const config = this.userService.user.person.configurationperson;
     this.collapseLeft = config.find((x: any) => x.nombre === 'PERFIL-COLLAPSE').valor === '1' ? true : false;
@@ -212,32 +192,6 @@ export class TabsEditPerfilComponent implements OnInit {
     this.idCollapseTop = config.find((x: any) => x.nombre === 'NOTICIAS-COLLAPSE').id;
     this.idCollapseLeft = config.find((x: any) => x.nombre === 'PERFIL-COLLAPSE').id;
   }
-
-  tweakCollapse(direction: any) {
-    if (direction === 'top') {
-      this.collapseTop = !this.collapseTop;
-      sessionStorage.setItem('collapseTop', this.collapseTop ? '1' : '0');
-      this.saveCollapse(this.collapseTop, this.idCollapseTop);
-    } else if (direction === 'left') {
-      this.collapseLeft = !this.collapseLeft;
-      sessionStorage.setItem('collapseLeft', this.collapseLeft ? '1' : '0');
-      this.saveCollapse(this.collapseLeft, this.idCollapseLeft);
-    }
-  }
-
-  saveCollapse(collapse: any, id: any) {
-    const serviceName = END_POINTS.base_back.config + '/configurationperson';
-    const params = {
-      valor: collapse ? '1' : '0',
-    };
-    this.generalService.updateNameIdData$(serviceName, id, params).subscribe((res: any) => {
-      if (res.success) {
-        this.collapseTop = this.isCollapseTop === '1' ? true : false;
-        this.collapseLeft = this.isCollapseLeft === '1' ? true : false;
-      }
-    });
-  }
-
   fileResult($event: any) {
     this.formHeader.controls['foto'].setValue('');
     this.formHeader.controls['profile_photo_path'].setValue('');
@@ -248,7 +202,26 @@ export class TabsEditPerfilComponent implements OnInit {
       this.formHeader.controls['base64_url'].setValue($event.base64);
     }
   }
-
+  setValueUserInfo(){
+    this.userInfo = this.userService;
+    this.formHeader.patchValue({
+      codigo: this.profile_id.person.codigo,
+      nombre: this.profile_id.person.nombres,
+      apellido_paterno: this.profile_id.person.apellido_paterno,
+      apellido_materno: this.profile_id.person.apellido_materno,
+      dni: this.profile_id.person.dni,
+      correo: this.profile_id.user.email,
+      genero: this.profile_id.person.genero || '',
+      nacionalidad: this.profile_id.person.nacionalidad || '',
+      ubigeo: this.profile_id.person.ubigeo || '',
+      estado_civil: this.profile_id.person.estado_civil || '',
+      religion: this.profile_id.person.religion || '',
+      fecha_nacimiento: new Date(this.profile_id.person.fecha_nacimiento) || new Date(),
+      presentacion: this.profile_id.person.resumen || '',
+      foto: this.profile_id.person.foto || '',
+      profile_photo_path: this.profile_id.user.profile_photo_path || '',
+    })
+  }
   getUserInfo(view: any) {
     this.userInfo = this.userService;
     const serviceName = END_POINTS.base_back.user + '/perfil';
@@ -292,17 +265,6 @@ export class TabsEditPerfilComponent implements OnInit {
       }
     );
   }
-
-  getNews() {
-    const serviceName = END_POINTS.base_back.user + '/news';
-    this.generalService.nameId$(serviceName, this.userService.user.person.id).subscribe((res: any) => {
-      if (res.success) {
-        this.newsList = res.data || [];
-        // console.log(this.newsList);
-      }
-    });
-  }
-
   saveInfo() {
     const serviceName = END_POINTS.base_back.people;
     const person_id = this.userInfo._user.id;
@@ -331,7 +293,7 @@ export class TabsEditPerfilComponent implements OnInit {
           this.formHeader.controls['foto'].setValue('');
           this.formHeader.controls['profile_photo_path'].setValue('');
           this.formHeader.controls['base64_url'].setValue('');
-          this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
+          this.saveInfoUser.emit(res)
         }
       },
       () => {

@@ -9,6 +9,10 @@ const routes: Routes = [{
     {
       path:'report-course',
       loadChildren: () => import('src/app/pages/reports/report-course/report-course.module').then(m => m.ReportCourseModule)
+    },
+    {
+      path:'report-access',
+      loadChildren: () => import('src/app/pages/reports/report-access/report-access.module').then(m => m.ReportAccessModule)
     }
   ]
 }];
