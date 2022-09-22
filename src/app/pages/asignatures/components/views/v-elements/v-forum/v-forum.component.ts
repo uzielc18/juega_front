@@ -59,7 +59,7 @@ export class VForumComponent implements OnInit, OnChanges {
   ) {
     setInterval(() => {
       if (this.pending) {
-        this.countdown(this.pending?.fecha_fin);
+        this.countdown(this.pending?.student_pending?.fecha_fin);
       }
     }, 1000);
   }
