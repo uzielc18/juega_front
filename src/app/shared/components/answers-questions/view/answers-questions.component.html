@@ -48,21 +48,44 @@
 
               </div>
               <div  class="comment-content" style="text-align: justify; padding-top: 5px;">
-                <p style="font-size: 12px; text-align: justify;">{{ item?.respuesta }} <br>
-                  <span style="color: brown; font-size: 11px; font-weight: bold; cursor: pointer; margin-right: 13px"
-                        nbTooltip="Responder comentario" nbTooltipPlacement="top" nbTooltipStatus="primary"
-                        (click)="responderComentario(item)">Responder</span>
+                <p style="font-size: 12px; text-align: justify;">{{ item?.respuesta }}
                   <!--<span *ngIf="item.child_responses.length > 0" style="color: var(--color-primary-500); font-size: 11px; font-weight: bold; cursor: pointer;"
                         (click)="verMasRespuestas(item)">Ver mas {{item.child_responses.length === 1? ' respuesta': ' respuestas'}} ({{item.child_responses.length}})</span>-->
                 </p>
+                <div class="d-flex align-items-center" style="margin-bottom:5px ;">
+                  <span style="color: brown; font-size: 11px; font-weight: bold; cursor: pointer; margin-right: 13px"
+                        nbTooltip="Responder comentario" nbTooltipPlacement="top" nbTooltipStatus="primary"
+                        (click)="responderComentario(item, i)">Responder</span>
+                  <app-react-comment [item] = "item"
+                                     (loadingsForm)="loadingsForm($event)"
+                                     [userInfo]="me"
+                                     [type_rating] = "1"
+                                     [color]= "'basic'"
+                                     [size]="'tiny'" ></app-react-comment>
+                </div>
                 <div *ngIf="item?.checked">
                   <hr>
                   <div class="d-flex flex-column">
                     <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="small"
-                              [formControl]="respuesta"  style="font-size: 16px;" rows="3"></textarea>
-                    <button nbButton status="success" size="tiny" class="ms-auto my-2"
-                            (click)="answerQuestion(item, i)" [disabled]="respuesta.invalid">Comentar</button>
+                              [(ngModel)]="item.enviar_comentario"  style="font-size: 16px;" rows="3"></textarea>
+                    <div class="ms-auto my-2" style="text-align: center">
+                      <nb-icon nbTooltip="Insertar emoji" nbTooltipPlacement="top" nbTooltipStatus="basic" style="cursor:pointer;" icon="smiling-face" nbPopoverPlacement="bottom"
+                               [nbPopover]="emojiRef"></nb-icon>
+
+                      <button nbButton status="success" size="tiny" class=""
+                              (click)="answerQuestion(item, i)" [disabled]="!item.enviar_comentario">Comentar</button>
+                    </div>
                   </div>
+                  <ng-template #emojiRef>
+                    <emoji-mart
+                      title="Pick your emoji…"
+                      set="google"
+                      size="16"
+                      emoji="point_up"
+                      (emojiClick)="addEmoji($event, item)"
+                    ></emoji-mart>
+                  </ng-template>
+
                 </div>
               </div>
             </div>

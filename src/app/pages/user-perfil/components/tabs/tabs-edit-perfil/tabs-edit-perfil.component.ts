@@ -100,7 +100,6 @@ export class TabsEditPerfilComponent implements OnInit {
       });
 
       this.showProfileInfo();
-      this.setCollapse();
     if(this.profile_id?.user?.person?.id === this.me) {
       this.fieldReactive();
       this.setValueUserInfo()
@@ -185,13 +184,7 @@ export class TabsEditPerfilComponent implements OnInit {
       // }
     });
   }
-  setCollapse() {
-    const config = this.userService.user.person.configurationperson;
-    this.collapseLeft = config.find((x: any) => x.nombre === 'PERFIL-COLLAPSE').valor === '1' ? true : false;
-    this.collapseTop = config.find((x: any) => x.nombre === 'NOTICIAS-COLLAPSE').valor === '1' ? true : false;
-    this.idCollapseTop = config.find((x: any) => x.nombre === 'NOTICIAS-COLLAPSE').id;
-    this.idCollapseLeft = config.find((x: any) => x.nombre === 'PERFIL-COLLAPSE').id;
-  }
+
   fileResult($event: any) {
     this.formHeader.controls['foto'].setValue('');
     this.formHeader.controls['profile_photo_path'].setValue('');

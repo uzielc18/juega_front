@@ -17,6 +17,7 @@ import {ImageRecorteModule} from "../../shared/components/recortes/image-recorte
 import { TabsMuroComponent } from './components/tabs/tabs-muro/tabs-muro.component';
 import {VideoPlayerModule} from "../../shared/components/video-player/video-player.module";
 import {AnswersQuestionsModule} from "../../shared/components/answers-questions/view/answers-questions.module";
+import {ReactCommentModule} from "../../shared/components/react-comments/view/react-comment.module";
 const COMPONENTS: any[] = [
 
 ]
@@ -41,7 +42,9 @@ const COMPONENTS: any[] = [
     NgxPrintModule,
     ImageRecorteModule,
     VideoPlayerModule,
-    AnswersQuestionsModule
+    AnswersQuestionsModule,
+    ReactCommentModule,
+
   ]
 })
 export class UserPerfilModule { }

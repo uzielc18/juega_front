@@ -20,6 +20,7 @@ export class AnswersQuestionsComponent implements OnInit {
   @Input() emmitComment: any;
   @Input() visibilidad: any;
   @Input() code: any;
+  isEmojiPickerVisible: boolean = false;
   formHeader: any = FormGroup;
   pagination: any = {
     page: 1,
@@ -28,6 +29,7 @@ export class AnswersQuestionsComponent implements OnInit {
     sizeListData: 0,
     isDisabledPage: false,
   };
+  public textArea: string = '';
   next: any;
   list: any = [];
   respuesta: any = new FormControl('', Validators.required)
@@ -72,6 +74,11 @@ export class AnswersQuestionsComponent implements OnInit {
     this.loading = true
     this.getAnswers('');
   }
+  addEmoji(event: any, item: any) {
+      item.enviar_comentario = `${item.enviar_comentario}${event.emoji.native}`;
+
+
+  }
   countdownAnswers(answer: any) {
     if (answer && answer.created_at) {
       const countDate = new Date(answer.created_at).getTime();
@@ -113,7 +120,7 @@ export class AnswersQuestionsComponent implements OnInit {
     const serviceName = END_POINTS.base_back.default + 'inquirieAnswers';
     const data = {
       inquirie_id: this.asnwerQuestions.id,
-      respuesta: this.respuesta.value,
+      respuesta: item.enviar_comentario,
       inquirie_answer_id: item.id,
       person_id: this.userService.user.person.id,
       userid: this.userService?.user?.id || '',
@@ -121,7 +128,7 @@ export class AnswersQuestionsComponent implements OnInit {
     this.generalService.addNameData$(serviceName, data).subscribe(
       (res: any) => {
         if (res.success) {
-          this.respuesta.setValue('')
+            item.enviar_comentario = '';
             item.checked = false
             item.child_responses.unshift(res.data)
             console.log(res)
@@ -214,7 +221,7 @@ export class AnswersQuestionsComponent implements OnInit {
       },() => {this.loading = false}
     );
   }
-  responderComentario(comentario:any) {
+  responderComentario(comentario:any, index: any) {
     if (comentario.checked) {
       comentario.checked = false;
     } else {
@@ -277,6 +284,11 @@ export class AnswersQuestionsComponent implements OnInit {
         }
       });
     }
+  }
+  loadingsForm($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
   }
   actualizarComentarios(){
     this.loading = true;

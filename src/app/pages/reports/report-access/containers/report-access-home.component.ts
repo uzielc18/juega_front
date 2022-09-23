@@ -158,9 +158,11 @@ export class ReportAccessHomeComponent implements OnInit {
   loadPage($event: any): any {
     this.loading = true;
     this.pagination.page = $event;
+    this.filterData()
   }
   sizeTable($event: any): any {
     this.pagination.per_page = $event;
+    this.filterData()
   }
   selectedSede(sede: any) {
     this.formHeader.controls['sede'].setValue(sede);
@@ -201,5 +203,51 @@ export class ReportAccessHomeComponent implements OnInit {
     console.log(prog)
     this.formHeader.controls['programa_estudio'].setValue(prog.name_programa_estudio);
     this.formHeader.controls['id_programa_estudio'].setValue(prog.id)
+  }
+  filterData(){
+    const serviceName = END_POINTS.base_back.reportes + '/estudiantes';
+    const sede = this.formHeader.get('sede').value.id || 0;
+    const nivel_ensenanza = this.formHeader.get('nivel_ensenanza').value.id || 0;
+    const sede_area = this.formHeader.get('facultad').value.id || 0;
+    const params = {
+      semester_id: this.rolSemestre.semestre.id,
+      programa_estudio_id: this.formHeader.get('id_programa_estudio').value || 0,
+      docente : this.formHeader.get('id_docente').value || 0,
+      ciclo: this.formHeader.value.ciclo || 0,
+      per_page: this.pagination.per_page,
+      page: this.pagination.page,
+      paginate: 'S',
+    }
+    this.loading = true;
+    this.generalService.nameIdAndIdAndIdParams$(serviceName, sede, nivel_ensenanza, sede_area, params).subscribe(res => {
+      this.data = res.data.data;
+      this.pagination.sizeListData = res.data && res.data.total || 0;
+      this.pagination.sizePage = res.data && res.data.per_page || 0;
+      if (this.pagination.sizeListData < this.data.length) {
+        this.pagination.isDisabledPage = true;
+      } else {
+        this.pagination.isDisabledPage = false;
+      }
+      this.data.map((m: any) => {
+        let total_suma = (m.pendientes + m.entregados + m.vencidos);
+        let porcentaje_pendientes = Math.round((m.pendientes * 100)/ total_suma);
+        let porcentaje_entregados = Math.round((m.entregados * 100)/ total_suma);
+        let porcentaje_vencidos = Math.round((m.vencidos * 100)/ total_suma);
+        console.log(porcentaje_pendientes, 'pendientes')
+        if(porcentaje_entregados >= porcentaje_pendientes && porcentaje_entregados >= porcentaje_vencidos){
+          m.icon_arrow = 'arrow-circle-up'
+          m.status_icon = 'success'
+        }
+        if(porcentaje_pendientes >= porcentaje_entregados && porcentaje_pendientes >= porcentaje_vencidos){
+          m.icon_arrow = 'arrow-circle-right'
+          m.status_icon = 'warning'
+        }
+        if(porcentaje_vencidos >= porcentaje_entregados && porcentaje_vencidos >= porcentaje_pendientes){
+          m.icon_arrow = 'arrow-circle-down'
+          m.status_icon = 'danger'
+        }
+
+      })
+    }, () => {this.loading = false}, () => {this.loading = false})
   }
 }

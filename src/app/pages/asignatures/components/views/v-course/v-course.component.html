@@ -3,7 +3,7 @@
     <div class="col-xxl-9 p-0">
       <!-- <div class="col-12 col-sm-9 col-md-6 col-lg-3 col-xl-3"> -->
       <div class="row m-0">
-        <div class="col mt-0 p-0" style="height: 350px; overflow: hidden">
+        <div class="col mt-0 p-0" style="height: 200px; overflow: hidden">
           <img src="assets/books.jpg" class="img-fluid" alt="" style="object-fit: cover" />
           <!--<img *ngIf="zoom.cod_category === null && zoom.portada === null" src="assets/books.jpg" class="img-fluid" alt="" style="object-fit: cover" />
           <img *ngIf="zoom.cod_category !== null && zoom.portada === null" src="'assets/{{zoom.cod_category}}.png'" class="img-fluid" alt="" style="object-fit: cover" />
@@ -23,7 +23,7 @@
                 "
                 class="text-white px-2 py-0 mx-3"
               >
-                {{ curso?.programa_estudio?.nombre }}
+                {{ curso?.programa_estudio?.nombre }} {{curso?.persons_teacher?.person?.nombres_completos? '- Docente:': ''}} {{curso?.persons_teacher?.person?.nombres_completos}}
               </small>
             </div>
             <div class="row m-0 px-0 px-md-2 mt-3">
