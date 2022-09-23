@@ -14,6 +14,7 @@ export class TabsMuroComponent implements OnInit {
   reponderComentario: boolean = false
   valid: boolean = false;
   showImput: boolean = false;
+  userInfo: any;
   @Input() profile: any;
   @Input() listInquiries: any
   formHeader: any = FormGroup;
@@ -23,6 +24,7 @@ export class TabsMuroComponent implements OnInit {
               private userService: AppService,) { }
 
   ngOnInit(): void {
+    this.userInfo = this.userService
     this.fieldReactive();
   }
 
@@ -70,37 +72,9 @@ export class TabsMuroComponent implements OnInit {
     }
 
   }
-  verMasRespuestas(item: any){
-    if (!item.vermas){
-      item.vermas = true;
-    }else{
-      item.vermas = false;
-    }
-  }
-  upVoteQuestion(item: any) {
-    const serviceName = END_POINTS.base_back.default + 'ratings';
-    const data = {
-      codigo: 'mas_uno' || '',
-      type_rating_id: 1 || '',
-      valor: 1 || '',
-      tabla: 'inquiries' || '',
-      tabla_id: item.id || '',
-      person_id: this.userService?.user?.person?.id || '',
-    };
-    this.loading = true;
-    this.generalService.addNameData$(serviceName, data).subscribe(
-      (res: any) => {
-        if (res.success) {
-          item.puntos = item.puntos + 1;
-          item.puntos_activo = 0;
-        }
-      },
-      () => {
-        this.loading = false;
-      },
-      () => {
-        this.loading = false;
-      }
-    );
+  loadingsForm($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
   }
 }

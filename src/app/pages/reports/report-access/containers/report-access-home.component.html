@@ -70,7 +70,7 @@
             <div class="col-sm-6 mb-2 mb-md-0"></div>
             <div class="col-sm-6 mb-2 mb-md-0">
               <label class="label" style="visibility: hidden;">Filtrar</label><br>
-              <button nbButton fullWidth size="small" status="warning"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
+              <button nbButton fullWidth size="small" status="warning" (click)="filterData()"><nb-icon icon="funnel"></nb-icon>Filtrar</button>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@
       <table class="table table-sm">
         <thead>
         <tr style="font-size: 12px;">
-          <th style="width: 50px">Codigo</th>
+          <th >Codigo</th>
           <th>Nombres</th>
           <th class="text-center">Pendientes</th>
           <th class="text-center">Entregados</th>
@@ -101,16 +101,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr style="font-size: 12px; vertical-align: middle;">
-          <td>123213</td>
-          <td style="font-weight: bold">Ever Saul Hilasaca Apaza</td>
-          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">12</td>
-          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">1</td>
-          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">2</td>
+        <tr style="font-size: 12px; vertical-align: middle;" *ngFor="let item of data">
+          <td>{{item.codigo}}</td>
+          <td style="font-weight: bold">
+            {{item.student_nombre}} <br>
+            <small class="label">ciclo: {{item.ciclo}}</small><br>
+            <small class="label">grupo: {{item.ciclo}}</small><br>
+          </td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.pendientes}}</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.entregados}}</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.vencidos}}</td>
           <td class="text-center">
-            <nb-icon style="width: 27px; height: 27px;" icon="arrow-circle-up" status="success"></nb-icon>
-            <nb-icon style="width: 27px; height: 27px;" icon="arrow-circle-down" status="danger"></nb-icon>
-            <nb-icon style="width: 27px; height: 27px;" icon="arrow-circle-right" status="warning"></nb-icon>
+            <nb-icon style="width: 27px; height: 27px;" [icon]="item.icon_arrow" [status]="item.status_icon"></nb-icon>
           </td>
           <td class="text-center"> Ingreso hace 10 minutos</td>
 

@@ -165,7 +165,7 @@
         <tr style="font-size: 12px; vertical-align: middle;" *ngFor="let item of data; let i = index">
           <td class="text-center">{{i + 1}}</td>
           <td class="text-center">PR</td>
-          <td ><a [routerLink]="['/pages/asignatures/course', item.id_carga_curso_docente]" style="cursor: pointer">{{item?.course_nombre}}</a></td>
+          <td ><a [routerLink]="['/pages/asignatures/course', item.id_carga_curso_docente]" style="cursor: pointer" target="_blank">{{item?.course_nombre}}</a></td>
           <td>{{item.teacher_nombre}}</td>
           <td class="text-center">{{item.ht}}</td>
           <td class="text-center">{{item.ciclo}}</td>
