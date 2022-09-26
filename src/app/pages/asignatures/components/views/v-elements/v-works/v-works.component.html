@@ -6,7 +6,7 @@
     secondsLeft | i18nPlural:secondsMap }}</span>
   </div>
   <div class="work work-expired" style="margin-left: 20px; margin-right: 20px;"
-       *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && !pending?.student_pending?.realizo">
+       *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && pending?.student_pending?.realizo==='0'">
     <span>
       <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu evaluación: {{ element?.titulo }} acaba de caducar hace {{
       expiredDays |
@@ -21,10 +21,10 @@
       <!-- <nb-icon class="work-expired-close" icon="close-outline"></nb-icon> -->
     </div>
   </div>
-  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf="!pending?.student_pending?.realizo && !pending?.student_pending?.nota">
+  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf="pending?.student_pending?.realizo==='1' && pending?.student_pending?.calificado==='1'">
     <p>Hola {{ userInfo.name }}!,</p><span>Tu evaluación: {{ element?.titulo }} ya fué calificado</span>
   </div>
-  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf="pending?.student_pending?.realizo==='1' && !pending?.student_pending?.nota">
+  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf="pending?.student_pending?.realizo==='1' && pending?.student_pending?.calificado==='0'">
     <p>Felicitaciones {{ userInfo.name }}!,</p><span>Ya entregaste tu Trabajo ({{ element?.titulo }})</span>
   </div>
   <nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">
