@@ -253,6 +253,7 @@ export class CreatedPollComponent implements OnInit {
   }
   newPoll(){
     const serviceName = 'inquiries';
+    const inquiries_id = this.recuperarId
     const forms = this.formHeader2.value;
     const forms2 = this.formHeader.value;
     let filtros = '';
@@ -279,12 +280,21 @@ export class CreatedPollComponent implements OnInit {
       titulo_video: forms2.titulo,
       descripcion_video: forms2.descripcion
     }
-    this.loading = true;
-    this.generalService.addNameData$(serviceName, params).subscribe((res:any) => {
-      if (res.success) {
-        this.back();
-      }
-    }, () => {this.loading = false}, ()=> {this.loading=false});
+    if(this.recuperarId){
+      this.loading = true;
+      this.generalService.updateNameIdData$(serviceName, inquiries_id, params).subscribe((res:any) => {
+        if (res.success) {
+          this.back();
+        }
+      }, () => {this.loading = false}, ()=> {this.loading=false});
+    }else{
+      this.loading = true;
+      this.generalService.addNameData$(serviceName, params).subscribe((res:any) => {
+        if (res.success) {
+          this.back();
+        }
+      }, () => {this.loading = false}, ()=> {this.loading=false});
+    }
   }
   setValue(){
     const serviceName = 'inquiries';

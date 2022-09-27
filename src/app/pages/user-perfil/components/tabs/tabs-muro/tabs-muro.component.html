@@ -36,14 +36,12 @@
       <div class="d-flex justify-content-between align-items-center animations" >
         <div class="d-flex flex-column flex-grow-1">
           <div class="d-flex justify-content-between align-items-center">
-            <p style="font-size: 14px; font-weight: bold;" class="comment-name m-0">{{item?.nombres + ' ' +
-            item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}} <label class="label" style="font-size: 11px;">&nbsp;&nbsp;&nbsp;&nbsp;Fecha {{formatDate(item?.answer.created_at)}}</label> </p>
+            <p style="font-size: 14px; font-weight: bold;" class="comment-name m-0">{{item.answer.persons_nombre}} <label class="label" style="font-size: 11px;">&nbsp;&nbsp;&nbsp;&nbsp;Fecha {{formatDate(item?.answer.created_at)}}</label> </p>
             <!--<div class="d-flex">
               <button style="margin-right: 5px" nbButton status="primary" size="tiny"><nb-icon icon="edit"></nb-icon></button>
               <button nbButton status="danger" size="tiny"><nb-icon icon="trash"></nb-icon></button>
             </div>-->
           </div>
-          <hr style="margin: 0">
           <p style="font-size: 12px; text-align: justify;">{{item.answer.respuesta}}</p>
         </div>
       </div>
