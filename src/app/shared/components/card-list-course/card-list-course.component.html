@@ -105,13 +105,13 @@
               </div>
               <div class="icons-container align-items-center">
                 <span nbTooltip="Participantes" nbTooltipStatus="warning" class="text-center icon">
-                  <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="people-outline"></nb-icon><br><label class="label" style="font-size: 12px;">{{curso?.matriculados}}</label>
+                  <nb-icon class="count_info" icon="people-outline"></nb-icon><label class="count_info">{{curso?.matriculados}}</label>
                 </span>&nbsp;&nbsp;
                 <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning" class="text-center icon">
-                  <nb-icon style="font-size: 14px;" class="label" [icon]="tot?.icono"></nb-icon><br><label class="label" style="font-size: 12px;">{{tot?.total}}</label>
+                  <nb-icon  class="count_info" [icon]="tot?.icono"></nb-icon><label class="count_info">{{tot?.total}}</label>
                   </span>&nbsp;&nbsp;
                 <span nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning" class="text-center icon">
-                <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="globe-outline"></nb-icon><br><label class="label" style="font-size: 12px;">{{curso?.resumen?.total_pendientes}}</label>
+                <nb-icon class="count_info" icon="globe-outline"></nb-icon><label class="count_info">{{curso?.resumen?.total_pendientes}}</label>
                 </span>
               </div>
             </div>
@@ -199,13 +199,13 @@
           </div>
           <div class="d-flex align-items-center justify-content-between" style="padding-left: 9px; padding-right: 9px;">
               <span nbTooltip="Participantes" nbTooltipStatus="warning" class="text-center">
-                <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="people-outline"></nb-icon><br><label class="label" style="font-size: 12px;">{{curso?.matriculados}}</label>
+                <nb-icon  class="count_info" icon="people-outline"></nb-icon><label class="count_info">{{curso?.matriculados}}</label>
               </span>&nbsp;&nbsp;
             <span *ngFor="let tot of curso?.resumen?.totales" [nbTooltip]="tot?.nombre" nbTooltipStatus="warning" class="text-center">
-                <nb-icon style="font-size: 14px;" class="label" [icon]="tot?.icono"></nb-icon><br><label class="label" style="font-size: 12px;">{{tot?.total}}</label>
+                <nb-icon class="count_info" [icon]="tot?.icono"></nb-icon><label class="count_info">{{tot?.total}}</label>
                 </span>&nbsp;&nbsp;
             <span nbTooltip="Total realizado / Total pendíentes" nbTooltipStatus="warning" class="text-center">
-              <nb-icon style="font-size: 14px; cursor: pointer;" class="label" icon="globe-outline"></nb-icon><br><label class="label" style="font-size: 12px;">{{curso?.resumen?.total_pendientes}}</label>
+              <nb-icon class="count_info" icon="globe-outline"></nb-icon><label class="count_info">{{curso?.resumen?.total_pendientes}}</label>
               </span>
           </div>
         </nb-card-footer>
