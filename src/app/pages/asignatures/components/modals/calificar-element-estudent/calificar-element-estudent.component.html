@@ -124,7 +124,7 @@
               ></app-v-exam-views>
             </div>
             <!-- {{formDate.value.fechaHoraValid}} - {{timeActual}}  formDate.value.codigo === 'SE' && -->
-          <div *ngIf="(formDate.value.codigo === 'SE' || formDate.value.codigo === 'ALL' ) &&pending && pending?.student_pending && timeActual && (formDate.value.fechaHoraValid < timeActual) && (pending.tipo === 'EVALUACION'? pending?.student_pending?.exam_estudent === null: '')">
+          <div *ngIf="(formDate.value.codigo === 'SE' || formDate.value.codigo === 'ALL' ) && pending && pending?.student_pending && timeActual && (formDate.value.fechaHoraValid < timeActual) && (pending.tipo === 'EVALUACION'? pending?.student_pending?.exam_estudent === null:  pending?.student_pending?.realizo === '0')">
 
             <nb-card status="primary">
               <nb-card-header>

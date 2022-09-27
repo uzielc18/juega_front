@@ -35,7 +35,7 @@ export class NavegacionComponent implements OnInit {
               private userService: AppService,
               private activatedRoute: ActivatedRoute,
               private generalService: GeneralService) {
-    this.breakpointObserver.observe(['(max-width: 1399px)']).subscribe((result: BreakpointState) => {
+    this.breakpointObserver.observe(['(max-width: 992px)']).subscribe((result: BreakpointState) => {
       if (result.matches) {
         this.showText = true;
       } else {

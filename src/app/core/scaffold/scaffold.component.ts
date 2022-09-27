@@ -6,7 +6,7 @@ import {
   NbMenuService,
   NbPopoverDirective,
   NbSidebarService,
-  NbThemeService,
+  NbThemeService, NbToastrService,
 } from '@nebular/theme';
 import {map, takeUntil} from 'rxjs/operators';
 import {Subject, Subscription} from 'rxjs';
@@ -34,6 +34,8 @@ import {SseService} from "../../providers/sse.service";
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
+  relojTime: any;
+  timezone: any
   MENU_ITEMS: NbMenuItem[] = [];
   statusSearch: boolean = false;
   minimum = false;
@@ -132,12 +134,14 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private spinnerService: SpinnerService,
     private sseService: SseService,
+    private toastrService: NbToastrService,
   ) {
     this.spinnerSub = this.onSpinner();
     // console.log(this.router);
 
-
-
+    setInterval( () => {
+      this.horaActual();
+    }, 1000)
 
   }
 
@@ -153,6 +157,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.timeZone()
     this.setConfiguartion();
     this.fieldReactive();
    // this.countNotifications();
@@ -621,5 +626,41 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     localStorage.setItem('__lamb_learning_token',JSON.stringify(token));
     sessionStorage.removeItem('simulateUser');
     window.location.reload();
+  }
+  horaActual(){
+    const countDate = new Date();
+    let hora: any = countDate.getHours();
+    let minuto: any  = countDate.getMinutes();
+    let segundo: any  = countDate.getSeconds();
+    let meridiano: any  = "AM";
+
+    if(hora > 12) {
+      hora = hora - 12;
+      meridiano = ' pm';
+    }
+    if(hora < 10) { hora = '0' + hora; }
+    if(minuto < 10) { minuto = '0' + minuto; }
+    if(segundo < 10) { segundo = '0' + segundo; }
+    this.relojTime = hora + ":" + minuto + " " + meridiano;
+    console.log(this.relojTime)
+  }
+  timeZone(){
+    this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if(this.appService?.user?.timezone !== this.timezone){
+      const serviceName = 'users';
+      const body = {
+        timezone: this.timezone,
+      }
+      this.generalService.updateNameIdData$(serviceName, this.appService?.user?.id, body).subscribe(res => {
+          if(res.success){
+            this.toastrService.info(status, `Actualizando tu zona horaria`);
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000)
+
+          }
+      })
+    }
+
   }
 }
