@@ -93,9 +93,13 @@
         <tr style="font-size: 12px;">
           <th >Codigo</th>
           <th>Nombres</th>
+          <th>Cursos</th>
           <th class="text-center">Pendientes</th>
-          <th class="text-center">Entregados</th>
+          <th class="text-center">Participacion</th>
+          <th class="text-center">Evaluaciones</th>
+          <th class="text-center">Completados</th>
           <th class="text-center">Vencidos</th>
+          <th class="text-center">Por completar</th>
           <th class="text-center">Estado</th>
           <th class="text-center">Ultimo acceso</th>
         </tr>
@@ -105,12 +109,15 @@
           <td>{{item.codigo}}</td>
           <td style="font-weight: bold">
             {{item.student_nombre}} <br>
-            <small class="label">ciclo: {{item.ciclo}}</small><br>
-            <small class="label">grupo: {{item.ciclo}}</small><br>
+            <small class="label">ciclo: {{item.ciclo}} | grupo: {{item.grupo}}</small>
           </td>
-          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.pendientes}}</td>
-          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.entregados}}</td>
-          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.vencidos}}</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.total_cursos}}</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.total_pendientes}}</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.total_participacion}}</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.total_evaluaciones}}</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.trabajos_completados}}</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.trabajos_vencidos}}</td>
+          <td class="text-center" style="font-weight: bold; color: var(--color-primary-500)">{{item.trabajos_por_completar}}</td>
           <td class="text-center">
             <nb-icon style="width: 27px; height: 27px;" [icon]="item.icon_arrow" [status]="item.status_icon"></nb-icon>
           </td>

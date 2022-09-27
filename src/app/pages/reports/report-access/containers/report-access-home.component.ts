@@ -229,11 +229,28 @@ export class ReportAccessHomeComponent implements OnInit {
         this.pagination.isDisabledPage = false;
       }
       this.data.map((m: any) => {
-        let total_suma = (m.pendientes + m.entregados + m.vencidos);
-        let porcentaje_pendientes = Math.round((m.pendientes * 100)/ total_suma);
-        let porcentaje_entregados = Math.round((m.entregados * 100)/ total_suma);
-        let porcentaje_vencidos = Math.round((m.vencidos * 100)/ total_suma);
-        console.log(porcentaje_pendientes, 'pendientes')
+        let total = m.estado;
+        //let porcentaje_pendientes = Math.round((m.pendientes * 100)/ total_suma);
+        //let porcentaje_entregados = Math.round((m.entregados * 100)/ total_suma);
+        //let porcentaje_vencidos = Math.round((m.vencidos * 100)/ total_suma);
+        //console.log(porcentaje_pendientes, 'pendientes')
+        if(total >= 80 ){
+          m.icon_arrow = 'arrow-circle-up'
+          m.status_icon = 'success'
+        }
+        if(total <80 && total>50){
+          m.icon_arrow = 'arrow-circle-right'
+          m.status_icon = 'warning'
+        }
+        if(total < 50){
+          m.icon_arrow = 'arrow-circle-down'
+          m.status_icon = 'danger'
+        }
+        /*let total = (m.pendientes + m.entregados + m.vencidos);
+        //let porcentaje_pendientes = Math.round((m.pendientes * 100)/ total_suma);
+        //let porcentaje_entregados = Math.round((m.entregados * 100)/ total_suma);
+        //let porcentaje_vencidos = Math.round((m.vencidos * 100)/ total_suma);
+        //console.log(porcentaje_pendientes, 'pendientes')
         if(porcentaje_entregados >= porcentaje_pendientes && porcentaje_entregados >= porcentaje_vencidos){
           m.icon_arrow = 'arrow-circle-up'
           m.status_icon = 'success'
@@ -245,7 +262,7 @@ export class ReportAccessHomeComponent implements OnInit {
         if(porcentaje_vencidos >= porcentaje_entregados && porcentaje_vencidos >= porcentaje_pendientes){
           m.icon_arrow = 'arrow-circle-down'
           m.status_icon = 'danger'
-        }
+        }*/
 
       })
     }, () => {this.loading = false}, () => {this.loading = false})
