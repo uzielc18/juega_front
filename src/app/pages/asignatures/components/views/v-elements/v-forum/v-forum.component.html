@@ -1,9 +1,9 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
 <div class="work work-expired" style="margin-left: 20px; margin-right: 20px;"
-*ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0
+*ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 1
   && !pending?.student_pending?.nota && pending?.student_pending?.realizo === '0'">
   <span>
-    <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu Trabajo: {{ element?.titulo }} acaba de caducar hace {{
+    <p>Hola {{ userInfo.name }}!</p>, Lo sentimos tu Foro: {{ element?.titulo }} acaba de caducar hace {{
     expiredDays |
     i18nPlural:daysMap }} {{ expiredHours | i18nPlural:hoursMap }} {{ expiredMinutes | i18nPlural:minutesMap }} {{
     expiredSeconds | i18nPlural:secondsMap }}
@@ -16,12 +16,24 @@
     <!-- <nb-icon class="work-expired-close" icon="close-outline"></nb-icon> -->
   </div>
 </div>
+  <div class="work work-remember" style="margin-left: 20px; margin-right: 20px;" *ngIf="!tiempo_vencido">
+    <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Foro: {{ element?.titulo }} está por vencer en {{
+    daysLeft |
+      i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} {{
+    secondsLeft | i18nPlural:secondsMap }}</span>
+  </div>
+  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf="pending?.student_pending?.realizo==='1' && pending?.student_pending?.calificado==='1'">
+    <p>Hola {{ userInfo.name }}!,</p><span>Tu foro: {{ element?.titulo }} ya fué calificado</span>
+  </div>
+  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf="pending?.student_pending?.realizo==='1' && pending?.student_pending?.calificado==='0'">
+    <p>Felicitaciones {{ userInfo.name }}!,</p><span>Ya entregaste tu foro ({{ element?.titulo }})</span>
+  </div>
 <nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">
   <nb-card-body>
     <div class="row">
       <div class="instructions col-md-9 col-xxl-10">
         <!-- <h4 class="instructions-title">{{ element?.titulo }}</h4> -->
-        <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p> <br>
+        <p class="instructions-description" style="text-align: justify;">{{ element?.descripcion }}</p><br>
         <label class="label">Pregunta: &nbsp;&nbsp;</label><label
           style="font-size: 15px; text-align: justify">{{element?.forums?.pregunta}}</label>
       </div>
@@ -47,7 +59,34 @@
             <small class="label"> {{pending?.student_pending?.comentario_docente}}</small></span>
       </div>
     </div>
-
+    <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending">
+      <h4 class="send-work-title">Mis justificaciones</h4> <br>
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead>
+          <tr style="font-size: 12px;">
+            <th style="width: 1px;">#</th>
+            <th>Justificación</th>
+            <th>Respuesta</th>
+            <th style="width: 1px;">Opción</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let just of pending?.justification; let i = index" style="font-size: 11px">
+            <td>{{i + 1}}</td>
+            <td>{{just?.justification}}</td>
+            <td>{{just?.respuesta}}</td>
+            <td>
+              <button nbButton size="tiny" status="danger" *ngIf="just.estado_justification ===  'pendiente'"
+                      >
+                <nb-icon icon="trash"></nb-icon>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     <!-- Permitir comentarios {{pending?.student_pending?.pending_forum?.permitir_comentarios}} <br>
     Ver Respuestas {{pending?.student_pending?.pending_forum?.ver_respuestas}} -->
 
