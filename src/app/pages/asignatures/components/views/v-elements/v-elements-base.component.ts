@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgDynamicBreadcrumbService } from 'ng-dynamic-breadcrumb';
-import { Subscription } from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
@@ -27,6 +27,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
   bgColors: any[] = ['#57884e20', '#8ba64220', '#f9c85120', '#f9a65a20', '#f97a5a20', '#f94a5a20', '#f9065a20'];
   pending: any;
   listResponses: any = [];
+  eventsSubject: Subject<void> = new Subject<void>();
   constructor(
     private userService: AppService,
     private generalService: GeneralService,
@@ -261,6 +262,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
       this.router.navigate([`../asignatures/course/${this.idCargaCursoDocente}/element/${item.next_page}`], {
         relativeTo: this.activatedRoute.parent,
       });
+      this.emitEventToChild()
       this.obtenerElementSelect();
     }
   }
@@ -273,5 +275,8 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
       });
       this.obtenerElementSelect();
     }
+  }
+  emitEventToChild() {
+    this.eventsSubject.next();
   }
 }

@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-menu-unit-topic-element',
@@ -14,6 +15,7 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
   unitsAndTopics:any = [];
   arrElemt:any = [];
   topic_id:any;
+  eventsSubscription: any = Subscription;
   @Output() elementSelected: EventEmitter<any> = new EventEmitter();
   constructor(private generalServi: GeneralService) { }
   ngOnChanges():void {
@@ -43,14 +45,13 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
         this.listElementOrden(ele.topic.id);
       }else{
         this.listElementOrden2(ele.topic.id, 'INIT');
+
       }
     }
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
       this.listUnitTopics(this.elemtent.id_carga_curso_docente);
-    }, 3000);
   }
   listUnitTopics(idCargaCursoDocente: any) {
     const serviceName = 'list-units-topics';
@@ -130,9 +131,22 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
   selectTopic2(topi:any, unit:any, index: any){
 
     if(!topi?.checked){
-      topi.checked = true
-      topi.childElement = [];
-      this.listElementOrden2(topi.id, topi.childElement);
+      if(topi.modo === 'ordenado'){
+        topi.checked = true
+        topi.childElement = [];
+        this.listElementOrden2(topi.id, topi.childElement);
+      }else{
+        if(topi.childElement.length > 0){
+          topi.checked = true
+        }
+        if (topi.childElement.length === 0){
+          topi.checked = true
+          topi.childElement = [];
+          this.listElementOrden2(topi.id, topi.childElement);
+        }
+      }
+
+
     }else{
       topi.checked = false
     }
@@ -254,7 +268,6 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
     this.elementSelected.emit(el);
   }
   selectedElmtOrdenado2(el:any, item: any) {
-
     item?.map((r:any) => {
       r.checked = false;
     });
@@ -265,4 +278,6 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
     // console.log($event);
     this.elementSelected.emit($event);
   }
+
+
 }
