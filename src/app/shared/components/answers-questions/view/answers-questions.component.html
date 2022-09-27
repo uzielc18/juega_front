@@ -69,7 +69,7 @@
                     <textarea nbInput fullWidth placeholder="Agregar comentario..." fieldSize="small"
                               [(ngModel)]="item.enviar_comentario"  style="font-size: 16px;" rows="3"></textarea>
                     <div class="ms-auto my-2" style="text-align: center">
-                      <nb-icon nbTooltip="Insertar emoji" nbTooltipPlacement="top" nbTooltipStatus="basic" style="cursor:pointer;" icon="smiling-face" nbPopoverPlacement="bottom"
+                      <nb-icon nbTooltip="Insertar emoji" nbPopoverPlacement="left" nbTooltipStatus="basic" style="cursor:pointer;" icon="smiling-face"
                                [nbPopover]="emojiRef"></nb-icon>
 
                       <button nbButton status="success" size="tiny" class=""
@@ -79,8 +79,8 @@
                   <ng-template #emojiRef>
                     <emoji-mart
                       title="Pick your emoji…"
-                      set="google"
-                      size="16"
+                      set="twitter"
+                      [sheetSize]="64"
                       emoji="point_up"
                       (emojiClick)="addEmoji($event, item)"
                     ></emoji-mart>

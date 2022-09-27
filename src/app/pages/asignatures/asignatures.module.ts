@@ -69,6 +69,7 @@ import {NotesModule} from "../../shared/components/notes/view/notes.module";
 import {MNoteWorksHomeModule} from "../../shared/components/notes-works/modal/m-note-works-home.module";
 import {MSatisfactionModule} from "../../shared/components/satisfaction/modal/m-satisfaction.module";
 import { CopyElementsComponent } from './components/modals/copy-elements/copy-elements.component';
+import {MenuNewElementsModule} from "../../shared/components/menu-new-elements/menu-new-elements.module";
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -165,7 +166,8 @@ const MODULES: any = [
   MenuUnitTopicElementModule,
   NotesModule,
   MNoteWorksHomeModule,
-  MSatisfactionModule
+  MSatisfactionModule,
+  MenuNewElementsModule
 ]
 
 @NgModule({
