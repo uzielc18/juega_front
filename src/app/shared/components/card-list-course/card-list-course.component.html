@@ -94,9 +94,9 @@
             <div class="course-info">
               <h6 class="names mb-0"> {{ curso.nombre }}</h6>
               <div class="text-course">
-                <span class="teachers mb-0"> {{ curso.persons_teacher_nombre }}</span><br>
-                <span class="descriptions mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</span><br>
-                <span class="descriptions mb-0"> Grupo - {{ curso.grupo }} / {{curso.sede}}</span><br>
+                <p class="teachers mb-0"> {{ curso.persons_teacher_nombre }}</p>
+                <p class="descriptions mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</p>
+                <p class="teachers mb-0"> Grupo - {{ curso.grupo }} / {{curso.sede}}</p>
               </div>
             </div>
             <div class="progress-icon">
@@ -190,8 +190,8 @@
         <div class="card-body">
           <h6 class="names mb-0">{{ curso.nombre }} - {{curso.type_teachers_code}}</h6>
           <p class="teachers mb-0">{{ curso.persons_teacher_nombre }}</p>
-          <p class="descriptions mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}</p>
-          <p class="descriptions mb-0">Grupo - {{ curso.grupo }} {{curso.sede !== null? '/': ''}} {{curso.sede}}</p>
+          <p class="descriptions mb-0">Ciclo - {{ curso.ciclo }} - {{ curso.programa_estudio_nombre }}
+          <p class="teachers mb-0">Grupo - {{ curso.grupo }} {{curso.sede !== null? '/': ''}} {{curso.sede}}</p>
         </div>
         <nb-card-footer class="p-0" style="margin-top: 0px;">
           <div>
