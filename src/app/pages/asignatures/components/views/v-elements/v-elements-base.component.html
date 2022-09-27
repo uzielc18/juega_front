@@ -76,19 +76,20 @@
         </div>
 
       </div>
-      <div class="col-md-3 sticky">
+      <div class="col-md-3 sticky" style="max-height: 81vh;">
         <!-- class="menu-children mt-1 pe-2 pe-xl-4 pe-xxl-5" -->
         <!-- <app-menu-elements-child [topic_id]="element?.topic_id"
           [type_element_id]="element?.type_element_id" [id_element]="element?.id"
           (elementSelected)="elementSelected($event)"></app-menu-elements-child>
           <br> -->
-          <app-menu-unit-topic-element [elemtent]="element" (elementSelected)="elementSelected($event)"></app-menu-unit-topic-element>
-      </div>
-    </div>
-    <!-- <div class="menu-container">
-      <app-menu-elements-child class="menu-children pe-2 pe-xl-4 pe-xxl-5" [topic_id]="element?.topic_id"
-        [type_element_id]="element?.type_element_id" [id_element]="element?.id"
-        (elementSelected)="elementSelected($event)"></app-menu-elements-child>
-    </div> -->
+        <app-menu-unit-topic-element [elemtent]="element" (elementSelected)="elementSelected($event)"></app-menu-unit-topic-element>
+        <!-- <app-menu-new-elements [element]="element"></app-menu-new-elements>-->
+ </div>
+</div>
+<!-- <div class="menu-container">
+ <app-menu-elements-child class="menu-children pe-2 pe-xl-4 pe-xxl-5" [topic_id]="element?.topic_id"
+   [type_element_id]="element?.type_element_id" [id_element]="element?.id"
+   (elementSelected)="elementSelected($event)"></app-menu-elements-child>
+</div> -->
   </div>
 </div>

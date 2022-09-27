@@ -1,6 +1,50 @@
-<div [nbSpinner]="loading" nbSpinnerStatus="primary"
+<div style="height: 100%" [nbSpinner]="loading" nbSpinnerStatus="primary"
 nbSpinnerSize="small">
-<nb-card style="margin-bottom: 3px;" *ngFor="let item of unitsAndTopics" class="padreHover">
+  <nb-card style="margin-bottom: 3px; height: 100%;" class="padreHover">
+    <nb-card-header class="padre">
+      <small>CONTENIDO DEL CURSO</small>
+    </nb-card-header>
+    <nb-card-body style="padding: 0;">
+      <div *ngFor="let item of porincUnitsTopics">
+        <div  style="padding: 15px 10px;background-color:var(--color-primary-500); color: #FFFFFF">
+          <div class="d-flex justify-content-between align-items-center" >
+            <small style="font-weight: bold; text-transform: uppercase;font-size: 13px;">UNIDAD {{item.orden_unidad}}</small>
+          </div>
+        </div>
+        <div>
+              <div *ngFor="let topis of item?.topics; let i = index">
+                <div  class="d-flex justify-content-between align-items-center section_class" (click)="selectTopic2(topis, item, i)">
+                  <div>
+                    <small style="font-weight: bold; text-transform: uppercase;font-size: 12px;">SESIÓN {{topis.orden_tema}}</small><br>
+                    <small class="label" style="font-size: 12px;">{{topis.fecha_tema| date: 'MMMM d, y'}}</small>
+                  </div>
+                  <nb-icon *ngIf="!topis?.checked" icon="arrow-ios-downward"></nb-icon>
+                  <nb-icon *ngIf="topis?.checked" icon="arrow-ios-upward"></nb-icon>
+                 </div>
+                  <div *ngIf="elemtent && topis?.checked">
+                    <div *ngFor="let el of topis.childElement"
+                         [ngStyle]="getColorSelected(el)"
+                         [class]="getClass(el, topis)"
+                         class="section_class_element"
+                         (click)="selectedElmtOrdenado2(el, topis.childElement)">
+                      <nb-icon *ngIf="rolSemestre?.rol?.name === 'Estudiante'" [nbTooltip]="el?.pendings?.visto === 1? 'Visto': 'No visto'"
+                               nbTooltipPlacement="top"
+                               [nbTooltipStatus]="el?.pendings?.visto === 1? 'success': 'basic'"
+                               [icon]="el?.pendings?.visto === 1? 'done-all-outline': 'checkmark-outline'"
+                               [status]="el?.pendings?.visto === 1? 'success': 'basic'"></nb-icon>
+                      <nb-icon [icon]="el?.type_elements?.icono"></nb-icon>&nbsp;{{el?.titulo}}
+                    </div>
+                  </div>
+              </div>
+
+        </div>
+      </div>
+
+      <hr style="margin: 0; color: #D1D7DC">
+    </nb-card-body>
+
+  </nb-card>
+<!--<nb-card style="margin-bottom: 3px;" *ngFor="let item of unitsAndTopics" class="padreHover">
     <nb-card-header class="padre" (click)="selectedUnit(item)">
         <div class="row">
             <div class="col-md-11" style="font-size: 11px; text-transform: uppercase;">{{item.nombre}}</div>
@@ -20,9 +64,9 @@ nbSpinnerSize="small">
                 </div>
             </nb-card-header>
             <nb-card-body  style="padding-right: 0px;" *ngIf="elemtent && topis?.checked">
-                <div *ngIf="topis?.modo === 'ordenado'">
-                    <nb-card *ngFor="let el of arrElemt" 
-                    [class]="getClass(el, topis)" 
+                <div>
+                    <nb-card *ngFor="let el of arrElemt"
+                    [class]="getClass(el, topis)"
                     style="margin-bottom: 4px"
                     (click)="selectedElmtOrdenado(el)">
                         <nb-card-header  class="nieto" [ngStyle]="getColorSelected(el)">
@@ -40,6 +84,6 @@ nbSpinnerSize="small">
             </nb-card-body>
         </nb-card>
     </nb-card-body>
-    
-</nb-card>
+
+</nb-card>-->
 </div>

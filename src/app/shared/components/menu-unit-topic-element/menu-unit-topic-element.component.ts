@@ -22,6 +22,7 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
       console.log(this.elemtent);
       this.unitsAndTopics = [];
       const ele = this.elemtent;
+
       const values = {
         id: ele.topic.unit.id,
         nombre: ele.topic.unit.nombre,
@@ -35,10 +36,13 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
           }
         ]
       };
+      console.log(values, 'elementoo')
       this.unitsAndTopics.push(values);
       this.topic_id = ele.topic.id;
       if (ele.topic.modo === 'ordenado') {
         this.listElementOrden(ele.topic.id);
+      }else{
+        this.listElementOrden2(ele.topic.id, 'INIT');
       }
     }
   }
@@ -58,9 +62,15 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
             if ( a.topics.length >0) {
               a.topics.map((x:any) => {
                 x.checked = false;
+                x.childElement = [];
+              })
+               a.topics.find((f: any) => {
+                 if(f.id === this.elemtent?.topic?.id){
+                   this.selectTopic2(f, '', '');
+                 }
               })
             }
-     
+
           })
         }
       });
@@ -84,6 +94,13 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
       }
     })
   }
+  selectedUnit2(item: any){
+    if(!item?.checked){
+       item.checked = true
+    }else{
+      item.checked = false
+    }
+  }
   recorreUnit() {
     this.porincUnitsTopics.map((r:any) => {
       r.checked = false;
@@ -102,10 +119,24 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
     const topis = (array.find((r:any) => r.id === unit.id)).topics;
     unit.topics = topis.filter((rs:any) => rs.id === topi.id);
     this.recorreTopic(topi, unit.topics, 'SELECT');
-    this.topic_id = topi.id; 
+    this.topic_id = topi.id;
     if (topi.modo === 'ordenado') {
       this.listElementOrden(topi.id);
+    }else{
+      this.listElementOrden(topi.id);
     }
+
+  }
+  selectTopic2(topi:any, unit:any, index: any){
+
+    if(!topi?.checked){
+      topi.checked = true
+      topi.childElement = [];
+      this.listElementOrden2(topi.id, topi.childElement);
+    }else{
+      topi.checked = false
+    }
+
   }
   recorreTopic(topi:any, topis:any, type:any) {
     if (topis.length>0) {
@@ -139,8 +170,46 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
             }
           })
         }
-        console.log(this.arrElemt, 'aaaa');
-        
+
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  // Elements
+  listElementOrden2(topic: any, arrElemt: any) {
+    const serviceName = END_POINTS.base_back.resourse + '/list-elements-order';
+    const topic_id = topic;
+    this.loading = true;
+    this.generalServi.nameId$(serviceName, topic_id).subscribe(data => {
+        if(arrElemt === 'INIT'){
+          this.arrElemt = data.data || [];
+          if (this.arrElemt.length>0) {
+            this.arrElemt.map((a:any) => {
+              a.checked = false;
+              if (a.id === this.elemtent.id) {
+                a.checked = true;
+              }
+            })
+          }
+        }else{
+          data.data.forEach((f: any) => {
+            arrElemt.push(f || []);
+          })
+          if (arrElemt.length>0) {
+            arrElemt.map((a:any) => {
+              a.checked = false;
+              if (a.id === this.elemtent.id) {
+                a.checked = true;
+              }
+            })
+          }
+        }
+
       },
       () => {
         this.loading = false;
@@ -152,9 +221,13 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
   }
   getColorSelected(el:any) {
     if (el.checked) {
-      return {'color': el.type_elements.background, 'font_weight': 'bold', 'font-size': '12px'}
+      return {'background-color': '#f5f5f5', 'color': el.type_elements.background, 'font_weight': 'bold', 'font-size': '13px'}
     } else {
-      return {'font-size': '10px'}
+      if(this.rolSemestre?.rol?.name === 'Estudiante'){
+        return {'font-size': '12px', 'color': el.pendings.visto === 1? el.type_elements.background: '' }
+      }else{
+        return {'font-size': '12px'}
+      }
     }
   }
   getClass(el:any, topisc:any) {
@@ -168,11 +241,21 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
     if (this.rolSemestre?.rol?.name === 'Docente') {
       valar = 'nietoHover';
     }
+    if (topisc.modo === 'agrupado') {
+      valar = 'nietoHover';
+    }
     return valar;
   }
   selectedElmtOrdenado(el:any) {
-    // console.log(el);
     this.arrElemt.map((r:any) => {
+      r.checked = false;
+    });
+    el.checked = true;
+    this.elementSelected.emit(el);
+  }
+  selectedElmtOrdenado2(el:any, item: any) {
+
+    item?.map((r:any) => {
       r.checked = false;
     });
     el.checked = true;
