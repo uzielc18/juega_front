@@ -64,6 +64,8 @@ export class CatchErrorInterceptor implements HttpInterceptor {
     );
   }
   private interceptResponse(event: HttpEvent<any>, method: any): any {
+    console.log(event, " event")
+    console.log(method, "method")
       const $event:any =  event;
       if (event && $event['status']) {
         var data: any = status[$event['status']];
@@ -77,7 +79,6 @@ export class CatchErrorInterceptor implements HttpInterceptor {
       }
   }
   private throwErrorToast(err: any): void {
-    console.log(err, "hola mundo")
     if (showStatusCodes.includes(err.status)) {
       this.toast(`${err.message}`, err.name);
     }
@@ -90,7 +91,6 @@ export class CatchErrorInterceptor implements HttpInterceptor {
     });
   }
   private throwErrorToastWarning(err: any): void {
-    console.log(err, "hola mundo")
     if (showStatusCodesWarning.includes(err.status)) {
       this.toast2(`${err.error.message}`, err.name);
     }
