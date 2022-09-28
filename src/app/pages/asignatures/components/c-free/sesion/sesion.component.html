@@ -94,7 +94,7 @@
         <div>
           <h5 class="sesion-title">{{ sesion?.modo === 'ordenado' ? el.orden : (i +1) }}. <nb-icon [icon]="el.icon"></nb-icon> {{ el.titulo }} - <small class="label" style="font-size: 10px" *ngIf="el.visibilidad === '0' && rolSemestre?.rol?.name !== 'Estudiante'">(Oculto para el estudiante)</small><nb-icon icon="eye-off-outline" *ngIf="el.visibilidad === '0' && rolSemestre?.rol?.name !== 'Estudiante'"></nb-icon></h5>
           <p class="label sesion-description"  *ngIf="['EVALUACION', 'TRABAJO', 'FORO'].includes(el?.tipo)">{{el.fecha_inicio | date: 'MMMM d, y, h:mm:ss a' | titlecase}} / {{el.fecha_fin | date: 'MMMM d, y, h:mm:ss a' | titlecase}}</p>
-          <p class="sesion-description">
+          <p class="sesion-description" style="white-space: pre-line">
             {{ el.descripcion }}
           </p>
           <label class="label" *ngIf="['Docente', 'Admin'].includes(rolSemestre?.rol?.name)">

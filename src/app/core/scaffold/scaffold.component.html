@@ -368,7 +368,7 @@
       <!-- -------------------------- termina boton flotante------------------ -->
     </nb-layout-header>
 
-    <nb-sidebar [state]="stateSidebar" [responsive]="false" tag="core-sidebar">
+    <nb-sidebar [state]="stateSidebar" [responsive]="responsiveValue" tag="core-sidebar">
       <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
       <nb-sidebar-footer  *ngIf="!minimum" style="padding: inherit; margin-bottom:30px">
         <div style="padding: 10px" class="text-center">
