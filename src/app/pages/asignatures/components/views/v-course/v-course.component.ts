@@ -67,8 +67,8 @@ export class VCourseComponent implements OnInit, OnDestroy {
           if (this.curso.tiene_permiso === 0) { // no tiene acceso al curso
             this.router.navigate([`/pages/asignatures`], {relativeTo: this.activatedRoute.parent});
           } else {
-            if(this.rolSemestre.rol.name === 'Docente' && this.curso.tiene_permiso === 1){
-              //window.location.reload();
+            if(this.curso.reload === 1){
+              window.location.reload();
             }
             this.getCursoShow(this.curso.id);
             this.updateBreadcrumb();
