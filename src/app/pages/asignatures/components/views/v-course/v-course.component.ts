@@ -68,7 +68,7 @@ export class VCourseComponent implements OnInit, OnDestroy {
             this.router.navigate([`/pages/asignatures`], {relativeTo: this.activatedRoute.parent});
           } else {
             if(this.rolSemestre.rol.name === 'Docente' && this.curso.tiene_permiso === 1){
-              window.location.reload();
+              //window.location.reload();
             }
             this.getCursoShow(this.curso.id);
             this.updateBreadcrumb();
