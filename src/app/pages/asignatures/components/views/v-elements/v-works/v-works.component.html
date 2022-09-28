@@ -1,5 +1,5 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
-  <div class="work work-remember" style="margin-left: 20px; margin-right: 20px;" *ngIf="!tiempo_vencido">
+  <div class="work work-remember" style="margin-left: 20px; margin-right: 20px;" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !tiempo_vencido">
     <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Trabajo: {{ element?.titulo }} está por vencer en {{
     daysLeft |
       i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} {{
@@ -21,10 +21,10 @@
       <!-- <nb-icon class="work-expired-close" icon="close-outline"></nb-icon> -->
     </div>
   </div>
-  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf="pending?.student_pending?.realizo==='1' && pending?.student_pending?.calificado==='1'">
+  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf=" rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.realizo==='1' && pending?.student_pending?.calificado==='1'">
     <p>Hola {{ userInfo.name }}!,</p><span>Tu evaluación: {{ element?.titulo }} ya fué calificado</span>
   </div>
-  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf="pending?.student_pending?.realizo==='1' && pending?.student_pending?.calificado==='0'">
+  <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;" *ngIf=" rolSemestre?.rol?.name === 'Estudiante' &&  pending?.student_pending?.realizo==='1' && pending?.student_pending?.calificado==='0'">
     <p>Felicitaciones {{ userInfo.name }}!,</p><span>Ya entregaste tu Trabajo ({{ element?.titulo }})</span>
   </div>
   <nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">

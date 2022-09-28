@@ -34,6 +34,8 @@ import {SseService} from "../../providers/sse.service";
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
+  disableCollapse: boolean = false;
+  stateSidebar: any;
   relojTime: any;
   timezone: any
   MENU_ITEMS: NbMenuItem[] = [];
@@ -157,7 +159,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.timeZone()
+    this.timeZone();
+    this.configurationCollapse()
     this.setConfiguartion();
     this.fieldReactive();
    // this.countNotifications();
@@ -262,15 +265,37 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
   toggle(): void {
     this.breakpointObserver.observe(['(max-width: 900px)']).subscribe((result) => {
+      console.log(result)
       if(result.matches){
         this.statusSearch = false
         this.search.value = '';
         this.data = [];
       }
     })
-
+    this.appService.user?.person?.configurationperson.find((f: any) => {
+        if(f.nombre === 'MENU-COLLAPSE'){
+          const serviceName = END_POINTS.base_back.config + '/configurationperson';
+          const params = {
+            valor: this.stateSidebar === 'compacted'? '0': '1'
+          }
+          this.generalService.updateNameIdData$(serviceName, f.id, params).subscribe(res => {
+            console.log(res)
+          })
+        }
+    })
     this.hidden = !this.hidden;
     this.sidebarService.toggle(true, 'core-sidebar');
+  }
+  configurationCollapse(){
+    this.appService.user?.person?.configurationperson.find((f: any) => {
+      if(f.nombre === 'MENU-COLLAPSE'){
+        if(f.valor == "1"){
+          this.stateSidebar = 'compacted'
+        }else{
+          this.stateSidebar = 'expanded'
+        }
+      }
+    })
   }
 
   changeTheme(status: boolean): void {
@@ -642,7 +667,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     if(minuto < 10) { minuto = '0' + minuto; }
     if(segundo < 10) { segundo = '0' + segundo; }
     this.relojTime = hora + ":" + minuto + " " + meridiano;
-    console.log(this.relojTime)
   }
   timeZone(){
     this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;

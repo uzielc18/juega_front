@@ -25,11 +25,11 @@
         </span>
   </div>
   <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;"
-       *ngIf="!pending?.student_pending?.realizo && !pending?.student_pending?.nota">
+       *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.realizo && !pending?.student_pending?.nota">
     <p>Hola {{ userInfo.name }}!,</p><span>Tu evaluación: {{ element?.titulo }} ya fué calificado</span>
   </div>
   <div class="work work-evaluated" style="margin-left: 20px; margin-right: 20px;"
-       *ngIf="!pending?.student_pending?.realizo && !pending?.student_pending?.nota">
+       *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !pending?.student_pending?.realizo && !pending?.student_pending?.nota">
     <p>Felicitaciones {{ userInfo.name }}!,</p><span>Ya entregaste tu evaluación ({{ element?.titulo }})</span>
   </div>
   <nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;">
