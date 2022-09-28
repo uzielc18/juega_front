@@ -6,7 +6,7 @@
           class="d-flex flex-column align-items-center justify-content-center rounded-start fecha"
           [ngStyle]="{'background-color': unidad.active == 1 && sesion.active == 1? 'var(--color-primary-600)': 'var(--color-primary-50)', 'color': unidad.active == 1 && sesion.active == 1? '#FFFFFF': ''}"
         >
-          <span class="fw-bold" style="font-size: 24px">{{ sesion?.fecha_tema | date: 'dd' }}</span
+          <span class="fw-bold" style="font-size: 24px">{{ sesion?.fecha_tema | date: 'dd':'UTC' }}</span
           ><small style="font-size: 14px; color: #898989">{{ sesion?.fecha_tema | date: 'MMM' | titlecase }}</small>
         </div>
         <div style="width: 100%; margin-left: 80px">
