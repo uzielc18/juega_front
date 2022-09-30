@@ -22,7 +22,7 @@ export class VWorksComponent implements OnInit, OnChanges {
   @Input() calification: any;
   loading: boolean = false;
   fechaFin: any;
-
+  ValidateDateI: boolean = false;
   daysLeft: any;
   hoursLeft: any;
   minutesLeft: any;
@@ -73,6 +73,7 @@ export class VWorksComponent implements OnInit, OnChanges {
     setInterval(() => {
       if (this.pending) {
         this.countdown(this.pending?.student_pending?.fecha_fin);
+        this.dateValidate(this.pending?.student_pending?.fecha_inicio);
       }
     }, 1000);
   }
@@ -93,6 +94,13 @@ export class VWorksComponent implements OnInit, OnChanges {
     }
   }
 
+  dateValidate(fechaInicio: any){
+    const dateI = new Date(fechaInicio?.replace(' ', 'T')).getTime();
+    const now = new Date().getTime();
+    if(now >= dateI){
+      this.ValidateDateI = true;
+    }
+  }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     const val = JSON.parse(sesion);

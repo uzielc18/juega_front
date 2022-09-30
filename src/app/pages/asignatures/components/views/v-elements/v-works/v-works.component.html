@@ -1,5 +1,5 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
-  <div class="work work-remember" style="margin-left: 20px; margin-right: 20px;" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !tiempo_vencido">
+  <div class="work work-remember" style="margin-left: 20px; margin-right: 20px;" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && !tiempo_vencido && ValidateDateI === true">
     <p>Hola {{ userInfo.name }}!,</p><span>Recuerda que tu Trabajo: {{ element?.titulo }} está por vencer en {{
     daysLeft |
       i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} {{
@@ -92,7 +92,7 @@
         </div>
 
         <div class="mt-4"
-             *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending && !tiempo_vencido">
+             *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending && !tiempo_vencido && ValidateDateI === true">
           <div class="d-flex">
             <h4 class="send-work-title">Entrega de trabajo</h4>
             <nb-icon [status]="form.value.tipo === '1' ? 'primary' : 'basic'" class="send-work-icon"
@@ -143,6 +143,14 @@
                 </button>
               </nb-card-body>
             </nb-card>
+          </div>
+
+        </div>
+        <div>
+          <div class="card" style="margin-left: 20px; margin-right: 20px;" *ngIf="pending && rolSemestre?.rol?.name === 'Estudiante' && !ValidateDateI">
+            <p>Hola <strong>{{ userInfo.name }}</strong></p>
+            <span><strong>{{ element?.titulo }} </strong> inicia el: {{pending?.student_pending.fecha_inicio | date: "d 'de' MMMM, y, h:mm:ss a"}}</span>
+            <p>(Mas información consultar a su docente)</p>
           </div>
         </div>
         <br>

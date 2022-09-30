@@ -61,6 +61,7 @@ import { SpinnerInterceptor } from './auth/interceptors/spinner.interceptor';
 import {FilterModule} from "../shared/pipes/filter/filter.module";
 import {MSatisfactionModule} from "../shared/components/satisfaction/modal/m-satisfaction.module";
 import {MNotificationsModule} from "../shared/components/notifications/modal/m-notifications.module";
+import { AuthRouteAzureComponent } from './auth/contents/auth-route-azure/auth-route-azure.component';
 registerLocaleData(localePe);
 const ANGULAR: any[] = [
   CommonModule,
@@ -72,7 +73,8 @@ const ANGULAR: any[] = [
     ScaffoldComponent,
     AuthRouteLoginComponent,
     AuthRouteLambComponent,
-    AuthRouteGoogleComponent
+    AuthRouteGoogleComponent,
+    AuthRouteAzureComponent
   ], // add
   imports: [
     ...ANGULAR,
@@ -134,7 +136,7 @@ const ANGULAR: any[] = [
   ],
 })
 export class CoreModule {
-  static forRoot(options: CoreOptions): ModuleWithProviders<CoreModule> {
+  static forRoot(options: { apiAuth: string; strategyName: string; moduleId: number; strategyGoogleName: string; strategyAzureName: string }): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
       providers: [{ provide: CORE_OPTIONS, useValue: options }],

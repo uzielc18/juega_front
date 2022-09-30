@@ -552,8 +552,13 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     hours = hours % 24;
    // console.log(`${this.padTo2Digits(hours)}:${this.padTo2Digits(minutes)}:${this.padTo2Digits(seconds)}`)
     //return `${this.padTo2Digits(hours)}:${this.padTo2Digits(minutes)}:${this.padTo2Digits(seconds)}`;
-    return `${this.padTo2Digits(days)} ${this.padTo2Digits(days) === '1' ? 'dia.' : 'dias.'} y
-    ${this.padTo2Digits(hours)} ${this.padTo2Digits(hours) === '1' ? 'hora.' : 'horas.'}`
+      if(minutes <= 3 ){
+        return 'online'
+      }else{
+        return `${this.padTo2Digits(days)} ${this.padTo2Digits(days) === '1' ? 'dia.' : 'dias.'} y
+      ${this.padTo2Digits(hours)} ${this.padTo2Digits(hours) === '1' ? 'hora.' : 'horas.'}`
+      }
+
   }
   searchEnter(event:any){
     const serviceName = 'search';
