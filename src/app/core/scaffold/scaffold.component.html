@@ -2,7 +2,7 @@
   <nb-layout withScroll [windowMode]="false">
     <nb-layout-header class="header-actions" fixed>
       <nb-actions>
-        <nb-action icon="menu-2-outline" (click)="toggle()"></nb-action>
+        <nb-action icon="menu-2-outline" class="menu-colapse" (click)="toggle()"></nb-action>
         <nb-action>
           <img *ngIf="!hidden" src="assets/logo-lamb-learning-blanco.svg" alt="Lamb" class="logo" />
         </nb-action>
@@ -12,7 +12,6 @@
             <div class="flex-grow-1 div-Class" #searhEvent *ngIf="userSimulate?.id !== rolSimulate?.id && userSimulate === null">
               <div class="input-wrapper">
                 <input *ngIf="statusSearch"
-
                        type="text"
                        class="input2"
                        placeholder="Buscar..."
@@ -369,7 +368,9 @@
     </nb-layout-header>
 
     <nb-sidebar [state]="stateSidebar" [responsive]="responsiveValue" tag="core-sidebar">
-      <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
+      <div class="menu-new">
+        <nb-menu [items]="MENU_ITEMS" tag="core-menu" style="border-top-left-radius: 10px;"></nb-menu>
+      </div>
       <nb-sidebar-footer  *ngIf="!minimum" style="padding: inherit; margin-bottom:30px">
         <div style="padding: 10px" class="text-center">
           <small style="color: #FFFFFF" >{{relojTime}} - {{timezone}}</small>

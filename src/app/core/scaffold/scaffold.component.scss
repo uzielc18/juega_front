@@ -35,7 +35,26 @@
 .logo {
   width: 120px;
 }
-
+nb-sidebar.menu-colapse{
+  height: var(--header-height);
+  background-color: #043a62;
+}
+div.menu-new {
+  background-color:var(--menu-background-color);
+  height: -webkit-fill-available;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+  margin-left: -0.4rem;
+}
+nb-sidebar.expanded div.menu-new {
+  width: 16rem;
+}
+nb-sidebar.compacted div.menu-new {
+  width: 3rem;
+}
+nb-menu ul.menu-items{
+  padding-top: 0.4rem !important;
+}
 @media screen and (max-width: 768px) {
   .logo {
     width: 80px;
@@ -46,7 +65,7 @@
   }
 }
 .background {
-  background: var(--header-background-color) !important;
+  background: var(--background-color) !important;
 }
 .text {
   color: white !important;
