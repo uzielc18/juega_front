@@ -17,6 +17,7 @@ import {NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule} from "ngx-goog
     CoreModule.forRoot({
       strategyName: environment.authStrategy.name,
       strategyGoogleName: environment.authGoogleStrategy.name,
+      strategyAzureName: environment.authAzureStrategy.name,
       apiAuth: environment.apiUrls.base,
       moduleId: environment.module_id,
     }),
