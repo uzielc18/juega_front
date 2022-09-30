@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AuthRouteGoogleComponent } from '../auth/contents/auth-route-google/auth-route-google.component';
 import { AuthRouteLambComponent } from '../auth/contents/auth-route-lamb/auth-route-lamb.component';
 import { AuthRouteLoginComponent } from '../auth/contents/auth-route-login/auth-route-login.component';
+import {AuthRouteAzureComponent} from "../auth/contents/auth-route-azure/auth-route-azure.component";
 
 
 export const toastConfig: any = {
@@ -21,6 +22,10 @@ export const routesConfig: Routes = [
   {
     path: 'auth/google/callback',
     component: AuthRouteGoogleComponent
+  },
+  {
+    path: 'auth/azure/callback',
+    component: AuthRouteAzureComponent
   }
-  
+
 ];

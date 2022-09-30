@@ -37,8 +37,9 @@
                         </div>
                         <div style="margin-left: 10px">
                           <small><strong>{{item.titulo | titlecase}}</strong></small><br>
-                          <small class="label" style="font-size: 12px">Ultimo acceso hace {{item.hora}}</small><br>
-                          <small>detalle{{item.detalle}}</small>
+                          <small class="label" style="font-size: 12px" *ngIf="item.hora !== 'online'">Ultimo acceso hace {{item.hora}}</small>
+                          <small style="font-size: 12px; color: var(--color-success-500)" *ngIf="item.hora === 'online'">{{item.hora}}</small><br>
+                          <small><strong>detalle: </strong> {{item.detalle}}</small>
                         </div>
                       </div>
                       <div style="right: 0; top: 5px;">
