@@ -32,18 +32,6 @@ export class NbAuthGoogleStrategy extends NbOAuth2AuthStrategy {
     return [NbAuthGoogleStrategy, options]; // HERE we make sure our strategy return correct class reference
   }
 }
-<<<<<<< HEAD
-=======
-export class AuthAzureToken extends NbAuthOAuth2JWTToken {
-
-  // let's rename it to exclude name clashes
-  static NAME = 'nb:auth:azure:token';
-
-  getValue(): string {
-    return this.token.id_token;
-  }
-}
->>>>>>> f3bb94f6595f965b6ef453ebba8f2ed8d92d012a
 
 @Injectable()
 export class NbAuthAzureStrategy extends NbOAuth2AuthStrategy {
