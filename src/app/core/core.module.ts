@@ -112,7 +112,8 @@ const ANGULAR: any[] = [
   exports: [
     AuthRouteLoginComponent,
     AuthRouteLambComponent,
-    AuthRouteGoogleComponent
+    AuthRouteGoogleComponent,
+    AuthRouteAzureComponent
   ],
   providers: [
     AppService,

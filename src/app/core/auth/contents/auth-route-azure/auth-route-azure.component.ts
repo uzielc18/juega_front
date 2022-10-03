@@ -2,8 +2,8 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {NbAuthResult, NbAuthService} from "@nebular/auth";
 import {DOCUMENT} from "@angular/common";
-import {CORE_OPTIONS, CoreOptions} from "../../../core.options";
 import {finalize} from "rxjs/operators";
+import { CoreOptions, CORE_OPTIONS } from 'src/app/core/core.options';
 
 @Component({
   selector: 'app-auth-route-azure',

@@ -30,98 +30,16 @@ export class NbAuthGoogleStrategy extends NbOAuth2AuthStrategy {
     return [NbAuthGoogleStrategy, options]; // HERE we make sure our strategy return correct class reference
   }
 }
-// Create new token for Azure auth so it returns id_token instead of access_token
-export class AuthAzureToken extends NbAuthOAuth2JWTToken {
-
-  // let's rename it to exclude name clashes
-  static NAME = 'nb:auth:azure:token';
-
-  getValue(): string {
-    return this.token.id_token;
-  }
-}
 
 @Injectable()
-export class AzureADB2CAuthStrategy extends NbOAuth2AuthStrategy {
-
-  // we need this method for strategy setup
-  static setup(options: NbOAuth2AuthStrategyOptions): [NbAuthStrategyClass, NbOAuth2AuthStrategyOptions] {
-    return [AzureADB2CAuthStrategy, options];
+export class NbAuthAzureStrategy extends NbOAuth2AuthStrategy {
+  static setup(
+    options: NbOAuth2AuthStrategyOptions
+  ): [NbAuthStrategyClass, NbOAuth2AuthStrategyOptions] {
+    return [NbAuthAzureStrategy, options]; // HERE we make sure our strategy return correct class reference
   }
-
-  protected redirectResultHandlers = {
-    [NbOAuth2ResponseType.CODE]: () => {
-      return of(this.route.snapshot.queryParams).pipe(
-        switchMap((params: any) => {
-          if (params.code) {
-            return this.requestToken(params.code);
-          }
-
-          return of(
-            new NbAuthResult(
-              false,
-              params,
-              this.getOption('redirect.failure'),
-              this.getOption('defaultErrors'),
-              [],
-            ));
-        }),
-      );
-    },
-    id_token: () => {
-      const module = 'authorize';
-      const requireValidToken = this.getOption(`${module}.requireValidToken`);
-      return of(this.route.snapshot.fragment).pipe(
-        map((fragment: any) => this.parseHashAsQueryParams(fragment)),
-        map((params: any) => {
-          if (!params.error) {
-            return new NbAuthResult(
-              true,
-              params,
-              this.getOption('redirect.success'),
-              [],
-              this.getOption('defaultMessages'),
-              this.createToken(params, requireValidToken));
-          }
-          return new NbAuthResult(
-            false,
-            params,
-            this.getOption('redirect.failure'),
-            this.getOption('defaultErrors'),
-            [],
-          );
-        }),
-        catchError(err => {
-          const errors = [];
-          if (err instanceof NbAuthIllegalTokenError) {
-            errors.push(err.message);
-          } else {
-            errors.push('Something went wrong.');
-          }
-          return of(
-            new NbAuthResult(
-              false,
-              err,
-              this.getOption('redirect.failure'),
-              errors,
-            ));
-        }),
-      );
-    },
-  };
-
-
-  protected redirectResults: any = {
-    [NbOAuth2ResponseType.CODE]: () => of(null),
-
-    id_token: () => {
-      return of(this.route.snapshot.fragment).pipe(
-        map((fragment: any) => this.parseHashAsQueryParams(fragment)),
-        map((params: any) => !!(params && (params.id_token || params.error))),
-      );
-    },
-  };
 }
+
 export const STRATEGIES = [
   NbAuthModule.forRoot({
     strategies: [
@@ -182,29 +100,35 @@ export const STRATEGIES = [
         },
 
       }),
-      AzureADB2CAuthStrategy.setup({
+      NbAuthAzureStrategy.setup({
         name: environment.authAzureStrategy.name,
         clientId: environment.authAzureStrategy.clientId,
         clientSecret: environment.authAzureStrategy.clientSecret,
+        clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
         authorize: {
           endpoint: environment.authAzureStrategy.endpoint,
-          responseType: 'id_token',
-          scope: 'openid',
+          responseType: NbOAuth2ResponseType.CODE,
           redirectUri: environment.authAzureStrategy.redirectUri,
-          params: {
-            nonce: NbOAuth2ClientAuthMethod.NONE
-          }
+          scope: 'openid profile email',
         },
         token: {
-          class: AuthAzureToken,
+          endpoint: environment.authAzureStrategy.tokenEndpoint,
+          grantType: NbOAuth2GrantType.AUTHORIZATION_CODE,
+          redirectUri: environment.authAzureStrategy.redirectUri,
+          class: NbAuthOAuth2Token
+        },
+        refresh: {
+          endpoint: environment.authAzureStrategy.refreshTokenEndpoint,
+          grantType: NbOAuth2GrantType.REFRESH_TOKEN,
         },
         redirect: {
-          success: environment.authAzureStrategy.success,
+          success: environment.authAzureStrategy.success
         },
+
       }),
     ],
   }).providers,
   NbAuthLambStrategy,
   NbAuthGoogleStrategy,
-  AzureADB2CAuthStrategy
+  NbAuthAzureStrategy
 ];
