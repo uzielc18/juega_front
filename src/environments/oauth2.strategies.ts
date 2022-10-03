@@ -13,6 +13,8 @@ import {
 import { of } from 'rxjs';
 import { environment } from './environment';
 import {catchError, map, switchMap} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
+import {ActivatedRoute} from "@angular/router";
 
 @Injectable()
 export class NbAuthLambStrategy extends NbOAuth2AuthStrategy {
@@ -30,6 +32,18 @@ export class NbAuthGoogleStrategy extends NbOAuth2AuthStrategy {
     return [NbAuthGoogleStrategy, options]; // HERE we make sure our strategy return correct class reference
   }
 }
+<<<<<<< HEAD
+=======
+export class AuthAzureToken extends NbAuthOAuth2JWTToken {
+
+  // let's rename it to exclude name clashes
+  static NAME = 'nb:auth:azure:token';
+
+  getValue(): string {
+    return this.token.id_token;
+  }
+}
+>>>>>>> f3bb94f6595f965b6ef453ebba8f2ed8d92d012a
 
 @Injectable()
 export class NbAuthAzureStrategy extends NbOAuth2AuthStrategy {
@@ -107,6 +121,7 @@ export const STRATEGIES = [
         clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
         authorize: {
           endpoint: environment.authAzureStrategy.endpoint,
+<<<<<<< HEAD
           responseType: NbOAuth2ResponseType.CODE,
           redirectUri: environment.authAzureStrategy.redirectUri,
           scope: 'openid profile email',
@@ -120,6 +135,18 @@ export const STRATEGIES = [
         refresh: {
           endpoint: environment.authAzureStrategy.refreshTokenEndpoint,
           grantType: NbOAuth2GrantType.REFRESH_TOKEN,
+=======
+          responseType: NbOAuth2ResponseType.TOKEN,
+          scope: 'openid profile',
+          redirectUri: environment.authAzureStrategy.redirectUri,
+          params: {
+            nonce: NbOAuth2ClientAuthMethod.NONE,
+          }
+        },
+        token: {
+          endpoint: 'token',
+          class: AuthAzureToken,
+>>>>>>> f3bb94f6595f965b6ef453ebba8f2ed8d92d012a
         },
         redirect: {
           success: environment.authAzureStrategy.success

@@ -33,11 +33,11 @@ export class AuthRouteLoginComponent {
 
   google = (): void => this.handle(this.config.strategyGoogleName);
 
-  azure = (): void => this.handle(this.config.strategyAzureName);
+  azure = (): void => this.handle(this.config?.strategyAzureName);
 
 
 
-  handle(strategyName: string): void {
+  handle(strategyName: any): void {
     const toastRef: NbToastRef = this.nbToastrService.success('Validando estrategia de autenticación...', 'Iniciando sesion...');
     this.spinner = true;
 

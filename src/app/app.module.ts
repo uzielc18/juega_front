@@ -25,6 +25,7 @@ import {NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule} from "ngx-goog
     AppRoutingModule,
     NgxGoogleAnalyticsModule.forRoot('G-WTC08NZJXC'),
     NgxGoogleAnalyticsRouterModule,
+
   ],
   providers: [
     STRATEGIES,

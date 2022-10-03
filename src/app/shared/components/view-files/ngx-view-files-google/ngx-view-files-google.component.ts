@@ -73,7 +73,7 @@ export class NgxViewFilesGoogleComponent implements OnInit, OnChanges {
       type: 'get',
       directory: this.directGogle,
       key: this.valueFile.nombre, // name s3
-      id_carga_curso_docente_array: '0'
+      id_carga_curso_docente_array: '0',
       // 127805_200110121_17603.pdf
     };
     // console.log(params, 'paramssssssssssssssssss');
