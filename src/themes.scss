@@ -71,15 +71,16 @@ $theme1: (
   color-danger-900: #5F0725);
 
 $theme2: (
-  header-background-color: color-primary-900,
+
+  header-background-color: color-primary-500,
   header-text-color: color-basic-100,
   header-shadow: none,
 
   sidebar-background-color: color-primary-900,
   sidebar-text-color: color-primary-700,
   sidebar-shadow: none,
-
-  menu-background-color: color-primary-900,
+  siderbar-padding:1 rem 1rem !important,
+  menu-background-color: color-primary-500,
   menu-text-color: color-basic-100,
   menu-submenu-text-color: color-basic-100,
   menu-group-text-color: color-basic-100,
@@ -89,6 +90,9 @@ $theme2: (
   menu-item-active-text-color: color-warning-500,
   menu-item-active-background-color: color-primary-900,
   menu-item-hover-text-color: color-warning-400,
+  menu-item-border-radius:10px,
+
+  background-color: color-primary-900,
 
   color-primary-50: #f5f8fa,
   color-primary-100: #C9FAF9,
