@@ -121,7 +121,7 @@ export const STRATEGIES = [
         clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
         authorize: {
           endpoint: environment.authAzureStrategy.endpoint,
-<<<<<<< HEAD
+
           responseType: NbOAuth2ResponseType.CODE,
           redirectUri: environment.authAzureStrategy.redirectUri,
           scope: 'openid profile email',
@@ -135,18 +135,6 @@ export const STRATEGIES = [
         refresh: {
           endpoint: environment.authAzureStrategy.refreshTokenEndpoint,
           grantType: NbOAuth2GrantType.REFRESH_TOKEN,
-=======
-          responseType: NbOAuth2ResponseType.TOKEN,
-          scope: 'openid profile',
-          redirectUri: environment.authAzureStrategy.redirectUri,
-          params: {
-            nonce: NbOAuth2ClientAuthMethod.NONE,
-          }
-        },
-        token: {
-          endpoint: 'token',
-          class: AuthAzureToken,
->>>>>>> f3bb94f6595f965b6ef453ebba8f2ed8d92d012a
         },
         redirect: {
           success: environment.authAzureStrategy.success
