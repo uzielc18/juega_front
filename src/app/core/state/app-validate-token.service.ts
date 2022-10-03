@@ -73,6 +73,12 @@ export class AppValidateTokenService {
     const encodeParamRequest = encodeURIComponent(`${paramRequest}`);
     this.document.location.href = `${environment.authGoogleStrategy.endpoint}/accounts/logout?${next}${encodeParamRequest}`;
   }
+  authorizeAzure(): void {
+    const paramRequest = AppValidateTokenService.paramsAzure();
+    const next = 'next=/oauth/authorize/';
+    const encodeParamRequest = encodeURIComponent(`${paramRequest}`);
+    this.document.location.href = `${environment.authAzureStrategy.endpoint}/accounts/logout?${next}${encodeParamRequest}`;
+  }
 
   // authorize(): void {
   //   const next = 'next=' +  '/oauth/authorize/';
@@ -107,5 +113,13 @@ export class AppValidateTokenService {
     );
     const scope = 'read introspection';
     return `?response_type=token&client_id=${environment.authGoogleStrategy.clientId}&scope=${scope}&redirect_uri=${redirectUri}`;
+  }
+  private static paramsAzure(): string {
+    console.log("holaa")
+    const redirectUri = encodeURIComponent(
+      environment.authAzureStrategy.redirectUri
+    );
+    const scope = 'read introspection';
+    return `?response_type=token&client_id=${environment.authAzureStrategy.clientId}&scope=${scope}&redirect_uri=${redirectUri}`;
   }
 }

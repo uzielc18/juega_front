@@ -22,6 +22,17 @@ export const environment = {
     redirectUri: `${window.location.origin}/auth/google/callback`,
     success: '/pages/dashboard',
   },
+  authAzureStrategy: {
+    name: '_azure_strategy',
+    clientId:
+      '700888e6-1816-490e-9f6b-13255282f84f',
+    clientSecret: 'ulJ8Q~2JnL_8gFBvjBCU9b_EOwFHkqfIOPyHGdcc',
+    endpoint: 'https://login.microsoftonline.com/cfbd88b4-94bc-4fba-98bd-64d0726394a3/oauth2/v2.0/authorize',
+    tokenEndpoint: 'https://login.microsoftonline.com/cfbd88b4-94bc-4fba-98bd-64d0726394a3/oauth2/v2.0/token',
+    refreshTokenEndpoint: 'https://login.microsoftonline.com/cfbd88b4-94bc-4fba-98bd-64d0726394a3/oauth2/v2.0/token',
+    redirectUri: `${window.location.origin}/auth/azure/callback`,
+    success: '/pages/dashboard',
+  },
   apiUrls: {
     auth: API.auth.dev,
     setup: API.setup.dev,

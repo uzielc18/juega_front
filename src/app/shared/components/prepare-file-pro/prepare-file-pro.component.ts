@@ -20,6 +20,7 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
   @Input() numFiles: number = 10; // no modificar
   accept: any;
   @Input() listArrayFile: any = [];
+  @Input() validBtn: any;
   loading: boolean = false;
   @Input() viewFile: string = 'ARRAY';
   @Input() fullWidth: boolean = true;
