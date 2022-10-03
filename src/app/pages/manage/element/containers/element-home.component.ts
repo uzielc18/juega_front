@@ -221,7 +221,7 @@ export class ElementHomeComponent implements OnInit {
     this.loading = true;
     const params = {
       semester_id: semester_id,
-      person_id: teacher_id,
+      person_id: teacher_id || this.appService?.user?.person?.id,
     };
     this.generalService.nameParams$(serviceName, params).subscribe(
       (res: any) => {
