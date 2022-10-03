@@ -98,7 +98,7 @@ export const STRATEGIES = [
           grantType: NbOAuth2GrantType.REFRESH_TOKEN,
         },
         redirect: {
-          success: environment.authGoogleStrategy.success
+          success: environment.authGoogleStrategy.success,
         },
 
       }),
@@ -109,7 +109,6 @@ export const STRATEGIES = [
         clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
         authorize: {
           endpoint: environment.authAzureStrategy.endpoint,
-
           responseType: NbOAuth2ResponseType.CODE,
           redirectUri: environment.authAzureStrategy.redirectUri,
           scope: 'openid profile email',
@@ -118,14 +117,14 @@ export const STRATEGIES = [
           endpoint: environment.authAzureStrategy.tokenEndpoint,
           grantType: NbOAuth2GrantType.AUTHORIZATION_CODE,
           redirectUri: environment.authAzureStrategy.redirectUri,
-          class: NbAuthOAuth2Token
+          class: NbAuthOAuth2Token,
         },
         refresh: {
           endpoint: environment.authAzureStrategy.refreshTokenEndpoint,
           grantType: NbOAuth2GrantType.REFRESH_TOKEN,
         },
         redirect: {
-          success: environment.authAzureStrategy.success
+          success: environment.authAzureStrategy.success,
         },
 
       }),
