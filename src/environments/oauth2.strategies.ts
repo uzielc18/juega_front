@@ -13,6 +13,8 @@ import {
 import { of } from 'rxjs';
 import { environment } from './environment';
 import {catchError, map, switchMap} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
+import {ActivatedRoute} from "@angular/router";
 
 @Injectable()
 export class NbAuthLambStrategy extends NbOAuth2AuthStrategy {
@@ -30,7 +32,6 @@ export class NbAuthGoogleStrategy extends NbOAuth2AuthStrategy {
     return [NbAuthGoogleStrategy, options]; // HERE we make sure our strategy return correct class reference
   }
 }
-// Create new token for Azure auth so it returns id_token instead of access_token
 export class AuthAzureToken extends NbAuthOAuth2JWTToken {
 
   // let's rename it to exclude name clashes
@@ -188,14 +189,15 @@ export const STRATEGIES = [
         clientSecret: environment.authAzureStrategy.clientSecret,
         authorize: {
           endpoint: environment.authAzureStrategy.endpoint,
-          responseType: 'id_token',
-          scope: 'openid',
+          responseType: NbOAuth2ResponseType.TOKEN,
+          scope: 'openid profile',
           redirectUri: environment.authAzureStrategy.redirectUri,
           params: {
-            nonce: NbOAuth2ClientAuthMethod.NONE
+            nonce: NbOAuth2ClientAuthMethod.NONE,
           }
         },
         token: {
+          endpoint: 'token',
           class: AuthAzureToken,
         },
         redirect: {
