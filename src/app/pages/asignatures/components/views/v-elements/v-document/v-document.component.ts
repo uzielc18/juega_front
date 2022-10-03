@@ -13,6 +13,7 @@ export class VDocumentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
   }
 
   getDirectoy() {

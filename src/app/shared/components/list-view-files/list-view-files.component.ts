@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { NbDialogService } from '@nebular/theme';
 import { MViewFilesComponent } from '../view-files/m-view-files/m-view-files.component';
 import Swal from 'sweetalert2';
+import {DIRECTORY} from "../../directorios/directory";
 
 @Component({
   selector: 'app-list-view-files',
@@ -17,6 +18,7 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
   @Input() director: any;
   @Output() fileValue: EventEmitter<any> = new EventEmitter();
   @Output() deleteFileEmit: EventEmitter<any> = new EventEmitter();
+  directorio: any = DIRECTORY.courses;
   constructor(private dialogService: NbDialogService) { }
 
   ngOnChanges():void {
@@ -83,6 +85,8 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
     return icon;
   }
   valueFile(item:any) {
+    let copiaDirectory: any = this.getDirectoy(item);
+    console.log(item)
     this.recorrerSelected(item);
     // if (['YOUTUBE', 'SOUNDCLOUD', 'VIMEO', 'REFERENCIA'].includes(item.ext)) {
 
@@ -96,7 +100,7 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
             dialogClass: 'dialog-limited-height',
             context: {
               item: item,
-              director: this.director,
+              director: item.copia_id_carga_curso_docente === null? this.director: copiaDirectory,
             },
             closeOnBackdropClick: false,
             closeOnEsc: false
@@ -112,6 +116,14 @@ export class ListViewFilesComponent implements OnInit, OnChanges {
 
     // }
   }
+  getDirectoy(item: any) {
+    if (item && item?.copia_id_carga_curso_docente) {
+      return this.directorio + '/' + item?.copia_id_carga_curso_docente + '/documents';
+    } else {
+      return '';
+    }
+  }
+
   recorrerSelected(item:any) {
     if (this.arrayFiles.length>0) {
       this.arrayFiles.map((r:any) => {
