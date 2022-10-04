@@ -1,0 +1,19 @@
+nb-sidebar.expanded :host{
+  .text2 small::before{
+    content: 'Pendientes';
+  }
+}
+nb-sidebar.compacted :host {
+  .text2 small::before{
+    content: 'P';
+  }
+  hr{
+    display: none;
+  }
+  nb-list-item{
+    padding: 0;
+  }
+  .list-text{
+    display: none;
+  }
+}

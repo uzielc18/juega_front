@@ -701,4 +701,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     }
 
   }
+  toggleCompact(){
+    this.sidebarService.toggle(true, 'right');
+  }
 }
