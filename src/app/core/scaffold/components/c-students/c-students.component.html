@@ -12,7 +12,11 @@
           <div class="flex-grow-1 list-text" style="margin-left:10px">
             <div class="d-flex flex-column align-items-baseline">
               <small style="font-weight: bold; color: var(--color-primary-500)">{{item.nombre}}</small>
-              <small style="font-size: 10px" class="label">14 septiembre 2022</small>
+              <small
+                style="font-size: 10px"
+                [ngStyle]="{'color': item.estado_usuario === 'ausente'? '#ffaa00':
+                item.estado_usuario === 'ofline'? '#D0D3DB':
+                '#529871'}">{{item.estado_usuario === 'ausente'? 'Ausente' : item.estado_usuario === 'ofline'? 'Ofline' : 'Conectado'}}</small>
             </div>
           </div>
         </div>
