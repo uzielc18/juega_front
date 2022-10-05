@@ -64,6 +64,7 @@ import {MNotificationsModule} from "../shared/components/notifications/modal/m-n
 import { AuthRouteAzureComponent } from './auth/contents/auth-route-azure/auth-route-azure.component';
 import { CPendingsComponent } from './scaffold/components/c-pendings/c-pendings.component';
 import { CStudentsComponent } from './scaffold/components/c-students/c-students.component';
+import { CPendingsTimeComponent } from './scaffold/components/c-pendings/components/c-pendings-time/c-pendings-time.component';
 registerLocaleData(localePe);
 const ANGULAR: any[] = [
   CommonModule,
@@ -78,7 +79,8 @@ const ANGULAR: any[] = [
     AuthRouteGoogleComponent,
     AuthRouteAzureComponent,
     CPendingsComponent,
-    CStudentsComponent
+    CStudentsComponent,
+    CPendingsTimeComponent
   ], // add
   imports: [
     ...ANGULAR,
