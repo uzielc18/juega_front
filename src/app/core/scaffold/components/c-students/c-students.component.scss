@@ -1,11 +1,23 @@
 nb-sidebar.expanded :host{
+  .user-imagen{
+    height: -webkit-fill-available;
+    border-radius: 50%;
+    border: 0.2rem solid #bebe3a;
+  }
   .text2 small::before{
-    content: 'Pendientes';
+    content: 'Compañeros';
   }
 }
 nb-sidebar.compacted :host {
+  .user-imagen{
+    margin-left: -0.6rem;
+    height: -webkit-fill-available;
+    border-radius: 50%;
+    border: 0.2rem solid #bebe3a;
+  }
   .text2 small::before{
-    content: 'P';
+    content: 'C';
+    padding: 1rem;
   }
   hr{
     display: none;
@@ -13,7 +25,7 @@ nb-sidebar.compacted :host {
   nb-list-item{
     padding: 0;
   }
-  .list-text{
-    display: none;
+  div.user-container>.info-container{
+    display: none !important;
   }
 }
