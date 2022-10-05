@@ -1,0 +1,26 @@
+<div class="text2 d-flex justify-content-between align-items-center">
+  <hr style="width: 60px; background-color: var(--color-primary-400)">
+  <h5></h5>
+  <hr style="width: 60px; background-color: var(--color-primary-400)">
+</div>
+<div>
+  <div>
+    <nb-list *ngFor="let item of data">
+      <nb-list-item style="background-color: #FFFFFF; border-radius: 10px; margin: 3px 0; padding: 10px">
+        <div class="d-flex justify-content-between align-items-center">
+          <img [ngStyle]="{'border': item.estado_usuario === 'ausente'? '0.2rem solid #ffaa00': item.estado_usuario === 'ofline'? '0.2rem solid #D0D3DB': '0.2rem solid #529871'}" [src]="item.imagen" alt="" class="user-imagen">
+          <div class="flex-grow-1 list-text" style="margin-left:10px">
+            <div class="d-flex flex-column align-items-baseline">
+              <small style="font-weight: bold; color: var(--color-primary-500)">{{item.nombre}}</small>
+              <small
+                style="font-size: 10px"
+                [ngStyle]="{'color': item.estado_usuario === 'ausente'? '#ffaa00':
+                item.estado_usuario === 'ofline'? '#D0D3DB':
+                '#529871'}">{{item.estado_usuario === 'ausente'? 'Ausente' : item.estado_usuario === 'ofline'? 'Ofline' : 'Conectado'}}</small>
+            </div>
+          </div>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </div>
+</div>

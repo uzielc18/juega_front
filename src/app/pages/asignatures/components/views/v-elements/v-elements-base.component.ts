@@ -27,6 +27,7 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
   bgColors: any[] = ['#57884e20', '#8ba64220', '#f9c85120', '#f9a65a20', '#f97a5a20', '#f94a5a20', '#f9065a20'];
   pending: any;
   listResponses: any = [];
+  datoSubscription: any = Subscription;
   eventsSubject: Subject<void> = new Subject<void>();
   constructor(
     private userService: AppService,
@@ -41,9 +42,18 @@ export class VElementsBaseComponent implements OnInit, OnDestroy {
     this.getElement();
     this.getUserInfo();
     this.emitEventsService.blockEnviar({ from: 'Asignaturas', status: true });
+    this.datoSubscription = this.emitEventsService.returnsUrl().subscribe(value => { // para emitir evento desde la cabecera
+      if(value){
+        this.elementId = value.element_id
+        this.idCargaCursoDocente = value.id_carga_curso_docente;
+        this.getElement();
+        this.getUserInfo();
+      }
+    });
   }
   ngOnDestroy(): void {
     this.emitEventsService.blockEnviar({ from: 'Asignaturas', status: false });
+    this.datoSubscription.unsubscribe();
   }
 
   get rolSemestre() {

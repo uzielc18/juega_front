@@ -9,66 +9,66 @@
       </nb-actions>
       <nb-actions class="flex-grow-1" >
         <nb-action  class="flex-grow-1 justify-content-end" >
-            <div class="flex-grow-1 div-Class" #searhEvent *ngIf="userSimulate?.id !== rolSimulate?.id && userSimulate === null">
-              <div class="input-wrapper">
-                <input *ngIf="statusSearch"
-                       type="text"
-                       class="input2"
-                       placeholder="Buscar..."
-                       nbInput
-                       fullWidth
-                       [formControl]="search"
-                       fieldSize="small"
-                       (keyup.enter)="searchEnter($event)">
-                <button [ngStyle]="{'display':statusSearch === false? 'none': 'block' }" class="icon-button" *ngIf="data.length !== 0 " nbSuffix nbButton size="small" ghost (click)="resetInput()">
-                  <nb-icon icon="close-square-outline" pack="eva" style="color: red"></nb-icon>
-                </button>
-              </div>
-
-              <div *ngIf="statusSearch" class="position-relative" style="height: 0" [ngStyle]="{'display': data.length !== 0? 'block': 'none'}">
-                <ul class="list-group position-absolute top-0 start-0 w-100" style="z-index: 9999; max-height: 500px; height: 50vh;">
-                  <li class="list-group-item list-group-item-action" *ngIf="search.value != ''">Buscar "{{search.value}}"</li>
-                  <li class="list-group-item" style="overflow-y: auto"
-                      *ngIf="data.length !== 0">
-                    <div class="d-flex justify-content-between flex-wrap-reverse animations" *ngFor="let item of data" style="border: 1px solid #CED9E6; margin:10px 2px; padding: 8px 0 8px 5px; height: auto; cursor: pointer" (click)="urlEvent(item)">
-                      <div class="d-flex justify-content-start align-items-center" >
-                        <div>
-                          <img [src]="item.imagen" alt="" width="80px">
-                        </div>
-                        <div style="margin-left: 10px">
-                          <small><strong>{{item.titulo | titlecase}}</strong></small><br>
-                          <small class="label" style="font-size: 12px" *ngIf="item.hora !== 'online'">Ultimo acceso hace {{item.hora}}</small>
-                          <small style="font-size: 12px; color: var(--color-success-500)" *ngIf="item.hora === 'online'">{{item.hora}}</small><br>
-                          <small><strong>detalle: </strong> {{item.detalle}}</small>
-                        </div>
-                      </div>
-                      <div style="right: 0; top: 5px;">
-                        <span class="badge bg-warning" *ngIf="item.tipo === 'persona'" style="text-transform: uppercase; font-size: 10px;">Persona</span>
-                        <span class="badge bg-success" *ngIf="item.tipo === 'cursos'" style="text-transform: uppercase; font-size: 10px;">Curso</span>
-                      </div>
-                    </div>
-
-                  </li>
-                  <li *ngIf="data.length !== 0" class="list-group-item list-group-item-action">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap" style="border: 1px dashed #CED9E6; margin:2px 1px; padding: 6px 15px; height: auto">
-                      <small><strong>Coincidencias</strong></small>
-                      <small>Personas: {{countPerson}}</small>
-                      <small>Cursos: {{countCourse}}</small>
-                      <small>Elementos: </small>
-                      <!--<button nbButton size="tiny" status="info">Ver todos</button>-->
-                    </div>
-                  </li>
-                  <li class="list-group-item list-group-item-action" *ngIf="countPerson == 0 && countCourse === 0">No se encontraron resultados</li>
-                </ul>
-              </div>
+          <div class="flex-grow-1 div-Class" #searhEvent *ngIf="userSimulate?.id !== rolSimulate?.id && userSimulate === null">
+            <div class="input-wrapper">
+              <input *ngIf="statusSearch"
+                     type="text"
+                     class="input2"
+                     placeholder="Buscar..."
+                     nbInput
+                     fullWidth
+                     [formControl]="search"
+                     fieldSize="small"
+                     (keyup.enter)="searchEnter($event)">
+              <button [ngStyle]="{'display':statusSearch === false? 'none': 'block' }" class="icon-button" *ngIf="data.length !== 0 " nbSuffix nbButton size="small" ghost (click)="resetInput()">
+                <nb-icon icon="close-square-outline" pack="eva" style="color: red"></nb-icon>
+              </button>
             </div>
-            <button *ngIf="statusSearch === false" nbButton
-                    ghost
-                    status="primary"
-                    size="medium"
-                    (click)="searchClicOpen(statusSearch)">
-              <nb-icon icon="search-outline"></nb-icon>
-            </button>
+
+            <div *ngIf="statusSearch" class="position-relative" style="height: 0" [ngStyle]="{'display': data.length !== 0? 'block': 'none'}">
+              <ul class="list-group position-absolute top-0 start-0 w-100" style="z-index: 9999; max-height: 500px; height: 50vh;">
+                <li class="list-group-item list-group-item-action" *ngIf="search.value != ''">Buscar "{{search.value}}"</li>
+                <li class="list-group-item" style="overflow-y: auto"
+                    *ngIf="data.length !== 0">
+                  <div class="d-flex justify-content-between flex-wrap-reverse animations" *ngFor="let item of data" style="border: 1px solid #CED9E6; margin:10px 2px; padding: 8px 0 8px 5px; height: auto; cursor: pointer" (click)="urlEvent(item)">
+                    <div class="d-flex justify-content-start align-items-center" >
+                      <div>
+                        <img [src]="item.imagen" alt="" width="80px">
+                      </div>
+                      <div style="margin-left: 10px">
+                        <small><strong>{{item.titulo | titlecase}}</strong></small><br>
+                        <small class="label" style="font-size: 12px" *ngIf="item.hora !== 'online'">Ultimo acceso hace {{item.hora}}</small>
+                        <small style="font-size: 13px; color: var(--color-success-500); font-weight: bold" *ngIf="item.hora === 'online'">{{item.hora}}</small><br>
+                        <small><strong>detalle: </strong> {{item.detalle}}</small>
+                      </div>
+                    </div>
+                    <div style="right: 0; top: 5px;">
+                      <span class="badge bg-warning" *ngIf="item.tipo === 'persona'" style="text-transform: uppercase; font-size: 10px;">Persona</span>
+                      <span class="badge bg-success" *ngIf="item.tipo === 'cursos'" style="text-transform: uppercase; font-size: 10px;">Curso</span>
+                    </div>
+                  </div>
+
+                </li>
+                <li *ngIf="data.length !== 0" class="list-group-item list-group-item-action">
+                  <div class="d-flex justify-content-between align-items-center flex-wrap" style="border: 1px dashed #CED9E6; margin:2px 1px; padding: 6px 15px; height: auto">
+                    <small><strong>Coincidencias</strong></small>
+                    <small>Personas: {{countPerson}}</small>
+                    <small>Cursos: {{countCourse}}</small>
+                    <small>Elementos: </small>
+                    <!--<button nbButton size="tiny" status="info">Ver todos</button>-->
+                  </div>
+                </li>
+                <li class="list-group-item list-group-item-action" *ngIf="countPerson == 0 && countCourse === 0">No se encontraron resultados</li>
+              </ul>
+            </div>
+          </div>
+          <button *ngIf="statusSearch === false" nbButton
+                  ghost
+                  status="primary"
+                  size="medium"
+                  (click)="searchClicOpen(statusSearch)">
+            <nb-icon icon="search-outline"></nb-icon>
+          </button>
           <button *ngIf="statusSearch === true" nbButton
                   ghost
                   status="primary"
@@ -79,7 +79,7 @@
         </nb-action>
 
         <nb-action *ngIf="userSimulate?.id === rolSimulate?.id && userSimulate !== null">
-              <button nbButton size="small" status="warning" (click)="logoutSimular()">Dejar de simular</button>
+          <button nbButton size="small" status="warning" (click)="logoutSimular()">Dejar de simular</button>
         </nb-action>
         <nb-action *ngIf="rolSemestre?.rol?.name !== 'Estudiante'">
           <button nbButton ghost nbTooltip="Crear elementos" nbTooltipStatus="primary" nbTooltipPlacement="left" status="primary" size="medium" (click)="newElements()"><nb-icon icon="plus-outline"></nb-icon></button>
@@ -123,7 +123,7 @@
                       (selectedChange)="changeSemestre()"
                     >
                       <nb-option *ngFor="let semestre of semestres; let i = index" [value]="semestre.id"
-                        >Semestre - {{ semestre.nombre }}</nb-option
+                      >Semestre - {{ semestre.nombre }}</nb-option
                       >
                     </nb-select>
                   </div>
@@ -168,37 +168,37 @@
             </ng-template>
           </div>
         </nb-action>-->
-       <!-- <nb-action class="d-none d-md-flex">
-          <form [formGroup]="formHeader" >
-            <div [nbPopover]="templat" nbPopoverPlacement="bottom" style="cursor: pointer">
-              <img [src]="logoLangs" height="20px" alt="" />
-            </div>
-            <ng-template #templat>
-              <nb-card style="padding-bottom: 0px">
-                <nb-card-header style="padding-top: 8px; padding-bottom: 8px"> Cambiar idioma </nb-card-header>
-                <nb-card-body style="padding-top: 3px; padding-bottom: 0px">
-                  <div>
-                    <label class="label">Lenguaje</label><br />
-                    <nb-radio-group formControlName="lenguaje" (ngModelChange)="changesLangs()">
-                      <nb-radio *ngFor="let item of listLanguages" [value]="item.code"
-                        >&nbsp;&nbsp;&nbsp;&nbsp;<img [src]="item?.img" height="20px" alt="" />&nbsp;&nbsp;{{
-                          item?.name
-                        }}</nb-radio
-                      >
-                    </nb-radio-group>
-                  </div>
-                </nb-card-body>
-                 <br>
-                    <div class="text-center">
-                        <button nbButton outline size="tiny" hero status="primary">
-                          Guardar
-                        </button>
-                      </div>
-              </nb-card>
-            </ng-template>
-          </form>
-          ///email [title]="user?.email"
-        </nb-action>-->
+        <!-- <nb-action class="d-none d-md-flex">
+           <form [formGroup]="formHeader" >
+             <div [nbPopover]="templat" nbPopoverPlacement="bottom" style="cursor: pointer">
+               <img [src]="logoLangs" height="20px" alt="" />
+             </div>
+             <ng-template #templat>
+               <nb-card style="padding-bottom: 0px">
+                 <nb-card-header style="padding-top: 8px; padding-bottom: 8px"> Cambiar idioma </nb-card-header>
+                 <nb-card-body style="padding-top: 3px; padding-bottom: 0px">
+                   <div>
+                     <label class="label">Lenguaje</label><br />
+                     <nb-radio-group formControlName="lenguaje" (ngModelChange)="changesLangs()">
+                       <nb-radio *ngFor="let item of listLanguages" [value]="item.code"
+                         >&nbsp;&nbsp;&nbsp;&nbsp;<img [src]="item?.img" height="20px" alt="" />&nbsp;&nbsp;{{
+                           item?.name
+                         }}</nb-radio
+                       >
+                     </nb-radio-group>
+                   </div>
+                 </nb-card-body>
+                  <br>
+                     <div class="text-center">
+                         <button nbButton outline size="tiny" hero status="primary">
+                           Guardar
+                         </button>
+                       </div>
+               </nb-card>
+             </ng-template>
+           </form>
+           ///email [title]="user?.email"
+         </nb-action>-->
         <nb-action [nbContextMenu]="userMenu" class="d-none d-md-flex">
           <nb-user
             class="header-user"
@@ -213,14 +213,14 @@
       <!-- --------------------buscador-------------------- -->
       <div *ngIf="statusSearch" class="div-Class-open me-2" #searhEvent2>
         <input
-               class="input2"
-               type="text"
-               placeholder="Buscar..."
-               nbInput
-               fullWidth
-               [formControl]="search"
-               fieldSize="small"
-               (keyup.enter)="searchEnter($event)">
+          class="input2"
+          type="text"
+          placeholder="Buscar..."
+          nbInput
+          fullWidth
+          [formControl]="search"
+          fieldSize="small"
+          (keyup.enter)="searchEnter($event)">
         <div *ngIf="statusSearch" class="" style="height: 0" [ngStyle]="{'display': data.length !== 0? 'block': 'none'}">
           <ul class="list-group position-absolute top-100 start-0 w-100" style="z-index: 9999; max-height: 500px; height: 50vh;">
             <li class="list-group-item list-group-item-action" *ngIf="search.value != ''">Buscar "{{search.value}}"</li>
@@ -361,7 +361,7 @@
                 </div>
               </nb-card>
             </ng-template>
-            </div>
+          </div>
         </div>
 
       </div>
@@ -404,11 +404,28 @@
 
       </nb-sidebar-footer>
     </nb-sidebar>
-    <nb-layout-column class="p-2 ps-0 background">
-      <router-outlet></router-outlet>
-    </nb-layout-column>
-    <nb-layout-footer class="d-block d-md-none header-actions fixed">
 
+    <nb-layout-column style="position:relative;" class="p-0 ps-0 background">
+      <router-outlet></router-outlet>
+
+      <div class="btn-collpse">
+        <span class="tweak-button rights" (click)="toggleCompact()">
+              <span>&#9830;</span>
+              <span>&#9830;</span>
+              <span>&#9830;</span>
+        </span>
+      </div>
+    </nb-layout-column>
+
+    <nb-sidebar [responsive]="responsiveValue2" right tag="right">
+      <div class="showTools">
+        <div class="container-tools">
+          <app-c-pendings></app-c-pendings>
+          <app-c-students></app-c-students>
+        </div>
+      </div>
+    </nb-sidebar>
+    <nb-layout-footer class="d-block d-md-none header-actions fixed">
       <nb-actions>
         <nb-action class="text-white">Copyright © {{ date | date: 'yyyy' }} UPeU</nb-action>
       </nb-actions>
@@ -426,8 +443,8 @@
                     <label class="label">Lenguaje</label><br />
                     <nb-radio-group formControlName="lenguaje" (ngModelChange)="changesLangs()">
                       <nb-radio *ngFor="let item of listLanguages" [value]="item.code"
-                        >&nbsp;&nbsp;&nbsp;&nbsp;<img [src]="item?.img" height="20px" alt="" />&nbsp;&nbsp;{{
-                          item?.name
+                      >&nbsp;&nbsp;&nbsp;&nbsp;<img [src]="item?.img" height="20px" alt="" />&nbsp;&nbsp;{{
+                        item?.name
                         }}</nb-radio
                       >
                     </nb-radio-group>
