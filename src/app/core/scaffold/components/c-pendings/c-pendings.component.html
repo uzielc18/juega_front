@@ -9,7 +9,7 @@
     <nb-list *ngFor="let item of data">
       <nb-list-item class="animations" [nbTooltip]="item.titulo | uppercase" nbTooltipPlacement="left" style="background-color: #FFFFFF; border-radius: 10px; margin: 3px 0; padding: 9px;" (click)="locationElement(item)">
           <div class="d-flex justify-content-between align-items-center" >
-            <nb-icon class="list-icon" [icon]="item.ico"></nb-icon>
+            <nb-icon class="list-icon" [ngStyle]="{'color': item.background}" [icon]="item.ico"></nb-icon>
             <div class="flex-grow-1 list-text" style="margin-left:10px">
               <div class="d-flex flex-column align-items-baseline">
                 <small style="font-weight: bold; color: var(--color-primary-500)">{{item.curso_nombre}}</small>

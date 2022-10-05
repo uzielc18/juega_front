@@ -11,7 +11,7 @@
           <img [ngStyle]="{'border': item.estado_usuario === 'ausente'? '0.2rem solid #ffaa00': item.estado_usuario === 'ofline'? '0.2rem solid #D0D3DB': '0.2rem solid #529871'}" [src]="item.imagen" alt="" class="user-imagen">
           <div class="flex-grow-1 list-text" style="margin-left:10px">
             <div class="d-flex flex-column align-items-baseline">
-              <small style="font-weight: bold; color: var(--color-primary-500)">{{item.nombre}}</small>
+              <small style="font-weight: bold; color: var(--color-primary-500); text-align: left;font-size: 11px;">{{item.nombre}}</small>
               <small
                 style="font-size: 10px"
                 [ngStyle]="{'color': item.estado_usuario === 'ausente'? '#ffaa00':
