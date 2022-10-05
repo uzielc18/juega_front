@@ -80,4 +80,11 @@ export class EmitEventsService {
   returnsCurso(): Observable<any> {
     return this.valuesCurso$.asObservable();
   }
+  enviarUrl(value: any) {
+    this.valuesEmail$.next(value);
+  }
+
+  returnsUrl(): Observable<any> {
+    return this.valuesEmail$.asObservable();
+  }
 }
