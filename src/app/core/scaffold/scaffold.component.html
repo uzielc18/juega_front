@@ -407,13 +407,17 @@
 
     <nb-layout-column style="position:relative;" class="p-0 ps-0 background">
       <router-outlet></router-outlet>
-      <span class="tweak-button rights" (click)="toggleCompact()">
+
+      <div class="btn-collpse">
+        <span class="tweak-button rights" (click)="toggleCompact()">
               <span>&#9830;</span>
               <span>&#9830;</span>
               <span>&#9830;</span>
-      </span>
+        </span>
+      </div>
     </nb-layout-column>
-    <nb-sidebar responsive right tag="right">
+
+    <nb-sidebar [responsive]="responsiveValue2" right tag="right">
       <div class="showTools">
         <div class="container-tools">
           <app-c-pendings></app-c-pendings>

@@ -1,22 +1,26 @@
 <div class="text2 d-flex justify-content-between align-items-center">
   <hr  style="width: 60px; background-color: var(--color-primary-400)">
-  <small></small>
+  <h5></h5>
   <hr style="width: 60px; background-color: var(--color-primary-400)">
 </div>
-<div>
+<div  >
   <div>
-    <nb-list>
-      <nb-list-item style="background-color: #FFFFFF; border-radius: 10px; margin: 3px 0; padding: 10px">
-        <div class="d-flex justify-content-between align-items-center">
-          <nb-icon class="list-icon" icon="edit"></nb-icon>
-          <div class="flex-grow-1 list-text" style="margin-left:10px">
-            <div class="d-flex flex-column align-items-baseline">
-              <small>Trabajo 1</small>
-              <small class="label">14 septiembre 2022</small>
+    <!--<nb-icon icon="arrow-ios-upward"></nb-icon>-->
+    <nb-list *ngFor="let item of data">
+      <nb-list-item class="animations" [nbTooltip]="item.tipo" nbTooltipPlacement="left" style="background-color: #FFFFFF; border-radius: 10px; margin: 3px 0; padding: 9px;" (click)="locationElement(item)">
+          <div class="d-flex justify-content-between align-items-center" >
+            <nb-icon class="list-icon" [icon]="item.ico"></nb-icon>
+            <div class="flex-grow-1 list-text" style="margin-left:10px">
+              <div class="d-flex flex-column align-items-baseline">
+                <small style="font-weight: bold; color: var(--color-primary-500)">{{item.curso_nombre}}</small>
+                <small>{{item.titulo}}</small>
+                <small style="color: var(--color-danger-500); font-size: 10px"><strong>Vence: </strong>{{daysLeft | i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} </small>
+              </div>
             </div>
           </div>
-        </div>
+
       </nb-list-item>
     </nb-list>
+    <!--<nb-icon icon="arrow-ios-downward" (click)="arrowDown"></nb-icon>-->
   </div>
 </div>

@@ -3,29 +3,45 @@ nb-sidebar.expanded :host{
     height: -webkit-fill-available;
     border-radius: 50%;
     border: 0.2rem solid #bebe3a;
+    width: 40px
   }
-  .text2 small::before{
+  .text2 h5::before{
     content: 'Compañeros';
+  }
+  img{
+
   }
 }
 nb-sidebar.compacted :host {
   .user-imagen{
-    margin-left: -0.6rem;
+    //margin-left: -0.6rem;
     height: -webkit-fill-available;
     border-radius: 50%;
     border: 0.2rem solid #bebe3a;
+    width: 35px
   }
-  .text2 small::before{
+  .text2 h5::before{
     content: 'C';
     padding: 1rem;
   }
   hr{
     display: none;
   }
+  .list-text{
+    display: none;
+  }
   nb-list-item{
-    padding: 0;
+    padding: 0 !important;
+    background-color: transparent !important;
   }
   div.user-container>.info-container{
     display: none !important;
   }
+  img{
+
+  }
+}
+h5{
+  font-size: 12px;
+  color: var(--color-primary-400);
 }

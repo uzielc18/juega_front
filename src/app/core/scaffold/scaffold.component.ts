@@ -37,6 +37,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   disableCollapse: boolean = false;
   stateSidebar: any;
   responsiveValue: boolean = false;
+  responsiveValue2: any;
   relojTime: any;
   timezone: any
   MENU_ITEMS: NbMenuItem[] = [];
@@ -146,12 +147,20 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       this.horaActual();
     }, 1000)
 
-    this.breakpointObserver.observe(['(max-width: 1200px)']).subscribe((result) => {
+    this.breakpointObserver.observe(['(max-width: 1100px)']).subscribe((result) => {
       console.log(result)
       if(result.matches){
         this.responsiveValue = true;
       }else{
         this.responsiveValue = false;
+      }
+    })
+    this.breakpointObserver.observe(['(max-width: 575px)']).subscribe((result) => {
+      console.log(result)
+      if(result.matches){
+        this.responsiveValue2 = true;
+      }else{
+        this.responsiveValue2 = false;
       }
     })
 
