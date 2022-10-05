@@ -14,7 +14,7 @@
               <div class="d-flex flex-column align-items-baseline">
                 <small style="font-weight: bold; color: var(--color-primary-500)">{{item.curso_nombre}}</small>
                 <small>{{item.titulo}}</small>
-                <small style="color: var(--color-danger-500); font-size: 10px"><strong>Vence: </strong>{{daysLeft | i18nPlural:daysMap }} {{ hoursLeft | i18nPlural:hoursMap }} {{ minutesLeft | i18nPlural:minutesMap }} </small>
+                <app-c-pendings-time [item] = "item"></app-c-pendings-time>
               </div>
             </div>
           </div>
