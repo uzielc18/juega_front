@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GeneralService} from "../../../../providers";
 import {END_POINTS} from "../../../../providers/utils";
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-note-works',
@@ -12,6 +13,7 @@ export class NoteWorksComponent implements OnInit {
   loading:boolean = false;
   data: any = [];
   notas: any = [];
+  fileName= 'ExcelSheet.xlsx';
   @Input() item:any;
   @Input() code: any;
   constructor(private generalService: GeneralService) { }
@@ -55,4 +57,40 @@ export class NoteWorksComponent implements OnInit {
 
     return
   }
+  exportExel(){
+    /* pass here the table id */
+    let element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, this.item.nombre + '-registro.xlsx');
+  }
+  /*exportExel2(){
+    const arr: any = [];
+
+    this.data.registro.forEach((fr: any) => {
+      let obj: any = {
+        "codigo": "",
+        "nombres": "",
+
+      }
+      this.data.elementos.forEach((f: any) => {
+        obj[f.titulo] = ""
+      })
+      obj.codigo = fr.codigo;
+      obj.nombres = fr.nombres_completos;
+      fr.notas.forEach((n: any)=> {
+        this.data.elementos.forEach((f: any) => {
+          obj[f.titulo] = n
+        })
+      })
+      arr.push(obj);
+    })
+
+    this.excelService.excelDownload(arr);
+  }*/
 }

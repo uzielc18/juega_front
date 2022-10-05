@@ -20,12 +20,13 @@
         >
           <nb-icon type="button" icon="printer" class="iconNB"></nb-icon>
         </button>
+        <img width="30px" style="cursor: pointer" (click)="exportExel()" src="./assets/excel-logo.png" alt="excel">
       </div>
     </div>
   </nb-card-header>
   <nb-card-body class="pb-0 d-flex flex-column">
     <div class="table-responsive">
-      <table class="table table-sm">
+      <table class="table table-sm" id="excel-table">
         <thead>
         <tr style="font-size: 10px;">
           <th>Código</th>
