@@ -24,6 +24,7 @@ export function init_app(configService: AppService, injector: Injector): any {
 export class AppService {
   private _user: any = null;
   private _usersimular: any = null;
+  private _notification: any = null;
   private _semestre: any = null;
   private _rol: any = null;
   private _area: any = null;
@@ -65,6 +66,13 @@ export class AppService {
 
   set user(value: any) {
     this._user = value;
+  }
+  get notification(): any {
+    return this._notification;
+  }
+
+  set notification(value: any) {
+    this._notification = value;
   }
 
   get menu(): any[] {
@@ -112,6 +120,7 @@ export class AppService {
               this._semestre = data.data.semestre;
               this._rol = data.data.roles;
               this._area = data.data.area;
+              this._notification = data.data.notification;
               this._usersimular = data.data.user_simular;
               this.getMenus(data.data.user.person.role_id);
               return true;

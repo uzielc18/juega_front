@@ -570,4 +570,41 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
       }
     });
   }
+  deleteWorks(){
+    const serviceName = 'pendings';
+
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿ Esta seguro en eliminar el Trabajo ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        const data = {
+          calificado: '0',
+          realizo: '0',
+          nota: null
+        }
+        this.generalServi.updateNameIdData$(serviceName, this.pending?.student_pending?.id, data).subscribe(res => {
+          if(res.success){
+            this.fieldReactive();
+            this.getListEstudent();
+            this.getStudentStatus(this.formDate.value.codigo);
+            this.pending = '';
+            this.datosStudent = '';
+            this.listResponses = [];
+          }
+        },() => {this.loading = false})
+      }
+    });
+  }
 }
