@@ -20,7 +20,10 @@ export class CPendingsComponent implements OnInit {
               private activatedRoute: ActivatedRoute,) {}
 
   ngOnInit(): void {
-    this.getPendings();
+    setTimeout(() => {
+      this.getPendings();
+
+    }, 4000)
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -37,8 +40,15 @@ export class CPendingsComponent implements OnInit {
     this.generalService.nameIdAndId$(serviceName, idPerson, this.rolSemestre?.semestre.id).subscribe(res =>{
       if(res.success){
         this.data = res.data
+        this.data.map((m: any) => {
+          m.validateDate = false;
+          const fechaFin = new Date(m.fecha_fin).getTime();
+          const now = new Date().getTime();
+          if(now > fechaFin){
+            m.validateDate = true
+          }
+        })
       }
-      console.log(res)
     })
   }
 

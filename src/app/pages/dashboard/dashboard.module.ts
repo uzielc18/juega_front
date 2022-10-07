@@ -11,6 +11,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { ChartTrabajosComponent } from './components/chart-trabajos/chart-trabajos.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import {NgChartsModule} from "ng2-charts";
 
 const COMPONENTS: any[] = [
   DashboardComponent,
@@ -39,7 +40,8 @@ const PIPES: any = [
 const MODULES: any = [
   CardListCourseModule,
   ImageRecorteModule,
-  PreviewNewsModule
+  PreviewNewsModule,
+  NgChartsModule
 ]
 
 @NgModule({

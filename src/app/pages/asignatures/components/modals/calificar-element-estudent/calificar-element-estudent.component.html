@@ -3,7 +3,8 @@
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
-        {{element?.tipo}}
+        {{element?.tipo}} <small class="label">Fecha inicio: {{element?.fecha_inicio |date: 'mediumDate'}} - Fecha fin: {{element?.fecha_fin |date: 'mediumDate'}}</small>
+
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
@@ -251,6 +252,7 @@
                 <button *ngIf="has_rubric && pending?.student_pending?.realizo !== '0' && pending?.tipo !== 'EVALUACION'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="sendCalification()">Calificar</button>
                 <button *ngIf="!has_rubric && pending?.student_pending?.realizo !== '0'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()" style="margin: 5px 0">Calificar</button><br>
                 <button *ngIf="rol?.name !== 'Estudiante' && !has_rubric && pending?.tipo === 'EVALUACION' && pending?.student_pending?.exam_estudent !== null" nbButton size="small" status="danger" fullWidth (click)="deleteExam()">Eliminar examen</button>
+                <button *ngIf="rol?.name !== 'Estudiante' && pending?.tipo === 'TRABAJO' && pending?.student_pending?.realizo !== '0'" nbButton size="small" status="danger" fullWidth (click)="deleteWorks()">Eliminar Trabajo</button>
               </div>
             </form>
 

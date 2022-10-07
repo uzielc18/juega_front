@@ -178,11 +178,11 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.timeZone();
+   // this.timeZone();
     this.configurationCollapse()
     this.setConfiguartion();
     this.fieldReactive();
-   // this.countNotifications();
+    this.notificationCount = this.appService.notification
     this.appService
       .onLoader()
       .pipe(takeUntil(this.destroy$))
@@ -245,6 +245,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         }, 1000);
       }
     });
+    this.countNotifications();
   }
 
 
