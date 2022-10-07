@@ -249,6 +249,20 @@
                 <control-messages [control]="formHeader.get('nota')"></control-messages>
               </div>
               <div class="text-center">
+                <lamb-prepare-file-pro
+                  *ngIf="rol?.name !== 'Estudiante' && pending?.tipo === 'TRABAJO' && pending?.student_pending?.realizo !== '0'"
+                  [paramsInfo]="{
+                        key_file: key_file,
+                        directory: getDirectoy(),
+                        type: 'put',
+                        tabla: 'pendings',
+                        tipo: 'DOCUMENTO_TRABAJO_RESPUESTA'}"
+                  [numFiles]="6"
+                  (filterValueChange)="valueFile($event)"
+                  [listArrayFile]="formHeader.value.files || []"
+                  [colorButom]="'primary'"
+                >
+                </lamb-prepare-file-pro>
                 <button *ngIf="has_rubric && pending?.student_pending?.realizo !== '0' && pending?.tipo !== 'EVALUACION'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="sendCalification()">Calificar</button>
                 <button *ngIf="!has_rubric && pending?.student_pending?.realizo !== '0'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()" style="margin: 5px 0">Calificar</button><br>
                 <button *ngIf="rol?.name !== 'Estudiante' && !has_rubric && pending?.tipo === 'EVALUACION' && pending?.student_pending?.exam_estudent !== null" nbButton size="small" status="danger" fullWidth (click)="deleteExam()">Eliminar examen</button>

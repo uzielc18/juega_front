@@ -158,8 +158,21 @@
           <h4 class="send-work-title">Documentos entregados</h4> <br>
           <div *ngIf="pending?.student_pending?.pending_files?.length>0">
             <app-list-view-files
-              [arrayFiles]="pending?.student_pending?.pending_files || []"
+              [arrayFiles]="getPendingsFiles || []"
               [deleteFile]="!pending?.student_pending?.nota"
+              (deleteFileEmit)="deleteFile($event)"
+              [director]="getDirectoy()"
+            ></app-list-view-files>
+          </div>
+          <div class="mt-4" *ngIf="pending?.student_pending?.pending_files?.length<=0">
+            <nb-alert outline="danger" style="font-size: 12px;">No se encontraron archivos adjuntos</nb-alert>
+          </div>
+        </div>
+        <div class="mt-4" *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota !== null">
+          <h4 class="send-work-title">Documentos de respuesta</h4> <br>
+          <div *ngIf="pending?.student_pending?.pending_files?.length>0">
+            <app-list-view-files
+              [arrayFiles]="getPendingFilesDocumentoRespuesta || []"
               (deleteFileEmit)="deleteFile($event)"
               [director]="getDirectoy()"
             ></app-list-view-files>

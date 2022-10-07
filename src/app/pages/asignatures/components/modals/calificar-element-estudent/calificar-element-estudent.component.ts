@@ -8,6 +8,7 @@ import { END_POINTS } from 'src/app/providers/utils';
 import { CForumsComponent } from '../../c-free/calificar-elements/c-forums/c-forums.component';
 import {VExamViewsComponent} from "../../../../../shared/components/exam-view/v-exam-views/v-exam-views.component";
 import Swal from "sweetalert2";
+import {DIRECTORY} from "../../../../../shared/directorios/directory";
 
 @Component({
   selector: 'app-calificar-element-estudent',
@@ -41,6 +42,8 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
   listResponses: any = [];
   infor: any = '';
   timeActual:any = '';
+  key_file: any;
+  directorio: any = DIRECTORY.courses;
   constructor(
     public activeModal: NbDialogRef<CalificarElementEstudentComponent>,
     private formBuilder: FormBuilder,
@@ -54,6 +57,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
+    this.key_file = this.userService?.user?.person?.codigo
     this.has_rubric = this.element.rubricas_guia_id !== null ? true : false;
     this.fieldReactive();
     this.filedMoreDate();
@@ -68,6 +72,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
       ver_trabajo: ['N'],
       comentario: [''],
       nota: [0, [Validators.required, Validators.maxLength(2), Validators.max(20)]],
+      files: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
   }
@@ -414,11 +419,13 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
       params = {
         comentario_docente: forms.comentario,
         nota: forms.nota,
+        files: forms.files || [],
       }
     }else{
       params = {
         comentario_docente: forms.comentario,
         nota: this.child?.info?.nota === null? forms.nota: nota_student,
+        files: forms.files || [],
       }
     }
     this.loading = true;
@@ -605,6 +612,18 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
           }
         },() => {this.loading = false})
       }
+    });
+  }
+  getDirectoy() {
+    if (this.element && this.element?.id_carga_curso_docente) {
+      return this.directorio + '/' + this.element?.id_carga_curso_docente + '/works';
+    } else {
+      return '';
+    }
+  }
+  valueFile($event:any){
+    this.formHeader.patchValue({
+      files: $event.arrayFile,
     });
   }
 }
