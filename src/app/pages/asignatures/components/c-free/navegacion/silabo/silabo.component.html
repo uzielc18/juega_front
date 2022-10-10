@@ -1,3 +1,8 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small" class="h-100">
-  <button nbButton status="basic" (click)="getSilabu()" fullWidth>Ver Silabo</button>
+  <button  nbButton status="basic" (click)="getSilabu()" fullWidth>Ver Silabo</button>
+  <hr>
+  <button fullWidth *ngIf="rolSemestre?.rol?.name !== 'Estudiante'" nbButton (click)="notesWorks('ASIG')" status="primary">
+    Registro de notas
+  </button>
 </div>
+
