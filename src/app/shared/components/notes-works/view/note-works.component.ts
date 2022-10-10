@@ -18,7 +18,7 @@ export class NoteWorksComponent implements OnInit {
   origin: any = [
     {nombre: 'Todos', value: 'todos'},
     {nombre: 'Evaluaciones', value: 'evaluaciones'},
-    {nombre: 'Actividades', value: 'actividades'}
+    {nombre: 'Materiales', value: 'actividades'}
   ]
   fileName= 'ExcelSheet.xlsx';
   @Input() item:any;
