@@ -14,11 +14,13 @@ import {AperturaRequestComponent} from "../../apertura-request/view/apertura-req
   styleUrls: ['./table-activities.component.scss']
 })
 export class TableActivitiesComponent implements OnInit {
+
+  @Input()id_Elemento: any;
   cursos: any[] = [];
   tipo_elementos: any[] = [];
   userInfo:any;
-  @Input() pendings: any[] = [];
-  @Output() eventFormHeader: EventEmitter<any> = new EventEmitter();
+  pendings: any[] = [];
+
   // curso_id: any;
   // elemento_id: any;
   pagesCount: any[] = [20, 50, 100, 300, 500];
@@ -38,6 +40,8 @@ export class TableActivitiesComponent implements OnInit {
   };
 
   collectionSize = this.pendings.length;
+
+
   constructor(
     private generalService: GeneralService,
     private formBuilder: FormBuilder,
@@ -50,6 +54,8 @@ export class TableActivitiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldReactive();
+    this.getUserInfo();
+
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -70,7 +76,6 @@ export class TableActivitiesComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.listCursos();
-    this.eventFormHeader.emit(this.formHeader);
   }
   getUserInfo() {
     return this.userInfo = this.appService.user;
@@ -90,8 +95,7 @@ export class TableActivitiesComponent implements OnInit {
       (res: any) => {
         this.cursos = res.data || [];
         if (this.cursos.length > 0) {
-          //this.listElements();
-          this.eventFormHeader.emit(this.formHeader);
+          this.listElements();
         }
       },
       () => {
@@ -115,21 +119,73 @@ export class TableActivitiesComponent implements OnInit {
 
   selectedPerPage(pages: any) {
     this.pagination.per_page = pages;
-    //this.listElements();
+    this.listElements();
   }
 
   selectedCourse(curso: any) {
     // this.curso_id = curso;
-    //this.listElements();
+    this.listElements();
   }
 
   selectedElement(element: any) {
     // this.elemento_id = element;
-    //this.listElements();
+    this.listElements();
   }
+
+  // table
+  listElements() {
+    this.pendings = [];
+    const params = {
+      persons_student_id: this.appService.user.person.id,
+      course_id: this.formHeader.value.id_curso,
+      page: this.pagination.page,
+      per_page: this.pagination.per_page,
+      type_element_id: this.id_Elemento,
+      filterEstado: this.formHeader.value.id_estado,
+      origin: 'evaluaciones',
+    };
+    const serviceName = END_POINTS.base_back.activities_evaluations + '/get-my-activities';
+    this.loading = true;
+    this.generalService.nameParams$(serviceName, params).subscribe(
+      (res: any) => {
+        this.pendings = res.data.data || [];
+        if(this.pendings.length>0) {
+          this.pendings.map((r:any) => {
+            r.reapertura = false;
+            r.fecha_actual = this.datepipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
+            if (r.total_justification === 0 && (r.fecha_fin <= r.fecha_actual)) {
+              r.reapertura = true;
+            }
+            const a = r.fecha_actual.split(' ');
+            const f = r.fecha_fin.split(' ');
+            const aa = new Date(a[0]).getTime();
+            const ff = new Date(f[0]).getTime();
+            const t = ff - aa;
+            r.dias = Number(t/(1000*60*60*24)).toFixed(0);
+          })
+        }
+        console.log(this.pendings);
+
+        this.pagination.sizeListData = (res.data && res.data.total) || 0;
+        this.pagination.sizePage = (res.data && res.data.per_page) || 0;
+        if (this.pagination.sizeListData < this.pendings.length) {
+          this.pagination.isDisabledPage = true;
+        } else {
+          this.pagination.isDisabledPage = false;
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+
   loadPage($event: any): any {
     this.pagination.page = $event;
-    //this.listElements();
+    this.listElements();
   }
 
   navigate(pending: any): any {
@@ -139,7 +195,7 @@ export class TableActivitiesComponent implements OnInit {
   }
 
   refresh() {
-    //this.listElements();
+    this.listElements();
   }
   solicitar(element:any){
     this.dialogService.open(AperturaRequestComponent, {

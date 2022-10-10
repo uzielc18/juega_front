@@ -9,7 +9,11 @@
     <div class="main-container">
       <div class="perfil">
         <!-- [ngStyle]="perfilInfo ? { 'min-width': '361px', width: '361px' } : { 'min-width': '361px', width: '361px' }" -->
-        <app-perfil [profile]="profile"></app-perfil>
+        <app-perfil [profile]="profile"
+                    [doughnutChartData] = "doughnutChartData"
+                    [doughnutChartLabels]="doughnutChartLabels"
+                    [doughnutChartType] ="doughnutChartType"
+                    [doughnutChartOptions] = "doughnutChartOptions"></app-perfil>
       </div>
       <div class="cursos" style="background-color: #eeeeee">
        <!-- <div class="anuncios" style="height: 300px; ">
@@ -30,8 +34,10 @@
               <nb-tab tabTitle="Reportes notas" *ngIf="rolSemestre?.rol?.name !== 'Estudiante' && rolSemestre?.rol?.name !== 'Docente' || profile?.user?.person?.id === me ">
                 <app-tabs-reporte-notas [profile] = 'profile' [notas]="notas"></app-tabs-reporte-notas>
               </nb-tab>
-              <nb-tab tabTitle="Editar perfil"  *ngIf="profile?.user?.person?.id === me ">
-                <app-tabs-edit-perfil [profile_id] = 'profile' (saveInfoUser)="emitEventToChild($event)"></app-tabs-edit-perfil>
+              <nb-tab tabTitle="Editar perfil"  *ngIf="profile?.user?.person?.id === me">
+                <app-tabs-edit-perfil [profile_id] = 'profile'
+                                      (saveInfoUser)="emitEventToChild($event)"
+                                      ></app-tabs-edit-perfil>
               </nb-tab>
             </nb-tabset>
           </nb-card-body>

@@ -45,14 +45,16 @@
       <table class="table table-sm" id="excel-table">
         <thead>
         <tr style="font-size: 10px;">
+          <th>#</th>
           <th>Código</th>
           <th>Nombres</th>
-          <th  class="text-center" *ngFor="let elements of data.elementos"><div nbTooltip [nbTooltipIcon]="elements.icono" nbTooltipPlacement="top" nbTooltipStatus="basic" style="width: 100px; white-space: normal; text-overflow: ellipsis; overflow: hidden">{{elements.titulo}}</div> </th>
+          <th  class="text-center" *ngFor="let elements of data.elementos"><div nbTooltip [nbTooltipIcon]="elements.icono" nbTooltipPlacement="top" nbTooltipStatus="basic">{{elements.titulo}}</div> </th>
           <th class="text-center" *ngIf="code == 'ASIG'">Promedio</th>
         </tr>
         </thead>
         <tbody>
         <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let students of data.registro; let i = index ">
+          <td>{{i+1}}</td>
           <td>{{students.codigo}}</td>
           <td>{{students.nombres_completos}}</td>
           <ng-container *ngFor="let nota of students.notas; let i = index ">
