@@ -4,9 +4,9 @@
     <button nbButton ghost status="warning" *ngIf="rolSemestre?.rol?.name !== 'Estudiante'" (click)="syncStudentsLamb()" nbTooltip="Sincronizar" nbTooltipStatus="warning">
       <nb-icon icon="sync-outline"></nb-icon>
     </button>
-    <button *ngIf="rolSemestre?.rol?.name !== 'Estudiante'" nbButton size="tiny" (click)="notesWorks('ASIG')" status="primary">
+    <!--<button *ngIf="rolSemestre?.rol?.name !== 'Estudiante'" nbButton size="tiny" (click)="notesWorks('ASIG')" status="primary">
       Registro
-    </button>
+    </button>-->
   </div>
   <nb-form-field [formGroup]="formHeader">
     <input

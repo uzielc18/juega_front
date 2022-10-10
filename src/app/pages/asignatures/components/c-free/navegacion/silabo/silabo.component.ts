@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GeneralService } from '../../../../../../providers';
 import { END_POINTS } from '../../../../../../providers/utils';
+import {
+  MNoteWorksHomeComponent
+} from "../../../../../../shared/components/notes-works/modal/m-note-works-home.component";
+import {NbDialogService} from "@nebular/theme";
 
 @Component({
   selector: 'app-silabo',
@@ -13,9 +17,17 @@ export class SilaboComponent implements OnInit {
 
   loading: boolean = false;
 
-  constructor(private generalService: GeneralService) {}
+  constructor(private generalService: GeneralService,
+              private dialogService: NbDialogService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {}  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion) {
+      return JSON.parse(sesion);
+    } else {
+      return '';
+    }
+  }
 
   getSilabu() {
     const serviceName = END_POINTS.base_back.config + '/syllable-viewer';
@@ -40,5 +52,21 @@ export class SilaboComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+  notesWorks(code: any){
+    this.dialogService.open(MNoteWorksHomeComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        code: code,
+        items: this.curso
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        // this.listCursos();
+      }
+    });
+
   }
 }

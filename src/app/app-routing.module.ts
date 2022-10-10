@@ -30,8 +30,12 @@ const routes: Routes = [
         loadChildren: () => import('./pages/evaluations/evaluations.module').then(m => m.EvaluationsModule),
       },
       {
-        path: 'evaluations-teacher',
-        loadChildren: () => import('./pages/evaluations-teacher/evaluations-teacher.module').then(m => m.EvaluationsTeacherModule),
+        path: 'forums',
+        loadChildren: () => import('./pages/forums/forums.module').then(m => m.ForumsModule),
+      },
+      {
+        path: 'works',
+        loadChildren: () => import('./pages/works/works.module').then(m => m.WorksModule),
       },
       {
         path: 'films',

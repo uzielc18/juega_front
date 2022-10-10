@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {GeneralService} from "../../../../providers";
 import {END_POINTS} from "../../../../providers/utils";
 import * as XLSX from 'xlsx';
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-note-works',
@@ -10,9 +11,15 @@ import * as XLSX from 'xlsx';
 })
 export class NoteWorksComponent implements OnInit {
 
+  selectOrigin: any = new FormControl('evaluaciones');
   loading:boolean = false;
   data: any = [];
   notas: any = [];
+  origin: any = [
+    {nombre: 'Todos', value: 'todos'},
+    {nombre: 'Evaluaciones', value: 'evaluaciones'},
+    {nombre: 'Actividades', value: 'actividades'}
+  ]
   fileName= 'ExcelSheet.xlsx';
   @Input() item:any;
   @Input() code: any;
@@ -22,6 +29,9 @@ export class NoteWorksComponent implements OnInit {
     this.getData();
   }
 
+  selectE(item: any){
+    this.getData();
+  }
   getData(){
     this.loading = true
     const serviceName = END_POINTS.base_back.activities_evaluations + '/registro-actividades';
@@ -29,6 +39,7 @@ export class NoteWorksComponent implements OnInit {
     if(this.code == 'ASIG'){
       const params = {
         id_carga_curso_docente: this.item.id_carga_curso_docente,
+        origin: this.selectOrigin.value
       }
       this.generalService.nameParams$(serviceName, params).subscribe((res:any) => {
        this.data = res.data
