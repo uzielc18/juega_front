@@ -264,15 +264,42 @@
   }
 }
 
-nb-progress-bar {
+ .exam-progress {
   height: 10px;
   // width: 162px;
 
   ::ng-deep .progress-container {
     background-color: #f6eac0 !important;
   }
-
   ::ng-deep .progress-value {
-    background-color: #9aacba !important;
+
+      background-color: #62257C !important;
+
+  }
+}
+.forum-progress {
+  height: 10px;
+  // width: 162px;
+
+  ::ng-deep .progress-container {
+    background-color: #f6eac0 !important;
+  }
+  ::ng-deep .progress-value {
+
+    background-color: #EDA81D  !important;
+
+  }
+}
+.works-progress {
+  height: 10px;
+  // width: 162px;
+
+  ::ng-deep .progress-container {
+    background-color: #f6eac0 !important;
+  }
+  ::ng-deep .progress-value {
+
+    background-color: #246C75 !important;
+
   }
 }

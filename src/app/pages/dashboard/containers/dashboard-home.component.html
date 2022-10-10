@@ -9,7 +9,11 @@
     <div class="main-container">
       <div *ngIf="collapseLeft" class="perfil">
         <!-- [ngStyle]="perfilInfo ? { 'min-width': '361px', width: '361px' } : { 'min-width': '361px', width: '361px' }" -->
-        <app-perfil [profile]="profile"></app-perfil>
+        <app-perfil [profile]="profile"
+                    [doughnutChartData] = "doughnutChartData"
+                    [doughnutChartLabels]="doughnutChartLabels"
+                    [doughnutChartType] ="doughnutChartType"
+                    [doughnutChartOptions] = "doughnutChartOptions"></app-perfil>
       </div>
       <div class="cursos" style="background-color: #eeeeee">
         <div *ngIf="collapseTop" class="anuncios" [ngStyle]="{ height: !collapseLeft ? '380px' : '300px' }">
