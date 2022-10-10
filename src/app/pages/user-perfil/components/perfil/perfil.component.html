@@ -69,40 +69,40 @@
       </ul>
     </div>
   </div>
-  <div class="trabajos">
+  <div class="trabajos" *ngIf="rolSemestre?.rol?.name === 'Estudiante'">
     <div class="completados work">
       <div class="count">
-        <p>{{ profile?.info?.trabajos_completados }}</p>
-        <span>/ {{ profile?.info?.total_trabajos }}</span>
+        <p>{{ profile?.info?.resumen_por_tipo[0]?.examenes?.realizo }}</p>
+        <span>/ {{ profile?.info?.resumen_por_tipo[0]?.examenes?.total }}</span>
       </div>
       <div class="description">
         <div class="text">
-          <p>Evaluciones completados</p>
-          <nb-progress-bar [value]="(profile?.info?.trabajos_completados / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
+          <p>Exámenes</p>
+          <nb-progress-bar class="exam-progress"  [value]="(profile?.info?.resumen_por_tipo[0]?.examenes?.realizo / profile?.info?.resumen_por_tipo[0]?.examenes?.total) * 100"></nb-progress-bar>
         </div>
       </div>
     </div>
     <div class="vencidos work">
       <div class="count">
-        <p>{{ profile?.info?.trabajos_vencidos }}</p>
-        <span>/ {{ profile?.info?.total_trabajos }}</span>
+        <p>{{ profile?.info?.resumen_por_tipo[0]?.foros?.realizo }}</p>
+        <span>/ {{ profile?.info?.resumen_por_tipo[0]?.foros?.total }}</span>
       </div>
       <div class="description">
         <div class="text">
-          <p>Evaluciones vencidos</p>
-          <nb-progress-bar [value]="(profile?.info?.trabajos_vencidos / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
+          <p>Foros</p>
+          <nb-progress-bar class="forum-progress" [value]="(profile?.info?.resumen_por_tipo[0]?.foros?.realizo / profile?.info?.resumen_por_tipo[0]?.foros?.total) * 100"></nb-progress-bar>
         </div>
       </div>
     </div>
     <div class="por-completar work">
       <div class="count">
-        <p>{{ profile?.info?.trabajos_por_completar }}</p>
-        <span>/ {{ profile?.info?.total_trabajos }} </span>
+        <p>{{ profile?.info?.resumen_por_tipo[0]?.trabajos?.realizo }}</p>
+        <span>/ {{ profile?.info?.resumen_por_tipo[0]?.trabajos?.total }}</span>
       </div>
       <div class="description">
         <div class="text">
-          <p>Evaluciones por completar</p>
-          <nb-progress-bar [value]="(profile?.info?.trabajos_por_completar / profile?.info?.total_trabajos) * 100"></nb-progress-bar>
+          <p>Trabajos</p>
+          <nb-progress-bar class="works-progress" [value]="(profile?.info?.resumen_por_tipo[0]?.trabajos?.realizo / profile?.info?.resumen_por_tipo[0]?.trabajos?.total) * 100"></nb-progress-bar>
         </div>
       </div>
     </div>

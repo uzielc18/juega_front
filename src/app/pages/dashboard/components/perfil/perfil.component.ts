@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChartData, ChartEvent, ChartType, ChartConfiguration} from 'chart.js';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-perfil',
@@ -8,33 +9,16 @@ import {ChartData, ChartEvent, ChartType, ChartConfiguration} from 'chart.js';
 })
 export class PerfilComponent implements OnInit {
   @Input() profile: any;
-  public doughnutChartLabels: string[] = [
-  ];
-  public doughnutChartData: ChartData<'doughnut'> = {
-    labels: this.doughnutChartLabels,
-    datasets: [
-    ],
-
-  };
-  public doughnutChartType: any = 'doughnut';
-  // events
-  public chartClicked({ event, active }: { event: ChartEvent, active: {}[] }): void {
-  }
-
-  public chartHovered({ event, active }: { event: ChartEvent, active: {}[] }): void {
-  }
-  public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
-      responsive: true,
-
-  };
-  constructor() {}
+  @Input() doughnutChartData: any;
+  @Input() doughnutChartLabels: any;
+  @Input() doughnutChartType: any;
+  @Input() doughnutChartOptions: any;
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-
-      this.doughnut();
-    }, 6000)
-
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -44,25 +28,16 @@ export class PerfilComponent implements OnInit {
       return '';
     }
   }
-  doughnut(){
-    this.doughnutChartLabels = Object.keys(this.profile?.info);
-    const trabajos_por_completar: any = this.profile?.info?.trabajos_por_completar
-    const trabajos_vencidos: any = this.profile?.info?.trabajos_vencidos;
-    const trabajos_completados: any = this.profile?.info?.trabajos_completados;
-    const obj = {
-      "data": [trabajos_por_completar,trabajos_vencidos,trabajos_completados],
-      "backgroundColor": [
-        '#FFD372', '#FF6961', '#8CFCA4'
-      ],
-      "hoverBackgroundColor": [
-        '#FFD372', '#FF6961', '#8CFCA4'
-      ],
-      "hoverBorderColor": [
-        '#FFD372', '#FF6961', '#8CFCA4'
-      ]
 
-    }
-    this.doughnutChartData.datasets.push(obj)
+
+  examLocation(){
+    this.router.navigate([`../evaluations`], { relativeTo: this.activatedRoute.parent});
+  }
+  forumLocation(){
+    this.router.navigate([`../forums`], { relativeTo: this.activatedRoute.parent});
+  }
+  worksLocation(){
+    this.router.navigate([`../works`], { relativeTo: this.activatedRoute.parent});
   }
 
 

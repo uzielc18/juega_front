@@ -48,7 +48,7 @@
           <th style="width: 15px">#</th>
           <th style="width: 50px">Código</th>
           <th style="min-width: 200px">Nombres</th>
-          <th  class="text-center" *ngFor="let elements of data.elementos"><div nbTooltip [nbTooltipIcon]="elements.icono" nbTooltipPlacement="top" nbTooltipStatus="basic">{{elements.titulo}}</div> </th>
+          <th style="min-width: 150px;" class="text-center" *ngFor="let elements of data.elementos"><div nbTooltip [nbTooltipIcon]="elements.icono" nbTooltipPlacement="top" nbTooltipStatus="basic">{{elements.titulo}}</div> </th>
           <th class="text-center" *ngIf="code == 'ASIG'">Promedio</th>
         </tr>
         </thead>

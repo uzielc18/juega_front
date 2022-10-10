@@ -7,6 +7,7 @@ import { GeneralService } from '../../../providers';
 import { END_POINTS } from '../../../providers/utils';
 import { DIRECTORY } from '../../../shared/directorios/directory';
 import { EmitEventsService } from '../../../shared/services/emit-events.service';
+import {ChartConfiguration, ChartData, ChartEvent} from "chart.js";
 
 @Component({
   selector: 'app-dashboard-home',
@@ -81,7 +82,25 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     }
   }
   ///////////////
+  public doughnutChartLabels: string[] = [
+  ];
+  public doughnutChartData: ChartData<'doughnut'> = {
+    labels: this.doughnutChartLabels,
+    datasets: [
+    ],
 
+  };
+  public doughnutChartType: any = 'doughnut';
+  // events
+  public chartClicked({ event, active }: { event: ChartEvent, active: {}[] }): void {
+  }
+
+  public chartHovered({ event, active }: { event: ChartEvent, active: {}[] }): void {
+  }
+  public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
+    responsive: true,
+
+  };
   constructor(
     private generalService: GeneralService,
     private userService: AppService,
@@ -260,6 +279,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
         if (res.success) {
           this.profile = res.data;
           // console.log(this.profile);
+          this.doughnut(this.profile)
           this.formHeader.patchValue({
             codigo: this.profile.person.codigo,
             nombre: this.profile.person.nombres,
@@ -288,6 +308,27 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     );
   }
 
+  doughnut(profile: any){
+    this.doughnutChartData.datasets = [];
+    this.doughnutChartLabels = Object.keys(profile?.info);
+    const trabajos_por_completar: any = profile?.info?.trabajos_por_completar
+    const trabajos_vencidos: any = profile?.info?.trabajos_vencidos;
+    const trabajos_completados: any = profile?.info?.trabajos_completados;
+    const obj = {
+      "data": [trabajos_por_completar,trabajos_vencidos,trabajos_completados],
+      "backgroundColor": [
+        '#FFD372', '#FF6961', '#8CFCA4'
+      ],
+      "hoverBackgroundColor": [
+        '#FFD372', '#FF6961', '#8CFCA4'
+      ],
+      "hoverBorderColor": [
+        '#FFD372', '#FF6961', '#8CFCA4'
+      ]
+
+    }
+    this.doughnutChartData.datasets.push(obj)
+  }
   getNews() {
     const serviceName = END_POINTS.base_back.user + '/news';
     this.generalService.nameId$(serviceName, this.userService.user.person.id).subscribe((res: any) => {
