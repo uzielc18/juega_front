@@ -1,0 +1,82 @@
+<div class="table-responsive">
+  <table class="table table-sm mb-0">
+    <thead>
+    <tr style="font-size: 14px" class="fw-bold text-center">
+      <th style="width: 50px">ICONO</th>
+      <th>NOMBRE ACTIVIDAD</th>
+      <th>DESCRIPCIÓN</th>
+      <th style="width: 150px">PER./GRUP.</th>
+      <th style="width: 200px">FINALIZA</th>
+      <th style="width: 185px">FECHA DE ENTREGA</th>
+      <th style="width: 150px">RE-APERTURA</th>
+      <th style="width: 100px">VISTO</th>
+      <th style="width: 100px">NOTA</th>
+      <th style="width: 100px">ACCIÓN</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let element of pendings" style="font-size: 11px" class="text-center align-middle">
+      <td class="p-0" [ngStyle]="iconStyle(element)">
+        <div class="d-flex align-items-center justify-content-center" style="height: 60px">
+          <nb-icon style="color: #fff; font-size: 20px" icon="{{ element?.icono }}"></nb-icon>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex flex-column text-start" style="width: 250px; word-break: break-all">
+          <span class="fw-bold" style="font-size: 10px; text-transform: uppercase;">{{ element?.titulo }}</span>
+          <span style="font-size: 10px">{{ element?.curso }}</span>
+          <span style="font-size: 10px"><strong>ciclo:</strong>  {{element.ciclo}}</span>
+          <span style="font-size: 10px"><strong>grupo:</strong>  {{element.grupo}}</span>
+        </div>
+      </td>
+      <td class="text-start" > <div style="width: 300px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden">{{ element?.descripcion }}</div></td>
+      <td>
+        <nb-icon icon="{{ element?.grupal === '1' ? 'people-outline' : 'person-outline' }}"></nb-icon>
+        {{ element?.grupal === '1' ? 'Grupal' : 'Personal' }}
+      </td>
+      <td>
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="d-flex flex-column text-start">
+            <span>{{ element?.fecha_fin | date: 'dd/MM/yyyy, h:mm a' }}</span>
+            <span *ngIf="element?.dias >= 0 && element?.fecha_entrega===null" class="fw-bold">Faltan {{element?.dias}} días</span>
+            <span *ngIf="element?.dias < 0 && element?.fecha_entrega===null" class="fw-bold" style="color: brown;">Pasaron {{element?.dias * -1}} días</span>
+          </div>
+          <!--<div class="status-end ms-3"></div>-->
+        </div>
+      </td>
+      <td>
+        <div *ngIf="element?.fecha_entrega; else noEntregado">
+          {{ element?.fecha_entrega | date: 'dd/MM/yyyy, h:mm a' }}
+        </div>
+        <ng-template #noEntregado>
+          <span style="color: red" class="fw-bold">{{ 'No entregó' | uppercase }}</span>
+        </ng-template>
+      </td>
+      <td>
+        <div class="d-flex align-items-center justify-content-center" *ngIf="element?.fecha_entrega===null">
+          <button *ngIf="element?.reapertura"
+                  nbButton
+                  ghost
+                  size="small"
+                  status="primary"
+                  (click)="solicitar(element)">
+            <nb-icon icon="clock-outline"></nb-icon>Solicitar</button>
+          <span *ngIf="element.total_justification !== 0" style="color: #A52A8A"> Justificación enviada</span>
+          <button *ngIf="!element?.reapertura && element.total_justification === 0" nbButton ghost size="small"><nb-icon icon="clock-outline"></nb-icon>Activo</button>
+        </div>
+      </td>
+      <td>
+        <nb-icon *ngIf="element?.fecha_visto && element?.fecha_entrega===null" style="color: #47da82" icon="checkmark-circle-2-outline"></nb-icon>
+        <nb-icon *ngIf="!element?.fecha_visto && element?.fecha_entrega===null" icon="checkmark-circle-2-outline"></nb-icon>
+        <nb-icon *ngIf="element?.fecha_visto && element?.fecha_entrega" style="color: #47da82" icon="done-all-outline"></nb-icon>
+      </td>
+      <td>
+        {{ element.nota }}
+      </td>
+      <td>
+        <nb-icon icon="eye-outline" status="warning" style="cursor: pointer" (click)="navigate(element)"></nb-icon>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
