@@ -9,6 +9,7 @@ import {map} from "rxjs/operators";
 import {NbAuthService, NbAuthToken, NbTokenService} from "@nebular/auth";
 import {AuthStorageTokenService} from "../../../../core/auth/services/auth-storage-token.service";
 import {environment} from "../../../../../environments/environment";
+import {ChartConfiguration, ChartData, ChartEvent} from "chart.js";
 
 @Component({
   selector: 'app-perfil',
@@ -21,6 +22,10 @@ export class PerfilComponent implements OnInit {
   id_carga_curso: any = '0';
   userSimulate: any;
   @Input() profile:any;
+  @Input() doughnutChartData: any;
+  @Input() doughnutChartLabels: any;
+  @Input() doughnutChartType: any;
+  @Input() doughnutChartOptions: any;
   authToken:any = NbAuthToken;
   authPrueba: any;
   loading: boolean = false
@@ -35,6 +40,7 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSimulate = this.appService.usersimular;
+
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -209,4 +215,5 @@ export class PerfilComponent implements OnInit {
       console.log(res, 'toke_simulate')
     })
   }
+
 }

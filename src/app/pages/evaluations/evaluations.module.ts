@@ -7,6 +7,7 @@ import { EvaluationsHomeComponent } from './containers/evaluations-home.componen
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NebularModule } from '../../shared/nebular.module';
 import {AperturaRequestModule} from "../../shared/components/apertura-request/view/apertura-request.module";
+import {TableActivitiesModule} from "../../shared/components/table-activities/view/table-activities.module";
 
 const COMPONENTS: any = [
   EvaluationsComponent,
@@ -33,6 +34,7 @@ const NEBULAR: any = [
         EvaluationsRoutingModule,
         ...NEBULAR,
         ...MODULES,
+        TableActivitiesModule,
     ]
 })
 export class EvaluationsModule { }
