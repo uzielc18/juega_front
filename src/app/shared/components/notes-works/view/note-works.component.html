@@ -11,7 +11,7 @@
         <p><strong style="padding-top: 7px;font-size: 12px">Nombre del docente:</strong></p>
       </div>
       <div class="d-flex justify-content-between align-items-center">
-        <div>
+        <div style="margin-bottom: 30px;">
           <label>Filtrar</label>
           <nb-select
             placeholder=""
@@ -45,9 +45,9 @@
       <table class="table table-sm" id="excel-table">
         <thead>
         <tr style="font-size: 10px;">
-          <th>#</th>
-          <th>Código</th>
-          <th>Nombres</th>
+          <th style="width: 15px">#</th>
+          <th style="width: 50px">Código</th>
+          <th style="min-width: 200px">Nombres</th>
           <th  class="text-center" *ngFor="let elements of data.elementos"><div nbTooltip [nbTooltipIcon]="elements.icono" nbTooltipPlacement="top" nbTooltipStatus="basic">{{elements.titulo}}</div> </th>
           <th class="text-center" *ngIf="code == 'ASIG'">Promedio</th>
         </tr>
