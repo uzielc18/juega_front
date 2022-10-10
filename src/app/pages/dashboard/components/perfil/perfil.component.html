@@ -37,6 +37,34 @@
       <span>Promedio en este ciclo</span>
     </div>
   </div>
+  <div class="chart-stats">
+    <div style="display: block; width: 150px; height: 150px">
+      <canvas baseChart
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [type]="doughnutChartType"
+              [legend]="true"
+              [options]="doughnutChartOptions"
+      >
+      </canvas>
+    </div>
+    <!-- <app-chart-trabajos [progressDatos]="profile?.info"></app-chart-trabajos> -->
+    <div class="description">
+      <p>{{ profile?.info?.total_trabajos }}</p>
+      <span>Evaluaciones en total</span>
+      <ul>
+        <li>
+          <span style="background-color: #FFD372"></span><small>{{ profile?.info?.trabajos_por_completar }} Evaluciones por completar</small>
+        </li>
+        <li>
+          <span style="background-color: #FF6961"></span><small>{{ profile?.info?.trabajos_vencidos }} Evaluaciones vencidos</small>
+        </li>
+        <li>
+          <span style="background-color: #8CFCA4"></span><small>{{ profile?.info?.trabajos_completados }} Evaluaciones completados</small>
+        </li>
+      </ul>
+    </div>
+  </div>
   <div class="trabajos">
     <div class="completados work">
       <div class="count">
@@ -75,26 +103,7 @@
       </div>
     </div>
   </div>
-  <div class="chart-stats">
-    <div class="chart">
-    </div>
-    <!-- <app-chart-trabajos [progressDatos]="profile?.info"></app-chart-trabajos> -->
-    <div class="description">
-      <p>{{ profile?.info?.total_trabajos }}</p>
-      <span>Evaluaciones en total</span>
-      <ul>
-        <li>
-          <span></span><small>{{ profile?.info?.trabajos_por_completar }} Evaluaciones por completar</small>
-        </li>
-        <li>
-          <span></span><small>{{ profile?.info?.trabajos_vencidos }} Evaluaciones vencidos</small>
-        </li>
-        <li>
-          <span></span><small>{{ profile?.info?.trabajos_completados }} Evaluaciones completados</small>
-        </li>
-      </ul>
-    </div>
-  </div>
+
   <!--<div class="stats-percentage">
     <div class="participacion">
       <div class="description">

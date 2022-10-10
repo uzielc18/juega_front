@@ -9,13 +9,24 @@
     <div *ngIf="!datos">DOCUMENTOS DEL ALUMNO</div>
   </nb-card-header>
   <nb-card-body>
-    <div>
-      <app-list-view-files
-        [arrayFiles]="pending?.student_pending?.pending_files || []"
-        [typeView]="'VIEW'"
-        [showText]="false"
-        (fileValue)="fileValues($event)"
-      ></app-list-view-files>
+    <div class="d-flex justify-content-between align-items-center">
+      <div *ngIf="filesTipo">
+        <app-list-view-files
+          [arrayFiles]="filesTipo || []"
+          [typeView]="'VIEW'"
+          [showText]="false"
+          (fileValue)="fileValues($event)"
+        ></app-list-view-files>
+      </div>
+      <div *ngIf="filesTipo2" class="d-flex flex-column align-items-center">
+        <app-list-view-files
+          [arrayFiles]="filesTipo2 || []"
+          [typeView]="'VIEW'"
+          [showText]="false"
+          (fileValue)="fileValues($event)"
+        ></app-list-view-files>
+        <small style="font-weight: bold" class="text-center">Documento de respuesta</small>
+      </div>
     </div>
     <br />
     <div *ngIf="datosFile">

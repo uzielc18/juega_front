@@ -20,6 +20,9 @@ export class VWorksComponent implements OnInit, OnChanges {
   @Input() rubrica: any;
   @Input() has_rubric: boolean = false;
   @Input() calification: any;
+
+  getPendingsFiles: any = []
+  getPendingFilesDocumentoRespuesta: any = []
   loading: boolean = false;
   fechaFin: any;
   ValidateDateI: boolean = false;
@@ -91,7 +94,9 @@ export class VWorksComponent implements OnInit, OnChanges {
     //this.pending = this.pending;
     if (changes.rubrica) {
       this.rubrica = changes.rubrica.currentValue;
+
     }
+    this.filesTipo(this.pending);
   }
 
   dateValidate(fechaInicio: any){
@@ -147,6 +152,7 @@ export class VWorksComponent implements OnInit, OnChanges {
     this.key_file = this.userInfo?.person?.codigo;
     // this.directorio = DIRECTORY.courses + `/${this.element.id_carga_curso_docente}` + '/works';
     // console.log(this.key_file, 'Key file');
+
   }
 
   cambioTypo($event: any) {
@@ -310,4 +316,13 @@ export class VWorksComponent implements OnInit, OnChanges {
       }
     });
   }
+   filesTipo(pending: any) {
+     pending?.student_pending?.pending_files.filter((m: any) => {
+       if (m.tipo === 'DOCUMENTO_TRABAJO_RESPUESTA') {
+         this.getPendingFilesDocumentoRespuesta.push(m)
+       }else{
+         this.getPendingsFiles.push(m)
+       }
+     });
+   }
 }

@@ -15,7 +15,10 @@ export class CStudentsComponent implements OnInit {
               private appService: AppService,) { }
 
   ngOnInit(): void {
-    this.getStudents();
+    setTimeout(() => {
+      this.getStudents();
+    },4000)
+
   }
 
   get rolSemestre() {

@@ -9,6 +9,8 @@ export class CWorksComponent implements OnInit, OnChanges {
   datosFile: any;
   datosUrl: any;
   loading: boolean = false;
+  getPendingsFiles: any = []
+  getPendingFilesDocumentoRespuesta: any = []
   @Input() pending: any = [];
   @Input() datos: any;
   @Input() director: any;
@@ -36,5 +38,15 @@ export class CWorksComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.loading = $event;
     }, 200);
+  }
+  get filesTipo() {
+   return this.pending?.student_pending?.pending_files.filter((m: any) => {
+      return m.tipo === 'DOCUMENTO_TRABAJO'
+    });
+  }
+  get filesTipo2() {
+    return this.pending?.student_pending?.pending_files.filter((m: any) => {
+      return m.tipo === 'DOCUMENTO_TRABAJO_RESPUESTA'
+    });
   }
 }

@@ -147,7 +147,7 @@
             </ng-template>
           </form>
         </nb-action>
-        <!--<nb-action class="p-1 d-none d-sm-flex">
+        <nb-action class="p-1 d-none d-sm-flex">
           <div>
             <div class="d-flex align-items-center">
               <button nbButton
@@ -167,7 +167,7 @@
               <app-m-notifications></app-m-notifications>
             </ng-template>
           </div>
-        </nb-action>-->
+        </nb-action>
         <!-- <nb-action class="d-none d-md-flex">
            <form [formGroup]="formHeader" >
              <div [nbPopover]="templat" nbPopoverPlacement="bottom" style="cursor: pointer">
@@ -420,7 +420,7 @@
     <nb-sidebar [responsive]="responsiveValue2" right tag="right">
       <div class="showTools">
         <div class="container-tools">
-          <app-c-pendings></app-c-pendings>
+          <app-c-pendings *ngIf="loading === false"></app-c-pendings>
           <app-c-students></app-c-students>
         </div>
       </div>
