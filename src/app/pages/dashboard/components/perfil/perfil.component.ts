@@ -33,7 +33,7 @@ export class PerfilComponent implements OnInit {
     setTimeout(() => {
 
       this.doughnut();
-    }, 5000)
+    }, 6000)
 
   }
   get rolSemestre() {

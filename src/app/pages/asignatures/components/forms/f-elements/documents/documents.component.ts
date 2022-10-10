@@ -120,7 +120,8 @@ export class DocumentsComponent implements OnInit, OnChanges {
     const form = this.formHeader.value;
     if (
        !form.titulo ||
-       !form.descripcion
+       !form.descripcion||
+       !form.files.length
        ) {
       return true;
     } else {

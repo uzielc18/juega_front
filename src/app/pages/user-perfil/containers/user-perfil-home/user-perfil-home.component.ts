@@ -5,6 +5,7 @@ import {AppService} from "../../../../core";
 import {ActivatedRoute} from "@angular/router";
 import {Subject, Subscription} from "rxjs";
 import {EmitEventsService} from "../../../../shared/services/emit-events.service";
+import {ChartConfiguration, ChartData, ChartEvent} from "chart.js";
 
 @Component({
   selector: 'app-user-perfil-home',
@@ -23,6 +24,28 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
   listCourses: any = [];
   listInquiries: any = [];
   datoSubscription: any = Subscription;
+
+
+  public doughnutChartLabels: string[] = [
+  ];
+  public doughnutChartData: ChartData<'doughnut'> = {
+    labels: this.doughnutChartLabels,
+    datasets: [
+    ],
+
+  };
+  public doughnutChartType: any = 'doughnut';
+  // events
+  public chartClicked({ event, active }: { event: ChartEvent, active: {}[] }): void {
+  }
+
+  public chartHovered({ event, active }: { event: ChartEvent, active: {}[] }): void {
+  }
+  public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
+    responsive: true,
+
+  };
+
   constructor( private generalService: GeneralService,
                private userService: AppService,
                private activatedRoute: ActivatedRoute,
@@ -63,6 +86,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
       if(res.success){
         this.status = res.success
         this.profile = res.data;
+        this.doughnut(this.profile);
         this.getInquiries(this.profile?.user?.person.id);
         if(this.rolSemestre?.rol?.name !== 'Estudiante' && this.rolSemestre?.rol?.name !== 'Docente' || this.profile?.user?.person?.id === this.me){
           this.getEvaluaciones(this.profile?.user?.person);
@@ -97,5 +121,26 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
   emitEventToChild($event: any) {
     this.getUser()
   }
+  doughnut(profile: any){
+    console.log(profile)
+    this.doughnutChartData.datasets = [];
+    this.doughnutChartLabels = Object.keys(profile?.info);
+    const trabajos_por_completar: any = profile?.info?.trabajos_por_completar
+    const trabajos_vencidos: any = profile?.info?.trabajos_vencidos;
+    const trabajos_completados: any = profile?.info?.trabajos_completados;
+    const obj = {
+      "data": [trabajos_por_completar,trabajos_vencidos,trabajos_completados],
+      "backgroundColor": [
+        '#FFD372', '#FF6961', '#8CFCA4'
+      ],
+      "hoverBackgroundColor": [
+        '#FFD372', '#FF6961', '#8CFCA4'
+      ],
+      "hoverBorderColor": [
+        '#FFD372', '#FF6961', '#8CFCA4'
+      ]
 
+    }
+    this.doughnutChartData.datasets.push(obj)
+  }
 }

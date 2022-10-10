@@ -18,6 +18,7 @@ import { TabsMuroComponent } from './components/tabs/tabs-muro/tabs-muro.compone
 import {VideoPlayerModule} from "../../shared/components/video-player/video-player.module";
 import {AnswersQuestionsModule} from "../../shared/components/answers-questions/view/answers-questions.module";
 import {ReactCommentModule} from "../../shared/components/react-comments/view/react-comment.module";
+import {NgChartsModule} from "ng2-charts";
 const COMPONENTS: any[] = [
 
 ]
@@ -33,18 +34,19 @@ const COMPONENTS: any[] = [
     TabsEditPerfilComponent,
     TabsMuroComponent,
   ],
-  imports: [
-    CommonModule,
-    UserPerfilRoutingModule,
-    NebularModule,
-    CardListCourseModule,
-    NgbModule,
-    NgxPrintModule,
-    ImageRecorteModule,
-    VideoPlayerModule,
-    AnswersQuestionsModule,
-    ReactCommentModule,
+    imports: [
+        CommonModule,
+        UserPerfilRoutingModule,
+        NebularModule,
+        CardListCourseModule,
+        NgbModule,
+        NgxPrintModule,
+        ImageRecorteModule,
+        VideoPlayerModule,
+        AnswersQuestionsModule,
+        ReactCommentModule,
+        NgChartsModule,
 
-  ]
+    ]
 })
 export class UserPerfilModule { }
