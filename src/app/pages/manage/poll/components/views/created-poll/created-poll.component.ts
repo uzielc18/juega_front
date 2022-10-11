@@ -8,7 +8,8 @@ import {DropdownTreeviewSelectI18n} from "../../../../../../shared/injectables/t
 import {NbDateService} from "@nebular/theme";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DatePipe} from "@angular/common";
-
+// @ts-ignore
+import * as customEditer from '../../../../../../shared/ckCustomBuild/build/ckeditor';
 @Component({
   selector: 'app-created-poll',
   templateUrl: './created-poll.component.html',
@@ -19,15 +20,15 @@ import {DatePipe} from "@angular/common";
 })
 export class CreatedPollComponent implements OnInit {
 
-  recuperarId:any = this.activatedRoute.snapshot.paramMap.get('id');
-  recuperar:any = this.activatedRoute.snapshot.paramMap;
+  recuperarId: any = this.activatedRoute.snapshot.paramMap.get('id');
+  recuperar: any = this.activatedRoute.snapshot.paramMap;
   loading: boolean = false
   formHeader2: any = FormGroup;
   formHeader: any = FormGroup;
   disable: boolean = true;
   dataEdit: any;
   min: any = Date;
-  emploreAreas: TreeviewItem[] =  [];
+  emploreAreas: TreeviewItem[] = [];
   buttonClasses = [
     'btn-outline-light btn-sm',
   ];
@@ -70,6 +71,8 @@ export class CreatedPollComponent implements OnInit {
     },
   ];
 
+  public Editor: any = customEditer;
+
   constructor(private formBuilder: FormBuilder,
               private generalService: GeneralService,
               private userService: AppService,
@@ -78,9 +81,9 @@ export class CreatedPollComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               public datepipe: DatePipe) {
 
-      let date:any = Date;
-      date = dateService.today();
-      this.min = dateService.addDay(date, 0);
+    let date: any = Date;
+    date = dateService.today();
+    this.min = dateService.addDay(date, 0);
   }
 
   ngOnInit(): void {
@@ -89,6 +92,7 @@ export class CreatedPollComponent implements OnInit {
     this.fieldReactive2();
     this.getProgramNews();
   }
+
   private fieldReactive2() {
     const controls = {
       titulo: ['', [Validators.required, Validators.maxLength(100)]],
@@ -108,6 +112,7 @@ export class CreatedPollComponent implements OnInit {
     };
     this.formHeader2 = this.formBuilder.group(controls);
   }
+
   private fieldReactive() {
     const controls = {
       url_externa: ['', [Validators.required]],
@@ -116,7 +121,7 @@ export class CreatedPollComponent implements OnInit {
       descripcion: ['', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
-    if(this.recuperarId){
+    if (this.recuperarId) {
       this.setValue();
     }
   }
@@ -161,12 +166,13 @@ export class CreatedPollComponent implements OnInit {
     }
   }
 
-  onSelectedChange(events:any){
+  onSelectedChange(events: any) {
     if (events) {
       this.formHeader2.controls['area'].setValue(events);
     }
     // console.log(this.formHeader.value.area);
   }
+
   vaciarCamps() {
     this.formHeader.patchValue({
       tamano_peso: '',
@@ -184,6 +190,7 @@ export class CreatedPollComponent implements OnInit {
       this.vaciarCamps();
     }
   }
+
   valueButtom(item: any) {
     this.listIcons.forEach((element: any) => {
       element.checked = false;
@@ -191,7 +198,8 @@ export class CreatedPollComponent implements OnInit {
     item.checked = true;
     this.formHeader.controls['tamano_peso'].setValue(item.name);
   }
-  changeType($event:any) {
+
+  changeType($event: any) {
     this.formHeader2.controls['area'].setValue('');
     this.formHeader2.controls['edad_desde'].setValue('');
     this.formHeader2.controls['edad_hasta'].setValue('');
@@ -216,7 +224,8 @@ export class CreatedPollComponent implements OnInit {
       this.formHeader2.controls['area'.toString()].updateValueAndValidity();
     }
   }
-  changeTodos($event:any) {
+
+  changeTodos($event: any) {
     this.formHeader2.controls['area'].setValue('');
     if ($event) {
       this.formHeader2.controls['area'.toString()].setValidators([]);
@@ -226,32 +235,36 @@ export class CreatedPollComponent implements OnInit {
       this.formHeader2.controls['area'.toString()].updateValueAndValidity();
     }
   }
+
   getProgramNews() {
     const serviceName = END_POINTS.base_back.news + '/mis-programas';
     this.generalService.nameId$(serviceName, this.userService.user.id).subscribe((res: any) => {
-      this.emploreAreas =  [new TreeviewItem(res.data)]
+      this.emploreAreas = [new TreeviewItem(res.data)]
       // console.log(this.emploreAreas)
     })
   }
+
   back() {
-    if(this.recuperarId){
-      this.router.navigate([`../../`], { relativeTo: this.activatedRoute });
-    }else{
-      this.router.navigate([`../`], { relativeTo: this.activatedRoute });
+    if (this.recuperarId) {
+      this.router.navigate([`../../`], {relativeTo: this.activatedRoute});
+    } else {
+      this.router.navigate([`../`], {relativeTo: this.activatedRoute});
     }
   }
-  getData(){
+
+  getData() {
     const serviceName = 'inquiries';
     const data = {
       tabla: 'tutoria'
 
     }
     this.generalService.addNameData$(serviceName, data).subscribe(res => {
-      if(res.success){
+      if (res.success) {
       }
     })
   }
-  newPoll(){
+
+  newPoll() {
     const serviceName = 'inquiries';
     const inquiries_id = this.recuperarId
     const forms = this.formHeader2.value;
@@ -280,44 +293,80 @@ export class CreatedPollComponent implements OnInit {
       titulo_video: forms2.titulo,
       descripcion_video: forms2.descripcion
     }
-    if(this.recuperarId){
+    if (this.recuperarId) {
       this.loading = true;
-      this.generalService.updateNameIdData$(serviceName, inquiries_id, params).subscribe((res:any) => {
+      this.generalService.updateNameIdData$(serviceName, inquiries_id, params).subscribe((res: any) => {
         if (res.success) {
           this.back();
         }
-      }, () => {this.loading = false}, ()=> {this.loading=false});
-    }else{
+      }, () => {
+        this.loading = false
+      }, () => {
+        this.loading = false
+      });
+    } else {
       this.loading = true;
-      this.generalService.addNameData$(serviceName, params).subscribe((res:any) => {
+      this.generalService.addNameData$(serviceName, params).subscribe((res: any) => {
         if (res.success) {
           this.back();
         }
-      }, () => {this.loading = false}, ()=> {this.loading=false});
+      }, () => {
+        this.loading = false
+      }, () => {
+        this.loading = false
+      });
     }
   }
-  setValue(){
+
+  setValue() {
     const serviceName = 'inquiries';
     const inquiries_id = this.recuperarId
     this.generalService.nameId$(serviceName, inquiries_id).subscribe(res => {
-          this.dataEdit = res.data;
-        this.formHeader.patchValue({
-            url_externa: this.dataEdit.url_video,
-            titulo: this.dataEdit.titulo_video,
-            descripcion: this.dataEdit.descripcion_video,
-          })
+      this.dataEdit = res.data;
+      this.formHeader.patchValue({
+        url_externa: this.dataEdit.url_video,
+        titulo: this.dataEdit.titulo_video,
+        descripcion: this.dataEdit.descripcion_video,
+      })
       this.formHeader2.patchValue({
         titulo: this.dataEdit.titulo,
-        tipo_filtro:  this.dataEdit.codigo === 'all'? 'area': 'edad' ,
+        tipo_filtro: this.dataEdit.codigo === 'all' ? 'area' : 'edad',
         publicar: true,
-        todos:  this.dataEdit.codigo === 'all'? true: false,
+        todos: this.dataEdit.codigo === 'all' ? true : false,
         edad_desde: this.dataEdit.titulo,
         edad_hasta: this.dataEdit.titulo,
         fecha_inicio: new Date(this.dataEdit.fecha_inicio),
-        fecha_fin: new Date(this.dataEdit.fecha_fin) ,
+        fecha_fin: new Date(this.dataEdit.fecha_fin),
         area: this.dataEdit.titulo,
-        contenido:  this.dataEdit.consulta,
+        contenido: this.dataEdit.consulta,
       })
     })
   }
+
 }
+ /* onReady(eventData: any) {
+    eventData.plugins.get('FileRepository').createUploadAdapter = function (loader: any) {
+      console.log('loader : ', loader)
+      console.log(btoa(loader.file));
+      return new UploadAdapter(loader);
+    };
+  }
+}
+export class UploadAdapter {
+  private loader;
+  constructor( loader: any ) {
+    this.loader = loader;
+  }
+
+  upload() {
+    return this.loader.file
+      .then( (file: any) => new Promise( ( resolve, reject ) => {
+        var myReader= new FileReader();
+        myReader.onloadend = (e) => {
+          resolve({ default: myReader.result });
+        }
+
+        myReader.readAsDataURL(file);
+      } ) );
+  };
+}*/
