@@ -317,6 +317,8 @@ export class VWorksComponent implements OnInit, OnChanges {
     });
   }
    filesTipo(pending: any) {
+     this.getPendingsFiles = [];
+     this.getPendingFilesDocumentoRespuesta = [];
      pending?.student_pending?.pending_files.filter((m: any) => {
        if (m.tipo === 'DOCUMENTO_TRABAJO_RESPUESTA') {
          this.getPendingFilesDocumentoRespuesta.push(m)

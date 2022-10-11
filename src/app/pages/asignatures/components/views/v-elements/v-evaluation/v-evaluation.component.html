@@ -1,6 +1,7 @@
 <div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  {{tiempo_vencido  |json}}
   <div class="work work-expired" style="margin-left: 20px; margin-right: 20px;"
-       *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && pending?.student_pending?.realizo === 0">
+       *ngIf="tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.justification?.length <= 0 && pending?.student_pending?.realizo === '0'">
     <span>
       <p>Hola {{ userInfo.name }}!</p>, Lo sentimos, su actividad de evaluación: {{ element?.titulo }} acaba de caducar hace {{
       expiredDays |
@@ -16,7 +17,7 @@
     </div>
   </div>
   <div class="work work-vence" style="margin-left: 20px; margin-right: 20px;"
-       *ngIf="!tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota === null">
+       *ngIf="!tiempo_vencido && rolSemestre?.rol?.name === 'Estudiante' && pending?.student_pending?.nota === null && pending?.student_pending?.realizo === '0'">
       <span>
           <p>Hola {{ userInfo.name }}!</p>, su evaluación: {{ element?.titulo }} vence en: {{
         venceDays |
@@ -101,7 +102,7 @@
                     <th>* Usted inicio su evaluación:</th>
                     <th>{{pending?.student_pending?.exam_estudent?.fecha_inicio}}</th>
                   </tr>
-                  <tr *ngIf="pending?.student_pending?.exam_estudent !== null && pending?.student_pending?.exam_estudent?.fecha_fin === null" style="color: var(--color-warning-500)">
+                  <tr *ngIf="pending?.student_pending?.exam_estudent !== null && pending?.student_pending?.exam_estudent?.fecha_fin === null && !validateDurationExam" style="color: var(--color-warning-500)">
                     <th>* Minutos transcurridos:</th>
                     <th>{{elapsedMinutes | i18nPlural:minutesMap}}</th>
                   </tr>
@@ -122,13 +123,17 @@
               <div *ngIf="pending?.exam?.supervisado === '0' || pending?.exam?.supervisado === null">
                 <div
                   *ngIf="rolSemestre?.rol?.name === 'Estudiante' && pending && pending?.validaciones?.bloqueo === 0 && pending?.student_pending?.realizo !== '1'">
-                  <span *ngIf="!pending?.student_pending?.exam_estudent && ValidateDateI === true" class="text-center" style="color: var(--color-danger-500); font-size: 11px;padding: 0px;"><strong class="text-center">¿Estás seguro de iniciar el examen?</strong><br>
+                  <span *ngIf="!pending?.student_pending?.exam_estudent && ValidateDateI === true && !tiempo_vencido" class="text-center" style="color: var(--color-danger-500); font-size: 11px;padding: 0px;"><strong class="text-center">¿Estás seguro de iniciar el examen?</strong><br>
                   <label class="text-center">Si su respuesta es “sí”, ya no habrá oportunidad de volver a realizar este examen.</label>
-                  </span> <br><br>
-                  <button *ngIf="pending?.student_pending?.exam_estudent === null && ValidateDateI === true" nbButton size="small" status="primary"
+                  </span>
+                  <span *ngIf="pending?.student_pending?.exam_estudent && ValidateDateI === true && !tiempo_vencido && validateDurationExam" class="text-center" style="color: var(--color-danger-500); font-size: 16px;padding: 0px;">
+                    <strong class="text-center">El tiempo para realizar tu evaluación a culminado, comunicate con tu docente.</strong><br>
+                  </span>
+                  <br><br>
+                  <button *ngIf="pending?.student_pending?.exam_estudent === null && ValidateDateI === true && !tiempo_vencido" nbButton size="small" status="primary"
                           (click)="initEvaluations()">Iniciar evaluación
                   </button>
-                  <button *ngIf="pending?.student_pending?.exam_estudent" nbButton size="small" status="primary"
+                  <button *ngIf="pending?.student_pending?.exam_estudent && !validateDurationExam" nbButton size="small" status="primary"
                           (click)="backQuestions()">Volver a la evaluación
                   </button>
                 </div>

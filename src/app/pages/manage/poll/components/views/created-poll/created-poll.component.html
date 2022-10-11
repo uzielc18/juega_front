@@ -115,9 +115,12 @@
               <div class="row">
                 <label class="label col-md-3">Contenido:</label>
                 <div class="col-md-9">
-                                    <textarea type="text" placeholder="Ingrese contenido" nbInput fullWidth fieldSize="small" formControlName="contenido"
-                                    ></textarea>
+                                   <!-- <textarea  type="text" placeholder="Ingrese contenido" nbInput fullWidth fieldSize="small"
+                                    ></textarea>-->
+
                 </div>
+                <ckeditor [editor]="Editor"></ckeditor>
+
               </div>
             </form>
           </div>
