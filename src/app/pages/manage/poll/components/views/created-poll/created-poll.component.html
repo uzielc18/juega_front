@@ -8,13 +8,25 @@
   </nb-card-header>
   <nb-card-body>
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-7">
         <nb-card status="primary">
           <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
             INFORMACIÓN
           </nb-card-header>
           <div class="card-body">
             <form [formGroup]="formHeader2">
+              <div class="row">
+                <label class="label col-md-3">Tipo:</label>
+                <div class="col-md-9">
+                  <nb-select  placeholder="Seleccione" fullWidth fieldSize="small" formControlName="tipoCE"
+                              >
+                    <nb-option value="tutoria">Campaña</nb-option>
+                    <nb-option value="election">Elecciones</nb-option>
+                  </nb-select>
+                  <control-messages [control]="formHeader2.get('tipo_filtro')"></control-messages>
+                </div>
+              </div>
+              <br>
               <div class="row">
                 <label class="label col-md-3">Título:</label>
                 <div class="col-md-9">
@@ -115,15 +127,18 @@
               <div class="row">
                 <label class="label col-md-3">Contenido:</label>
                 <div class="col-md-9">
-                                    <textarea type="text" placeholder="Ingrese contenido" nbInput fullWidth fieldSize="small" formControlName="contenido"
-                                    ></textarea>
+                                   <!-- <textarea  type="text" placeholder="Ingrese contenido" nbInput fullWidth fieldSize="small"
+                                    ></textarea>-->
+
                 </div>
+                <ckeditor [editor]="Editor" formControlName="contenido"></ckeditor>
+
               </div>
             </form>
           </div>
         </nb-card>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-5" *ngIf="formHeader2.get('tipoCE').value === 'tutoria'">
         <nb-card status="primary">
           <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
             PREPARAR VIDEO

@@ -8,6 +8,7 @@ import {NebularModule} from "../../../shared/nebular.module";
 import { CreatedPollComponent } from './components/views/created-poll/created-poll.component';
 import {ControlMessagesModule} from "../../../shared/components/control-messages/control-messages.module";
 import {TreeviewModule} from "ngx-treeview";
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {TreeviewModule} from "ngx-treeview";
     NebularModule,
     ControlMessagesModule,
     TreeviewModule.forRoot(),
+    CKEditorModule
   ]
 })
 export class PollModule { }

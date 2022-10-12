@@ -1,7 +1,7 @@
 <!-- El componente esta diseñado solo para imagenes y pdf si desea añadir otras extensiones, cree otro componente -->
 <nb-card accent="primary" class="scrollModal text-center"
   [ngStyle]="{'width': formHeaders.value.ext === 'pdf' ? '450px' : '450px'}" [nbSpinner]="loading"
-  nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Preparando archivo">
+         nbSpinnerStatus="danger" nbSpinnerSize="large" nbSpinnerMessage="Subiendo archivo">
   <nb-card-header>
     <div class="d-flex align-items-center justify-content-between">
       <div>

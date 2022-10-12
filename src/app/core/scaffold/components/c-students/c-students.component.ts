@@ -33,7 +33,7 @@ export class CStudentsComponent implements OnInit {
   getStudents(){
     const serviceName = END_POINTS.base_back.user + '/amigos-online';
     const idPerson = this.appService?.user?.person?.id;
-    this.generalService.nameIdAndId$(serviceName, idPerson, this.rolSemestre?.semestre.id).subscribe(res => {
+    this.generalService.nameIdAndId$(serviceName, idPerson, this.rolSemestre?.semestre?.id).subscribe(res => {
     this.data = res.data;
     })
   }

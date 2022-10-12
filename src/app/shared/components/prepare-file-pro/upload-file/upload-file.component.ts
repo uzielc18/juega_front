@@ -158,7 +158,7 @@ export class UploadFileComponent implements OnInit {
               }, () => { this.loading = false }, () => { this.loading = false });
             }
           }
-        }, () => { this.loading = false }, () => { this.loading = false });
+        }, () => { this.loading = false });
     }
     // }
    // else {

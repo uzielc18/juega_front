@@ -20,7 +20,7 @@ export class VEvaluationComponent implements OnInit, OnChanges {
   ip:any = '';
   @Output() loadingss: EventEmitter<any> = new EventEmitter();
   loading: boolean = false;
-
+  validateDurationExam: boolean = false;
   elapsedMinutes: any;
   ValidateDateI : boolean = false;
   daysLeft: any;
@@ -68,7 +68,7 @@ export class VEvaluationComponent implements OnInit, OnChanges {
       if (this.pending) {
         this.countdown(this.pending?.student_pending?.fecha_fin);
         this.dateValidate(this.pending?.student_pending?.fecha_inicio);
-        this.minuteTrascurridoEvaluacion(this.pending?.student_pending?.exam_estudent?.fecha_inicio);
+        this.minuteTrascurridoEvaluacion(this.pending?.student_pending?.exam_estudent?.fecha_inicio, this.pending?.duracion);
       }
     }, 1000);
 
@@ -100,7 +100,7 @@ export class VEvaluationComponent implements OnInit, OnChanges {
         this.ValidateDateI = true;
     }
   }
-  minuteTrascurridoEvaluacion(fechaIniciEvaluacion: any){
+  minuteTrascurridoEvaluacion(fechaIniciEvaluacion: any, duracion: any){
     const fecha_inicio = new Date(fechaIniciEvaluacion?.replace(' ', 'T')).getTime();
     const now = new Date().getTime();
     const minutesTrans =  now - fecha_inicio;
@@ -111,6 +111,10 @@ export class VEvaluationComponent implements OnInit, OnChanges {
     const day = hour * 24;
 
     this.elapsedMinutes = Math.floor((minutesTrans % day)/minute);
+    if(this.elapsedMinutes > parseInt(duracion)){
+        this.validateDurationExam = true
+    }
+
   }
   countdown(fecha_fin: any) {
     const countDate = new Date(fecha_fin?.replace(' ', 'T')).getTime();
