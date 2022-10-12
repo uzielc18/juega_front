@@ -23,6 +23,8 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
   notas: any = [];
   listCourses: any = [];
   listInquiries: any = [];
+  listTutoria: any = [];
+  listElections: any = [];
   datoSubscription: any = Subscription;
 
 
@@ -114,6 +116,13 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
         this.listInquiries.map((m: any) => {
           m.checked = false
           m.vermas = false
+        })
+        this.listInquiries.filter((f: any) => {
+            if(f.tabla === 'tutoria'){
+                this.listTutoria = f
+            }else{
+                this.listElections = f
+            }
         })
     }
     )

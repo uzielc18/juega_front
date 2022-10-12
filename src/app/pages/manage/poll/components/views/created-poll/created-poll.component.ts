@@ -109,6 +109,7 @@ export class CreatedPollComponent implements OnInit {
       contenido: ['', [Validators.required]],
       imagen: ['', [Validators.required]],
       base64_url: ['', [Validators.required]],
+      tipoCE: ['tutoria', [Validators.required]],
     };
     this.formHeader2 = this.formBuilder.group(controls);
   }
@@ -285,7 +286,7 @@ export class CreatedPollComponent implements OnInit {
       fecha_fin: this.datepipe.transform(forms.fecha_fin, 'yyyy-MM-dd'),
       consulta: forms.contenido,
       mostrar: 'publico',
-      tabla: 'tutoria',
+      tabla: forms.tipoCE,
       tabla_id: 0,
       person_id: this.userService?.user?.person?.id,
       codigo: filtros,
