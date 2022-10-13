@@ -333,6 +333,7 @@ export class CreatedPollComponent implements OnInit {
         titulo: this.dataEdit.titulo,
         tipo_filtro: this.dataEdit.codigo === 'all' ? 'area' : 'edad',
         publicar: true,
+        tipoCE: this.dataEdit.tabla,
         todos: this.dataEdit.codigo === 'all' ? true : false,
         edad_desde: this.dataEdit.titulo,
         edad_hasta: this.dataEdit.titulo,
