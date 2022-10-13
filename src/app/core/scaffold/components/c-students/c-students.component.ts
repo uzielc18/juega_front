@@ -17,7 +17,7 @@ export class CStudentsComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.getStudents();
-    },4000)
+    },6000)
 
   }
 
