@@ -41,7 +41,7 @@ export class CWorksComponent implements OnInit, OnChanges {
   }
   get filesTipo() {
    return this.pending?.student_pending?.pending_files.filter((m: any) => {
-      return m.tipo === 'DOCUMENTO_TRABAJO'
+      return m.tipo !== 'DOCUMENTO_TRABAJO_RESPUESTA';
     });
   }
   get filesTipo2() {

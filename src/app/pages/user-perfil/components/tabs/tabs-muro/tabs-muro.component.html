@@ -1,4 +1,4 @@
-<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large" nbSpinnerMessage="Procesado su voto">
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
 
 <div id="fb-root"></div>
 <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
@@ -54,7 +54,7 @@
   </nb-card-body>
 
 </nb-card>
-<div style="background-color: #FFFFFF" class="row mx-4 my-3" *ngIf="listElections.length > 0">
+<div style="background-color: #FFFFFF" class="row mx-4 my-3" *ngIf="listElections.length > 0 && profile?.person?.id === userInfo?.user?.person.id">
   <h1 style="text-align: center; font-size: 20px; border-bottom: 1px solid #E4E9F2" >ELECCIONES 2022</h1>
   <div class="col-md-6"  *ngFor="let item of listElections"
        >

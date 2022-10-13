@@ -581,6 +581,47 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
       }
     });
   }
+  deleteForum(){
+    const serviceName = 'forumsResponses';
+    if (this.listResponses) {
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿ Desea eliminar el comentario ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+        if (result.isConfirmed) {
+          this.loading = true;
+          const params = {
+            pending_id: this.pending?.student_pending?.id,
+          }
+          this.listResponses.find((f: any) => {
+            if(f.person_id === this.pending?.student_pending?.persons_student_id ){
+              this.generalServi.deleteNameIdParams$(serviceName, f.id, params).subscribe(r => {
+                if (r.success) {
+                  this.fieldReactive();
+                  this.getListEstudent();
+                  this.getStudentStatus(this.formDate.value.codigo);
+                  this.pending = '';
+                  this.datosStudent = '';
+                  this.listResponses = [];
+                }
+              }, () => { this.loading =false; }, () => { this.loading =false; });
+            }
+          });
+
+        }
+      });
+    }
+  }
   deleteWorks(){
     const serviceName = 'pendings';
 

@@ -266,7 +266,9 @@
                 <button *ngIf="has_rubric && pending?.student_pending?.realizo !== '0' && pending?.tipo !== 'EVALUACION'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="sendCalification()">Calificar</button>
                 <button *ngIf="!has_rubric && pending?.student_pending?.realizo !== '0'" nbButton size="small" status="primary" [disabled]="formHeader.invalid" fullWidth (click)="calificarWork()" style="margin: 5px 0">Calificar</button><br>
                 <button *ngIf="rol?.name !== 'Estudiante' && !has_rubric && pending?.tipo === 'EVALUACION' && pending?.student_pending?.exam_estudent !== null" nbButton size="small" status="danger" fullWidth (click)="deleteExam()">Eliminar examen</button>
-                <button *ngIf="rol?.name !== 'Estudiante' && pending?.tipo === 'TRABAJO' && pending?.student_pending?.realizo !== '0'" nbButton size="small" status="danger" fullWidth (click)="deleteWorks()">Eliminar Trabajo</button>
+                <button *ngIf="rol?.name !== 'Estudiante' && pending?.tipo === 'TRABAJO' && pending?.student_pending?.realizo !== '0'" nbButton size="small" status="danger" fullWidth (click)="deleteWorks()">Eliminar trabajo</button>
+                <button *ngIf="rol?.name !== 'Estudiante' && pending?.tipo === 'FORO' && pending?.student_pending?.realizo !== '0'" nbButton size="small" status="danger" fullWidth (click)="deleteForum()">Eliminar respuesta</button>
+
               </div>
             </form>
 

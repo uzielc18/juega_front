@@ -11,4 +11,15 @@ window.smartsupp||(function(d) {
   c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
 })(document);
 
-var item = sessionStorage.getItem('rolSemesterLeng')
+const session_Storage = {
+  get rolSemester(){
+    const sesion = sessionStorage.getItem('rolSemesterLeng');
+    if (sesion) {
+      return JSON.parse(sesion);
+    } else {
+      return  '';
+    }
+  }
+}
+smartsupp('name', session_Storage.rolSemester.person.nombres_completos);
+smartsupp('email', session_Storage.rolSemester.person.codigo);
