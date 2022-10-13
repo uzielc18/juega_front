@@ -242,6 +242,24 @@ nb-sidebar.compacted div.showTools {
 @media screen and (max-width: 1200px) {
 
 }
+.time_zone{
+  background-color: #FFFFFF;
+  margin: 9px;
+  position: absolute;
+  text-align: left;
+  font-size: 13px;
+  border-radius: 5px;
+  padding: 0 9px;
+}
+.selectTime{
+  cursor: pointer;
+  padding: 0 10px
+}
+ .selectTime:hover {
+    background-color: #014776;
+    color: #FFFFFF;
+
+}
 
 
 

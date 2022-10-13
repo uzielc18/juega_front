@@ -34,6 +34,7 @@ import {SseService} from "../../providers/sse.service";
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
+  timeZoneState: boolean = false;
   disableCollapse: boolean = false;
   stateSidebar: any;
   responsiveValue: boolean = false;
@@ -178,7 +179,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-   // this.timeZone();
+    this.timeZone();
     this.configurationCollapse()
     this.setConfiguartion();
     this.fieldReactive();
@@ -246,8 +247,16 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       }
     });
     this.countNotifications();
+    this.smartSupp();
+
   }
 
+  smartSupp(){
+    var script = document.createElement('script');
+    script.src = "assets/smartSupp/cargarChat.js";
+    console.log(document.head.appendChild(script))
+    document.head.appendChild(script);
+  }
 
   private fieldReactive() {
     const controls = {
@@ -694,7 +703,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
   timeZone(){
     this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if(this.appService?.user?.timezone !== this.timezone){
+   /* if(this.appService?.user?.timezone !== this.timezone){
       const serviceName = 'users';
       const body = {
         timezone: this.timezone,
@@ -708,7 +717,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
           }
       })
-    }
+    }*/
 
   }
   toggleCompact(){
@@ -716,5 +725,34 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
   dashboard(){
     this.router.navigate(['./pages/dashboard']);
+  }
+
+  opTimeZone(){
+    this.timeZoneState = !this.timeZoneState;
+  }
+  cambiarZoneHorariaSistema() {
+      const serviceName = 'users';
+      const body = {
+        timezone: this.timezone,
+      }
+      this.loading = true
+      this.generalService.updateNameIdData$(serviceName, this.appService?.user?.id, body).subscribe(res => {
+        if (res.success) {
+          this.timezone = this.user?.timezone;
+          this.toastrService.info(status, `Actualizando tu zona horaria`);
+          setTimeout(() => {
+            window.location.reload();
+          }, 5000)
+
+        }
+      },() => {this.loading = true}, () => {this.loading = true})
+  }
+  cambiarZoneHorariaEquipo(){
+    this.loading = true
+    this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    this.toastrService.info(status, `Actualizando tu zona horaria`);
+    setTimeout(() => {
+      window.location.reload();
+    }, 5000)
   }
 }
