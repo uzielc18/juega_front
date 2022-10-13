@@ -248,14 +248,13 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       }
     });
     this.countNotifications();
-    //this.smartSupp();
+
 
   }
 
   smartSupp(){
     var script = document.createElement('script');
     script.src = "assets/smartSupp/cargarChat.js";
-    console.log(document.head.appendChild(script))
     document.head.appendChild(script);
   }
 
