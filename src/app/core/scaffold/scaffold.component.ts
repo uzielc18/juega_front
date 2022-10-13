@@ -83,6 +83,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     persons_student: '',
     persons_teacher: '',
     area: '',
+    person: ''
   };
   date = new Date();
   loading: boolean = false;
@@ -247,7 +248,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       }
     });
     this.countNotifications();
-    this.smartSupp();
+    //this.smartSupp();
 
   }
 
@@ -460,6 +461,11 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
             this.paramsSessionStorage.persons_student = (this.appService.user.person && this.appService.user.person.persons_student) || '';
             this.paramsSessionStorage.persons_teacher = (this.appService.user.person && this.appService.user.person.persons_teacher) || '';
             this.paramsSessionStorage.area = this.appService.area;
+            const obj = {
+              nombres_completos: this.appService.user.person.nombres_completos,
+              codigo: this.appService.user.person.codigo
+            }
+            this.paramsSessionStorage.person = obj || '';
             sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
             // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
             this.emitEventsService.enviar(this.paramsSessionStorage);
