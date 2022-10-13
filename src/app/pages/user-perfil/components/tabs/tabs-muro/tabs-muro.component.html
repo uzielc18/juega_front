@@ -67,7 +67,6 @@
             <div class="table-responsive" [innerHTML]="item.consulta"></div>
             <br>
             <app-react-comment  style="text-align: center" [item]= "item"
-                                *ngIf="!emmitDatos?.datos?.valor"
                                (valueEmmit)="valueEmmit($event)"
                                [type] ="'election'"
                                [color] = "'primary'"
