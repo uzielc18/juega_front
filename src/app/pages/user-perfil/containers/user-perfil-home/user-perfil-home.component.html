@@ -27,6 +27,7 @@
             <nb-tabset>
               <nb-tab tabTitle="Muro">
                 <app-tabs-muro [profile] = "profile"
+                               (valueEmmit2) = valueEmmit2($event)
                                [listInquiries] = "listInquiries"
                                [listTutoria] = "listTutoria"
                                [listElections] = "listElections"></app-tabs-muro>

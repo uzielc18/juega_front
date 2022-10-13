@@ -46,7 +46,7 @@ export class ReactCommentComponent implements OnInit {
               datos: this.data,
               id_tabla:item.id
             }
-            this.valueEmmit.emit(obj)
+            //this.valueEmmit.emit(obj)
           }
 
 
@@ -76,16 +76,14 @@ export class ReactCommentComponent implements OnInit {
     this.generalService.addNameData$(serviceName, data).subscribe(
       (res: any) => {
         if (res.success) {
-          if(this.type === 'election'){
-            this.getVoteQuestion(this.item);
+          if(this.type_rating === 5){
+            this.valueEmmit.emit(this.userInfo?.user?.person?.id)
           }else{
             this.data.valor = this.data.valor + 1;
             this.data.activo = 0;
+            this.loadingsForm.emit(false);
           }
         }
-      },
-      () => {
-        this.loadingsForm.emit(false);
       },
       () => {
         this.loadingsForm.emit(false);

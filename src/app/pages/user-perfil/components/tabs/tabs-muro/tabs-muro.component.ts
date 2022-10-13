@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {GeneralService} from "../../../../../providers";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {END_POINTS} from "../../../../../providers/utils";
@@ -20,6 +20,7 @@ export class TabsMuroComponent implements OnInit {
   @Input() listInquiries: any;
   @Input() listTutoria: any;
   @Input() listElections: any;
+  @Output() valueEmmit2: EventEmitter<boolean> = new EventEmitter();
   formHeader: any = FormGroup;
   loading: boolean = false
   constructor(private generalService: GeneralService,
@@ -81,8 +82,6 @@ export class TabsMuroComponent implements OnInit {
     }, 100);
   }
   valueEmmit($event: any){
-
-    this.emmitDatos = $event
-    console.log(this.emmitDatos)
+    this.valueEmmit2.emit($event)
   }
 }
