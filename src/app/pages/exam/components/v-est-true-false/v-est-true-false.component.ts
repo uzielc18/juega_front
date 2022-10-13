@@ -63,6 +63,8 @@ export class VEstTrueFalseComponent implements OnInit, OnChanges {
         response.push(item);
       }
     });
-    this.saveValues.emit(response);
+    const dataArr = new Set(response)
+    let result = [...dataArr]
+    this.saveValues.emit(result);
   }
 }

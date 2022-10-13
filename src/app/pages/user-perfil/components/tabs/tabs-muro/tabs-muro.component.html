@@ -1,6 +1,6 @@
 <div id="fb-root"></div>
 <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
-<nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;" *ngFor="let item of listInquiries">
+<nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;" *ngFor="let item of listTutoria">
   <nb-card-body class="px-4 py-3">
     <div class="d-flex align-items-center">
       <div class="instructions">
@@ -15,7 +15,7 @@
       </div>
       <div class="col-xl-4" style="margin-top: 30px">
         <div>
-          <small style="white-space: pre-line">{{item.consulta}}</small><br>
+          <small style="white-space: pre-line" [innerHTML]="item.consulta"></small><br>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
         <div class="d-flex flex-column flex-grow-1">
           <div class="d-flex justify-content-between align-items-center">
             <p style="font-size: 14px; font-weight: bold;" class="comment-name m-0">{{item.answer.persons_nombre}} <label class="label" style="font-size: 11px;">&nbsp;&nbsp;&nbsp;&nbsp;Fecha {{formatDate(item?.answer.created_at)}}</label> </p>
-            <!--<div class="d-flex">
+           <!-- <div class="d-flex">
               <button style="margin-right: 5px" nbButton status="primary" size="tiny"><nb-icon icon="edit"></nb-icon></button>
               <button nbButton status="danger" size="tiny"><nb-icon icon="trash"></nb-icon></button>
             </div>-->
@@ -50,9 +50,33 @@
       <app-answers-questions [profile] = "profile" [visibilidad] = "item.vermas" [asnwerQuestions] = "item" [emmitComment] = "item.checked" [code] = "'ANSWER'"></app-answers-questions>
     </div>
   </nb-card-body>
-  <!--<nb-card-body class="d-flex justify-content-between flex-wrap">
-    <div [innerHTML]="item.contenido"></div>
-    <button nbButton size="large" outline status="primary"><nb-icon icon="checkmark"></nb-icon>Marcar</button>
-  </nb-card-body>-->
+
 </nb-card>
+<div style="background-color: #FFFFFF" class="row mx-4 my-3" *ngIf="listElections.length > 0">
+  <h1 style="text-align: center; font-size: 20px; border-bottom: 1px solid #E4E9F2" >ELECCIONES 2022</h1>
+  <div class="col-md-6"  *ngFor="let item of listElections">
+    <nb-card status="primary" >
+      <nb-card-header>{{item.titulo}}</nb-card-header>
+      <nb-card-body >
+        <div>
+          <div>
+            <div class="table-responsive" [innerHTML]="item.consulta"></div>
+            <br>
+            <app-react-comment style="text-align: center" [item]= "item"
+                               (valueEmmit)="valueEmmit($event)"
+                               [type] ="'election'"
+                               [color] = "'primary'"
+                               [size] = "'large'"
+                               [icon] = "'checkmark'"
+                               [type_rating] = "5"
+                               (loadingsForm) = loadingsForm($event)
+                               [userInfo] = "userInfo"></app-react-comment>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
 

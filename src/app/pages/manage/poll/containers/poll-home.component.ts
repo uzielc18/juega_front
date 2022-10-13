@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 })
 export class PollHomeComponent implements OnInit {
 
+  dataElections: any = [];
   loading: boolean = false;
   data: any = [];
   constructor(private router: Router,
@@ -19,6 +20,7 @@ export class PollHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
+    this.getDataElections();
   }
   crearView() {
     this.router.navigate([`created`], { relativeTo: this.activatedRoute.parent});
@@ -33,6 +35,18 @@ export class PollHomeComponent implements OnInit {
     this.generalService.nameParams$(serviceName, params).subscribe(res => {
       if(res.success){
         this.data = res.data
+      }
+    }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  getDataElections(){
+    this.loading = true;
+    const serviceName = 'inquiries';
+    const params = {
+      tabla: 'election'
+    }
+    this.generalService.nameParams$(serviceName, params).subscribe(res => {
+      if(res.success){
+        this.dataElections = res.data
       }
     }, () => {this.loading = false}, () => {this.loading = false})
   }
@@ -57,7 +71,11 @@ export class PollHomeComponent implements OnInit {
           this.loading = true;
           this.generalService.deleteNameId$(serviceName, item.id).subscribe(r => {
             if (r.success) {
-              this.getData();
+              if(item.tabla === 'tutoria'){
+                this.getData();
+              }else{
+                this.getDataElections();
+              }
             }
           }, () => { this.loading =false; }, () => { this.loading =false; });
         }
