@@ -129,7 +129,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
                 console.log(this.listElections)
             }
         })
-    }
+    },() => {this.loading = false}, () => {this.loading = false}
     )
   }
   emitEventToChild($event: any) {
@@ -156,5 +156,10 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
 
     }
     this.doughnutChartData.datasets.push(obj)
+  }
+  valueEmmit2($event: any){
+    if($event){
+      this.getInquiries($event);
+    }
   }
 }

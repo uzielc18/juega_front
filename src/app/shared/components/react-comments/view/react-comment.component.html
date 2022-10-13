@@ -7,4 +7,8 @@
   <button *ngIf="data.activo === 1 && data.valor === 0"  [disabled]="data?.activo === 0" nbButton [status]="color || 'basic'" [size]="size || 'tiny'" outline (click)="upVoteQuestion(item)">
     <nb-icon [icon]="icon || 'heart'"></nb-icon>{{type === 'election'? 'Votar': data?.valor}}
   </button>
+  <div *ngIf="data.activo === 0 && data.valor == 1" class="d-flex align-items-center">
+    <h3 style="font-size: 40px; color: var(--color-danger-500)">VOTO </h3>
+    <nb-icon style="width: 50px; height: 50px" icon="close" status="danger"></nb-icon>
+  </div>
 </div>
