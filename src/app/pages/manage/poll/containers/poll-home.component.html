@@ -13,37 +13,18 @@
         <button nbButton size="small" fullWidth status="primary" (click)="crearView()">Crear</button>
       </div>
     </div>
-    <hr>
-    <div class="table-responsive">
-      <table class="table table-sm">
-        <thead>
-        <tr style="font-size: 12px;">
-          <th class="text-center" style="width: 1px">#</th>
-          <th class="text-center">Título</th>
-          <th class="text-center">Consulta</th>
-          <th class="text-center">Fecha inicio</th>
-          <th class="text-center">Fecha fin</th>
-          <th class="text-center">Numero de respuestas</th>
-          <th style="width: 1px" colspan="2">Acción</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of data;  let i = index" style="font-size: 12px; vertical-align: middle">
-          <td class="text-center">{{i+ 1}}</td>
-          <td class="text-center">{{item.titulo}}</td>
-          <td class="text-center">{{item.consulta}}</td>
-          <td class="text-center">{{item.fecha_inicio}}</td>
-          <td class="text-center">{{item.fecha_fin}}</td>
-          <td class="text-center">{{item.count_answers}}</td>
-          <th style="width: 1px">
-            <button nbButton size="tiny" status="primary" (click)="editInquiries(item)"><nb-icon icon="edit"></nb-icon></button>
-          </th>
-          <th style="width: 1px">
-            <button nbButton size="tiny" status="danger" (click)="deleteInquiries(item)"><nb-icon icon="trash"></nb-icon></button>
-          </th>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+    <nb-tabset>
+      <nb-tab tabTitle="Campaña">
+        <app-tab-poll-camp [data] = "data"
+                           (editInquiries) = "editInquiries($event)"
+                           (deleteInquiries) = "deleteInquiries($event)"></app-tab-poll-camp>
+      </nb-tab>
+      <nb-tab tabTitle="Elecciones">
+        <app-tab-elections-poll [data] = "dataElections"
+                                (editInquiries) = "editInquiries($event)"
+                                (deleteInquiries) = "deleteInquiries($event)"></app-tab-elections-poll>
+      </nb-tab>
+    </nb-tabset>
+
   </nb-card-body>
 </nb-card>

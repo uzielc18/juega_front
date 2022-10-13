@@ -26,6 +26,9 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
 import {ImageInsert, ImageResizeEditing, ImageResizeHandles} from "@ckeditor/ckeditor5-image";
 import {GeneralHtmlSupport, HtmlComment} from "@ckeditor/ckeditor5-html-support";
+import {Alignment} from "@ckeditor/ckeditor5-alignment";
+import {SourceEditing} from "@ckeditor/ckeditor5-source-editing";
+import {TableCellProperties, TableProperties} from "@ckeditor/ckeditor5-table";
 
 class Editor extends ClassicEditor {}
 
@@ -53,9 +56,13 @@ Editor.builtinPlugins = [
 	PasteFromOffice,
 	Table,
 	TableToolbar,
+  TableProperties,
+  TableCellProperties,
 	TextTransformation,
   ImageInsert,
-  HtmlComment
+  HtmlComment,
+  Alignment,
+  SourceEditing
 ];
 
 // Editor configuration.
@@ -78,7 +85,9 @@ Editor.defaultConfig = {
 			'undo',
 			'redo',
 			'insertTable',
-      'insertImage'
+      'insertImage',
+      'alignment',
+      'sourceEditing',
 		]
 	},
 	language: 'es',
@@ -94,9 +103,24 @@ Editor.defaultConfig = {
 		contentToolbar: [
 			'tableColumn',
 			'tableRow',
-			'mergeTableCells'
+			'mergeTableCells',
+      'tableProperties',
+      'tableCellProperties'
 		]
-	}
+	},
+  alignment: {
+    options: [ 'left', 'right', 'center', 'justify' ]
+  },
+  htmlSupport: {
+    allow: [
+      {
+        name: /.*/,
+        attributes: true,
+        classes: true,
+        styles: true
+      }
+    ]
+  },
 };
 
 export default Editor;

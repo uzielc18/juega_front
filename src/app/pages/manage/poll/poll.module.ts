@@ -9,13 +9,17 @@ import { CreatedPollComponent } from './components/views/created-poll/created-po
 import {ControlMessagesModule} from "../../../shared/components/control-messages/control-messages.module";
 import {TreeviewModule} from "ngx-treeview";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import { TabElectionsPollComponent } from './components/tabs/tab-elections-poll/tab-elections-poll.component';
+import { TabPollCampComponent } from './components/tabs/tab-poll-camp/tab-poll-camp.component';
 
 
 @NgModule({
   declarations: [
     PollComponent,
     PollHomeComponent,
-    CreatedPollComponent
+    CreatedPollComponent,
+    TabElectionsPollComponent,
+    TabPollCampComponent
   ],
   imports: [
     CommonModule,

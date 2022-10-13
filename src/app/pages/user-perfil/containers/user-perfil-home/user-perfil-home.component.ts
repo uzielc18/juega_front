@@ -119,9 +119,11 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
         })
         this.listInquiries.filter((f: any) => {
             if(f.tabla === 'tutoria'){
-                this.listTutoria = f
-            }else{
-                this.listElections = f
+                this.listTutoria.push(f)
+            }
+            if(f.tabla === 'election'){
+                this.listElections.push(f);
+                console.log(this.listElections)
             }
         })
     }

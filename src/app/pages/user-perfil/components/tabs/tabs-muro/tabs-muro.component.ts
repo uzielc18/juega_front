@@ -16,7 +16,9 @@ export class TabsMuroComponent implements OnInit {
   showImput: boolean = false;
   userInfo: any;
   @Input() profile: any;
-  @Input() listInquiries: any
+  @Input() listInquiries: any;
+  @Input() listTutoria: any;
+  @Input() listElections: any;
   formHeader: any = FormGroup;
   loading: boolean = false
   constructor(private generalService: GeneralService,
@@ -76,5 +78,9 @@ export class TabsMuroComponent implements OnInit {
     setTimeout(() => {
       this.loading = $event;
     }, 100);
+  }
+  valueEmmit($event: any){
+    console.log($event, "aaaaaaaaaaaaa")
+
   }
 }
