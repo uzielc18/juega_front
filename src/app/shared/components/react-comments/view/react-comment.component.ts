@@ -40,6 +40,17 @@ export class ReactCommentComponent implements OnInit {
       (res: any) => {
         if (res.success) {
           this.data = res.data;
+          const arr: any = []
+          if(this.data.valor === 1){
+            const obj: any = {
+              datos: this.data,
+              id_tabla:item.id
+            }
+            this.valueEmmit.emit(obj)
+          }
+
+
+
         }
       },
       () => {

@@ -15,6 +15,7 @@ export class TabsMuroComponent implements OnInit {
   valid: boolean = false;
   showImput: boolean = false;
   userInfo: any;
+  emmitDatos: any;
   @Input() profile: any;
   @Input() listInquiries: any;
   @Input() listTutoria: any;
@@ -80,7 +81,8 @@ export class TabsMuroComponent implements OnInit {
     }, 100);
   }
   valueEmmit($event: any){
-    console.log($event, "aaaaaaaaaaaaa")
 
+    this.emmitDatos = $event
+    console.log(this.emmitDatos)
   }
 }
