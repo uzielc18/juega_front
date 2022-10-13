@@ -47,7 +47,7 @@
                   {{i + 1}} &nbsp;&nbsp;{{item?.nombres + ' ' + item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}
                 </div>
                 <div>
-                  {{item?.nota}}
+                  {{ item?.nota}}
                   <nb-icon *ngIf="item?.realizo === '0'" icon="close-circle-outline" status="danger"
                   nbTooltip="Pendiénte" nbTooltipPlacement="top" nbTooltipStatus="danger"></nb-icon>
                   <nb-icon *ngIf="item?.realizo === '1' && item?.calificado === '0'" icon="checkmark-outline" status="basic"

@@ -1,5 +1,5 @@
-<div style="margin-right: 10px">
-  <button [disabled]="data?.activo === 0" nbButton [status]="color || 'basic'" [size]="size || 'tiny'" outline (click)="upVoteQuestion(item)">
-    <nb-icon icon="heart"></nb-icon>{{data?.valor}}
+<div style="margin-right: 10px" *ngIf="data">
+  <button  [disabled]="data?.activo === 0" nbButton [status]="color || 'basic'" [size]="size || 'tiny'" outline (click)="upVoteQuestion(item)">
+    <nb-icon [icon]="icon || 'heart'"></nb-icon>{{type === 'election'? 'Votar': data?.valor}}
   </button>
 </div>

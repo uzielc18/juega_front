@@ -11,11 +11,14 @@ export class ReactCommentComponent implements OnInit {
 
   data: any;
   @Input() item: any;
+  @Input() type: any;
   @Input() color: any;
   @Input() size: any;
+  @Input() icon: any;
   @Input() type_rating: any;
   @Input() userInfo: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
+  @Output() valueEmmit: EventEmitter<boolean> = new EventEmitter();
   constructor(private generalService: GeneralService) { }
 
   ngOnInit(): void {
@@ -36,7 +39,7 @@ export class ReactCommentComponent implements OnInit {
     this.generalService.nameParams$(serviceName, data).subscribe(
       (res: any) => {
         if (res.success) {
-          this.data = res.data
+          this.data = res.data;
         }
       },
       () => {
@@ -62,8 +65,12 @@ export class ReactCommentComponent implements OnInit {
     this.generalService.addNameData$(serviceName, data).subscribe(
       (res: any) => {
         if (res.success) {
-          this.data.valor = this.data.valor + 1;
-          this.data.activo = 0;
+          if(this.type === 'election'){
+            this.getVoteQuestion(this.item);
+          }else{
+            this.data.valor = this.data.valor + 1;
+            this.data.activo = 0;
+          }
         }
       },
       () => {

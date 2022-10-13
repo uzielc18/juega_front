@@ -244,7 +244,11 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
       this.generalServi.nameIdParams$(serviceName, this.element.id, params).subscribe(
         (res: any) => {
           this.listAlumns = (res && res.data) || [];
-          console.log(res)
+          this.listAlumns.forEach((f: any) => {
+            if(f.nota){
+              f.nota = parseInt(f.nota).toFixed(2)
+            }
+          })
           // if (this.listAlumns.length>0) {
           //   this.listAlumns.map((re:any) => {
           //     if (re.persons_student_id === 909) {
