@@ -30,6 +30,12 @@
                         <button nbButton size="tiny" status="primary" (click)="syncNotes()"><nb-icon icon="sync-outline"></nb-icon></button>
                       </td>
                     </tr>
+                    <tr *ngIf="curso.courses_type_id === 2">
+                      <td>Agregar unidades y sesiones</td>
+                      <td style="width: 1px;">
+                        <button nbButton size="tiny" status="primary" (click)="addUnitAndSession()"><nb-icon icon="plus"></nb-icon></button>
+                      </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

@@ -20,7 +20,8 @@ export class SilaboComponent implements OnInit {
   constructor(private generalService: GeneralService,
               private dialogService: NbDialogService) {}
 
-  ngOnInit(): void {}  get rolSemestre() {
+  ngOnInit(): void {}
+  get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     if (sesion) {
       return JSON.parse(sesion);

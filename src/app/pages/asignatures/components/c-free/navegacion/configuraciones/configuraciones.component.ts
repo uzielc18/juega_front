@@ -3,6 +3,8 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import Swal from 'sweetalert2';
 import {Router} from "@angular/router";
+import {MUnitSessionComponent} from "../../../../../../shared/components/unit-session/modal/m-unit-session.component";
+import {NbDialogService} from "@nebular/theme";
 @Component({
   selector: 'app-configuraciones',
   templateUrl: './configuraciones.component.html',
@@ -11,9 +13,11 @@ import {Router} from "@angular/router";
 export class ConfiguracionesComponent implements OnInit {
   loading: boolean = false
   @Input() curso:any;
+  @Input() userInfo: any;
   @Output() changeLoad: EventEmitter<any> = new EventEmitter();
   constructor(private generalService: GeneralService,
-              private router:Router) { }
+              private router:Router,
+              private dialogService: NbDialogService,) { }
 
   ngOnInit(): void {
   }
@@ -123,5 +127,20 @@ export class ConfiguracionesComponent implements OnInit {
   }
   syncNotes(){
     this.router.navigate([`/pages/asignatures/course/${this.curso.id_carga_curso_docente}/notes`],);
+  }
+  addUnitAndSession(){
+    this.dialogService.open(MUnitSessionComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        userInfo: this.userInfo?.user,
+        items: this.curso
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        //this.getCourseZoom();
+      }
+    });
   }
 }

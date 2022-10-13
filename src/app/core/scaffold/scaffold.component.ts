@@ -34,6 +34,7 @@ import {SseService} from "../../providers/sse.service";
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
+  timeZoneState: boolean = false;
   disableCollapse: boolean = false;
   stateSidebar: any;
   responsiveValue: boolean = false;
@@ -82,6 +83,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     persons_student: '',
     persons_teacher: '',
     area: '',
+    person: ''
   };
   date = new Date();
   loading: boolean = false;
@@ -178,7 +180,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-   // this.timeZone();
+    this.timeZone();
     this.configurationCollapse()
     this.setConfiguartion();
     this.fieldReactive();
@@ -246,8 +248,15 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       }
     });
     this.countNotifications();
+
+
   }
 
+  smartSupp(){
+    var script = document.createElement('script');
+    script.src = "assets/smartSupp/cargarChat.js";
+    document.head.appendChild(script);
+  }
 
   private fieldReactive() {
     const controls = {
@@ -451,6 +460,11 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
             this.paramsSessionStorage.persons_student = (this.appService.user.person && this.appService.user.person.persons_student) || '';
             this.paramsSessionStorage.persons_teacher = (this.appService.user.person && this.appService.user.person.persons_teacher) || '';
             this.paramsSessionStorage.area = this.appService.area;
+            const obj = {
+              nombres_completos: this.appService.user.person.nombres_completos,
+              codigo: this.appService.user.person.codigo
+            }
+            this.paramsSessionStorage.person = obj || '';
             sessionStorage.setItem('rolSemesterLeng', JSON.stringify(this.paramsSessionStorage));
             // this.emitEventsService.valuesRolSem$.emit(this.paramsSessionStorage); //Guardar valores en la cabecera
             this.emitEventsService.enviar(this.paramsSessionStorage);
@@ -694,7 +708,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
   timeZone(){
     this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if(this.appService?.user?.timezone !== this.timezone){
+   /* if(this.appService?.user?.timezone !== this.timezone){
       const serviceName = 'users';
       const body = {
         timezone: this.timezone,
@@ -708,7 +722,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
           }
       })
-    }
+    }*/
 
   }
   toggleCompact(){
@@ -716,5 +730,34 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
   dashboard(){
     this.router.navigate(['./pages/dashboard']);
+  }
+
+  opTimeZone(){
+    this.timeZoneState = !this.timeZoneState;
+  }
+  cambiarZoneHorariaSistema() {
+      const serviceName = 'users';
+      const body = {
+        timezone: this.timezone,
+      }
+      this.loading = true
+      this.generalService.updateNameIdData$(serviceName, this.appService?.user?.id, body).subscribe(res => {
+        if (res.success) {
+          this.timezone = this.user?.timezone;
+          this.toastrService.info(status, `Actualizando tu zona horaria`);
+          setTimeout(() => {
+            window.location.reload();
+          }, 5000)
+
+        }
+      },() => {this.loading = true}, () => {this.loading = true})
+  }
+  cambiarZoneHorariaEquipo(){
+    this.loading = true
+    this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    this.toastrService.info(status, `Actualizando tu zona horaria`);
+    setTimeout(() => {
+      window.location.reload();
+    }, 5000)
   }
 }

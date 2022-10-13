@@ -112,13 +112,16 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
   getInquiries(person_id: any){
     const serviceName = 'inquiries-tutoria';
     this.generalService.nameId$(serviceName, person_id).subscribe( res => {
-        this.listInquiries = res.data
+        this.listInquiries = res.data;
+        this.listTutoria = [];
+        this.listElections = [];
         this.listInquiries.map((m: any) => {
           m.checked = false
           m.vermas = false
         })
         this.listInquiries.filter((f: any) => {
             if(f.tabla === 'tutoria'){
+
                 this.listTutoria.push(f)
             }
             if(f.tabla === 'election'){

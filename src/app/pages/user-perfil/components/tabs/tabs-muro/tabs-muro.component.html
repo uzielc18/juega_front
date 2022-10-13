@@ -1,3 +1,5 @@
+<div [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+
 <div id="fb-root"></div>
 <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
 <nb-card class="instructions-container" style="margin-left: 20px; margin-right: 20px;" *ngFor="let item of listTutoria">
@@ -52,17 +54,20 @@
   </nb-card-body>
 
 </nb-card>
-<div style="background-color: #FFFFFF" class="row mx-4 my-3" *ngIf="listElections.length > 0">
+<div style="background-color: #FFFFFF" class="row mx-4 my-3" *ngIf="listElections.length > 0 && profile?.person?.id === userInfo?.user?.person.id">
   <h1 style="text-align: center; font-size: 20px; border-bottom: 1px solid #E4E9F2" >ELECCIONES 2022</h1>
-  <div class="col-md-6"  *ngFor="let item of listElections">
+  <div class="col-md-6"  *ngFor="let item of listElections"
+       >
     <nb-card status="primary" >
       <nb-card-header>{{item.titulo}}</nb-card-header>
-      <nb-card-body >
+      <nb-card-body>
+
         <div>
           <div>
             <div class="table-responsive" [innerHTML]="item.consulta"></div>
             <br>
-            <app-react-comment style="text-align: center" [item]= "item"
+            <app-react-comment  style="text-align: center" [item]= "item"
+                                *ngIf="!emmitDatos?.datos?.valor"
                                (valueEmmit)="valueEmmit($event)"
                                [type] ="'election'"
                                [color] = "'primary'"
@@ -71,12 +76,17 @@
                                [type_rating] = "5"
                                (loadingsForm) = loadingsForm($event)
                                [userInfo] = "userInfo"></app-react-comment>
+            <div *ngIf="emmitDatos?.id_tabla === item.id && emmitDatos?.datos?.valor === 1" class="d-flex align-items-center">
+              <h3 style="font-size: 40px; color: var(--color-danger-500)">VOTO </h3>
+              <nb-icon style="width: 50px; height: 50px" icon="close" status="danger"></nb-icon>
+            </div>
+
           </div>
         </div>
       </nb-card-body>
     </nb-card>
   </div>
 </div>
-
+</div>
 
 
