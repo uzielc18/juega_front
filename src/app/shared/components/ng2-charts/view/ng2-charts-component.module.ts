@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Ng2ChartsComponentComponent } from './ng2-charts-component.component';
 import { Ng2ChartsBartComponent } from './components/ng2-charts-bart/ng2-charts-bart.component';
 import {NgChartsModule} from "ng2-charts";
+import {NebularModule} from "../../../nebular.module";
 
 
 
@@ -16,7 +17,8 @@ import {NgChartsModule} from "ng2-charts";
   ],
   imports: [
     CommonModule,
-    NgChartsModule
+    NgChartsModule,
+    NebularModule
   ]
 })
 export class Ng2ChartsComponentModule { }
