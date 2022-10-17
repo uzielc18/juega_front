@@ -60,6 +60,7 @@ export class Ng2ChartsBartComponent implements OnInit, OnChanges {
   }
 
   dataBar(item: any){
+    this.barChartData.labels = []
     item.labels?.forEach((f: any) => {
       this.barChartData.labels?.push(f.titulo);
     });

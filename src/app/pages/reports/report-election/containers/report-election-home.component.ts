@@ -13,7 +13,8 @@ export class ReportElectionHomeComponent implements OnInit {
 
   data: any = [];
   dataFilter: any = [];
-
+  col_md_active: boolean = false;
+  todos: any = 'todos';
   loading:boolean = false;
 
 
@@ -27,16 +28,44 @@ export class ReportElectionHomeComponent implements OnInit {
 
   classActive(item: any){
     let valor: any = 'hover_class_desactive';
-    if(item.checked){
+    if(item?.checked){
+      valor = 'hover_class_active'
+    }
+    if(item === 'todos'){
       valor = 'hover_class_active'
     }
     return valor
+  }
+  selectItemTodos(item: any, filter: any, value: any){
+    if(value === 'all'){
+      filter?.map((r:any) => {
+        r.checked = false;
+      });
+      this.todos = 'todos'
+      this.col_md_active = false;
+      this.filterData(item)
+    }
+
   }
   selectItem(item: any, filter: any){
     filter?.map((r:any) => {
       r.checked = false;
     });
+    this.todos = ''
     item.checked = true;
+    this.col_md_active = true;
+    this.filterData(item);
+
+  }
+  filterData(item: any){
+    const serviceName = END_POINTS.base_back.reportes + '/elecciones-datos';
+    const params = {
+      id_election: item.id || item
+    }
+    this.loading = true;
+    this.generalService.nameParams$(serviceName, params).subscribe( res => {
+      this.data = res.data;
+    }, () => {this.loading = false}, () => {this.loading = false})
   }
 
   getData(){
