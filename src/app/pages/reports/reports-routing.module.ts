@@ -13,6 +13,10 @@ const routes: Routes = [{
     {
       path:'report-access',
       loadChildren: () => import('src/app/pages/reports/report-access/report-access.module').then(m => m.ReportAccessModule)
+    },
+    {
+      path:'report-election',
+      loadChildren: () => import('src/app/pages/reports/report-election/report-election.module').then(m => m.ReportElectionModule)
     }
   ]
 }];
