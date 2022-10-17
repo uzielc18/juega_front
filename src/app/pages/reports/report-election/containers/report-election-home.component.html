@@ -1,0 +1,38 @@
+<nb-card class="m-0 h-100 border-0" style="border-radius: 15px;" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="shopping-bag-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">REPORTE DE ELECCIONES</strong>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-4 col-xxl-2">
+        <nb-card>
+          <nb-card-body class="d-flex justify-content-between flex-wrap">
+            <div>
+              <button nbButton status="primary" size="small" outline style="margin-right: 10px">Elecciones</button>
+              <div>
+                <ul class="list_group">
+                  <li class="list_item">TODOS</li>
+                  <li *ngFor="let item of dataFilter" (click)="selectItem(item, dataFilter)" [ngClass]="classActive(item)" class="list_item">{{item.titulo | uppercase}}</li>
+                </ul>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-8 col-xxl-10">
+        <nb-card class="mb-0">
+          <nb-card-body style="min-height: 60vh">
+              <app-ng2-charts-component
+                [barChartData]="barChartData"
+                [barChartOptions]="barChartOptions"
+                [barChartPlugins]="barChartPlugins"
+                [barChartType]="barChartType"></app-ng2-charts-component>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
