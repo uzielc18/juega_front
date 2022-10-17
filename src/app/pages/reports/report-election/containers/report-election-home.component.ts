@@ -16,38 +16,7 @@ export class ReportElectionHomeComponent implements OnInit {
 
   loading:boolean = false;
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  public barChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: {
-      x: {},
-      y: {
-        min: 0
-      }
-    },
-    plugins: {
-      legend: {
-        display: true,
-      }
-    }
-  };
-  public barChartType: ChartType = 'bar';
-  public barChartPlugins = [
 
-  ];
-
-  public barChartData: ChartData<'bar'> = {
-    labels: [],
-    datasets: []
-  };
-
-  // events
-  public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-  }
-
-  public chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-  }
 
   constructor( private generalService: GeneralService) { }
 
@@ -75,8 +44,8 @@ export class ReportElectionHomeComponent implements OnInit {
     const serviceName = END_POINTS.base_back.reportes + '/elecciones-datos';
     this.generalService.nameAll$(serviceName).subscribe( res => {
       this.data = res.data;
-      this.dataBar(this.data)
-
+      if(res.success){
+      }
     }, () => {this.loading = false}, () => {this.loading = false})
   }
   getFilterData(){
@@ -88,23 +57,6 @@ export class ReportElectionHomeComponent implements OnInit {
       })
 
     })
-  }
-
-  dataBar(item: any){
-    console.log(item)
-    item.labels?.forEach((f: any) => {
-      this.barChartData.labels?.push(f.titulo);
-    });
-    console.log(this.barChartData)
-    item.datasets.forEach((f:any) => {
-      const obj = {
-        data: f.data,
-        label: f.label
-      }
-      console.log(obj)
-      this.barChartData.datasets.push(obj)
-    })
-      //this.barChartData.datasets = item.datasets
   }
 
 

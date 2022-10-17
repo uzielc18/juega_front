@@ -17,6 +17,7 @@ import {GeneralService} from "../../../providers";
 import {FilterPipeModule} from "../../../shared/pipes/filterPipe/filterPipe.module";
 import {ReportCourseRoutingModule} from "../report-course/report-course-routing.module";
 import {Ng2ChartsComponentModule} from "../../../shared/components/ng2-charts/view/ng2-charts-component.module";
+import {NgChartsConfiguration, NgChartsModule} from "ng2-charts";
 
 const COMPONENTS: any[] = [
   ReportElectionHomeComponent,
@@ -24,6 +25,7 @@ const COMPONENTS: any[] = [
 ];
 const NG_MODULES: any = [
   NebularModule,
+  NgChartsModule
 ];
 const NGB_MODULES: any = [
   NgbModule,
@@ -51,6 +53,7 @@ const PIPES: any = [
 @NgModule({
   providers: [
     ...SERIVCES,
+    { provide: NgChartsConfiguration, useValue: { generateColors: false }}
   ],
   imports: [
     ReportElectionRoutingModule,

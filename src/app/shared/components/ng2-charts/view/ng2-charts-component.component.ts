@@ -7,10 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class Ng2ChartsComponentComponent implements OnInit {
 
-  @Input() barChartData: any;
-  @Input() barChartOptions: any;
-  @Input() barChartPlugins: any;
-  @Input() barChartType: any;
+  @Input() data: any;
   constructor() { }
 
   ngOnInit(): void {
