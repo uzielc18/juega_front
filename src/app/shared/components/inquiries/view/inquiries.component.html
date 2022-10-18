@@ -1,0 +1,33 @@
+<nb-card class="h-100"
+         style="border-radius: 10px; border: 1px solid #00000012; box-shadow: 1px 1px 5px 1px #00000012;"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="small">
+  <nb-card-header>
+    <div>
+      ENCUESTAS ACTIVAS EN LAMB ACADEMICO
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px">
+          <th>N°</th>
+          <th>Titulo</th>
+          <th>Estado</th>
+          <th>Url</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of item; let i = index" style="font-size: 10px; vertical-align: middle">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.titulo }}</td>
+          <td>{{ item.estado }}</td>
+          <td><a [href]="item.url" target="_blank"><button nbButton size="tiny" status="primary">Ir a la encuesta</button></a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>

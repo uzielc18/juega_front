@@ -37,6 +37,8 @@ export class PerfilComponent implements OnInit {
   view: string = 'mini';
   loading: boolean = false;
   formHeader: any = FormGroup;
+  facultades: any = [];
+  litProgramStudy:any = [];
 
   constructor(private formBuilder: FormBuilder, private generalService: GeneralService) {}
 
@@ -44,6 +46,15 @@ export class PerfilComponent implements OnInit {
     this.fieldReactive();
   }
 
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol){
+      return val;
+    } else {
+      return '';
+    }
+  }
   private fieldReactive() {
     const controls = {
       codigo: ['', [Validators.required]],
@@ -52,6 +63,8 @@ export class PerfilComponent implements OnInit {
       apellido_paterno: ['', [Validators.required]],
       apellido_materno: ['', [Validators.required]],
       dni: ['', [Validators.required]],
+      facultades_unidades: ['', [Validators.required]],
+      id_programa_estudio: ['', [Validators.required]],
       ubigeo: ['', [Validators.required]],
       genero: ['', [Validators.required]],
       nacionalidad: ['', [Validators.required]],
@@ -61,6 +74,7 @@ export class PerfilComponent implements OnInit {
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getUserInfo();
+    this.getFacultadesUnidades();
   }
 
   getUserInfo() {
@@ -96,6 +110,7 @@ export class PerfilComponent implements OnInit {
             estado_civil: this.profile.person.estado_civil || '',
             religion: this.profile.person.religion || '',
             fecha_nacimiento: new Date(this.profile.person.fecha_nacimiento) || new Date(),
+            id_programa_estudio: this.profile.person.programa_estudio_id,
           });
         }
       },
@@ -158,4 +173,83 @@ export class PerfilComponent implements OnInit {
       }
     );
   }
+  getFacultadesUnidades(){
+    const serviceName = END_POINTS.base_back.sede_areas;
+    const params = {
+      all: 1
+    }
+    this.generalService.nameIdAndIdParams$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, params).subscribe(
+      (res: any) => {
+        this.facultades = res.data || [];
+
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  selecFacultades(item: any){
+    this.formHeader.controls['facultades_unidades'].setValue(item.id);
+    this.litProgramStudy = [];
+    this.formHeader.controls['id_programa_estudio'].setValue('');
+    this.listProgramEstudy(item.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
+  }
+  listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
+    this.loading = true
+    const serviceName = 'list-programa-estudios';
+    const params = {
+      programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
+    }
+    if (id_sede && id_nive_enseanza) {
+      this.generalService.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
+        this.litProgramStudy = res.data || [];
+        console.log(this.litProgramStudy)
+        if (this.litProgramStudy.length>0) {
+          this.litProgramStudy.map((r:any) => {
+            r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');
+            if (r.semiprecencial_nombre) {
+              r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+            }
+          })
+          // this.getZoom();
+        }
+      }, () => {this.loading = false}, () => {this.loading = false});
+
+    }
+  }
+  /*getProgramStudy() {
+    const serviceName = 'list-programa-estudios';
+    let idArea:any;
+    const ids = {
+      nivel_ensenanza_id: this.rolSemestre.area.nivel_ensenanza_id,
+      sede_id: this.rolSemestre.area.sede_id,
+      area_id: this.rolSemestre.area.area_id,
+    };
+    const params = {
+      programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
+    }
+    if(this.rolSemestre.area.area_id === 0 ){
+      idArea = this.items.area_id;
+    }else{
+      idArea = this.rolSemestre.area.area_id;
+    }
+    if (ids && ids.sede_id && ids.nivel_ensenanza_id) {
+      this.generalService.nameIdAndIdAndIdParams$(serviceName, ids.nivel_ensenanza_id, ids.sede_id, idArea, params).subscribe((res:any) => {
+        this.litProgramStudy = res.data || [];
+        if (this.litProgramStudy.length>0) {
+          this.litProgramStudy.map((r:any) => {
+            r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');
+            if (r.semiprecencial_nombre) {
+              r.name_programa_estudio = r.nombre_corto + ' (' + r.sede_nombre + ' - ' + r.semiprecencial_nombre + ' )';
+            }
+          })
+          // this.getZoom();
+        }
+      });
+    }
+  }*/
+
 }
