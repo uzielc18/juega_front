@@ -49,6 +49,26 @@
       <input type="number" nbInput fullWidth fieldSize="small" formControlName="dni" readonly placeholder="DNI" />
     </div>
   </div>
+  <br>
+    <div class="row">
+      <label class="label col-md-3 d-flex align-items-center">Facultad unidad:</label>
+      <div class="col-md-9">
+        <nb-select fullWidth placeholder="Seleccione tipo" size="small" formControlName="facultades_unidades">
+          <nb-option *ngFor="let item of facultades" [value]="item.id" (click)="selecFacultades(item)">{{item.nombre}}
+
+          </nb-option>
+        </nb-select>
+      </div>
+    </div>
+  <br>
+  <div class="row">
+    <label class="label col-md-3 d-flex align-items-center">Programa de estudio:</label>
+    <div class="col-md-9">
+      <nb-select fullWidth placeholder="Seleccione programa" size="small" formControlName="id_programa_estudio">
+        <nb-option *ngFor="let item of litProgramStudy" [value]="item.id">{{item.name_programa_estudio}}</nb-option>
+      </nb-select>
+    </div>
+  </div>
   <br />
   <hr />
   <br />
