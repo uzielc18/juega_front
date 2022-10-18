@@ -65,6 +65,7 @@ import { AuthRouteAzureComponent } from './auth/contents/auth-route-azure/auth-r
 import { CPendingsComponent } from './scaffold/components/c-pendings/c-pendings.component';
 import { CStudentsComponent } from './scaffold/components/c-students/c-students.component';
 import { CPendingsTimeComponent } from './scaffold/components/c-pendings/components/c-pendings-time/c-pendings-time.component';
+import {MInquiriesModule} from "../shared/components/inquiries/modal/m-inquiries.module";
 registerLocaleData(localePe);
 const ANGULAR: any[] = [
   CommonModule,
@@ -113,7 +114,8 @@ const ANGULAR: any[] = [
     NebularModule,
     FilterModule,
     MSatisfactionModule,
-    MNotificationsModule
+    MNotificationsModule,
+    MInquiriesModule,
   ],
   exports: [
     AuthRouteLoginComponent,

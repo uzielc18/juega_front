@@ -26,6 +26,7 @@ import {BreakpointObserver, BreakpointState} from "@angular/cdk/layout";
 import {MSatisfactionComponent} from "../../shared/components/satisfaction/modal/m-satisfaction.component";
 import {MNotificationsComponent} from "../../shared/components/notifications/modal/m-notifications.component";
 import {SseService} from "../../providers/sse.service";
+import {MInquiriesComponent} from "../../shared/components/inquiries/modal/m-inquiries.component";
 
 @Component({
   selector: 'app-scaffold',
@@ -249,7 +250,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     });
     this.countNotifications();
 
-
   }
 
   smartSupp(){
@@ -453,6 +453,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
           if (data.success) {
             if(this.rolSemestre.rol?.name === 'Estudiante'){
               this.satisfaction();
+            }
+            if(this.rolSemestre.rol?.name === 'Estudiante' || this.rolSemestre.rol?.name === 'Docente'){
+              this.mInquiries();
             }
             this.paramsSessionStorage.rol = rol;
             this.paramsSessionStorage.semestre = value;
@@ -660,6 +663,28 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         }
     });
 
+  }
+  mInquiries(){
+    const serviceName = 'instrumentos';
+    const params = {
+      id_persona: this.appService.user.person.id_persona
+    }
+    this.generalService.nameParams$(serviceName, params).subscribe(res => {
+      if(res.data.length > 0){
+        this.dialogService.open(MInquiriesComponent, {
+          dialogClass: 'dialog-limited-height',
+          context: {
+            item: res.data,
+          },
+          closeOnBackdropClick: false,
+          closeOnEsc: false,
+        })
+          .onClose.subscribe(result => {
+          if (result === 'ok') {
+          }
+        });
+      }
+    })
   }
   countNotifications(){
     const serviceName =  'notifications-users/' + this.appService.user.id
