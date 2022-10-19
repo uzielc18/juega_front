@@ -666,11 +666,18 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
   mInquiries(){
     const serviceName = 'instrumentos';
+    let valor: boolean = false;
     const params = {
       id_persona: this.appService.user.person.id_persona
     }
     this.generalService.nameParams$(serviceName, params).subscribe(res => {
       if(res.data.length > 0){
+      res.data.filter((f: any) => {
+        if(f.codigo_estado === 'PENDIENTE'){
+          valor = true
+        }
+      })
+      if(valor){
         this.dialogService.open(MInquiriesComponent, {
           dialogClass: 'dialog-limited-height',
           context: {
@@ -683,6 +690,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
           if (result === 'ok') {
           }
         });
+      }
       }
     })
   }
