@@ -32,6 +32,15 @@ export class TabsMuroComponent implements OnInit {
     this.fieldReactive();
   }
 
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol) {
+      return val;
+    } else {
+      return '';
+    }
+  }
   private fieldReactive() {
     const controls = {
       comentario: ['']
