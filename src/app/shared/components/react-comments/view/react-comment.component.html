@@ -8,7 +8,7 @@
     <nb-icon [icon]="icon || 'heart'"></nb-icon>{{type === 'election'? 'Votar': data?.valor}}
   </button>
   <div *ngIf="data.activo === 0 && data.valor == 1" class="d-flex align-items-center">
-    <h3 style="font-size: 40px; color: var(--color-danger-500)">VOTO </h3>
-    <nb-icon style="width: 50px; height: 50px" icon="close" status="danger"></nb-icon>
+    <small style="font-size: 25px; color: #2FC974; font-weight: bold">VOTO </small>
+    <nb-icon style="width: 35px; height: 35px" icon="checkmark" status="success"></nb-icon>
   </div>
 </div>

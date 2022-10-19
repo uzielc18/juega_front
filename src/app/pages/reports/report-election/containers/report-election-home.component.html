@@ -29,11 +29,14 @@
             <div [class]="col_md_active? 'col-md-6 col-xxl-5': ''">
               <nb-card status="primary">
                 <nb-card-header >
-                  <small style="font-size: 14px" class="fw-bold">INFORMACIÓN GRAFICO</small>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <small style="font-size: 14px" class="fw-bold">INFORMACIÓN GRAFICO</small>
+                    <img (click)="exportExel('info-grafico')" nbTooltip="Descargar exel" nbTooltipPlacement="top" style="cursor: pointer" src="assets/excel-logo.png" width="30px" class="ms-auto" alt="exel">
+                  </div>
                 </nb-card-header>
                 <nb-card-body>
                   <div class="table-responsive">
-                    <table class="table table-sm mb-0">
+                    <table class="table table-sm mb-0" id="info-grafico">
                       <thead>
                       <tr style="font-size: 12px" class="fw-bold text-center">
                         <th style="text-align: left">Titulo</th>
@@ -58,15 +61,18 @@
             <div *ngIf="data?.electores?.length > 0">
               <nb-card status="primary">
                 <nb-card-header >
-                  <small style="font-size: 14px" class="fw-bold">PADRON ELECTORAL / </small>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <small style="font-size: 14px" class="fw-bold">PADRON ELECTORAL / </small>
+                    <img (click)="exportExel('padron-electoral')" nbTooltip="Descargar exel" nbTooltipPlacement="top" style="cursor: pointer" src="assets/excel-logo.png" width="30px" class="ms-auto" alt="exel">
+                  </div>
                 </nb-card-header>
                 <nb-card-body>
                   <div class="table-responsive">
-                    <table class="table table-sm mb-0">
+                    <table class="table table-sm mb-0" id="padron-electoral">
                       <thead>
                       <tr style="font-size: 12px" class="fw-bold text-center">
                         <th style="text-align: left">Código</th>
-                        <th style="text-align: left">Nombre</th>
+                        <th style="text-align: left">Nombres y Apellidos</th>
                         <th>Total</th>
                       </tr>
                       </thead>

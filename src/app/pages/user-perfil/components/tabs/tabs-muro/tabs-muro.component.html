@@ -54,7 +54,7 @@
   </nb-card-body>
 
 </nb-card>
-<div style="background-color: #FFFFFF" class="row mx-4 my-3" *ngIf="listElections.length > 0 && profile?.person?.id === userInfo?.user?.person.id">
+<div style="background-color: #FFFFFF" class="row mx-4 my-3" *ngIf="listElections.length > 0 && profile?.person?.id === userInfo?.user?.person.id && rolSemestre?.rol?.name === 'Estudiante'">
   <h1 style="text-align: center; font-size: 20px; border-bottom: 1px solid #E4E9F2" >ELECCIONES 2022</h1>
   <div class="col-md-6"  *ngFor="let item of listElections"
        >
@@ -65,7 +65,6 @@
         <div>
           <div>
             <div class="table-responsive" [innerHTML]="item.consulta"></div>
-            <br>
             <app-react-comment  style="text-align: center" [item]= "item"
                                (valueEmmit)="valueEmmit($event)"
                                [type] ="'election'"
