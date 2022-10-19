@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {END_POINTS} from "../../../../providers/utils";
 import {GeneralService} from "../../../../providers";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-react-comment',
