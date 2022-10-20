@@ -8,7 +8,7 @@ import {
   NbSidebarService,
   NbThemeService, NbToastrService,
 } from '@nebular/theme';
-import {map, takeUntil} from 'rxjs/operators';
+import {filter, map, takeUntil} from 'rxjs/operators';
 import {Subject, Subscription} from 'rxjs';
 
 import {NbAuthResult, NbAuthService, NbAuthToken, NbTokenService} from '@nebular/auth';
@@ -185,7 +185,11 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.configurationCollapse()
     this.setConfiguartion();
     this.fieldReactive();
-    this.notificationCount = this.appService.notification
+    this.appService.configurations.filter((f: any) => {
+      if(f.nombre === 'NOTIFICATION'){
+        this.notificationCount = f.valor
+      }
+    })
     this.appService
       .onLoader()
       .pipe(takeUntil(this.destroy$))
@@ -485,9 +489,14 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
               this.close();
             }
 
-            if(this.rolSemestre.rol?.name === 'Estudiante' || this.rolSemestre.rol?.name === 'Docente'){
-              this.mInquiries();
-            }
+            this.appService.configurations.filter((f: any) => {
+              if(f.nombre === 'ENCUESTA'){
+                if(f.estado === '1' && (this.rolSemestre.rol?.name === 'Estudiante' || this.rolSemestre.rol?.name === 'Docente')){
+                  this.mInquiries();
+                }
+              }
+            })
+
             // location.reload();
           }
         },

@@ -9,6 +9,7 @@ import {GeneralService} from "../../../../providers";
 })
 export class MInquiriesComponent implements OnInit {
 
+  validarClose: boolean = false;
   data: any = [];
   loading: boolean = false;
   @Input() infoUser: any;
@@ -34,6 +35,12 @@ export class MInquiriesComponent implements OnInit {
     this.generalService.nameParams$(serviceName, params).subscribe(res => {
       if(res.data.length > 0){
           this.data = res.data
+
+        this.data.filter((f: any) => {
+          if(f.codigo_estado === 'PENDIENTE'){
+            this.validarClose = true
+          }
+        })
       }
     }, () => {this.loading = false}, () => {this.loading = false})
   }
