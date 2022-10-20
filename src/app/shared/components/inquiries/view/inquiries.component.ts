@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-inquiries',
@@ -8,11 +8,16 @@ import {Component, Input, OnInit} from '@angular/core';
 export class InquiriesComponent implements OnInit {
 
   @Input() item: any;
+  @Output() emitEvenetLoad: EventEmitter<boolean> = new EventEmitter();
   loading:boolean = false;
   constructor() { }
 
 
   ngOnInit(): void {
   }
+  actualizarData(){
+    this.emitEvenetLoad.emit(true)
+  }
+
 
 }
