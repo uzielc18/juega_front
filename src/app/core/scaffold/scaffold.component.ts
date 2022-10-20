@@ -225,6 +225,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         } else if (data.item.subtag === 'profile') {
           //this.emitEventsService.profileInfo(true);
           this.router.navigate([`/pages/user/perfil/${this.user.email}`]);
+          this.emitEventsService.enviarEmail(`${this.user.email}`);
         }
       });
 
@@ -454,9 +455,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
             if(this.rolSemestre.rol?.name === 'Estudiante'){
               this.satisfaction();
             }
-            if(this.rolSemestre.rol?.name === 'Estudiante' || this.rolSemestre.rol?.name === 'Docente'){
-              this.mInquiries();
-            }
+
             this.paramsSessionStorage.rol = rol;
             this.paramsSessionStorage.semestre = value;
             this.paramsSessionStorage.lenguaje = (this.appService.user && this.appService.user.lang) || '';
@@ -484,6 +483,10 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
             if (this.formHeader.value.carga === '2') {
               this.close();
+            }
+
+            if(this.rolSemestre.rol?.name === 'Estudiante' || this.rolSemestre.rol?.name === 'Docente'){
+              this.mInquiries();
             }
             // location.reload();
           }
@@ -698,6 +701,8 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     const serviceName =  'notifications-users/' + this.appService.user.id
     this.generalService.pollNotification(serviceName).subscribe((res: any) =>{
       this.notificationCount = res.data.total
+      if(res.success){
+      }
     })
   }
 
