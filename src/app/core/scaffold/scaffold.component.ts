@@ -684,7 +684,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         this.dialogService.open(MInquiriesComponent, {
           dialogClass: 'dialog-limited-height',
           context: {
-            item: res.data,
+            infoUser: this.appService.user.person.id_persona
           },
           closeOnBackdropClick: false,
           closeOnEsc: false,

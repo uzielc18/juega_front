@@ -9,6 +9,6 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-    <app-inquiries [item] = "item"></app-inquiries>
+    <app-inquiries [item] = "data" (emitEvenetLoad) = emitEvenetLoad($event)></app-inquiries>
   </nb-card-body>
 </nb-card>
