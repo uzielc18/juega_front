@@ -73,23 +73,55 @@ export class ReactCommentComponent implements OnInit {
       userid: this.userInfo?.user.id,
       person_id: this.userInfo?.user?.person?.id || '',
     };
-    this.loadingsForm.emit(true);
-    this.generalService.addNameData$(serviceName, data).subscribe(
-      (res: any) => {
-        if (res.success) {
-          if(this.type_rating === 5){
-            this.valueEmmit.emit(this.userInfo?.user?.person?.id)
-          }else{
-            this.data.valor = this.data.valor + 1;
-            this.data.activo = 0;
+    if(this.type_rating === 5){
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿ Está seguro de elegir esta lista ? ',
+        backdrop: true,
+        icon: 'question',
+        // animation: true,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#00244E',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        // timer: 2000,
+      }).then((result:any) => {
+        if (result.isConfirmed) {
+          this.loadingsForm.emit(true);
+          this.generalService.addNameData$(serviceName, data).subscribe((res:any) => {
+              if (res.success) {
+                this.valueEmmit.emit(this.userInfo?.user?.person?.id)
+              }
+            },
+            () => {
+              this.loadingsForm.emit(false)
+            });
+        }
+      });
+      }else{
+        this.loadingsForm.emit(true);
+        this.generalService.addNameData$(serviceName, data).subscribe(
+          (res: any) => {
+            if (res.success) {
+              if(this.type_rating === 5){
+                this.valueEmmit.emit(this.userInfo?.user?.person?.id)
+              }else{
+                this.data.valor = this.data.valor + 1;
+                this.data.activo = 0;
+                this.loadingsForm.emit(false);
+              }
+            }
+          },
+          () => {
             this.loadingsForm.emit(false);
           }
-        }
-      },
-      () => {
-        this.loadingsForm.emit(false);
+        );
       }
-    );
+
+
   }
+
 
 }
