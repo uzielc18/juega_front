@@ -23,6 +23,15 @@ export class VEstRelationComponent implements OnInit {
     '#94124E',
     '#002885',
     '#5D1787',
+
+    '#653100',
+    '#FF01FF',
+    '#023303',
+    '#649802',
+    '#00FF00',
+    '#FFFF89',
+    '#804040',
+    '#2D001F',
   ];
   // randomListColor: any = [];
   relationList: any[] = [];
