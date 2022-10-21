@@ -27,7 +27,7 @@
           <td>{{ i + 1 }}</td>
           <td>{{ item.titulo }}</td>
           <td>{{ item.estado }}</td>
-          <td><a [href]="item.url" target="_blank"><button nbButton size="tiny" status="primary">Ir a la encuesta</button></a></td>
+          <td><a [href]="item.url" target="_blank"><button nbButton size="tiny" status="primary" (click)="actualizarData()">Ir a la encuesta</button></a></td>
         </tr>
         </tbody>
       </table>
