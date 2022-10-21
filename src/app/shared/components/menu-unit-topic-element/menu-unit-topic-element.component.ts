@@ -21,7 +21,6 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
   ngOnChanges():void {
     this.elemtent = this.elemtent;
     if (this.elemtent && this.elemtent.id) {
-      console.log(this.elemtent);
       this.unitsAndTopics = [];
       const ele = this.elemtent;
 
@@ -38,7 +37,6 @@ export class MenuUnitTopicElementComponent implements OnInit, OnChanges {
           }
         ]
       };
-      console.log(values, 'elementoo')
       this.unitsAndTopics.push(values);
       this.topic_id = ele.topic.id;
       if (ele.topic.modo === 'ordenado') {

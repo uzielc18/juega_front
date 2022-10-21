@@ -29,7 +29,6 @@ export class MSessionComponent implements OnInit {
   ngOnInit(): void {
     this.reactiveForms();
     if(this.code == 'UPDATE'){
-      console.log(this.unit)
     }
   }
 

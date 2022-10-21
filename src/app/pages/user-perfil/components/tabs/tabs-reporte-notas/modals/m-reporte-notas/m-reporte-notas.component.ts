@@ -42,7 +42,7 @@ export class MReporteNotasComponent implements OnInit {
 
 
     })
-    console.log(this.data)
+   // console.log(this.data)
 
   }
   padTo2Digits(num: any) {

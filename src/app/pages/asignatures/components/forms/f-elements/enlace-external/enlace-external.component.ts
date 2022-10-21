@@ -163,7 +163,6 @@ export class EnlaceExternalComponent implements OnInit {
         this.loadingsForm.emit(true);
         this.generalServi.addNameData$(serviceName, params).subscribe(
           (r: any) => {
-            console.log(r)
             if (r.success) {
               const valueClose = {
                 value_close: 'ok',

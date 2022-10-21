@@ -115,7 +115,6 @@ export class AppValidateTokenService {
     return `?response_type=token&client_id=${environment.authGoogleStrategy.clientId}&scope=${scope}&redirect_uri=${redirectUri}`;
   }
   private static paramsAzure(): string {
-    console.log("holaa")
     const redirectUri = encodeURIComponent(
       environment.authAzureStrategy.redirectUri
     );

@@ -163,7 +163,6 @@ export class EvaluationsHomeComponent implements OnInit {
             r.dias = Number(t/(1000*60*60*24)).toFixed(0);
           })
         }
-        console.log(this.pendings);
 
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;

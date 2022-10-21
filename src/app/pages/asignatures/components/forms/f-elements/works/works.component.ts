@@ -161,7 +161,6 @@ export class WorksComponent implements OnInit, OnChanges {
     if (this.code === 'UPDATE') {
       this.setObjectUpdate();
     }
-    console.log(this.directorio)
   }
   setValuesPre() {
     this.formHeader.patchValue({
@@ -288,7 +287,7 @@ export class WorksComponent implements OnInit, OnChanges {
         this.loadingsForm.emit(true);
         this.generalServi.addNameData$(serviceName, params).subscribe(
           (r: any) => {
-            console.log(r)
+            //console.log(r)
             if (r.success) {
               const valueClose = {
                 value_close: 'ok',

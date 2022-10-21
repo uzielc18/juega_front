@@ -131,7 +131,6 @@ export class AnswersQuestionsComponent implements OnInit {
             item.enviar_comentario = '';
             item.checked = false
             item.child_responses.unshift(res.data)
-            console.log(res)
         }
       },
       () => {
@@ -188,7 +187,6 @@ export class AnswersQuestionsComponent implements OnInit {
     );
   }
   loadPage($event: any): any {
-    console.log($event)
     this.loading = true;
     const v = this.pagination.page += 1;
     this.getAnswers(v)
@@ -213,7 +211,6 @@ export class AnswersQuestionsComponent implements OnInit {
         if (res.success) {
           this.formHeader.controls['comentario'].setValue('');
           this.answers.unshift(res.data)
-          console.log(res)
         }
       },
       () => {

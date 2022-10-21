@@ -87,7 +87,6 @@ export class CreatedPollComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.recuperar)
     this.fieldReactive();
     this.fieldReactive2();
     this.getProgramNews();
