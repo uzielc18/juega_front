@@ -30,7 +30,6 @@ export class TypeRatingsHomeComponent implements OnInit {
     this.loading = true
     const serviceName = 'typeRatings';
     this.generalService.nameAll$(serviceName).subscribe(resp => {
-      console.log(resp)
       this.typeRatinsData = resp.data
     }, () => {this.loading = false}, () => {this.loading = false})
   }

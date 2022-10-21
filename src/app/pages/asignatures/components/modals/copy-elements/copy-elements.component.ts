@@ -123,7 +123,7 @@ export class CopyElementsComponent implements OnInit {
       (res: any) => {
         if (res.success) {
           this.listOfCourses = res.data;
-          console.log(this.listOfCourses, "asdasd")
+          //console.log(this.listOfCourses, "asdasd")
           this.listOfCourses.map((course: any) => {
             course.show = false;
             course.topics.map((topic: any) => {

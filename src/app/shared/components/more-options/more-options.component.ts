@@ -47,7 +47,6 @@ export class MoreOptionsComponent implements OnInit, OnChanges {
     }
   }
   updateValues() {
-    console.log(this.setValues, "more")
     this.formHeader.patchValue({
       permitir_comentarios: this.setValues.permitir_comentarios  === '1' ? true : false,
       duration: this.setValues.duracion,

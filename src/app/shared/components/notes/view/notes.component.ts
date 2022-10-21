@@ -31,8 +31,6 @@ export class NotesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
-    console.log(this.rolSemestre.semestre)
-
   }
   getData(){
     this.loading = true
@@ -66,7 +64,6 @@ export class NotesComponent implements OnInit {
     this.loading = true
     const serviceName = END_POINTS.base_back.config + '/get-evaluations';
     this.generalService.nameIdAndIdAndId$(serviceName, this.items[0].id_carga_curso, '0', this.rolSemestre.semestre.codigo).subscribe(res => {
-      console.log(res)
     }, () => {this.loading = false}, () => {this.loading = false});
   }
 }

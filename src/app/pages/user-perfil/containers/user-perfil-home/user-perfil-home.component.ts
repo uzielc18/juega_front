@@ -126,7 +126,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
             }
             if(f.tabla === 'election'){
                 this.listElections.push(f);
-                console.log(this.listElections)
+                //console.log(this.listElections)
             }
         })
     },() => {this.loading = false}, () => {this.loading = false}
@@ -136,7 +136,7 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
     this.getUser()
   }
   doughnut(profile: any){
-    console.log(profile)
+    //console.log(profile)
     this.doughnutChartData.datasets = [];
     this.doughnutChartLabels = Object.keys(profile?.info);
     const trabajos_por_completar: any = profile?.info?.trabajos_por_completar

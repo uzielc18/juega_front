@@ -67,7 +67,6 @@ export class MActivitiesComponent implements OnInit {
       id_carga_curso_docente: this.item.id_carga_curso_docente
     }
     this.generalService.nameParams$(serviceName, params).subscribe(res => {
-      console.log(res)
       this.students = res.data.students;
       },
       () => {this.loading = false}, () => {this.loading = false}

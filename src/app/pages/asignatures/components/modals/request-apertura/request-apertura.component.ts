@@ -59,7 +59,6 @@ export class RequestAperturaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.elemento, 'pen', this.pendiente, 'info', this.userInfo);
     this.fieldReactive();
   }
   private fieldReactive() {

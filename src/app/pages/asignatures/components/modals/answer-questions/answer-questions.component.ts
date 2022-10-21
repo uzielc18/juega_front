@@ -145,7 +145,6 @@ export class AnswerQuestionsComponent implements OnInit {
       (res: any) => {
         if (res.success) {
           this.answers = res.data;
-          console.log(this.answers);
           this.answers.forEach(answer => {
             answer.expiredDays = 0;
             answer.expiredHours = 0;

@@ -206,7 +206,7 @@ export class PerfilComponent implements OnInit {
     if (id_sede && id_nive_enseanza) {
       this.generalService.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
         this.litProgramStudy = res.data || [];
-        console.log(this.litProgramStudy)
+        //console.log(this.litProgramStudy)
         if (this.litProgramStudy.length>0) {
           this.litProgramStudy.map((r:any) => {
             r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');

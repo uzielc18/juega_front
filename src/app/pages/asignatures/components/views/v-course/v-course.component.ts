@@ -38,7 +38,6 @@ export class VCourseComponent implements OnInit, OnDestroy {
     this.getUnidades();
     this.emitEventsService.blockEnviar({from: 'Asignaturas', status: true});
     this.datoSubscription = this.emitEventsService.returnsCurso().subscribe(value => { // para emitir evento desde la cabecera
-      console.log(value)
       if(value){
         this.idCargaCursoDocente = value;
         this.getUnidades();

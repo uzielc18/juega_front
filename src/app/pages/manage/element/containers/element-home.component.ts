@@ -196,7 +196,6 @@ export class ElementHomeComponent implements OnInit {
       (res: any) => {
         if (res.success) {
           this.listOfCourses = res.data;
-          console.log(this.listOfCourses, "asdasd")
           this.listOfCourses.map((course: any) => {
             course.show = false;
             course.topics.map((topic: any) => {
@@ -414,7 +413,6 @@ export class ElementHomeComponent implements OnInit {
     this.loading = true;
     this.generalService.addNameData$(serviceName, data).subscribe(
       (res: any) => {
-        console.log(res);
         if (res.success) {
           this.elementsByTopic.map((element: any) => {
             element.checked = false;
