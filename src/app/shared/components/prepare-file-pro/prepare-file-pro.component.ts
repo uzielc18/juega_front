@@ -110,7 +110,6 @@ export class PrepareFileProComponent implements OnInit, OnChanges {
       }
 
     }
-    console.log(param)
     this.modalServiceNebular.open(UploadFileComponent, {
       closeOnBackdropClick: false,
       context: param,

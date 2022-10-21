@@ -88,7 +88,6 @@ export class EvaluationsComponent implements OnInit {
     })
   }
   formsValues($event:any) {
-    console.log($event)
     this.formHeader.patchValue({
       calificable: $event.calificable,
       duracion: $event.duration || '',

@@ -98,7 +98,6 @@ export class UploadFileComponent implements OnInit {
       key: key,
       id_carga_curso_docente_array: this.params?.id_carga_curso_docente_array
     }
-    console.log(prams, "paramsssssss")
     if (prams && prams.type && prams.directory && prams.key) {
       this.loading = true;
         this.s3ServiceServ.addFimadoS3$(prams).subscribe(r => {
@@ -136,7 +135,6 @@ export class UploadFileComponent implements OnInit {
               })
             }
             if(this.params?.id_carga_curso_docente_array === '0'){
-              console.log(r.data)
               const u = r.data.url.split('?');
               const urls = u[0];
               this.s3ServiceServ.addS3$(r.data.url, form.file.type, form.file).subscribe(r => {
