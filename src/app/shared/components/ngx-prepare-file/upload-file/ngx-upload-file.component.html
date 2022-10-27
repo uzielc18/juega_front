@@ -1,0 +1,48 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        UNIDADES
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="center">
+      <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+                     (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" [accept]="accepts" [multiple]="true">
+        <ng-template style="align-items: center" ngx-file-drop-content-tmp let-openFileSelector="openFileSelector" >
+          Arrastre sus archivos <br>
+          <button type="button" nbButton status="basic" size="tiny" outline (click)="openFileSelector()">Subir archivos</button>
+        </ng-template>
+
+      </ngx-file-drop>
+      <br>
+      <div class="table-responsive">
+        <table class="table table-sm table-hover table-bordered">
+          <thead>
+          <tr style="font-size: 13px">
+            <th style="width: 10px;">Tipo</th>
+            <th>Name</th>
+            <th class="text-center">Acción</th>
+          </tr>
+          </thead>
+          <tbody>
+          {{files| json}}
+          <tr style="font-size: 13px" *ngFor="let item of files; let i=index">
+            <td><img [src]= "fileImg(item)" width="25px" alt=""></td>
+            <td><strong>{{item.name}}</strong></td>
+            <td class="text-center"><button nbButton size="tiny" status="danger" (click)="deleteItem(i)"><nb-icon icon="trash"></nb-icon></button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="text-center">
+    <button [disabled]="files.length === 0" nbButton status="primary" size="small"
+            >Subir archivos</button>
+  </nb-card-footer>
+</nb-card>
