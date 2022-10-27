@@ -51,6 +51,7 @@ export class UploadFileComponent implements OnInit {
   }
   /// imagen
   onFileChange(event:any) {
+    console.log(event)
     this.limpiarDatos();
     this.urlSafe = '';
     if (this.isExistFiles(event)) {

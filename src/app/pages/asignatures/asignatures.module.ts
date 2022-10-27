@@ -70,6 +70,7 @@ import {MNoteWorksHomeModule} from "../../shared/components/notes-works/modal/m-
 import {MSatisfactionModule} from "../../shared/components/satisfaction/modal/m-satisfaction.module";
 import { CopyElementsComponent } from './components/modals/copy-elements/copy-elements.component';
 import {MenuNewElementsModule} from "../../shared/components/menu-new-elements/menu-new-elements.module";
+import {NgxPrepareFileModule} from "../../shared/components/ngx-prepare-file/ngx-prepare-file.module";
 const COMPONENTS: any[] = [
   AsignaturesComponent,
   AsignaturesHomeComponent,
@@ -174,16 +175,17 @@ const MODULES: any = [
     providers: [
         ...SERIVCES,
     ],
-    imports: [
-        AsignaturesRoutingModule,
-        ...NG_MODULES,
-        ...NGB_MODULES,
-        ...CONTROL_MESSAGGE,
-        ...NGX_MODULES,
-        ...MODULES,
-        ...PIPES,
-        ...DIRECTIVES
-    ],
+  imports: [
+    AsignaturesRoutingModule,
+    ...NG_MODULES,
+    ...NGB_MODULES,
+    ...CONTROL_MESSAGGE,
+    ...NGX_MODULES,
+    ...MODULES,
+    ...PIPES,
+    ...DIRECTIVES,
+    NgxPrepareFileModule
+  ],
     declarations: [...COMPONENTS, CopyElementsComponent,],
     entryComponents: [...MODALS],
 

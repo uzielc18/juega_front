@@ -41,6 +41,20 @@
         [listArrayFile]="formHeader.value.files || []"
       >
       </lamb-prepare-file-pro>
+      <!--<lamb-ngx-prepare-file
+        [paramsInfo]="{
+          key_file: key_file,
+          directory: getDirectoy(),
+          id_carga_curso_docente_array: getIdCargaCursoDocenteArr(),
+          type: 'put',
+          tabla: 'elements',
+          tipo: 'DOCUMENTO_AYUDA'
+        }"
+        [numFiles]="6"
+        (filterValueChange)="valueFile($event)"
+        [listArrayFile]="formHeader.value.files || []">
+
+      </lamb-ngx-prepare-file>-->
     </div>
   </div>
   <!-- {{formHeader.value | json}} -->
@@ -142,8 +156,8 @@
   </div>
   <div style="padding-top: 4px" class="row">
     <!-- <label class="label" >Fecha y hora de gracia</label> -->
-    <div class="col-md-6">
-      <nb-toggle status="basic" formControlName="grupal"> ¿Es grupal?</nb-toggle>
+    <div disabled class="col-md-6">
+      <!-- <nb-toggle  status="basic" formControlName="grupal"> ¿Es grupal?</nb-toggle>-->
       <control-messages [control]="formHeader.get('grupal')"></control-messages>
     </div>
     <div class="col-md-6">
