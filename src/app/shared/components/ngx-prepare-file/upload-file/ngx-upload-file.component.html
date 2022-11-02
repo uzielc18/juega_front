@@ -30,10 +30,9 @@
           </tr>
           </thead>
           <tbody>
-          {{files| json}}
           <tr style="font-size: 13px" *ngFor="let item of files; let i=index">
             <td><img [src]= "fileImg(item)" width="25px" alt=""></td>
-            <td><strong>{{item.name}}</strong></td>
+            <td><strong>{{item.relativePath}}</strong></td>
             <td class="text-center"><button nbButton size="tiny" status="danger" (click)="deleteItem(i)"><nb-icon icon="trash"></nb-icon></button></td>
           </tr>
           </tbody>

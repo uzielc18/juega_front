@@ -69,7 +69,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
   }
   private fieldReactive() {
     const controls = {
-      ver_trabajo: ['N'],
+      ver_trabajo: ['S'],
       comentario: [''],
       nota: [0, [Validators.required, Validators.maxLength(2), Validators.max(20)]],
       files: [''],

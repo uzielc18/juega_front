@@ -51,18 +51,17 @@ export class NgxUploadFileComponent implements OnInit {
       if (droppedFile.fileEntry.isFile && this.isFileAllowed(droppedFile.fileEntry?.name)) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         let ar: any = []
-
+          console.log(fileEntry)
         fileEntry?.file((file: File) => {
-         console.log(droppedFile.relativePath, file);
-         const a = file
-          ar.push(a)
 
         });
-       console.log(ar, "holaaa")
         files.forEach((f: any) => {
-
+          const filentry = f.fileEntry as FileSystemFileEntry;
+          filentry.file((file: File) => {
+            this.files.push(file)
+          });
         })
-        this.files.push()
+
         console.log(this.files)
         const hash: any = {}
         this.files = this.files.filter((current: any) => {
