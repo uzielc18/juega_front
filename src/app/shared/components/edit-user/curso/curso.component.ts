@@ -33,6 +33,17 @@ export class CursoComponent implements OnInit {
     }
   }
 
+  status(value:any) {
+    // console.log(value);
+
+    if (value <= 33) {
+      return 'danger';
+    } else if (value <= 66) {
+      return 'warning';
+    } else {
+      return 'success';
+    }
+  }
   getCourses() {
     const serviceName = END_POINTS.base_back.default + 'course-list';
     const params = {

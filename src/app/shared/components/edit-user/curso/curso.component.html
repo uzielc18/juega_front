@@ -21,7 +21,7 @@
               </div>
               <div class="col-md-9 p-0">
                 <div class="d-flex flex-column">
-                  <p class="mb-0 fw-bold" style="font-size: 16px">({{cursoEst?.id_carga_curso}}) {{ cursoEst?.course_nombre }}</p>
+                  <p class="mb-0 fw-bold" style="font-size: 16px">({{cursoEst?.id_carga_curso_docente}}) {{ cursoEst?.course_nombre }}</p>
                   <span class="text-secondary" style="font-size: 12px">{{ cursoEst?.person_teacher_nombre }}</span>
                   <span class="text-secondary" style="font-size: 12px">
                     {{ cursoEst?.programa_estudio_nombre }} - Ciclo {{ cursoEst?.ciclo }} - Grupo {{ cursoEst?.grupo }}
@@ -38,6 +38,10 @@
                 >
                   <nb-icon icon="trash-2-outline" status="danger" style="font-size: 30px"></nb-icon>
                 </div>
+              </div>
+              <br>
+              <div style="margin: 5px 0" class="col-md-10">
+                <nb-progress-bar style="height: 4px" [value]="cursoEst?.resumen?.avance" [status]="status(cursoEst?.resumen?.avance)"></nb-progress-bar>
               </div>
             </div>
           </nb-card-body>
@@ -65,7 +69,7 @@
               </div>
               <div class="col-md-9 p-0">
                 <div class="d-flex flex-column">
-                  <p class="mb-0 fw-bold" style="font-size: 16px">({{cursoDoc?.id_carga_curso}}) {{ cursoDoc?.nombre }}</p>
+                  <p class="mb-0 fw-bold" style="font-size: 16px">({{cursoDoc?.id_carga_curso_docente}}) {{ cursoDoc?.nombre }}</p>
                   <span class="text-secondary" style="font-size: 12px">{{ cursoDoc?.persons_teacher_nombre }}</span>
                   <span class="text-secondary" style="font-size: 12px">
                     {{ cursoDoc?.programa_estudio_nombre }} - Ciclo {{ cursoDoc?.ciclo }} - Grupo {{ cursoDoc?.grupo }}
@@ -73,7 +77,11 @@
                 </div>
               </div>
               <div class="col-md-1"></div>
+              <div style="margin: 5px 0" class="col-md-10">
+                <nb-progress-bar style="height: 4px" [value]="cursoDoc?.resumen?.avance" [status]="status(cursoDoc?.resumen?.avance)"></nb-progress-bar>
+              </div>
             </div>
+
           </nb-card-body>
         </nb-card>
       </nb-card-body>
@@ -99,7 +107,7 @@
               </div>
               <div class="col-md-9 p-0">
                 <div class="d-flex flex-column">
-                  <p class="mb-0 fw-bold" style="font-size: 16px">({{cursoTut?.id_carga_curso}}) {{ cursoTut?.course_nombre }}</p>
+                  <p class="mb-0 fw-bold" style="font-size: 16px">({{cursoTut?.id_carga_curso_docente}}) {{ cursoTut?.course_nombre }}</p>
                   <span class="text-secondary" style="font-size: 12px">{{ cursoTut?.persons_teacher_nombre }}</span>
                   <span class="text-secondary" style="font-size: 12px">
                     {{ cursoTut?.programa_estudio_nombre }} - Ciclo {{ cursoTut?.ciclo }} - Grupo {{ cursoTut?.grupo }}
@@ -116,6 +124,9 @@
                 >
                   <nb-icon icon="trash-2-outline" status="danger" style="font-size: 30px"></nb-icon>
                 </div>
+              </div>
+              <div style="margin: 5px 0" class="col-md-10">
+                <nb-progress-bar style="height: 4px" [value]="cursoTut?.resumen?.avance" [status]="status(cursoTut?.resumen?.avance)"></nb-progress-bar>
               </div>
             </div>
           </nb-card-body>
