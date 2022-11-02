@@ -4,7 +4,7 @@ import {GeneralService} from "../../../../../providers";
 import {AppService} from "../../../../../core";
 import {Subscription} from "rxjs";
 import {EmitEventsService} from "../../../../../shared/services/emit-events.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-tabs-cursos',
@@ -22,6 +22,7 @@ export class TabsCursosComponent implements OnInit, OnDestroy {
   constructor(private generalService: GeneralService,
               private userService: AppService,
               private activatedRoute: ActivatedRoute,
+              private router: Router,
               private emitEventsService: EmitEventsService,) {
 
   }
@@ -78,5 +79,18 @@ export class TabsCursosComponent implements OnInit, OnDestroy {
       }
     );
   }
+  status(value:any) {
+    // console.log(value);
 
+    if (value <= 33) {
+      return 'danger';
+    } else if (value <= 66) {
+      return 'warning';
+    } else {
+      return 'success';
+    }
+  }
+  navigateUrl(item: any){
+    return `/pages/asignatures/course/${item.id_carga_curso_docente}`;
+  }
 }
