@@ -84,10 +84,11 @@
 
               <div *ngIf="formHeader.value.ver_trabajo === 'S'">
                 <p  style="text-align: justify; font-size: 11px;">{{element?.descripcion}}</p>
-
+                <p style="text-align: justify; font-size: 11px;"><strong>Fecha de entrega:</strong> {{pending?.student_pending?.fecha_entrega | date: 'EEEE, MMMM d, y, h:mm:ss a' }}</p>
                 <div class="row" style="font-size: 11px;" *ngIf="infor && element?.type_element?.codigo === 'EVAL'">
                   <br>
                   <div class="col-md-10" *ngIf="infor">
+                      <strong>Fecha de entrega:</strong> {{pending?.student_pending?.fecha_entrega | date: 'EEEE, MMMM d, y, h:mm:ss a' }} <br>
                       <strong>Duración:</strong> {{infor?.duracion}} minutos <br>
                       <strong>Tiempo de interación:</strong> {{infor?.segundos}} <br>
                       <strong>Preguntas:</strong> {{infor?.preguntas_respondidas || 0}} / {{infor?.total_questions || 0}}
