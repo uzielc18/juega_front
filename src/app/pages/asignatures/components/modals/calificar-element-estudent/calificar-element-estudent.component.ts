@@ -241,12 +241,14 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
       this.loading = true;
       this.generalServi.nameIdParams$(serviceName, this.element.id, params).subscribe(
         (res: any) => {
-          this.listAlumns = (res && res.data) || [];
+          this.listAlumns = (res && res.data.sort(this.ordeByLastName)) || [];
+          console.log(this.listAlumns)
           this.listAlumns.forEach((f: any) => {
             if(f.nota){
               f.nota = Number.parseFloat(f.nota).toFixed(2)
             }
           })
+
           // if (this.listAlumns.length>0) {
           //   this.listAlumns.map((re:any) => {
           //     if (re.persons_student_id === 909) {
@@ -258,6 +260,9 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
     }
   }
 
+  ordeByLastName(x: any, y: any){
+    return x.apellido_paterno.localeCompare(y.apellido_paterno);
+  }
   getRubric() {
     if (this.has_rubric) {
       const serviceName = END_POINTS.base_back.rubrics + '/get-rubrica';

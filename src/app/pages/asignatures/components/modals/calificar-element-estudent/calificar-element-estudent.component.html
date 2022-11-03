@@ -44,7 +44,7 @@
               class="p-1 d-flex align-items-center justify-content-between" (click)="selectedStudent(item)"
               [ngStyle]="{'cursor': 'pointer', 'background': item?.checked ? item?.background : '', 'color': item?.checked ? item?.color : '', 'font-size': '10px'}">
                 <div>
-                  {{i + 1}} &nbsp;&nbsp;{{item?.nombres + ' ' + item?.apellido_paterno + ' ' + ' ' +item?.apellido_materno}}
+                  {{i + 1}} &nbsp;&nbsp;{{item?.apellido_paterno+ ' ' +item?.apellido_materno+ ' ' + ' ' +item?.nombres}}
                 </div>
                 <div>
                   {{ item?.nota}}
