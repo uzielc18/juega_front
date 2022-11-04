@@ -317,7 +317,19 @@ export class CreatedPollComponent implements OnInit {
       });
     }
   }
-
+  renderDate(date: any) {
+    if (date) {
+      const fecha = date.split('-');
+      var n = new Date(`${fecha[0]}-${fecha[1]}-${fecha[2]}`);
+      n.setMinutes(n.getMinutes() + n.getTimezoneOffset()); //para solucionar la diferencia de minutos
+      if (n.getDate()) {
+        return n;
+      } else {
+        return '';
+      }
+    }
+    return '';
+  }
   setValue() {
     const serviceName = 'inquiries';
     const inquiries_id = this.recuperarId
@@ -336,8 +348,8 @@ export class CreatedPollComponent implements OnInit {
         todos: this.dataEdit.codigo === 'all' ? true : false,
         edad_desde: this.dataEdit.titulo,
         edad_hasta: this.dataEdit.titulo,
-        fecha_inicio: new Date(this.dataEdit.fecha_inicio),
-        fecha_fin: new Date(this.dataEdit.fecha_fin),
+        fecha_inicio: this.renderDate(this.dataEdit.fecha_inicio),
+        fecha_fin: this.renderDate(this.dataEdit.fecha_fin),
         area: this.dataEdit.titulo,
         contenido: this.dataEdit.consulta,
       })
