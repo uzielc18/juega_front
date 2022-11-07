@@ -23,6 +23,20 @@ export class PerfilComponent implements OnInit {
     'Conviviente',
     'No precisa',
   ];
+  categoryTeachers: any = [] = [
+    {
+      id: 1,
+      name: 'AUXILIAR'
+    },
+    {
+      id: 2,
+      name: 'ASOCIADO'
+    },
+    {
+      id: 3,
+      name: 'PRINCIPAL'
+    },
+  ]
   religionArray: any[] = [
     'Adventista del Séptimo Día',
     'Católico',
@@ -65,6 +79,7 @@ export class PerfilComponent implements OnInit {
       dni: ['', [Validators.required]],
       facultades_unidades: ['', [Validators.required]],
       id_programa_estudio: ['', [Validators.required]],
+      categoria_docente: ['', [Validators.required]],
       ubigeo: ['', [Validators.required]],
       genero: ['', [Validators.required]],
       nacionalidad: ['', [Validators.required]],
@@ -104,6 +119,7 @@ export class PerfilComponent implements OnInit {
             apellido_materno: this.profile.person.apellido_materno,
             dni: this.profile.person.dni,
             correo: this.profile.user.email,
+            categoria_docente: this.profile.person.categoria_docente,
             genero: this.profile.person.genero || '',
             nacionalidad: this.profile.person.nacionalidad || '',
             ubigeo: this.profile.person.ubigeo || '',
@@ -122,7 +138,9 @@ export class PerfilComponent implements OnInit {
       }
     );
   }
-
+  selectCategory(item: any){
+    this.formHeader.controls['categoria_docente'].setValue(item.name);
+  }
   saveInfo() {
     const serviceName = END_POINTS.base_back.people;
     const person_id = this.user.person_id;
@@ -138,6 +156,9 @@ export class PerfilComponent implements OnInit {
       },
       user: {
         email: this.formHeader.controls['correo'].value || '',
+      },
+      persons_teacher: {
+        categoria_docente: this.formHeader.controls['categoria_docente'].value
       },
     };
     this.generalService.updateNameIdData$(serviceName, person_id, data).subscribe(
@@ -251,5 +272,6 @@ export class PerfilComponent implements OnInit {
       });
     }
   }*/
+
 
 }
