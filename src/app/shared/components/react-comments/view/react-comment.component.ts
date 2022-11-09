@@ -75,7 +75,7 @@ export class ReactCommentComponent implements OnInit {
     };
     if(this.type_rating === 5){
       Swal.fire({
-        title: 'Eliminar',
+        title: 'Elecciones 2022',
         text: '¿ Está seguro de elegir esta lista ? ',
         backdrop: true,
         icon: 'question',
