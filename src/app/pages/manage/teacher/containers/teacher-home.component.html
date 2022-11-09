@@ -10,7 +10,6 @@
         <div class="col-md-3" *ngIf="rolSemestre.area.area_id === 0">
           <label class="label">Sede</label>
           <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="sede">
-            <nb-option value="" disabled>Selecciona</nb-option>
             <nb-option *ngFor="let sede of sedes" [value]="sede" (click)="selectedSede(sede)">{{ sede?.nombre }}</nb-option>
           </nb-select>
         </div>

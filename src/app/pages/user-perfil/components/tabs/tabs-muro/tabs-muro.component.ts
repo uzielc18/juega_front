@@ -93,4 +93,13 @@ export class TabsMuroComponent implements OnInit {
   valueEmmit($event: any){
     this.valueEmmit2.emit($event)
   }
+  validateDate(item: any){
+    const now2 = new Date().toLocaleDateString();
+    const now = new Date(now2).getTime();
+    const fecha_fin = new Date(item.fecha_fin).getTime();
+    if(fecha_fin === now){
+      return true
+    }
+    return false
+  }
 }

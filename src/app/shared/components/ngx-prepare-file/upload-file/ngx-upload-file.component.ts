@@ -3,9 +3,8 @@ import {NbDialogRef} from "@nebular/theme";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {S3ServiceService} from "../../prepare-file-pro/services/s3-service.service";
-import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
-import uniqueBy from "@popperjs/core/lib/utils/uniqueBy";
-import Swal from "sweetalert2";
+//import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from "ngx-file-drop";
+//import uniqueBy from "@popperjs/core/lib/utils/uniqueBy";
 
 @Component({
   selector: 'app-ngx-upload-file',
@@ -44,7 +43,7 @@ export class NgxUploadFileComponent implements OnInit {
   }
 
 
-  public dropped(files: NgxFileDropEntry[]) {
+ /* public dropped(files: NgxFileDropEntry[]) {
 
     for (const droppedFile of files) {
       // Is it a file and is it allowed?
@@ -88,7 +87,7 @@ export class NgxUploadFileComponent implements OnInit {
         });
       }
     }
-  }
+  }*/
 
   isFileAllowed(fileName: string) {
 
