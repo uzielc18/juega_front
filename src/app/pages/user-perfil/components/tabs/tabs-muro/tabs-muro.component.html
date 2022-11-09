@@ -61,11 +61,10 @@
     <nb-card status="primary" >
       <nb-card-header>{{item.titulo}}</nb-card-header>
       <nb-card-body>
-
         <div>
           <div>
             <div class="table-responsive" [innerHTML]="item.consulta"></div>
-            <app-react-comment  style="text-align: center" [item]= "item"
+            <app-react-comment *ngIf="validateDate(item)" style="text-align: center" [item]= "item"
                                (valueEmmit)="valueEmmit($event)"
                                [type] ="'election'"
                                [color] = "'primary'"
@@ -73,15 +72,41 @@
                                [icon] = "'checkmark'"
                                [type_rating] = "5"
                                (loadingsForm) = loadingsForm($event)
-                               [userInfo] = "userInfo"></app-react-comment>
-
-
+                               [userInfo] = "userInfo">
+            </app-react-comment>
           </div>
         </div>
       </nb-card-body>
     </nb-card>
   </div>
 </div>
+  <!--<div style="background-color: #FFFFFF" class="row mx-4 my-3">
+    <h1 style="text-align: left; font-size: 20px; border-bottom: 1px solid #E4E9F2; background-color: #185580; color: #FFFFFF" >ELECCIONES 2022</h1>
+    <div class="col-md-6">
+      <nb-card status="primary" >
+        <nb-card-body>
+          <div class="d-flex justify-content-between flex-wrap">
+            <span> <strong>Nombre del docente</strong> </span>
+            <small class="label">Facultad - Programa estudio</small>
+          </div>
+          <br>
+          <app-elections-teachers></app-elections-teachers>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-md-6">
+      <nb-card status="primary" >
+        <nb-card-body>
+          <div class="d-flex justify-content-between flex-wrap">
+            <span> <strong>Nombre del docente</strong> </span>
+            <small class="label">Facultad - Programa estudio</small>
+          </div>
+          <br>
+          <app-elections-teachers></app-elections-teachers>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>-->
 </div>
 
 

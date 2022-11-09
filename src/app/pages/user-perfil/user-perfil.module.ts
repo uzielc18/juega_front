@@ -19,6 +19,7 @@ import {VideoPlayerModule} from "../../shared/components/video-player/video-play
 import {AnswersQuestionsModule} from "../../shared/components/answers-questions/view/answers-questions.module";
 import {ReactCommentModule} from "../../shared/components/react-comments/view/react-comment.module";
 import {NgChartsModule} from "ng2-charts";
+import {ElectionsTeachersModule} from "../../shared/components/elections-teacher/view/elections-teachers.module";
 const COMPONENTS: any[] = [
 
 ]
@@ -46,6 +47,7 @@ const COMPONENTS: any[] = [
         AnswersQuestionsModule,
         ReactCommentModule,
         NgChartsModule,
+        ElectionsTeachersModule,
 
     ]
 })
