@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {UploadFileComponent} from "../prepare-file-pro/upload-file/upload-file.component";
 import {NbDialogService} from "@nebular/theme";
 import {AppService} from "../../../core";
 import {NgxUploadFileComponent} from "./upload-file/ngx-upload-file.component";

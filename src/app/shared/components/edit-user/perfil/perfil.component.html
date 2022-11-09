@@ -74,7 +74,7 @@
     <label class="label col-md-3 d-flex align-items-center">Categoria docente:</label>
     <div class="col-md-9">
       <nb-select fullWidth placeholder="Categoria docente" size="small" formControlName="categoria_docente">
-        <nb-option *ngFor="let item of categoryTeachers" [value]="item.id" (click)="selectCategory(item)">{{item.name}}</nb-option>
+        <nb-option *ngFor="let item of categoryTeachers" [value]="item.name" (click)="selectCategory(item)">{{item.name}}</nb-option>
       </nb-select>
     </div>
   </div>

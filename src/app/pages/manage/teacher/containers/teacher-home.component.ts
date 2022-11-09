@@ -64,12 +64,12 @@ export class TeacherHomeComponent implements OnInit {
 
   private fieldReactive() {
     const controls = {
-      programa_estudio_id: ['', Validators.required],
+      programa_estudio_id: [''],
       ciclo: [''],
-      facultades_unidades: [''],
+      facultades_unidades: [{ value: '', disabled: true }, [Validators.required]],
       buscar: [''],
-      nivel_ensenanza:[''],
-      sede:[''],
+      nivel_ensenanza:[{ value: '', disabled: true }, [Validators.required]],
+      sede:['', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
   }
@@ -106,14 +106,13 @@ export class TeacherHomeComponent implements OnInit {
     );
   }
   selectedSede(sede: any) {
-      console.log(sede, "sede")
     this.formHeader.controls['sede'].setValue(sede);
     this.formHeader.controls['nivel_ensenanza'].enable();
     this.nivelEnsenanza = [];
     this.facultades = [];
     this.formHeader.controls['nivel_ensenanza'].setValue('');
     this.formHeader.controls['facultades_unidades'].setValue('');
-    this.formHeader.controls['programa_estudio_id'].setValue(this.todos);
+    this.formHeader.controls['programa_estudio_id'].setValue();
     this.listNivelEnsenanza(sede.id);
   }
   listNivelEnsenanza(sede_id: any) {
@@ -138,7 +137,7 @@ export class TeacherHomeComponent implements OnInit {
     this.formHeader.controls['facultades_unidades'].enable();
     this.facultades = [];
     this.formHeader.controls['facultades_unidades'].setValue('');
-    this.formHeader.controls['programa_estudio_id'].setValue(this.todos);
+    this.formHeader.controls['programa_estudio_id'].setValue();
     this.getFacultadesUnidades(nivel.id, this.formHeader.get('sede').value.id);
   }
   getFacultadesUnidades(nivel: any, sedeId: any){
