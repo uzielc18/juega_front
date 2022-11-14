@@ -53,4 +53,18 @@ figure{
   }
 }
 
+.img_style{
+  cursor: pointer;
+}
+.img_style:hover{
+  filter: brightness(80%);
+}
+
+.button_select{
+  position: absolute;
+  right: 45%;
+  /* bottom: 0; */
+  top: 45%;
+}
+
 

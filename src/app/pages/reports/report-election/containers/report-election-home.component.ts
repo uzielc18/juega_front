@@ -101,4 +101,8 @@ export class ReportElectionHomeComponent implements OnInit {
     XLSX.writeFile(wb, idHtml + '.xlsx');
   }
 
+  updateData(filter: any){
+    console.log(filter)
+   // this.filterData(item);
+  }
 }
