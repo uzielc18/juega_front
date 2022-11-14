@@ -20,6 +20,7 @@ export class TabsMuroComponent implements OnInit {
   userInfo: any;
   emmitDatos: any;
   listTeachers: any = [];
+  codigo_CP: any;
   @Input() profile: any;
   @Input() listInquiries: any;
   @Input() listTutoria: any;
@@ -112,6 +113,7 @@ export class TabsMuroComponent implements OnInit {
     if($event === 'refresh'){
       this.getTeachers();
     }
+    //this.codigo_CP = $event
   }
   getTeachers() {
     const serviceName = END_POINTS.base_back.default + 'persons/list-docentes';

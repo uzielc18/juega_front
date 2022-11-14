@@ -9,11 +9,14 @@ import Swal from "sweetalert2";
   styleUrls: ['./elections-teachers.component.scss']
 })
 export class ElectionsTeachersComponent implements OnInit {
-
+  loading: boolean = false;
   typeRatinsData: any =[];
   validarBtn: any = [];
+  dataBtn: any = [];
   @Input() teacherItem: any;
+  @Input() codigo_cp: any;
   @Input() userInfo: any;
+  @Input() dataTeacher: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   @Output() valueEmmit: EventEmitter<any> = new EventEmitter();
   constructor(private generalService: GeneralService) { }
@@ -27,13 +30,13 @@ export class ElectionsTeachersComponent implements OnInit {
       agrupado: 1,
       agrupado_valor: 0
     }
-    this.loadingsForm.emit(true);
+    this.loading = true
     this.generalService.nameParams$(serviceName, params).subscribe(resp => {
       this.typeRatinsData = resp.data;
       this.typeRatinsData.map((m: any) => {
         this.getVoteQuestion(m)
       })
-    }, () => {this.loadingsForm.emit(false);}, () => {this.loadingsForm.emit(false);})
+    })
   }
   getVoteQuestion(item: any) {
     const serviceName = END_POINTS.base_back.default + 'validar-rating';
@@ -45,7 +48,6 @@ export class ElectionsTeachersComponent implements OnInit {
       tabla_id: this.teacherItem.person_id || '',
       person_id: this.userInfo?.user.person?.id || '',
     };
-    this.loadingsForm.emit(true);
     this.generalService.nameParams$(serviceName, data).subscribe(
       (res: any) => {
         if (res.success) {
@@ -56,20 +58,20 @@ export class ElectionsTeachersComponent implements OnInit {
               datos: this.validarBtn,
               id_tabla:item.id
             }
-            this.valueEmmit.emit(obj)
+            //this.valueEmmit.emit(obj)
           }
         }
       },
       () => {
-        this.loadingsForm.emit(false);
+        this.loading = false
       },
       () => {
-        this.loadingsForm.emit(false);
+        this.loading = false
       }
     );
     return item
   }
-  stylebtn(item: any){
+  stylebtn(item: any, codigo: any){
     let valor: any = 'hover_class_desactive';
     if(item?.validarBtn?.valor === 1 && item?.validarBtn?.activo === 0){
       valor = 'hover_class_active'
@@ -92,7 +94,7 @@ export class ElectionsTeachersComponent implements OnInit {
     };
       Swal.fire({
         title: 'Elecciones 2022',
-        text: '¿ Está seguro de elegir esta lista ? ',
+        text: '¿ Está seguro de elegir esta opción ? ',
         backdrop: true,
         icon: 'question',
         // animation: true,
@@ -109,9 +111,15 @@ export class ElectionsTeachersComponent implements OnInit {
           this.generalService.addNameData$(serviceName, data).subscribe((res:any) => {
               if (res.success) {
                 this.valueEmmit.emit('refresh')
+                /*this.typeRatinsData.map((m: any) => {
+                  this.getVoteQuestion(m)
+                })
+                this.valueEmmit.emit(item.codigo)*/
               }
             },
             () => {
+              this.loadingsForm.emit(false)
+            }, () => {
               this.loadingsForm.emit(false)
             });
         }

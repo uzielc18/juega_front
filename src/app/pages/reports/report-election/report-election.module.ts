@@ -18,6 +18,7 @@ import {FilterPipeModule} from "../../../shared/pipes/filterPipe/filterPipe.modu
 import {ReportCourseRoutingModule} from "../report-course/report-course-routing.module";
 import {Ng2ChartsComponentModule} from "../../../shared/components/ng2-charts/view/ng2-charts-component.module";
 import {NgChartsConfiguration, NgChartsModule} from "ng2-charts";
+import { TabElectionsTeacherComponent } from './components/tabs/tab-elections-teacher/tab-elections-teacher.component';
 
 const COMPONENTS: any[] = [
   ReportElectionHomeComponent,
@@ -66,7 +67,7 @@ const PIPES: any = [
     ...PIPES,
     Ng2ChartsComponentModule,
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, TabElectionsTeacherComponent],
   entryComponents: [...MODALS],
 })
 export class ReportElectionModule { }

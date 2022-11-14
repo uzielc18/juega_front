@@ -95,6 +95,8 @@
             {{item.categoria_docente | titlecase}}</small>
           <br>
           <app-elections-teachers [teacherItem] = "item"
+                                  [codigo_cp] = "this.codigo_CP"
+                                  [dataTeacher] = "listTeachers"
                                   (valueEmmit)="valueEmmitDocente($event)"
                                   [userInfo] = "userInfo"
                                   (loadingsForm) = loadingsForm($event)></app-elections-teachers>
