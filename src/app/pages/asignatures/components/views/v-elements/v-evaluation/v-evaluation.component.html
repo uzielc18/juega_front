@@ -126,7 +126,7 @@
                   <label class="text-center">Si su respuesta es “sí”, ya no habrá oportunidad de volver a realizar este examen.</label>
                   </span>
                   <span *ngIf="pending?.student_pending?.exam_estudent && ValidateDateI === true && !tiempo_vencido && validateDurationExam" class="text-center" style="color: var(--color-danger-500); font-size: 16px;padding: 0px;">
-                    <strong class="text-center">El tiempo para realizar tu evaluación a culminado, comunicate con tu docente.</strong><br>
+                    <strong class="text-center">El tiempo para realizar tu evaluación ha culminado y comunícate con tu docente.</strong><br>
                   </span>
                   <br><br>
                   <button *ngIf="pending?.student_pending?.exam_estudent === null && ValidateDateI === true && !tiempo_vencido" nbButton size="small" status="primary"

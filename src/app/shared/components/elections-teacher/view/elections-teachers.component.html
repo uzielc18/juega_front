@@ -1,5 +1,6 @@
-<div style="right: 0" class="d-flex justify-content-end flex-wrap">
-  <button style="margin-right: 5px" nbButton size="small" status="primary" outline>Asamblea</button>
-  <button style="margin-right: 5px" nbButton size="small" status="primary" outline>Consejo</button>
-  <button style="margin-right: 5px" nbButton size="small" status="primary" outline>Consejo Filial</button>
+<div *ngIf="validarBtn" style="right: 0" class="d-flex justify-content-end flex-wrap" >
+  <button [disabled]="item?.validarBtn?.activo === 0"
+          [class]="stylebtn(item)"
+          *ngFor="let item of typeRatinsData"
+          (click)="upVoteQuestion(item, typeRatinsData)" style="margin-right: 5px; margin-bottom: 5px" nbButton size="small" status="primary" outline >{{item.nombre}} <nb-icon *ngIf="item?.validarBtn?.valor === 1 && item?.validarBtn?.activo === 0" status="success" [icon]="item.icono"></nb-icon></button>
 </div>
