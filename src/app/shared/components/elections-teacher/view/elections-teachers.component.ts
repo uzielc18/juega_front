@@ -120,7 +120,7 @@ export class ElectionsTeachersComponent implements OnInit {
             () => {
               this.loadingsForm.emit(false)
             }, () => {
-              this.loadingsForm.emit(false)
+
             });
         }
       });
