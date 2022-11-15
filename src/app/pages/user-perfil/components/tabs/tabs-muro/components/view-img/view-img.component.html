@@ -1,0 +1,14 @@
+<nb-card accent="primary" class="scrollModal">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
+    <div class="d-flex align-items-center justify-content-between">
+      <small>{{item.titulo}}</small>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div  class="table-responsive img_style" [innerHTML]="item?.consulta">
+    </div>
+  </nb-card-body>
+</nb-card>

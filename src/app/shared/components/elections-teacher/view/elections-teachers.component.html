@@ -1,5 +1,17 @@
-<div style="right: 0" class="d-flex justify-content-end flex-wrap">
-  <button style="margin-right: 5px" nbButton size="small" status="primary" outline>Asamblea</button>
-  <button style="margin-right: 5px" nbButton size="small" status="primary" outline>Consejo</button>
-  <button style="margin-right: 5px" nbButton size="small" status="primary" outline>Consejo Filial</button>
+<div *ngIf="validarBtn" style="right: 0" class="d-flex justify-content-end flex-wrap"  [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="small">
+
+  <div *ngFor="let item of typeRatinsData">
+    <button *ngIf="item.codigo !== 'election-4'" [disabled]="item?.validarBtn?.activo === 0"
+            [class]="stylebtn(item, codigo_cp)"
+            (click)="upVoteQuestion(item, typeRatinsData)" style="margin-right: 5px; margin-bottom: 5px" nbButton size="small" status="primary" outline >{{item.nombre}} <nb-icon *ngIf="item?.validarBtn?.valor === 1 && item?.validarBtn?.activo === 0" status="success" [icon]="item.icono"></nb-icon></button>
+    <button *ngIf="item.codigo === 'election-4' && userInfo.sede_id === teacherItem.sede_id" [disabled]="item?.validarBtn?.activo === 0"
+            [class]="stylebtn(item, codigo_cp)"
+            (click)="upVoteQuestion(item, typeRatinsData)"
+            style="margin-right: 5px; margin-bottom: 5px" nbButton size="small" status="primary" outline >{{item.nombre}}
+      <nb-icon *ngIf="item?.validarBtn?.valor === 1 && item?.validarBtn?.activo === 0" status="success" [icon]="item.icono">
+
+      </nb-icon>
+    </button>
+  </div>
+
 </div>

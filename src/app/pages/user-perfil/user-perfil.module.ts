@@ -20,6 +20,7 @@ import {AnswersQuestionsModule} from "../../shared/components/answers-questions/
 import {ReactCommentModule} from "../../shared/components/react-comments/view/react-comment.module";
 import {NgChartsModule} from "ng2-charts";
 import {ElectionsTeachersModule} from "../../shared/components/elections-teacher/view/elections-teachers.module";
+import { ViewImgComponent } from './components/tabs/tabs-muro/components/view-img/view-img.component';
 const COMPONENTS: any[] = [
 
 ]
@@ -34,6 +35,7 @@ const COMPONENTS: any[] = [
     TabsCursosComponent,
     TabsEditPerfilComponent,
     TabsMuroComponent,
+    ViewImgComponent,
   ],
     imports: [
         CommonModule,

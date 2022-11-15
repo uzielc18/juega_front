@@ -3,6 +3,9 @@ import {GeneralService} from "../../../../../providers";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {END_POINTS} from "../../../../../providers/utils";
 import {AppService} from "../../../../../core";
+import {EditUserComponent} from "../../../../../shared/components/edit-user/edit-user.component";
+import {NbDialogService} from "@nebular/theme";
+import {ViewImgComponent} from "./components/view-img/view-img.component";
 
 @Component({
   selector: 'app-tabs-muro',
@@ -16,6 +19,8 @@ export class TabsMuroComponent implements OnInit {
   showImput: boolean = false;
   userInfo: any;
   emmitDatos: any;
+  listTeachers: any = [];
+  codigo_CP: any;
   @Input() profile: any;
   @Input() listInquiries: any;
   @Input() listTutoria: any;
@@ -24,6 +29,7 @@ export class TabsMuroComponent implements OnInit {
   formHeader: any = FormGroup;
   loading: boolean = false
   constructor(private generalService: GeneralService,
+              private dialogService: NbDialogService,
               private formBuilder: FormBuilder,
               private userService: AppService,) { }
 
@@ -46,6 +52,8 @@ export class TabsMuroComponent implements OnInit {
       comentario: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
+    this.loading = true
+    this.getTeachers()
   }
   loadingsFiles($event: boolean) {
     setTimeout(() => {
@@ -95,11 +103,87 @@ export class TabsMuroComponent implements OnInit {
   }
   validateDate(item: any){
     const now2 = new Date().toLocaleDateString();
-    const now = new Date(now2).getTime();
+    const now = new Date('2022-11-17').getTime();
     const fecha_fin = new Date(item.fecha_fin).getTime();
     if(fecha_fin === now){
       return true
     }
     return false
+  }
+  renderDate(date: any) {
+    if (date) {
+      const fecha = date.split('-');
+      var n = new Date(`${fecha[0]}-${fecha[1]}-${fecha[2]}`);
+      n.setMinutes(n.getMinutes() + n.getTimezoneOffset()); //para solucionar la diferencia de minutos
+      if (n.getDate()) {
+        return n;
+      } else {
+        return '';
+      }
+    }
+    return '';
+  }
+  validateDateTeacher(){
+    const y = new Date().getFullYear();
+    const m = new Date().getMonth();
+    const d = new Date().getDate();
+    const now =  new Date(y, m, d,).getTime();
+    const fecha_fin = this.renderDate('2022-11-17');
+    const a = new Date(fecha_fin).getTime();
+    if(a === now){
+      return true
+    }
+    return false
+  }
+  valueEmmitDocente($event: any){
+    if($event === 'refresh'){
+      this.getTeachers();
+    }
+    //this.codigo_CP = $event
+  }
+  getTeachers() {
+    const serviceName = END_POINTS.base_back.default + 'persons/list-docentes';
+    const forms = this.formHeader.value;
+    const params = {
+      programa_estudio_id: forms.programa_estudio_id || '',
+      ciclo: forms.ciclo || '',
+      grupo: forms.grupo || '',
+      per_page: '',
+      page: '',
+      paginate: 'N',
+      categoria_docente: this.userInfo.user?.person?.persons_teacher?.categoria_docente,
+      cd_programa_estudio_id: this.userInfo.user?.person?.persons_teacher?.programa_estudio_id,
+      q: forms.buscar || ''
+    }
+    if (this.userInfo.user?.person?.persons_teacher?.categoria_docente !== null){
+      this.generalService.nameParams$(serviceName, params).subscribe(
+        (res: any) => {
+          this.listTeachers = res.data || [];
+        },
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
+    }
+
+  }
+  viewImage(item : any){
+    this.dialogService
+      .open(ViewImgComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          item: item
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
+      if (result === 'ok') {
+        //this.getTeachers();
+      }
+    });
   }
 }

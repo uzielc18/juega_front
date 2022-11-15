@@ -27,6 +27,7 @@ export class AppService {
   private _configurations: any = null;
   private _semestre: any = null;
   private _rol: any = null;
+  private _sede_id: any = null;
   private _area: any = null;
   private _menu: any[] = [];
   private _usernameMenu: any[] = [];
@@ -66,6 +67,13 @@ export class AppService {
 
   set user(value: any) {
     this._user = value;
+  }
+  get sede_id(): any {
+    return this._sede_id;
+  }
+
+  set sede_id(value: any) {
+    this._sede_id = value;
   }
   get configurations(): any {
     return this._configurations;
@@ -120,6 +128,7 @@ export class AppService {
               this._semestre = data.data.semestre;
               this._rol = data.data.roles;
               this._area = data.data.area;
+              this._sede_id = data.data.sede_id;
               this._configurations = data.data.configurations;
               this._usersimular = data.data.user_simular;
               this.getMenus(data.data.user.person.role_id);

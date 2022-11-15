@@ -131,7 +131,7 @@
         </nb-select>
       </div>
       <button style="margin-right: 4px" nbButton size="tiny">csv</button>
-      <button style="margin-right: 4px" nbButton size="tiny">excel</button>
+      <button style="margin-right: 4px" nbButton size="tiny" (click)="exportExel('reporte_cursos')">excel</button>
       <!--<button style="margin-right: 4px" nbButton size="tiny">pdf</button>-->
       <button nbButton size="tiny"
               printSectionId="print-report-course"
@@ -139,7 +139,7 @@
               ngxPrint>print</button>
     </div>
     <div class="table-responsive" id="print-report-course">
-      <table class="table table-sm">
+      <table class="table table-sm" id="reporte_cursos">
         <thead>
         <tr style="font-size: 12px;">
           <!-- <th style="width: 1px;">#</th> -->

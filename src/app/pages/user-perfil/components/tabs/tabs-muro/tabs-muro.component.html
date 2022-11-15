@@ -63,7 +63,9 @@
       <nb-card-body>
         <div>
           <div>
-            <div class="table-responsive" [innerHTML]="item.consulta"></div>
+            <div (click)="viewImage(item)" class="table-responsive img_style" [innerHTML]="item.consulta">
+            </div>
+
             <app-react-comment *ngIf="validateDate(item)" style="text-align: center" [item]= "item"
                                (valueEmmit)="valueEmmit($event)"
                                [type] ="'election'"
@@ -80,33 +82,28 @@
     </nb-card>
   </div>
 </div>
-  <!--<div style="background-color: #FFFFFF" class="row mx-4 my-3">
-    <h1 style="text-align: left; font-size: 20px; border-bottom: 1px solid #E4E9F2; background-color: #185580; color: #FFFFFF" >ELECCIONES 2022</h1>
-    <div class="col-md-6">
+  <div style="background-color: #FFFFFF" class="row mx-4 my-3" *ngIf="listTeachers.length > 0 && profile?.person?.id === userInfo?.user?.person.id && rolSemestre?.rol?.name === 'Docente'">
+    <h1 style="text-align: left; font-size: 16px; border-bottom: 1px solid #E4E9F2; background-color: #185580; color: #FFFFFF" >ELECCIONES DOCENTE, ORGANOS DE GOBIERNO Y ORGANOS ADMINISTRATIVOS</h1>
+    <div class="col-md-6" *ngFor="let item of listTeachers">
       <nb-card status="primary" >
         <nb-card-body>
           <div class="d-flex justify-content-between flex-wrap">
-            <span> <strong>Nombre del docente</strong> </span>
-            <small class="label">Facultad - Programa estudio</small>
+            <span> <strong>{{item.apellido_paterno}} {{item.apellido_materno}} {{item.nombres}}</strong> </span>
+            <small class="label">{{item.nombre}}</small>
           </div>
+          <small style="font-size: 11.4px;; font-weight: bold;color: #F1BCBF;">
+            {{item.categoria_docente | titlecase}}</small>
           <br>
-          <app-elections-teachers></app-elections-teachers>
+          <app-elections-teachers *ngIf="validateDateTeacher()" [teacherItem] = "item"
+                                  [codigo_cp] = "this.codigo_CP"
+                                  [dataTeacher] = "listTeachers"
+                                  (valueEmmit)="valueEmmitDocente($event)"
+                                  [userInfo] = "userInfo"
+                                  (loadingsForm) = loadingsForm($event)></app-elections-teachers>
         </nb-card-body>
       </nb-card>
     </div>
-    <div class="col-md-6">
-      <nb-card status="primary" >
-        <nb-card-body>
-          <div class="d-flex justify-content-between flex-wrap">
-            <span> <strong>Nombre del docente</strong> </span>
-            <small class="label">Facultad - Programa estudio</small>
-          </div>
-          <br>
-          <app-elections-teachers></app-elections-teachers>
-        </nb-card-body>
-      </nb-card>
-    </div>
-  </div>-->
+  </div>
 </div>
 
 
