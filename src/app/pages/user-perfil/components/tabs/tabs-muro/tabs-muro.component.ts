@@ -52,6 +52,7 @@ export class TabsMuroComponent implements OnInit {
       comentario: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
+    this.loading = true
     this.getTeachers()
   }
   loadingsFiles($event: boolean) {
@@ -102,9 +103,34 @@ export class TabsMuroComponent implements OnInit {
   }
   validateDate(item: any){
     const now2 = new Date().toLocaleDateString();
-    const now = new Date(now2).getTime();
+    const now = new Date('2022-11-17').getTime();
     const fecha_fin = new Date(item.fecha_fin).getTime();
     if(fecha_fin === now){
+      return true
+    }
+    return false
+  }
+  renderDate(date: any) {
+    if (date) {
+      const fecha = date.split('-');
+      var n = new Date(`${fecha[0]}-${fecha[1]}-${fecha[2]}`);
+      n.setMinutes(n.getMinutes() + n.getTimezoneOffset()); //para solucionar la diferencia de minutos
+      if (n.getDate()) {
+        return n;
+      } else {
+        return '';
+      }
+    }
+    return '';
+  }
+  validateDateTeacher(){
+    const y = new Date().getFullYear();
+    const m = new Date().getMonth();
+    const d = new Date().getDate();
+    const now =  new Date(y, m, d,).getTime();
+    const fecha_fin = this.renderDate('2022-11-17');
+    const a = new Date(fecha_fin).getTime();
+    if(a === now){
       return true
     }
     return false
@@ -129,7 +155,6 @@ export class TabsMuroComponent implements OnInit {
       cd_programa_estudio_id: this.userInfo.user?.person?.persons_teacher?.programa_estudio_id,
       q: forms.buscar || ''
     }
-    this.loading = true;
     if (this.userInfo.user?.person?.persons_teacher?.categoria_docente !== null){
       this.generalService.nameParams$(serviceName, params).subscribe(
         (res: any) => {
