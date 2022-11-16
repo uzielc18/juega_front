@@ -134,6 +134,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       }
     });
     this.recoveryValues();
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
