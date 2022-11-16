@@ -261,7 +261,7 @@ export class CalificarElementEstudentComponent implements OnInit, AfterViewInit{
   }
 
   ordeByLastName(x: any, y: any){
-    return x.apellido_paterno.localeCompare(y.apellido_paterno);
+    return x?.apellido_paterno?.localeCompare(y?.apellido_paterno);
   }
   getRubric() {
     if (this.has_rubric) {
