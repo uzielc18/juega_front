@@ -52,7 +52,7 @@ export class TabsMuroComponent implements OnInit {
       comentario: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
-    if(this.rolSemestre?.name === "Docente"){
+    if(this.rolSemestre?.rol?.name === "Docente"){
       this.loading = true
       this.getTeachers()
     }
@@ -173,7 +173,7 @@ export class TabsMuroComponent implements OnInit {
       cd_programa_estudio_id: this.userInfo.user?.person?.persons_teacher?.programa_estudio_id,
       q: forms.buscar || ''
     }
-    if (this.userInfo.user?.person?.persons_teacher?.categoria_docente !== null && this.rolSemestre?.name === "Docente"){
+    if (this.userInfo.user?.person?.persons_teacher?.categoria_docente !== null && this.rolSemestre?.rol?.name === "Docente"){
       this.generalService.nameParams$(serviceName, params).subscribe(
         (res: any) => {
           this.listTeachers = res.data || [];
