@@ -52,8 +52,11 @@ export class TabsMuroComponent implements OnInit {
       comentario: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
-    this.loading = true
-    this.getTeachers()
+    if(this.rolSemestre?.name === "Docente"){
+      this.loading = true
+      this.getTeachers()
+    }
+
   }
   loadingsFiles($event: boolean) {
     setTimeout(() => {
@@ -113,6 +116,18 @@ export class TabsMuroComponent implements OnInit {
     }
     return false
   }
+  validateConfigurationElection(){
+   const a = this.userInfo?.configurations.find((f:any) => {
+      if(f.nombre === "ACTIVAR_ELECCION"){
+        return f.valor === "1";
+      }else{
+        return false
+      }
+    });
+    return !!a;
+
+
+  }
   renderDate(date: any) {
     if (date) {
       const fecha = date.split('-');
@@ -158,7 +173,7 @@ export class TabsMuroComponent implements OnInit {
       cd_programa_estudio_id: this.userInfo.user?.person?.persons_teacher?.programa_estudio_id,
       q: forms.buscar || ''
     }
-    if (this.userInfo.user?.person?.persons_teacher?.categoria_docente !== null){
+    if (this.userInfo.user?.person?.persons_teacher?.categoria_docente !== null && this.rolSemestre?.name === "Docente"){
       this.generalService.nameParams$(serviceName, params).subscribe(
         (res: any) => {
           this.listTeachers = res.data || [];
