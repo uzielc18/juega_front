@@ -98,10 +98,11 @@ export class TabElectionsTeacherComponent implements OnInit {
 
     this.typeRatinsData.filter((f: any ) => {
       if(f.checked){
-        this.filterDataCategory(f, item)
-        this.tipoCategoria = item.name
+        this.filterDataCategory(f, item);
+        this.tipoCategoria = item.name;
       }
     })
+    this.tipoCategoria = '';
   }
   filterDataCategory(item: any, categoria: any){
     const serviceName = END_POINTS.base_back.reportes + '/elecciones-docente';
