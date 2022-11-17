@@ -19,13 +19,14 @@ export class TabsMuroComponent implements OnInit {
   showImput: boolean = false;
   userInfo: any;
   emmitDatos: any;
-  listTeachers: any = [];
+  @Input() listTeachers: any = []
   codigo_CP: any;
   @Input() profile: any;
   @Input() listInquiries: any;
   @Input() listTutoria: any;
   @Input() listElections: any;
   @Output() valueEmmit2: EventEmitter<boolean> = new EventEmitter();
+  @Output() valueEmmitteacher: EventEmitter<boolean> = new EventEmitter();
   formHeader: any = FormGroup;
   loading: boolean = false
   constructor(private generalService: GeneralService,
@@ -52,10 +53,6 @@ export class TabsMuroComponent implements OnInit {
       comentario: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
-    if(this.rolSemestre?.rol?.name === "Docente"){
-      this.loading = true
-      this.getTeachers()
-    }
 
   }
   loadingsFiles($event: boolean) {
@@ -155,39 +152,11 @@ export class TabsMuroComponent implements OnInit {
   }
   valueEmmitDocente($event: any){
     if($event === 'refresh'){
-      this.getTeachers();
+      this.valueEmmitteacher.emit($event);
     }
     //this.codigo_CP = $event
   }
-  getTeachers() {
-    const serviceName = END_POINTS.base_back.default + 'persons/list-docentes';
-    const forms = this.formHeader.value;
-    const params = {
-      programa_estudio_id: forms.programa_estudio_id || '',
-      ciclo: forms.ciclo || '',
-      grupo: forms.grupo || '',
-      per_page: '',
-      page: '',
-      paginate: 'N',
-      categoria_docente: this.userInfo.user?.person?.persons_teacher?.categoria_docente,
-      cd_programa_estudio_id: this.userInfo.user?.person?.persons_teacher?.programa_estudio_id,
-      q: forms.buscar || ''
-    }
-    if (this.userInfo.user?.person?.persons_teacher?.categoria_docente !== null && this.rolSemestre?.rol?.name === "Docente"){
-      this.generalService.nameParams$(serviceName, params).subscribe(
-        (res: any) => {
-          this.listTeachers = res.data || [];
-        },
-        () => {
-          this.loading = false;
-        },
-        () => {
-          this.loading = false;
-        }
-      );
-    }
 
-  }
   viewImage(item : any){
     this.dialogService
       .open(ViewImgComponent, {

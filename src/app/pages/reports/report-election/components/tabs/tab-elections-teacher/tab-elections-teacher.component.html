@@ -6,11 +6,90 @@
           <button nbButton status="primary" size="small" outline style="margin-right: 10px">Elecciones</button>
           <div>
             <ul class="list_group">
-              <li *ngFor="let item of dataFilter" (click)="selectItem(item, dataFilter)" [ngClass]="classActive(item)" class="list_item">{{item.name | uppercase}}</li>
+              <li *ngFor="let item of typeRatinsData" (click)="selectItem(item, typeRatinsData)" [ngClass]="classActive(item)" class="list_item">{{item.nombre | uppercase}}</li>
             </ul>
           </div>
         </div>
       </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-8 col-xxl-10">
+    <nb-card class="mb-0">
+      <nb-card-body [class]="col_md_active? 'row': ''" style="min-height: 60vh">
+        <div>
+
+        </div>
+        <app-ng2-charts-component [class]="col_md_active? 'col-md-6 col-xxl-7': ''" [data] = "data"></app-ng2-charts-component>
+        <div [class]="col_md_active? 'col-md-6 col-xxl-5': ''">
+          <nb-card status="primary">
+            <nb-card-header >
+              <div class="d-flex justify-content-between align-items-center">
+                <small style="font-size: 14px" class="fw-bold">INFORMACIÓN GRAFICO</small>
+                <img (click)="exportExel('info-grafico-teacher')" nbTooltip="Descargar exel" nbTooltipPlacement="top" style="cursor: pointer" src="assets/excel-logo.png" width="30px" class="ms-auto" alt="exel">
+              </div>
+            </nb-card-header>
+            <nb-card-body>
+              <div class="table-responsive">
+                <table class="table table-sm mb-0" id="info-grafico-teacher">
+                  <thead>
+                  <tr style="font-size: 12px" class="fw-bold text-center">
+                    <th style="text-align: left">Titulo</th>
+                    <th>Total</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr style="font-size: 11px" class="text-center align-middle" *ngFor="let item of data?.detalle">
+                    <td style="text-align: left">
+                      {{item.titulo}}
+                    </td>
+                    <td>
+                      {{item.total}}
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <div *ngIf="data?.electores?.length > 0">
+          <nb-card status="primary">
+            <nb-card-header >
+              <div class="d-flex justify-content-between align-items-center">
+                <small style="font-size: 14px" class="fw-bold">PADRON ELECTORAL / </small>
+                <img (click)="exportExel('padron-electoral-teacher')" nbTooltip="Descargar exel" nbTooltipPlacement="top" style="cursor: pointer" src="assets/excel-logo.png" width="30px" class="ms-auto" alt="exel">
+              </div>
+            </nb-card-header>
+            <nb-card-body>
+              <div class="table-responsive">
+                <table class="table table-sm mb-0" id="padron-electoral-teacher">
+                  <thead>
+                  <tr style="font-size: 12px" class="fw-bold text-center">
+                    <th style="text-align: left">Código</th>
+                    <th style="text-align: left">Nombres y Apellidos</th>
+                    <th>Total</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr style="font-size: 11px" class="text-center align-middle" *ngFor="let item of data?.electores">
+                    <td style="text-align: left">
+                      {{item.codigo}}
+                    </td>
+                    <td style="text-align: left">
+                      {{item.nombres}} {{item.apellido_paterno}} {{item.apellido_materno}}
+                    </td>
+                    <td>
+                      {{item.titulo}}
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </nb-card-body>
+
     </nb-card>
   </div>
 </div>

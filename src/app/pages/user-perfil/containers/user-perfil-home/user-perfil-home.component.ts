@@ -15,7 +15,9 @@ import {ChartConfiguration, ChartData, ChartEvent} from "chart.js";
 export class UserPerfilHomeComponent implements OnInit, OnDestroy {
   recuperarEmail:any = this.activatedRoute.snapshot.paramMap.get('email');
   status: any;
-  me: any
+  me: any;
+  listTeachers: any = [];
+  userInfo: any;
   email: any;
   profile: any;
   loading: boolean = false
@@ -54,7 +56,8 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
                private emitEventsService: EmitEventsService,) {}
 
   ngOnInit(): void {
-    this.me = this.userService.user.person.id
+    this.me = this.userService.user.person.id;
+    this.userInfo = this.userService
     this.email = this.recuperarEmail;
     this.getUser();
     this.datoSubscription = this.emitEventsService.returnsEmail().subscribe(value => { // para emitir evento desde la cabecera
@@ -90,6 +93,9 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
         this.profile = res.data;
         this.doughnut(this.profile);
         this.getInquiries(this.profile?.user?.person.id);
+        if(this.userInfo.user?.person?.persons_teacher && (this.userInfo.user?.person?.persons_teacher!== null && this.profile?.user?.person?.id === this.me)){
+          this.getTeachers();
+        }
         if(this.rolSemestre?.rol?.name !== 'Estudiante' && this.rolSemestre?.rol?.name !== 'Docente' || this.profile?.user?.person?.id === this.me){
           this.getEvaluaciones(this.profile?.user?.person);
         }else{
@@ -98,6 +104,39 @@ export class UserPerfilHomeComponent implements OnInit, OnDestroy {
 
       }
     }, () => {this.loading = false})
+  }
+  getTeachers() {
+    const serviceName = END_POINTS.base_back.default + 'persons/list-docentes';
+    const params = {
+      programa_estudio_id: '',
+      ciclo:  '',
+      grupo: '',
+      per_page: '',
+      page: '',
+      paginate: 'N',
+      categoria_docente: this.userInfo.user?.person?.persons_teacher?.categoria_docente,
+      cd_programa_estudio_id: this.userInfo.user?.person?.persons_teacher?.programa_estudio_id,
+      q: ''
+    }
+    this.loading = true;
+    this.generalService.nameParams$(serviceName, params).subscribe(
+      (res: any) => {
+        this.listTeachers = res.data || [];
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+
+
+  }
+  valueEmmitteacher($event: any){
+    if($event === 'refresh'){
+      this.getTeachers();
+    }
   }
   getEvaluaciones(person: any){
     const serviceName = END_POINTS.base_back.persons + '/reporte-notas';
