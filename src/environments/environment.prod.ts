@@ -22,7 +22,7 @@ export const environment = {
     clientSecret:'oKLfJo1ut09TzLcb7vfWFhBqQWsbU4tgBWWPdUge802miZ3pZvjg8X6QZ4xB1EUznq5giqUOGNeSKAMwuy3bRgOTojQjbvnjv4y5AqsfJcVESl6rQLsgejMANL456Qa4',
     baseEndpoint: 'https://oauth.upeu.edu.pe',
     redirectUri: `https://lamb-learning.upeu.edu.pe/auth/lamb/callback`,
-    success: '/pages/user/perfil/0',
+    success: '/pages/dashboard',
   },
   authGoogleStrategy: {
     name: '_google_strategy',
