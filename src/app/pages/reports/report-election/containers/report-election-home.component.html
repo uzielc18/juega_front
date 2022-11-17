@@ -67,7 +67,7 @@
                   <nb-card status="primary">
                     <nb-card-header >
                       <div class="d-flex justify-content-between align-items-center">
-                        <small style="font-size: 14px" class="fw-bold">PADRON ELECTORAL / </small>
+                        <small style="font-size: 14px" class="fw-bold">PADRON ELECTORAL / {{data?.electores?.length}}</small>
                         <img (click)="exportExel('padron-electoral')" nbTooltip="Descargar exel" nbTooltipPlacement="top" style="cursor: pointer" src="assets/excel-logo.png" width="30px" class="ms-auto" alt="exel">
                       </div>
                     </nb-card-header>
@@ -90,7 +90,7 @@
                               {{item.nombres}} {{item.apellido_paterno}} {{item.apellido_materno}}
                             </td>
                             <td>
-                              {{item.titulo}}
+                              {{item.titulo}} - lista {{item.tabla_id}}
                             </td>
                           </tr>
                           </tbody>
@@ -106,7 +106,7 @@
         </div>
       </nb-tab>
       <nb-tab tabTitle="Elecciones docentes">
-        <app-tab-elections-teacher></app-tab-elections-teacher>
+        <app-tab-elections-teacher (loadingsForm) = loadingsForm($event)></app-tab-elections-teacher>
       </nb-tab>
     </nb-tabset>
   </nb-card-body>

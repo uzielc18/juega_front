@@ -28,9 +28,10 @@
               <nb-tab tabTitle="Muro">
                 <app-tabs-muro [profile] = "profile"
                                (valueEmmit2) = valueEmmit2($event)
+                               (valueEmmitteacher) = valueEmmitteacher($event)
                                [listInquiries] = "listInquiries"
                                [listTutoria] = "listTutoria"
-                               [listElections] = "listElections"></app-tabs-muro>
+                               [listElections] = "listElections" [listTeachers] = "listTeachers"></app-tabs-muro>
               </nb-tab>
               <nb-tab tabTitle="Cursos" *ngIf="rolSemestre?.rol?.name !== 'Estudiante' && rolSemestre?.rol?.name !== 'Docente' || profile?.user?.person?.id === me">
                 <app-tabs-cursos *ngIf="this.status === true && this.loading === false" [profile] = "profile" [listCourses]="listCourses"></app-tabs-cursos>
