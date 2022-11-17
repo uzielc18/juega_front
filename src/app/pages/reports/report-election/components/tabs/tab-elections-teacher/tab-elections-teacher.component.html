@@ -22,7 +22,8 @@
 
         </div>
         <br>
-        <span><strong>{{tipoCategoria}}</strong></span>
+        <span style="text-align: center; color: var(--color-primary-500)"><strong>{{tipoCategoria}}</strong></span>
+        <hr>
         <app-ng2-charts-component [class]="col_md_active? 'col-md-6 col-xxl-7': ''" [data] = "data"></app-ng2-charts-component>
         <div [class]="col_md_active? 'col-md-6 col-xxl-5': ''">
           <nb-card status="primary">
@@ -75,7 +76,8 @@
                   <tr style="font-size: 12px" class="fw-bold text-center">
                     <th style="text-align: left">Código</th>
                     <th style="text-align: left">Nombres y Apellidos</th>
-                    <th>Total</th>
+                    <th>Facultad</th>
+                    <th>Categoria docente</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -87,7 +89,10 @@
                       {{item.nombres}} {{item.apellido_paterno}} {{item.apellido_materno}}
                     </td>
                     <td>
-                      {{item.titulo}}
+                      {{item.facultad}}
+                    </td>
+                    <td>
+                      {{item.categoria_docente}}
                     </td>
                   </tr>
                   </tbody>
