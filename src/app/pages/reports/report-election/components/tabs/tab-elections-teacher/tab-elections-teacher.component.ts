@@ -13,10 +13,20 @@ export class TabElectionsTeacherComponent implements OnInit {
   loading: boolean = false;
   col_md_active: boolean = false;
   data: any = [];
+  tipoCategoria: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
-  dataFilter: any = [
+  filterElectionData: any = [
     {
-      name: 'asamblea universitario'
+      name: 'PRINCIPAL',
+      checked: true
+    },
+    {
+      name: 'ASOCIADO',
+      checked: true
+    },
+    {
+      name: 'AUXILIAR',
+      checked: true
     }
   ]
   typeRatinsData: any = []
@@ -44,7 +54,7 @@ export class TabElectionsTeacherComponent implements OnInit {
   getTypeRatings(){
     const serviceName = 'typeRatings';
     const params = {
-      agrupado: 1,
+      agrupado: 0,
       agrupado_valor: 0
     }
     this.loadingsForm.emit(true);
@@ -82,5 +92,27 @@ export class TabElectionsTeacherComponent implements OnInit {
 
     /* save to file */
     XLSX.writeFile(wb, idHtml + '.xlsx');
+  }
+
+  selectFilterItem(item: any, data: any){
+
+    this.typeRatinsData.filter((f: any ) => {
+      if(f.checked){
+        this.filterDataCategory(f, item)
+        this.tipoCategoria = item.name
+      }
+    })
+  }
+  filterDataCategory(item: any, categoria: any){
+    const serviceName = END_POINTS.base_back.reportes + '/elecciones-docente';
+    const params = {
+      type_rating_id: item.id || item,
+      categoria_docente: categoria.name
+    }
+    this.loadingsForm.emit(true);
+    this.generalService.nameParams$(serviceName, params).subscribe( res => {
+      this.data = res.data;
+
+    }, () => {this.loadingsForm.emit(false)}, () => {this.loadingsForm.emit(false)})
   }
 }

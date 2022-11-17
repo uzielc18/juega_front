@@ -15,10 +15,14 @@
   </div>
   <div class="col-md-8 col-xxl-10">
     <nb-card class="mb-0">
+
       <nb-card-body [class]="col_md_active? 'row': ''" style="min-height: 60vh">
-        <div>
+        <div  class="d-flex align-items-center flex-wrap">
+          <button *ngFor="let item of filterElectionData" (click)="selectFilterItem(item, filterElectionData)" nbButton size="small" status="primary" outline style="margin-left: 10px">{{item.name}}</button>
 
         </div>
+        <br>
+        <span><strong>{{tipoCategoria}}</strong></span>
         <app-ng2-charts-component [class]="col_md_active? 'col-md-6 col-xxl-7': ''" [data] = "data"></app-ng2-charts-component>
         <div [class]="col_md_active? 'col-md-6 col-xxl-5': ''">
           <nb-card status="primary">
@@ -33,17 +37,21 @@
                 <table class="table table-sm mb-0" id="info-grafico-teacher">
                   <thead>
                   <tr style="font-size: 12px" class="fw-bold text-center">
-                    <th style="text-align: left">Titulo</th>
+                    <th style="text-align: left">Nombre y Apellidos</th>
+                    <th style="text-align: left">Facultad</th>
                     <th>Total</th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr style="font-size: 11px" class="text-center align-middle" *ngFor="let item of data?.detalle">
                     <td style="text-align: left">
-                      {{item.titulo}}
+                      {{item.label}}
+                    </td>
+                    <td style="text-align: left">
+                      {{item.facultad}}
                     </td>
                     <td>
-                      {{item.total}}
+                      {{item.data}}
                     </td>
                   </tr>
                   </tbody>
@@ -56,7 +64,7 @@
           <nb-card status="primary">
             <nb-card-header >
               <div class="d-flex justify-content-between align-items-center">
-                <small style="font-size: 14px" class="fw-bold">PADRON ELECTORAL / </small>
+                <small style="font-size: 14px" class="fw-bold">PADRON ELECTORAL / {{data?.electores?.length}}</small>
                 <img (click)="exportExel('padron-electoral-teacher')" nbTooltip="Descargar exel" nbTooltipPlacement="top" style="cursor: pointer" src="assets/excel-logo.png" width="30px" class="ms-auto" alt="exel">
               </div>
             </nb-card-header>
