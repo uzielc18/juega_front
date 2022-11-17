@@ -105,4 +105,9 @@ export class ReportElectionHomeComponent implements OnInit {
     console.log(filter)
    // this.filterData(item);
   }
+  loadingsForm($event: boolean) {
+    setTimeout(() => {
+      this.loading = $event;
+    }, 100);
+  }
 }
