@@ -49,6 +49,7 @@ export class TabElectionsTeacherComponent implements OnInit {
     item.checked = true;
     this.col_md_active = true;
     this.filterData(item);
+    this.tipoCategoria = '';
 
   }
   getTypeRatings(){
@@ -102,7 +103,6 @@ export class TabElectionsTeacherComponent implements OnInit {
         this.tipoCategoria = item.name;
       }
     })
-    this.tipoCategoria = '';
   }
   filterDataCategory(item: any, categoria: any){
     const serviceName = END_POINTS.base_back.reportes + '/elecciones-docente';
