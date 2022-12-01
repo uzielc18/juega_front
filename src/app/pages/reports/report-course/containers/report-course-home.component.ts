@@ -35,7 +35,7 @@ export class ReportCourseHomeComponent implements OnInit {
     sizeListData: 0,
     isDisabledPage: false,
   };
-  pagesCount: any[] = [20, 30, 50];
+  pagesCount: any[] = [20, 30, 50, 100, 500, 1000];
 
   ciclos: any = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
   estados: any[] = [
