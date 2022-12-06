@@ -30,7 +30,7 @@
         </div>
         <div class="col-lg-3">
           <label class="label">Programa estudio</label>
-          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id" [(selected)]="todos">
             <nb-option [value]="todos">Todos</nb-option>
             <nb-option *ngFor="let item of litProgramStudy" [value]="item.id">{{
               item.name_programa_estudio
@@ -48,13 +48,13 @@
           <label class="label">Buscar</label>
           <input nbInput type="text" fieldSize="small" fullWidth formControlName="buscar">
         </div>
-        <div class="col-md-2 ms-auto">
+        <div class="col-md-2 " [class]="formHeader.controls['programa_estudio_id'].value? 'ms-auto': ''" *ngIf="formHeader.controls['programa_estudio_id'].value">
           <label class="label" style="visibility: hidden">Sincronizar con canvas</label><br />
           <button nbButton fullWidth size="small" status="success">
             <nb-icon icon="sync-outline"></nb-icon>Sincronizar con canvas
           </button>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" [class]="!formHeader.controls['programa_estudio_id'].value? 'ms-auto': ''">
           <label class="label" style="visibility: hidden">Filtrar</label><br />
           <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="!formHeader.controls['programa_estudio_id'].value && rolSemestre.area.area_id === 0 && formHeader.controls['buscar'].value === ''">
             <nb-icon icon="funnel"></nb-icon>Filtrar

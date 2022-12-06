@@ -18,6 +18,7 @@ export class StudentHomeComponent implements OnInit {
   nivelEnsenanza: any = [];
   sedes: any = [];
   todos: any = [];
+  selectedItem2 = this.todos;
   ciclos = [
     { ciclo: '1' },
     { ciclo: '2' },
@@ -136,7 +137,6 @@ export class StudentHomeComponent implements OnInit {
     this.facultades = [];
     this.formHeader.controls['facultades_unidades'].setValue('');
     this.formHeader.controls['programa_estudio_id'].setValue();
-    this.todos = '';
     this.getFacultadesUnidades(nivel.id, this.formHeader.get('sede').value.id);
   }
   getFacultadesUnidades(nivel: any, sedeId: any){
@@ -144,6 +144,7 @@ export class StudentHomeComponent implements OnInit {
     const params = {
       all: 1
     }
+    this.loading = true;
     this.generalServi.nameIdAndIdParams$(serviceName, nivel, sedeId, params).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
@@ -177,7 +178,7 @@ export class StudentHomeComponent implements OnInit {
           arr.push(f.id)
         })
         todoss = arr.join(',');
-        this.todos = todoss
+        this.todos = todoss;
         if (this.litProgramStudy.length>0) {
           this.litProgramStudy.map((r:any) => {
             r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');

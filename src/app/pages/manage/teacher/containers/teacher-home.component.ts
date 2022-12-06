@@ -147,9 +147,11 @@ export class TeacherHomeComponent implements OnInit {
     const params = {
       all: 1
     }
+    this.loading = true;
     this.generalServi.nameIdAndIdParams$(serviceName, nivel, sedeId, params).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
+        this.todos = '';
       },
       () => {
         this.loading = false;
@@ -160,7 +162,6 @@ export class TeacherHomeComponent implements OnInit {
     );
   }
   selecFacultades(item:any){
-    console.log(item, "facultades")
     this.formHeader.controls['facultades_unidades'].setValue(item);
     this.litProgramStudy = [];
     this.formHeader.controls['programa_estudio_id'].setValue();
