@@ -49,8 +49,14 @@
           <input nbInput type="text" fieldSize="small" fullWidth formControlName="buscar">
         </div>
         <div class="col-md-2 ms-auto">
+          <label class="label" style="visibility: hidden">Sincronizar con canvas</label><br />
+          <button nbButton fullWidth size="small" status="success">
+            <nb-icon icon="sync-outline"></nb-icon>Sincronizar con canvas
+          </button>
+        </div>
+        <div class="col-md-2">
           <label class="label" style="visibility: hidden">Filtrar</label><br />
-          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['facultades_unidades'].value == '' && rolSemestre.area.area_id === 0 && formHeader.controls['buscar'].value === '' ">
+          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="!formHeader.controls['programa_estudio_id'].value && rolSemestre.area.area_id === 0 && formHeader.controls['buscar'].value === '' ">
             <nb-icon icon="funnel"></nb-icon>Filtrar
           </button>
         </div>
