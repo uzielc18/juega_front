@@ -16,7 +16,7 @@ export class TeacherHomeComponent implements OnInit {
   listTeachers: any = [];
   facultades:any = [];
   sedes: any = [];
-  todos: any = 0;
+  todos: any;
   // @ts-ignore
   //selectedProgramaStudy: any = this.todos;
   nivelEnsenanza: any = [];
@@ -66,9 +66,9 @@ export class TeacherHomeComponent implements OnInit {
     const controls = {
       programa_estudio_id: [''],
       ciclo: [''],
-      facultades_unidades: [{ value: '', disabled: true }, [Validators.required]],
+      facultades_unidades: [{ value: '', disabled: true }],
       buscar: [''],
-      nivel_ensenanza:[{ value: '', disabled: true }, [Validators.required]],
+      nivel_ensenanza:[{ value: '', disabled: true }],
       sede:['', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
@@ -122,6 +122,7 @@ export class TeacherHomeComponent implements OnInit {
       this.generalServi.nameId$(serviceName, sede_id).subscribe(
         (res: any) => {
           this.nivelEnsenanza = res.data || [];
+          this.todos = '';
         },
         () => {
           this.loading = false;
@@ -138,6 +139,7 @@ export class TeacherHomeComponent implements OnInit {
     this.facultades = [];
     this.formHeader.controls['facultades_unidades'].setValue('');
     this.formHeader.controls['programa_estudio_id'].setValue();
+    this.todos = '';
     this.getFacultadesUnidades(nivel.id, this.formHeader.get('sede').value.id);
   }
   getFacultadesUnidades(nivel: any, sedeId: any){
@@ -161,7 +163,8 @@ export class TeacherHomeComponent implements OnInit {
     console.log(item, "facultades")
     this.formHeader.controls['facultades_unidades'].setValue(item);
     this.litProgramStudy = [];
-    this.formHeader.controls['programa_estudio_id'].setValue(this.todos);
+    this.formHeader.controls['programa_estudio_id'].setValue();
+
     this.listProgramEstudy(item.nivel_ensenanza_id, this.formHeader.get('sede').value.id, item.id)
   }
   listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){

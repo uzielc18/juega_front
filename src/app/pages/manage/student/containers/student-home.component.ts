@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils';
@@ -15,6 +15,9 @@ export class StudentHomeComponent implements OnInit {
   formHeader: any = FormGroup;
   listStudents: any = [];
   facultades:any = [];
+  nivelEnsenanza: any = [];
+  sedes: any = [];
+  todos: any = [];
   ciclos = [
     { ciclo: '1' },
     { ciclo: '2' },
@@ -51,15 +54,18 @@ export class StudentHomeComponent implements OnInit {
   ngOnInit(): void {
     this.fieldReactive();
     this.getStudents();
-    this.getFacultadesUnidades();
+    this.listSedes();
+    //this.getFacultadesUnidades();
   }
 
   private fieldReactive() {
     const controls = {
       programa_estudio_id: [''],
       ciclo: [''],
-      facultades_unidades: [''],
-      buscar: ['']
+      facultades_unidades: [{ value: '', disabled: true }],
+      buscar: [''],
+      nivel_ensenanza:[{ value: '', disabled: true }],
+      sede:[''],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
@@ -74,12 +80,71 @@ export class StudentHomeComponent implements OnInit {
       return '';
     }
   }
-  getFacultadesUnidades(){
+  listSedes() {
+    const serviceName = END_POINTS.base_back.default + 'sedes';
+    this.loading = true;
+    this.generalServi.nameAll$(serviceName).subscribe(
+      (res: any) => {
+        this.sedes = res.data || [];
+        if (this.sedes.length > 0) {
+          this.formHeader.patchValue({
+            sede: this.sedes[0],
+          });
+          this.formHeader.controls['nivel_ensenanza'].enable();
+          this.listNivelEnsenanza(this.sedes[0].id);
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  selectedSede(sede: any) {
+    this.formHeader.controls['sede'].setValue(sede);
+    this.formHeader.controls['nivel_ensenanza'].enable();
+    this.nivelEnsenanza = [];
+    this.facultades = [];
+    this.formHeader.controls['nivel_ensenanza'].setValue('');
+    this.formHeader.controls['facultades_unidades'].setValue('');
+    this.formHeader.controls['programa_estudio_id'].setValue();
+    this.listNivelEnsenanza(sede.id);
+  }
+  listNivelEnsenanza(sede_id: any) {
+    const serviceName = END_POINTS.base_back.nivel_ensenanza;
+    if (this.sedes.length > 0) {
+      this.loading = true;
+      this.generalServi.nameId$(serviceName, sede_id).subscribe(
+        (res: any) => {
+          this.nivelEnsenanza = res.data || [];
+          this.todos = '';
+        },
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
+    }
+  }
+  selectedNivel(nivel: any) {
+    this.formHeader.controls['nivel_ensenanza'].setValue(nivel);
+    this.formHeader.controls['facultades_unidades'].enable();
+    this.facultades = [];
+    this.formHeader.controls['facultades_unidades'].setValue('');
+    this.formHeader.controls['programa_estudio_id'].setValue();
+    this.todos = '';
+    this.getFacultadesUnidades(nivel.id, this.formHeader.get('sede').value.id);
+  }
+  getFacultadesUnidades(nivel: any, sedeId: any){
     const serviceName = END_POINTS.base_back.sede_areas;
     const params = {
       all: 1
     }
-    this.generalServi.nameIdAndIdParams$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, params).subscribe(
+    this.generalServi.nameIdAndIdParams$(serviceName, nivel, sedeId, params).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
       },
@@ -106,6 +171,13 @@ export class StudentHomeComponent implements OnInit {
     if (id_sede && id_nive_enseanza) {
       this.generalServi.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
         this.litProgramStudy = res.data || [];
+        const arr: any = [];
+        let todoss: any;
+        this.litProgramStudy.forEach((f: any) => {
+          arr.push(f.id)
+        })
+        todoss = arr.join(',');
+        this.todos = todoss
         if (this.litProgramStudy.length>0) {
           this.litProgramStudy.map((r:any) => {
             r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');

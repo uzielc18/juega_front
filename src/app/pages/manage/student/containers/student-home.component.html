@@ -7,6 +7,19 @@
     <hr />
     <form [formGroup]="formHeader">
       <div class="row">
+        <div class="col-md-3" *ngIf="rolSemestre.area.area_id === 0">
+          <label class="label">Sede</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="sede">
+            <nb-option *ngFor="let sede of sedes" [value]="sede" (click)="selectedSede(sede)">{{ sede?.nombre }}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-3" *ngIf="rolSemestre.area.area_id === 0">
+          <label class="label">Nivel de enseñanza</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="nivel_ensenanza">
+            <nb-option value="" disabled>Selecciona</nb-option>
+            <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel" (click)="selectedNivel(nivel)">{{ nivel?.nombre }}</nb-option>
+          </nb-select>
+        </div>
         <!-- <div class="col-md-6"></div> -->
         <div class="col-lg-3" *ngIf="rolSemestre.area.area_id === 0">
           <label class="label">Facultades/Unidades</label>
@@ -18,7 +31,7 @@
         <div class="col-lg-3">
           <label class="label">Programa estudio</label>
           <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
-            <nb-option value="">Todos</nb-option>
+            <nb-option [value]="todos">Todos</nb-option>
             <nb-option *ngFor="let item of litProgramStudy" [value]="item.id">{{
               item.name_programa_estudio
             }}</nb-option>
@@ -36,8 +49,14 @@
           <input nbInput type="text" fieldSize="small" fullWidth formControlName="buscar">
         </div>
         <div class="col-md-2 ms-auto">
+          <label class="label" style="visibility: hidden">Sincronizar con canvas</label><br />
+          <button nbButton fullWidth size="small" status="success">
+            <nb-icon icon="sync-outline"></nb-icon>Sincronizar con canvas
+          </button>
+        </div>
+        <div class="col-md-2">
           <label class="label" style="visibility: hidden">Filtrar</label><br />
-          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['facultades_unidades'].value == '' && rolSemestre.area.area_id === 0 && formHeader.controls['buscar'].value === ''">
+          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="!formHeader.controls['programa_estudio_id'].value && rolSemestre.area.area_id === 0 && formHeader.controls['buscar'].value === ''">
             <nb-icon icon="funnel"></nb-icon>Filtrar
           </button>
         </div>
