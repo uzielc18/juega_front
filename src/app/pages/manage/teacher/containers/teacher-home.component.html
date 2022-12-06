@@ -74,8 +74,8 @@
             <th>Login id</th>
             <th>DNI</th>
             <th>Areas</th>
-            <th>Cursos</th>
-            <th>Perfiles</th>
+            <th>Corre upeu</th>
+            <th>Corre externo</th>
             <th>Último Ingreso</th>
             <th class="text-center">Acciones</th>
           </tr>
@@ -88,8 +88,8 @@
             <td>{{ item.login_id }}</td>
             <td>{{ item.dni }}</td>
             <td>{{ item.nombre }}</td>
-            <td>{{ item?.cursos }}</td>
-            <td>{{ item?.perfiles }}</td>
+            <td>{{ item?.email }}</td>
+            <td>{{ item?.email_upeu }}</td>
             <td>{{ item?.ultimo_acceso  | date: 'MMMM d, y, h:mm:ss a' }}</td>
             <td class="text-center" style="width: 120px">
               <div class="d-flex justify-content-evenly">
