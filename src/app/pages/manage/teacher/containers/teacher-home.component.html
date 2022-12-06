@@ -84,13 +84,13 @@
           <tr *ngFor="let item of listTeachers; let i = index" style="font-size: 10px; vertical-align: middle">
             <td>{{ item.codigo }}</td>
             <td>{{ item.person_id }}</td>
-            <td>{{ item.apellido_paterno }} {{ item.apellido_materno }} {{ item.nombres }}</td>
+            <td>{{ item.nombres_completos }}</td>
             <td>{{ item.login_id }}</td>
             <td>{{ item.dni }}</td>
             <td>{{ item.nombre }}</td>
             <td>{{ item?.cursos }}</td>
             <td>{{ item?.perfiles }}</td>
-            <td>{{ item?.ultimo_ingreso }}</td>
+            <td>{{ item?.ultimo_acceso  | date: 'MMMM d, y, h:mm:ss a' }}</td>
             <td class="text-center" style="width: 120px">
               <div class="d-flex justify-content-evenly">
                 <div style="cursor: pointer" (click)="editTeacher(item)">
