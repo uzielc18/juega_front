@@ -69,7 +69,10 @@
         <thead>
           <tr style="font-size: 12px">
             <th>Código</th>
+            <th>Person id</th>
             <th>Nombre</th>
+            <th>Login id</th>
+            <th>DNI</th>
             <th>Areas</th>
             <th>Cursos</th>
             <th>Perfiles</th>
@@ -80,7 +83,10 @@
         <tbody>
           <tr *ngFor="let item of listStudents; let i = index" style="font-size: 10px; vertical-align: middle">
             <td>{{ item.codigo }}</td>
+            <td>{{ item.person_id }}</td>
             <td>{{ item.apellido_paterno }} {{ item.apellido_materno }} {{ item.nombres }} </td>
+            <td>{{ item.login_id }}</td>
+            <td>{{ item.dni }}</td>
             <td>{{ item.nombre }}</td>
             <td>{{ item?.cursos }}</td>
             <td>{{ item?.perfiles }}</td>
