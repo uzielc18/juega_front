@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { NbDialogService } from '@nebular/theme';
+import {NbDialogService, NbToastrService} from '@nebular/theme';
 import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils';
 import { EditUserComponent } from '../../../../shared/components/edit-user/edit-user.component';
@@ -49,7 +49,8 @@ export class StudentHomeComponent implements OnInit {
   constructor(
     private generalServi: GeneralService,
     private formBuilder: FormBuilder,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private toastrService: NbToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -288,5 +289,19 @@ export class StudentHomeComponent implements OnInit {
           this.getStudents();
         }
       });
+  }
+
+  syncCanvas(){
+    const serviceName = 'canva-insert-student';
+    const forms = this.formHeader.value;
+    const params = {
+      programa_estudio_id: forms.programa_estudio_id || '',
+    }
+    this.loading = true
+    this.generalServi.nameParams$(serviceName, params).subscribe(res => {
+      if(res.success){
+        this.toastrService.info(status, `${res.message}`);
+      }
+    }, () => {this.loading = false}, () => {this.loading = false})
   }
 }
