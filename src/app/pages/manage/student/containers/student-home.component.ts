@@ -250,8 +250,13 @@ export class StudentHomeComponent implements OnInit {
     };
     this.loading = true;
     this.generalServi.nameParams$(serviceName, params).subscribe(
+
       (res: any) => {
+        let a: any = []
         this.listStudents = res.data.data || [];
+        this.listStudents.map((m: any) => {
+         m.canva_login = JSON.parse(m.canva_login) ;
+        })
         // console.log(this.listStudents);
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;
