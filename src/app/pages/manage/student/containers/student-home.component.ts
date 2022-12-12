@@ -301,6 +301,7 @@ export class StudentHomeComponent implements OnInit {
     this.generalServi.nameParams$(serviceName, params).subscribe(res => {
       if(res.success){
         this.toastrService.info(status, `${res.message}`);
+        this.getStudents();
       }
     }, () => {this.loading = false}, () => {this.loading = false})
   }
