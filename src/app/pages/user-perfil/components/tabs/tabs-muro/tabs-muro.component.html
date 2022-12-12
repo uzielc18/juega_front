@@ -82,7 +82,7 @@
     </nb-card>
   </div>
 </div>
-  <div style="background-color: #FFFFFF" class="row mx-4 my-3" *ngIf="listTeachers.length > 0 && profile?.person?.id === userInfo?.user?.person.id && rolSemestre?.rol?.name === 'Docente'">
+  <div style="background-color: #FFFFFF" class="row mx-4 my-3" *ngIf="listTeachers.length > 0 && profile?.person?.id === userInfo?.user?.person.id && rolSemestre?.rol?.name === 'Docente' && validateConfigurationElection()">
     <h1 style="text-align: left; font-size: 16px; border-bottom: 1px solid #E4E9F2; background-color: #185580; color: #FFFFFF" >ELECCIONES DOCENTE, ORGANOS DE GOBIERNO Y ORGANOS ADMINISTRATIVOS</h1>
     <div class="col-md-6" *ngFor="let item of listTeachers">
       <nb-card status="primary" >

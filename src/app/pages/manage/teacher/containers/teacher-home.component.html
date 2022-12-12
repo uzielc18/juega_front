@@ -50,7 +50,7 @@
         </div>
         <div class="col-md-2" [class]="formHeader.controls['programa_estudio_id'].value? 'ms-auto': ''" *ngIf="formHeader.controls['programa_estudio_id'].value">
           <label class="label" style="visibility: hidden">Sincronizar con canvas</label><br />
-          <button nbButton fullWidth size="small" status="success">
+          <button nbButton fullWidth size="small" status="success" (click)="syncCanvas()">
             <nb-icon icon="sync-outline"></nb-icon>Sincronizar con canvas
           </button>
         </div>
@@ -77,6 +77,8 @@
             <th>Corre upeu</th>
             <th>Corre externo</th>
             <th>Último Ingreso</th>
+            <th>Canva login</th>
+            <th class="text-center">Canva id</th>
             <th class="text-center">Acciones</th>
           </tr>
         </thead>
@@ -91,6 +93,23 @@
             <td>{{ item?.correo_externo }}</td>
             <td>{{ item?.correo_upeu }}</td>
             <td>{{ item?.ultimo_acceso  | date: 'MMMM d, y, h:mm:ss a' }}</td>
+            <td>
+              <div class="d-flex flex-column text-start" style="width: 250px; word-break: break-all" *ngFor="let canva of item.canva_login">
+                <!--<span style="font-size: 10px"><strong>CANVA ID:</strong>  {{item.id_canva}}</span>-->
+                <span style="font-size: 10px"><strong>ID:</strong>  {{canva.id}}</span>
+                <span style="font-size: 10px"><strong>UNIQUE ID:</strong>  {{canva.unique_id}}</span>
+                <span style="font-size: 10px"><strong>AUTHENTICATION TYPE:</strong>  {{canva.authentication_provider_type}}</span>
+              </div>
+            </td>
+            <td class="text-center">
+              <nb-icon [icon]="item.id_canva? 'checkmark-circle-2-outline': 'minus-outline'"
+                       [status]="item.id_canva? 'success': ''">
+              </nb-icon><nb-icon nbTooltip="Editar usuario canva"
+                                 nbTooltipStatus="primary"
+                                 status="info"
+                                 style="cursor: pointer" *ngIf="item.id_canva"
+                                 [icon]="'edit'"
+                                 status="info"></nb-icon> <br>{{item.id_canva}} </td>
             <td class="text-center" style="width: 120px">
               <div class="d-flex justify-content-evenly">
                 <div style="cursor: pointer" (click)="editTeacher(item)">
