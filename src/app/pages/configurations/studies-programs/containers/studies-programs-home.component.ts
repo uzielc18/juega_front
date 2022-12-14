@@ -140,7 +140,7 @@ export class StudiesProgramsHomeComponent implements OnInit {
     const forms = this.formHeader.controls['facultades_unidades'].value
     const id_nive_enseanza = forms.nivel_ensenanza_id;
     const id_area = forms.id;
-    const id_sede = this.rolSemestre.area.sede_id;
+    const id_sede = this.formHeader.controls['sede'].value.id;
     const params = {
       programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
     }
