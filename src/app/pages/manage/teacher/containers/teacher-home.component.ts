@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { NbDialogService } from '@nebular/theme';
+import {NbDialogService, NbToastrService} from '@nebular/theme';
 import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils';
 import { EditUserComponent } from '../../../../shared/components/edit-user/edit-user.component';
@@ -16,7 +16,7 @@ export class TeacherHomeComponent implements OnInit {
   listTeachers: any = [];
   facultades:any = [];
   sedes: any = [];
-  todos: any = 0;
+  todos: any;
   // @ts-ignore
   //selectedProgramaStudy: any = this.todos;
   nivelEnsenanza: any = [];
@@ -51,7 +51,8 @@ export class TeacherHomeComponent implements OnInit {
   constructor(
     private generalServi: GeneralService,
     private formBuilder: FormBuilder,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private toastrService: NbToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -66,9 +67,9 @@ export class TeacherHomeComponent implements OnInit {
     const controls = {
       programa_estudio_id: [''],
       ciclo: [''],
-      facultades_unidades: [{ value: '', disabled: true }, [Validators.required]],
+      facultades_unidades: [{ value: '', disabled: true }],
       buscar: [''],
-      nivel_ensenanza:[{ value: '', disabled: true }, [Validators.required]],
+      nivel_ensenanza:[{ value: '', disabled: true }],
       sede:['', [Validators.required]],
     };
     this.formHeader = this.formBuilder.group(controls);
@@ -122,6 +123,7 @@ export class TeacherHomeComponent implements OnInit {
       this.generalServi.nameId$(serviceName, sede_id).subscribe(
         (res: any) => {
           this.nivelEnsenanza = res.data || [];
+          this.todos = '';
         },
         () => {
           this.loading = false;
@@ -138,6 +140,7 @@ export class TeacherHomeComponent implements OnInit {
     this.facultades = [];
     this.formHeader.controls['facultades_unidades'].setValue('');
     this.formHeader.controls['programa_estudio_id'].setValue();
+    this.todos = '';
     this.getFacultadesUnidades(nivel.id, this.formHeader.get('sede').value.id);
   }
   getFacultadesUnidades(nivel: any, sedeId: any){
@@ -145,9 +148,11 @@ export class TeacherHomeComponent implements OnInit {
     const params = {
       all: 1
     }
+    this.loading = true;
     this.generalServi.nameIdAndIdParams$(serviceName, nivel, sedeId, params).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
+        this.todos = '';
       },
       () => {
         this.loading = false;
@@ -158,10 +163,10 @@ export class TeacherHomeComponent implements OnInit {
     );
   }
   selecFacultades(item:any){
-    console.log(item, "facultades")
     this.formHeader.controls['facultades_unidades'].setValue(item);
     this.litProgramStudy = [];
-    this.formHeader.controls['programa_estudio_id'].setValue(this.todos);
+    this.formHeader.controls['programa_estudio_id'].setValue();
+
     this.listProgramEstudy(item.nivel_ensenanza_id, this.formHeader.get('sede').value.id, item.id)
   }
   listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
@@ -286,5 +291,19 @@ export class TeacherHomeComponent implements OnInit {
           this.getTeachers();
         }
       });
+  }
+  syncCanvas(){
+    const serviceName = 'canva-insert-teacher';
+    const forms = this.formHeader.value;
+    const params = {
+      programa_estudio_id: forms.programa_estudio_id || '',
+    }
+    this.loading = true
+    this.generalServi.nameParams$(serviceName, params).subscribe(res => {
+      if(res.success){
+        this.toastrService.info(status, `${res.message}`);
+        this.getTeachers();
+      }
+    }, () => {this.loading = false}, () => {this.loading = false})
   }
 }

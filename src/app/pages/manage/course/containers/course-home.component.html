@@ -15,6 +15,19 @@
                     <nb-option *ngFor="let item of semestrers" [value]="item.id">{{item.nombre}}</nb-option>
                 </nb-select>
             </div>
+            <div class="col-md-3" *ngIf="rolSemestre.area.area_id === 0">
+              <label class="label">Sede</label>
+              <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="sede">
+                <nb-option *ngFor="let sede of sedes" [value]="sede" (click)="selectedSede(sede)">{{ sede?.nombre }}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-md-3" *ngIf="rolSemestre.area.area_id === 0">
+              <label class="label">Nivel de enseñanza</label>
+              <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="nivel_ensenanza">
+                <nb-option value="" disabled>Selecciona</nb-option>
+                <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel" (click)="selectedNivel(nivel)">{{ nivel?.nombre }}</nb-option>
+              </nb-select>
+            </div>
             <div class="col-md-3" *ngIf="rolSemestre?.area?.area_id === 0">
               <label class="label">Facultades/Unidades</label>
               <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="facultades_unidades">
@@ -25,22 +38,28 @@
             <div class="col-md-3">
                 <label class="label">Programa estudio</label>
                 <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
-                    <nb-option value="">Todos</nb-option>
+                    <nb-option [value]="todos">Todos</nb-option>
                     <nb-option *ngFor="let item of litProgramStudy" [value]="item.id">{{item.name_programa_estudio}}</nb-option>
                 </nb-select>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label class="label">Ciclo</label>
                 <nb-select fullWidth size="small" formControlName="ciclo">
                     <nb-option value="">Todos</nb-option>
                     <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{item.ciclo}}</nb-option>
                 </nb-select>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <label class="label">Nombre curso</label>
               <input type="text" nbInput fullWidth fieldSize="small" placeholder="Ingrese nombre" formControlName="nombre" (keyup)="keyNombre($event)">
             </div>
-            <div class="col-md-3 ms-auto">
+            <div class="col-md-2 " [class]="formHeader.controls['programa_estudio_id'].value? 'ms-auto': ''" *ngIf="formHeader.controls['programa_estudio_id'].value">
+              <label class="label" style="visibility: hidden">Sincronizar con canvas</label><br />
+              <button nbButton fullWidth size="small" status="success" (click)="syncCanvasCourse()">
+                <nb-icon icon="sync-outline"></nb-icon>Sincronizar con canvas
+              </button>
+            </div>
+            <div class="col-md-3" [class]="!formHeader.controls['programa_estudio_id'].value? 'ms-auto': ''">
                 <div class="row">
                     <div class="col-sm-6">
                         <label class="label" style="visibility: hidden;">Filtrar</label><br>

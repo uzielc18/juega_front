@@ -7,6 +7,19 @@
     <hr />
     <form [formGroup]="formHeader">
       <div class="row">
+        <div class="col-md-3" *ngIf="rolSemestre.area.area_id === 0">
+          <label class="label">Sede</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="sede">
+            <nb-option *ngFor="let sede of sedes" [value]="sede" (click)="selectedSede(sede)">{{ sede?.nombre }}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-3" *ngIf="rolSemestre.area.area_id === 0">
+          <label class="label">Nivel de enseñanza</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="nivel_ensenanza">
+            <nb-option value="" disabled>Selecciona</nb-option>
+            <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel" (click)="selectedNivel(nivel)">{{ nivel?.nombre }}</nb-option>
+          </nb-select>
+        </div>
         <!-- <div class="col-md-6"></div> -->
         <div class="col-lg-3" *ngIf="rolSemestre.area.area_id === 0">
           <label class="label">Facultades/Unidades</label>
@@ -17,8 +30,8 @@
         </div>
         <div class="col-lg-3">
           <label class="label">Programa estudio</label>
-          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id">
-            <nb-option value="">Todos</nb-option>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="programa_estudio_id" [(selected)]="todos">
+            <nb-option [value]="todos">Todos</nb-option>
             <nb-option *ngFor="let item of litProgramStudy" [value]="item.id">{{
               item.name_programa_estudio
             }}</nb-option>
@@ -35,9 +48,15 @@
           <label class="label">Buscar</label>
           <input nbInput type="text" fieldSize="small" fullWidth formControlName="buscar">
         </div>
-        <div class="col-md-2 ms-auto">
+        <div class="col-md-2 " [class]="formHeader.controls['programa_estudio_id'].value? 'ms-auto': ''" *ngIf="formHeader.controls['programa_estudio_id'].value">
+          <label class="label" style="visibility: hidden">Sincronizar con canvas</label><br />
+          <button nbButton fullWidth size="small" status="success" (click)="syncCanvas()">
+            <nb-icon icon="sync-outline"></nb-icon>Sincronizar con canvas
+          </button>
+        </div>
+        <div class="col-md-2" [class]="!formHeader.controls['programa_estudio_id'].value? 'ms-auto': ''">
           <label class="label" style="visibility: hidden">Filtrar</label><br />
-          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="formHeader.controls['facultades_unidades'].value == '' && rolSemestre.area.area_id === 0 && formHeader.controls['buscar'].value === ''">
+          <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="!formHeader.controls['programa_estudio_id'].value && rolSemestre.area.area_id === 0 && formHeader.controls['buscar'].value === ''">
             <nb-icon icon="funnel"></nb-icon>Filtrar
           </button>
         </div>
@@ -50,22 +69,47 @@
         <thead>
           <tr style="font-size: 12px">
             <th>Código</th>
+            <th>Person id</th>
             <th>Nombre</th>
+            <th>Login id</th>
+            <th>DNI</th>
             <th>Areas</th>
-            <th>Cursos</th>
-            <th>Perfiles</th>
+            <th>Corre upeu</th>
+            <th>Corre externo</th>
             <th>Último Ingreso</th>
+            <th>Canva login</th>
+            <th class="text-center">Canva id</th>
             <th class="text-center">Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of listStudents; let i = index" style="font-size: 10px; vertical-align: middle">
             <td>{{ item.codigo }}</td>
-            <td>{{ item.nombres }} {{ item.apellido_paterno }} {{ item.apellido_materno }}</td>
+            <td>{{ item.person_id }}</td>
+            <td>{{ item.nombres_completos }} </td>
+            <td>{{ item.login_id }}</td>
+            <td>{{ item.dni }}</td>
             <td>{{ item.nombre }}</td>
-            <td>{{ item?.cursos }}</td>
-            <td>{{ item?.perfiles }}</td>
-            <td>{{ item?.ultimo_ingreso }}</td>
+            <td>{{ item?.correo_externo }}</td>
+            <td>{{ item?.correo_upeu }}</td>
+            <td>{{ item?.ultimo_acceso  | date: 'MMMM d, y, h:mm:ss a'}}</td>
+            <td>
+              <div class="d-flex flex-column text-start" style="width: 250px; word-break: break-all" *ngFor="let canva of item.canva_login">
+                <!--<span style="font-size: 10px"><strong>CANVA ID:</strong>  {{item.id_canva}}</span>-->
+                <span style="font-size: 10px"><strong>ID:</strong>  {{canva.id}}</span>
+                <span style="font-size: 10px"><strong>UNIQUE ID:</strong>  {{canva.unique_id}}</span>
+                <span style="font-size: 10px"><strong>AUTHENTICATION TYPE:</strong>  {{canva.authentication_provider_type}}</span>
+              </div>
+            </td>
+            <td class="text-center">
+              <nb-icon [icon]="item.id_canva? 'checkmark-circle-2-outline': 'minus-outline'"
+                       [status]="item.id_canva? 'success': ''">
+              </nb-icon><nb-icon nbTooltip="Actualizar usuario canva"
+                                 nbTooltipStatus="primary"
+                                 status="info"
+                                 style="cursor: pointer" *ngIf="item.id_canva"
+                                 [icon]="'edit'"
+                                 status="info"></nb-icon> <br>{{item.id_canva}} </td>
             <td class="text-center" style="width: 120px">
               <div class="d-flex justify-content-evenly">
                 <div style="cursor: pointer" (click)="editStudent(item)">
