@@ -42,6 +42,9 @@ export class CourseHomeComponent implements OnInit {
   litProgramStudy:any = [];
   semestrers:any = [];
   facultades:any = [];
+  nivelEnsenanza: any = [];
+  sedes: any = [];
+  todos: any;
   ///////////////////////////////
   private index: number = 0;
   physicalPositions = NbGlobalPhysicalPosition;
@@ -51,7 +54,7 @@ export class CourseHomeComponent implements OnInit {
   ngOnInit(): void {
     this.fieldReactive();
     this.getSemester();
-    this.getFacultadesUnidades();
+    //this.getFacultadesUnidades();
   }
   private fieldReactive() {
     const controls = {
@@ -59,7 +62,9 @@ export class CourseHomeComponent implements OnInit {
       programa_estudio_id: [''],
       ciclo: [''],
       nombre: [''],
-      facultades_unidades: ['']
+      facultades_unidades: [''],
+      nivel_ensenanza:[{ value: '', disabled: true }],
+      sede:[''],
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
@@ -80,19 +85,79 @@ export class CourseHomeComponent implements OnInit {
         this.semestrers = res.data || [];
         if (this.semestrers.length>0) {
           this.formHeader.controls['semester'].setValue(this.rolSemestre.semestre.id);
+          this.listSedes()
         }
       }, () => {this.loading = false}, () => {this.loading = false});
   }
-  getFacultadesUnidades(){
+  listSedes() {
+    const serviceName = END_POINTS.base_back.default + 'sedes';
+    this.loading = true;
+    this.generalServi.nameAll$(serviceName).subscribe(
+      (res: any) => {
+        this.sedes = res.data || [];
+        if (this.sedes.length > 0) {
+          this.formHeader.patchValue({
+            sede: this.sedes[0],
+          });
+          this.formHeader.controls['nivel_ensenanza'].enable();
+          this.listNivelEnsenanza(this.sedes[0].id);
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  selectedSede(sede: any) {
+    this.formHeader.controls['sede'].setValue(sede);
+    this.formHeader.controls['nivel_ensenanza'].enable();
+    this.nivelEnsenanza = [];
+    this.facultades = [];
+    this.formHeader.controls['nivel_ensenanza'].setValue('');
+    this.formHeader.controls['facultades_unidades'].setValue('');
+    this.formHeader.controls['programa_estudio_id'].setValue();
+    this.listNivelEnsenanza(sede.id);
+  }
+  listNivelEnsenanza(sede_id: any) {
+    const serviceName = END_POINTS.base_back.nivel_ensenanza;
+    if (this.sedes.length > 0) {
+      this.loading = true;
+      this.generalServi.nameId$(serviceName, sede_id).subscribe(
+        (res: any) => {
+          this.nivelEnsenanza = res.data || [];
+        },
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
+    }
+  }
+  selectedNivel(nivel: any) {
+    this.formHeader.controls['nivel_ensenanza'].setValue(nivel);
+    this.formHeader.controls['facultades_unidades'].enable();
+    this.facultades = [];
+    this.formHeader.controls['facultades_unidades'].setValue('');
+    this.formHeader.controls['programa_estudio_id'].setValue();
+    this.getFacultadesUnidades(nivel.id, this.formHeader.get('sede').value.id);
+  }
+  getFacultadesUnidades(nivel: any, sedeId: any){
     this.loading = true
     const serviceName = END_POINTS.base_back.sede_areas;
     const params = {
       all: 1
     }
-    this.generalServi.nameIdAndIdParams$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, params).subscribe(
+
+    this.generalServi.nameIdAndIdParams$(serviceName, nivel, sedeId, params).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
-      }
+        this.formHeader.controls['programa_estudio_id'].setValue('');
+      }, () => {this.loading = false}, () => {this.loading = false}
     );
   }
   selecFacultades(item:any){
@@ -110,6 +175,13 @@ export class CourseHomeComponent implements OnInit {
     if (id_sede && id_nive_enseanza) {
         this.generalServi.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
           this.litProgramStudy = res.data || [];
+          const arr: any = [];
+          let todoss: any;
+          this.litProgramStudy.forEach((f: any) => {
+            arr.push(f.id)
+          })
+          todoss = arr.join(',');
+          this.todos = todoss;
           if (this.litProgramStudy.length>0) {
             this.litProgramStudy.map((r:any) => {
               r.name_programa_estudio = r.nombre_corto + ' - ' + (r.sede_nombre ? r.sede_nombre : '');
@@ -372,5 +444,8 @@ export class CourseHomeComponent implements OnInit {
         }
       });
     }
+  }
+  syncCanvasCourse() {
+
   }
 }

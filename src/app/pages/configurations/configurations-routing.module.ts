@@ -36,6 +36,11 @@ const routes: Routes = [
         path: 'type-teachers',
         loadChildren: () => import('src/app/pages/configurations/type-teachers/type-teachers.module')
           .then(m => m.TypeTeachersModule)
+      },
+      {
+        path: 'study-program',
+        loadChildren: () => import('src/app/pages/configurations/studies-programs/studies-programs.module')
+          .then(m => m.StudiesProgramsModule)
       }
     ]
   }
