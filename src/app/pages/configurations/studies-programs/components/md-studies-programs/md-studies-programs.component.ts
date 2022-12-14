@@ -31,7 +31,7 @@ export class MdStudiesProgramsComponent implements OnInit {
       nombre: [{ value: '', disabled: true }],
       id_programa_estudio: [{ value: '', disabled: true }],
       sede_nombre: [{ value: '', disabled: true }],
-      canva_id: [''],
+      id_canva: [''],
     };
     this.FormEditProgramStudy = this.fb.group(controls);
 
@@ -46,7 +46,7 @@ export class MdStudiesProgramsComponent implements OnInit {
         nombre: this.item.nombre,
         id_programa_estudio: this.item.id_programa_estudio,
         sede_nombre: this.item.sede_nombre,
-        canva_id: this.item.canva_id
+        id_canva: this.item.id_canva
       }
     )
 
@@ -59,7 +59,7 @@ export class MdStudiesProgramsComponent implements OnInit {
       nombre: forms.nombre,
       id_programa_estudio: forms.id_programa_estudio,
       sede_nombre: forms.sede_nombre,
-      canva_id: forms.canva_id
+      id_canva: forms.id_canva
     }
     this.loading = true;
     this.generalService.updateNameIdData$(serviceName, this.item.id, params).subscribe(res => {

@@ -1,8 +1,8 @@
 <nb-card class="m-0 h-100 border-0" style="border-radius: 15px" [nbSpinner]="loading">
   <nb-card-header>
     <div class="d-flex">
-      <nb-icon icon="person-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
-      <strong style="padding-top: 7px">ESTUDIANTES</strong>
+      <nb-icon icon="folder-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px">PROGRAMA DE ESTUDIOS</strong>
     </div>
     <hr />
     <form [formGroup]="formHeader">
@@ -56,7 +56,7 @@
           <td>{{ item.sede_area_id }}</td>
           <td class="text-center">{{ item.abr }} </td>
           <td>{{ item.name_programa_estudio }}</td>
-          <td></td>
+          <td>{{item.id_canva}}</td>
           <td class="text-center" style="width: 120px">
             <div class="d-flex justify-content-evenly">
               <div style="cursor: pointer" (click)="editListProgramStudy(item, 'UPDATE')">
