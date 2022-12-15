@@ -491,7 +491,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
             this.appService.configurations.filter((f: any) => {
               if(f.nombre === 'ENCUESTA'){
-                if(f.estado === '1' && (this.rolSemestre.rol?.name === 'Estudiante' || this.rolSemestre.rol?.name === 'Docente')){
+                if(f.valor === '1' && (this.rolSemestre.rol?.name === 'Estudiante' || this.rolSemestre.rol?.name === 'Docente')){
                   this.mInquiries();
                 }
               }
@@ -677,6 +677,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
   }
   mInquiries(){
+
     const serviceName = 'instrumentos';
     let valor: boolean = false;
     const params = {
