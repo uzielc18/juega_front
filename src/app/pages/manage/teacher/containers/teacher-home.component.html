@@ -48,13 +48,13 @@
           <label class="label">Buscar</label>
           <input nbInput type="text" fieldSize="small" fullWidth formControlName="buscar">
         </div>
-        <div class="col-md-2" [class]="formHeader.controls['programa_estudio_id'].value? 'ms-auto': ''" *ngIf="formHeader.controls['programa_estudio_id'].value">
+        <div class="col-md-2" [class]="formHeader.controls['programa_estudio_id'].value && activateBtnCanva? 'ms-auto': ''" *ngIf="formHeader.controls['programa_estudio_id'].value && activateBtnCanva && listTeachers.length > 0">
           <label class="label" style="visibility: hidden">Sincronizar con canvas</label><br />
           <button nbButton fullWidth size="small" status="success" (click)="syncCanvas()">
             <nb-icon icon="sync-outline"></nb-icon>Sincronizar con canvas
           </button>
         </div>
-        <div class="col-md-2" [class]="!formHeader.controls['programa_estudio_id'].value? 'ms-auto': ''">
+        <div class="col-md-2" [class]="!activateBtnCanva || listTeachers.length === 0? 'ms-auto': ''">
           <label class="label" style="visibility: hidden">Filtrar</label><br />
           <button nbButton fullWidth size="small" status="warning" (click)="refresh()" [disabled]="!formHeader.controls['programa_estudio_id'].value && rolSemestre.area.area_id === 0 && formHeader.controls['buscar'].value === '' ">
             <nb-icon icon="funnel"></nb-icon>Filtrar

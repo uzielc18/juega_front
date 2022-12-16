@@ -16,6 +16,7 @@ export class StudentHomeComponent implements OnInit {
   listStudents: any = [];
   facultades:any = [];
   nivelEnsenanza: any = [];
+  activateBtnCanva: boolean = false;
   sedes: any = [];
   todos: any = [];
   selectedItem2 = this.todos;
@@ -109,6 +110,7 @@ export class StudentHomeComponent implements OnInit {
     this.formHeader.controls['nivel_ensenanza'].enable();
     this.nivelEnsenanza = [];
     this.facultades = [];
+    this.activateBtnCanva = false;
     this.formHeader.controls['nivel_ensenanza'].setValue('');
     this.formHeader.controls['facultades_unidades'].setValue('');
     this.formHeader.controls['programa_estudio_id'].setValue();
@@ -136,6 +138,7 @@ export class StudentHomeComponent implements OnInit {
     this.formHeader.controls['nivel_ensenanza'].setValue(nivel);
     this.formHeader.controls['facultades_unidades'].enable();
     this.facultades = [];
+    this.activateBtnCanva = false;
     this.formHeader.controls['facultades_unidades'].setValue('');
     this.formHeader.controls['programa_estudio_id'].setValue();
     this.getFacultadesUnidades(nivel.id, this.formHeader.get('sede').value.id);
@@ -162,6 +165,7 @@ export class StudentHomeComponent implements OnInit {
     this.formHeader.controls['facultades_unidades'].setValue(item);
     this.litProgramStudy = [];
     this.formHeader.controls['programa_estudio_id'].setValue('');
+    this.activateBtnCanva = false;
     this.listProgramEstudy(item.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
   }
   listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
@@ -224,6 +228,7 @@ export class StudentHomeComponent implements OnInit {
 
   refresh() {
     this.pagination.page = 1;
+    this.activateBtnCanva = true
     this.getStudents();
   }
 
