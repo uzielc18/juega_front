@@ -27,6 +27,7 @@ import {MHomeTutoresComponent} from "../components/modals/m-tutores/m-home-tutor
 export class CourseHomeComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
+  activateBtnCanva: boolean = false;
   listCourseZoom:any = [];
   success : any;
   ciclos = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
@@ -65,6 +66,7 @@ export class CourseHomeComponent implements OnInit {
       facultades_unidades: [''],
       nivel_ensenanza:[{ value: '', disabled: true }],
       sede:[''],
+      id_canva: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
@@ -116,6 +118,7 @@ export class CourseHomeComponent implements OnInit {
     this.formHeader.controls['nivel_ensenanza'].enable();
     this.nivelEnsenanza = [];
     this.facultades = [];
+    this.activateBtnCanva = false;
     this.formHeader.controls['nivel_ensenanza'].setValue('');
     this.formHeader.controls['facultades_unidades'].setValue('');
     this.formHeader.controls['programa_estudio_id'].setValue();
@@ -142,6 +145,7 @@ export class CourseHomeComponent implements OnInit {
     this.formHeader.controls['nivel_ensenanza'].setValue(nivel);
     this.formHeader.controls['facultades_unidades'].enable();
     this.facultades = [];
+    this.activateBtnCanva = false;
     this.formHeader.controls['facultades_unidades'].setValue('');
     this.formHeader.controls['programa_estudio_id'].setValue();
     this.getFacultadesUnidades(nivel.id, this.formHeader.get('sede').value.id);
@@ -163,6 +167,7 @@ export class CourseHomeComponent implements OnInit {
   selecFacultades(item:any){
     this.formHeader.controls['facultades_unidades'].setValue(item);
     this.litProgramStudy = [];
+    this.activateBtnCanva = false;
     this.formHeader.controls['programa_estudio_id'].setValue('');
     this.listProgramEstudy(item.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
   }
@@ -195,6 +200,9 @@ export class CourseHomeComponent implements OnInit {
 
     }
   }
+  selecPrograma(item: any){
+    this.formHeader.controls['id_canva'].setValue(item);
+  }
   getProgramStudy() {
     const serviceName = 'list-programa-estudios';
     const ids = {
@@ -226,6 +234,7 @@ export class CourseHomeComponent implements OnInit {
   refresh() {
     this.pagination.page = 1;
     this.getCourseZoom();
+    this.activateBtnCanva = true;
   }
   loadPage($event: any): any {
     this.pagination.page = $event;
@@ -446,6 +455,21 @@ export class CourseHomeComponent implements OnInit {
     }
   }
   syncCanvasCourse() {
+    const serviceName = 'canva-insert-course';
+    const forms = this.formHeader.value;
+    const params = {
+      id_canva:  forms.id_canva.id_canva,
+      programa_estudio_id: forms.id_canva.id,
+      semester_id: forms.semester,
+      ciclo: forms.ciclo
 
+    }
+    this.loading = true;
+    this.generalServi.nameParams$(serviceName, params).subscribe(res => {
+      if(res.success){
+        this.toastrService.info(status, `${res.message}`);
+        this.getCourseZoom();
+      }
+    }, () => {this.loading= false}, () => {this.loading = false})
   }
 }

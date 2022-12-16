@@ -13,6 +13,7 @@ import { EditUserComponent } from '../../../../shared/components/edit-user/edit-
 export class TeacherHomeComponent implements OnInit {
   loading: boolean = false;
   formHeader: any = FormGroup;
+  activateBtnCanva: boolean = false;
   listTeachers: any = [];
   facultades:any = [];
   sedes: any = [];
@@ -111,6 +112,7 @@ export class TeacherHomeComponent implements OnInit {
     this.formHeader.controls['nivel_ensenanza'].enable();
     this.nivelEnsenanza = [];
     this.facultades = [];
+    this.activateBtnCanva = false;
     this.formHeader.controls['nivel_ensenanza'].setValue('');
     this.formHeader.controls['facultades_unidades'].setValue('');
     this.formHeader.controls['programa_estudio_id'].setValue();
@@ -141,6 +143,7 @@ export class TeacherHomeComponent implements OnInit {
     this.formHeader.controls['facultades_unidades'].setValue('');
     this.formHeader.controls['programa_estudio_id'].setValue();
     this.todos = '';
+    this.activateBtnCanva = false;
     this.getFacultadesUnidades(nivel.id, this.formHeader.get('sede').value.id);
   }
   getFacultadesUnidades(nivel: any, sedeId: any){
@@ -166,7 +169,7 @@ export class TeacherHomeComponent implements OnInit {
     this.formHeader.controls['facultades_unidades'].setValue(item);
     this.litProgramStudy = [];
     this.formHeader.controls['programa_estudio_id'].setValue();
-
+    this.activateBtnCanva = false;
     this.listProgramEstudy(item.nivel_ensenanza_id, this.formHeader.get('sede').value.id, item.id)
   }
   listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
@@ -233,6 +236,7 @@ export class TeacherHomeComponent implements OnInit {
   refresh() {
     this.pagination.page = 1;
     this.getTeachers();
+    this.activateBtnCanva = true;
   }
 
   loadPage($event: any): any {
