@@ -18,6 +18,7 @@ import {END_POINTS} from "../../../../providers/utils";
 import {Router} from "@angular/router";
 import {MTutoresComponent} from "../components/modals/m-tutores/m-tutores.component";
 import {MHomeTutoresComponent} from "../components/modals/m-tutores/m-home-tutores/m-home-tutores.component";
+import {MSyncCanvasComponent} from "../components/modals/m-sync-canvas/m-sync-canvas.component";
 
 @Component({
   selector: 'app-course-home',
@@ -453,6 +454,22 @@ export class CourseHomeComponent implements OnInit {
         }
       });
     }
+  }
+  openSyncCanvasCourse(){
+    const forms = this.formHeader.value;
+    this.dialogService.open(MSyncCanvasComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        userInfo: this.appUserInfo.user,
+        items: forms
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        //this.getCourseZoom();
+      }
+    });
   }
   syncCanvasCourse() {
     const serviceName = 'canva-insert-course';
