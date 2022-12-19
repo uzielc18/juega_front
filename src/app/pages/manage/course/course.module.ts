@@ -21,6 +21,7 @@ import { MTutoresComponent } from './components/modals/m-tutores/m-tutores.compo
 import {FilterModule} from "../../../shared/pipes/filter/filter.module";
 import {DirectiveModule} from "../../../shared/directives/highlight.module";
 import { MHomeTutoresComponent } from './components/modals/m-tutores/m-home-tutores/m-home-tutores.component';
+import { MSyncCanvasComponent } from './components/modals/m-sync-canvas/m-sync-canvas.component';
 
 const COMPONENTS: any[] = [
   CourseComponent,
@@ -72,7 +73,7 @@ const MODULES: any = [
     FilterModule,
     DirectiveModule,
   ],
-  declarations: [...COMPONENTS, VNewWindowComponent, MTutoresComponent, MHomeTutoresComponent],
+  declarations: [...COMPONENTS, VNewWindowComponent, MTutoresComponent, MHomeTutoresComponent, MSyncCanvasComponent],
   entryComponents: [...MODALS],
 })
 
