@@ -20,7 +20,7 @@ export class MSyncCanvasComponent implements OnInit {
               private toastrService: NbToastrService) { }
 
   ngOnInit(): void {
-    this.getCanvaInfo()
+    this.getCanvaInfo();
   }
   closeModal(){
     this.activeModal.close('')
@@ -75,12 +75,37 @@ export class MSyncCanvasComponent implements OnInit {
       this.generalService.nameParams$(serviceName, params).subscribe(res => {
         if(res.success){
           this.toastrService.info(status, `${res.message}`);
-          //this.getCourseZoom();
+          this.getCanvaInfo();
         }
       }, () => {this.loading= false}, () => {this.loading = false})
     }
     if(item.id == 2){
-
+        const serviceName = 'canva-insert-enrollment-teacher';
+        const params = {
+          programa_estudio_id: this.items.programa_estudio_id,
+          semester_id: this.items.semester
+        }
+      this.loading = true;
+        this.generalService.nameParams$(serviceName, params).subscribe( res => {
+          if(res.success){
+            this.toastrService.info(status, `${res.message}`);
+            this.getCanvaInfo();
+          }
+        },() => {this.loading= false}, () => {this.loading = false})
+    }
+    if(item.id === 3){
+      const serviceName = 'canva-insert-enrollment';
+      const params = {
+        programa_estudio_id: this.items.programa_estudio_id,
+        semester_id: this.items.semester
+      }
+      this.loading = true;
+      this.generalService.nameParams$(serviceName, params).subscribe( res => {
+        if(res.success){
+          this.toastrService.info(status, `${res.message}`);
+          this.getCanvaInfo();
+        }
+      },() => {this.loading= false}, () => {this.loading = false})
     }
   }
 }
