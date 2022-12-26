@@ -37,7 +37,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>{{zoom.mostrar_fecha_session === 0? 'No': 'Si'}} mostrar fecha</td>
+                      <td>Mostrar fecha ({{zoom.mostrar_fecha_session === 0? 'Si': 'No'}})</td>
                       <td style="width: 1px;">
                         <nb-toggle (checkedChange)="configurationShowDate($event)" [formControl]="mostrar_fecha_session"></nb-toggle>
                       </td>
