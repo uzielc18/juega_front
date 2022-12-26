@@ -50,12 +50,15 @@
                 </nb-select>
             </div>
             <div class="col-md-2">
-              <label class="label">Nombre curso</label>
-              <input type="text" nbInput fullWidth fieldSize="small" placeholder="Ingrese nombre" formControlName="nombre" (keyup)="keyNombre($event)">
+              <label class="label">Tipo docente</label>
+              <nb-select fullWidth size="small" formControlName="type_teacher_code">
+                <nb-option value="">Todos</nb-option>
+                <nb-option *ngFor="let item of typeTeacherData" [value]="item.codigo">{{item.nombre}}</nb-option>
+              </nb-select>
             </div>
             <div class="col-md-2 " [class]="formHeader.controls['programa_estudio_id'].value && activateBtnCanva? 'ms-auto': ''" *ngIf="formHeader.controls['programa_estudio_id'].value && listCourseZoom.length > 0 && activateBtnCanva">
               <label class="label" style="visibility: hidden">Sincronizar con canvas</label><br />
-              <button nbButton fullWidth size="small" status="success" (click)="syncCanvasCourse()">
+              <button nbButton fullWidth size="small" status="success" (click)="openSyncCanvasCourse()">
                 <nb-icon icon="sync-outline"></nb-icon>Sincronizar con canvas
               </button>
             </div>
@@ -70,6 +73,10 @@
                                 <button nbButton fullWidth size="small" status="primary" (click)="openCoursesFree('', 'NEW')" [disabled]="!formHeader.value.semester"><nb-icon icon="plus"></nb-icon>Crear</button>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-3">
+              <label class="label">Nombre curso</label>
+              <input type="text" nbInput fullWidth fieldSize="small" placeholder="Ingrese nombre" formControlName="nombre" (keyup)="keyNombre($event)">
             </div>
         </div>
     </form>
@@ -88,6 +95,8 @@
                         <th>Cod. anfitrión</th>
                         <th>Zoom</th>
                         <th style="width: 1px;"><nb-icon icon="people"></nb-icon></th>
+                        <th class="text-center">Canva ID</th>
+                      <th class="text-center">Canva ID teacher</th>
                         <th class="text-center" style="width: 1px;" colspan="8">Opciones</th>
                     </tr>
                 </thead>
@@ -102,6 +111,8 @@
                         <td>{{item.host_key}}</td>
                         <td style="color: brown;">{{item.join_url}}</td>
                         <td style="color: brown; font-size: 14px; font-weight: bold;" class="text-center">{{item?.matriculados}}</td>
+                        <td class="text-center">{{item.id_canva}}</td>
+                      <td class="text-center">{{item.id_canva_teacher}}</td>
                         <td class="text-center" style="width: 1px; vertical-align: middle;">
                             <nb-icon *ngIf="item?.id_zoom_meetings" icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon>
                         </td>

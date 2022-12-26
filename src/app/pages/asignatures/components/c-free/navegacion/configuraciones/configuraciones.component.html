@@ -36,6 +36,12 @@
                         <button nbButton size="tiny" status="primary" (click)="addUnitAndSession()"><nb-icon icon="plus"></nb-icon></button>
                       </td>
                     </tr>
+                    <tr>
+                      <td>Mostrar fecha ({{zoom.mostrar_fecha_session === 0? 'Si': 'No'}} )</td>
+                      <td style="width: 1px;">
+                        <nb-toggle (checkedChange)="configurationShowDate($event)" [formControl]="mostrar_fecha_session"></nb-toggle>
+                      </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

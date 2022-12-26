@@ -24,6 +24,7 @@ export class SesionComponent implements OnInit {
   @Input() sesion: any = [];
   @Input() unidad: any;
   @Input() curso: any;
+  @Input() zoom: any;
 
   arrayEl: any = [];
   loading: boolean = false;

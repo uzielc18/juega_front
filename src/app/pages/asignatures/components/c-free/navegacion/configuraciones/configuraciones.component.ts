@@ -1,25 +1,34 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import Swal from 'sweetalert2';
 import {Router} from "@angular/router";
 import {MUnitSessionComponent} from "../../../../../../shared/components/unit-session/modal/m-unit-session.component";
 import {NbDialogService} from "@nebular/theme";
+import {FormControl} from "@angular/forms";
 @Component({
   selector: 'app-configuraciones',
   templateUrl: './configuraciones.component.html',
   styleUrls: ['./configuraciones.component.scss']
 })
-export class ConfiguracionesComponent implements OnInit {
+export class ConfiguracionesComponent implements OnInit, OnChanges {
   loading: boolean = false
+  mostrar_fecha_session =  new FormControl(false);
   @Input() curso:any;
   @Input() userInfo: any;
+  @Input() zoom: any;
   @Output() changeLoad: EventEmitter<any> = new EventEmitter();
   constructor(private generalService: GeneralService,
               private router:Router,
               private dialogService: NbDialogService,) { }
 
   ngOnInit(): void {
+
+  }
+  ngOnChanges(): void {
+    console.log(this.zoom)
+    this.zoom = this.zoom;
+    this.setValueDate()
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -28,6 +37,7 @@ export class ConfiguracionesComponent implements OnInit {
     } else {
       return '';
     }
+
   }
 
   syncEstLamb() {
@@ -143,4 +153,21 @@ export class ConfiguracionesComponent implements OnInit {
       }
     });
   }
+  setValueDate(){
+    this.mostrar_fecha_session.setValue(this.zoom?.mostrar_fecha_session === 0 || null? false : true);
+  }
+  configurationShowDate(event: any){
+    const serviceName = 'courses';
+    const params = {
+      mostrar_fecha_session: event? 1: 0,
+    }
+    this.loading = true;
+    this.generalService.updateNameIdData$(serviceName, this.zoom?.id, params).subscribe(res => {
+        if( res.success){
+          this.changeLoad.emit('ok');
+        }
+    }, () => {this.loading = false}, () => {this.loading = false})
+  }
+
+
 }
