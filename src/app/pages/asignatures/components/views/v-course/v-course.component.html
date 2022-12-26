@@ -84,6 +84,7 @@
                               [sesion]="sesion"
                               [unidad]="unidad"
                               [curso]="curso"
+                              [zoom] = "zoom"
                               (validaExist)="validaExist()"
                             ></app-sesion>
                           </div>
@@ -111,7 +112,7 @@
       </div>
     </div>
     <div class="col-lg-3 p-0">
-      <app-navegacion [curso]="curso" [zoom]="zoom" (eventsChange)="eventsChangesss($event)"></app-navegacion>
+      <app-navegacion  [curso]="curso" [zoom]="zoom" (eventsChange)="eventsChangesss($event)"></app-navegacion>
     </div>
   </div>
 </div>

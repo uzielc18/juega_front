@@ -46,6 +46,7 @@ export class CourseHomeComponent implements OnInit {
   facultades:any = [];
   nivelEnsenanza: any = [];
   sedes: any = [];
+  typeTeacherData: any = [];
   todos: any;
   ///////////////////////////////
   private index: number = 0;
@@ -67,10 +68,12 @@ export class CourseHomeComponent implements OnInit {
       facultades_unidades: [''],
       nivel_ensenanza:[{ value: '', disabled: true }],
       sede:[''],
-      id_canva: ['']
+      id_canva: [''],
+      type_teacher_code: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getProgramStudy();
+    this.getTypeTeacher();
   }
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
@@ -261,6 +264,7 @@ export class CourseHomeComponent implements OnInit {
       ciclo: forms.ciclo || '',
       grupo: forms.grupo || '',
       nombre: forms.nombre || '',
+      type_teacher_code: forms.type_teacher_code || '',
       per_page: this.pagination.per_page,
       page: this.pagination.page,
       paginate: 'S',
@@ -488,5 +492,12 @@ export class CourseHomeComponent implements OnInit {
         this.getCourseZoom();
       }
     }, () => {this.loading= false}, () => {this.loading = false})
+  }
+  getTypeTeacher(){
+    this.loading = true;
+    const nameService = 'typeTeachers';
+    this.generalServi.nameAll$(nameService).subscribe(resp => {
+      this.typeTeacherData = resp.data
+    },()=> this.loading = false, () => {this.loading = false});
   }
 }

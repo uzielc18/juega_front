@@ -12,7 +12,6 @@
   </nb-card-header>
   <nb-card-body class="pb-0">
     <div class="table-responsive">
-
       <table class="table table-sm mb-0">
         <thead>
         <tr style="font-size: 14px" class="fw-bold text-center">
@@ -25,9 +24,28 @@
         <tbody>
         <tr *ngFor="let item of SyncCanva" style="font-size: 11px" class="text-center align-middle">
           <td>{{item.name}}</td>
-          <td>{{item.importado}}</td>
-          <td>{{item.fImportar}}</td>
-          <td>
+          <ng-container *ngIf="item.importado.length">
+            <td >
+              <div *ngFor="let imp of item.importado">
+                <small><strong>{{imp.total}} - {{imp.type_teachers_code}}</strong> </small><br>
+              </div>
+            </td>
+          </ng-container>
+          <td *ngIf="!item.importado.length">{{item.importado}}</td>
+          <ng-container *ngIf="item.fImportar.length">
+            <td>
+              <div *ngFor="let imp of item.fImportar">
+                <small><strong>{{imp.total}} - {{imp.type_teachers_code}}</strong></small>
+              </div>
+            </td>
+          </ng-container>
+         <td *ngIf="!item.fImportar.length">{{item.fImportar}}</td>
+          <ng-container *ngIf="item.id === 1">
+            <td class="d-flex flex-column align-items-center">
+              <button style="margin-bottom: 1px" *ngFor="let imp of item.fImportar" nbButton size="tiny" status="success" (click)="syncCanvasCourse(item, imp)">Sincronizar {{imp.type_teachers_code}}</button>
+            </td>
+          </ng-container>
+          <td *ngIf="item.id !== 1 ">
             <button nbButton size="tiny" status="success" (click)="syncCanvas(item)">Sincronizar</button>
           </td>
         </tr>
@@ -37,7 +55,6 @@
 
   </nb-card-body>
   <nb-card-footer class="d-flex">
-    <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
-    <button class="ms-2" nbButton size="small" status="primary">Guardar</button>
+    <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cerrar</button>
   </nb-card-footer>
 </nb-card>
