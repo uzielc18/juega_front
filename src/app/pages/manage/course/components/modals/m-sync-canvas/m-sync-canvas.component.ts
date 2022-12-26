@@ -40,8 +40,8 @@ export class MSyncCanvasComponent implements OnInit {
             {
                id: 1,
                name: 'Cursos',
-               importado: this.dataInfoCanva.courses_en_canva,
-               fImportar: this.dataInfoCanva.courses
+               importado: [],
+               fImportar: [],
            },
            {
                id:2,
@@ -54,9 +54,24 @@ export class MSyncCanvasComponent implements OnInit {
              name: 'Matriculas',
              importado: this.dataInfoCanva.enrollments_en_canva,
              fImportar: this.dataInfoCanva.enrollments
-           }];
+           }]
 
-
+         this.dataInfoCanva.courses.forEach((m: any) => {
+           console.log(m)
+           const obj = {
+             total: m.total,
+             type_teachers_code: m.type_teachers_code
+           }
+           this.SyncCanva[0].fImportar.push(obj)
+         })
+          this.dataInfoCanva.courses_en_canva.forEach((m: any) => {
+            const obj = {
+              total: m.total,
+              type_teachers_code: m.type_teachers_code
+            }
+            this.SyncCanva[0].importado.push(obj)
+          })
+        console.log(this.SyncCanva)
     },() => {this.loading = false}, () => {this.loading = false})
   }
 
@@ -107,5 +122,26 @@ export class MSyncCanvasComponent implements OnInit {
         }
       },() => {this.loading= false}, () => {this.loading = false})
     }
+  }
+  syncCanvasCourse(item: any, imp: any){
+      if(item.id == 1){
+        const serviceName = 'canva-insert-course';
+        const forms = this.items;
+        const params = {
+          id_canva:  forms.id_canva.id_canva,
+          programa_estudio_id: forms.id_canva.id,
+          semester_id: forms.semester,
+          ciclo: forms.ciclo,
+          type_teachers_code: imp.type_teachers_code
+
+        }
+        this.loading = true;
+        this.generalService.nameParams$(serviceName, params).subscribe(res => {
+          if(res.success){
+            this.toastrService.info(status, `${res.message}`);
+            this.getCanvaInfo();
+          }
+        }, () => {this.loading= false}, () => {this.loading = false})
+      }
   }
 }
