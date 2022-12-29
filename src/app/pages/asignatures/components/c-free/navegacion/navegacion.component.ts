@@ -15,7 +15,8 @@ import Swal from "sweetalert2";
   styleUrls: ['./navegacion.component.scss'],
 })
 export class NavegacionComponent implements OnInit {
-  loading:boolean = false
+  loading:boolean = false;
+  stateChat:boolean = false;
   idCargaCursoDocente: any = this.activatedRoute.snapshot.paramMap.get('id_carga_curso_docente');
   @Input() curso: any;
   @Input() zoom: any;
@@ -125,6 +126,14 @@ export class NavegacionComponent implements OnInit {
             if(res.success){ }
     }, () => {this.loading = false}, () => {this.loading = false});
 
+    }
+  }
+  eventChat(event: any){
+    if(event == 'on'){
+      this.stateChat = true;
+    }
+    if(event == 'off'){
+      this.stateChat = false;
     }
   }
 }

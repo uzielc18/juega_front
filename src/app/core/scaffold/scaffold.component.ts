@@ -1,14 +1,18 @@
-import {Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {
+  NB_WINDOW_DEFAULT_BUTTONS_CONFIG,
   NbDialogService,
   NbMediaBreakpointsService,
   NbMenuItem,
   NbMenuService,
   NbPopoverDirective,
   NbSidebarService,
-  NbThemeService, NbToastrService,
+  NbThemeService,
+  NbToastrService,
+  NbWindowService,
+  NbWindowState,
 } from '@nebular/theme';
-import {filter, map, takeUntil} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
 import {Subject, Subscription} from 'rxjs';
 
 import {NbAuthResult, NbAuthService, NbAuthToken, NbTokenService} from '@nebular/auth';
@@ -21,21 +25,22 @@ import {GeneralService} from 'src/app/providers';
 import {EmitEventsService} from 'src/app/shared/services/emit-events.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SpinnerService} from '../auth/services/spinner.service';
-import {environment} from "../../../environments/environment";
-import {BreakpointObserver, BreakpointState} from "@angular/cdk/layout";
+import {BreakpointObserver} from "@angular/cdk/layout";
 import {MSatisfactionComponent} from "../../shared/components/satisfaction/modal/m-satisfaction.component";
-import {MNotificationsComponent} from "../../shared/components/notifications/modal/m-notifications.component";
 import {SseService} from "../../providers/sse.service";
 import {MInquiriesComponent} from "../../shared/components/inquiries/modal/m-inquiries.component";
+import {NbWindowControlButtonsConfig} from "@nebular/theme/components/window/window.options";
 
 @Component({
   selector: 'app-scaffold',
   templateUrl: './scaffold.component.html',
-  styleUrls: ['./scaffold.component.scss'],
+  styleUrls: ['./scaffold.component.scss',],
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
+  closeWindows: boolean = false;
   timeZoneState: boolean = false;
+  toogleCompact:any = 'compacted'
   disableCollapse: boolean = false;
   stateSidebar: any;
   responsiveValue: boolean = false;
@@ -51,8 +56,15 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   termino:any;
   notificationCount: any;
   userSimulate: any;
+
+  minimize = true;
+  maximize = true;
+  fullScreen = false;
+  close2 = true;
   @ViewChild('searhEvent') searhEvent: any = ElementRef;
   @ViewChild('searhEvent2') searhEvent2: any = ElementRef;
+  @ViewChild('disabledEsc', { read: TemplateRef }) disabledEscTemplate: any =  TemplateRef;
+
   get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     if (sesion) {
@@ -132,6 +144,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private appService: AppService,
     private dialogService: NbDialogService,
+    private windowService: NbWindowService,
     private tokenService: AppValidateTokenService,
     @Inject(CORE_OPTIONS) protected options: CoreOptions,
     private formBuilder: FormBuilder,
@@ -142,6 +155,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     private spinnerService: SpinnerService,
     private sseService: SseService,
     private toastrService: NbToastrService,
+
   ) {
     this.spinnerSub = this.onSpinner();
     // console.log(this.router);
@@ -1135,6 +1149,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
   toggleCompact(){
     this.sidebarService.toggle(true, 'right');
+    if(this.toogleCompact == 'compacted'){
+
+    }
   }
   dashboard(){
     this.router.navigate(['./pages/dashboard']);
@@ -1167,5 +1184,31 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       window.location.reload();
     }, 5000)
+  }
+  openWindowWithoutBackdrop(){
+    this.closeWindows = true
+    console.log(this.windowService)
+    const buttonsConfig: NbWindowControlButtonsConfig = {
+      minimize: this.minimize,
+      maximize: this.maximize,
+      fullScreen: this.fullScreen,
+
+    };
+    if(this.closeWindows){
+      this.windowService.open(
+        this.disabledEscTemplate,
+        {
+          title: 'Window without backdrop',
+          hasBackdrop: false,
+          closeOnEsc: false,
+          initialState: NbWindowState.MAXIMIZED,
+          buttons: buttonsConfig},
+
+
+      ).onClose.subscribe( () => {
+        this.closeWindows = false
+      })
+    }
+
   }
 }
