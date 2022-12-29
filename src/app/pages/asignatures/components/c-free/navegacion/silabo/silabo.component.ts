@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { GeneralService } from '../../../../../../providers';
 import { END_POINTS } from '../../../../../../providers/utils';
 import {
@@ -13,7 +13,9 @@ import {NbDialogService} from "@nebular/theme";
 })
 export class SilaboComponent implements OnInit {
   @Input() curso: any;
+  activateChat: boolean = false;
   silabu: any;
+  @Output() eventChat: any = new EventEmitter<any>();
 
   loading: boolean = false;
 
@@ -69,5 +71,13 @@ export class SilaboComponent implements OnInit {
       }
     });
 
+  }
+  stateChat(){
+    this.activateChat = true;
+    this.eventChat.emit('on')
+  }
+  stateChat2(){
+    this.activateChat = false;
+    this.eventChat.emit('off')
   }
 }

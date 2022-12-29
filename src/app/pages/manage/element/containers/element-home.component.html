@@ -176,7 +176,8 @@
                   <label class="label">Eliga un curso:</label>
                   <nb-select placeholder="Seleccione un curso" formControlName="curso" status="primary" size="small" fullWidth>
                     <nb-option *ngFor="let curso of listOfCoursesToImport" [value]="curso.id" (click)="setCourse(curso)">
-                      {{ curso.nombre }}
+                      {{ curso.nombre }} - {{curso.ciclo}} - {{curso.grupo}} -
+                      {{curso.programa_estudio_nombre}}
                     </nb-option>
                   </nb-select>
                 </div>
