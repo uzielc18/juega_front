@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NbDialogService } from "@nebular/theme";
+import {NbDialogService, NbToastrService} from "@nebular/theme";
 import { GeneralService } from "src/app/providers";
 import { END_POINTS } from "src/app/providers/utils";
 import { ConfirmFinishExamComponent } from "../components/modals/confirm-finish-exam/confirm-finish-exam.component";
@@ -35,8 +35,13 @@ export class ExamHomeComponent implements OnInit {
 
   private scrollHeight = 500;
   showButtom:boolean = true;
-  constructor(private activatedRoute: ActivatedRoute, private service: GeneralService, public router: Router, private rou: ActivatedRoute,
-    private dialogService: NbDialogService, private userService: AppService,) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private service: GeneralService,
+              public router: Router,
+              private rou: ActivatedRoute,
+              private dialogService: NbDialogService,
+              private toastrService: NbToastrService,
+              private userService: AppService,) {
       setInterval(() => {
         if (this.info) {
           this.countdown();
@@ -120,6 +125,9 @@ export class ExamHomeComponent implements OnInit {
       // this.tiempoRestante.horas = 0;
       // this.tiempoRestante.minutos = 0;
       // this.tiempoRestante.segundos = 0;
+    }
+    if(this.tiempoRestante.dias === 0 && this.tiempoRestante.horas === 0 && this.tiempoRestante.minutos === 4 && this.tiempoRestante.segundos === 59){
+      this.toastrService.danger(status, `Te quedan 5 minutos!`);
     }
   }
 
