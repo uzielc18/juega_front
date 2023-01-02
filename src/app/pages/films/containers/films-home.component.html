@@ -31,6 +31,8 @@
           <th>Curso</th>
           <th>Sesión</th>
           <th>Titulo</th>
+          <th>Tamaño</th>
+          <th>Tipo</th>
           <th>Duración</th>
           <th class="text-center" style="width: 1px" colspan="5">Acciones</th>
         </tr>
@@ -43,6 +45,8 @@
           <td>{{item.course_nombre}}</td>
           <td>{{item.topic}}</td>
           <td>{{item.titulo}}</td>
+          <td>{{item.sizeRecord}}</td>
+          <td>{{item.file_type}}</td>
           <td><strong>{{item.duration_re}}</strong></td>
           <!--<td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' ||rolSemestre.rol.name === 'Docente'">
             <a [href]="item.download_url" target="_blank">
