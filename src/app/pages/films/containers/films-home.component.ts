@@ -86,7 +86,9 @@ export class FilmsHomeComponent implements OnInit {
 
       this.grabacionesData.map((m: any) => {
         m.duration_re = this.durationRecord(m);
+        m.sizeRecord = this.sizeRecording(m);
       })
+
     },() => {this.loading = false}, () => {this.loading = false})
   }
   durationRecord(item: any){
@@ -116,6 +118,14 @@ export class FilmsHomeComponent implements OnInit {
       }else{
         return `${this.expiredHours}hrs ${this.expiredMinutes}min. `
       }
+  }
+  sizeRecording(item: any){
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (item.file_size == 0) return '0 Byte';
+    const i = parseInt(String(Math.floor(Math.log(item.file_size) / Math.log(1024))));
+    // @ts-ignore
+    return Math.round(item.file_size / Math.pow(1024, i), 2) + ' ' + sizes[i];
+
   }
   addSession(item: any,tipo: any){
     this.dialogService.open(MAddSessionComponent, {
