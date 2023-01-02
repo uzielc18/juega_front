@@ -41,7 +41,7 @@
         <tr style="font-size: 11px; vertical-align: middle" *ngFor="let item of grabacionesData">
           <td><nb-icon icon="play-circle-outline" status="primary"></nb-icon></td>
           <td>{{item.record_id}}</td>
-          <td>{{item.recording_start| date: 'medium'}}</td>
+          <td>{{item.recording_start| date: 'MMMM d, y'}}</td>
           <td>{{item.course_nombre}}</td>
           <td>{{item.topic}}</td>
           <td>{{item.titulo}}</td>
