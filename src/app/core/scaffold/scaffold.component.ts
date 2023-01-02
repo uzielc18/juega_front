@@ -38,6 +38,9 @@ import {NbWindowControlButtonsConfig} from "@nebular/theme/components/window/win
 })
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
+  chats: any = [];
+  messages: any = [];
+  eventsSubject: Subject<void> = new Subject<void>();
   closeWindows: boolean = false;
   timeZoneState: boolean = false;
   toogleCompact:any = 'compacted'
@@ -267,7 +270,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
         }, 1000);
       }
     });
-    this.countNotifications();
+    //this.countNotifications();
 
   }
 
@@ -1185,8 +1188,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       window.location.reload();
     }, 5000)
   }
-  openWindowWithoutBackdrop(){
-    this.closeWindows = true
+  openWindowWithoutBackdrop(item: any){
     console.log(this.windowService)
     const buttonsConfig: NbWindowControlButtonsConfig = {
       minimize: this.minimize,
@@ -1194,11 +1196,10 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       fullScreen: this.fullScreen,
 
     };
-    if(this.closeWindows){
       this.windowService.open(
         this.disabledEscTemplate,
         {
-          title: 'Window without backdrop',
+          title: item.nombre,
           hasBackdrop: false,
           closeOnEsc: false,
           initialState: NbWindowState.MAXIMIZED,
@@ -1206,9 +1207,43 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
 
       ).onClose.subscribe( () => {
-        this.closeWindows = false
+        this.emitEventToChild(item)
       })
-    }
 
+    this.getHistoryChat(item)
+  }
+  eventOpenChat(event: any){
+      this.chats = [];
+      this.messages = [];
+      this.chats.push(event);
+      console.log(this.chats)
+      this.openWindowWithoutBackdrop(event)
+
+  }
+  emitEventToChild(a: any) {
+    this.eventsSubject.next(a);
+  }
+  getHistoryChat(item: any){
+    const serviceName = 'chats';
+    const params = {
+      person_id: this.user?.person?.id,
+      person_send_id: item.firend_id
+    }
+    this.generalService.nameParams$(serviceName, params).subscribe(res => {
+
+      res.data.data.forEach((m: any) => {
+        const obj = {
+          text: m.mensaje,
+          reply: m.reply === 0? false: true,
+          user: {
+            name: m.nombre
+          }
+        }
+        this.messages.push(obj);
+      })
+      this.chats.map((m: any) => {
+        m.messages = this.messages
+      })
+    })
   }
 }
