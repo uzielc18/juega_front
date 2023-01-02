@@ -63,14 +63,22 @@
             </button>
             </a>
           </td>
-          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' || rolSemestre.rol.name === 'Docente' || rolSemestre.rol.name === 'Admin'">
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="(rolSemestre.rol.name === 'Estudiante' || rolSemestre.rol.name === 'Docente' || rolSemestre.rol.name === 'Admin')&& item.download_url">
             <a [href]="item.download_url" target="">
               <button nbButton size="tiny"
-                      status="primary">
+                      status="info"
+                      nbTooltip="Descargar grabación">
                 <nb-icon icon="download"></nb-icon>
-                Descargar
               </button>
             </a>
+          </td>
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name !== 'Estudiante' && item.element_id!==0">
+            <button  nbButton
+                     size="tiny"
+                     status="primary"
+                     (click)="updateSession(item,'EDITAR')">
+              <nb-icon icon="edit"></nb-icon>
+            </button>
           </td>
           <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name !== 'Estudiante' && item.element_id==0">
             <button nbButton size="tiny" status="danger"
@@ -88,14 +96,7 @@
             </button>
           </td>
 
-          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name !== 'Estudiante' && item.element_id!==0">
-            <button  nbButton
-                    size="tiny"
-                    status="info"
-                    (click)="updateSession(item,'EDITAR')">
-              <nb-icon icon="edit"></nb-icon>
-            </button>
-          </td>
+
         </tr>
         </tbody>
       </table>
