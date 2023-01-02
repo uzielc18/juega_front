@@ -25,23 +25,25 @@
       <table class="table table-sm">
         <thead>
         <tr style="font-size: 12px">
+          <th><nb-icon icon="file-outline"></nb-icon></th>
           <th>Record id</th>
           <th>Fecha</th>
           <th>Curso</th>
           <th>Sesión</th>
           <th>Titulo</th>
           <th>Duración</th>
-          <th class="text-center" style="width: 1px" colspan="4">Acción</th>
+          <th class="text-center" style="width: 1px" colspan="5">Acciones</th>
         </tr>
         </thead>
         <tbody>
         <tr style="font-size: 11px; vertical-align: middle" *ngFor="let item of grabacionesData">
+          <td><nb-icon icon="play-circle-outline" status="primary"></nb-icon></td>
           <td>{{item.record_id}}</td>
-          <td>{{item.recording_start| date: 'd/M/y'}}</td>
+          <td>{{item.recording_start| date: 'medium'}}</td>
           <td>{{item.course_nombre}}</td>
           <td>{{item.topic}}</td>
           <td>{{item.titulo}}</td>
-          <td>{{item.duration_re}} minutos</td>
+          <td><strong>{{item.duration_re}}</strong></td>
           <!--<td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' ||rolSemestre.rol.name === 'Docente'">
             <a [href]="item.download_url" target="_blank">
             <button nbButton size="tiny"
@@ -55,10 +57,19 @@
           <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' || rolSemestre.rol.name === 'Docente' || rolSemestre.rol.name === 'Admin'">
             <a [href]="item.play_url" target="_blank">
             <button nbButton size="tiny"
-                    status="primary"
-                    nbTooltip="Ver">
-              <nb-icon icon="eye"></nb-icon>
+                    status="warning"
+                    nbTooltip="Enlace externo">
+              <nb-icon icon="external-link-outline"></nb-icon>
             </button>
+            </a>
+          </td>
+          <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name === 'Estudiante' || rolSemestre.rol.name === 'Docente' || rolSemestre.rol.name === 'Admin'">
+            <a [href]="item.download_url" target="">
+              <button nbButton size="tiny"
+                      status="primary">
+                <nb-icon icon="download"></nb-icon>
+                Descargar
+              </button>
             </a>
           </td>
           <td class="text-center" style="width: 1px; vertical-align: middle;" *ngIf="rolSemestre.rol.name !== 'Estudiante' && item.element_id==0">
