@@ -74,6 +74,7 @@ export class FilmsHomeComponent implements OnInit {
        this.grabacionesData = res.data
       this.grabacionesData.map((m: any) => {
         m.duration_re = this.durationRecord(m);
+        m.sizeRecord = this.sizeRecording(m);
       })
       }, () => {this.loading = false}, () => {this.loading = false}
     )
