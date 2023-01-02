@@ -62,7 +62,7 @@
             <a [href]="item.play_url" target="_blank">
             <button nbButton size="tiny"
                     status="warning"
-                    nbTooltip="Enlace externo">
+                    nbTooltip="Ver grabación">
               <nb-icon icon="external-link-outline"></nb-icon>
             </button>
             </a>
@@ -80,6 +80,7 @@
             <button  nbButton
                      size="tiny"
                      status="primary"
+                     nbTooltip="Editar"
                      (click)="updateSession(item,'EDITAR')">
               <nb-icon icon="edit"></nb-icon>
             </button>

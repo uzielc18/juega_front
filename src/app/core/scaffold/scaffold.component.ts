@@ -59,7 +59,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   termino:any;
   notificationCount: any;
   userSimulate: any;
-
   minimize = true;
   maximize = true;
   fullScreen = false;
