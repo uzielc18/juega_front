@@ -25,8 +25,6 @@ export class CStudentsComponent implements OnInit, OnDestroy {
     },6000)
     this.eventsSubscription = this.events.subscribe((res: any) => {
       this.a = res
-      console.log(this.a)
-
     });
 
   }
