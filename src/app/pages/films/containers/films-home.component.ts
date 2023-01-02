@@ -114,10 +114,10 @@ export class FilmsHomeComponent implements OnInit {
     this.expiredMinutes = Math.floor((expired % hour) / minute);
     this.expiredSeconds = Math.floor((expired % minute) / second);
 
-      if(this.expiredHours === 0){
-        return `${this.expiredMinutes} min.`
-      }else if(this.expiredHours === 0 && this.expiredMinutes === 0){
+      if(this.expiredHours === 0 && this.expiredMinutes === 0){
         return `${this.expiredSeconds}sec.`
+      }else if(this.expiredHours === 0 && this.expiredMinutes !== 0 ){
+        return `${this.expiredMinutes} min.`
       }else {
         return `${this.expiredHours}hrs ${this.expiredMinutes}min.`
       }
