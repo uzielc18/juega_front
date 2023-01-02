@@ -13,7 +13,6 @@ import {AppService} from "../../../core";
   styleUrls: ['./films-home.component.scss']
 })
 export class FilmsHomeComponent implements OnInit {
-
   loading:boolean = false;
   formHeader: any = FormGroup;
   user: any;
@@ -73,6 +72,9 @@ export class FilmsHomeComponent implements OnInit {
     const id = this.formHeader.controls['curso_id'].value;
     this.generalService.nameIdAndId$(serviceName,id,6).subscribe(res => {
        this.grabacionesData = res.data
+      this.grabacionesData.map((m: any) => {
+        m.duration_re = this.durationRecord(m);
+      })
       }, () => {this.loading = false}, () => {this.loading = false}
     )
   }
@@ -81,11 +83,14 @@ export class FilmsHomeComponent implements OnInit {
     const serviceName = 'record-zoom-person';
     this.generalService.nameId$(serviceName, this.userService.user.person.id).subscribe(res => {
       this.grabacionesData = res.data
-      this.durationRecord(this.grabacionesData);
+
+      this.grabacionesData.map((m: any) => {
+        m.duration_re = this.durationRecord(m);
+      })
     },() => {this.loading = false}, () => {this.loading = false})
   }
   durationRecord(item: any){
-    const start = new Date(item.recording_start).getTime();
+    const start = new Date(item.recording_start).getTime()
     const end = new Date(item.recording_end).getTime();
     const duration = start - end;
     const expired = end - start;
@@ -106,9 +111,11 @@ export class FilmsHomeComponent implements OnInit {
     this.expiredMinutes = Math.floor((expired % hour) / minute);
     this.expiredSeconds = Math.floor((expired % minute) / second);
 
-    item.map((m: any) => {
-      return m.duration_re = this.expiredMinutes;
-    })
+      if(this.expiredHours === 0){
+        return `${this.expiredMinutes} min. `
+      }else{
+        return `${this.expiredHours}hrs ${this.expiredMinutes}min. `
+      }
   }
   addSession(item: any,tipo: any){
     this.dialogService.open(MAddSessionComponent, {

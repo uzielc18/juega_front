@@ -40,6 +40,7 @@ export class MAddSessionComponent implements OnInit {
     this.generalService.nameId$(serviceName, this.items.course_id).subscribe(res => {
 
       this.topicsData = res.data;
+
     }, () => {this.loading = false}, () => {this.loading = false})
   }
   saveElements(){
