@@ -89,7 +89,6 @@ export class FilmsHomeComponent implements OnInit {
         m.duration_re = this.durationRecord(m);
         m.sizeRecord = this.sizeRecording(m);
       })
-
     },() => {this.loading = false}, () => {this.loading = false})
   }
   durationRecord(item: any){
@@ -115,6 +114,7 @@ export class FilmsHomeComponent implements OnInit {
     this.expiredSeconds = Math.floor((expired % minute) / second);
 
       if(this.expiredHours === 0 && this.expiredMinutes === 0){
+        console.log('sec')
         return `${this.expiredSeconds}sec.`
       }else if(this.expiredHours === 0 && this.expiredMinutes !== 0 ){
         return `${this.expiredMinutes} min.`
