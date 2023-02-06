@@ -443,7 +443,7 @@
       <div class="showTools">
         <div class="container-tools">
           <app-c-pendings *ngIf="loading === false"></app-c-pendings>
-          <app-c-students [events]="eventsSubject.asObservable()" (eventOpenChat) = "eventOpenChat($event)"></app-c-students>
+          <app-c-students [events]="eventsSubject.asObservable()" (eventOpenChat) = "eventOpenChat($event)" [amigosOnlineData] = "amigosOnlineData"></app-c-students>
         </div>
       </div>
     </nb-sidebar>

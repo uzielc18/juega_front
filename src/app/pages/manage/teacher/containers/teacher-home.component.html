@@ -1,9 +1,9 @@
 <nb-card class="m-0 h-100 border-0" style="border-radius: 15px" [nbSpinner]="loading">
   <nb-card-header>
-    <div class="d-flex">
-      <nb-icon icon="person-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
-      <strong style="padding-top: 7px">DOCENTES</strong>
-    </div>
+      <div class="d-flex">
+        <nb-icon icon="person-outline" status="primary" style="font-size: 40px"></nb-icon>&nbsp;&nbsp;
+        <strong style="padding-top: 7px">DOCENTES</strong>
+      </div>
     <hr />
     <form [formGroup]="formHeader">
       <div class="row">
@@ -50,7 +50,7 @@
         </div>
         <div class="col-md-2" [class]="formHeader.controls['programa_estudio_id'].value && activateBtnCanva? 'ms-auto': ''" *ngIf="formHeader.controls['programa_estudio_id'].value && activateBtnCanva && listTeachers.length > 0">
           <label class="label" style="visibility: hidden">Sincronizar con canvas</label><br />
-          <button nbButton fullWidth size="small" status="success" (click)="syncCanvas()">
+          <button nbButton fullWidth size="small" status="success" (click)="openSyncCanvas()">
             <nb-icon icon="sync-outline"></nb-icon>Sincronizar con canvas
           </button>
         </div>
@@ -82,14 +82,14 @@
             <th class="text-center">Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="listTeachers.length > 0; else emptyData">
           <tr *ngFor="let item of listTeachers; let i = index" style="font-size: 10px; vertical-align: middle">
             <td>{{ item.codigo }}</td>
             <td>{{ item.person_id }}</td>
             <td>{{ item.nombres_completos }}</td>
             <td>{{ item.login_id }}</td>
-            <td>{{ item.dni }}</td>
-            <td>{{ item.nombre }}</td>
+            <td>{{ item.dni }}</td>sync-outline
+            <td>{{ item.nombre }}</td>/pages/manage/lamb-sync
             <td>{{ item?.correo_externo }}</td>
             <td>{{ item?.correo_upeu }}</td>
             <td>{{ item?.ultimo_acceso  | date: 'MMMM d, y, h:mm:ss a' }}</td>
@@ -120,15 +120,18 @@
                 </div>
               </div>
             </td>
+
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="text-center" *ngIf="listTeachers.length === 0 && loading === false">
-      <h4 style="color: var(--color-primary-700)">Ups!!</h4>
-      <h6>No se encontraron resultados</h6>
-      <img src="assets/busqueda.png" alt="busqueda-upeu" width="300px">
-    </div>
+    <ng-template #emptyData>
+      <td colspan="12" class="text-center">
+        <h4 style="color: var(--color-primary-700)">Ups!!</h4>
+        <h6>No se encontraron resultados</h6>
+        <img src="assets/busqueda.png" alt="busqueda-upeu" width="300px">
+      </td>
+    </ng-template>
   </nb-card-body>
   <nb-card-footer>
     <div class="d-flex justify-content-lg-between justify-content-center align-items-center p-2 flex-wrap">

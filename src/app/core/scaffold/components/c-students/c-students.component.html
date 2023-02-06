@@ -5,8 +5,8 @@
 </div>
 <div>
   <div>
-    <nb-list *ngFor="let item of data">
-      <nb-list-item style="background-color: #FFFFFF; border-radius: 10px; margin: 3px 0; padding: 10px; cursor:pointer;" (click)="openChat(item)">
+    <nb-list *ngFor="let item of amigosOnlineData">
+      <nb-list-item style="background-color: #FFFFFF; border-radius: 10px; margin: 3px 0; padding: 10px; cursor:pointer;" nbTooltip="{{item.nombre}}" (click)="openChat(item)">
         <div class="d-flex justify-content-between align-items-center" >
           <img [ngStyle]="{'border': item.estado_usuario === 'ausente'? '0.2rem solid #ffaa00': item.estado_usuario === 'ofline'? '0.2rem solid #D0D3DB': '0.2rem solid #529871'}"
                [src]="item.imagen"

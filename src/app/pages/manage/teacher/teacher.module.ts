@@ -9,6 +9,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ControlMessagesModule } from '../../../shared/components/control-messages/control-messages.module';
 import { GeneralService } from '../../../providers';
 import { EditUserModule } from '../../../shared/components/edit-user/edit-user.module';
+import { MSyncCanvasComponent } from './components/m-sync-canvas/m-sync-canvas.component';
 
 const COMPONENTS: any[] = [
   TeacherComponent,
@@ -46,7 +47,7 @@ const MODULES: any = [
     ...NGX_MODULES,
     ...MODULES,
   ],
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, MSyncCanvasComponent],
   entryComponents: [...MODALS],
 })
 export class TeacherModule { }

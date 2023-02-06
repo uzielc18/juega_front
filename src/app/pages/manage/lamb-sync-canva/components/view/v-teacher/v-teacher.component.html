@@ -1,0 +1,46 @@
+<nb-accordion class="mb-3" >
+  <nb-accordion-item [collapsed]="false">
+    <nb-accordion-item-header>
+      DOCENTES
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <div class="row">
+        <div class="col-md-10">
+          <small class="label">Ultimos 10 docentes sincronizados</small>
+        </div>
+        <br>
+        <div class="col-md-2">
+          <button (click)="openMTeacher()" nbButton fullWidth size="small" status="primary">Docentes</button>
+        </div>
+      </div>
+      <hr  style="background: #8F9BB3; margin: 10px -14px">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped">
+          <thead>
+          <tr style="font-size: 12px">
+            <th>Nombre</th>
+            <th>Id carga curso docente</th>
+            <th>Id canva/ login</th>
+            <th>Fecha actualización</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="docentes.length > 0; else emptyContent">
+          <tr *ngFor="let item of docentes" style="font-size: 12px">
+            <td>{{ item.nombres_completos }}</td>
+            <td>{{ item.codigo }}</td>
+            <td>{{ item.id_canva }} / {{item.login_id}} </td>
+            <td></td>
+          </tr>
+          </tbody>
+          <ng-template #emptyContent>
+            <tbody>
+            <tr style="font-size: 12px">
+              <td colspan="4" class="text-center text-muted">Aún no hay registros</td>
+            </tr>
+            </tbody>
+          </ng-template>
+        </table>
+      </div>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>

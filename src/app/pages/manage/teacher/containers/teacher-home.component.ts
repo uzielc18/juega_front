@@ -4,6 +4,7 @@ import {NbDialogService, NbToastrService} from '@nebular/theme';
 import { GeneralService } from '../../../../providers';
 import { END_POINTS } from '../../../../providers/utils';
 import { EditUserComponent } from '../../../../shared/components/edit-user/edit-user.component';
+import {MSyncCanvasComponent} from "../components/m-sync-canvas/m-sync-canvas.component";
 
 @Component({
   selector: 'app-teacher-home',
@@ -53,7 +54,6 @@ export class TeacherHomeComponent implements OnInit {
     private generalServi: GeneralService,
     private formBuilder: FormBuilder,
     private dialogService: NbDialogService,
-    private toastrService: NbToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -296,18 +296,20 @@ export class TeacherHomeComponent implements OnInit {
         }
       });
   }
-  syncCanvas(){
-    const serviceName = 'canva-insert-teacher';
-    const forms = this.formHeader.value;
-    const params = {
-      programa_estudio_id: forms.programa_estudio_id || '',
-    }
-    this.loading = true
-    this.generalServi.nameParams$(serviceName, params).subscribe(res => {
-      if(res.success){
-        this.toastrService.info(status, `${res.message}`);
+  openSyncCanvas() {
+    this.dialogService
+      .open(MSyncCanvasComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          items: this.formHeader.value,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe(result => {
+      if (result === 'ok') {
         this.getTeachers();
       }
-    }, () => {this.loading = false}, () => {this.loading = false})
+    });
   }
 }

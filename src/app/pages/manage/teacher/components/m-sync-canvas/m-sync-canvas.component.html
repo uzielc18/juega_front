@@ -1,0 +1,22 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        SINCRONIZAR CON CANVAS
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="d-flex align-items-center flex-wrap">
+      <div class="col">
+        <button nbButton size="small" status="success"> <nb-icon icon="plus"></nb-icon> Agregar docente a canvas</button>
+      </div>
+      <div class="col">
+        <button (click)="syncCanvas()" nbButton size="small" status="success"><nb-icon icon="edit"></nb-icon> Actualizar doncentes en canvas</button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

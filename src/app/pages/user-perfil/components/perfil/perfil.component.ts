@@ -41,8 +41,7 @@ export class PerfilComponent implements OnInit {
   ngOnInit(): void {
     this.userSimulate = this.appService.usersimular;
 
-  }
-  get rolSemestre() {
+  }get rolSemestre() {
     const sesion: any = sessionStorage.getItem('rolSemesterLeng');
     if (sesion) {
       return JSON.parse(sesion);
@@ -50,6 +49,7 @@ export class PerfilComponent implements OnInit {
       return '';
     }
   }
+
   get rolSimulate() {
     const sesion: any = sessionStorage.getItem('simulateUser');
     const val = JSON.parse(sesion);
