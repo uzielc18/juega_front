@@ -13,6 +13,11 @@ const routes: Routes = [
           .then(m => m.LambSyncModule),
       },
       {
+        path: 'lamb-sync-canva',
+        loadChildren: () => import('src/app/pages/manage/lamb-sync-canva/lamb-sync-canva.module')
+          .then(m => m.LambSyncCanvaModule),
+      },
+      {
         path: 'zoom',
         loadChildren: () => import('src/app/pages/manage/zoom/zoom.module')
           .then(m => m.ZoomModule),

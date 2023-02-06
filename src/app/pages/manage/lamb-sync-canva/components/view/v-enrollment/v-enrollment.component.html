@@ -1,0 +1,42 @@
+<nb-accordion class="mb-3" >
+  <nb-accordion-item [collapsed]="false">
+    <nb-accordion-item-header>
+      MATRICULAS
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <div class="row">
+        <div class="col-md-10">
+          <small class="label">Ultimos 10 matriculas sincronizados</small>
+        </div>
+        <br>
+        <div class="col-md-2">
+          <button (click)="openMEnrollment()" nbButton fullWidth size="small" status="primary">Matriculas</button>
+        </div>
+      </div>
+      <hr  style="background: #8F9BB3; margin: 10px -14px">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped">
+          <thead>
+          <tr style="font-size: 12px">
+            <th>Nombre</th>
+            <th>Id carga curso docente</th>
+            <th>Id canva</th>
+            <th>Fecha actualización</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          </tbody>
+          <template>
+
+          </template>
+        </table>
+      </div>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>

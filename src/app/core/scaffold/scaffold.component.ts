@@ -39,6 +39,7 @@ import {NbWindowControlButtonsConfig} from "@nebular/theme/components/window/win
 export class ScaffoldComponent implements OnInit, OnDestroy {
   // MENU_ITEMS: NbMenuItem[] = [];
   chats: any = [];
+  amigosOnlineData: any = [];
   messages: any = [];
   eventsSubject: Subject<void> = new Subject<void>();
   closeWindows: boolean = false;
@@ -472,6 +473,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       // this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe(
         (data: any) => {
           if (data.success) {
+            this.getStudents();
             if(this.rolSemestre.rol?.name === 'Estudiante'){
               this.satisfaction();
             }
@@ -1242,6 +1244,17 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       })
       this.chats.map((m: any) => {
         m.messages = this.messages
+      })
+    })
+  }
+
+  getStudents(){
+    const serviceName = END_POINTS.base_back.user + '/amigos-online';
+    const idPerson = this.appService?.user?.person?.id;
+    this.generalService.nameIdAndId$(serviceName, idPerson, this.rolSemestre?.semestre?.id).subscribe(res => {
+      this.amigosOnlineData = res.data;
+      this.amigosOnlineData.map((m: any) => {
+        m.winStateChat = false
       })
     })
   }

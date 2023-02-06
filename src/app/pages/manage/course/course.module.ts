@@ -60,21 +60,24 @@ const MODULES: any = [
 ];
 
 @NgModule({
-  providers: [
-    ...SERIVCES,
-  ],
-  imports: [
-    CourseRoutingModule,
-    ...NG_MODULES,
-    ...NGB_MODULES,
-    ...CONTROL_MESSAGGE,
-    ...NGX_MODULES,
-    ...MODULES,
-    FilterModule,
-    DirectiveModule,
-  ],
-  declarations: [...COMPONENTS, VNewWindowComponent, MTutoresComponent, MHomeTutoresComponent, MSyncCanvasComponent],
-  entryComponents: [...MODALS],
+    providers: [
+        ...SERIVCES,
+    ],
+    imports: [
+        CourseRoutingModule,
+        ...NG_MODULES,
+        ...NGB_MODULES,
+        ...CONTROL_MESSAGGE,
+        ...NGX_MODULES,
+        ...MODULES,
+        FilterModule,
+        DirectiveModule,
+    ],
+    declarations: [...COMPONENTS, VNewWindowComponent, MTutoresComponent, MHomeTutoresComponent, MSyncCanvasComponent],
+    entryComponents: [...MODALS],
+    exports: [
+        CourseComponent
+    ]
 })
 
 export class CourseModule { }

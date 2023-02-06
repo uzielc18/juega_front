@@ -1,0 +1,112 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        DOCENTES A SINCRONIZAR
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <br>
+    <div class="row px-2" >
+      <div class="col-md-8">
+        <div class="d-flex align-items-center">
+          <div class="d-flex text-center align-items-center mx-1">
+            <small class="label pe-1">Docentes sincronizados {{teachers_I?.teacher_en_canva}} </small><nb-icon icon="checkmark-circle-2-outline" class="p-0" status="success"></nb-icon>
+          </div>
+          <div class="d-flex text-center align-items-center mx-1">
+            <small class="pe-1" style="color: #CD4343">Faltan sincronizar {{teachers_I?.teachers}} </small><nb-icon icon="close-circle-outline" class="p-0" status="danger"></nb-icon>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="col-md-2">
+        <button (click)="syncCanvas()" nbButton fullWidth size="small" status="primary">Sincronizar</button>
+      </div>
+      <div class="col-md-2">
+        <button  nbButton fullWidth size="small" status="primary">Actualizar</button>
+      </div>
+    </div>
+    <br>
+    <div class="row px-2">
+      <div class="col-md-12">
+        <div class="input-group ">
+          <nb-form-field style="width: 98.9%;">
+            <input  nbInput type="text" fieldSize="small" fullWidth
+                    placeholder="Buscar nombre..." [formControl]="termino" (keyup.enter) = "searchTeacher()">
+            <button (click)="limpiarBusqueda()" nbSuffix nbButton ghost *ngIf="closeAndGetInfo">
+              <nb-icon icon="close-square-outline" status="danger"
+                       pack="eva">
+              </nb-icon>
+            </button>
+          </nb-form-field>
+          <button (click)="searchTeacher()" nbButton size="small" status="primary" class="input-group-addon"><nb-icon icon="search"></nb-icon></button>
+        </div>
+      </div>
+
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-responsive px-2 mx-1">
+      <table class="table table-sm table-striped">
+        <thead>
+        <tr style="font-size: 12px">
+          <th>Nombres</th>
+          <th>Código</th>
+          <th>Login id</th>
+          <th style="width: 20px">Canva id</th>
+          <th>Fecha update</th>
+          <th class="text-center" colspan="2">Opciones</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="listTeachers.length > 0; else emptyContent">
+        <tr *ngFor="let item of listTeachers; let i = index" style="font-size: 12px">
+          <td>{{ item.nombres_completos }}</td>
+          <td>{{ item.codigo }}</td>
+          <td>{{ item.login_id }} </td>
+          <td >
+            <div class="d-flex flex-column " style="width: 250px; word-break: break-all" *ngFor="let canva of item.canva_login">
+              <!--<span style="font-size: 10px"><strong>CANVA ID:</strong>  {{item.id_canva}}</span>-->
+              <span style="font-size: 10px"><strong>ID:</strong>  {{canva.id}}</span>
+              <span style="font-size: 10px"><strong>UNIQUE ID:</strong>  {{canva.unique_id}}</span>
+              <span style="font-size: 10px"><strong>AUTHENTICATION TYPE:</strong>  {{canva.authentication_provider_type}}</span>
+            </div>
+          </td>
+          <td></td>
+          <td class="text-center">
+            <nb-icon [nbTooltip]="item.id_canva? 'Sincronizado': 'Falta sincronizar'" [icon]="item.id_canva? 'checkmark-circle-2-outline': 'close-circle-outline'"
+                     [status]="item.id_canva? 'success': 'danger'"></nb-icon>
+          </td>
+          <td class="text-center"><nb-icon nbTooltip="Actualizar sincronización" icon ="flip-2-outline" status="warning"></nb-icon></td>
+        </tr>
+        </tbody>
+        <ng-template #emptyContent>
+          <tbody>
+          <tr style="font-size: 12px">
+            <td colspan="6" class="text-center text-muted">Aún no hay registros</td>
+          </tr>
+          </tbody>
+        </ng-template>
+      </table>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="d-flex justify-content-between align-items-center p-2">
+      <div style="color: brown; font-weight: bold;">Total: {{pagination.sizeListData}}</div>
+      <ngb-pagination [collectionSize]="pagination?.sizeListData" [(page)]="pagination.page" [maxSize]="20"
+                      [disabled]="pagination?.isDisabledPage" [pageSize]="pagination?.sizePage"
+                      class="d-flex justify-content-center" size="sm" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+      </ngb-pagination>
+      <div>
+        <nb-form-field>
+          <nb-icon nbPrefix icon="list-outline"></nb-icon>
+          <nb-select placeholder="" status="success" size="tiny" fullWidth
+                     [(selected)]="selectedItem" (selectedChange)="sizeTable($event)">
+            <nb-option *ngFor="let per of pagesCount" [value]="per">Paginar de {{per}} en {{per}}</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
+    </div>
+  </nb-card-footer>
+</nb-card>
