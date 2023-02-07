@@ -63,6 +63,14 @@
           >Semestre - {{ semester?.nombre }}
           </nb-option>
         </nb-select>
+        <ng-container *ngIf="validateIdCanva">
+          <span style="color: darkred">
+            {{validateIdCanva}} - falta sincronizar
+          </span>
+          <button (click)="updateSemesterCanva()" nbButton size="tiny" status="primary">
+            <nb-icon icon="refresh-outline"></nb-icon>
+          </button>
+        </ng-container>
       </div>
     </div>
   </nb-card-header>

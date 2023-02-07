@@ -30,7 +30,7 @@
         </div>
         <div class="col-md-2 ms-auto">
           <label class="label" style="visibility: hidden">Filtrar</label><br />
-          <button nbButton fullWidth size="small" status="warning" (click)="refresh()">
+          <button [disabled]="!formHeader.value.facultades_unidades" nbButton fullWidth size="small" status="warning" (click)="refresh()">
             <nb-icon icon="funnel"></nb-icon>Filtrar
           </button>
         </div>

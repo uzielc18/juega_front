@@ -55,7 +55,7 @@
           <th>Nombres</th>
           <th>Código</th>
           <th>Login id</th>
-          <th style="width: 20px">Canva id</th>
+          <th>Canva id</th>
           <th>Fecha update</th>
           <th class="text-center" colspan="2">Opciones</th>
         </tr>
@@ -65,7 +65,7 @@
           <td>{{ item.nombres_completos }}</td>
           <td>{{ item.codigo }}</td>
           <td>{{ item.login_id }} </td>
-          <td >
+          <td>
             <div class="d-flex flex-column " style="width: 250px; word-break: break-all" *ngFor="let canva of item.canva_login">
               <!--<span style="font-size: 10px"><strong>CANVA ID:</strong>  {{item.id_canva}}</span>-->
               <span style="font-size: 10px"><strong>ID:</strong>  {{canva.id}}</span>

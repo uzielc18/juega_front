@@ -43,27 +43,31 @@
                     <nb-option *ngFor="let item of litProgramStudy" [value]="item.id" (click)="selecPrograma(item)">{{item.name_programa_estudio}}</nb-option>
                 </nb-select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label class="label">Ciclo</label>
                 <nb-select fullWidth size="small" formControlName="ciclo">
                     <nb-option value="">Todos</nb-option>
                     <nb-option *ngFor="let item of ciclos" [value]="item.ciclo">{{item.ciclo}}</nb-option>
                 </nb-select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label class="label">Tipo docente</label>
               <nb-select fullWidth size="small" formControlName="type_teacher_code">
                 <nb-option value="">Todos</nb-option>
                 <nb-option *ngFor="let item of typeTeacherData" [value]="item.codigo">{{item.nombre}}</nb-option>
               </nb-select>
             </div>
-            <div class="col-md-2 " [class]="formHeader.controls['programa_estudio_id'].value && activateBtnCanva? 'ms-auto': ''" *ngIf="formHeader.controls['programa_estudio_id'].value && listCourseZoom.length > 0 && activateBtnCanva">
+          <div class="col-md-3">
+            <label class="label">Buscar nombre</label>
+            <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar...." formControlName="nombre" (keyup)="keyNombre($event)">
+          </div>
+            <!--<div class="col-md-2 " [class]="formHeader.controls['programa_estudio_id'].value && activateBtnCanva? 'ms-auto': ''" *ngIf="formHeader.controls['programa_estudio_id'].value && listCourseZoom.length > 0 && activateBtnCanva">
               <label class="label" style="visibility: hidden">Sincronizar con canvas</label><br />
               <button nbButton fullWidth size="small" status="success" (click)="openSyncCanvasCourse()">
                 <nb-icon icon="sync-outline"></nb-icon>Sincronizar con canvas
               </button>
-            </div>
-            <div class="col-md-3" [class]="!activateBtnCanva || listCourseZoom.length === 0? 'ms-auto': ''">
+            </div>-->
+            <div class="col-md-3 ms-auto">
                 <div class="row">
                     <div class="col-sm-6">
                         <label class="label" style="visibility: hidden;">Filtrar</label><br>
@@ -75,10 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-              <label class="label">Nombre curso</label>
-              <input type="text" nbInput fullWidth fieldSize="small" placeholder="Ingrese nombre" formControlName="nombre" (keyup)="keyNombre($event)">
-            </div>
+
         </div>
     </form>
     </nb-card-header>
