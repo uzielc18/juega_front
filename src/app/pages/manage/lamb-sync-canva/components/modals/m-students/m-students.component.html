@@ -75,7 +75,7 @@
               <span style="font-size: 10px"><strong>AUTHENTICATION TYPE:</strong>  {{canva.authentication_provider_type}}</span>
             </div>
           </td>
-          <td></td>
+          <td>{{item.updated_at}}</td>
           <td class="text-center">
             <nb-icon [nbTooltip]="item.id_canva? 'Sincronizado': 'Falta sincronizar'" [icon]="item.id_canva? 'checkmark-circle-2-outline': 'close-circle-outline'"
                      [status]="item.id_canva? 'success': 'danger'"></nb-icon>
