@@ -56,7 +56,8 @@ export class MStudentsComponent implements OnInit {
         let a: any = []
         this.listStudents = res.data.data || [];
         this.listStudents.map((m: any) => {
-          m.canva_login = JSON.parse(m.canva_login) ;
+          m.canva_login = JSON.parse(m.canva_login);
+          m.activateEdit = false
         })
         // console.log(this.listStudents);
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
@@ -122,6 +123,108 @@ export class MStudentsComponent implements OnInit {
     this.closeAndGetInfo = false;
     this.termino.setValue('');
     this.getStudents();
+  }
+  activateEditFunction(acti: any) {
+    this.listStudents.forEach((f: any) => {
+      f.activateEdit = false
+
+    })
+    this.listStudents.find((f: any) => {
+      if (f.id === acti.id) {
+        acti.activateEdit = true
+      }
+    })
+
+  }
+  accepEdit(item: any) {
+    const serviceName = 'users';
+    const data = {
+      correo_upeu: item.correo_upeu,
+    }
+    this.loading = true
+    this.generalService.updateNameIdData$(serviceName, item.user_id, data).subscribe(res => {
+
+      if(res.success){
+        this.listStudents.find((f: any) => {
+          if (f.id === item.id) {
+            item.activateEdit = false
+          }
+        })
+      }
+
+    }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  updateStudentCanva() {
+    const serviceName = 'canva-update-student';
+    this.loading = true;
+    Swal.fire({
+      title: 'Actualizar',
+      text: '¿ Esta seguro de actualizar información en canva? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.generalService.nameAll$(serviceName).subscribe(res => {
+          if(res.success) {
+            this.getStudents()
+          }
+        },() => {this.loading = false}, () => {this.loading = false})
+      }
+    });
+
+  }
+  updateUsers() {
+    const serviceName = 'canva-update-users-student';
+    this.loading = true;
+    this.generalService.nameAll$(serviceName).subscribe(res => {
+      if(res.success) {
+        this.getStudents()
+      }
+
+    }, () => {this.loading = false}, () => {this.loading = false})
+
+  }
+  updateLogins() {
+    const serviceName = 'canva-update-logins-student';
+    this.loading = true;
+    this.generalService.nameAll$(serviceName).subscribe(res => {
+      if(res.success) {
+        this.getStudents()
+      }
+    }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  passwordReset(item: any) {
+    const serviceName = 'canva-update-login';
+    Swal.fire({
+      title: 'Restablecer contraseña',
+      text: '¿ Esta seguro de restablecer contraseña ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService.nameId$(serviceName, item.id).subscribe(res => {
+          if(res.success){
+          }
+        }, () => {this.loading = false}, () => {this.loading = false})
+      }
+    });
   }
 
 }
