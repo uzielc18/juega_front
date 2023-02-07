@@ -16,6 +16,8 @@ export class LambSyncCanvaHomeComponent implements OnInit {
   programa_estudios: any = [];
   semestres: any = [];
 
+  validateIdCanva: any;
+
   courses_I: any;
   enrollments: any;
   teachers_I: any;
@@ -41,9 +43,18 @@ export class LambSyncCanvaHomeComponent implements OnInit {
       nivel_ensenanza: [{ value: '', disabled: true }, [Validators.required]],
       facultad: [{ value: '', disabled: true }, [Validators.required]],
       programa_estudio: [{ value: '', disabled: true }, [Validators.required]],
-      semestre: [this.rolSemestre.semestre.id || '', [Validators.required]],
+      semestre: [
+
+        this.rolSemestre.semestre.id || '',
+        [Validators.required]
+      ],
 
     };
+    if(!this.rolSemestre.semestre.id_canva) {
+        this.validateIdCanva = this.rolSemestre.semestre.nombre
+    }else {
+      this.validateIdCanva = false;
+    }
     this.formHeader = this.fb.group(controls);
     this.listSedes();
     this.listSemesters();
@@ -197,6 +208,11 @@ export class LambSyncCanvaHomeComponent implements OnInit {
     this.getCanvaInfo(prog, this.formHeader.value.semestre);
   }
   selectSemester(sem: any) {
+    if(!sem.id_canva) {
+      this.validateIdCanva = sem.nombre;
+    }else {
+      this.validateIdCanva = false;
+    }
     if(this.formHeader.value.programa_estudio) {
       this.getInfoCanvaPanel(this.formHeader.value.programa_estudio);
       this.getCanvaInfo(this.formHeader.value.programa_estudio, sem.id);
@@ -248,5 +264,15 @@ export class LambSyncCanvaHomeComponent implements OnInit {
         teachers: res.data.teachers
       }
     },() => { this.loading = false;}, () => { this.loading = false;})
+  }
+  updateSemesterCanva() {
+    const serviceName = 'canva-update-terms';
+    this.loading = true;
+    this.generalService.nameAll$(serviceName).subscribe(res => {
+      if(res.success) {
+        this.listSemesters()
+      }
+
+    }, () => {this.loading = false}, () => {this.loading = false})
   }
 }
