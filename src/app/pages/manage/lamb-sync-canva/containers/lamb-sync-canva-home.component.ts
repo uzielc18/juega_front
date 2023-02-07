@@ -204,7 +204,7 @@ export class LambSyncCanvaHomeComponent implements OnInit {
 
   selectedProgramaEstudio(prog: any) {
     this.formHeader.controls['programa_estudio'].setValue(prog);
-    this.getInfoCanvaPanel(prog);
+    this.getInfoCanvaPanel(prog, this.formHeader.value.semestre);
     this.getCanvaInfo(prog, this.formHeader.value.semestre);
   }
   selectSemester(sem: any) {
@@ -214,15 +214,16 @@ export class LambSyncCanvaHomeComponent implements OnInit {
       this.validateIdCanva = false;
     }
     if(this.formHeader.value.programa_estudio) {
-      this.getInfoCanvaPanel(this.formHeader.value.programa_estudio);
+      this.getInfoCanvaPanel(this.formHeader.value.programa_estudio, sem.id);
       this.getCanvaInfo(this.formHeader.value.programa_estudio, sem.id);
     }
   }
 
-  getInfoCanvaPanel(prog: any) {
+  getInfoCanvaPanel(prog: any, sem: any) {
     const serviceName = 'canva-info-panel';
     const params = {
-      programa_estudio_id: prog.id
+      programa_estudio_id: prog.id,
+      semester_id: sem
     }
     this.loading = true;
     this.generalService.nameParams$(serviceName, params).subscribe(res => {
@@ -237,7 +238,7 @@ export class LambSyncCanvaHomeComponent implements OnInit {
   getForm($event: boolean) {
     if($event) {
       setTimeout(() => {
-        this.getInfoCanvaPanel(this.formHeader.value.programa_estudio);
+        this.getInfoCanvaPanel(this.formHeader.value.programa_estudio,  this.formHeader.value.semestre);
         this.getCanvaInfo(this.formHeader.value.programa_estudio, this.formHeader.value.semestre);
       }, 100);
     }
