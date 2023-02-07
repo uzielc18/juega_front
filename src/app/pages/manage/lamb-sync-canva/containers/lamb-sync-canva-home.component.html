@@ -83,11 +83,6 @@
                         (loadingsForm) = getForm($event)></app-v-course>
         </div>
         <div class="col-md-6 col-xxl-6">
-          <app-v-teacher-add-course  [formHeader] = "formHeader.value"
-                                     [cursos_docentes] = "cursos_docentes"
-                                     (loadingsForm) = getForm($event)></app-v-teacher-add-course>
-        </div>
-        <div class="col-md-6 col-xxl-6">
           <app-v-teacher  [formHeader] = "formHeader.value"
                           [teachers_I] = "teachers_I"
                           [docentes] = "docentes"
@@ -98,6 +93,12 @@
                            [estudiantes] = "estudiantes"
                            (loadingsForm) = getForm($event)></app-v-students>
         </div>
+        <div class="col-md-6 col-xxl-6">
+          <app-v-teacher-add-course  [formHeader] = "formHeader.value"
+                                     [cursos_docentes] = "cursos_docentes"
+                                     (loadingsForm) = getForm($event)></app-v-teacher-add-course>
+        </div>
+
         <div class="col-md-6 col-xxl-6">
           <app-v-enrollment [formHeader] = "formHeader.value"
                             [enrollments] = "enrollments"

@@ -10,6 +10,7 @@ export const END_POINTS = {
     resourse: 'resources-person',
     elements: 'elements',
     user: 'user',
+    users: 'users',
     people: 'people',
     config: 'config',
     configurations: 'configurations',
