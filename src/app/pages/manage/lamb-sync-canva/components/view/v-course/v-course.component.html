@@ -1,7 +1,7 @@
 <nb-accordion class="mb-3" >
   <nb-accordion-item [collapsed]="false">
     <nb-accordion-item-header>
-      CURSOS
+      1.CURSOS
     </nb-accordion-item-header>
     <nb-accordion-item-body>
       <div class="row">
@@ -10,7 +10,7 @@
         </div>
         <br>
         <div class="col-md-2">
-          <button (click)="openMCourse()" nbButton fullWidth size="small" status="primary">Cursos</button>
+          <button [disabled]="validateIdCanva" (click)="openMCourse()" nbButton fullWidth size="small" status="primary">Cursos</button>
         </div>
       </div>
       <hr  style="background: #8F9BB3; margin: 10px -14px">

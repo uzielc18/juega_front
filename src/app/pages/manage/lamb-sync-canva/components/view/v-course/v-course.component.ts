@@ -14,6 +14,7 @@ export class VCourseComponent implements OnInit {
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   @Input() cursos: any = [];
   @Input() formHeader: any;
+  @Input() validateIdCanva: any;
   @Input() courses_I: any;
   constructor( private dialogService: NbDialogService,
                private generalService: GeneralService) { }

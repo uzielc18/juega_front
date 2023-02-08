@@ -1,7 +1,7 @@
 <nb-accordion class="mb-3" >
   <nb-accordion-item [collapsed]="false">
     <nb-accordion-item-header>
-      AGREGAR DOCENTES A CURSOS
+      4.AGREGAR DOCENTES A CURSOS
     </nb-accordion-item-header>
     <nb-accordion-item-body>
       <div class="row">
@@ -10,7 +10,7 @@
         </div>
         <br>
         <div class="col-md-2">
-          <button (click)="openMCourse()" nbButton fullWidth size="small" status="primary">Docentes</button>
+          <button [disabled]="validateIdCanva" (click)="openMCourse()" nbButton fullWidth size="small" status="primary">Docentes</button>
         </div>
       </div>
       <hr  style="background: #8F9BB3; margin: 10px -14px">

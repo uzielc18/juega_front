@@ -33,8 +33,8 @@
             Opciones
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button  ngbDropdownItem (click)="updateUsers()"><nb-icon icon="cloud-download-outline"></nb-icon> Login</button>
-            <button  ngbDropdownItem (click)="updateLogins()"><nb-icon icon="cloud-upload-outline"></nb-icon> Login</button>
+            <button nbTooltip="Traer logins" ngbDropdownItem (click)="updateUsers()"><nb-icon icon="cloud-download-outline"></nb-icon> Login</button>
+            <button nbTooltip="Enviar logins" ngbDropdownItem (click)="updateLogins()"><nb-icon icon="cloud-upload-outline"></nb-icon> Login</button>
           </div>
         </div>
       </div>

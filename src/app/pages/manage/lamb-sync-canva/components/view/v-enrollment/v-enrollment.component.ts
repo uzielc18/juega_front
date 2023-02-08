@@ -12,6 +12,7 @@ export class VEnrollmentComponent implements OnInit {
 
   @Input() matriculas: any = [];
   @Input() formHeader: any;
+  @Input() validateIdCanva: any;
   @Input() enrollments: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
 

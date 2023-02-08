@@ -67,7 +67,7 @@
           <span style="color: darkred">
             {{validateIdCanva}} - falta sincronizar
           </span>
-          <button (click)="updateSemesterCanva()" nbButton size="tiny" status="primary">
+          <button ngbTooltip="Actualizar" (click)="updateSemesterCanva()" nbButton size="tiny" status="primary">
             <nb-icon icon="refresh-outline"></nb-icon>
           </button>
         </ng-container>
@@ -76,25 +76,35 @@
   </nb-card-header>
   <nb-card-body *ngIf="formHeader.value.programa_estudio">
       <div class="row">
+        <div class="col">
+          <button nbButton size="small" status="primary" nbTooltip="Refresh" (click)="refresh()">Refrescar<nb-icon icon="refresh-outline"></nb-icon></button>
+        </div>
+      </div>
+    <br>
+      <div class="row">
         <div class="col-md-6 col-xxl-6">
           <app-v-course [formHeader] = "formHeader.value"
+                        [validateIdCanva] = "validateIdCanva"
                         [cursos] = "cursos"
                         [courses_I] = "courses_I"
                         (loadingsForm) = getForm($event)></app-v-course>
         </div>
         <div class="col-md-6 col-xxl-6">
           <app-v-teacher  [formHeader] = "formHeader.value"
+                          [validateIdCanva] = "validateIdCanva"
                           [teachers_I] = "teachers_I"
                           [docentes] = "docentes"
                           (loadingsForm) = getForm($event)></app-v-teacher>
         </div>
         <div class="col-md-6 col-xxl-6">
           <app-v-students  [formHeader] = "formHeader.value"
+                           [validateIdCanva] = "validateIdCanva"
                            [estudiantes] = "estudiantes"
                            (loadingsForm) = getForm($event)></app-v-students>
         </div>
         <div class="col-md-6 col-xxl-6">
           <app-v-teacher-add-course  [formHeader] = "formHeader.value"
+                                     [validateIdCanva] = "validateIdCanva"
                                      [teachers_I] = "teachers_I"
                                      [cursos_docentes] = "cursos_docentes"
                                      (loadingsForm) = getForm($event)></app-v-teacher-add-course>
@@ -102,6 +112,7 @@
 
         <div class="col-md-6 col-xxl-6">
           <app-v-enrollment [formHeader] = "formHeader.value"
+                            [validateIdCanva] = "validateIdCanva"
                             [enrollments] = "enrollments"
                             [matriculas] = "matriculas"
                             (loadingsForm) = getForm($event)></app-v-enrollment>

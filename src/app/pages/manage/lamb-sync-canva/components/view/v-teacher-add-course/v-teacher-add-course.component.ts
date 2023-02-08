@@ -13,6 +13,7 @@ export class VTeacherAddCourseComponent implements OnInit {
   @Input() cursos_docentes: any = [];
   @Input() teachers_I: any;
   @Input() formHeader: any;
+  @Input() validateIdCanva: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private dialogService: NbDialogService,) { }
