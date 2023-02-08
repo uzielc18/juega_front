@@ -10,23 +10,23 @@
     </div>
     <br>
     <div class="row px-2" >
-      <div class="col-md-8">
+      <div class="col-md-10">
         <div class="d-flex align-items-center">
           <div class="d-flex text-center align-items-center mx-1">
-            <small class="label pe-1">Cursos sincronizados 50 </small><nb-icon icon="checkmark-circle-2-outline" class="p-0" status="success"></nb-icon>
+            <small class="label pe-1">Docentes sincronizados {{teachers_I?.teacher_en_canva}} </small><nb-icon icon="checkmark-circle-2-outline" class="p-0" status="success"></nb-icon>
           </div>
           <div class="d-flex text-center align-items-center mx-1">
-            <small class="pe-1" style="color: #CD4343">Faltan sincronizar 50 </small><nb-icon icon="close-circle-outline" class="p-0" status="danger"></nb-icon>
+            <small class="pe-1" style="color: #CD4343">Faltan sincronizar {{teachers_I?.teachers}} </small><nb-icon icon="close-circle-outline" class="p-0" status="danger"></nb-icon>
           </div>
         </div>
       </div>
       <br>
       <div class="col-md-2">
-        <button nbButton fullWidth size="small" status="primary">Sincronizar</button>
+        <button nbButton fullWidth size="small" status="primary" (click)="syncTeacherCourse()">Sincronizar</button>
       </div>
-      <div class="col-md-2">
+      <!--<div class="col-md-2">
         <button nbButton fullWidth size="small" status="primary">Actualizar</button>
-      </div>
+      </div>-->
     </div>
     <br>
     <div class="row px-2">
