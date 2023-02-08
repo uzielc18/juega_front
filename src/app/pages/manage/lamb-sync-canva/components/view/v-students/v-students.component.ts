@@ -12,6 +12,7 @@ export class VStudentsComponent implements OnInit {
 
   @Input() estudiantes: any = [];
   @Input() formHeader: any;
+  @Input() validateIdCanva: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private dialogService: NbDialogService,) { }

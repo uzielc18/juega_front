@@ -229,7 +229,7 @@ export class MTeacherComponent implements OnInit {
     }).then((result:any) => {
       if (result.isConfirmed) {
         this.loading = true;
-        this.generalService.nameId$(serviceName, item.id).subscribe(res => {
+        this.generalService.nameId$(serviceName, item.person_id).subscribe(res => {
           if(res.success){
           }
         }, () => {this.loading = false}, () => {this.loading = false})

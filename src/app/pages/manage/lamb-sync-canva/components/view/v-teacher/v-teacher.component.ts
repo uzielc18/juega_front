@@ -12,6 +12,7 @@ export class VTeacherComponent implements OnInit {
 
   @Input() docentes: any = [];
   @Input() formHeader: any;
+  @Input() validateIdCanva: any;
   @Input() teachers_I: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
 

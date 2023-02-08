@@ -276,4 +276,8 @@ export class LambSyncCanvaHomeComponent implements OnInit {
 
     }, () => {this.loading = false}, () => {this.loading = false})
   }
+  refresh() {
+    this.getInfoCanvaPanel(this.formHeader.value.programa_estudio,  this.formHeader.value.semestre);
+    this.getCanvaInfo(this.formHeader.value.programa_estudio, this.formHeader.value.semestre);
+  }
 }
