@@ -11,6 +11,7 @@ import {MTeacherAddCourseComponent} from "../../modals/m-teacher-add-course/m-te
 export class VTeacherAddCourseComponent implements OnInit {
 
   @Input() cursos_docentes: any = [];
+  @Input() teachers_I: any;
   @Input() formHeader: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
 
@@ -25,6 +26,7 @@ export class VTeacherAddCourseComponent implements OnInit {
         dialogClass: 'dialog-limited-height',
         context: {
           formHeader: this.formHeader,
+          teachers_I: this.teachers_I,
         },
         closeOnBackdropClick: false,
         closeOnEsc: false,

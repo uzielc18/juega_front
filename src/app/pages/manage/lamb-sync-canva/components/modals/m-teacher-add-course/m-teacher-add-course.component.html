@@ -2,7 +2,7 @@
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
-        CURSOS A SINCRONIZAR
+        AGREGAR DOCENTES A CURSOS
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
@@ -68,8 +68,8 @@
           <td>{{item.id_canva_teacher}}</td>
           <td>{{item.updated_at}}</td>
           <td>
-            <nb-icon nbTooltip="Falta sincronizar" [icon]="item.id_canva? 'checkmark-circle-2-outline': 'close-circle-outline'"
-                     [status]="item.id_canva? 'success': 'danger'"></nb-icon>
+            <nb-icon nbTooltip="Falta sincronizar" [icon]="item.id_canva_teacher? 'checkmark-circle-2-outline': 'close-circle-outline'"
+                     [status]="item.id_canva_teacher? 'success': 'danger'"></nb-icon>
           </td>
           <td><nb-icon nbTooltip="Actualizar sincronización" icon ="flip-2-outline" status="warning"></nb-icon></td>
         </tr>
