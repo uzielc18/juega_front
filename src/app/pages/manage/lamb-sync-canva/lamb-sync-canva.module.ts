@@ -17,6 +17,8 @@ import { MTeacherComponent } from './components/modals/m-teacher/m-teacher.compo
 import { MStudentsComponent } from './components/modals/m-students/m-students.component';
 import { MEnrollmentCanvaComponent } from './components/modals/m-enrollment-canva/m-enrollment-canva.component';
 import { MTeacherAddCourseComponent } from './components/modals/m-teacher-add-course/m-teacher-add-course.component';
+import { TDocentePComponent } from './components/modals/m-teacher-add-course/components/tabs/t-docente-p/t-docente-p.component';
+import { TDocenteTComponent } from './components/modals/m-teacher-add-course/components/tabs/t-docente-t/t-docente-t.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { MTeacherAddCourseComponent } from './components/modals/m-teacher-add-co
     MTeacherComponent,
     MStudentsComponent,
     MEnrollmentCanvaComponent,
-    MTeacherAddCourseComponent
+    MTeacherAddCourseComponent,
+    TDocentePComponent,
+    TDocenteTComponent
   ],
   imports: [
     CommonModule,

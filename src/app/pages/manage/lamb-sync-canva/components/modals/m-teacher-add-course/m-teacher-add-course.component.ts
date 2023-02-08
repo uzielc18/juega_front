@@ -24,13 +24,13 @@ export class MTeacherAddCourseComponent implements OnInit {
     sizeListData: 0,
     isDisabledPage: false,
   };
-  pagesCount: any[] = [20, 30, 50, 100];
+  termino: any;
+  pagesCount: any[] = [20, 50, 100];
   loading: boolean = false;
-  termino: any = new FormControl('');
 
   constructor(private generalService: GeneralService,
               public activeModal: NbDialogRef<MTeacherAddCourseComponent>,
-              private toastrService: NbToastrService) { }
+              ) { }
 
   ngOnInit(): void {
     this.getCourseZoom();
@@ -49,7 +49,7 @@ export class MTeacherAddCourseComponent implements OnInit {
       semester_id: forms.semestre || '',
       ciclo: forms.ciclo || '',
       grupo: forms.grupo || '',
-      nombre: this.termino.value || '',
+      nombre: this.termino || '',
       type_teacher_code: forms.type_teacher_code || '',
       per_page: this.pagination.per_page,
       page: this.pagination.page,
@@ -70,46 +70,13 @@ export class MTeacherAddCourseComponent implements OnInit {
     this.pagination.per_page = $event;
     this.getCourseZoom();
   }
-  searchCourse() {
-    this.closeAndGetInfo = true;
-    this.getCourseZoom();
-  }
-  limpiarBusqueda() {
-    this.closeAndGetInfo = false;
-    this.termino.setValue('');
-    this.getCourseZoom();
-  }
-  syncTeacherCourse() {
-    const serviceName = 'canva-insert-enrollment-teacher';
-    const forms =  this.formHeader;
-    const params = {
-      programa_estudio_id: forms.programa_estudio?.id,
-      semester_id: forms.semestre
-    }
-    Swal.fire({
-      title: 'Sincronizar',
-      text: '¿ Esta seguro de sincronizar con canva ? ',
-      backdrop: true,
-      icon: 'question',
-      // animation: true,
-      showCloseButton: true,
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonColor: '#00244E',
-      confirmButtonText: 'Si',
-      cancelButtonText: 'No',
-      // timer: 2000,
-    }).then((result:any) => {
-      if (result.isConfirmed) {
-        this.loading = true;
-        this.generalService.nameParams$(serviceName, params).subscribe( res => {
-          if(res.success){
-            this.toastrService.info(status, `${res.message}`);
-            this.getCourseZoom();
-          }
-        },() => {this.loading= false}, () => {this.loading = false})
+  eventGetCourse(event: any) {
+      if(event) {
+        this.getCourseZoom();
       }
-    });
-
+  }
+  eventTermino(event: any) {
+      this.termino = event;
+      this.getCourseZoom();
   }
 }

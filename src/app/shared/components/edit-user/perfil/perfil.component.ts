@@ -79,13 +79,13 @@ export class PerfilComponent implements OnInit {
       dni: ['', [Validators.required]],
       facultades_unidades: ['', [Validators.required]],
       id_programa_estudio: ['', [Validators.required]],
-      categoria_docente: ['', [Validators.required]],
       ubigeo: ['', [Validators.required]],
       genero: ['', [Validators.required]],
       nacionalidad: ['', [Validators.required]],
       estado_civil: ['', [Validators.required]],
       religion: ['', [Validators.required]],
       fecha_nacimiento: ['', [Validators.required]],
+      id_canva: ['']
     };
     this.formHeader = this.formBuilder.group(controls);
     this.getUserInfo();
@@ -119,7 +119,6 @@ export class PerfilComponent implements OnInit {
             apellido_materno: this.profile.person.apellido_materno,
             dni: this.profile.person.dni,
             correo: this.profile.user.email,
-            categoria_docente: this.profile.person.categoria_docente,
             genero: this.profile.person.genero || '',
             nacionalidad: this.profile.person.nacionalidad || '',
             ubigeo: this.profile.person.ubigeo || '',
@@ -127,6 +126,7 @@ export class PerfilComponent implements OnInit {
             religion: this.profile.person.religion || '',
             fecha_nacimiento: new Date(this.profile.person.fecha_nacimiento) || new Date(),
             id_programa_estudio: this.profile.person.programa_estudio_id,
+            id_canva: this.profile.person.id_canva
           });
         }
       },
@@ -138,9 +138,9 @@ export class PerfilComponent implements OnInit {
       }
     );
   }
-  selectCategory(item: any){
+/*  selectCategory(item: any){
     this.formHeader.controls['categoria_docente'].setValue(item.name);
-  }
+  }*/
   saveInfo() {
     const serviceName = END_POINTS.base_back.people;
     const person_id = this.user.person_id;
@@ -153,12 +153,12 @@ export class PerfilComponent implements OnInit {
         estado_civil: this.formHeader.controls['estado_civil'].value || '',
         religion: this.formHeader.controls['religion'].value || '',
         fecha_nacimiento: this.formHeader.controls['fecha_nacimiento'].value || '',
+        id_canva: this.formHeader.controls['id_canva'].value || ''
       },
       user: {
         email: this.formHeader.controls['correo'].value || '',
       },
       persons_teacher: {
-        categoria_docente: this.formHeader.controls['categoria_docente'].value
       },
     };
     this.generalService.updateNameIdData$(serviceName, person_id, data).subscribe(
