@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GeneralService} from "../../../../../../providers";
-import {NbDialogRef} from "@nebular/theme";
+import {NbDialogRef, NbToastrService} from "@nebular/theme";
 import {FormControl} from "@angular/forms";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-m-teacher-add-course',
@@ -13,6 +14,7 @@ export class MTeacherAddCourseComponent implements OnInit {
   closeAndGetInfo: boolean = false;
 
   listCourse: any = [];
+  @Input() teachers_I: any;
   @Input() formHeader: any;
   selectedItem = 20;
   pagination: any = {
@@ -27,7 +29,8 @@ export class MTeacherAddCourseComponent implements OnInit {
   termino: any = new FormControl('');
 
   constructor(private generalService: GeneralService,
-              public activeModal: NbDialogRef<MTeacherAddCourseComponent>,) { }
+              public activeModal: NbDialogRef<MTeacherAddCourseComponent>,
+              private toastrService: NbToastrService) { }
 
   ngOnInit(): void {
     this.getCourseZoom();
@@ -75,5 +78,38 @@ export class MTeacherAddCourseComponent implements OnInit {
     this.closeAndGetInfo = false;
     this.termino.setValue('');
     this.getCourseZoom();
+  }
+  syncTeacherCourse() {
+    const serviceName = 'canva-insert-enrollment-teacher';
+    const forms =  this.formHeader;
+    const params = {
+      programa_estudio_id: forms.programa_estudio?.id,
+      semester_id: forms.semestre
+    }
+    Swal.fire({
+      title: 'Sincronizar',
+      text: '¿ Esta seguro de sincronizar con canva ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService.nameParams$(serviceName, params).subscribe( res => {
+          if(res.success){
+            this.toastrService.info(status, `${res.message}`);
+            this.getCourseZoom();
+          }
+        },() => {this.loading= false}, () => {this.loading = false})
+      }
+    });
+
   }
 }
