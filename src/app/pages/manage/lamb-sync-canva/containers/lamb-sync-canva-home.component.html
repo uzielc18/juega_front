@@ -92,13 +92,14 @@
         <div class="col-md-6 col-xxl-6">
           <app-v-teacher  [formHeader] = "formHeader.value"
                           [validateIdCanva] = "validateIdCanva"
-                          [teachers_I] = "teachers_I"
+                          [docentes_I] = "docentes_I"
                           [docentes] = "docentes"
                           (loadingsForm) = getForm($event)></app-v-teacher>
         </div>
         <div class="col-md-6 col-xxl-6">
           <app-v-students  [formHeader] = "formHeader.value"
                            [validateIdCanva] = "validateIdCanva"
+                           [estudiantes_I] = "estudiantes_I"
                            [estudiantes] = "estudiantes"
                            (loadingsForm) = getForm($event)></app-v-students>
         </div>

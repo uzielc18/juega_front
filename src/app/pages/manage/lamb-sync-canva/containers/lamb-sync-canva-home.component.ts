@@ -21,6 +21,8 @@ export class LambSyncCanvaHomeComponent implements OnInit {
   courses_I: any;
   enrollments: any;
   teachers_I: any;
+  docentes_I: any;
+  estudiantes_I: any;
 
   cursos: any = [];
   cursos_docentes: any = [];
@@ -263,6 +265,14 @@ export class LambSyncCanvaHomeComponent implements OnInit {
       this.teachers_I = {
         teacher_en_canva: res.data.teacher_en_canva,
         teachers: res.data.teachers
+      }
+      this.docentes_I = {
+        docentes: res.data.docentes,
+        docentes_en_canvas: res.data.docentes_en_canvas,
+      }
+      this.estudiantes_I = {
+        estudiantes: res.data.estudiantes,
+        estudiantes_en_canvas: res.data.estudiantes_en_canvas
       }
     },() => { this.loading = false;}, () => { this.loading = false;})
   }

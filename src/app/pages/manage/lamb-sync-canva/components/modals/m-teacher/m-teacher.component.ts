@@ -28,7 +28,7 @@ export class MTeacherComponent implements OnInit {
   correo_upeu: any = new FormControl('');
   pagesCount: any[] = [20, 30, 50, 100, 200, 300, 500, 1000];
   @Input() formHeader: any;
-  @Input() teachers_I: any;
+  @Input() docentes_I: any;
   constructor(private generalService: GeneralService,
               public activeModal: NbDialogRef<MTeacherComponent>,
               private toastrService: NbToastrService,) { }
@@ -115,7 +115,6 @@ export class MTeacherComponent implements OnInit {
         this.generalService.nameParams$(serviceName, params).subscribe(res => {
           if(res.success){
             this.toastrService.info(status, `${res.message}`);
-            this.activeModal.close('ok')
             this.loadsynCanva = true;
           }
         }, () => {this.loading = false}, () => {this.loading = false})

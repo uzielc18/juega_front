@@ -13,7 +13,7 @@ export class VTeacherComponent implements OnInit {
   @Input() docentes: any = [];
   @Input() formHeader: any;
   @Input() validateIdCanva: any;
-  @Input() teachers_I: any;
+  @Input() docentes_I: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private dialogService: NbDialogService,) { }
@@ -27,7 +27,7 @@ export class VTeacherComponent implements OnInit {
         dialogClass: 'dialog-limited-height',
         context: {
           formHeader: this.formHeader,
-          teachers_I: this.teachers_I
+          docentes_I: this.docentes_I
         },
         closeOnBackdropClick: false,
         closeOnEsc: false,
