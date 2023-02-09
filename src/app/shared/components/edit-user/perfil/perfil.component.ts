@@ -76,9 +76,9 @@ export class PerfilComponent implements OnInit {
       nombre: ['', [Validators.required]],
       apellido_paterno: ['', [Validators.required]],
       apellido_materno: ['', [Validators.required]],
-      dni: ['', [Validators.required]],
+      dni: ['', [Validators.required]],/*
       facultades_unidades: ['', [Validators.required]],
-      id_programa_estudio: ['', [Validators.required]],
+      id_programa_estudio: ['', [Validators.required]],*/
       ubigeo: ['', [Validators.required]],
       genero: ['', [Validators.required]],
       nacionalidad: ['', [Validators.required]],
@@ -125,7 +125,7 @@ export class PerfilComponent implements OnInit {
             estado_civil: this.profile.person.estado_civil || '',
             religion: this.profile.person.religion || '',
             fecha_nacimiento: new Date(this.profile.person.fecha_nacimiento) || new Date(),
-            id_programa_estudio: this.profile.person.programa_estudio_id,
+           /* id_programa_estudio: this.profile.person.programa_estudio_id,*/
             id_canva: this.profile.person.id_canva
           });
         }

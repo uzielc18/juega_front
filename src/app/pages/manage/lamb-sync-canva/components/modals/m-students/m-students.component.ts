@@ -27,6 +27,7 @@ export class MStudentsComponent implements OnInit {
   pagesCount: any[] = [20, 30, 50, 100];
 
   @Input() formHeader: any;
+  @Input() estudiantes_I: any;
   constructor(private generalService: GeneralService,
               public activeModal: NbDialogRef<MStudentsComponent>,
               private toastrService: NbToastrService,) { }
@@ -109,7 +110,6 @@ export class MStudentsComponent implements OnInit {
         this.generalService.nameParams$(serviceName, params).subscribe(res => {
           if(res.success){
             this.toastrService.info(status, `${res.message}`);
-            this.activeModal.close('ok')
           }
         }, () => {this.loading = false}, () => {this.loading = false})
       }
