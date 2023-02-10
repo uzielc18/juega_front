@@ -33,11 +33,11 @@
                   <div class="d-flex justify-content-between flex-wrap-reverse animations" *ngFor="let item of data" style="border: 1px solid #CED9E6; margin:10px 2px; padding: 8px 0 8px 5px; height: auto; cursor: pointer" (click)="urlEvent(item)">
                     <div class="d-flex justify-content-start align-items-center" >
                       <div>
-                        <img [src]="item.imagen" alt="" width="80px">
+                        <img [src]="item.tipo === 'cursos'? './assets/books.jpg' :item.imagen" alt="" width="80px">
                       </div>
                       <div style="margin-left: 10px">
                         <small><strong>{{item.titulo | titlecase}}</strong></small><br>
-                        <small class="label" style="font-size: 12px" *ngIf="item.hora !== 'online'">Ultimo acceso hace {{item.hora}}</small>
+                        <small class="label" style="font-size: 12px" *ngIf="item.hora !== 'online'">{{item.tipo === 'cursos'? 'Creado en:' : 'Ultimo acceso hace:'}} {{item.tipo === 'cursos'? item.info_fecha: item.hora}}</small>
                         <small style="font-size: 13px; color: var(--color-success-500); font-weight: bold" *ngIf="item.hora === 'online'">{{item.hora}}</small><br>
                         <small><strong>detalle: </strong> {{item.detalle}}</small>
                       </div>
