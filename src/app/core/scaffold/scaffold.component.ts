@@ -271,6 +271,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       }
     });
     //this.countNotifications();
+    this.getStudents();
 
   }
 
@@ -473,7 +474,6 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       // this.generalService.nameIdAndId$(serviceName, id, id_rol).subscribe(
         (data: any) => {
           if (data.success) {
-            this.getStudents();
             if(this.rolSemestre.rol?.name === 'Estudiante'){
               this.satisfaction();
             }
