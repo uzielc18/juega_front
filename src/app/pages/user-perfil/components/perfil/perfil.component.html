@@ -16,8 +16,8 @@
         </p>
       </div>
       <div class="student-info">
-        <p *ngIf="rolSemestre?.rol?.name === 'Estudiante'" class="ciclo">{{ profile?.user?.person?.ciclo }}º Ciclo</p>
-        <p *ngIf="rolSemestre?.rol?.name === 'Estudiante'" class="carrera">{{ profile?.user?.person?.programa_estudio }}</p>
+        <p class="ciclo">{{ profile?.person?.role_id === 2? 'Admin': profile?.person?.role_id === 5? 'Estudiante': profile?.person?.role_id === 5? 'Docente': 'Sin rol'  }}</p>
+        <p class="carrera">{{ profile?.person?.programa_estudio }}</p>
         <p class="codigo">
           {{ profile?.user?.person?.codigo }}
         </p>
