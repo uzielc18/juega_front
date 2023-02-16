@@ -21,6 +21,9 @@ export class ZoomHomeComponent implements OnInit {
   loading:boolean = false;
   listZoom:any = [];
   facultades:any = [];
+  semestrers:any = [];
+  nivelEnsenanza: any = [];
+  sedes: any = [];
   formHeader: any = FormGroup;
   listProgramStudy:any = [{
     id: '',
@@ -42,8 +45,6 @@ export class ZoomHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldReactive();
-    this.getProgramStudy();
-    this.getFacultadesUnidades();
     this.nombreSubscription = this.emitEventsService.returns().subscribe(value => { // para emitir evento desde la cabecera
       if (value && value.rol && value.semestre) {
         // this.theRolSemestre =  value;
@@ -56,7 +57,76 @@ export class ZoomHomeComponent implements OnInit {
       }
       });
       this.recoveryValues();
+      this.getSemester();
     // this.getZoom();
+  }
+  getSemester() {
+    this.loading = true
+    const serviceName = 'semesters';
+    this.generalServi.nameAll$(serviceName).subscribe((res:any) => {
+      this.semestrers = res.data || [];
+      if (this.semestrers.length>0) {
+        this.formHeader.controls['semester'].setValue(this.rolSemestre.semestre.id);
+        this.listSedes()
+      }
+    }, () => {this.loading = false}, () => {this.loading = false});
+  }
+  listSedes() {
+    const serviceName = END_POINTS.base_back.default + 'sedes';
+    this.loading = true;
+    this.generalServi.nameAll$(serviceName).subscribe(
+      (res: any) => {
+        this.sedes = res.data || [];
+        if (this.sedes.length > 0) {
+          this.formHeader.patchValue({
+            sede: this.sedes[0],
+          });
+          this.formHeader.controls['nivel_ensenanza'].enable();
+          this.listNivelEnsenanza(this.sedes[0].id);
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  selectedSede(sede: any) {
+    this.formHeader.controls['sede'].setValue(sede);
+    this.formHeader.controls['nivel_ensenanza'].enable();
+    this.nivelEnsenanza = [];
+    this.facultades = [];
+    this.formHeader.controls['nivel_ensenanza'].setValue('');
+    this.formHeader.controls['facultades_unidades'].setValue('');
+    this.formHeader.controls['programa_estudio_id'].setValue();
+    this.listNivelEnsenanza(sede.id);
+  }
+  listNivelEnsenanza(sede_id: any) {
+    const serviceName = END_POINTS.base_back.nivel_ensenanza;
+    if (this.sedes.length > 0) {
+      this.loading = true;
+      this.generalServi.nameId$(serviceName, sede_id).subscribe(
+        (res: any) => {
+          this.nivelEnsenanza = res.data || [];
+        },
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
+    }
+  }
+  selectedNivel(nivel: any) {
+    this.formHeader.controls['nivel_ensenanza'].setValue(nivel);
+    this.formHeader.controls['facultades_unidades'].enable();
+    this.facultades = [];
+    this.formHeader.controls['facultades_unidades'].setValue('');
+    this.formHeader.controls['programa_estudio_id'].setValue();
+    this.getFacultadesUnidades(nivel.id, this.formHeader.get('sede').value.id);
   }
   recoveryValues() {
     this.emitEventsService.castRolSemester.subscribe(value => {
@@ -72,6 +142,9 @@ export class ZoomHomeComponent implements OnInit {
     const controls = {
       programa_estudio_id: [''],
       facultades_unidades: [''],
+      semester:[''],
+      sede:[''],
+      nivel_ensenanza:[''],
     };
     this.formHeader = this.formBuilder.group(controls);
   }
@@ -85,12 +158,12 @@ export class ZoomHomeComponent implements OnInit {
     }
 
   }
-  getFacultadesUnidades(){
+  getFacultadesUnidades(nivel: any, sedeId: any){
     const serviceName = END_POINTS.base_back.sede_areas;
     const params = {
       all: 1
     }
-    this.generalServi.nameIdAndIdParams$(serviceName, this.rolSemestre.area.nivel_ensenanza_id, this.rolSemestre.area.sede_id, params).subscribe(
+    this.generalServi.nameIdAndIdParams$(serviceName, nivel, sedeId, params).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
       },
