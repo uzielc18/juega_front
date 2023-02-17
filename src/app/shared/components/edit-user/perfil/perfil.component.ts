@@ -143,7 +143,13 @@ export class PerfilComponent implements OnInit {
   }*/
   saveInfo() {
     const serviceName = END_POINTS.base_back.people;
-    const person_id = this.user.person_id;
+    let person_id: any;
+    if(this.rol === 'user'){
+      person_id = this.user?.person?.id
+    }else {
+      person_id = this.user.person_id;
+    }
+
     this.loading = true;
     const data = {
       person: {
