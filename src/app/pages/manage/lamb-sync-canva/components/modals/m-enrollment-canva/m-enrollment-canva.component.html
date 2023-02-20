@@ -13,10 +13,10 @@
       <div class="col-md-10">
         <div class="d-flex align-items-center">
           <div class="d-flex text-center align-items-center mx-1">
-            <small class="pe-1" style="color: #CD4343; background: var(--color-danger-100); cursor: pointer; padding: 0 4px; border-radius: 5px" (click)="allSync()">Faltan sincronizar {{contadores?.matriculas}}</small><nb-icon icon="close-circle-outline" class="p-0" status="danger"></nb-icon>
+            <small class="label pe-1">Matriculas con errores {{contadores?.matriculas_por_act}}</small>
           </div>
           <div class="d-flex text-center align-items-center mx-1">
-            <small class="label pe-1">Matriculas con errores {{contadores?.matriculas_por_act}}</small>
+            <small class="pe-1" style="color: #CD4343; background: var(--color-danger-100); cursor: pointer; padding: 0 4px; border-radius: 5px" (click)="allSync()">Faltan sincronizar {{contadores?.matriculas}}</small><nb-icon icon="close-circle-outline" class="p-0" status="danger"></nb-icon>
           </div>
           <div class="d-flex text-center align-items-center mx-1">
             <small class="label pe-1" style="color: #4AC41C">Matriculas sincronizados {{contadores?.matriculas_en_canva}}</small><nb-icon icon="checkmark-circle-2-outline" class="p-0" status="success"></nb-icon>
@@ -48,8 +48,22 @@
     </div>
   </nb-card-header>
   <nb-card-body>
+    <div class="d-flex align-items-center justify-content-center">
+      <div class="text-center d-flex align-items-center justify-content-center">
+        <strong class="text-leyend">El curso no esta en canvas</strong>
+        <div class="circle" style="background: #EEC7A1"></div>
+      </div>
+      <div class="text-center d-flex align-items-center justify-content-center">
+        <strong class="text-leyend">EL usuario no esta en Canvas</strong>
+        <div class="circle" style="background: #FBF7B8"></div>
+      </div>
+      <div class="text-center d-flex align-items-center justify-content-center">
+        <strong class="text-leyend">El usuario y el curso no están en canva </strong>
+        <div class="circle" style="background: #F6DADE"></div>
+      </div>
+    </div>
     <div class="table-responsive px-2 mx-1">
-      <table class="table table-sm table-striped">
+      <table class="table table-sm">
         <thead>
         <tr style="font-size: 12px">
           <th>Estudiante</th>
@@ -62,7 +76,7 @@
         </tr>
         </thead>
         <tbody *ngIf="listEnrllments.length > 0; else emptyContent">
-        <tr *ngFor="let item of listEnrllments" style="font-size: 12px">
+        <tr *ngFor="let item of listEnrllments" style="font-size: 12px" [ngStyle]="{'background-color': item.c_id_canva === null? '#EEC7A1': item.p_id_canva === null? '#FBF7B8': item.c_id_canva === null && item.p_id_canva === null? '#F6DADE': ''}">
           <td>{{item.nombres_estudiante}} {{item.apellido_paterno}} {{item.apellido_materno}}</td>
           <td>{{item.nombre}} ({{item.id_carga_curso_docente}})</td>
           <td>{{item.id_canva}}</td>
@@ -105,5 +119,6 @@
         </nb-form-field>
       </div>
     </div>
+
   </nb-card-footer>
 </nb-card>
