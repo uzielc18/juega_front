@@ -18,7 +18,7 @@ export class MEnrollmentCanvaComponent implements OnInit {
   listEnrllments: any = [];
   contadores: any;
   selectedItem = 100;
-  estado_canva: any = 1;
+  estado_canva: any;
   pagination: any = {
     page: 1,
     per_page: 100,
@@ -39,13 +39,15 @@ export class MEnrollmentCanvaComponent implements OnInit {
   getListEnrollments () {
     const serviceName = 'list-enrollments-programa';
     const forms = this.formHeader;
-    const params = {
+    const params: any = {
       semester_id: forms.semestre,
       q:  this.termino.value || '',
       per_page: this.pagination.per_page,
       page: this.pagination.page,
       paginate: 'S',
-      estado_canva: this.estado_canva,
+    }
+    if(this.estado_canva == 2){
+      params.estado_canva = this.estado_canva;
     }
     this.loading = true;
     this.generalService.nameIdParams$(serviceName, forms.programa_estudio?.id, params).subscribe(res => {
@@ -116,6 +118,10 @@ export class MEnrollmentCanvaComponent implements OnInit {
   }
   allSync() {
     this.estado_canva = 2;
+    this.getListEnrollments();
+  }
+  refresh() {
+    this.estado_canva = '';
     this.getListEnrollments();
   }
 
