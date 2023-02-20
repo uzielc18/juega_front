@@ -115,7 +115,7 @@ export class MEnrollmentCanvaComponent implements OnInit {
     this.getListEnrollments();
   }
   allSync() {
-    this.estado_canva = 0;
+    this.estado_canva = 2;
     this.getListEnrollments();
   }
 

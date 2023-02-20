@@ -13,14 +13,15 @@
       <div class="col-md-10">
         <div class="d-flex align-items-center">
           <div class="d-flex text-center align-items-center mx-1">
-            <small class="label pe-1">Matriculas encontradas {{contadores?.matriculas_por_act}}</small>
+            <small class="pe-1" style="color: #CD4343; background: var(--color-danger-100); cursor: pointer; padding: 0 4px; border-radius: 5px" (click)="allSync()">Faltan sincronizar {{contadores?.matriculas}}</small><nb-icon icon="close-circle-outline" class="p-0" status="danger"></nb-icon>
+          </div>
+          <div class="d-flex text-center align-items-center mx-1">
+            <small class="label pe-1">Matriculas con errores {{contadores?.matriculas_por_act}}</small>
           </div>
           <div class="d-flex text-center align-items-center mx-1">
             <small class="label pe-1" style="color: #4AC41C">Matriculas sincronizados {{contadores?.matriculas_en_canva}}</small><nb-icon icon="checkmark-circle-2-outline" class="p-0" status="success"></nb-icon>
           </div>
-          <div class="d-flex text-center align-items-center mx-1">
-            <small class="pe-1" style="color: #CD4343; background: var(--color-danger-100); cursor: pointer; padding: 0 4px; border-radius: 5px" (click)="allSync()">Faltan sincronizar {{contadores?.matriculas}}</small><nb-icon icon="close-circle-outline" class="p-0" status="danger"></nb-icon>
-          </div>
+
         </div>
       </div>
       <br>
