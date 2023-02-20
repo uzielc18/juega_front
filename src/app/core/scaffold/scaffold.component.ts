@@ -271,7 +271,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
       }
     });
     //this.countNotifications();
-    this.getStudents();
+
 
   }
 
@@ -516,6 +516,9 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
             })
 
             // location.reload();
+            setTimeout(() => {
+              this.getStudents();
+            }, 3000)
           }
         },
         () => {
