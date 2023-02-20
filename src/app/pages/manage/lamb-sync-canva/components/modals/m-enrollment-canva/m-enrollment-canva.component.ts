@@ -17,15 +17,16 @@ export class MEnrollmentCanvaComponent implements OnInit {
 
   listEnrllments: any = [];
   contadores: any;
-  selectedItem = 20;
+  selectedItem = 100;
+  estado_canva: any = 1;
   pagination: any = {
     page: 1,
-    per_page: 20,
+    per_page: 100,
     sizePage: 0,
     sizeListData: 0,
     isDisabledPage: false,
   };
-  pagesCount: any[] = [20, 30, 50, 100];
+  pagesCount: any[] = [100, 150, 200, 250];
   @Input() formHeader: any;
   constructor(private generalService: GeneralService,
               public activeModal: NbDialogRef<MEnrollmentCanvaComponent>,
@@ -41,12 +42,19 @@ export class MEnrollmentCanvaComponent implements OnInit {
     const params = {
       semester_id: forms.semestre,
       q:  this.termino.value || '',
+      per_page: this.pagination.per_page,
+      page: this.pagination.page,
+      paginate: 'S',
+      estado_canva: this.estado_canva,
     }
     this.loading = true;
     this.generalService.nameIdParams$(serviceName, forms.programa_estudio?.id, params).subscribe(res => {
       if(res.success){
-        this.listEnrllments = res.data.matriculas;
+        this.listEnrllments = res.data.matriculas.data;
         this.contadores = res.data.contadores;
+        this.pagination.sizeListData = res.data.matriculas && res.data.matriculas.total || 0;
+        this.pagination.sizePage = res.data.matriculas && res.data.matriculas.per_page || 0;
+        this.pagination.isDisabledPage = this.pagination.sizeListData < this.listEnrllments.length;
       }
 
     }, () => {this.loading = false}, ()=> {this.loading = false})
@@ -104,6 +112,10 @@ export class MEnrollmentCanvaComponent implements OnInit {
   }
   searchEnrollement() {
     this.closeAndGetInfo = true;
+    this.getListEnrollments();
+  }
+  allSync() {
+    this.estado_canva = 0;
     this.getListEnrollments();
   }
 

@@ -173,7 +173,7 @@ export class CourseHomeComponent implements OnInit {
     this.litProgramStudy = [];
     this.activateBtnCanva = false;
     this.formHeader.controls['programa_estudio_id'].setValue('');
-    this.listProgramEstudy(item.nivel_ensenanza_id, this.rolSemestre.area.sede_id, item.id)
+    this.listProgramEstudy(item.nivel_ensenanza_id, this.formHeader.get('sede').value.id, item.id)
   }
   listProgramEstudy( id_nive_enseanza:any, id_sede:any, id_area:any){
     this.loading = true
