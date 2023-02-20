@@ -10,13 +10,13 @@
     </div>
     <br>
     <div class="row px-2" >
-      <div class="col-md-10">
+      <div class="col-md-9">
         <div class="d-flex align-items-center">
           <div class="d-flex text-center align-items-center mx-1">
-            <small class="label pe-1">Matriculas con errores {{contadores?.matriculas_por_act}}</small>
+            <small class="label pe-1" style="background: #F7F9FC; cursor: pointer; padding: 0 4px; border-radius: 5px" (click)="allSync()">Matriculas con errores {{contadores?.matriculas_por_act}}</small>
           </div>
           <div class="d-flex text-center align-items-center mx-1">
-            <small class="pe-1" style="color: #CD4343; background: var(--color-danger-100); cursor: pointer; padding: 0 4px; border-radius: 5px" (click)="allSync()">Faltan sincronizar {{contadores?.matriculas}}</small><nb-icon icon="close-circle-outline" class="p-0" status="danger"></nb-icon>
+            <small class="pe-1" style="color: #CD4343;" >Faltan sincronizar {{contadores?.matriculas}}</small><nb-icon icon="close-circle-outline" class="p-0" status="danger"></nb-icon>
           </div>
           <div class="d-flex text-center align-items-center mx-1">
             <small class="label pe-1" style="color: #4AC41C">Matriculas sincronizados {{contadores?.matriculas_en_canva}}</small><nb-icon icon="checkmark-circle-2-outline" class="p-0" status="success"></nb-icon>
@@ -25,8 +25,11 @@
         </div>
       </div>
       <br>
-      <div class="col-md-2">
-        <button (click)="syncCanvasEnrrollemnt()" nbButton fullWidth size="small" status="primary">Sincronizar</button>
+      <div class="col-md-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <button nbTooltip="Actualizar" nbButton size="small" status="primary" style="margin-right: 4px" (click)="refresh()"><nb-icon icon="refresh-outline"></nb-icon></button>
+          <button (click)="syncCanvasEnrrollemnt()" nbButton fullWidth size="small" status="primary">Sincronizar</button>
+        </div>
       </div>
     </div>
     <br>
@@ -48,7 +51,7 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-    <div class="d-flex align-items-center justify-content-center">
+    <div class="d-flex align-items-center justify-content-center flex-wrap">
       <div class="text-center d-flex align-items-center justify-content-center">
         <strong class="text-leyend">El curso no esta en canvas</strong>
         <div class="circle" style="background: #EEC7A1"></div>
