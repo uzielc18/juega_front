@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { ConfigZoomComponent } from 'src/app/shared/components/config-zoom/config-zoom.component';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-zoom-course',
@@ -12,6 +13,7 @@ import { ConfigZoomComponent } from 'src/app/shared/components/config-zoom/confi
 export class ZoomCourseComponent implements OnInit {
   loading: boolean = false;
   @Input() item:any;
+  @Input() semester: any;
   formHeader: any = FormGroup;
   listCourseZoom:any = [];
   zoomMeets:any;
@@ -123,6 +125,75 @@ export class ZoomCourseComponent implements OnInit {
       // console.log(res);
 
     }, () => {this.loading = false}, () => {this.loading = false});
+  }
+  addModuleCanva() {
+    const serviceName = 'canva-insert-module';
+    const forms =  this.formHeader.value;
+    const params = {
+      semester_id: this.semester,
+      programa_estudio_id: forms.programa_estudio_id,
+      ciclo: forms.ciclo || '',
+      grupo:forms.grupo || '',
+    }
+    Swal.fire({
+      title: 'Crear Modulo en canva',
+      text: '¿ Esta seguro de crear modulo en canva ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalServi.nameParams$(serviceName, params).subscribe(res => {
+          if(res.success) {
+            this.getCourseZoom();
+          }
+        }, () => {this.loading = false}, () => {this.loading = false})
+      }
+    });
+
+
+  }
+  insertMeetCanva() {
+    const serviceName = 'canva-insert-meet';
+    const forms =  this.formHeader.value;
+    const params = {
+      semester_id: this.semester,
+      programa_estudio_id: forms.programa_estudio_id,
+      ciclo: forms.ciclo || '',
+      grupo:forms.grupo || '',
+    }
+    Swal.fire({
+      title: 'Inserte sala zoom en canva',
+      text: '¿ Esta seguro de insertar sala zoom en canva ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalServi.nameParams$(serviceName, params).subscribe(res => {
+          if(res.success) {
+            this.getCourseZoom();
+          }
+        },() => {this.loading = false}, () => {this.loading = false})
+      }
+    });
+
   }
 
 }

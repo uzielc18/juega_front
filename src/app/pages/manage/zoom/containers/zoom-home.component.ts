@@ -259,7 +259,7 @@ export class ZoomHomeComponent implements OnInit {
       dialogClass: 'dialog-limited-height',
       context: {
         item: items,
-
+        semester: this.formHeader.value.semester
       },
       closeOnBackdropClick: false,
       closeOnEsc: false
