@@ -88,7 +88,7 @@ export class ZoomCourseComponent implements OnInit {
       ciclo: forms.ciclo || '',
       grupo: forms.grupo || '',
       paginate: 'N',
-      semester_id: this.rolSemestre.semestre.id || '',
+      semester_id: this.semester || '',
     }
     if (params && params.programa_estudio_id && params.ciclo && params.grupo) {
       this.loading = true;
