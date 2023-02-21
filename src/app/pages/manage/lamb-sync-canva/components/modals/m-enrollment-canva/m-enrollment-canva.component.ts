@@ -53,6 +53,17 @@ export class MEnrollmentCanvaComponent implements OnInit {
     this.generalService.nameIdParams$(serviceName, forms.programa_estudio?.id, params).subscribe(res => {
       if(res.success){
         this.listEnrllments = res.data.matriculas.data;
+        this.listEnrllments.map((m: any) => {
+          if(m.c_id_canva === null && m.p_id_canva === null) {
+            m.color_error = '#F6DADE'
+          }
+          if(m.c_id_canva === null && m.p_id_canva !== null) {
+            m.color_error = '#EEC7A1'
+          }
+          if(m.p_id_canva === null && m.c_id_canva !== null) {
+            m.color_error = '#FBF7B8'
+          }
+        })
         this.contadores = res.data.contadores;
         this.pagination.sizeListData = res.data.matriculas && res.data.matriculas.total || 0;
         this.pagination.sizePage = res.data.matriculas && res.data.matriculas.per_page || 0;

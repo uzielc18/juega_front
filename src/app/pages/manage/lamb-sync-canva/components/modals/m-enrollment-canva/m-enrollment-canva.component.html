@@ -79,7 +79,7 @@
         </tr>
         </thead>
         <tbody *ngIf="listEnrllments.length > 0; else emptyContent">
-        <tr *ngFor="let item of listEnrllments" style="font-size: 12px" [ngStyle]="{'background-color': item.c_id_canva === null? '#EEC7A1': item.p_id_canva === null? '#FBF7B8': item.c_id_canva === null && item.p_id_canva === null? '#F6DADE': ''}">
+        <tr *ngFor="let item of listEnrllments" style="font-size: 12px" [ngStyle]="{'background-color': item.color_error}">
           <td>{{item.nombres_estudiante}} {{item.apellido_paterno}} {{item.apellido_materno}}</td>
           <td>{{item.nombre}} ({{item.id_carga_curso_docente}})</td>
           <td>{{item.id_canva}}</td>

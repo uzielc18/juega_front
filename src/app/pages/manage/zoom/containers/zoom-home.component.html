@@ -75,7 +75,7 @@
                         <th style="width: 100px;" class="text-center">N° salas</th>
                         <th style="width: 300px;">Salas en línea</th>
                         <!-- <th style="width: 1px;">Estado</th> -->
-                        <th colspan="4" class="text-center" style="width: 10px;">Opciones</th>
+                        <th colspan="5" class="text-center" style="width: 10px;">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -127,6 +127,10 @@
                         <td class="text-center" style="width: 70px;">
                             <nb-icon icon="edit" status="info" style="cursor: pointer; font-size: 25px;" (click)="updateZoom(item)"></nb-icon> <br>
                             Editar
+                        </td>
+                        <td class="text-center" style="width: 70px;">
+                          <nb-icon icon="video-outline" status="primary" style="cursor: pointer; font-size: 25px;" (click)="openRecordingZoom(item)"></nb-icon> <br>
+                          Grabaciones
                         </td>
                         <td class="text-center" style="width: 70px;">
                             <nb-icon icon="monitor-outline" status="warning" style="cursor: pointer; font-size: 25px;" (click)="openCourseZoom(item)"></nb-icon> <br>

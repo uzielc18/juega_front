@@ -19,6 +19,7 @@ import {Router} from "@angular/router";
 import {MTutoresComponent} from "../components/modals/m-tutores/m-tutores.component";
 import {MHomeTutoresComponent} from "../components/modals/m-tutores/m-home-tutores/m-home-tutores.component";
 import {MSyncCanvasComponent} from "../components/modals/m-sync-canvas/m-sync-canvas.component";
+import {MGroupCourseComponent} from "../components/modals/m-group-course/m-group-course.component";
 
 @Component({
   selector: 'app-course-home',
@@ -499,5 +500,20 @@ export class CourseHomeComponent implements OnInit {
     this.generalServi.nameAll$(nameService).subscribe(resp => {
       this.typeTeacherData = resp.data
     },()=> this.loading = false, () => {this.loading = false});
+  }
+  openSplitCourse(items: any) {
+    this.dialogService.open(MGroupCourseComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        item: items,
+
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        this.getCourseZoom();
+      }
+    });
   }
 }

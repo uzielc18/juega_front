@@ -1,0 +1,26 @@
+.scrollModal {
+  max-width: 95vw;
+  max-height: 95vh;
+  width: 1250px;
+}
+.circle{
+  padding: 8px;
+}
+.text-leyend{
+  font-size: 11.4px;
+  padding: 0 10px;
+}
+thead tr th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #ffffff;
+  color: black;
+}
+.table-responsive {
+  max-height: 60vh;
+  // overflow-y:scroll;
+}
+accordion-item-background-color {
+  background-color: #0F483F
+}

@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigZoomModule } from 'src/app/shared/components/config-zoom/config-zoom.module';
 import { MAddSalaComponent } from './components/modals/m-add-sala/m-add-sala.component';
 import {NbTagModule} from "@nebular/theme";
+import { MSyncRecordingComponent } from './components/modals/m-sync-recording/m-sync-recording.component';
 // import { SelectSearchModule } from 'src/app/shared/components/selectors/select-search/select-search.module';
 // import { InputSelectSearchModule } from 'src/app/shared/components/selectors/input-select-search/input-select-search.module';
 const COMPONENTS: any[] = [
@@ -63,7 +64,7 @@ const PIPES: any = [
         ...PIPES,
         NbTagModule
     ],
-  declarations: [...COMPONENTS, MAddSalaComponent],
+  declarations: [...COMPONENTS, MAddSalaComponent, MSyncRecordingComponent],
   entryComponents: [...MODALS],
 })
 

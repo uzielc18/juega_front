@@ -94,6 +94,18 @@ export class ZoomCourseComponent implements OnInit {
       this.loading = true;
       this.generalServi.nameParams$(serviceName, params).subscribe((res:any) => {
         this.listCourseZoom = res.data || [];
+
+        this.listCourseZoom.map((m: any) => {
+          if(m.id_canva == null && m.id_canva_module == null) {
+            m.color_error = '#F6DADE'
+          }
+          if(m.id_canva === null && m.id_canva_module !== null) {
+            m.color_error = '#EEC7A1'
+          }
+          if(m.id_canva_module === null && m.id_canva !== null) {
+            m.color_error = '#FBF7B8'
+          }
+        })
       }, () => {this.loading = false}, () => {this.loading = false});
     }
   }

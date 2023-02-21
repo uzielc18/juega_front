@@ -12,6 +12,7 @@ import { EmitEventsService } from 'src/app/shared/services/emit-events.service';
 import { Subscription } from 'rxjs';
 import {END_POINTS} from "../../../../providers/utils";
 import {MAddSalaComponent} from "../components/modals/m-add-sala/m-add-sala.component";
+import {MSyncRecordingComponent} from "../components/modals/m-sync-recording/m-sync-recording.component";
 @Component({
   selector: 'app-zoom-home',
   templateUrl: './zoom-home.component.html',
@@ -347,6 +348,21 @@ export class ZoomHomeComponent implements OnInit {
       context: {
         item: items,
 
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false
+    }).onClose.subscribe(result => {
+      if (result === 'ok') {
+        // this.filtrar();
+      }
+    });
+  }
+  openRecordingZoom(item: any) {
+    this.dialogService.open(MSyncRecordingComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        item: item,
+        semester: this.formHeader.value.semester
       },
       closeOnBackdropClick: false,
       closeOnEsc: false
