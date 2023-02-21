@@ -71,6 +71,7 @@
                         <th>Id_canva</th>
                         <th>Cod. anfitrión</th>
                         <th>Zoom</th>
+                        <th>Estado</th>
                         <th style="width: 1px;"><nb-icon icon="people" style="font-size: 20px;"></nb-icon></th>
                         <th class="text-center" style="width: 1px;" colspan="4">Opciones</th>
                     </tr>
@@ -84,6 +85,10 @@
                         <td>{{item.host_key}}</td>
                         <td  style="color: brown;">
                           {{item.join_url}}
+                        </td>
+                        <td>
+                          <nb-icon [nbTooltip]="item.id_canva_meet? 'Sincronizado con canva': 'Falta sincronizar'" [icon]="item.id_canva_meet? 'checkmark-circle-2-outline': 'close-circle-outline'"
+                                   [status]="item.id_canva_meet? 'success': 'danger'"></nb-icon>
                         </td>
                         <td>{{item?.matriculados}}</td>
                         <td class="text-center">
