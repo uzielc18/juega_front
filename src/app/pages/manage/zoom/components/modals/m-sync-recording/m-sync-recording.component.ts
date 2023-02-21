@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NbDialogRef} from "@nebular/theme";
 import {GeneralService} from "../../../../../../providers";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-m-sync-recording',
@@ -49,6 +50,7 @@ export class MSyncRecordingComponent implements OnInit {
           if(m.id_canva_module === null && m.id_canva !== null) {
             m.color_error = '#FBF7B8'
           }
+          m.course_id = m.records[0]?.course_id;
         })
         this.pagination.sizeListData = (res.data && res.data.total) || 0;
         this.pagination.sizePage = (res.data && res.data.per_page) || 0;
@@ -72,5 +74,72 @@ export class MSyncRecordingComponent implements OnInit {
   sizeTable($event: any): any {
     this.pagination.per_page = $event;
     this.getData();
+  }
+  synCanvas() {
+    const serviceName = 'canva-insert-record';
+      const params = {
+        programa_estudio_id:this.item.programa_estudio_id || '',
+        semester_id: this.semester || '',
+        ciclo: this.item.ciclo || '',
+        grupo: this.item.grupo || ''
+      }
+
+    Swal.fire({
+      title: 'Sincronizar',
+      text: '¿ Esta seguro de sincronizar con canva ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService.nameParams$(serviceName, params).subscribe(res => {
+          if(res.success) {
+            this.getData();
+          }
+        }, () => {this.loading = false}, () => {this.loading = false})
+      }
+    });
+  }
+  synCanvasCourse(item: any) {
+    const serviceName = 'canva-insert-record';
+    const params = {
+      programa_estudio_id:this.item.programa_estudio_id || '',
+      semester_id: this.semester || '',
+      ciclo: this.item.ciclo || '',
+      grupo: this.item.grupo || '',
+      course_id: item.course_id
+    }
+
+    Swal.fire({
+      title: 'Sincronizar',
+      text: '¿ Esta seguro de sincronizar con canva ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService.nameParams$(serviceName, params).subscribe(res => {
+          if(res.success) {
+            this.getData();
+          }
+        }, () => {this.loading = false}, () => {this.loading = false})
+      }
+    });
   }
 }
