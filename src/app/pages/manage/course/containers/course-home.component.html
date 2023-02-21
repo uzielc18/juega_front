@@ -99,7 +99,7 @@
                         <th style="width: 1px;"><nb-icon icon="people"></nb-icon></th>
                         <th class="text-center">Canva ID</th>
                       <th class="text-center">Canva ID teacher</th>
-                        <th class="text-center" style="width: 1px;" colspan="8">Opciones</th>
+                        <th class="text-center" style="width: 1px;" colspan="9">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -117,6 +117,9 @@
                       <td class="text-center">{{item.id_canva_teacher}}</td>
                         <td class="text-center" style="width: 1px; vertical-align: middle;">
                             <nb-icon *ngIf="item?.id_zoom_meetings" icon="video-outline" status="primary" style="font-size: 25px; cursor: pointer;" (click)="openConfig(item)"></nb-icon>
+                        </td>
+                        <td class="text-center" style="width: 1px;">
+                          <button nbButton size="tiny" status="primary" (click)="openSplitCourse(item)" nbTooltip="Dividir cursos" nbTooltipStatus="basic"><nb-icon icon="copy-outline"></nb-icon></button>
                         </td>
                         <td class="text-center" style="width: 1px;">
                             <button nbButton size="tiny" status="basic" (click)="openMatricula(item)" nbTooltip="Matricular por códigos" nbTooltipStatus="basic"><nb-icon icon="person-add"></nb-icon></button>

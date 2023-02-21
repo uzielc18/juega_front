@@ -22,6 +22,7 @@ import {FilterModule} from "../../../shared/pipes/filter/filter.module";
 import {DirectiveModule} from "../../../shared/directives/highlight.module";
 import { MHomeTutoresComponent } from './components/modals/m-tutores/m-home-tutores/m-home-tutores.component';
 import { MSyncCanvasComponent } from './components/modals/m-sync-canvas/m-sync-canvas.component';
+import { MGroupCourseComponent } from './components/modals/m-group-course/m-group-course.component';
 
 const COMPONENTS: any[] = [
   CourseComponent,
@@ -73,7 +74,7 @@ const MODULES: any = [
         FilterModule,
         DirectiveModule,
     ],
-    declarations: [...COMPONENTS, VNewWindowComponent, MTutoresComponent, MHomeTutoresComponent, MSyncCanvasComponent],
+    declarations: [...COMPONENTS, VNewWindowComponent, MTutoresComponent, MHomeTutoresComponent, MSyncCanvasComponent, MGroupCourseComponent],
     entryComponents: [...MODALS],
     exports: [
         CourseComponent
