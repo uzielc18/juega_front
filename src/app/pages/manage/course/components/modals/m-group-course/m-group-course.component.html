@@ -28,23 +28,23 @@
                     <strong>Grupo manual</strong><br>
                     <div>
                       <label class="label">Nombre del grupo</label>
-                      <input class="w-100" type="text" nbInput fullWidth placeholder="Ingrese nombre del grupo" fieldSize="small" formControlName="nombre_grupo"/>
-                      <control-messages [control]="formGroupManual.get('nombre_grupo')"></control-messages>
+                      <input class="w-100" type="text" nbInput fullWidth placeholder="Ingrese nombre del curso" fieldSize="small" formControlName="nombre_curso"/>
+                      <control-messages [control]="formGroupManual.get('nombre_curso')"></control-messages>
                     </div>
                     <br>
                     <div class="d-flex align-items-center justify-content-between">
                       <div></div>
                       <div>
-                        <button *ngIf="formGroupManual.value.opc === 'U'" nbButton status="basic" size="small" (click)="cancelSave()">Cancelar</button>&nbsp;
-                        <button nbButton status="primary" size="small" [disabled]="formGroupManual.invalid" >
-                          <nb-icon [icon]="formGroupManual.value.opc === 'NEWS' ? 'plus' : 'edit-2-outline'"></nb-icon>
-                          {{formGroupManual.value.opc === 'NEWS' ? 'Añadir' : 'Editar'}}
+                        <button nbButton status="basic" size="small">Cancelar</button>&nbsp;
+                        <button nbButton status="primary" size="small" (click)="saveGM()">
+                          <nb-icon icon="plus"></nb-icon>
+                          Añadir
                         </button>
                       </div>
                     </div>
                   </form>
                 </nb-tab>
-                <nb-tab tabTitle="Generar" tabId="G" class="reducir" [disabled]="listGroups?.length > 0" #item2>
+                <nb-tab tabTitle="Generar" tabId="G" class="reducir" #item2>
                   <form [formGroup]="formGenerar">
                     <strong>Generar grupos</strong><br>
                     <strong style="font-size: 10px; color: brown;">N° alumnos </strong> <br>
@@ -52,7 +52,7 @@
                       <div class="col-md-6">
                         <label class="label">Miembros</label>
                         <input class="w-100" type="number" nbInput fullWidth placeholder="Ingrese" fieldSize="small"  formControlName="n_miembros"/>
-                        <control-messages [control]="formGenerar.get('n_miembros')"></control-messages>
+                        <control-messages></control-messages>
                       </div>
                       <div class="col-md-3">
                         <label class="label">Aleatorio</label>
@@ -91,24 +91,6 @@
                       <div></div>
                       <button nbButton status="primary" size="small" [disabled]="arregloDeArreglos?.length <= 0"
                               ><nb-icon icon="plus"></nb-icon>Añadir</button>
-                    </div>
-                  </form>
-                </nb-tab>
-                <nb-tab tabTitle="Importar" tabId="I" class="reducir" [disabled]="listGroups?.length > 0" #item3>
-                  <form [formGroup]="formImportar">
-                    <strong>Importar grupos</strong><br>
-                    <div>
-                      <label class="label">Selecciona el trabajo referencial para importar sus grupos</label>
-                      <nb-select placeholder="Seleccionar trabajo"  fullWidth size="small" formControlName="selected_element_id">
-                        <nb-option *ngFor="let item of listTrabajos" [value]="item.id">{{item.titulo}}</nb-option>
-                      </nb-select>
-                      <control-messages [control]="formImportar.get('selected_element_id')"></control-messages>
-                    </div>
-                    <br>
-                    <div class="d-flex align-items-center justify-content-between">
-                      <div></div>
-                      <button nbButton status="primary" size="small" [disabled]="formImportar.invalid"
-                              ><nb-icon icon="plus"></nb-icon>Importar</button>
                     </div>
                   </form>
                 </nb-tab>
@@ -164,7 +146,7 @@
         <nb-card>
           <nb-card-header style="padding-top: 1px; padding-bottom: 1px;">
             <label class="label">
-              Nombre del grupo: {{formGroup.value.nombre_grupo}}
+              Nombre del grupo:
             </label>
           </nb-card-header>
           <nb-card-body>
