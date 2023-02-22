@@ -35,10 +35,10 @@
                     <div class="d-flex align-items-center justify-content-between">
                       <div></div>
                       <div>
-                        <button nbButton status="basic" size="small">Cancelar</button>&nbsp;
+                        <button nbButton status="basic" size="small" *ngIf="formGroupManual.value.opc === 'U'" (click)="cancelSave()">Cancelar</button>&nbsp;
                         <button nbButton status="primary" size="small" (click)="saveGM()">
-                          <nb-icon icon="plus"></nb-icon>
-                          Añadir
+                          <nb-icon [icon]="formGroupManual.value.opc === 'NEWS'? 'plus': 'edit-2-outline' "></nb-icon>
+                          {{formGroupManual.value.opc === 'NEWS'? 'Añadir': 'Editar' }}
                         </button>
                       </div>
                     </div>
@@ -119,18 +119,18 @@
                 <tr *ngFor="let item of listGroups; let i = index" [ngStyle]="{'background': item?.color, 'font-size': '10px'}">
                   <td>{{i+1}}</td>
                   <td>{{item.nombre}}</td>
-                  <td>{{item.group_members_count}}</td>
+                  <td>{{item.matriculados}}</td>
                   <td class="text-center" style="width: 1px;">
                     <nb-icon icon="person-add-outline" size="tiny" status="success" style="cursor: pointer; font-size: 15px;"
-                             nbTooltip="Ver" nbTooltipPlacement="top" nbTooltipStatus="success"></nb-icon>
+                             nbTooltip="Ver" nbTooltipPlacement="top" nbTooltipStatus="success" (click)="viewMembers(item)"></nb-icon>
                   </td>
                   <td class="text-center" style="width: 1px;">
                     <nb-icon icon="edit-2-outline" size="tiny" status="info" style="cursor: pointer; font-size: 15px;"
-                             nbTooltip="Editar" nbTooltipPlacement="top" nbTooltipStatus="info"></nb-icon>
+                             nbTooltip="Editar" nbTooltipPlacement="top" nbTooltipStatus="info" (click)="updateGruop(item)"></nb-icon>
                   </td>
-                  <td *ngIf="!item?.checks" class="text-center" style="width: 1px;">
+                  <td *ngIf="item.matriculados == 0" class="text-center" style="width: 1px;">
                     <nb-icon  icon="trash" size="tiny" status="danger" style="cursor: pointer; font-size: 15px;"
-                              nbTooltip="Eliminar" nbTooltipPlacement="top" nbTooltipStatus="danger"></nb-icon>
+                              nbTooltip="Eliminar" nbTooltipPlacement="top" nbTooltipStatus="danger" (click)="deleteCurso(item)"></nb-icon>
                   </td>
                 </tr>
                 </tbody>
@@ -146,11 +146,11 @@
         <nb-card>
           <nb-card-header style="padding-top: 1px; padding-bottom: 1px;">
             <label class="label">
-              Nombre del grupo:
+              Nombre del grupo: {{formGroup.value.nombre_grupo}}
             </label>
           </nb-card-header>
           <nb-card-body>
-            <div>
+            <div *ngIf="!validPending">
               <label class="label">Lista de alumnos pendientes</label>
               <div class="row">
                 <div class="col-md-6">
@@ -192,10 +192,10 @@
               </div>
               <div class="d-flex align-items-center justify-content-between">
                 <div></div>
-                <button nbButton status="primary" size="small" ><nb-icon icon="plus"></nb-icon>Añadir</button>
+                <button nbButton status="primary" size="small" ><nb-icon icon="plus" (click)="matricularCodigos()"></nb-icon>Añadir</button>
               </div>
             </div>
-            <hr/>
+            <hr *ngIf="!validPending"/>
             <div>
               <label class="label">Lista de alumnos asignados al grupo</label>
               <div class="table-responsive">
