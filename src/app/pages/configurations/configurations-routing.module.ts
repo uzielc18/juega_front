@@ -13,6 +13,11 @@ const routes: Routes = [
           .then(m => m.RolesModule)
       },
       {
+        path: 'categories',
+        loadChildren: () => import('src/app/pages/configurations/categories/categories.module')
+          .then(m => m.CategoriesModule)
+      },
+      {
         path: 'semesters',
         loadChildren: () => import('src/app/pages/configurations/semesters/semesters.module')
           .then(m => m.SemestersModule)

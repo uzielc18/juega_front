@@ -21,6 +21,7 @@ export const END_POINTS = {
     programa_estudios: 'list-programa-estudios',
     semesters: 'semesters',
     roles: 'roles',
+    categories: 'categories',
     activities_evaluations: 'activities-evaluations-resume',
     rubrics: 'rubricas',
     calendar: 'calendar',
