@@ -8,6 +8,11 @@ const routes: Routes = [
     component: ConfigurationComponent,
     children: [
       {
+        path: 'roles',
+        loadChildren: () => import('src/app/pages/configurations/roles/roles.module')
+          .then(m => m.RolesModule)
+      },
+      {
         path: 'semesters',
         loadChildren: () => import('src/app/pages/configurations/semesters/semesters.module')
           .then(m => m.SemestersModule)
