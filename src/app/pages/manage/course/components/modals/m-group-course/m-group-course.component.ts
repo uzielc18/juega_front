@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NbDialogRef} from "@nebular/theme";
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
+import {NbDialogRef, NbDialogService} from "@nebular/theme";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GeneralService} from "../../../../../../providers";
 import Swal from "sweetalert2";
+import {END_POINTS} from "../../../../../../providers/utils";
 
 @Component({
   selector: 'app-m-group-course',
@@ -17,6 +18,7 @@ export class MGroupCourseComponent implements OnInit {
   formGroup: any = FormGroup;
   arregloDeArreglos: any = [];
   listTrabajos: any = [];
+  listMiembros:any = [];
   memberGroup: any = [];
   listGroups:any = [];
   datosGrup: any = {
@@ -32,7 +34,10 @@ export class MGroupCourseComponent implements OnInit {
     array_A: [],
     array_B: [],
   }
-  constructor(public activeModal: NbDialogRef<MGroupCourseComponent>, private fb: FormBuilder, private generalService: GeneralService) { }
+  constructor(public activeModal: NbDialogRef<MGroupCourseComponent>,
+              private fb: FormBuilder,
+              private generalService: GeneralService,
+              private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -52,7 +57,8 @@ export class MGroupCourseComponent implements OnInit {
   private fieldGrupo() {
     const controls = {
       nombre_grupo: [''],
-      group_id: ['']
+      group_id: [''],
+      id_carga_curso_docente: [''],
     };
     this.formGroup = this.fb.group(controls);
   }
@@ -79,6 +85,33 @@ export class MGroupCourseComponent implements OnInit {
     this.activeModal.close('');
   }
   deleteMembersGroup(item: any) {
+
+    if (item && item.id) {
+      Swal.fire({
+        title: 'Eliminar matricula',
+        text: `¿Está seguro de eliminar la matricula del curso ${item.course_nombre}?`,
+        backdrop: true,
+        icon: 'question',
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: '#7f264a',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+      }).then(res => {
+        if (res.isConfirmed) {
+          const serviceName = END_POINTS.base_back.default + 'enrollments';
+          this.loading = true;
+          this.generalService.deleteNameId$(serviceName, item.id).subscribe((res: any) => {
+            if (res.success) {
+              this.getListMembGroup(item.id_carga_curso_docente);
+              this.getListMemberSinGroup();
+              this.getData();
+            }
+          }, () => { this.loading = false; }, () => { this.loading = false; });
+        }
+      });
+    }
 
   }
   refresForms() {
@@ -108,16 +141,76 @@ export class MGroupCourseComponent implements OnInit {
     }
   }
   vaciarDatosGroup() {
-
+    this.datosGrup.g_completos = 0;
+    this.datosGrup.g_imcompletos = 0;
+    this.datosGrup.n_imc = 0;
   }
   getListTrabs() {
 
   }
   getListMember() {
+    this.listMiembros = [];
+    const serviceName = 'get-sin-matriculas';
+    const item = this.item;
+    this.loading = true;
+    this.generalService.nameId$(serviceName, item.id).subscribe(res => {
+      this.listMiembros = res.data || [];
+    }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  formarGrupos() {
+    let lists = this.listMiembros;
+    this.arregloDeArreglos = [];
+    const form = this.formGenerar.value;
+    if (lists.length>0 && form.n_miembros > 0) {
 
+      if (form.aleatorio) {
+        lists = lists.sort(function() { return Math.random() - 0.5 });
+      }
+
+      for (let i = 0; i < lists.length; i += form.n_miembros) {
+        let pedazo = lists.slice(i, i + form.n_miembros);
+        this.arregloDeArreglos.push(pedazo);
+      }
+      console.log(this.arregloDeArreglos, 'List arreglos')
+      this.caldatosGrup();
+    }
+    // console.log("Arreglo de arreglos: ", this.arregloDeArreglos);
+  }
+  caldatosGrup() {
+    const form = this.formGenerar.value;
+    this.vaciarDatosGroup();
+    let grupsCompletos: any = [];
+    let groupsImcomplets: any = [];
+    if (this.arregloDeArreglos.length > 0) {
+      this.arregloDeArreglos.map((r:any) => {
+        if(r.length === Number(form.n_miembros)) {
+          grupsCompletos.push(r);
+        } else {
+          groupsImcomplets.push(r);
+        }
+      });
+      this.datosGrup.g_completos = grupsCompletos.length;
+      this.datosGrup.g_imcompletos = groupsImcomplets.length;
+
+      if (grupsCompletos.length > 0) {
+        this.datosGrup.n_imc = this.listMiembros?.length - (grupsCompletos.length * Number(form.n_miembros));
+      } else {
+        this.datosGrup.n_imc = this.listMiembros?.length - Number(form.n_miembros);
+      }
+    }
+    console.log(grupsCompletos,'grp')
+    console.log(groupsImcomplets,'gI')
+    console.log(this.datosGrup.n_imc,'bbb')
+    console.log(this.datosGrup.n_imc,'aaaa')
   }
 
   getData() {
+    this.fieldGrupo();
+    this.memberGroup = [];
+    this.alumnsPending = [];
+    this.partidos.array_A = [];
+    this.partidos.array_B = [];
+
     const serviceName = 'courses';
     const item = this.item;
     const params = {
@@ -125,12 +218,14 @@ export class MGroupCourseComponent implements OnInit {
       paginate: 'N',
       semester_id: item.semester_id,
     }
-    this.loading = true;
-    this.generalService.nameParams$(serviceName, params).subscribe(res => {
-      if(res.success){
+    if(params && params.course_id) {
+      this.loading = true;
+      this.generalService.nameParams$(serviceName, params).subscribe(res => {
+        if(res.success){
           this.listGroups = res.data
-      }
-    }, () => {this.loading = false}, () => {this.loading = false})
+        }
+      }, () => {this.loading = false}, () => {this.loading = false})
+    }
   }
   saveGM() {
     const serviceName = 'courses';
@@ -211,7 +306,9 @@ export class MGroupCourseComponent implements OnInit {
 
   }
   updateGruop(item: any) {
-    console.log(item)
+    this.recorrerGroup();
+    item.color = '#fce9e6';
+    item.checks = true;
     this.formGroupManual.patchValue({
       opc: 'U',
       id_group: item.id,
@@ -230,10 +327,11 @@ export class MGroupCourseComponent implements OnInit {
     this.recorrerGroup();
   }
   viewMembers(item: any) {
-    console.log(item)
+    this.validarColor(item);
     this.formGroup.patchValue({
       nombre_grupo: item.nombre,
       group_id:item.id,
+      id_carga_curso_docente: item.id_carga_curso_docente,
     })
     this.getListMemberSinGroup();
     this.getListMembGroup(item.id_carga_curso_docente); // id grupo
@@ -252,6 +350,17 @@ export class MGroupCourseComponent implements OnInit {
       }
 
     }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  validarColor(item: any) {
+      this.listGroups.find((m: any) => {
+        if(m.id !== item.id) {
+            m.checks = false;
+            m.color = '';
+        }else {
+          m.color = '#fce9e6';
+          m.checks = true;
+        }
+      })
   }
   partirArrayPending() {
     this.partidos.array_A = [];
@@ -276,6 +385,14 @@ export class MGroupCourseComponent implements OnInit {
           }
     },() => {this.loading = false}, () => {this.loading = false})
   }
+  get disabledGenerate () {
+    const form = this.formGenerar.value;
+    if (!form.n_miembros || (form.n_miembros > this.listMiembros.length) || this.listMiembros.length <= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   matricularCodigos() {
 
     const serviceName = 'matricular-codigos';
@@ -295,12 +412,10 @@ export class MGroupCourseComponent implements OnInit {
         }
       });
     }
-    console.log(this.partidos.array_A, 'B', this.partidos.array_B)
-    console.log(array)
+
     const params = {
       codigos: array.join(',') || '',
     }
-    console.log(this.formGroup.value.group_id, params)
     if (params && params.codigos) {
       Swal.fire({
         title: 'MATRICULAR',
@@ -320,9 +435,10 @@ export class MGroupCourseComponent implements OnInit {
           this.loading = true;
           this.generalService.addNameIdData$(serviceName, this.formGroup.value.group_id, params).subscribe((res:any) => {
             if (res.success) {
-              this.getListMembGroup(this.formGroup.value.group_id); // id grupo
               this.getListMemberSinGroup();
+              this.getListMembGroup(this.formGroup.value.id_carga_curso_docente); // id grupo
               this.partirArrayPending();
+              this.getData();
             }
           }, () => {this.loading = false;}, () => {this.loading = false;});
         }
@@ -346,6 +462,7 @@ export class MGroupCourseComponent implements OnInit {
       // timer: 2000,
     }).then((result:any) => {
       if (result.isConfirmed) {
+        this.loading = true
         this.generalService.deleteNameId$(serviceName, item.id).subscribe((res:any) => {
           if (res.success) {
             this.getData();
@@ -353,5 +470,35 @@ export class MGroupCourseComponent implements OnInit {
         }, () => {this.loading = false}, () => {this.loading = false});
       }
     });
+  }
+  saveGenerate() {
+    const serviceName = 'save-list-course-members';
+    let arrays:any = [];
+    let i = 1;
+    this.arregloDeArreglos.map((res:any) => {
+      const numG = i++;
+      const params = {
+        nombre: 'G' + '-' + numG,
+        grupo: numG,
+        course_id: this.item.id,
+        members: res,
+      }
+      arrays.push(params);
+    });
+    // console.log(arrays, 'array', this.arregloDeArreglos, 'arrardearray');
+    if (arrays.length>0) {
+      this.loading = true;
+      this.generalService.addNameData$(serviceName, arrays).subscribe(r => {
+        if (r.success) {
+          this.getData();
+          this.fieldGenerar();
+          this.arregloDeArreglos = [];
+          this.vaciarDatosGroup();
+        }
+      }, () => { this.loading =false; }, () => { this.loading =false; });
+    }
+  }
+  open(dialog: TemplateRef<any>) {
+    this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
   }
 }

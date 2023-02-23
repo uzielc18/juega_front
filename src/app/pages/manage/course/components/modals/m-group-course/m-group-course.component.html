@@ -3,7 +3,7 @@
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
-        Administrar grupo <br>
+        Administrar sub cursos
         <label class="label">Trabajo grupal - {{item?.nombre}}</label>
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
@@ -17,7 +17,7 @@
         <nb-card>
           <nb-card-header style="padding-top: 1px; padding-bottom: 1px;">
             <label class="label">
-              Nuevo grupo
+              Nuevo curso
             </label>
           </nb-card-header>
           <nb-card-body style="padding-top: 0px;">
@@ -27,7 +27,7 @@
                   <form [formGroup]="formGroupManual">
                     <strong>Grupo manual</strong><br>
                     <div>
-                      <label class="label">Nombre del grupo</label>
+                      <label class="label">Nombre del curso</label>
                       <input class="w-100" type="text" nbInput fullWidth placeholder="Ingrese nombre del curso" fieldSize="small" formControlName="nombre_curso"/>
                       <control-messages [control]="formGroupManual.get('nombre_curso')"></control-messages>
                     </div>
@@ -36,7 +36,7 @@
                       <div></div>
                       <div>
                         <button nbButton status="basic" size="small" *ngIf="formGroupManual.value.opc === 'U'" (click)="cancelSave()">Cancelar</button>&nbsp;
-                        <button nbButton status="primary" size="small" (click)="saveGM()">
+                        <button nbButton status="primary" size="small" [disabled]="formGroupManual.invalid" (click)="saveGM()">
                           <nb-icon [icon]="formGroupManual.value.opc === 'NEWS'? 'plus': 'edit-2-outline' "></nb-icon>
                           {{formGroupManual.value.opc === 'NEWS'? 'Añadir': 'Editar' }}
                         </button>
@@ -44,10 +44,10 @@
                     </div>
                   </form>
                 </nb-tab>
-                <nb-tab tabTitle="Generar" tabId="G" class="reducir" #item2>
+                <nb-tab tabTitle="Generar" tabId="G" class="reducir" [disabled]="listGroups?.length > 0" #item2>
                   <form [formGroup]="formGenerar">
                     <strong>Generar grupos</strong><br>
-                    <strong style="font-size: 10px; color: brown;">N° alumnos </strong> <br>
+                    <strong style="font-size: 10px; color: brown;">N° alumnos {{listMiembros.length}}</strong> <br>
                     <div class="row">
                       <div class="col-md-6">
                         <label class="label">Miembros</label>
@@ -60,8 +60,8 @@
                       </div>
                       <div class="col-md-3">
                         <label class="label">Procesar</label>
-                        <button nbButton status="warning" size="small" fullWidth
-                                ><nb-icon icon="settings-2-outline"></nb-icon></button>
+                        <button nbButton status="warning" size="small" fullWidth [disabled]="disabledGenerate"
+                                 (click)="formarGrupos()"><nb-icon icon="settings-2-outline"></nb-icon></button>
                       </div>
                     </div>
                     <!-- {{datosGrup | json}} -->
@@ -70,7 +70,7 @@
                       <label class="label">Usted va a generar &nbsp; </label>
 
                       <label class="label" *ngIf="datosGrup.g_completos > 0">
-                        {{datosGrup?.g_completos}} grupo(s) de {{formGenerar.value.n_miembros}}
+                        {{datosGrup?.g_completos}} curso(s) de {{formGenerar.value.n_miembros}}
                         alumno(s)
                       </label>
 
@@ -81,16 +81,16 @@
                       </label><br>
 
                       <label class="label" style="color: brown;">
-                        Total de grupos a crear {{arregloDeArreglos?.length}}.
+                        Total de cursos a crear {{arregloDeArreglos?.length}}.
                       </label> <br>
-                      <label class="label"> Ver grupos generados: <nb-icon icon="eye" style="cursor: pointer;" status="info"></nb-icon></label>
+                      <label class="label"> Ver grupos generados: <nb-icon icon="eye" style="cursor: pointer;" status="info" (click)="open(dialog)"></nb-icon></label>
 
                     </div>
                     <br>
                     <div class="d-flex align-items-center justify-content-between">
                       <div></div>
                       <button nbButton status="primary" size="small" [disabled]="arregloDeArreglos?.length <= 0"
-                              ><nb-icon icon="plus"></nb-icon>Añadir</button>
+                              (click)="saveGenerate()"><nb-icon icon="plus"></nb-icon>Añadir</button>
                     </div>
                   </form>
                 </nb-tab>
@@ -136,7 +136,7 @@
                 </tbody>
               </table>
               <div class="text-center">
-                <nb-alert *ngIf="listGroups?.length<=0" outline="basic" style="font-size: 10px;">No se encontraron grupos.</nb-alert>
+                <nb-alert *ngIf="listGroups?.length<=0" outline="basic" style="font-size: 10px;">No se encontraron cursos.</nb-alert>
               </div>
             </div>
           </nb-card-body>
@@ -209,7 +209,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let item of memberGroup; let i = index" style="font-size: 10px;">
+                  <tr *ngFor="let item of memberGroup; let i = index" style="font-size: 10px;" >
                     <td>{{i+1}}</td>
                     <td>{{item.codigo}}</td>
                     <td>{{item?.persons_student_nombre}}</td>
