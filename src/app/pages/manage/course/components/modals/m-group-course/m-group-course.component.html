@@ -163,7 +163,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr *ngFor="let item of partidos?.array_B" style="font-size: 10px;">
+                      <tr *ngFor="let item of partidos?.array_A" style="font-size: 10px;">
                         <td> <nb-checkbox status="primary"  [(ngModel)]="item.checked"></nb-checkbox></td>
                         <td>{{item?.apellido_paterno + ' ' + item?.apellido_materno + ' ' + item?.nombres}}</td>
                       </tr>
@@ -181,7 +181,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr *ngFor="let item of partidos?.array_A" style="font-size: 10px;">
+                      <tr *ngFor="let item of partidos?.array_B" style="font-size: 10px;">
                         <td><nb-checkbox status="primary" [(ngModel)]="item.checked"></nb-checkbox></td>
                         <td>{{item?.apellido_paterno + ' ' + item?.apellido_materno + ' ' + item?.nombres}}</td>
                       </tr>
@@ -192,12 +192,12 @@
               </div>
               <div class="d-flex align-items-center justify-content-between">
                 <div></div>
-                <button nbButton status="primary" size="small" ><nb-icon icon="plus" (click)="matricularCodigos()"></nb-icon>Añadir</button>
+                <button nbButton status="primary" size="small" (click)="matricularCodigos()"><nb-icon icon="plus" ></nb-icon>Añadir</button>
               </div>
             </div>
             <hr *ngIf="!validPending"/>
             <div>
-              <label class="label">Lista de alumnos asignados al grupo</label>
+              <label class="label">Lista de alumnos asignados al curso</label>
               <div class="table-responsive">
                 <table class="table table-sm">
                   <thead>
@@ -212,7 +212,7 @@
                   <tr *ngFor="let item of memberGroup; let i = index" style="font-size: 10px;">
                     <td>{{i+1}}</td>
                     <td>{{item.codigo}}</td>
-                    <td>{{item?.apellido_paterno + ' ' + item?.apellido_materno + ' ' + item?.nombres}}</td>
+                    <td>{{item?.persons_student_nombre}}</td>
                     <td style="width: 2px;">
                       <nb-icon  icon="trash" size="tiny" status="danger" (click)="deleteMembersGroup(item)" style="cursor: pointer; font-size: 15px;"
                                 nbTooltip="Eliminar" nbTooltipPlacement="top" nbTooltipStatus="danger"></nb-icon>

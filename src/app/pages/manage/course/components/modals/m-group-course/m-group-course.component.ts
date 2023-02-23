@@ -277,32 +277,30 @@ export class MGroupCourseComponent implements OnInit {
     },() => {this.loading = false}, () => {this.loading = false})
   }
   matricularCodigos() {
+
     const serviceName = 'matricular-codigos';
     let array:any = [];
 
     if (this.partidos.array_A.length>0) {
       this.partidos.array_A.map((res:any) => {
         if (res.checked) {
-          const datoA = {
-            codigo: res.codigo,
-          }
-          array.push(datoA);
+          array.push(res.codigo);
         }
       });
     }
     if (this.partidos.array_B.length>0) {
       this.partidos.array_B.map((res:any) => {
         if (res.checked) {
-          const datoB = {
-            codigo: res.codigo,
-          }
-          array.push(datoB);
+          array.push(res.codigo);
         }
       });
     }
+    console.log(this.partidos.array_A, 'B', this.partidos.array_B)
+    console.log(array)
     const params = {
       codigos: array.join(',') || '',
     }
+    console.log(this.formGroup.value.group_id, params)
     if (params && params.codigos) {
       Swal.fire({
         title: 'MATRICULAR',
