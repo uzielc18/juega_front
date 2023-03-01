@@ -81,8 +81,12 @@
             </div>
             <hr class="mt-0" />
             <div class="card-list">
+              <!--Lista de cursos-->
               <app-card-list-course *ngIf="!perfilInfo"></app-card-list-course>
-              <div *ngIf="perfilInfo" class="row p-3 m-0" style="width: 100%">
+              <!--Fin de Lista de cursos-->
+
+              <!--
+              <div  class="row p-3 m-0" style="width: 100%">
                 <div class="col-md-6">
                   <nb-card status="primary" class="mb-0">
                     <nb-card-header style="padding-top: 5px; padding-bottom: 5px">
@@ -159,7 +163,7 @@
                         <br />
                         <hr />
                         <br />
-                        <!--<div class="row">
+                        <div class="row">
                           <label class="label col-md-3 d-flex align-items-center">Correo Institucional:</label>
                           <div class="col-md-9">
                             <input
@@ -172,7 +176,7 @@
                               placeholder="Correo Institucional"
                             />
                           </div>
-                        </div>-->
+                        </div>
                         <br />
                         <div class="row">
                           <label class="label col-md-3 d-flex align-items-center">Genero:</label>
@@ -320,7 +324,7 @@
                           <button nbButton size="small" status="primary" (click)="saveInfo()">Guardar Informacion</button>
                         </div>
                       </form>
-                      <!--<div class="row m-0">
+                      <div class="row m-0">
                         <label class="label">Familia</label>
                         <nb-card class="p-0 m-2">
                           <nb-card-body class="p-3">
@@ -403,14 +407,14 @@
                             </div>
                           </nb-card-body>
                         </nb-card>
-                      </div>-->
+                      </div>
                     </nb-card-body>
                   </nb-card>
                 </div>
                 <div class="text-end">
                   <button nbButton size="small" status="danger" (click)="backToProfile()">Cerrar</button>
                 </div>
-              </div>
+              </div>-->
             </div>
           </nb-card-body>
         </nb-card>

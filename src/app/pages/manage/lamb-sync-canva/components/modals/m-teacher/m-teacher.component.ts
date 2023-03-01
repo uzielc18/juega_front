@@ -165,8 +165,12 @@ export class MTeacherComponent implements OnInit {
 
   updateUsers() {
     const serviceName = 'canva-update-users-teacher';
+    const forms = this.formHeader;
+    const param={
+      programa_estudio_id: forms.programa_estudio?.id,
+    }
     this.loading = true;
-    this.generalService.nameAll$(serviceName).subscribe(res => {
+    this.generalService.nameParams$(serviceName,param).subscribe(res => {
       if(res.success) {
         this.getTeachers()
       }
@@ -176,8 +180,26 @@ export class MTeacherComponent implements OnInit {
   }
   updateLogins() {
     const serviceName = 'canva-update-logins-teacher';
+    const forms = this.formHeader;
+    const param={
+      programa_estudio_id: forms.programa_estudio?.id,
+    }
     this.loading = true;
-    this.generalService.nameAll$(serviceName).subscribe(res => {
+    this.generalService.nameParams$(serviceName,param).subscribe(res => {
+      if(res.success) {
+        this.getTeachers()
+      }
+    }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  updateAllLogins() {
+    const serviceName = 'canva-update-logins-teacher';
+    const forms = this.formHeader;
+    const param={
+      programa_estudio_id: forms.programa_estudio?.id,
+      tipo: 'update',
+    }
+    this.loading = true;
+    this.generalService.nameParams$(serviceName,param).subscribe(res => {
       if(res.success) {
         this.getTeachers()
       }

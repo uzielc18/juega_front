@@ -9,7 +9,13 @@
     padding: 30px 25px;
   }
 }
-
+.user-info{
+  border-top: solid 1px #e5e5e5;
+  small{
+    font-style: italic;
+    color: var(--text-hint-color);
+  }
+}
 .profile {
   display: flex;
   align-items: center;

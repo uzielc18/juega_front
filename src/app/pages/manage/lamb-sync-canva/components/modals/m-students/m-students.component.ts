@@ -183,8 +183,12 @@ export class MStudentsComponent implements OnInit {
   }
   updateUsers() {
     const serviceName = 'canva-update-users-student';
+    const forms = this.formHeader;
+    const param={
+      programa_estudio_id: forms.programa_estudio?.id,
+    }
     this.loading = true;
-    this.generalService.nameAll$(serviceName).subscribe(res => {
+    this.generalService.nameParams$(serviceName,param).subscribe(res => {
       if(res.success) {
         this.getStudents()
       }
@@ -194,8 +198,26 @@ export class MStudentsComponent implements OnInit {
   }
   updateLogins() {
     const serviceName = 'canva-update-logins-student';
+    const forms = this.formHeader;
+    const param={
+      programa_estudio_id: forms.programa_estudio?.id,
+    }
     this.loading = true;
-    this.generalService.nameAll$(serviceName).subscribe(res => {
+    this.generalService.nameParams$(serviceName,param).subscribe(res => {
+      if(res.success) {
+        this.getStudents()
+      }
+    }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  updateAllLogins() {
+    const serviceName = 'canva-update-logins-student';
+    this.loading = true;
+    const forms = this.formHeader;
+    const param={
+      programa_estudio_id: forms.programa_estudio?.id,
+      tipo: 'update',
+    }
+    this.generalService.nameParams$(serviceName,param).subscribe(res => {
       if(res.success) {
         this.getStudents()
       }

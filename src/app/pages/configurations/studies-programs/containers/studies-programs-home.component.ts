@@ -5,6 +5,7 @@ import {GeneralService} from "../../../../providers";
 import {EditUserComponent} from "../../../../shared/components/edit-user/edit-user.component";
 import {NbDialogService} from "@nebular/theme";
 import {MdStudiesProgramsComponent} from "../components/md-studies-programs/md-studies-programs.component";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-studies-programs-home',
@@ -31,7 +32,7 @@ export class StudiesProgramsHomeComponent implements OnInit {
   };
   pagesCount: any[] = [20, 30, 50, 100, 200, 300, 500, 1000];
   constructor( private fb: FormBuilder,
-               private generalServi: GeneralService,
+               private generalService: GeneralService,
                private dialogService: NbDialogService,) { }
 
   ngOnInit(): void {
@@ -61,7 +62,7 @@ export class StudiesProgramsHomeComponent implements OnInit {
   listSedes() {
     const serviceName = END_POINTS.base_back.default + 'sedes';
     this.loading = true;
-    this.generalServi.nameAll$(serviceName).subscribe(
+    this.generalService.nameAll$(serviceName).subscribe(
       (res: any) => {
         this.sedes = res.data || [];
         if (this.sedes.length > 0) {
@@ -93,7 +94,7 @@ export class StudiesProgramsHomeComponent implements OnInit {
     const serviceName = END_POINTS.base_back.nivel_ensenanza;
     if (this.sedes.length > 0) {
       this.loading = true;
-      this.generalServi.nameId$(serviceName, sede_id).subscribe(
+      this.generalService.nameId$(serviceName, sede_id).subscribe(
         (res: any) => {
           this.nivelEnsenanza = res.data || [];
         },
@@ -119,7 +120,7 @@ export class StudiesProgramsHomeComponent implements OnInit {
       all: 0
     }
     this.loading = true;
-    this.generalServi.nameIdAndIdParams$(serviceName, nivel, sedeId, params).subscribe(
+    this.generalService.nameIdAndIdParams$(serviceName, nivel, sedeId, params).subscribe(
       (res: any) => {
         this.facultades = res.data || [];
       },
@@ -145,7 +146,7 @@ export class StudiesProgramsHomeComponent implements OnInit {
       programa_estudio_id: this.rolSemestre.area.programa_estudio_id,
     }
     if (id_sede && id_nive_enseanza) {
-      this.generalServi.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
+      this.generalService.nameIdAndIdAndIdParams$(serviceName, id_nive_enseanza, id_sede, id_area, params).subscribe((res:any) => {
         this.litProgramStudy = res.data || [];
         this.success = true;
         if (this.litProgramStudy.length>0) {
@@ -187,6 +188,32 @@ export class StudiesProgramsHomeComponent implements OnInit {
       .onClose.subscribe(result => {
       if (result === 'ok') {
         this.listProgramEstudy();
+      }
+    });
+  }
+  deletePrograma(item:any){
+    const serviceName = 'programaEstudios'
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿ Desea eliminar ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#7f264a',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService.deleteNameId$(serviceName, item.id).subscribe(r => {
+          if (r.success) {
+            this.listProgramEstudy()
+          }
+        },() => {this.loading = false;},() => {this.loading = false;});
       }
     });
   }
