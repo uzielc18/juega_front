@@ -28,6 +28,7 @@ export const END_POINTS = {
     reportes: 'reportes',
     evaluations_Registry: 'evaluations-registry',
     inquiries: 'inquiries',
-    persons: 'persons'
+    persons: 'persons',
+    person_errors: 'personErrors'
   },
 };

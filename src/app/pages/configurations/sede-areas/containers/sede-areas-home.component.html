@@ -1,0 +1,104 @@
+<nb-card class="h-100 border-0"
+         style="border-radius: 15px"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="large">
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="globe-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">Sede Areas</strong>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body class="pb-0 d-flex flex-column">
+    <form [formGroup]="formHeader">
+      <div class="row">
+        <div class="col-sm-5">
+          <label class="label">Buscar Sede</label>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar...." formControlName="nombre_sede"
+                 (keyup)="keyNombreSede($event)">
+        </div>
+        <div class="col-sm-5">
+          <label class="label">Buscar Area</label>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar...." formControlName="nombre_area"
+                 (keyup)="keyNombreArea($event)">
+        </div>
+        <div class="col-sm-2">
+          <label class="label" style="visibility: hidden;">Filtrar</label><br>
+          <button nbButton size="small" status="warning" (click)="refresh()" class="m-1"
+                  [disabled]="formHeader.controls['nombre_sede'].value === ''  ">
+            <nb-icon icon="funnel"></nb-icon>
+            Filtrar
+          </button>
+          <button
+            class="ms-auto m-1"
+            nbButton
+            (click)="open('', 'NEW')"
+            status="primary"
+            nbTooltip="Nuevo tipo elemento"
+            size="small">
+            <nb-icon icon="plus"></nb-icon>
+            Crear
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px;">
+          <th>Area nombre</th>
+          <th>Sede nombre</th>
+          <th>id_sede_areas</th>
+          <th>Código</th>
+          <th>Url Pago</th>
+          <th>Código pago</th>
+          <th>estado</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let item of sedeAreasData">
+          <td>{{item.area_nombre}} ({{item.area_id}})</td>
+          <td>{{item.sede_nombre}} ({{item.sede_id}})</td>
+          <td>{{item.codigo}}</td>
+          <td>{{item.id_sede_areas}}</td>
+          <td>{{item.url_pago_visa}}</td>
+          <td>{{item.codigo_pago}}</td>
+          <td>{{item.estado}}</td>
+
+          <td class="text-center" style="width: 1px; vertical-align: middle;">
+            <div class="d-flex align-items-center justify-content-center">
+              <button nbButton size="tiny" status="info" (click)="open(item, 'UPDATE')">
+                <nb-icon icon="edit" style="font-size: 25px; cursor: pointer;"></nb-icon>
+              </button>
+              <button nbButton size="tiny" status="danger" (click)="delete(item)">
+                <nb-icon icon="trash" style="font-size: 25px; cursor: pointer;"></nb-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="d-flex justify-content-between align-items-center p-2">
+      <div style="color: brown; font-weight: bold;">Total: {{pagination.sizeListData}}</div>
+      <ngb-pagination [collectionSize]="pagination?.sizeListData" [(page)]="pagination.page" [maxSize]="20"
+                      [disabled]="pagination?.isDisabledPage" [pageSize]="pagination?.sizePage"
+                      class="d-flex justify-content-center" size="sm" [boundaryLinks]="true"
+                      (pageChange)="loadPage($event)">
+      </ngb-pagination>
+      <div>
+        <nb-form-field>
+          <nb-icon nbPrefix icon="list-outline"></nb-icon>
+          <nb-select placeholder="Paginación" status="success" size="tiny" fullWidth
+                     [(selected)]="selectedItem" (selectedChange)="sizeTable($event)">
+            <nb-option *ngFor="let per of pagesCount" [value]="per">Paginar de {{per}} en {{per}}</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
+    </div>
+  </nb-card-footer>
+</nb-card>

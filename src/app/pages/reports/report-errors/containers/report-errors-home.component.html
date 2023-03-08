@@ -1,0 +1,33 @@
+<nb-card class="h-100 border-0"
+         style="border-radius: 15px"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="large">
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="error" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">Errores</strong>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="pb-0 d-flex flex-column">
+
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+        <tr style="font-size: 12px;">
+          <th>info</th>
+          <th>info 1</th>
+          <th>info 2</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let item of items">
+          <td>{{item.iud_persona}}</td>
+          <td>{{item.correo}}</td>
+          <td>{{item.nombres}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>

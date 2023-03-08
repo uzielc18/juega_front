@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {GeneralService} from "../../../../../providers";
-import {END_POINTS} from "../../../../../providers/utils";
 import Swal from "sweetalert2";
-import {
-  MTypeTeachersComponent
-} from "../../../type-teachers/components/modals/m-type-teachers/m-type-teachers.component";
 import {NbDialogService} from "@nebular/theme";
 import {MTypeRatingsComponent} from "../../components/modals/m-type-ratings/m-type-ratings.component";
 import {AppService} from "../../../../../core";

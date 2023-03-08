@@ -7,6 +7,9 @@ const routes: Routes = [{
   component: ReportsComponent,
   children: [
     {
+      path:'report-errors',
+      loadChildren: () => import('src/app/pages/reports/report-errors/report-errors.module').then(m => m.ReportErrorsModule)
+    },{
       path:'report-course',
       loadChildren: () => import('src/app/pages/reports/report-course/report-course.module').then(m => m.ReportCourseModule)
     },

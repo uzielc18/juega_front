@@ -8,6 +8,41 @@ const routes: Routes = [
     component: ConfigurationComponent,
     children: [
       {
+        path: 'tipo-programas',
+        loadChildren: () => import('src/app/pages/configurations/tipo-programas/tipo-programas.module')
+          .then(m => m.TipoProgramasModule)
+      },
+      {
+        path: 'semipresencial',
+        loadChildren: () => import('src/app/pages/configurations/semipresencial/semipresencial.module')
+          .then(m => m.SemipresencialModule)
+      },
+      {
+        path: 'nivel-ensenanza',
+        loadChildren: () => import('src/app/pages/configurations/nivel-ensenanza/nivel-ensenanza.module')
+          .then(m => m.NivelEnsenanzaModule)
+      },
+      {
+        path: 'sedes',
+        loadChildren: () => import('src/app/pages/configurations/sedes/sedes.module')
+          .then(m => m.SedesModule)
+      },
+      {
+        path: 'sede-areas',
+        loadChildren: () => import('src/app/pages/configurations/sede-areas/sede-areas.module')
+          .then(m => m.SedeAreasModule)
+      },
+      {
+        path: 'areas',
+        loadChildren: () => import('src/app/pages/configurations/areas/areas.module')
+          .then(m => m.AreasModule)
+      },
+      {
+        path: 'tipo-contratos',
+        loadChildren: () => import('src/app/pages/configurations/contratos/tipo-contratos.module')
+          .then(m => m.TipoContratosModule)
+      },
+      {
         path: 'roles',
         loadChildren: () => import('src/app/pages/configurations/roles/roles.module')
           .then(m => m.RolesModule)
