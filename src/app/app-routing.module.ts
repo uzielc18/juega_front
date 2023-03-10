@@ -69,6 +69,14 @@ const routes: Routes = [
         path: 'reports',
         loadChildren: () => import('./pages/reports/reports.module').then(m => m.ReportsModule),
       },
+      {
+        path: 'upeu-juega',
+        loadChildren: () => import('./pages/upeu-juega/upeu-juega.module').then(m => m.UpeuJuegaModule),
+      },
+      {
+        path: 'educatemas',
+        loadChildren: () => import('./pages/educatemas/educatemas.module').then(m => m.EducatemasModule),
+      },
 
       // {
       //   path: "**",

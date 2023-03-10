@@ -2,23 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import {GeneralService} from "../../../../providers";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {NbDialogService} from "@nebular/theme";
-import {MSedeAreasComponent} from "../components/modals/m-sede-areas/m-sede-areas.component";
+//import {MAreasComponent} from "../components/modals/m-areas/m-areas.component";
 import Swal from "sweetalert2";
 import {AppService} from "../../../../core";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {END_POINTS} from "../../../../providers/utils";
 
 @Component({
   selector: 'app-type-elements-home',
-  templateUrl: './sede-areas-home.component.html',
-  styleUrls: ['./sede-areas-home.component.scss']
+  templateUrl: './pagos-home.component.html',
+  styleUrls: ['./pagos-home.component.scss']
 })
-export class SedeAreasHomeComponent implements OnInit {
+export class PagosHomeComponent implements OnInit {
 
   loading:boolean = false;
-  sedeAreasData: any [] = [];
-  sedes: any [] = [];
-  sedes_id: any;
+  pagosData: any [] = [];
   formHeader: any = FormGroup;
   selectedItem = 20;
   pagination: any = {
@@ -34,32 +31,40 @@ export class SedeAreasHomeComponent implements OnInit {
               private appUserInfo: AppService,private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.listSedes();
     this.fieldReactive();
     this.getData();
   }
   private fieldReactive() {
     const controls = {
-      sede: [''],
-      nombre_area: [''],
+      nombre: [''],
     };
     this.formHeader = this.formBuilder.group(controls);
   }
   getData(){
     this.loading = true
-    const serviceName = 'sedeAreas';
+    const serviceName = 'pagosEducatemas';
     const forms =  this.formHeader.value;
     const param={
       per_page: this.pagination.per_page,
       page: this.pagination.page,
-      sede: this.sedes_id || '',
-      nombre_area: forms.nombre_area || '',
+      nombre: forms.nombre || '',
     }
     this.generalService.nameParams$(serviceName,param).subscribe((res:any) => {
-      this.sedeAreasData = res.data;
+        this.pagosData = res.data;
+      this.pagosData.map((m: any) => {
+        m.billing = JSON.parse(m.billing);
+        m.shipping = JSON.parse(m.shipping);
+        m.meta_data = JSON.parse(m.meta_data);
+        m.line_items = JSON.parse(m.line_items);
+        m.tax_lines = JSON.parse(m.tax_lines);
+        m.shipping_lines = JSON.parse(m.shipping_lines);
+        m.fee_lines = JSON.parse(m.fee_lines);
+        m.coupon_lines = JSON.parse(m.coupon_lines);
+        m.refunds = JSON.parse(m.refunds);
+      })
       this.pagination.sizeListData = res.meta && res.meta.total || 0;
       this.pagination.sizePage = res.meta && res.meta.per_page || 0;
-      if (this.pagination.sizeListData < this.sedeAreasData.length) {
+      if (this.pagination.sizeListData < this.pagosData.length) {
         this.pagination.isDisabledPage = true;
       } else {
         this.pagination.isDisabledPage = false;
@@ -68,33 +73,6 @@ export class SedeAreasHomeComponent implements OnInit {
         this.loading = true;
       }
     }, () => {this.loading = false}, () => {this.loading = false});
-  }
-  listSedes() {
-    const serviceName = END_POINTS.base_back.default + 'sedes';
-    this.loading = true;
-    this.generalService.nameAll$(serviceName).subscribe(
-      (res: any) => {
-        this.sedes = res.data || [];
-        if (this.sedes.length > 0) {
-          this.formHeader.patchValue({
-            sede_id: this.sedes[0],
-          });
-          //this.formHeader.controls['nivel_ensenanza'].enable();
-          //this.listNivelEnsenanza(this.sedes[0].id);
-
-        }
-      },
-      () => {
-        this.loading = false;
-      },
-      () => {
-        this.loading = false;
-      }
-    );
-  }
-  selectedSede(sede: any) {
-    this.sedes_id=sede.id;
-    //this.getData();
   }
   refresh() {
     this.pagination.page = 1;
@@ -108,20 +86,14 @@ export class SedeAreasHomeComponent implements OnInit {
     this.pagination.per_page = $event;
     this.getData();
   }
-  keyNombreSede($event:any) {
-    if (!this.formHeader.value.nombre_sede) {
+  keyNombre($event:any) {
+    if (!this.formHeader.value.nombre) {
       this.pagination.page = 1;
       this.getData();
     }
   }
-  keyNombreArea($event:any) {
-    if (!this.formHeader.value.nombre_area) {
-      this.pagination.page = 1;
-      this.getData();
-    }
-  }
-  open(item: any, code: any){
-    this.dialogService.open(MSedeAreasComponent, {
+ /*/ open(item: any, code: any){
+    this.dialogService.open(MAreasComponent, {
       context: {
         userInfo: this.appUserInfo.user,
         item: item,
@@ -134,10 +106,9 @@ export class SedeAreasHomeComponent implements OnInit {
           this.getData();
         }
     })
-
-  }
+  }*/
   delete(item: any){
-    const serviceName = 'sedeAreas'
+    const serviceName = 'pagosEducatemas'
     Swal.fire({
       title: 'Eliminar',
       text: '¿ Desea eliminar ? ',

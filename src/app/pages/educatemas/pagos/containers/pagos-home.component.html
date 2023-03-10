@@ -6,32 +6,26 @@
   <nb-card-header>
     <div class="d-flex">
       <nb-icon icon="globe-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
-      <strong style="padding-top: 7px;">Sede Areas</strong>
+      <strong style="padding-top: 7px;">Areas</strong>
     </div>
   </nb-card-header>
 
   <nb-card-body class="pb-0 d-flex flex-column">
     <form [formGroup]="formHeader">
       <div class="row">
-        <div class="col-sm-5">
-            <label class="label">Sede</label>
-            <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="sede">
-              <nb-option *ngFor="let sede of sedes" [value]="sede" (click)="selectedSede(sede)">{{ sede?.nombre }}</nb-option>
-            </nb-select>
+        <div class="col-sm-9">
+          <label class="label">Buscar nombre</label>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar...." formControlName="nombre"
+                 (keyup)="keyNombre($event)">
         </div>
-        <div class="col-sm-5">
-          <label class="label">Buscar Area</label>
-          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar...." formControlName="nombre_area"
-                 (keyup)="keyNombreArea($event)">
-        </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <label class="label" style="visibility: hidden;">Filtrar</label><br>
           <button nbButton size="small" status="warning" (click)="refresh()" class="m-1"
-                  [disabled]="formHeader.controls['sede'].value === '' &&  formHeader.controls['nombre_area'].value === '' ">
+                  [disabled]="formHeader.controls['nombre'].value === '' ">
             <nb-icon icon="funnel"></nb-icon>
             Filtrar
           </button>
-          <button
+          <!--<button
             class="ms-auto m-1"
             nbButton
             (click)="open('', 'NEW')"
@@ -40,7 +34,7 @@
             size="small">
             <nb-icon icon="plus"></nb-icon>
             Crear
-          </button>
+          </button>-->
         </div>
       </div>
     </form>
@@ -48,31 +42,47 @@
       <table class="table table-sm">
         <thead>
         <tr style="font-size: 12px;">
-          <th>Area nombre</th>
-          <th>Sede nombre</th>
-          <th>id_sede_areas</th>
-          <th>Código</th>
-          <th>Url Pago</th>
-          <th>Código pago</th>
-          <th>estado</th>
+          <th>Codigo</th>
+          <th>Status</th>
+          <th>Currency</th>
+          <th>Total</th>
+          <th>Datos</th>
+          <th>Meta_data</th>
+          <th>Fecha</th>
           <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
-        <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let item of sedeAreasData">
-          <td>{{item.area_nombre}} ({{item.area_id}})</td>
-          <td>{{item.sede_nombre}} ({{item.sede_id}})</td>
-          <td>{{item.codigo}}</td>
-          <td>{{item.id_sede_areas}}</td>
-          <td>{{item.url_pago_visa}}</td>
-          <td>{{item.codigo_pago}}</td>
-          <td>{{item.estado}}</td>
+        <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let item of pagosData">
+          <td>{{item.pago_id}}</td>
+          <td>{{item.status}}</td>
+          <td>{{item.currency_symbol}}{{item.currency}}</td>
+          <td>{{item.total}}</td>
+          <td>
+
+            <div class="d-flex flex-column " style="width: 100%; word-break: break-all" >
+              <!--<span style="font-size: 10px"><strong>CANVA ID:</strong>  {{item.id_canva}}</span>-->
+              <span style="font-size: 10px"><strong>First Name:</strong>  {{item.billing.first_name}}</span>
+              <span style="font-size: 10px"><strong>Last name:</strong>  {{item.billing.last_name}}</span>
+              <span style="font-size: 10px"><strong>Company</strong>  {{item.billing.company}}</span>
+              <span style="font-size: 10px"><strong>Address</strong>  {{item.billing.address_1}} {{item.billing.address_2}}</span>
+              <span style="font-size: 10px"><strong>Email</strong>  {{item.billing.email}}</span>
+              <span style="font-size: 10px"><strong>Phone</strong>  {{item.billing.phone}}</span>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column " style="width: 100%; word-break: break-all" *ngFor="let dat of item.meta_data">
+            <!--<span style="font-size: 10px"><strong>CANVA ID:</strong>  {{item.id_canva}}</span>-->
+            <span style="font-size: 10px"><strong>Id:</strong>  {{dat.id}}</span>
+            <span style="font-size: 10px"><strong>Key</strong>  {{dat.key}}</span>
+          </div></td>
+          <td>{{item.date_created}}</td>
 
           <td class="text-center" style="width: 1px; vertical-align: middle;">
             <div class="d-flex align-items-center justify-content-center">
-              <button nbButton size="tiny" status="info" (click)="open(item, 'UPDATE')">
+              <!--<button nbButton size="tiny" status="info" (click)="open(item, 'UPDATE')">
                 <nb-icon icon="edit" style="font-size: 25px; cursor: pointer;"></nb-icon>
-              </button>
+              </button>-->
               <button nbButton size="tiny" status="danger" (click)="delete(item)">
                 <nb-icon icon="trash" style="font-size: 25px; cursor: pointer;"></nb-icon>
               </button>

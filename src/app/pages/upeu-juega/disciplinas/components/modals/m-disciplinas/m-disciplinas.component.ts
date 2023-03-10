@@ -3,21 +3,22 @@ import {NbDialogRef} from "@nebular/theme";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneralService} from "../../../../../../providers";
 
+
 @Component({
-  selector: 'app-m-type-elements',
-  templateUrl: './m-sedes.component.html',
-  styleUrls: ['./m-sedes.component.scss']
+  selector: 'app-m-disciplinas',
+  templateUrl: './m-disciplinas.component.html',
+  styleUrls: ['./m-disciplinas.component.scss']
 })
-export class MSedesComponent implements OnInit {
+export class MDisciplinasComponent implements OnInit {
 
   loading:boolean = false
-  FormSedes: any = FormGroup
+  FormDisciplinas: any = FormGroup
   defaultIcon:any = 'info-outline';
   //color_active2 = new FormControl('')
   @Input() item: any;
   @Input() code: any;
   @Input() userInfo: any;
-  constructor(public activeModal: NbDialogRef<MSedesComponent>,
+  constructor(public activeModal: NbDialogRef<MDisciplinasComponent>,
               private fb: FormBuilder,
               private generalService: GeneralService) { }
 
@@ -27,42 +28,31 @@ export class MSedesComponent implements OnInit {
 
   private fielsReactive() {
     const controls = {
-      id_sede: [''],
-      nombre: ['',[Validators.required]],
-      codigo: [''],
-      url_pago_visa: [''],
-      codigo_pago: [''],
+      name: ['',[Validators.required]],
       estado: ['1'],
     };
-    this.FormSedes = this.fb.group(controls)
+    this.FormDisciplinas = this.fb.group(controls)
     if(this.code === 'UPDATE'){
       this.setData();
     }
   }
 
   setData(){
-    this.FormSedes.patchValue({
-      id_sede: this.item.id_sede,
-      nombre: this.item.nombre,
-      codigo: this.item.codigo,
-      url_pago_visa: this.item.url_pago_visa,
-      codigo_pago: this.item.codigo_pago,
+    this.FormDisciplinas.patchValue({
+      name: this.item.name,
       estado: this.item.estado,
     })
   }
   closeModal(){
     this.activeModal.close('close');
   }
-  saveTypeElements(){
-    const serviceName = 'sedes';
-    const forms = this.FormSedes.value;
+  save(){
+    const serviceName = 'upeudisciplinas';
+    const forms = this.FormDisciplinas.value;
     const params = {
-      codigo: forms.codigo,
-      nombre: forms.nombre.toUpperCase(),
-      id_sede: forms.id_sede,
-      url_pago_visa: forms.url_pago_visa,
-      codigo_pago: forms.codigo_pago,
+      nombre: forms.name.toUpperCase(),
       estado: forms.estado,
+      //userId: this.userInfo.id
     };
     if (this.code === 'NEW') {
       this.loading = true;

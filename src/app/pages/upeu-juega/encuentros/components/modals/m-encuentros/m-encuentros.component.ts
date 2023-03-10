@@ -4,20 +4,20 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneralService} from "../../../../../../providers";
 
 @Component({
-  selector: 'app-m-type-elements',
-  templateUrl: './m-sedes.component.html',
-  styleUrls: ['./m-sedes.component.scss']
+  selector: 'app-m-encuentros',
+  templateUrl: './m-encuentros.component.html',
+  styleUrls: ['./m-encuentros.component.scss']
 })
-export class MSedesComponent implements OnInit {
+export class MEncuentrosComponent implements OnInit {
 
   loading:boolean = false
-  FormSedes: any = FormGroup
+  Formdatos: any = FormGroup
   defaultIcon:any = 'info-outline';
   //color_active2 = new FormControl('')
   @Input() item: any;
   @Input() code: any;
   @Input() userInfo: any;
-  constructor(public activeModal: NbDialogRef<MSedesComponent>,
+  constructor(public activeModal: NbDialogRef<MEncuentrosComponent>,
               private fb: FormBuilder,
               private generalService: GeneralService) { }
 
@@ -27,42 +27,49 @@ export class MSedesComponent implements OnInit {
 
   private fielsReactive() {
     const controls = {
-      id_sede: [''],
-      nombre: ['',[Validators.required]],
-      codigo: [''],
-      url_pago_visa: [''],
-      codigo_pago: [''],
+      upeuequipo_id: [''],
+      upeurival_id: [''],
+      fecha: [''],
+      hora: [''],
+      estado_encuentro: ['pendiente'],
       estado: ['1'],
+      score_equipo: ['1'],
+      score_rival: ['1'],
     };
-    this.FormSedes = this.fb.group(controls)
+    this.Formdatos = this.fb.group(controls)
     if(this.code === 'UPDATE'){
       this.setData();
     }
   }
 
   setData(){
-    this.FormSedes.patchValue({
-      id_sede: this.item.id_sede,
-      nombre: this.item.nombre,
-      codigo: this.item.codigo,
-      url_pago_visa: this.item.url_pago_visa,
-      codigo_pago: this.item.codigo_pago,
+    this.Formdatos.patchValue({
+      upeuequipo_id: this.item.upeuequipo_id,
+      upeurival_id: this.item.upeurival_id,
+      fecha: this.item.fecha,
+      hora: this.item.hora,
+      estado_encuentro: this.item.estado_encuentro,
       estado: this.item.estado,
+      score_equipo: this.item.score_equipo,
+      score_rival: this.item.score_rival,
     })
   }
   closeModal(){
     this.activeModal.close('close');
   }
   saveTypeElements(){
-    const serviceName = 'sedes';
-    const forms = this.FormSedes.value;
+    const serviceName = 'upeuencuentros';
+    const forms = this.Formdatos.value;
     const params = {
-      codigo: forms.codigo,
-      nombre: forms.nombre.toUpperCase(),
-      id_sede: forms.id_sede,
-      url_pago_visa: forms.url_pago_visa,
-      codigo_pago: forms.codigo_pago,
+      upeuequipo_id: forms.upeuequipo_id,
+      upeurival_id: forms.upeurival_id,
+      fecha:forms.fecha,
+      hora: forms.hora,
+      estado_encuentro: forms.estado_encuentro,
       estado: forms.estado,
+      score_equipo: forms.score_equipo,
+      score_rival: forms.score_rival,
+      //userId: this.userInfo.id
     };
     if (this.code === 'NEW') {
       this.loading = true;

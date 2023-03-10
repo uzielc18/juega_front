@@ -5,19 +5,19 @@ import {GeneralService} from "../../../../../../providers";
 
 @Component({
   selector: 'app-m-type-elements',
-  templateUrl: './m-sedes.component.html',
-  styleUrls: ['./m-sedes.component.scss']
+  templateUrl: './m-pagos.component.html',
+  styleUrls: ['./m-pagos.component.scss']
 })
-export class MSedesComponent implements OnInit {
+export class MPagosComponent implements OnInit {
 
   loading:boolean = false
-  FormSedes: any = FormGroup
-  defaultIcon:any = 'info-outline';
+  FormPagos: any = FormGroup
+  defaultIcon:any = 'globe-outline';
   //color_active2 = new FormControl('')
   @Input() item: any;
   @Input() code: any;
   @Input() userInfo: any;
-  constructor(public activeModal: NbDialogRef<MSedesComponent>,
+  constructor(public activeModal: NbDialogRef<MPagosComponent>,
               private fb: FormBuilder,
               private generalService: GeneralService) { }
 
@@ -27,42 +27,46 @@ export class MSedesComponent implements OnInit {
 
   private fielsReactive() {
     const controls = {
-      id_sede: [''],
+      area_id: [''],
       nombre: ['',[Validators.required]],
-      codigo: [''],
-      url_pago_visa: [''],
-      codigo_pago: [''],
-      estado: ['1'],
+      sigla: ['',[Validators.min(4)]],
+      id_areas: ['0'],
+      id_padre: ['0'],
+      codigo: ['',[Validators.required]],
+      estado: ['1',],
     };
-    this.FormSedes = this.fb.group(controls)
+    this.FormPagos = this.fb.group(controls)
     if(this.code === 'UPDATE'){
       this.setData();
     }
   }
 
   setData(){
-    this.FormSedes.patchValue({
-      id_sede: this.item.id_sede,
+    this.FormPagos.patchValue({
+      area_id: this.item.area_id,
       nombre: this.item.nombre,
-      codigo: this.item.codigo,
-      url_pago_visa: this.item.url_pago_visa,
-      codigo_pago: this.item.codigo_pago,
+      sigla: this.item.sigla,
+      id_areas: this.item.id_areas,
+      id_padre: this.item.id_padre,
       estado: this.item.estado,
+      codigo: this.item.codigo,
     })
   }
   closeModal(){
     this.activeModal.close('close');
   }
-  saveTypeElements(){
-    const serviceName = 'sedes';
-    const forms = this.FormSedes.value;
+  save(){
+    const serviceName = 'pagosEducatemas';
+    const forms = this.FormPagos.value;
     const params = {
-      codigo: forms.codigo,
+      area_id: forms.area_id,
       nombre: forms.nombre.toUpperCase(),
-      id_sede: forms.id_sede,
-      url_pago_visa: forms.url_pago_visa,
-      codigo_pago: forms.codigo_pago,
+      sigla: forms.sigla,
+      id_areas: forms.id_areas,
+      id_padre: forms.id_padre,
+      codigo: forms.codigo,
       estado: forms.estado,
+     //userId: this.userInfo.id
     };
     if (this.code === 'NEW') {
       this.loading = true;

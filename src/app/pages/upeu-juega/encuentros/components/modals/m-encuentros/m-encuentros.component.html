@@ -1,0 +1,34 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        {{code === 'NEW' ? 'NUEVO Encuentro': 'EDITAR Encuentro'}}
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="text-center" >
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="Formdatos">
+
+        </form>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="d-flex">
+    <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
+    <button
+      type="button"
+      class="ms-2"
+      nbButton
+      size="small"
+      status="primary"
+      (click)="saveTypeElements()"
+      [disabled] = "Formdatos.invalid">
+      Guardar
+    </button>
+  </nb-card-footer>
+</nb-card>
