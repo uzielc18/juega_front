@@ -1,0 +1,64 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        EQUIPOS
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row" [formGroup]="formHeader">
+      <div class="col-md-6 mb-2 mb-md-0">
+        <label class="label">Diciplinas</label>
+        <nb-select
+          placeholder="Nivel enseñanza"
+          size="small"
+          status="primary"
+          fullWidth
+          formControlName="diciplina">
+          <nb-option *ngFor="let item of disciplinasData" [value]="item.id">
+            {{item.name}}
+          </nb-option>
+        </nb-select>
+      </div>
+      <div class="col-md-6 mb-2 mb-md-0">
+        <label class="label">Categorias</label>
+        <nb-select
+          placeholder="Nivel enseñanza"
+          size="small"
+          status="primary"
+          fullWidth
+          formControlName="categoria">
+          <nb-option *ngFor="let item of categoriasData" [value]="item.id">
+            {{item.name}}
+          </nb-option>
+        </nb-select>
+      </div>
+      <br>
+      <div class="col-md-3 mb-2 mb-md-0">
+        <label class="label">N° de equipos por grupo</label>
+        <input type="text" placeholder="Número de equipos" nbInput fullWidth fieldSize="small" formControlName="equipos">
+      </div>
+      <div class="col-md-3">
+        <label class="label">N° de grupos</label>
+        <input type="text" placeholder="Número de grupos" nbInput fullWidth fieldSize="small" formControlName="grupos">
+      </div>
+      <div class="col-md-4 mb-2 mb-md-0 ms-auto">
+        <label class="label" style="visibility: hidden">Procesar</label>
+        <button [disabled]="formHeader.invalid" nbButton size="small" status="warning" fullWidth><nb-icon icon="settings-outline"></nb-icon> Procesar</button>
+      </div>
+    </div>
+    <hr class="label">
+    <nb-card style="margin: 0">
+      <nb-card-body>
+
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+  <nb-card-footer class="d-flex">
+    <button class="ms-auto" size="small" nbButton status="primary">Guardar</button>
+  </nb-card-footer>
+</nb-card>
