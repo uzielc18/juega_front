@@ -15,6 +15,9 @@ const routes: Routes = [{
     },{
       path:'encuentros',
       loadChildren: () => import('src/app/pages/upeu-juega/encuentros/encuentros.module').then(m => m.EncuentrosModule)
+    },{
+      path:'equipos',
+      loadChildren: () => import('src/app/pages/upeu-juega/equipos/equipos.module').then(m => m.EquiposModule)
     }
   ]
 }];

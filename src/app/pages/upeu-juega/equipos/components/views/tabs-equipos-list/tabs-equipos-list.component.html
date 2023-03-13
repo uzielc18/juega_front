@@ -1,0 +1,38 @@
+<div class="row" >
+  <div class="col-md-6 col-xxl-6" *ngFor="let item of data">
+    <nb-accordion class="mb-3">
+      <nb-accordion-item [collapsed]="item.active">
+        <nb-accordion-item-header>
+          {{item.name}}
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="table-responsive">
+            <table class="table table-sm table-striped">
+              <thead>
+              <tr style="font-size: 12px">
+                <th>Nombre</th>
+                <th>Color</th>
+                <th>Codigo</th>
+              </tr>
+              </thead>
+              <tbody *ngIf="item.equipos.length > 0; else emptyContent">
+              <tr *ngFor="let eq of item.equipos" style="font-size: 12px">
+                <td>{{eq.name}}</td>
+                <td>{{eq.color}}</td>
+                <td>{{eq.codigo}}</td>
+              </tr>
+              </tbody>
+              <ng-template #emptyContent>
+                <tbody>
+                <tr style="font-size: 12px">
+                  <td colspan="3" class="text-center text-muted">Aún no hay registros</td>
+                </tr>
+                </tbody>
+              </ng-template>
+            </table>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+  </div>
+</div>

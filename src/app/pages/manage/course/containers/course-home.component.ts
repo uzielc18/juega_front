@@ -159,7 +159,7 @@ export class CourseHomeComponent implements OnInit {
     this.loading = true
     const serviceName = END_POINTS.base_back.sede_areas;
     const params = {
-      all: 1
+      all: 0
     }
 
     this.generalServi.nameIdAndIdParams$(serviceName, nivel, sedeId, params).subscribe(

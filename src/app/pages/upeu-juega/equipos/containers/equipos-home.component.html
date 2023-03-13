@@ -1,0 +1,25 @@
+<nb-card class="h-100 border-0"
+         style="border-radius: 15px"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="large">
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="cube-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">EQUIPOS</strong>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="pb-0 d-flex flex-column">
+    <div class="row" style="padding: 0px">
+      <div class="col-md-10"></div>
+      <div class="col-md-2">
+        <button nbButton size="small" fullWidth status="primary" (click)="openModalCreate()">Crear</button>
+      </div>
+    </div>
+    <nb-tabset (changeTab)="changeTabs($event)">
+        <nb-tab *ngFor="let item of tabsData" [active]="item.name == 'Futsal'" [tabTitle]="item.name" responsive [tabId]="item.name" style="max-height: 70vh;">
+          <app-tabs-equipos-list [item] = "item" (loadingsForm) = loadingsForm($event)></app-tabs-equipos-list>
+        </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>
