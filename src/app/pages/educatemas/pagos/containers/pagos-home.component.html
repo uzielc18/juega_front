@@ -18,9 +18,9 @@
           <input type="text" nbInput fullWidth fieldSize="small" placeholder="Buscar...." formControlName="nombre"
                  (keyup)="keyNombre($event)">
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2 ms-auto">
           <label class="label" style="visibility: hidden;">Filtrar</label><br>
-          <button nbButton size="small" status="warning" (click)="refresh()" class="m-1"
+          <button fullWidth nbButton size="small" status="warning" (click)="refresh()"
                   [disabled]="formHeader.controls['nombre'].value === '' ">
             <nb-icon icon="funnel"></nb-icon>
             Filtrar
@@ -38,58 +38,66 @@
         </div>
       </div>
     </form>
+    <hr style="background-color: #EDF1F7; color: #EDF1F7">
+    <div class="d-flex align-items-center justify-content-center flex-wrap">
+      <div class="text-center d-flex align-items-center justify-content-center">
+        <strong class="text-leyend">Estado lamb ≠ (1) y status(completed)</strong>
+        <div class="circle" style="background: #F6DADE"></div>
+      </div>
+      <div class="text-center d-flex align-items-center justify-content-center">
+        <strong class="text-leyend">Estado lamb = (1) y status(completed)</strong>
+        <div class="circle" style="background: #C6F2D7"></div>
+      </div>
+      <div class="text-center d-flex align-items-center justify-content-center">
+        <strong class="text-leyend">Estado lamb ≠ 1 y status(created) </strong>
+        <div class="circle" style="background: #EEC7A1"></div>
+      </div>
+    </div>
     <div class="table-responsive">
       <table class="table table-sm">
         <thead>
         <tr style="font-size: 12px;">
+          <th style="width: 1px">#</th>
           <th>Codigo</th>
           <th>Status</th>
-          <th>Nombres</th>
-          <th>Dni</th>
-          <th>Currency</th>
-          <th>Total</th>
           <th>Datos</th>
-          <th>Meta_data</th>
+          <th>Moneda</th>
+          <th>Total</th>
           <th>Fecha</th>
+          <th>Lamb sincro</th>
           <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
-        <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let item of pagosData">
-          <td>{{item.id_pago}}</td>
+        <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let item of pagosData; let i = index" [ngStyle]="{'background-color': item.color_error}">
+          <td>{{i+1}}</td>
+          <td>{{item.pago_id}}</td>
           <td>{{item.status}}</td>
-          <td>{{item.nombres}}</td>
-          <td>{{item.dni}}</td>
-          <td>{{item.currency_symbol}}{{item.currency}}</td>
-          <td>{{item.total}}</td>
           <td>
-
             <div class="d-flex flex-column " style="width: 100%; word-break: break-all" >
               <!--<span style="font-size: 10px"><strong>CANVA ID:</strong>  {{item.id_canva}}</span>-->
-              <span style="font-size: 10px"><strong>First Name:</strong>  {{item.billing.first_name}}</span>
-              <span style="font-size: 10px"><strong>Last name:</strong>  {{item.billing.last_name}}</span>
-              <span style="font-size: 10px"><strong>Company</strong>  {{item.billing.company}}</span>
-              <span style="font-size: 10px"><strong>Address</strong>  {{item.billing.address_1}} {{item.billing.address_2}}</span>
-              <span style="font-size: 10px"><strong>Email</strong>  {{item.billing.email}}</span>
-              <span style="font-size: 10px"><strong>Phone</strong>  {{item.billing.phone}}</span>
+              <span style="font-size: 10px"><strong>Nmbres:</strong>  {{item.billing.first_name}} {{item.billing.last_name}}</span>
+              <span style="font-size: 10px"><strong>DNI:</strong>  {{item.dni}}</span>
             </div>
           </td>
-          <td>
-            <div class="d-flex flex-column " style="width: 100%; word-break: break-all" *ngFor="let dat of item.meta_data">
-            <!--<span style="font-size: 10px"><strong>CANVA ID:</strong>  {{item.id_canva}}</span>-->
-            <span style="font-size: 10px"><strong>Id:</strong>  {{dat.id}}</span>
-            <span style="font-size: 10px"><strong>Key</strong>  {{dat.key}}</span>
-          </div></td>
+          <td>{{item.currency_symbol}}{{item.currency}}</td>
+          <td>{{item.total}}</td>
           <td>{{item.date_created}}</td>
-
+          <td>
+            <div class="d-flex flex-column " style="width: 100%; word-break: break-all" >
+              <!--<span style="font-size: 10px"><strong>CANVA ID:</strong>  {{item.id_canva}}</span>-->
+              <span style="font-size: 10px"><strong>Estado:</strong>  {{item.estado_lamb === '1'? 'Procesado': ''}}</span>
+              <span style="font-size: 10px"><strong>Info:</strong>  {{item.estado_lamb_descripcion}}</span>
+            </div>
+          </td>
           <td class="text-center" style="width: 1px; vertical-align: middle;">
             <div class="d-flex align-items-center justify-content-center">
-              <button nbButton size="tiny" status="info" (click)="reload(item)">
+              <button nbButton size="tiny" status="info" (click)="reload(item)" *ngIf="item.estado_lamb !== '1' && item.status == 'completed'">
                 <nb-icon icon="flip-outline" style="font-size: 25px; cursor: pointer;"></nb-icon>
               </button>
-              <button nbButton size="tiny" status="danger" (click)="delete(item)">
+              <!--<button nbButton size="tiny" status="danger" (click)="delete(item)">
                 <nb-icon icon="trash" style="font-size: 25px; cursor: pointer;"></nb-icon>
-              </button>
+              </button>-->
             </div>
           </td>
         </tr>

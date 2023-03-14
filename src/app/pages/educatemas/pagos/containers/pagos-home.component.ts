@@ -61,6 +61,16 @@ export class PagosHomeComponent implements OnInit {
         m.fee_lines = JSON.parse(m.fee_lines);
         m.coupon_lines = JSON.parse(m.coupon_lines);
         m.refunds = JSON.parse(m.refunds);
+
+        if(m.estado_lamb !== '1' && m.status === 'completed') {
+          m.color_error = '#F6DADE'
+        }
+        if(m.estado_lamb === '1' && m.status === 'completed') {
+          m.color_error = '#C6F2D7'
+        }
+        if(m.estado_lamb !== '1' && m.status === 'created') {
+          m.color_error = '#EEC7A1'
+        }
       })
       this.pagination.sizeListData = res.meta && res.meta.total || 0;
       this.pagination.sizePage = res.meta && res.meta.per_page || 0;
