@@ -108,7 +108,7 @@ export class PagosHomeComponent implements OnInit {
     })
   }*/
   delete(item: any){
-    const serviceName = 'pagosEducatemas'
+    const serviceName = 'reload-pago'
     Swal.fire({
       title: 'Eliminar',
       text: '¿ Desea eliminar ? ',
@@ -134,4 +134,30 @@ export class PagosHomeComponent implements OnInit {
     });
   }
 
+  reload(item: any){
+    const serviceName = 'reload-pago'
+    Swal.fire({
+      title: 'Reprocesar',
+      text: '¿ Desea reprocesar el pago ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#7f264a',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService.updateNameIdData$(serviceName, item.id,[]).subscribe(r => {
+          if (r.success) {
+            this.getData();
+          }
+        },() => {this.loading = false;},() => {this.loading = false;});
+      }
+    });
+  }
 }

@@ -6,7 +6,7 @@
   <nb-card-header>
     <div class="d-flex">
       <nb-icon icon="globe-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
-      <strong style="padding-top: 7px;">Areas</strong>
+      <strong style="padding-top: 7px;">Pagos</strong>
     </div>
   </nb-card-header>
 
@@ -44,6 +44,8 @@
         <tr style="font-size: 12px;">
           <th>Codigo</th>
           <th>Status</th>
+          <th>Nombres</th>
+          <th>Dni</th>
           <th>Currency</th>
           <th>Total</th>
           <th>Datos</th>
@@ -54,8 +56,10 @@
         </thead>
         <tbody>
         <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let item of pagosData">
-          <td>{{item.pago_id}}</td>
+          <td>{{item.id_pago}}</td>
           <td>{{item.status}}</td>
+          <td>{{item.nombres}}</td>
+          <td>{{item.dni}}</td>
           <td>{{item.currency_symbol}}{{item.currency}}</td>
           <td>{{item.total}}</td>
           <td>
@@ -80,9 +84,9 @@
 
           <td class="text-center" style="width: 1px; vertical-align: middle;">
             <div class="d-flex align-items-center justify-content-center">
-              <!--<button nbButton size="tiny" status="info" (click)="open(item, 'UPDATE')">
-                <nb-icon icon="edit" style="font-size: 25px; cursor: pointer;"></nb-icon>
-              </button>-->
+              <button nbButton size="tiny" status="info" (click)="reload(item)">
+                <nb-icon icon="flip-outline" style="font-size: 25px; cursor: pointer;"></nb-icon>
+              </button>
               <button nbButton size="tiny" status="danger" (click)="delete(item)">
                 <nb-icon icon="trash" style="font-size: 25px; cursor: pointer;"></nb-icon>
               </button>
