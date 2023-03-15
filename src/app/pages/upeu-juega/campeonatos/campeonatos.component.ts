@@ -1,0 +1,17 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-categorias',
+  template: `<router-outlet></router-outlet>`,
+  styles: [
+
+  ]
+})
+export class CampeonatosComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}

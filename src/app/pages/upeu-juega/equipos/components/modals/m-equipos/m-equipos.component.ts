@@ -33,9 +33,11 @@ export class MEquiposComponent implements OnInit {
     this.getDisciplina();
     this.getCategory();
   }
+
   closeModal() {
     this.activeModal.close('')
   }
+
   getDisciplina(){
     this.loading = true
     const serviceName = 'upeudisciplinas';
@@ -43,6 +45,7 @@ export class MEquiposComponent implements OnInit {
       this.disciplinasData = resp.data;
     }, () => {this.loading = false}, () => {this.loading = false});
   }
+
   getCategory(){
     this.loading = true
     const serviceName = 'upeucategoriasEquipos';

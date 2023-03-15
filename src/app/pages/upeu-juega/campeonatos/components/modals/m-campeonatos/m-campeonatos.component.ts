@@ -6,19 +6,19 @@ import {GeneralService} from "../../../../../../providers";
 
 @Component({
   selector: 'app-m-disciplinas',
-  templateUrl: './m-disciplinas.component.html',
-  styleUrls: ['./m-disciplinas.component.scss']
+  templateUrl: './m-campeonatos.component.html',
+  styleUrls: ['./m-campeonatos.component.scss']
 })
-export class MDisciplinasComponent implements OnInit {
+export class MCampeonatosComponent implements OnInit {
 
   loading:boolean = false
-  FormDisciplinas: any = FormGroup
+  Form: any = FormGroup
+  defaultIcon:any = 'info-outline';
   //color_active2 = new FormControl('')
   @Input() item: any;
   @Input() code: any;
   @Input() userInfo: any;
-  @Input() campeonato: any;
-  constructor(public activeModal: NbDialogRef<MDisciplinasComponent>,
+  constructor(public activeModal: NbDialogRef<MCampeonatosComponent>,
               private fb: FormBuilder,
               private generalService: GeneralService) { }
 
@@ -29,19 +29,27 @@ export class MDisciplinasComponent implements OnInit {
   private fielsReactive() {
     const controls = {
       name: ['',[Validators.required]],
-      upeucampeonato_id: [''],
+      logo: [''],
+      lema: [''],
+      pagina_web: [''],
+      fecha_inicio: [''],
+      fecha_fin: [''],
       estado: ['1'],
     };
-    this.FormDisciplinas = this.fb.group(controls)
+    this.Form = this.fb.group(controls)
     if(this.code === 'UPDATE'){
       this.setData();
     }
   }
 
   setData(){
-    this.FormDisciplinas.patchValue({
+    this.Form.patchValue({
       name: this.item.name,
-      upeucampeonato_id: this.campeonato?.id || this.item.upeucampeonato_id,
+      logo: this.item.logo,
+      lema: this.item.lema,
+      pagina_web: this.item.pagina_web,
+      fecha_inicio: this.item.fecha_inicio,
+      fecha_fin: this.item.fecha_fin,
       estado: this.item.estado,
     })
   }
@@ -49,12 +57,17 @@ export class MDisciplinasComponent implements OnInit {
     this.activeModal.close('close');
   }
   save(){
-    const serviceName = 'upeudisciplinas';
-    const forms = this.FormDisciplinas.value;
+    const serviceName = 'upeucampeonatos';
+    const forms = this.Form.value;
     const params = {
       name: forms.name.toUpperCase(),
+      logo: forms.logo,
+      lema: forms.lema,
+      pagina_web: forms.pagina_web,
+      fecha_inicio: forms.fecha_inicio,
+      fecha_fin: forms.fecha_fin,
       estado: forms.estado,
-      upeucampeonato_id: this.campeonato?.id || forms.upeucampeonato_id,
+      //userId: this.userInfo.id
     };
     if (this.code === 'NEW') {
       this.loading = true;

@@ -1,0 +1,74 @@
+<nb-card accent="primary" class="scrollModal" [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>
+        {{code === 'NEW' ? 'NUEVA AREA': 'EDITAR AREA'}}
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="text-center" >
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="Form">
+          <div class="row">
+            <label class="label col-md-3">Nombre:</label>
+            <div class="col-md-9">
+              <input type="text" placeholder="Ingrese nombre" nbInput fieldSize="small" fullWidth formControlName="name">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <label class="label col-md-3">Lema:</label>
+            <div class="col-md-9">
+              <input type="text" placeholder="Ingrese lema" nbInput fieldSize="small" fullWidth formControlName="lema">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <label class="label col-md-3">Logo:</label>
+            <div class="col-md-9">
+              <input type="text" placeholder="Ingrese logo" nbInput fieldSize="small" fullWidth formControlName="logo">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <label class="label col-md-3">Url Pagina web:</label>
+            <div class="col-md-9">
+              <input type="text" placeholder="Ingrese pagina_web" nbInput fieldSize="small" fullWidth formControlName="pagina_web">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <label class="label col-md-3">Fecha Inicio:</label>
+            <div class="col-md-9">
+              <input type="text" placeholder="Ingrese fecha_incio" nbInput fieldSize="small" fullWidth formControlName="fecha_inicio">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <label class="label col-md-3">Fecha fin:</label>
+            <div class="col-md-9">
+              <input type="text" placeholder="Ingrese fecha_fin" nbInput fieldSize="small" fullWidth formControlName="fecha_fin">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="d-flex">
+    <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
+    <button
+      type="button"
+      class="ms-2"
+      nbButton
+      size="small"
+      status="primary"
+      (click)="save()"
+      [disabled] = "Form.invalid">
+      Guardar
+    </button>
+  </nb-card-footer>
+</nb-card>

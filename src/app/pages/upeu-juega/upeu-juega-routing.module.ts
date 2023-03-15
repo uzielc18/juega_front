@@ -18,6 +18,9 @@ const routes: Routes = [{
     },{
       path:'equipos',
       loadChildren: () => import('src/app/pages/upeu-juega/equipos/equipos.module').then(m => m.EquiposModule)
+    },{
+      path:'campeonatos',
+      loadChildren: () => import('src/app/pages/upeu-juega/campeonatos/campeonatos.module').then(m => m.CampeonatosModule)
     }
   ]
 }];

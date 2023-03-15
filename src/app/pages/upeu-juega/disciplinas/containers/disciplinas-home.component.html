@@ -5,40 +5,54 @@
          nbSpinnerSize="large">
   <nb-card-header>
     <div class="d-flex">
-      <nb-icon icon="droplet-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <nb-icon icon="compass" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
       <strong style="padding-top: 7px;">Disciplinas</strong>
     </div>
   </nb-card-header>
   <nb-card-body class="pb-0 d-flex flex-column">
-    <button
-      class="ms-auto"
-      nbButton
-      (click)="open('', 'NEW')"
-      status="primary"
-      nbTooltip="Nuevo tipo elemento"
-      size="small">
-      <nb-icon icon="plus"></nb-icon>Crear</button>
+    <form [formGroup]="formHeader">
+      <div class="row">
+        <div class="12">
+          <label class="label">Campeonato</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona" formControlName="campeonato_id">
+            <nb-option *ngFor="let camp of campeonatos" [value]="camp"
+                       (click)="selectedCampeonato(camp)">{{ camp?.name }}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-sm-3 ms-auto">
+          <button
+            nbButton fullWidth size="small" status="primary"
+            (click)="open('', 'NEW')"
+            nbTooltip="Nueva Disciplina">
+            <nb-icon icon="plus"></nb-icon>
+            Crear
+          </button>
+        </div>
 
+      </div>
+    </form>
     <div class="table-responsive">
       <table class="table table-sm">
         <thead>
         <tr style="font-size: 12px;">
           <th>Nombre</th>
+          <th>Campeonato</th>
           <th>estado</th>
           <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
-        <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let item of disciplinasData">
+        <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let item of disciplinasData">
           <td>{{item.name}}</td>
+          <td>{{item.upeucampeonato_nombre}}</td>
           <td>{{item.estado}}</td>
           <td class="text-center" style="width: 1px; vertical-align: middle;">
             <div class="d-flex align-items-center justify-content-center">
-            <button nbButton size="tiny" status="info" (click)="open(item, 'UPDATE')">
-              <nb-icon  icon="edit" style="font-size: 25px; cursor: pointer;" ></nb-icon>
-            </button>
+              <button nbButton size="tiny" status="info" (click)="open(item, 'UPDATE')">
+                <nb-icon icon="edit" style="font-size: 25px; cursor: pointer;"></nb-icon>
+              </button>
               <button nbButton size="tiny" status="danger" (click)="delete(item)">
-                <nb-icon  icon="trash" style="font-size: 25px; cursor: pointer;" ></nb-icon>
+                <nb-icon icon="trash" style="font-size: 25px; cursor: pointer;"></nb-icon>
               </button>
             </div>
           </td>
