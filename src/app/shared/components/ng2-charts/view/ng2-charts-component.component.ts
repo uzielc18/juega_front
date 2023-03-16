@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class Ng2ChartsComponentComponent implements OnInit {
 
   @Input() data: any;
+  @Input() type: any = 'ELEC'
   constructor() { }
 
   ngOnInit(): void {

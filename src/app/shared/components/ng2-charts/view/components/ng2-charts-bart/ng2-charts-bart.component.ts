@@ -11,6 +11,7 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 export class Ng2ChartsBartComponent implements OnInit, OnChanges {
 
   @Input() items: any;
+  @Input() type: any;
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
     public barChartOptions: ChartConfiguration['options'] = {
       responsive: true,
@@ -39,6 +40,10 @@ export class Ng2ChartsBartComponent implements OnInit, OnChanges {
     public barChartData: ChartData<'bar'> = {
       labels: [],
       datasets: [
+        {
+          data:[],
+          label: ''
+        }
       ]
     };
 
@@ -60,11 +65,31 @@ export class Ng2ChartsBartComponent implements OnInit, OnChanges {
   }
 
   dataBar(item: any){
-    this.barChartData.labels = []
-    item.labels?.forEach((f: any) => {
-      this.barChartData.labels?.push(f.titulo);
-    });
-    this.barChartData.datasets = this.items.datasets
+    if(this.type ===  'DASH') {
+      const datasets: any = [];
+      item.labels?.forEach((f: any) => {
+        this.barChartData.labels?.push(f);
+      })
+      item.datasets?.forEach((dataset: any) => {
+        dataset.label.forEach((label: any, index: any) => {
+          if (!datasets[index]) {
+            datasets[index] = {
+              label: label,
+              data: []
+            };
+          }
+          datasets[index].data.push(dataset.data[index]);
+        });
+      })
+      this.barChartData.datasets = datasets
+
+    }else {
+      this.barChartData.labels = []
+      item.labels?.forEach((f: any) => {
+        this.barChartData.labels?.push(f.titulo);
+      });
+      this.barChartData.datasets = this.items.datasets
+    }
     this.chart?.update();
   }
 

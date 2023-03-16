@@ -62,6 +62,13 @@
               <div style="cursor: pointer" (click)="editListProgramStudy(item, 'UPDATE')">
                 <nb-icon icon="edit" status="info" style="font-size: 25px"></nb-icon>
               </div>
+              <div style="cursor: pointer" (click)="editStatusProgramStudy(item)">
+                <nb-icon [nbTooltip]="item.estado === '1'?'Visible': 'Oculto'"
+                         [nbTooltipStatus]="item.estado === '1'? 'primary': 'warning'"
+                         [icon]=" item.estado === '1'? 'eye-outline':'eye-off-outline'"
+                         [status]="item.estado === '1'? 'primary': 'warning'"
+                         style="font-size: 25px"></nb-icon>
+              </div>
               <div style="cursor: pointer"  (click)="deletePrograma(item)">
                 <nb-icon icon="trash-2-outline" status="danger" style="font-size: 25px"></nb-icon>
               </div>
