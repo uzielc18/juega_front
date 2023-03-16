@@ -24,6 +24,16 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   idCollapseTop: number = 0;
   idCollapseLeft: number = 0;
 
+
+  sedes: any = [];
+  nivelEnsenanza: any = [];
+  facultades: any = [];
+  litProgramStudy: any = [];
+  semestres: any = []
+  activeCardBody: boolean = false;
+
+  cursoPrograma: any = [];
+
   generoArray: any[] = ['Masculino', 'Femenino'];
   estadoCivilArray: any[] = ['Casado(a)', 'Soltero(a)', 'Divorciado(a)', 'Viudo(a)', 'Separado(a)', 'Conviviente', 'No precisa'];
   religionArray: any[] = [
@@ -44,6 +54,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   loading: boolean = false;
 
   formHeader: any = FormGroup;
+  formDashboard: any = FormGroup;
   nombreSubscription: any = Subscription;
   theRolSemestre: any;
   valida: boolean = false;
@@ -58,7 +69,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   pauseOnHover = true;
   pauseOnFocus = true;
 
-  @ViewChild('carousel', { static: true }) carousel!: NgbCarousel;
+  @ViewChild('carousel', {static: true}) carousel!: NgbCarousel;
 
   togglePaused() {
     if (this.paused) {
@@ -81,32 +92,35 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       this.togglePaused();
     }
   }
+
   ///////////////
-  public doughnutChartLabels: string[] = [
-  ];
+  public doughnutChartLabels: string[] = [];
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: this.doughnutChartLabels,
-    datasets: [
-    ],
+    datasets: [],
 
   };
   public doughnutChartType: any = 'doughnut';
+
   // events
-  public chartClicked({ event, active }: { event: ChartEvent, active: {}[] }): void {
+  public chartClicked({event, active}: { event: ChartEvent, active: {}[] }): void {
   }
 
-  public chartHovered({ event, active }: { event: ChartEvent, active: {}[] }): void {
+  public chartHovered({event, active}: { event: ChartEvent, active: {}[] }): void {
   }
+
   public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true,
 
   };
+
   constructor(
     private generalService: GeneralService,
     private userService: AppService,
     private emitEventsService: EmitEventsService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
 
@@ -121,6 +135,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.getUserInfo(this.perfilInfo ? 'full' : 'mini');
     this.getNews();
     this.fieldReactive();
+    this.fielReactiveDashboard();
     this.nombreSubscription = this.emitEventsService.returns().subscribe(value => {
       // para emitir evento desde la cabecera
       if (value && value.rol && value.semestre) {
@@ -134,6 +149,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       }
     });
     this.recoveryValues();
+
 
   }
 
@@ -153,6 +169,16 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
         // }, 1000);
       }
     });
+  }
+
+  get rolSemestre() {
+    const sesion: any = sessionStorage.getItem('rolSemesterLeng');
+    const val = JSON.parse(sesion);
+    if (val && val.rol) {
+      return val;
+    } else {
+      return '';
+    }
   }
 
   private fieldReactive() {
@@ -177,6 +203,19 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.formHeader = this.formBuilder.group(controls);
     this.key_file = this.userService?.user?.person?.codigo;
     this.directorio = DIRECTORY.users + `/${this.userInfo._user.person.codigo}`;
+  }
+
+  private fielReactiveDashboard() {
+    const controls = {
+      semester: [this.rolSemestre.semestre.id || '',
+        [Validators.required]],
+      sede: [''],
+      nivel_ensenanza: [{value: '',  disabled: true}],
+      facultades_unidades: [{value: '',  disabled: true}],
+    }
+    this.formDashboard = this.formBuilder.group(controls);
+    this.listSedes();
+    this.listSemesters();
   }
 
   backToProfile() {
@@ -309,14 +348,14 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  doughnut(profile: any){
+  doughnut(profile: any) {
     this.doughnutChartData.datasets = [];
     this.doughnutChartLabels = Object.keys(profile?.info);
     const trabajos_por_completar: any = profile?.info?.trabajos_por_completar
     const trabajos_vencidos: any = profile?.info?.trabajos_vencidos;
     const trabajos_completados: any = profile?.info?.trabajos_completados;
     const obj = {
-      "data": [trabajos_por_completar,trabajos_vencidos,trabajos_completados],
+      "data": [trabajos_por_completar, trabajos_vencidos, trabajos_completados],
       "backgroundColor": [
         '#FFD372', '#FF6961', '#8CFCA4'
       ],
@@ -330,6 +369,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     }
     this.doughnutChartData.datasets.push(obj)
   }
+
   getNews() {
     const serviceName = END_POINTS.base_back.user + '/news';
     this.generalService.nameId$(serviceName, this.userService.user.person.id).subscribe((res: any) => {
@@ -385,6 +425,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
     this.nombreSubscription.unsubscribe();
   }
+
   syncLamb() {
     const serviceName = END_POINTS.base_back.config + '/get-info-user';
     // const person_id = this.userInfo._user.id;
@@ -403,5 +444,119 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     );
+  }
+
+  //  ------------ROL ADMIN DASHBOARD----------
+
+  listSemesters() {
+    const serviceName = END_POINTS.base_back.semesters;
+    this.loading = true;
+    this.generalService.nameAll$(serviceName).subscribe(
+      (res: any) => {
+        this.semestres = res.data || [];
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  listSedes() {
+    const serviceName = END_POINTS.base_back.default + 'sedes';
+    this.loading = true;
+    this.generalService.nameAll$(serviceName).subscribe(
+      (res: any) => {
+        this.sedes = res.data || [];
+        if (this.sedes.length > 0) {
+          this.formDashboard.patchValue({
+            sede: this.sedes[0],
+          });
+          this.formDashboard.controls['nivel_ensenanza'].enable();
+          this.listNivelEnsenanza(this.sedes[0].id);
+        }
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  selectedSede(sede: any) {
+    this.formDashboard.controls['sede'].setValue(sede);
+    this.formDashboard.controls['nivel_ensenanza'].enable();
+    this.nivelEnsenanza = [];
+    this.facultades = [];
+    this.formDashboard.controls['nivel_ensenanza'].setValue('');
+    this.formDashboard.controls['facultades_unidades'].setValue('');
+    this.listNivelEnsenanza(sede.id);
+  }
+  listNivelEnsenanza(sede_id: any) {
+    const serviceName = END_POINTS.base_back.nivel_ensenanza;
+    if (this.sedes.length > 0) {
+      this.loading = true;
+      this.generalService.nameId$(serviceName, sede_id).subscribe(
+        (res: any) => {
+          this.nivelEnsenanza = res.data || [];
+        },
+        () => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
+    }
+  }
+  selectedNivel(nivel: any) {
+    this.formDashboard.controls['nivel_ensenanza'].setValue(nivel);
+    this.formDashboard.controls['facultades_unidades'].enable();
+    this.facultades = [];
+    this.formDashboard.controls['facultades_unidades'].setValue('');
+    this.getFacultadesUnidades(nivel.id, this.formDashboard.get('sede').value.id);
+  }
+  getFacultadesUnidades(nivel: any, sedeId: any){
+    const serviceName = END_POINTS.base_back.sede_areas;
+    const params = {
+      all: 0
+    }
+    this.loading = true;
+    this.generalService.nameIdAndIdParams$(serviceName, nivel, sedeId, params).subscribe(
+      (res: any) => {
+        this.facultades = res.data || [];
+      },
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  selecFacultades(item:any){
+    this.formDashboard.controls['facultades_unidades'].setValue(item);
+  }
+
+  getCursosProgramaDashboard() {
+    const serviceName = END_POINTS.base_back.reportes + '/cursos-programa';
+    const data = this.formDashboard.value;
+    const params = {
+      area_id: data.facultades_unidades.id,
+      sede_id: data.sede.id,
+      semester_id: data.semester
+    }
+    this.loading = true;
+    this.generalService.nameParams$(serviceName, params).subscribe(res => {
+
+      if(res.success) {
+        this.activeCardBody = true;
+        this.cursoPrograma = res.data
+      }
+
+
+    },() => {this.loading = false}, () => {this.loading = false});
   }
 }

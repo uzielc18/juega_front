@@ -22,6 +22,8 @@ export class StudiesProgramsHomeComponent implements OnInit {
   facultades: any = [];
   litProgramStudy: any = [];
 
+  statusPrograma: boolean = false;
+
   selectedItem = 20;
   pagination: any = {
     page: 1,
@@ -216,5 +218,46 @@ export class StudiesProgramsHomeComponent implements OnInit {
         },() => {this.loading = false;},() => {this.loading = false;});
       }
     });
+  }
+  editStatusProgramStudy(item: any) {
+    const serviceName = 'programaEstudios';
+    let params:any = {}
+    if( item.estado === '1') {
+      params = {
+        estado: '0'
+      }
+    }
+    if( item.estado === '0') {
+      params = {
+        estado: '1'
+      }
+    }
+    Swal.fire({
+      title: 'Programa estudio',
+      text: '¿ Está seguro de cambiar de estado ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#7f264a',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService.updateNameIdData$(serviceName, item.id, params).subscribe(res => {
+          if(res.success){
+            this.listProgramEstudy();
+          }
+        }, () => {this.loading = false}, () => {this.loading = false})
+      }
+    });
+
+
+
+
   }
 }

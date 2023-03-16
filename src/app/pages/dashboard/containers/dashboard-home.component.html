@@ -1,4 +1,59 @@
-<nb-card
+<nb-card class="m-0 border-0 h-100"
+         style="border-radius: 15px; overflow: hidden"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="small"
+         *ngIf="['Admin'].includes(this.rolSemestre?.rol?.name)">
+  <nb-card-header>
+        <div class="d-flex">
+          <nb-icon icon="book-open-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+          <strong style="padding-top: 7px;">DASHBOARD</strong>
+        </div>
+  </nb-card-header>
+
+  <nb-card-body>
+        <nb-card>
+          <nb-card-header>
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+              <div></div>
+              <div class="row" [formGroup]="formDashboard">
+                <div class="col-auto">
+                  <nb-select fullWidth size="small" status="primary" placeholder="Selecciona" formControlName="sede" shape="round">
+                    <nb-option *ngFor="let sede of sedes" [value]="sede" (click)="selectedSede(sede)">{{ sede?.nombre }}</nb-option>
+                  </nb-select>
+                </div>
+                <div class="col-auto">
+                  <nb-select fullWidth size="small" status="primary" placeholder="Selecciona" formControlName="nivel_ensenanza" shape="round">
+                    <nb-option *ngFor="let nivel of nivelEnsenanza" [value]="nivel" (click)="selectedNivel(nivel)">{{ nivel?.nombre }}</nb-option>
+                  </nb-select>
+                </div>
+                <div class="col-auto">
+                  <nb-select fullWidth size="small" status="primary" placeholder="Selecciona" formControlName="facultades_unidades" shape="round">
+                    <nb-option *ngFor="let item of facultades" [value]="item" (click)="selecFacultades(item)">{{ item?.nombre }}</nb-option>
+                  </nb-select>
+                </div>
+                <div class="col-auto">
+                  <nb-select fullWidth size="small" status="primary" placeholder="Selecciona" formControlName="semester" shape="round">
+                    <nb-option *ngFor="let sem of semestres" [value]="sem.id">{{ sem?.nombre }}</nb-option>
+                  </nb-select>
+                </div>
+                <div class="col-auto">
+                  <button [disabled]="!formDashboard.value.facultades_unidades" nbButton status="warning" size="small" (click)="getCursosProgramaDashboard()" shape="round">Filtrar</button>
+                </div>
+              </div>
+            </div>
+          </nb-card-header>
+          <nb-card-body *ngIf="activeCardBody && formDashboard.value.facultades_unidades">
+            <app-ng2-charts-component [data] = "cursoPrograma" [type] = "'DASH'"></app-ng2-charts-component>
+          </nb-card-body>
+        </nb-card>
+  </nb-card-body>
+
+</nb-card>
+
+
+
+<nb-card *ngIf="['Docente', 'Estudiante'].includes(this.rolSemestre?.rol?.name)"
   class="m-0 border-0 h-100"
   style="border-radius: 15px; overflow: hidden"
   [nbSpinner]="loading"
