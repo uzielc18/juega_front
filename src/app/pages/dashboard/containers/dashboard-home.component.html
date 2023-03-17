@@ -34,16 +34,16 @@
                 </div>
                 <div class="col-auto">
                   <nb-select fullWidth size="small" status="primary" placeholder="Selecciona" formControlName="semester" shape="round">
-                    <nb-option *ngFor="let sem of semestres" [value]="sem.id">{{ sem?.nombre }}</nb-option>
+                    <nb-option *ngFor="let sem of semestres" [value]="sem?.id">{{ sem?.nombre }}</nb-option>
                   </nb-select>
                 </div>
                 <div class="col-auto">
-                  <button [disabled]="!formDashboard.value.facultades_unidades" nbButton status="warning" size="small" (click)="getCursosProgramaDashboard()" shape="round">Filtrar</button>
+                  <button [disabled]="!formDashboard?.value?.facultades_unidades" nbButton status="warning" size="small" (click)="getCursosProgramaDashboard()" shape="round">Filtrar</button>
                 </div>
               </div>
             </div>
           </nb-card-header>
-          <nb-card-body *ngIf="activeCardBody && formDashboard.value.facultades_unidades">
+          <nb-card-body *ngIf="activeCardBody && formDashboard?.value?.facultades_unidades">
             <app-ng2-charts-component [data] = "cursoPrograma" [type] = "'DASH'"></app-ng2-charts-component>
           </nb-card-body>
         </nb-card>
