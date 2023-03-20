@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NbDialogRef} from "@nebular/theme";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GeneralService} from "../../../../../../providers";
@@ -10,7 +10,9 @@ import {GeneralService} from "../../../../../../providers";
 })
 export class MEquiposComponent implements OnInit {
 
+  @Input() campeonato:any;
   loading: boolean = false;
+  equipos: any = []
   disciplinasData: any = []
   categoriasData: any = []
   formHeader: any = FormGroup;
@@ -39,10 +41,11 @@ export class MEquiposComponent implements OnInit {
   }
 
   getDisciplina(){
-    this.loading = true
     const serviceName = 'upeudisciplinas';
-    this.generalService.nameAll$(serviceName).subscribe(resp => {
-      this.disciplinasData = resp.data;
+    const param={campeonato_id:this.campeonato.id || null,};
+    this.loading = true;
+    this.generalService.nameParams$(serviceName,param).subscribe(res => {
+      this.disciplinasData = res.data;
     }, () => {this.loading = false}, () => {this.loading = false});
   }
 
@@ -53,5 +56,33 @@ export class MEquiposComponent implements OnInit {
       this.categoriasData = resp.data;
     }, () => {this.loading = false}, () => {this.loading = false});
   }
+  procesar(){
+    this.loading = true
+    const forms = this.formHeader.value;
+    const param={
+      disciplina_id:forms.diciplina,
+      categorias_equipo_id:forms.categoria,
+      grupo:forms.grupos,
+      campeonato_id:forms.campeonato_id,
+      equi_x_grupo:forms.equipos,
+    }
+    const serviceName = 'equipos-procesar';
+    this.generalService.nameParams$(serviceName,param).subscribe(resp => {
+      this.equipos = resp.data;
+    }, () => {this.loading = false}, () => {this.loading = false});
+  }
 
+  save(){
+    const serviceName = 'equipos-procesar-save';
+    const params = {
+      equipos: this.equipos.equipos_save
+    };
+      this.loading = true;
+      this.generalService.addNameData$(serviceName, params).subscribe((res:any) => {
+        if (res.success) {
+          this.activeModal.close('ok');
+        }
+      }, () => {this.loading = false;}, () => {this.loading = false;});
+
+  }
 }

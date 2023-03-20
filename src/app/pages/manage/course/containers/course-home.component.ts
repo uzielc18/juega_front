@@ -53,7 +53,10 @@ export class CourseHomeComponent implements OnInit {
   private index: number = 0;
   physicalPositions = NbGlobalPhysicalPosition;
   logicalPositions = NbGlobalLogicalPosition;
-  constructor(private generalServi: GeneralService, public router: Router, private formBuilder: FormBuilder, private dialogService: NbDialogService, private appUserInfo: AppService, private toastrService: NbToastrService) { }
+  constructor(private generalServi: GeneralService,
+              public router: Router, private formBuilder: FormBuilder,
+              private dialogService: NbDialogService, private appUserInfo: AppService,
+              private toastrService: NbToastrService) { }
 
   ngOnInit(): void {
     this.fieldReactive();

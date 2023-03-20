@@ -2,7 +2,7 @@
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
-        EQUIPOS
+        EQUIPOS {{campeonato.name}}
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
@@ -48,17 +48,38 @@
       </div>
       <div class="col-md-4 mb-2 mb-md-0 ms-auto">
         <label class="label" style="visibility: hidden">Procesar</label>
-        <button [disabled]="formHeader.invalid" nbButton size="small" status="warning" fullWidth><nb-icon icon="settings-outline"></nb-icon> Procesar</button>
+        <button [disabled]="formHeader.invalid" (click)="procesar()" nbButton size="small" status="warning" fullWidth><nb-icon icon="settings-outline"></nb-icon> Procesar</button>
       </div>
     </div>
     <hr class="label">
     <nb-card style="margin: 0">
       <nb-card-body>
 
+        <div class="col" *ngFor="let eq of equipos.equipos_mostrar">
+        <nb-card [size]="'small'">
+          <nb-card-header>{{eq.name}}</nb-card-header>
+          <nb-card-body>
+            <table>
+              <thead>
+              <tr>
+                <th>Nombre</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of eq.equipo">
+                <td>
+                  {{item.name}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </nb-card-body>
+        </nb-card>
+        </div>
       </nb-card-body>
     </nb-card>
   </nb-card-body>
   <nb-card-footer class="d-flex">
-    <button class="ms-auto" size="small" nbButton status="primary">Guardar</button>
+    <button class="ms-auto" size="small" nbButton status="primary" (click)="save()">Guardar</button>
   </nb-card-footer>
 </nb-card>

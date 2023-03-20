@@ -25,7 +25,7 @@ export class EncuentrosHomeComponent implements OnInit {
 
   getData(){
     this.loading = true
-    const serviceName = 'upeuencuentros';
+    const serviceName = 'listar-encuentros';
     this.generalService.nameAll$(serviceName).subscribe(resp => {
         this.Datas = resp.data;
     }, () => {this.loading = false}, () => {this.loading = false});
