@@ -19,7 +19,7 @@ export class EquiposHomeComponent implements OnInit {
   tabsData: any = [];
   campeonatos:any=[];
   campeonato:any;
-  campeonato_id:any;
+  tabID: any;
   loading: boolean = false;
   @ViewChild(TabsEquiposListComponent) listEquipos:any;
   constructor(private generalService: GeneralService,
@@ -38,7 +38,8 @@ export class EquiposHomeComponent implements OnInit {
   }
   getTabs() {
     const serviceName = 'upeudisciplinas';
-    const param={campeonato_id:this.campeonato_id || null,};
+    const form = this.formHeader.value
+    const param={campeonato_id: form.campeonato.id || null,};
     this.loading = true;
     this.generalService.nameParams$(serviceName,param).subscribe(res => {
       if(res.success) {
@@ -49,6 +50,9 @@ export class EquiposHomeComponent implements OnInit {
   }
 
   changeTabs(event:any) {
+
+    this.tabID = event.tabId;
+    console.log(event)
     const idTab = event.tabId;
     switch (idTab) {
       case 'futsal':
@@ -74,10 +78,7 @@ export class EquiposHomeComponent implements OnInit {
     }, () => {this.loading = false}, () => {this.loading = false});
   }
   selectCampeonato(item:any){
-
     this.formHeader.controls['campeonato'].setValue(item);
-    this.campeonato_id=item.id;
-    this.campeonato=item;
     this.getTabs();
   }
   openModalCreate() {
@@ -85,7 +86,8 @@ export class EquiposHomeComponent implements OnInit {
       .open(MEquiposComponent, {
         dialogClass: 'dialog-limited-height',
         context: {
-          campeonato:this.campeonato,
+          campeonato:this.formHeader.value.campeonato,
+          tabID: this.tabID
         },
         closeOnBackdropClick: false,
         closeOnEsc: false,

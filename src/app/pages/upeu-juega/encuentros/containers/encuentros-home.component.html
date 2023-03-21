@@ -6,53 +6,73 @@
   <nb-card-header>
     <div class="d-flex">
       <nb-icon icon="droplet-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
-      <strong style="padding-top: 7px;">Sedes</strong>
+      <strong style="padding-top: 7px;">Encuentros</strong>
     </div>
   </nb-card-header>
   <nb-card-body class="pb-0 d-flex flex-column">
-    <button
-      class="ms-auto"
-      nbButton
-      (click)="open('', 'NEW')"
-      status="primary"
-      nbTooltip="Nuevo tipo elemento"
-      size="small">
-      <nb-icon icon="plus"></nb-icon>Crear</button>
-
-    <div class="table-responsive">
-      <table class="table table-sm">
-        <thead>
-        <tr style="font-size: 12px;">
-          <th>id_sede</th>
-          <th>Código</th>
-          <th>Nombre</th>
-          <th>url pago visa</th>
-          <th>Código pago</th>
-          <th>estado</th>
-          <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let item of Datas">
-          <td>{{item.id_sede}}</td>
-          <td>{{item.codigo}}</td>
-          <td>{{item.nombre}}</td>
-          <td>{{item.url_pago_visa}}</td>
-          <td>{{item.codigo_pago}}</td>
-          <td>{{item.estado}}</td>
-          <td class="text-center" style="width: 1px; vertical-align: middle;">
-            <div class="d-flex align-items-center justify-content-center">
-            <button nbButton size="tiny" status="info" (click)="open(item, 'UPDATE')">
-              <nb-icon  icon="edit" style="font-size: 25px; cursor: pointer;" ></nb-icon>
-            </button>
-              <button nbButton size="tiny" status="danger" (click)="delete(item)">
-                <nb-icon  icon="trash" style="font-size: 25px; cursor: pointer;" ></nb-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    <form [formGroup]="formHeader">
+      <div class="row" style="padding: 0px">
+        <div class="col-md-4">
+          <label class="label">Campeonatos</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona Campeonatos" formControlName="campeonato">
+            <nb-option *ngFor="let camp of campeonatos"  [value]="camp" (click)="selectCampeonato(camp)">{{camp.name}}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-4 mb-2 mb-md-0">
+          <label class="label">Diciplinas</label>
+          <nb-select
+            placeholder="Diciplinas"
+            size="small"
+            status="primary"
+            fullWidth
+            formControlName="diciplina">
+            <nb-option *ngFor="let item of disciplinasData" [value]="item.id">
+              {{item.name}}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-2 ms-auto">
+          <label class="label" style="visibility: hidden">Filtrar</label>
+          <button [disabled]="!formHeader.value.campeonato" nbButton size="small" fullWidth status="warning" (click)="filter()">Filtrar</button>
+        </div>
+        <div class="col-md-2 ms-auto">
+          <label class="label" style="visibility: hidden">new</label>
+          <button  nbButton size="small" fullWidth status="primary" (click)="nuevoEncuentro()">Crear</button>
+        </div>
+      </div>
+    </form>
+    <hr class="label">
+    <div class="d-flex justify-content-between flex-wrap">
+      <nb-card style="width: 32%" accent="primary" *ngFor="let item of Datas, let j = index">
+        <nb-card-header>
+          <small style="font-size: 10px"><strong>Categoria: </strong>  {{item.categoria_name}}</small><br>
+          <small style="font-size: 10px"><strong>Disciplina: </strong> {{item.disciplina_name}}</small>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="table-responsive">
+            <table class="table table-sm">
+              <thead>
+              <tr style="font-size: 12px;">
+                <th style="width: 1px;"></th>
+                <th>Local</th>
+                <th>Visita</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let enc of item.encuentros; let i = index">
+                <td><nb-checkbox [checked]="enc.seleccionado" (checkedChange)="onCheckboxChange($event, j, i)"></nb-checkbox></td>
+                <td>{{enc.local}}</td>
+                <td>{{enc.visitante}}</td>
+                <td>{{enc.fecha | date: 'MMMM d, y'}}</td>
+                <td>{{enc.hora}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </nb-card-body>
+      </nb-card>
     </div>
   </nb-card-body>
 </nb-card>

@@ -14,16 +14,16 @@
     <div class="row" style="padding: 0px">
       <div class="col-md-10">
         <nb-select fullWidth size="small" placeholder="Selecciona Campeonatos" formControlName="campeonato">
-          <nb-option *ngFor="let camp of campeonatos"  [value]="camp.id" (click)="selectCampeonato(camp)">{{camp.name}}</nb-option>
+          <nb-option *ngFor="let camp of campeonatos"  [value]="camp" (click)="selectCampeonato(camp)">{{camp.name}}</nb-option>
         </nb-select>
       </div>
       <div class="col-md-2">
-        <button nbButton size="small" fullWidth status="primary" (click)="openModalCreate()">Crear</button>
+        <button [disabled]="!formHeader.value.campeonato" nbButton size="small" fullWidth status="primary" (click)="openModalCreate()">Crear</button>
       </div>
     </div>
     </form>
     <nb-tabset (changeTab)="changeTabs($event)">
-        <nb-tab *ngFor="let item of tabsData" [active]="item.name == 'Futsal'" [tabTitle]="item.name" responsive [tabId]="item.name" style="max-height: 70vh;">
+        <nb-tab *ngFor="let item of tabsData" [active]="item.name == 'Futsal'" [tabTitle]="item.name" responsive [tabId]="item.id" style="max-height: 70vh;">
           <app-tabs-equipos-list [item] = "item" (loadingsForm) = loadingsForm($event)></app-tabs-equipos-list>
         </nb-tab>
     </nb-tabset>

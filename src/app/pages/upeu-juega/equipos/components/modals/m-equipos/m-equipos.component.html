@@ -2,7 +2,7 @@
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
-        EQUIPOS {{campeonato.name}}
+        EQUIPOS {{campeonato.name | uppercase}}
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
@@ -52,32 +52,32 @@
       </div>
     </div>
     <hr class="label">
-    <nb-card style="margin: 0">
-      <nb-card-body>
-
-        <div class="col" *ngFor="let eq of equipos.equipos_mostrar">
-        <nb-card [size]="'small'">
-          <nb-card-header>{{eq.name}}</nb-card-header>
-          <nb-card-body>
-            <table>
-              <thead>
-              <tr>
-                <th>Nombre</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let item of eq.equipo">
-                <td>
-                  {{item.name}}
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </nb-card-body>
-        </nb-card>
-        </div>
-      </nb-card-body>
-    </nb-card>
+      <nb-card>
+        <nb-card-body class="d-flex justify-content-between align-items-center flex-wrap">
+            <nb-card style="width: 24%" accent="warning" *ngFor="let eq of equipos.equipos_mostrar">
+              <nb-card-header style="position: relative; padding: 10px">
+                <!--<nb-badge text="Procesado" status="success" position="top right"></nb-badge>-->
+                {{eq.name}}
+              </nb-card-header>
+              <nb-card-body style="padding: 10px">
+                <table class="table table-sm table-striped">
+                  <thead>
+                  <tr>
+                    <th>Nombre</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of eq.equipo">
+                    <td>
+                      {{item.name}}
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </nb-card-body>
+            </nb-card>
+        </nb-card-body>
+      </nb-card>
   </nb-card-body>
   <nb-card-footer class="d-flex">
     <button class="ms-auto" size="small" nbButton status="primary" (click)="save()">Guardar</button>
