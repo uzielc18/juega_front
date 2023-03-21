@@ -9,13 +9,64 @@
       </button>
     </div>
   </nb-card-header>
-  <nb-card-body class="text-center" >
-    <div class="row">
-      <div class="col-md-12">
-        <form [formGroup]="Formdatos">
-
-        </form>
+  <nb-card-body>
+    <form [formGroup]="formHeader">
+      <div class="row" style="padding: 0px">
+        <div class="col-md-4">
+          <label class="label">Campeonatos</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona Campeonatos" formControlName="campeonato">
+            <nb-option *ngFor="let camp of campeonatos"  [value]="camp" (click)="selectCampeonato(camp)">{{camp.name}}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-4 mb-2 mb-md-0">
+          <label class="label">Diciplinas</label>
+          <nb-select
+            placeholder="Diciplinas"
+            size="small"
+            status="primary"
+            fullWidth
+            formControlName="diciplina">
+            <nb-option *ngFor="let item of disciplinasData" [value]="item.id">
+              {{item.name}}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-2 ms-auto">
+          <label class="label" style="visibility: hidden">Filtrar</label>
+          <button [disabled]="!formHeader.value.campeonato" nbButton size="small" fullWidth status="warning" (click)="Procesar()">Procesar</button>
+        </div>
       </div>
+    </form>
+    <hr class="label">
+    <div class="d-flex justify-content-between flex-wrap">
+      <nb-card style="width: 32%" accent="primary" *ngFor="let item of Datas, let j = index">
+        <nb-card-header>
+          <small style="font-size: 10px"><strong>Categoria: </strong>  {{item.categoria_name}}</small><br>
+          <small style="font-size: 10px"><strong>Disciplina: </strong> {{item.disciplina_name}}</small>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="table-responsive">
+            <table class="table table-sm">
+              <thead>
+              <tr style="font-size: 12px;">
+                <th>Local</th>
+                <th>Visita</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let enc of item.encuentros; let i = index">
+                <td>{{enc.local}}</td>
+                <td>{{enc.visitante}}</td>
+                <td>{{enc.fecha | date: 'MMMM d, y'}}</td>
+                <td>{{enc.hora}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </nb-card-body>
+      </nb-card>
     </div>
   </nb-card-body>
   <nb-card-footer class="d-flex">
@@ -26,8 +77,7 @@
       nbButton
       size="small"
       status="primary"
-      (click)="saveTypeElements()"
-      [disabled] = "Formdatos.invalid">
+      >
       Guardar
     </button>
   </nb-card-footer>

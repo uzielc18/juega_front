@@ -11,6 +11,7 @@ import {GeneralService} from "../../../../../../providers";
 export class MEquiposComponent implements OnInit {
 
   @Input() campeonato:any;
+  @Input() tabID: any;
   loading: boolean = false;
   equipos: any = []
   disciplinasData: any = []
@@ -25,7 +26,7 @@ export class MEquiposComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      diciplina: ['', [Validators.required]],
+      diciplina: [this.tabID, [Validators.required]],
       categoria: ['', [Validators.required]],
       equipos: ['', [Validators.required]],
       grupos: ['', [Validators.required]],
