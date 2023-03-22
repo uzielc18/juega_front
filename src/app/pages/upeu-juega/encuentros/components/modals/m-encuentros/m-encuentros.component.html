@@ -2,7 +2,7 @@
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
-        {{code === 'NEW' ? 'NUEVO Encuentro': 'EDITAR Encuentro'}}
+        {{code === 'NEW' ? 'NUEVO ENCUENTRO': 'EDITAR ENCUENTRO'}}
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
@@ -39,7 +39,7 @@
     </form>
     <hr class="label">
     <div class="d-flex justify-content-between flex-wrap">
-      <nb-card style="width: 32%" accent="primary" *ngFor="let item of Datas, let j = index">
+      <nb-card style="width: 32%" accent="primary" *ngFor="let item of Datas.mostrar, let j = index">
         <nb-card-header>
           <small style="font-size: 10px"><strong>Categoria: </strong>  {{item.categoria_name}}</small><br>
           <small style="font-size: 10px"><strong>Disciplina: </strong> {{item.disciplina_name}}</small>
@@ -57,8 +57,8 @@
               </thead>
               <tbody>
               <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let enc of item.encuentros; let i = index">
-                <td>{{enc.local}}</td>
-                <td>{{enc.visitante}}</td>
+                <td>{{enc[0].name}}</td>
+                <td>{{enc[1].name}}</td>
                 <td>{{enc.fecha | date: 'MMMM d, y'}}</td>
                 <td>{{enc.hora}}</td>
               </tr>
@@ -77,6 +77,7 @@
       nbButton
       size="small"
       status="primary"
+      (click)="save()"
       >
       Guardar
     </button>

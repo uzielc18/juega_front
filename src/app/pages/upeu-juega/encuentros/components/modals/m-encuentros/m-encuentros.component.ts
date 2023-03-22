@@ -70,8 +70,23 @@ export class MEncuentrosComponent implements OnInit {
       const formData = this.formHeader.value
       this.loading = true;
       this.generalService.nameIdAndId$(serviceName, formData.campeonato.id, formData.diciplina).subscribe( res => {
-
+        this.Datas=res.data;
       }, () => {this.loading = false}, () => {this.loading = false})
+  }
+
+
+  save(){
+    const serviceName = 'encuentros-procesar-save';
+    const params = {
+      encuentros: this.Datas.equipos_save
+    };
+    this.loading = true;
+    this.generalService.addNameData$(serviceName, params).subscribe((res:any) => {
+      if (res.success) {
+        this.activeModal.close('ok');
+      }
+    }, () => {this.loading = false;}, () => {this.loading = false;});
+
   }
 
 }

@@ -43,7 +43,7 @@ export class MEquiposComponent implements OnInit {
 
   getDisciplina(){
     const serviceName = 'upeudisciplinas';
-    const param={campeonato_id:this.campeonato.id || null,};
+    const param={campeonato_id:this.campeonato.id,};
     this.loading = true;
     this.generalService.nameParams$(serviceName,param).subscribe(res => {
       this.disciplinasData = res.data;
@@ -64,7 +64,7 @@ export class MEquiposComponent implements OnInit {
       disciplina_id:forms.diciplina,
       categorias_equipo_id:forms.categoria,
       grupo:forms.grupos,
-      campeonato_id:forms.campeonato_id,
+      campeonato_id:this.campeonato.id || forms.campeonato_id,
       equi_x_grupo:forms.equipos,
     }
     const serviceName = 'equipos-procesar';
