@@ -15,7 +15,8 @@
         <div class="col-md-4">
           <label class="label">Campeonatos</label>
           <nb-select fullWidth size="small" placeholder="Selecciona Campeonatos" formControlName="campeonato">
-            <nb-option *ngFor="let camp of campeonatos"  [value]="camp" (click)="selectCampeonato(camp)">{{camp.name}}</nb-option>
+            <nb-option *ngFor="let camp of campeonatos" [value]="camp"
+                       (click)="selectCampeonato(camp)">{{camp.name}}</nb-option>
           </nb-select>
         </div>
         <div class="col-md-4 mb-2 mb-md-0">
@@ -33,16 +34,53 @@
         </div>
         <div class="col-md-2 ms-auto">
           <label class="label" style="visibility: hidden">Filtrar</label>
-          <button [disabled]="!formHeader.value.campeonato" nbButton size="small" fullWidth status="warning" (click)="filter()">Filtrar</button>
+          <button [disabled]="!formHeader.value.campeonato" nbButton size="small" fullWidth status="warning"
+                  (click)="filter()">Filtrar
+          </button>
         </div>
         <div class="col-md-2 ms-auto">
           <label class="label" style="visibility: hidden">new</label>
-          <button  nbButton size="small" fullWidth status="primary" (click)="nuevoEncuentro()">Crear</button>
+          <button nbButton size="small" fullWidth status="primary" (click)="nuevoEncuentro()">Crear</button>
         </div>
       </div>
     </form>
     <hr class="label">
+    <div>
+          <form [formGroup]="formBody" *ngIf="mostrar_div">
+            <div class="row" style="padding: 0px">
+              <div class="col-md-4">
+                <label class="label">Fecha</label>
+                <nb-form-field>
+                  <input type="text" nbInput placeholder="Fecha" fullWidth
+                         [nbDatepicker]="fecha" fieldSize="small" formControlName="fecha"/>
+                  <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                           pack="eva"></nb-icon>
+                  <nb-datepicker #fecha format="dd/MM/yyyy">
+                  </nb-datepicker>
+                </nb-form-field>
+              </div>
+              <div class="col-md-4 mb-2 mb-md-0">
+                <label class="label">HORA</label>
+                <nb-form-field>
+                  <input type="text" nbInput placeholder="Hora" fullWidth
+                         [nbTimepicker]="hora" fieldSize="small" formControlName="hora"/>
+                  <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                           pack="eva"></nb-icon>
+                  <nb-timepicker #hora></nb-timepicker>
+                </nb-form-field>
+              </div>
+              <div class="col-md-2">
+                <label class="label" style="visibility: hidden">Actualizar</label>
+                <button [disabled]="!formHeader.value.campeonato" nbButton size="small" fullWidth status="warning"
+                        (click)="saveEncuentro()">Actualizar
+                </button>
+              </div>
+            </div>
+          </form>
+    </div>
+    <br>
     <div class="d-flex justify-content-between flex-wrap">
+
       <nb-card style="width: 32%" accent="primary" *ngFor="let item of Datas, let j = index">
         <nb-card-header>
           <small style="font-size: 10px"><strong>Categoria: </strong>  {{item.categoria_name}}</small><br>
@@ -61,11 +99,14 @@
               </tr>
               </thead>
               <tbody>
-              <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let enc of item.encuentros; let i = index">
-                <td><nb-checkbox [checked]="enc.seleccionado" (checkedChange)="onCheckboxChange($event, j, i)"></nb-checkbox></td>
+              <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let enc of item.encuentros; let i = index">
+                <td>
+                  <nb-checkbox [checked]="enc.seleccionado"
+                               (checkedChange)="onCheckboxChange($event, j, i)"></nb-checkbox>
+                </td>
                 <td>{{enc.local}}</td>
                 <td>{{enc.visitante}}</td>
-                <td>{{enc.fecha | date: 'MMMM d, y'}}</td>
+                <td>{{enc.fecha | date: 'MMMM d, y': 'UTC'}}</td>
                 <td>{{enc.hora}}</td>
               </tr>
               </tbody>
