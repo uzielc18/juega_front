@@ -215,5 +215,30 @@ export class PerfilComponent implements OnInit {
       console.log(res, 'toke_simulate')
     })
   }
-
+  passwordReset() {
+    const userData = this.appService;
+    const serviceName = 'canva-update-login';
+    Swal.fire({
+      title: 'Restablecer contraseña',
+      text: '¿ Esta seguro de restablecer contraseña ? ',
+      backdrop: true,
+      icon: 'question',
+      // animation: true,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: '#00244E',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      // timer: 2000,
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.generalService.nameId$(serviceName, userData.user?.person?.id).subscribe(res => {
+          if(res.success){
+          }
+        }, () => {this.loading = false}, () => {this.loading = false})
+      }
+    });
+  }
 }

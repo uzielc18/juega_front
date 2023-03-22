@@ -78,7 +78,7 @@ export class MEncuentrosComponent implements OnInit {
   save(){
     const serviceName = 'encuentros-procesar-save';
     const params = {
-      encuentros: this.Datas.equipos_save
+      encuentros: this.Datas.save
     };
     this.loading = true;
     this.generalService.addNameData$(serviceName, params).subscribe((res:any) => {
