@@ -33,8 +33,8 @@ export class MSyncRecordingComponent implements OnInit {
   getData() {
     const serviceName = 'zoomRecords-list';
     const params = {
-     /* programa_estudio_id: this.item.programa_estudio_id || '',
-      semester_id: this.semester,*/
+      programa_estudio_id: this.item.programa_estudio_id || '',
+      semester_id: this.semester,
     }
     this.loading = true;
     this.generalService.nameParams$(serviceName, params).subscribe(res => {

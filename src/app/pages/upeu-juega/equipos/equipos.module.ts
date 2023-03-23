@@ -17,7 +17,7 @@ import {MInfoEquiposComponent} from "./components/modals/m-info-equipos/m-info-e
     EquiposHomeComponent,
     TabsEquiposListComponent,
     MEquiposComponent,
-    MInfoEquiposComponent
+    MInfoEquiposComponent,
   ],
   imports: [
     CommonModule,
