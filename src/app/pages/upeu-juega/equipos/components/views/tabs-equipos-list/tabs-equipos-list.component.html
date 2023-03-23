@@ -13,13 +13,24 @@
                 <th>Nombre</th>
                 <th>Color</th>
                 <th>Codigo</th>
+                <th>Delegado</th>
+                <th>Act</th>
               </tr>
               </thead>
               <tbody *ngIf="item.equipos.length > 0; else emptyContent">
               <tr *ngFor="let eq of item.equipos" style="font-size: 12px">
                 <td>{{eq.name}}</td>
-                <td>{{eq.color}}</td>
+                <td>{{eq.color_info}}</td>
                 <td>{{eq.codigo}}</td>
+                <td>{{eq.delegado}}</td>
+                <td><div class="d-flex align-items-center justify-content-center">
+                  <button *ngIf="eq.info_id" nbButton size="tiny" status="info" (click)="openInfo(eq, 'UPDATE')">
+                    <nb-icon  icon="edit" style="font-size: 25px; cursor: pointer;" ></nb-icon>
+                  </button>
+                  <button *ngIf="!eq.info_id" nbButton size="tiny" status="success" (click)="openInfo(eq, 'NEW')">
+                    <nb-icon  icon="plus-outline" style="font-size: 25px; cursor: pointer;" ></nb-icon>
+                  </button>
+                </div></td>
               </tr>
               </tbody>
               <ng-template #emptyContent>

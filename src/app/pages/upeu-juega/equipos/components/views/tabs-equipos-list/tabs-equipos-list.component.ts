@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {GeneralService} from "../../../../../../providers";
+import {NbDialogService} from "@nebular/theme";
+import {AppService} from "../../../../../../core";
+import {MInfoEquiposComponent} from "../../modals/m-info-equipos/m-info-equipos.component";
 
 @Component({
   selector: 'app-tabs-equipos-list',
@@ -11,7 +14,11 @@ export class TabsEquiposListComponent implements OnInit {
   @Input() item: any;
   @Output() loadingsForm: EventEmitter<boolean> = new EventEmitter();
   data: any = []
-  constructor(private generalService: GeneralService) { }
+
+  constructor(private generalService: GeneralService,
+              private dialogService: NbDialogService,
+              private appUserInfo: AppService) {
+  }
 
   ngOnInit(): void {
     this.listEquipos()
@@ -24,17 +31,36 @@ export class TabsEquiposListComponent implements OnInit {
     }
     this.loadingsForm.emit(true)
     this.generalService.nameParams$(serviceName, params).subscribe(res => {
-      if(res.success) {
+      if (res.success) {
         this.data = res.data
         this.data.map((f: any) => {
-          if(f.id === this.data[0].id || f.id === this.data[1].id) {
+          if (f.id === this.data[0].id || f.id === this.data[1].id) {
             f.active = false
-          }else {
+          } else {
             f.active = true
           }
         })
       }
-    }, () => {this.loadingsForm.emit(false)}, () => {this.loadingsForm.emit(false)})
+    }, () => {
+      this.loadingsForm.emit(false)
+    }, () => {
+      this.loadingsForm.emit(false)
+    })
   }
 
+  openInfo(item: any, code: any) {
+    this.dialogService.open(MInfoEquiposComponent, {
+      context: {
+        userInfo: this.appUserInfo.user,
+        item: item,
+        code: code
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    }).onClose.subscribe(resp => {
+      if (resp === 'ok') {
+        this.listEquipos();
+      }
+    })
+  }
 }

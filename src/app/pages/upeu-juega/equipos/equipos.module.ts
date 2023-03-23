@@ -8,6 +8,7 @@ import {NbCardModule, NbIconModule} from "@nebular/theme";
 import {NebularModule} from "../../../shared/nebular.module";
 import { TabsEquiposListComponent } from './components/views/tabs-equipos-list/tabs-equipos-list.component';
 import { MEquiposComponent } from './components/modals/m-equipos/m-equipos.component';
+import {MInfoEquiposComponent} from "./components/modals/m-info-equipos/m-info-equipos.component";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MEquiposComponent } from './components/modals/m-equipos/m-equipos.compo
     EquiposComponent,
     EquiposHomeComponent,
     TabsEquiposListComponent,
-    MEquiposComponent
+    MEquiposComponent,
+    MInfoEquiposComponent
   ],
   imports: [
     CommonModule,
