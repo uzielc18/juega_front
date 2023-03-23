@@ -28,6 +28,8 @@ export class MSyncRecordingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
+    console.log(this.item);
+    console.log(this.semester);
   }
 
   getData() {
@@ -35,6 +37,7 @@ export class MSyncRecordingComponent implements OnInit {
     const params = {
       programa_estudio_id: this.item.programa_estudio_id || '',
       semester_id: this.semester,
+      zoom_acount_id: this.item.id,
     }
     this.loading = true;
     this.generalService.nameParams$(serviceName, params).subscribe(res => {
