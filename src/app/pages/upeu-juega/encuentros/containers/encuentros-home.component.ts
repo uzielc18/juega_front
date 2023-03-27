@@ -163,7 +163,7 @@ export class EncuentrosHomeComponent implements OnInit {
     const params = {
       fecha: forms.fecha,
       lugar: forms.lugar,
-      hora: this.datePipe.transform(forms.hora, 'hh:mm:ss'),
+      hora: this.datePipe.transform(forms.hora, 'HH:mm:ss'),
       encuentros:encuentros_array,
     };
     console.log(encuentros_array);
