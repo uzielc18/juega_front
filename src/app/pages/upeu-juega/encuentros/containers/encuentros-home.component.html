@@ -105,7 +105,7 @@
                                (checkedChange)="onCheckboxChange($event, j, i)"></nb-checkbox>
                 </td>
                 <td><span *ngIf="enc.local">{{enc.local}}</span><span *ngIf="!enc.local">{{enc.local_name}}</span></td>
-                <td><span *ngIf="enc.visitante">{{enc.visitante}}</span><span *ngIf="!enc.visitante">{{enc.visitante_name}}</span></td>
+                <td><span *ngIf="enc.visitante">{{enc.visitante}}</span><span *ngIf="!enc.visitante">{{enc.rival_name}}</span></td>
                 <td>{{enc.fecha | date: 'MMMM d, y': 'UTC'}}</td>
                 <td>{{enc.hora}}</td>
               </tr>
