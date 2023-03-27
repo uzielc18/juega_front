@@ -36,6 +36,7 @@ export class EncuentrosHomeComponent implements OnInit {
     const control_body={
       fecha:['',Validators.required],
       hora:['',Validators.required],
+      lugar:['',Validators.required],
     };
     this.formBody = this.fb.group(control_body);
     const controls = {
@@ -161,6 +162,7 @@ export class EncuentrosHomeComponent implements OnInit {
     const forms = this.formBody.value;
     const params = {
       fecha: forms.fecha,
+      lugar: forms.lugar,
       hora: this.datePipe.transform(forms.hora, 'hh:mm:ss'),
       encuentros:encuentros_array,
     };

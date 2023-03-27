@@ -69,6 +69,12 @@
                   <nb-timepicker #hora></nb-timepicker>
                 </nb-form-field>
               </div>
+              <div class="col-md-4 mb-2 mb-md-0">
+                <label class="label">Lugar</label>
+                <nb-form-field>
+                  <input type="text" nbInput placeholder="Lugar" fullWidthfieldSize="small" formControlName="lugar"/>
+                </nb-form-field>
+              </div>
               <div class="col-md-2">
                 <label class="label" style="visibility: hidden">Actualizar</label>
                 <button [disabled]="!formHeader.value.campeonato" nbButton size="small" fullWidth status="warning"
@@ -94,6 +100,7 @@
                 <th style="width: 1px;"></th>
                 <th>Local</th>
                 <th>Visita</th>
+                <th>Lugar</th>
                 <th>Fecha</th>
                 <th>Hora</th>
               </tr>
@@ -106,6 +113,7 @@
                 </td>
                 <td><span *ngIf="enc.local">{{enc.local}}</span><span *ngIf="!enc.local">{{enc.local_name}}</span></td>
                 <td><span *ngIf="enc.visitante">{{enc.visitante}}</span><span *ngIf="!enc.visitante">{{enc.rival_name}}</span></td>
+                <td>{{enc.lugar}}</td>
                 <td>{{enc.fecha | date: 'MMMM d, y': 'UTC'}}</td>
                 <td>{{enc.hora}}</td>
               </tr>
