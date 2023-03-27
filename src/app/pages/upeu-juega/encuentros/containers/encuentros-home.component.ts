@@ -34,9 +34,9 @@ export class EncuentrosHomeComponent implements OnInit {
   }
   private fieldReactive() {
     const control_body={
-      fecha:['',Validators.required],
-      hora:['',Validators.required],
-      lugar:['',Validators.required],
+      fecha:[''],
+      hora:[''],
+      lugar:[''],
     };
     this.formBody = this.fb.group(control_body);
     const controls = {

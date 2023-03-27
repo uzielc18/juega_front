@@ -6,11 +6,13 @@ import {NebularModule} from "../../../shared/nebular.module";
 import {ControlMessagesModule} from "../../../shared/components/control-messages/control-messages.module";
 import {GeneralService} from "../../../providers";
 import {EncuentrosRoutingModule} from "./encuentros-routing.module";
+import {MNewEncuentrosComponent} from "./components/modals/m-new-encuentros/m-new-encuentros.component";
 
 const COMPONENTS: any[] = [
   EncuentrosHomeComponent,
   EncuentrosComponent,
-  MEncuentrosComponent
+  MEncuentrosComponent,
+  MNewEncuentrosComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
