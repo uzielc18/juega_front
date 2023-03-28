@@ -31,6 +31,21 @@
                       <input class="w-100" type="text" nbInput fullWidth placeholder="Ingrese nombre del curso" fieldSize="small" formControlName="nombre_curso"/>
                       <control-messages [control]="formGroupManual.get('nombre_curso')"></control-messages>
                     </div>
+
+                        <div class="row"  *ngIf="formGroupManual.value.opc === 'U'">
+                          <div class="col-md-12">
+                            <label class="label">Ciclo</label>
+                            <nb-select fullWidth size="small" formControlName="ciclo">
+                              <nb-option *ngFor="let item of ciclos" [value]="item?.ciclo">{{item.ciclo}}</nb-option>
+                            </nb-select>
+                            <control-messages [control]="formGroupManual.get('ciclo')"></control-messages>
+                          </div>
+                          <div class="col-md-12">
+                            <label class="label">Grupo</label>
+                            <input class="w-100" type="text" nbInput fullWidth placeholder="Ingrese grupo" fieldSize="small" formControlName="grupo"/>
+                            <control-messages [control]="formGroupManual.get('grupo')"></control-messages>
+                          </div>
+                      </div>
                     <br>
                     <div class="d-flex align-items-center justify-content-between">
                       <div></div>

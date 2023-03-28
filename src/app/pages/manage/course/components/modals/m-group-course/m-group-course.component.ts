@@ -21,6 +21,8 @@ export class MGroupCourseComponent implements OnInit {
   listMiembros:any = [];
   memberGroup: any = [];
   listGroups:any = [];
+  ciclos: any = [{ciclo: '1'}, {ciclo:'2'}, {ciclo:'3'}, {ciclo:'4'}, {ciclo:'5'}, {ciclo:'6'}, {ciclo:'7'}, {ciclo:'8'}, {ciclo:'9'}, {ciclo:'10'}, {ciclo:'11'}, {ciclo:'12'}, {ciclo:'13'}, {ciclo:'14'}];
+
   datosGrup: any = {
     g_completos: 0,
     g_imcompletos: 0,
@@ -51,6 +53,8 @@ export class MGroupCourseComponent implements OnInit {
       nombre_curso: ['', [Validators.required]],
       opc: ['NEWS'],
       id_group: [''],
+      grupo: [''],
+      ciclo: ['']
     };
     this.formGroupManual = this.fb.group(controls);
   }
@@ -294,6 +298,8 @@ export class MGroupCourseComponent implements OnInit {
     } else {
       const params = {
         nombre: forms.nombre_curso,
+        ciclo: forms.ciclo,
+        grupo: forms.grupo
       }
       this.generalService.updateNameIdData$(serviceName, forms.id_group, params).subscribe(res => {
         if(res.success) {
@@ -313,6 +319,8 @@ export class MGroupCourseComponent implements OnInit {
       opc: 'U',
       id_group: item.id,
       nombre_curso: item.nombre,
+      ciclo: item.ciclo,
+      grupo: item.grupo
     });
   }
   get validPending() {
