@@ -50,7 +50,7 @@ export class MInfoEquiposComponent implements OnInit {
       disciplina_id: this.item.upeudisciplina_id,
       delegado: this.item.delegado,
       codigo: this.item.codigo,
-      color: this.item.info_color,
+      color: this.item.color_info,
       estado: this.item.estado,
     })
   }
