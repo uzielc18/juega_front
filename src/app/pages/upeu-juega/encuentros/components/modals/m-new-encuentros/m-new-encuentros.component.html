@@ -13,26 +13,25 @@
     <div class="row">
       <div class="col-md-12">
         <form [formGroup]="fromEncuentros">
-
           <div class="row">
-            <label class="label col-md-3">Equipo local (codigo único):</label>
+            <label class="label col-md-3">Equipo local (código):</label>
             <div class="col-md-9">
-              <input type="text" placeholder="Cambiar por select" nbInput fieldSize="small" fullWidth
+              <input type="text" placeholder="Ingrese el código de la tabla de posciciones" nbInput fieldSize="small" fullWidth
                      formControlName="upeuequipo_id">
             </div>
           </div>
           <br>
           <div class="row">
-            <label class="label col-md-3">Equipo visitante (codigo único):</label>
+            <label class="label col-md-3">Equipo visitante (código):</label>
             <div class="col-md-9">
-              <input type="text" placeholder="Ingrese nombre" nbInput fieldSize="small" fullWidth
+              <input type="text" placeholder="Ingrese el código de la tabla de posciciones" nbInput fieldSize="small" fullWidth
                      formControlName="upeurival_id">
             </div>
           </div>
           <br>
           <div class="row">
+            <label class="label col-md-3">Fecha y hora</label>
             <div class="col-md-4">
-              <label class="label">Fecha</label>
               <nb-form-field>
                 <input type="text" nbInput placeholder="Fecha" fullWidth
                        [nbDatepicker]="fecha" fieldSize="small" formControlName="fecha"/>
@@ -43,7 +42,6 @@
               </nb-form-field>
             </div>
             <div class="col-md-4 mb-2 mb-md-0">
-              <label class="label">HORA</label>
               <nb-form-field>
                 <input type="text" nbInput placeholder="Hora" fullWidth
                        [nbTimepicker]="hora" fieldSize="small" formControlName="hora"/>

@@ -21,6 +21,9 @@ const routes: Routes = [{
     },{
       path:'campeonatos',
       loadChildren: () => import('src/app/pages/upeu-juega/campeonatos/campeonatos.module').then(m => m.CampeonatosModule)
+    },{
+      path:'resultados',
+      loadChildren: () => import('src/app/pages/upeu-juega/resultados/resultados.module').then(m => m.ResultadosModule)
     }
   ]
 }];

@@ -30,6 +30,9 @@
                   <button *ngIf="!eq.info_id" nbButton size="tiny" status="success" (click)="openInfo(eq, 'NEW')">
                     <nb-icon  icon="plus-outline" style="font-size: 25px; cursor: pointer;" ></nb-icon>
                   </button>
+                  <button *ngIf="!eq.info_id" nbButton size="tiny" status="danger" (click)="delete(eq)">
+                    <nb-icon  icon="trash-2-outline" style="font-size: 25px; cursor: pointer;" ></nb-icon>
+                  </button>
                 </div></td>
               </tr>
               </tbody>
