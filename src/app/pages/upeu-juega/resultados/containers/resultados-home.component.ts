@@ -23,6 +23,7 @@ export class ResultadosHomeComponent implements OnInit {
   campeonatos:any = [];
   disciplinasData: any = [];
   categoriasData: any = [];
+  etapasData: any = [];
   Datas: any [] = [];
   constructor(private generalService: GeneralService,
               private dialogService: NbDialogService,
@@ -38,7 +39,7 @@ export class ResultadosHomeComponent implements OnInit {
     const controls = {
       campeonato: [''],
       diciplina: [{ value: '', disabled: true }, [Validators.required]],
-      categoria: [{ value: ''}]
+      categoria: ['']
     };
     this.formHeader = this.fb.group(controls);
     this.listCampeonatos();
@@ -88,7 +89,7 @@ export class ResultadosHomeComponent implements OnInit {
     const parmas = {
       campeonato_id: form.campeonato.id,
       disciplina_id: form.diciplina,
-      categorias_equipo_id: form.categoria || null,
+      categorias_equipo_id: form.categoria || '',
     }
     this.loading = true;
     this.generalService.nameParams$(serviceName, parmas).subscribe(res => {

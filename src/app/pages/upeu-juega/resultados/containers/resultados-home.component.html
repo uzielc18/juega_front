@@ -1,3 +1,4 @@
+<script src="resultados-home.component.ts"></script>
 <nb-card class="h-100 border-0"
          style="border-radius: 15px"
          [nbSpinner]="loading"
@@ -35,11 +36,12 @@
         <div class="col-md-2 mb-2 mb-md-0">
           <label class="label">Categorias</label>
           <nb-select
-            placeholder="Diciplinas"
+            placeholder="Categorias"
             size="small"
             status="primary"
             fullWidth
             formControlName="categoria">
+            <nb-option [value]="''">Todos</nb-option>
             <nb-option *ngFor="let cat of categoriasData" [value]="cat.id" (click)="selectCat(cat.id)">
               {{cat.name}}
             </nb-option>
@@ -58,19 +60,20 @@
       </div>
     </form>
     <br>
-    <h3 class="label">FINALES</h3>
-    <hr class="label">
+    <h3 class="label" *ngIf="etapasData.length>0">FINALES</h3>
+    <hr class="label" *ngIf="etapasData.length>0">
 
 
 
-    <h3 class="label">CUARTOS</h3>
-    <hr class="label">
+    <h3 class="label" *ngIf="etapasData.length>0">CUARTOS</h3>
+    <hr class="label" *ngIf="etapasData.length>0">
 
 
-    <h3 class="label">GRUPOS</h3>
+    <h3 class="label">GRUPOS  <button nbButton size="small" status="success"
+                                      (click)="filter()">Recargar </button></h3>
     <hr class="label">
     <div class="d-flex justify-content-between flex-wrap">
-      <nb-card style="width: 50%" accent="primary" *ngFor="let item of Datas, let j = index">
+      <nb-card [ngStyle]="{'width': etapasData.length===0?'50%':'100%'}" accent="primary" *ngFor="let item of Datas, let j = index">
         <nb-card-header>
           <small style="font-size: 10px"><strong>Disciplina: </strong> {{item.disciplina_name}}</small><br>
           <small style="font-size: 10px"><strong>Categoria: </strong>  {{item.categoria_name}}</small><br>
