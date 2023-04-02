@@ -2,7 +2,7 @@
   <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
     <div class=" d-flex align-items-center justify-content-between">
       <div>
-        {{code === 'NEW' ? 'NUEVO ENCUENTRO': 'EDITAR ENCUENTRO'}}
+        GENERAR ENCUENTROS - antes debe generar los grupos
       </div>
       <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
@@ -47,20 +47,29 @@
         <nb-card-body>
           <div class="table-responsive">
             <table class="table table-sm">
-              <thead>
-              <tr style="font-size: 12px;">
-                <th>Local</th>
-                <th>Visita</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-              </tr>
-              </thead>
               <tbody>
-              <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let enc of item.encuentros; let i = index">
-                <td>{{enc[0].name}}</td>
-                <td>{{enc[1].name}}</td>
-                <td>{{enc.fecha | date: 'MMMM d, y'}}</td>
-                <td>{{enc.hora}}</td>
+              <tr  style="font-size: 10px; vertical-align: middle;" *ngFor="let gr of item.grupos; let i = index">
+                <td colspan="4">{{gr.grupo_name}}
+                <table>
+                  <thead>
+                  <tr style="font-size: 12px;">
+                    <th>Local</th>
+                    <th>Visita</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr style="font-size: 10px; vertical-align: middle;" *ngFor="let enc of gr.encuentros; let x = index">
+                    <td>{{enc[0].name}}</td>
+                    <td>{{enc[1].name}}</td>
+                    <td>{{enc.fecha | date: 'MMMM d, y'}}</td>
+                    <td>{{enc.hora}}</td>
+
+                  </tr>
+                  </tbody>
+                </table>
+                </td>
               </tr>
               </tbody>
             </table>
