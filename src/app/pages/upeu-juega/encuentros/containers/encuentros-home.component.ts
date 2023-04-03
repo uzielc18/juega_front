@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import {AppService} from "../../../../core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DatePipe} from "@angular/common";
+import {MNewEncuentrosComponent} from "../components/modals/m-new-encuentros/m-new-encuentros.component";
 @Component({
   selector: 'app-encuentros-home',
   templateUrl: './encuentros-home.component.html',
@@ -146,8 +147,23 @@ export class EncuentrosHomeComponent implements OnInit {
       }
     })
   }
-
-
+  encuentro(item: any,code: any){
+    if(item.fecha && item.hora){
+      this.dialogService.open(MNewEncuentrosComponent, {
+        context: {
+          userInfo: this.appUserInfo.user,
+          code: code,
+          item: item,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      }).onClose.subscribe(resp => {
+        if(resp === 'ok'){
+          this.filter();
+        }
+      })
+    }
+  }
   saveEncuentro() {
     const encuentros_array:any=[];
     this.Datas.forEach((f: any) => {

@@ -13,29 +13,33 @@
     <div class="row">
       <div class="col-md-12">
         <form [formGroup]="fromEncuentros">
-          <div class="row">
-            <label class="label col-md-3">Equipo local (código):</label>
-            <div class="col-md-9">
-              <input type="text" placeholder="Ingrese el código de la tabla de posciciones" nbInput fieldSize="small" fullWidth
-                     formControlName="upeuequipo_id">
+          <div class="row" *ngIf="code === 'NEW'">
+            <div class="col">
+              <div class="form-group">
+                <label class="label">Equipo local (código):</label>
+                <input type="text" placeholder="Ingrese el código de la tabla de posciciones" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="upeuequipo_id">
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+                <label class="label">Equipo visitante (código):</label>
+                <input type="text" placeholder="Ingrese el código de la tabla de posciciones" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="upeurival_id">
+              </div>
             </div>
           </div>
           <br>
-          <div class="row">
-            <label class="label col-md-3">Equipo visitante (código):</label>
-            <div class="col-md-9">
-              <input type="text" placeholder="Ingrese el código de la tabla de posciciones" nbInput fieldSize="small" fullWidth
-                     formControlName="upeurival_id">
-            </div>
-          </div>
-          <br>
-          <div class="row">
+          <div class="row" *ngIf="code === 'NEW'">
             <label class="label col-md-3">Fecha y hora</label>
             <div class="col-md-4">
               <nb-form-field>
                 <input type="text" nbInput placeholder="Fecha" fullWidth
                        [nbDatepicker]="fecha" fieldSize="small" formControlName="fecha"/>
-                <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                <nb-icon nbSuffix icon="calendar" status="primary" size="tiny"
                          pack="eva"></nb-icon>
                 <nb-datepicker #fecha format="dd/MM/yyyy">
                 </nb-datepicker>
@@ -45,7 +49,7 @@
               <nb-form-field>
                 <input type="text" nbInput placeholder="Hora" fullWidth
                        [nbTimepicker]="hora" fieldSize="small" formControlName="hora"/>
-                <nb-icon nbSuffix icon="calendar" status="primary" size="small"
+                <nb-icon nbSuffix icon="calendar" status="primary" size="tiny"
                          pack="eva"></nb-icon>
                 <nb-timepicker #hora></nb-timepicker>
               </nb-form-field>
@@ -56,7 +60,7 @@
             <label class="label col-md-3">Lugar</label>
             <div class="col-md-9 mb-2 mb-md-0">
               <nb-form-field>
-                <input type="text" nbInput placeholder="Lugar" fullWidth="small" formControlName="lugar"/>
+                <input type="text" nbInput placeholder="Lugar" fullWidth fieldSize="tiny" formControlName="lugar"/>
               </nb-form-field>
             </div>
           </div>
@@ -65,8 +69,93 @@
             <label class="label col-md-3">Etapa</label>
             <div class="col-md-9 mb-2 mb-md-0">
               <nb-form-field>
-                <input type="text" nbInput placeholder="grupos,cuartos,finales" fullWidth="small" formControlName="etapa"/>
+                <input type="text" nbInput placeholder="grupos,cuartos,finales" fullWidth fieldSize="tiny"
+                       formControlName="etapa"/>
               </nb-form-field>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col" [ngStyle]="{'background':item.local_color}" >
+              <h5 style="font-size: 12px;">Local {{item.local}} {{item.local_name}}</h5>
+              <div class="form-group">
+                <label class="label">Marcador</label>
+                <input type="text" placeholder="Ingrese el marcador" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="score_equipo">
+              </div>
+              <div class="form-group">
+                <label class="label">Tarjeta Roja</label>
+                <input type="text" placeholder="T rojas" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="e_rojas">
+              </div>
+              <div class="form-group">
+                <label class="label">Tarjeta Amarilla</label>
+                <input type="text" placeholder="T Amarilla" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="e_amarillas">
+              </div>
+              <div class="form-group">
+                <label class="label">Numero de Faltas</label>
+                <input type="text" placeholder="Ingrese total de faltas" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="e_faltas">
+              </div>
+            </div>
+            <div class="col"[ngStyle]="{'background':item.rival_color}" >
+              <h5 style="font-size: 12px;">Visitante {{item.rival}} {{item.rival_name}}</h5><div class="form-group">
+              <div class="form-group">
+                <label class="label">Marcador</label>
+                <input type="text" placeholder="Ingrese el marcador" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="score_rival">
+              </div>
+              <div class="form-group">
+                <label class="label">Tarjeta Roja</label>
+                <input type="text" placeholder="T rojas" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="r_rojas">
+              </div>
+              <div class="form-group">
+                <label class="label">Tarjeta Amarilla</label>
+                <input type="text" placeholder="T Amarilla" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="r_amarillas">
+              </div>
+              <div class="form-group">
+                <label class="label">Numero de Faltas</label>
+                <input type="text" placeholder="Ingrese total de faltas" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="r_faltas">
+              </div>
+            </div>
+          </div>
+          </div>
+          <br>
+          <div class="row">
+            <label class="label col-md-3">Estado del encuentro</label>
+            <div class="col-md-9 mb-2 mb-md-0">
+              <button *ngIf="code !== 'NEW'"
+                      type="button"
+                      class="ms-2"
+                      nbButton
+                      size="small"
+                      status="success"
+                      (click)="save('encurso')"
+                      [disabled]="fromEncuentros.invalid">
+                En curso
+              </button>
+              <button *ngIf="code !== 'NEW'"
+                      type="button"
+                      class="ms-2 "
+                      nbButton
+                      size="small"
+                      status="danger"
+                      (click)="save('finalizado')"
+                      [disabled]="fromEncuentros.invalid">
+                Finalizar
+              </button>
             </div>
           </div>
         </form>
@@ -75,13 +164,13 @@
   </nb-card-body>
   <nb-card-footer class="d-flex">
     <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
-    <button
+    <button *ngIf="code === 'NEW'"
       type="button"
       class="ms-2"
       nbButton
       size="small"
       status="primary"
-      (click)="save()"
+      (click)="save('pendiente')"
       [disabled]="fromEncuentros.invalid">
       Guardar
     </button>

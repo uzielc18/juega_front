@@ -111,13 +111,20 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let enc of item.encuentros; let i = index" [ngStyle]="{'font-size': '10px ','vertical-align': 'middle','background-color':enc.estado_encuentro=='encurso'?'#b8daab':enc.estado_encuentro=='finalizado'?'#f69e9e':'#ffffff'}">
+              <tr *ngFor="let enc of item.encuentros; let i = index"
+                  [ngStyle]="{'font-size': '10px ','vertical-align': 'middle','background-color':enc.estado_encuentro=='encurso'?'#b8daab':enc.estado_encuentro=='finalizado'?'#f69e9e':'#ffffff'}"
+              (click)="encuentro(enc,'UPDATE')">
                 <td>
                   <nb-checkbox *ngIf="enc.estado_encuentro=='pendiente'" [checked]="enc.seleccionado"
                                (checkedChange)="onCheckboxChange($event, j, i)"></nb-checkbox>
                 </td>
-                <td><span *ngIf="enc.local">{{enc.local}}</span><span *ngIf="!enc.local">{{enc.local_name}}</span></td>
-                <td><span *ngIf="enc.visitante">{{enc.visitante}}</span><span *ngIf="!enc.visitante">{{enc.rival_name}}</span></td>
+                <td>
+                  <span *ngIf="enc.local" [ngStyle]="{'color':enc.local_color}">{{enc.local}}</span>
+                  <span *ngIf="!enc.local" [ngStyle]="{'color':enc.local_color}">{{enc.local_name}}</span></td>
+                <td>
+                  <span *ngIf="enc.visitante" [ngStyle]="{'color':enc.rival_color}">{{enc.visitante}}</span>
+                  <span *ngIf="!enc.visitante" [ngStyle]="{'color':enc.rival_color}">{{enc.rival_name}}</span>
+                </td>
                 <td>{{enc.lugar}}</td>
                 <td>{{enc.fecha | date: 'MMMM d, y': 'UTC'}}</td>
                 <td>{{enc.hora}}</td>
