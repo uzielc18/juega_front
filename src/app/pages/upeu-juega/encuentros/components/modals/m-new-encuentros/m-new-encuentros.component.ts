@@ -140,7 +140,10 @@ export class MNewEncuentrosComponent implements OnInit {
       this.loading = true;
       this.generalService.updateNameIdData$(serviceName, this.item.id, params).subscribe((res: any) => {
         if (res.success) {
-          this.activeModal.close('ok');
+          this.item.estado_encuentro=res.data.estado_encuentro;
+          if(estado!=='encurso'){
+            this.activeModal.close('ok');
+          }
         }
       }, () => {
         this.loading = false;

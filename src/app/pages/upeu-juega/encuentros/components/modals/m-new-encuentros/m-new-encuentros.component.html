@@ -75,67 +75,8 @@
             </div>
           </div>
           <br>
-          <div class="row">
-            <div class="col" [ngStyle]="{'background':item.local_color}" >
-              <h5 style="font-size: 12px;">Local {{item.local}} {{item.local_name}}</h5>
-              <div class="form-group">
-                <label class="label">Marcador</label>
-                <input type="text" placeholder="Ingrese el marcador" nbInput fieldSize="tiny"
-                       fullWidth
-                       formControlName="score_equipo">
-              </div>
-              <div class="form-group">
-                <label class="label">Tarjeta Roja</label>
-                <input type="text" placeholder="T rojas" nbInput fieldSize="tiny"
-                       fullWidth
-                       formControlName="e_rojas">
-              </div>
-              <div class="form-group">
-                <label class="label">Tarjeta Amarilla</label>
-                <input type="text" placeholder="T Amarilla" nbInput fieldSize="tiny"
-                       fullWidth
-                       formControlName="e_amarillas">
-              </div>
-              <div class="form-group">
-                <label class="label">Numero de Faltas</label>
-                <input type="text" placeholder="Ingrese total de faltas" nbInput fieldSize="tiny"
-                       fullWidth
-                       formControlName="e_faltas">
-              </div>
-            </div>
-            <div class="col"[ngStyle]="{'background':item.rival_color}" >
-              <h5 style="font-size: 12px;">Visitante {{item.visitante}} {{item.rival_name}}</h5><div class="form-group">
-              <div class="form-group">
-                <label class="label">Marcador</label>
-                <input type="text" placeholder="Ingrese el marcador" nbInput fieldSize="tiny"
-                       fullWidth
-                       formControlName="score_rival">
-              </div>
-              <div class="form-group">
-                <label class="label">Tarjeta Roja</label>
-                <input type="text" placeholder="T rojas" nbInput fieldSize="tiny"
-                       fullWidth
-                       formControlName="r_rojas">
-              </div>
-              <div class="form-group">
-                <label class="label">Tarjeta Amarilla</label>
-                <input type="text" placeholder="T Amarilla" nbInput fieldSize="tiny"
-                       fullWidth
-                       formControlName="r_amarillas">
-              </div>
-              <div class="form-group">
-                <label class="label">Numero de Faltas</label>
-                <input type="text" placeholder="Ingrese total de faltas" nbInput fieldSize="tiny"
-                       fullWidth
-                       formControlName="r_faltas">
-              </div>
-            </div>
-          </div>
-          </div>
-          <br>
-          <div class="row">
-            <label class="label col-md-3">Estado del encuentro</label>
-            <div class="col-md-9 mb-2 mb-md-0">
+          <div class="row" *ngIf="item.estado_encuentro === 'pendiente'">
+            <div class="col mb-2 mb-md-0">
               <button *ngIf="code !== 'NEW'"
                       type="button"
                       class="ms-2"
@@ -144,8 +85,77 @@
                       status="success"
                       (click)="save('encurso')"
                       [disabled]="fromEncuentros.invalid">
-                En curso
+                INICIAR PARTIDO
               </button>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col" >
+              <h5 style="font-size: 12px;">Local {{item.local}} {{item.local_name}}</h5>
+
+              <div class="col p-2" [ngStyle]="{'background':item.local_color?item.local_color:'#444444'}">
+              </div>
+              <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
+                <label class="label">Marcador</label>
+                <input type="text" placeholder="Ingrese el marcador" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="score_equipo">
+              </div>
+              <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
+                <label class="label">Tarjeta Roja</label>
+                <input type="text" placeholder="T rojas" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="e_rojas">
+              </div>
+              <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
+                <label class="label">Tarjeta Amarilla</label>
+                <input type="text" placeholder="T Amarilla" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="e_amarillas">
+              </div>
+              <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
+                <label class="label">Numero de Faltas</label>
+                <input type="text" placeholder="Ingrese total de faltas" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="e_faltas">
+              </div>
+              <br>
+            </div>
+            <div class="col" >
+              <h5 style="font-size: 12px;">Visitante {{item.visitante}} {{item.rival_name}}</h5>
+              <div class="col p-2" [ngStyle]="{'background':item.rival_color?item.local_color:'#444444'}">
+              </div>
+                <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
+                  <label class="label">Marcador</label>
+                  <input type="text" placeholder="Ingrese el marcador" nbInput fieldSize="tiny"
+                         fullWidth
+                         formControlName="score_rival">
+                </div>
+                <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
+                  <label class="label">Tarjeta Roja</label>
+                  <input type="text" placeholder="T rojas" nbInput fieldSize="tiny"
+                         fullWidth
+                         formControlName="r_rojas">
+                </div>
+                <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
+                  <label class="label">Tarjeta Amarilla</label>
+                  <input type="text" placeholder="T Amarilla" nbInput fieldSize="tiny"
+                         fullWidth
+                         formControlName="r_amarillas">
+                </div>
+                <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
+                  <label class="label">Numero de Faltas</label>
+                  <input type="text" placeholder="Ingrese total de faltas" nbInput fieldSize="tiny"
+                         fullWidth
+                         formControlName="r_faltas">
+                </div>
+              <br>
+            </div>
+          </div>
+          <br>
+          <div class="row" *ngIf="item.estado_encuentro === 'encurso' || item.estado_encuentro === 'finalizado' ">
+            <div class="col mb-2 mb-md-0">
               <button *ngIf="code !== 'NEW'"
                       type="button"
                       class="ms-2 "
@@ -154,7 +164,7 @@
                       status="danger"
                       (click)="save('finalizado')"
                       [disabled]="fromEncuentros.invalid">
-                Finalizar
+                FINALIZAR PARTIDO
               </button>
             </div>
           </div>
@@ -165,13 +175,13 @@
   <nb-card-footer class="d-flex">
     <button type="button" class="ms-auto" nbButton size="small" (click)="closeModal()">Cancelar</button>
     <button *ngIf="code === 'NEW'"
-      type="button"
-      class="ms-2"
-      nbButton
-      size="small"
-      status="primary"
-      (click)="save('pendiente')"
-      [disabled]="fromEncuentros.invalid">
+            type="button"
+            class="ms-2"
+            nbButton
+            size="small"
+            status="primary"
+            (click)="save('pendiente')"
+            [disabled]="fromEncuentros.invalid">
       Guardar
     </button>
   </nb-card-footer>
