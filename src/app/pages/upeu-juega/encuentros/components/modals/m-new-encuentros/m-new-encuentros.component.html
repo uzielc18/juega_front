@@ -124,7 +124,7 @@
             </div>
             <div class="col" >
               <h5 style="font-size: 12px;">Visitante {{item.visitante}} {{item.rival_name}}</h5>
-              <div class="col p-2" [ngStyle]="{'background':item.rival_color?item.local_color:'#444444'}">
+              <div class="col p-2" [ngStyle]="{'background':item.rival_color?item.rival_color:'#444444'}">
               </div>
                 <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
                   <label class="label">Marcador</label>
