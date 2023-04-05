@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NbDialogRef} from "@nebular/theme";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneralService} from "../../../../../../providers";
+import {DatePipe} from "@angular/common";
 
 
 @Component({
@@ -20,6 +21,7 @@ export class MNewEncuentrosComponent implements OnInit {
 
   constructor(public activeModal: NbDialogRef<MNewEncuentrosComponent>,
               private fb: FormBuilder,
+              private datePipe: DatePipe,
               private generalService: GeneralService) {
   }
 
@@ -103,28 +105,21 @@ export class MNewEncuentrosComponent implements OnInit {
   save(estado:any) {
     const serviceName = 'upeuencuentros';
     const forms = this.fromEncuentros.value;
-    const params = {
-      estado: forms.estado,
-      upeuequipo_id: forms.upeuequipo_id,
-      upeurival_id: forms.upeurival_id,
-      fecha: forms.fecha,
-      hora: forms.hora,
-      lugar: forms.lugar,
-      etapa: forms.etapa,
-      empate: forms.empate,
-      estado_encuentro: estado,
-      score_equipo: forms.score_equipo,
-      e_rojas: forms.e_rojas,
-      e_amarillas: forms.e_amarillas,
-      e_faltas: forms.e_faltas,
-      e_ganador: forms.e_ganador,
-      score_rival: forms.score_rival,
-      r_rojas: forms.r_rojas,
-      r_amarillas: forms.r_amarillas,
-      r_faltas: forms.r_faltas,
-      r_ganador: forms.r_ganador,
-    };
+    var hora_int=forms.hora;
+    if(this.code === 'NEW'){
+      hora_int=this.datePipe.transform(forms.hora, 'HH:mm:ss');
+    }
+
     if (this.code === 'NEW') {
+      const params = {
+        estado: forms.estado,
+        upeuequipo_id: forms.upeuequipo_id,
+        upeurival_id: forms.upeurival_id,
+        fecha: forms.fecha,
+        hora: hora_int,
+        lugar: forms.lugar,
+        etapa: forms.etapa
+      };
       this.loading = true;
       this.generalService.addNameData$(serviceName, params).subscribe((res: any) => {
         if (res.success) {
@@ -137,6 +132,27 @@ export class MNewEncuentrosComponent implements OnInit {
       });
 
     } else {
+      const params = {
+        estado: forms.estado,
+        upeuequipo_id: forms.upeuequipo_id,
+        upeurival_id: forms.upeurival_id,
+        fecha: forms.fecha,
+        hora: hora_int,
+        lugar: forms.lugar,
+        etapa: forms.etapa,
+        empate: forms.empate,
+        estado_encuentro: estado,
+        score_equipo: forms.score_equipo,
+        e_rojas: forms.e_rojas,
+        e_amarillas: forms.e_amarillas,
+        e_faltas: forms.e_faltas,
+        e_ganador: forms.e_ganador,
+        score_rival: forms.score_rival,
+        r_rojas: forms.r_rojas,
+        r_amarillas: forms.r_amarillas,
+        r_faltas: forms.r_faltas,
+        r_ganador: forms.r_ganador,
+      };
       this.loading = true;
       this.generalService.updateNameIdData$(serviceName, this.item.id, params).subscribe((res: any) => {
         if (res.success) {

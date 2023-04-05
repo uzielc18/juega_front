@@ -106,8 +106,8 @@
                 <th>Local</th>
                 <th>Visita</th>
                 <th>Lugar</th>
-                <th>Fecha</th>
                 <th>Hora</th>
+                <th>Etapa</th>
               </tr>
               </thead>
               <tbody>
@@ -120,14 +120,15 @@
                 </td>
                 <td>
                   <span *ngIf="enc.local" [ngStyle]="{'color':enc.local_color}">{{enc.local}}</span>
-                  <span *ngIf="!enc.local" [ngStyle]="{'color':enc.local_color}">{{enc.local_name}}</span></td>
+                  <span *ngIf="!enc.local" [ngStyle]="{'color':enc.local_color}">{{enc.local_name}}</span>
+                </td>
                 <td>
                   <span *ngIf="enc.visitante" [ngStyle]="{'color':enc.rival_color}">{{enc.visitante}}</span>
                   <span *ngIf="!enc.visitante" [ngStyle]="{'color':enc.rival_color}">{{enc.rival_name}}</span>
                 </td>
-                <td>{{enc.lugar}}</td>
-                <td>{{enc.fecha | date: 'MMMM d, y': 'UTC'}}</td>
+                <td>{{enc.lugar}}<br><span style="font-style: italic;font-size: 8px;">{{enc.fecha | date: 'MMMM d, y': 'UTC'}}</span></td>
                 <td>{{enc.hora}}</td>
+                <td>{{enc.etapa}}</td>
               </tr>
               </tbody>
             </table>

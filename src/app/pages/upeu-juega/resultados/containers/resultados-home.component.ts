@@ -23,7 +23,7 @@ export class ResultadosHomeComponent implements OnInit {
   campeonatos:any = [];
   disciplinasData: any = [];
   categoriasData: any = [];
-  etapasData: any = [];
+  etapasDatas: any = [];
   Datas: any [] = [];
   constructor(private generalService: GeneralService,
               private dialogService: NbDialogService,
@@ -94,7 +94,8 @@ export class ResultadosHomeComponent implements OnInit {
     this.loading = true;
     this.generalService.nameParams$(serviceName, parmas).subscribe(res => {
       if(res.success) {
-        this.Datas = res.data;
+        this.Datas = res.data.grupos;
+        this.etapasDatas = res.data.etapas;
       }
     }, () => {this.loading = false}, () => {this.loading = false})
   }
@@ -102,6 +103,7 @@ export class ResultadosHomeComponent implements OnInit {
   nuevoEncuentro() {
     this.dialogService.open(MNewEncuentrosComponent, {
       context: {
+        item:{estado_encuentro:'pendiente'},
         userInfo: this.appUserInfo.user,
         code: 'NEW',
       },

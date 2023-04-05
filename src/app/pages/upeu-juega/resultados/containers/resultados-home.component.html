@@ -60,20 +60,87 @@
       </div>
     </form>
     <br>
-    <h3 class="label" *ngIf="etapasData.length>0">FINALES</h3>
-    <hr class="label" *ngIf="etapasData.length>0">
+    <hr class="label" *ngIf="etapasDatas.length>0">
+    <div class="d-flex justify-content-between flex-wrap" *ngIf="etapasDatas.length>0">
+      <nb-card [ngStyle]="{'width': etapasDatas.length===0?'50%':'100%'}" accent="primary"
+               *ngFor="let etapa of etapasDatas, let e = index">
+        <nb-card-header>
+          <strong style="font-size: 13px">{{etapa.nombre}}</strong><br>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="d-flex justify-content-between flex-wrap" *ngIf="etapasDatas.length>0">
+            <nb-card [ngStyle]="{'width':'50%'}" accent="primary"
+                     *ngFor="let encuentro of etapa.encuentros, let ec = index">
+              <nb-card-header>
+                <strong style="font-size: 13px">LLAVE {{ec+1}} {{encuentro.hora}} {{encuentro.fecha | date: 'MMMM d, y': 'UTC'}}
+                  <span *ngIf="encuentro.estado_encuentro==='encurso'" style="color:#1A5848">En curso</span>
+                  <span *ngIf="encuentro.estado_encuentro==='pendiente'" style="color:#1f2323">Pendiente</span>
+                  <span *ngIf="encuentro.estado_encuentro==='finalizado'" style="color:#bb2929">Finalizado</span></strong><br>
+              </nb-card-header>
+              <nb-card-body>
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                    <tr>
+                      <th colspan="7" style="text-align: center;">LOCAL</th>
+                      <th colspan="7" style="text-align: center;">VISITA</th>
+                    </tr>
+                    <tr style="font-size: 12px;">
+                      <th style="width: 1px;">Código</th>
+                      <th>Equipo</th>
+                      <th title="Punos en contra">Puntos/Goles</th>
+                      <th title="Número de faltas">Faltas</th>
+                      <th title="Tarjetas Rojas">T R</th>
+                      <th title="Tarjetas Amarillas">T A</th>
+                      <th colspan="2">-</th>
+                      <th style="width: 1px;">Código</th>
+                      <th>Equipo</th>
+                      <th title="Punos en contra">Puntos/Goles</th>
+                      <th title="Número de faltas">Faltas</th>
+                      <th title="Tarjetas Rojas">T R</th>
+                      <th title="Tarjetas Amarillas">T A</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngIf="encuentro.estado_encuentro!=='pendiente'">
+                      <td>
+                        {{encuentro.upeuequipo_id}}
+                      </td>
+                      <td>{{encuentro.local}}</td>
+                      <td>{{encuentro.score_equipo}}</td>
+                      <td>{{encuentro.e_faltas}}</td>
+                      <td>{{encuentro.e_rojas}}</td>
+                      <td>{{encuentro.e_amarillas}}</td>
+                      <td colspan="2">-</td>
+                      <td>{{encuentro.upeurival_id}}</td>
+                      <td>{{encuentro.visitante}}</td>
+                      <td>{{encuentro.score_rival}}</td>
+                      <td>{{encuentro.r_faltas}}</td>
+                      <td>{{encuentro.r_rojas}}</td>
+                      <td>{{encuentro.r_amarillas}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <hr class="label" *ngIf="etapasDatas.length>0">
 
 
-
-    <h3 class="label" *ngIf="etapasData.length>0">CUARTOS</h3>
-    <hr class="label" *ngIf="etapasData.length>0">
-
-
-    <h3 class="label">GRUPOS  <button nbButton size="small" status="success"
-                                      (click)="filter()">Recargar </button></h3>
+    <h3 class="label">GRUPOS
+      <button nbButton size="small" status="success"
+              (click)="filter()">Recargar
+      </button>
+    </h3>
     <hr class="label">
     <div class="d-flex justify-content-between flex-wrap">
-      <nb-card [ngStyle]="{'width': etapasData.length===0?'50%':'100%'}" accent="primary" *ngFor="let item of Datas, let j = index">
+      <nb-card [ngStyle]="{'width': etapasDatas.length===0?'50%':'100%'}" accent="primary"
+               *ngFor="let item of Datas, let j = index">
         <nb-card-header>
           <small style="font-size: 10px"><strong>Disciplina: </strong> {{item.disciplina_name}}</small><br>
           <small style="font-size: 10px"><strong>Categoria: </strong>  {{item.categoria_name}}</small><br>
@@ -104,7 +171,7 @@
                   [ngStyle]="{'background-color':i==0?'#85C1E9':i==1?'#EAEDED':''}"
               >
                 <td>
-                 {{enc.upeuequipo_id}}
+                  {{enc.upeuequipo_id}}
                 </td>
                 <td>{{enc.name}}</td>
                 <td>{{enc.pj}}</td>
