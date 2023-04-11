@@ -58,6 +58,9 @@ export class MNewEncuentrosComponent implements OnInit {
       rival_color: [''],
       visitante: [''],
       estado: ['1'],
+      numero_penales: [''],
+      e_penales: [''],
+      r_penales: [''],
     };
     this.fromEncuentros = this.fb.group(controls)
     if (this.code === 'UPDATE') {
@@ -93,7 +96,10 @@ export class MNewEncuentrosComponent implements OnInit {
       local: this.item.local,
       local_color: this.item.local_color,
       rival_color: this.item.rival_color,
-      visitante: this.item.visitante
+      visitante: this.item.visitante,
+      numero_penales: this.item.numero_penales,
+      e_penales: this.item.e_penales,
+      r_penales: this.item.r_penales
 
     })
   }
@@ -152,6 +158,9 @@ export class MNewEncuentrosComponent implements OnInit {
         r_amarillas: forms.r_amarillas,
         r_faltas: forms.r_faltas,
         r_ganador: forms.r_ganador,
+        numero_penales: forms.numero_penales,
+        e_penales: forms.e_penales,
+        r_penales: forms.r_penales,
       };
       this.loading = true;
       this.generalService.updateNameIdData$(serviceName, this.item.id, params).subscribe((res: any) => {

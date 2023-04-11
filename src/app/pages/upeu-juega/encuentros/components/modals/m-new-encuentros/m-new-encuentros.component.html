@@ -75,6 +75,16 @@
             </div>
           </div>
           <br>
+          <div class="row" *ngIf="item.estado_encuentro === 'finalizado' && item.empate === 1 && item.etapa !== 'grupos'">
+            <label class="label col-md-3">Numero de penales</label>
+            <div class="col-md-9 mb-2 mb-md-0">
+              <nb-form-field>
+                <input type="text" nbInput placeholder="Ingres el número de penales" fullWidth fieldSize="tiny"
+                       formControlName="numero_penales"/>
+              </nb-form-field>
+            </div>
+          </div>
+          <br>
           <div class="row" *ngIf="item.estado_encuentro === 'pendiente'">
             <div class="col mb-2 mb-md-0">
               <button *ngIf="code !== 'NEW'"
@@ -101,6 +111,12 @@
                 <input type="text" placeholder="Ingrese el marcador" nbInput fieldSize="tiny"
                        fullWidth
                        formControlName="score_equipo">
+              </div>
+              <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente' && item.numero_penales>0">
+                <label class="label">Penales</label>
+                <input type="text" placeholder="Ingrese los penales anotados" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="e_penales">
               </div>
               <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
                 <label class="label">Tarjeta Roja</label>
@@ -132,6 +148,12 @@
                          fullWidth
                          formControlName="score_rival">
                 </div>
+              <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente' && item.numero_penales>0">
+                <label class="label">Penales</label>
+                <input type="text" placeholder="Ingrese los penales anotados" nbInput fieldSize="tiny"
+                       fullWidth
+                       formControlName="r_penales">
+              </div>
                 <div class="form-group" *ngIf="item.estado_encuentro !== 'pendiente'">
                   <label class="label">Tarjeta Roja</label>
                   <input type="text" placeholder="T rojas" nbInput fieldSize="tiny"
