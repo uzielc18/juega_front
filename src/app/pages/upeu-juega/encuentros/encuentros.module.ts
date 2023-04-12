@@ -7,12 +7,14 @@ import {ControlMessagesModule} from "../../../shared/components/control-messages
 import {GeneralService} from "../../../providers";
 import {EncuentrosRoutingModule} from "./encuentros-routing.module";
 import {MNewEncuentrosComponent} from "./components/modals/m-new-encuentros/m-new-encuentros.component";
+import {MEncuentrosBarrasComponent} from "./components/modals/m-encuentros-barras/m-encuentros-barras.component";
 
 const COMPONENTS: any[] = [
   EncuentrosHomeComponent,
   EncuentrosComponent,
   MEncuentrosComponent,
-  MNewEncuentrosComponent
+  MNewEncuentrosComponent,
+  MEncuentrosBarrasComponent
 ];
 const NG_MODULES: any = [
   NebularModule,
