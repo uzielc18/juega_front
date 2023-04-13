@@ -207,7 +207,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
 
   private fielReactiveDashboard() {
     const controls = {
-      semester: [this.rolSemestre.semestre.id || '',
+      semester: ['',
         [Validators.required]],
       sede: [''],
       nivel_ensenanza: [{value: '',  disabled: true}],
@@ -469,6 +469,9 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     this.generalService.nameAll$(serviceName).subscribe(
       (res: any) => {
         this.sedes = res.data || [];
+        if(res.success) {
+          this.formDashboard.controls['semester'].setValue(this.rolSemestre?.semestre?.id)
+        }
         if (this.sedes.length > 0) {
           this.formDashboard.patchValue({
             sede: this.sedes[0],
