@@ -66,6 +66,7 @@ import { CPendingsComponent } from './scaffold/components/c-pendings/c-pendings.
 import { CStudentsComponent } from './scaffold/components/c-students/c-students.component';
 import { CPendingsTimeComponent } from './scaffold/components/c-pendings/components/c-pendings-time/c-pendings-time.component';
 import {MInquiriesModule} from "../shared/components/inquiries/modal/m-inquiries.module";
+import {AuthRouteRegisterComponent} from "./auth/contents/auth-route-register/auth-route-register.component";
 registerLocaleData(localePe);
 const ANGULAR: any[] = [
   CommonModule,
@@ -81,6 +82,7 @@ const ANGULAR: any[] = [
     AuthRouteLambComponent,
     AuthRouteGoogleComponent,
     AuthRouteAzureComponent,
+    AuthRouteRegisterComponent,
     CPendingsComponent,
     CStudentsComponent,
     CPendingsTimeComponent
@@ -125,7 +127,8 @@ const ANGULAR: any[] = [
     AuthRouteLoginComponent,
     AuthRouteLambComponent,
     AuthRouteGoogleComponent,
-    AuthRouteAzureComponent
+    AuthRouteAzureComponent,
+    AuthRouteRegisterComponent
   ],
   providers: [
     AppService,

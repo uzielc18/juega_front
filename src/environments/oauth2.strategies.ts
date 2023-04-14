@@ -109,15 +109,9 @@ export const STRATEGIES = [
         clientAuthMethod: NbOAuth2ClientAuthMethod.REQUEST_BODY,
         authorize: {
           endpoint: environment.authAzureStrategy.endpoint,
-          responseType: NbOAuth2ResponseType.CODE,
+          responseType:NbOAuth2ResponseType.TOKEN,
           redirectUri: environment.authAzureStrategy.redirectUri,
           scope: 'openid profile email',
-        },
-        token: {
-          endpoint: environment.authAzureStrategy.tokenEndpoint,
-          grantType: NbOAuth2GrantType.AUTHORIZATION_CODE,
-          redirectUri: environment.authAzureStrategy.redirectUri,
-          class: NbAuthOAuth2Token,
         },
         refresh: {
           endpoint: environment.authAzureStrategy.refreshTokenEndpoint,

@@ -28,46 +28,28 @@
 
             <nb-list>
               <nb-list-item class="d-flex flex-column justify-content-start align-items-start border-top-0">
-                <h2 class="p-0 m-0">Hola</h2>
-                <span class="paragraph">¿Eres Estudiante o Docente?</span>
+                <h2 class="p-0 m-0">Crear usuario</h2>
+                <span class="paragraph">¿Quieres registrarte en Lamb-learning e inicar una nueva aventura?</span>
               </nb-list-item>
               <nb-list-item class="border-bottom-0">
                 <button nbButton fullWidth status="primary" shape="semi-round" (click)="lamb()">
                   <nb-icon icon="layers-outline"></nb-icon>
-                  Iniciar sesión
+                  Crear usuario con lamb
+                </button>
+
+
+                <button nbButton fullWidth shape="semi-round" (click)="azure()">
+                  <img src="https://learn.microsoft.com/favicon.ico?v2"
+                       alt="" width="20"> &nbsp;
+                  Crear usuario con Microsoft
                 </button>
               </nb-list-item>
 
-              <nb-list-item class="border-bottom-0">
-                <div class="w-100">
-                  <p>Inicia sesión con:</p>
-                  <div class="d-flex flex-column gap-3">
 
-                    <button nbButton fullWidth shape="semi-round" (click)="azure()">
-                      <img src="https://learn.microsoft.com/favicon.ico?v2"
-                           alt="" width="20"> &nbsp;
-                      Microsoft
-                    </button>
-
-                    <button nbButton fullWidth status="danger" shape="semi-round" (click)="google()">
-                      <nb-icon icon="google-outline"></nb-icon>
-                      Google
-                    </button>
-                  </div>
-                </div>
-              </nb-list-item>
-              <nb-list-item class="border-bottom-0">
-                <div class="w-100">
-                  <p style="text-align: center">O</p>
-                  <div class="d-flex flex-column gap-3">
-
-                    <button nbButton fullWidth shape="semi-round" (click)="azure()">
-                      Regístrate
-                    </button>
-
-                  </div>
-                </div>
-              </nb-list-item>
+              <button nbButton fullWidth status="danger" shape="semi-round" (click)="google()">
+                <nb-icon icon="google-outline"></nb-icon>
+                Crear usuario con Google
+              </button>
 
             </nb-list>
 
