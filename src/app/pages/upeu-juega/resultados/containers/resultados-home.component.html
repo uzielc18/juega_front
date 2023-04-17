@@ -82,23 +82,19 @@
                   <table class="table table-sm">
                     <thead>
                     <tr>
-                      <th colspan="7" style="text-align: center;">LOCAL</th>
-                      <th colspan="7" style="text-align: center;">VISITA</th>
+                      <th colspan="7" style="text-align: center;">LOCAL <span *ngIf="encuentro.e_ganador===1" style="color:#1A5848"> Ganador</span></th>
+                      <th colspan="7" style="text-align: center;">VISITA <span *ngIf="encuentro.r_ganador===1" style="color:#1A5848"> Ganador</span></th>
                     </tr>
                     <tr style="font-size: 12px;">
                       <th style="width: 1px;">Código</th>
                       <th>Equipo</th>
                       <th title="Punos en contra">Puntos/Goles</th>
-                      <th title="Número de faltas">Faltas</th>
-                      <th title="Tarjetas Rojas">T R</th>
-                      <th title="Tarjetas Amarillas">T A</th>
+                      <th title="Número de penales">Penales</th>
                       <th colspan="2">-</th>
                       <th style="width: 1px;">Código</th>
                       <th>Equipo</th>
                       <th title="Punos en contra">Puntos/Goles</th>
-                      <th title="Número de faltas">Faltas</th>
-                      <th title="Tarjetas Rojas">T R</th>
-                      <th title="Tarjetas Amarillas">T A</th>
+                      <th title="Número de penales">Penales</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -108,16 +104,12 @@
                       </td>
                       <td>{{encuentro.local}}</td>
                       <td>{{encuentro.score_equipo}}</td>
-                      <td>{{encuentro.e_faltas}}</td>
-                      <td>{{encuentro.e_rojas}}</td>
-                      <td>{{encuentro.e_amarillas}}</td>
+                      <td>{{encuentro.e_penales}}/{{encuentro.numero_penales}}</td>
                       <td colspan="2">-</td>
                       <td>{{encuentro.upeurival_id}}</td>
                       <td>{{encuentro.visitante}}</td>
                       <td>{{encuentro.score_rival}}</td>
-                      <td>{{encuentro.r_faltas}}</td>
-                      <td>{{encuentro.r_rojas}}</td>
-                      <td>{{encuentro.r_amarillas}}</td>
+                      <td>{{encuentro.r_penales}}/{{encuentro.numero_penales}}</td>
                     </tr>
                     </tbody>
                   </table>
