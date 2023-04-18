@@ -2,7 +2,7 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {NbAuthResult, NbAuthService} from "@nebular/auth";
 import {DOCUMENT} from "@angular/common";
 import {finalize} from "rxjs/operators";
-import {NbToastRef, NbToastrService} from "@nebular/theme";
+import {NbDialogRef, NbToastRef, NbToastrService} from "@nebular/theme";
 import { CoreOptions, CORE_OPTIONS } from 'src/app/core/core.options';
 
 @Component({
@@ -16,7 +16,7 @@ export class AuthRouteRegisterComponent {
   isAuthenticated = this.authService.isAuthenticated();
   backgroundImg: string[] = [
     'https://1.bp.blogspot.com/-RIHDZsrLNMY/XIAcoVUepjI/AAAAAAABNvw/jDBZKWrXVcAoO4GNC2LkgZ6GGwUj1t1twCLcBGAs/s1600/universidad-peruana-union2.jpg',
-    'https://www.upeu.edu.pe/fia/wp-content/uploads/sites/2/2018/03/upeu-lima.jpg',
+   // 'https://www.upeu.edu.pe/fia/wp-content/uploads/sites/2/2018/03/upeu-lima.jpg',
     // 'https://www.upeu.edu.pe/wp-content/uploads/2018/11/Edificio-Administrativo-Juliaca.jpg',
     // 'https://www.upeu.edu.pe/wp-content/uploads/2020/01/EP-de-Medicina-Humana-de-la-UPeU-es-registrada-en-el-directorio-mundial-de-escuelas-de-medicina1-1500x750.jpg',
     // 'https://cepre.upeu.edu.pe/wp-content/uploads/2020/06/UPeU-Juliaca-2018.jpg'
@@ -24,6 +24,7 @@ export class AuthRouteRegisterComponent {
 
   constructor(
     private nbToastrService: NbToastrService,
+    public activeModal: NbDialogRef<AuthRouteRegisterComponent>,
     private authService: NbAuthService,
     @Inject(DOCUMENT) protected document: any,
     @Inject(CORE_OPTIONS) protected config: CoreOptions) {
@@ -35,21 +36,20 @@ export class AuthRouteRegisterComponent {
 
   azure = (): void => this.handle(this.config?.strategyAzureName);
 
-
-
   handle(strategyName: any): void {
     const toastRef: NbToastRef = this.nbToastrService.success('Validando estrategia de autenticación...', 'Iniciando sesion...');
     this.spinner = true;
 
-    this.authService.authenticate(strategyName,{tipo:'nuevousuario'})
+    this.authService.authenticate(strategyName,{email: 'email@example.com', password: 'test'})
       .pipe(finalize(() => {
         this.spinner = false;
         toastRef.close();
       }))
       .subscribe((authResult: NbAuthResult) => {
-        if (authResult.isSuccess() && authResult.getRedirect()) {
+        console.log(authResult);
+        /*if (authResult.isSuccess() && authResult.getRedirect()) {
           this.document.location.href = authResult.getRedirect();
-        }
+        }*/
       })
   }
 
@@ -61,6 +61,10 @@ export class AuthRouteRegisterComponent {
       'background-size': 'cover',
       'background-image': `url(${this.backgroundImg[Math.floor(Math.random() * this.backgroundImg.length)]})`
     }
+  }
+
+  closeModal(){
+    this.activeModal.close('close');
   }
 
 }

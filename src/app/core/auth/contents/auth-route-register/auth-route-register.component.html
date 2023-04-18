@@ -1,3 +1,13 @@
+<nb-card accent="primary" class="scrollModal" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header style="padding-top: 5px; padding-bottom: 5px;">
+    <div class=" d-flex align-items-center justify-content-between">
+      <div>Registrar en lamb learning
+      </div>
+      <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </nb-card-header>
 <nb-layout>
   <nb-layout-column [nbSpinner]="spinner" nbSpinnerSize="giant"
                     nbSpinnerStatus="primary" [ngStyle]="background"
@@ -10,6 +20,10 @@
              status="primary">
       <nb-card-header class="top-radius">
         <img src="assets/logo-lamb-learning-blanco.svg" alt="Lamb" width="100"/>
+
+        <button nbButton outline status="primary" size="tiny" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </nb-card-header>
       <nb-card-body *ngIf="(isAuthenticated | async)" >
         <nb-alert>
@@ -37,7 +51,9 @@
                   Crear usuario con lamb
                 </button>
 
+              </nb-list-item>
 
+              <nb-list-item class="border-bottom-0">
                 <button nbButton fullWidth shape="semi-round" (click)="azure()">
                   <img src="https://learn.microsoft.com/favicon.ico?v2"
                        alt="" width="20"> &nbsp;
@@ -45,12 +61,14 @@
                 </button>
               </nb-list-item>
 
+              <nb-list-item class="border-bottom-0">
 
               <button nbButton fullWidth status="danger" shape="semi-round" (click)="google()">
                 <nb-icon icon="google-outline"></nb-icon>
                 Crear usuario con Google
               </button>
 
+              </nb-list-item>
             </nb-list>
 
 
@@ -62,6 +80,7 @@
 
   </nb-layout-column>
 </nb-layout>
+</nb-card>
 
 
 

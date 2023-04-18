@@ -2,8 +2,9 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {NbAuthResult, NbAuthService} from "@nebular/auth";
 import {DOCUMENT} from "@angular/common";
 import {finalize} from "rxjs/operators";
-import {NbToastRef, NbToastrService} from "@nebular/theme";
+import {NbDialogService, NbToastRef, NbToastrService} from "@nebular/theme";
 import { CoreOptions, CORE_OPTIONS } from 'src/app/core/core.options';
+import {AuthRouteRegisterComponent} from "../auth-route-register/auth-route-register.component";
 
 @Component({
   selector: 'app-auth-route-login',
@@ -24,6 +25,7 @@ export class AuthRouteLoginComponent {
 
   constructor(
     private nbToastrService: NbToastrService,
+    private dialogService: NbDialogService,
     private authService: NbAuthService,
     @Inject(DOCUMENT) protected document: any,
     @Inject(CORE_OPTIONS) protected config: CoreOptions) {
@@ -61,6 +63,16 @@ export class AuthRouteLoginComponent {
       'background-size': 'cover',
       'background-image': `url(${this.backgroundImg[Math.floor(Math.random() * this.backgroundImg.length)]})`
     }
+  }
+  register(){
+    this.dialogService.open(AuthRouteRegisterComponent, {
+
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    }).onClose.subscribe(resp => {
+      //this.document.location.href = authResult.getRedirect();
+    })
+
   }
 
 }
