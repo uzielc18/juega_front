@@ -24,6 +24,9 @@ const routes: Routes = [{
     },{
       path:'resultados',
       loadChildren: () => import('src/app/pages/upeu-juega/resultados/resultados.module').then(m => m.ResultadosModule)
+    },{
+      path:'puntos',
+      loadChildren: () => import('src/app/pages/upeu-juega/puntos/puntos.module').then(m => m.PuntosModule)
     }
   ]
 }];

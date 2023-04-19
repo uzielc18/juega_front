@@ -1,0 +1,113 @@
+import { Component, OnInit } from '@angular/core';
+import {GeneralService} from "../../../../providers";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NbDialogService} from "@nebular/theme";
+import Swal from "sweetalert2";
+import {AppService} from "../../../../core";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {DatePipe} from "@angular/common";
+import * as XLSX from "xlsx";
+
+@Component({
+  selector: 'app-puntos-home',
+  templateUrl: './puntos-home.component.html',
+  styleUrls: ['./puntos-home.component.scss']
+})
+export class PuntosHomeComponent implements OnInit {
+
+  allDisabled = false;
+  selectedIdx = -1;
+  loading:boolean = false;
+  formHeader: any = FormGroup;
+  formBody: any = FormGroup;
+  campeonatos:any = [];
+  disciplinasData: any = [];
+  categoriasData: any = [];
+  Datas: any [] = [];
+  constructor(private generalService: GeneralService,
+              private dialogService: NbDialogService,
+              private fb: FormBuilder,
+              private datePipe: DatePipe,
+              private appUserInfo: AppService) { }
+
+  ngOnInit(): void {
+    this.fieldReactive();
+  }
+  private fieldReactive() {
+
+    const controls = {
+      campeonato: [''],
+      diciplina: [{ value: '', disabled: true }, [Validators.required]],
+      categoria: ['']
+    };
+    this.formHeader = this.fb.group(controls);
+    this.listCampeonatos();
+    this.getCategorias()
+  }
+
+  listCampeonatos(){
+    this.loading = true
+    const serviceName = 'upeucampeonatos';
+    this.generalService.nameAll$(serviceName).subscribe(resp => {
+      this.campeonatos = resp.data;
+    }, () => {this.loading = false}, () => {this.loading = false});
+  }
+
+
+  selectCampeonato(item:any){
+    this.disciplinasData = [];
+    this.formHeader.controls['diciplina'].setValue();
+    this.formHeader.controls['campeonato'].setValue(item);
+    this.formHeader.controls['diciplina'].enable();
+    this.getDisciplina(item.id);
+  }
+  selectCat(cat:any){
+    this.formHeader.controls['categoria'].setValue(cat);
+  }
+
+  getDisciplina(campeonato: any){
+    const serviceName = 'upeudisciplinas';
+    const param={campeonato_id: campeonato || null,};
+    this.loading = true;
+    this.generalService.nameParams$(serviceName,param).subscribe(res => {
+      this.disciplinasData = res.data;
+    }, () => {this.loading = false}, () => {this.loading = false});
+  }
+
+  getCategorias(){
+    const serviceName = 'upeucategoriasEquipos';
+    const param={estado:  1,};
+    this.loading = true;
+    this.generalService.nameParams$(serviceName,param).subscribe(res => {
+      this.categoriasData = res.data;
+    }, () => {this.loading = false}, () => {this.loading = false});
+  }
+  filter() {
+    const serviceName = 'resultados-puntos';
+    const form = this.formHeader.value;
+    const parmas = {
+      campeonato_id: form.campeonato.id,
+      disciplina_id: form.diciplina,
+      categorias_equipo_id: form.categoria || '',
+    }
+    this.loading = true;
+    this.generalService.nameParams$(serviceName, parmas).subscribe(res => {
+      if(res.success) {
+        this.Datas = res.data;
+        this.Datas.map(m=>{m.equipos.sort((a:any,b:any)=>b.total-a.total);});
+      }
+    }, () => {this.loading = false}, () => {this.loading = false})
+  }
+  exportExel(idHtml: any){
+    /* pass here the table id */
+    let element = document.getElementById(idHtml);
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, idHtml + '.xlsx');
+  }
+}

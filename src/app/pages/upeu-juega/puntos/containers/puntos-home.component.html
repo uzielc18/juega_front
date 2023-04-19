@@ -1,0 +1,125 @@
+<script src="puntos-home.component.ts"></script>
+<nb-card class="h-100 border-0"
+         style="border-radius: 15px"
+         [nbSpinner]="loading"
+         nbSpinnerStatus="primary"
+         nbSpinnerSize="large">
+  <nb-card-header>
+    <div class="d-flex">
+      <nb-icon icon="droplet-outline" status="primary" style="font-size: 40px;"></nb-icon>&nbsp;&nbsp;
+      <strong style="padding-top: 7px;">Puntos</strong>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="pb-0 d-flex flex-column">
+    <form [formGroup]="formHeader">
+      <div class="row" style="padding: 0px">
+        <div class="col-md-3">
+          <label class="label">Campeonatos</label>
+          <nb-select fullWidth size="small" placeholder="Selecciona Campeonatos" formControlName="campeonato">
+            <nb-option *ngFor="let camp of campeonatos" [value]="camp"
+                       (click)="selectCampeonato(camp)">{{camp.name}}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-3 mb-2 mb-md-0">
+          <label class="label">Diciplinas</label>
+          <nb-select
+            placeholder="Diciplinas"
+            size="small"
+            status="primary"
+            fullWidth
+            formControlName="diciplina">
+            <nb-option *ngFor="let item of disciplinasData" [value]="item.id">
+              {{item.name}}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-2 mb-2 mb-md-0">
+          <label class="label">Categorias</label>
+          <nb-select
+            placeholder="Categorias"
+            size="small"
+            status="primary"
+            fullWidth
+            formControlName="categoria">
+            <nb-option [value]="''">Todos</nb-option>
+            <nb-option *ngFor="let cat of categoriasData" [value]="cat.id" (click)="selectCat(cat.id)">
+              {{cat.name}}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-2 ms-auto">
+          <label class="label" style="visibility: hidden">Filtrar</label>
+          <button [disabled]="!formHeader.value.campeonato" nbButton size="small" fullWidth status="warning"
+                  (click)="filter()">Filtrar
+          </button>
+        </div>
+      </div>
+    </form>
+    <br>
+      <div class="d-flex justify-content-end align-items-center" style="margin-bottom: 5px">
+
+        <button nbButton size="small" status="success"
+                (click)="filter()">Recargar
+        </button>
+        <button style="margin-right: 4px" nbButton size="tiny" (click)="exportExel('reporte_upeu_juega')">excel</button>
+        <!--<button style="margin-right: 4px" nbButton size="tiny">pdf</button>-->
+        <button nbButton size="tiny"
+                printSectionId="reporte_upeu_juega"
+                [useExistingCss]="true"
+                ngxPrint>print</button>
+      </div>
+
+    <h3 class="label">GRUPOS
+    </h3>
+    <hr class="label">
+    <div class="d-flex justify-content-between flex-wrap">
+
+      <nb-card [ngStyle]="{'width': '100%'}" accent="primary"
+               *ngFor="let item of Datas, let j = index"
+      id="reporte_upeu_juega">
+        <nb-card-header>
+          <small style="font-size: 12px"><strong>Disciplina: </strong> {{item.disciplina_name}}</small><br>
+          <small style="font-size: 12px"><strong>Categoria: </strong>  {{item.categoria_name}}</small><br>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="table-responsive">
+            <table class="table table-sm">
+              <thead>
+              <tr style="font-size: 12px;">
+                <th style="width: 1px;">Código</th>
+                <th>Equipo</th>
+                <th title="Partidos Jugados">Puntualidad</th>
+                <th title="Partidos Ganados">Uniformidad</th>
+                <th title="Partidos Perdidos">Barras</th>
+                <th title="Partidos Empatados">Conducta Deportiva</th>
+                <th title="Puntos a Favor">Tarjeta Roja Ant</th>
+                <th title="Punos en contra">Tarjeta Roja</th>
+                <th title="Diferencia de puntos">Tarjeta Amarilla</th>
+                <th title="Puntos">Total</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let enc of item.equipos; let i = index"
+                  [ngStyle]="{'background-color':i==0?'#85C1E9':i==1?'#EAEDED':''}"
+              >
+                <td>
+                  {{enc.upeuequipo_id}}
+                </td>
+                <td>{{enc.name}}</td>
+                <td>{{enc.puntualidad}}</td>
+                <td>{{enc.uniformidad}}</td>
+                <td>{{enc.barras}}</td>
+                <td>{{enc.conducta_jugadores}}</td>
+                <td>{{enc.tarjeta_roja_ant}}</td>
+                <td>{{enc.tarjeta_roja}}</td>
+                <td>{{enc.tarjeta_amarilla}}</td>
+                <td>{{enc.total}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </nb-card-body>
+</nb-card>
