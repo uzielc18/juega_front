@@ -72,11 +72,11 @@
     <h3 class="label">GRUPOS
     </h3>
     <hr class="label">
-    <div class="d-flex justify-content-between flex-wrap">
+    <div class="d-flex justify-content-between flex-wrap" id="reporte_upeu_juega">
 
       <nb-card [ngStyle]="{'width': '100%'}" accent="primary"
                *ngFor="let item of Datas, let j = index"
-      id="reporte_upeu_juega">
+      >
         <nb-card-header>
           <small style="font-size: 12px"><strong>Disciplina: </strong> {{item.disciplina_name}}</small><br>
           <small style="font-size: 12px"><strong>Categoria: </strong>  {{item.categoria_name}}</small><br>
