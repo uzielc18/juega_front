@@ -117,7 +117,7 @@
                   <nb-checkbox *ngIf="enc.estado_encuentro === 'pendiente'" [checked]="enc.seleccionado"
                                (checkedChange)="onCheckboxChange($event, j, i)" ></nb-checkbox>
                   <nb-icon *ngIf="enc.estado_encuentro === 'finalizado'"
-                           icon="activity" status="primary" style="font-size: 25px;" (click)="barras(enc,'UPDATE')"></nb-icon>&nbsp;&nbsp;
+                           icon="people-outline" status="primary" style="font-size: 25px;" (click)="barras(enc,'UPDATE')"></nb-icon>&nbsp;&nbsp;
                 </td>
                 <td (click)="encuentro(enc,'UPDATE')">
                   <span *ngIf="enc.local" [ngStyle]="{'color':enc.local_color}">{{enc.local}}</span>
