@@ -36,11 +36,7 @@ export class TabsEquiposListComponent implements OnInit {
       if (res.success) {
         this.data = res.data
         this.data.map((f: any) => {
-          if (f.id === this.data[0].id || f.id === this.data[1].id) {
             f.active = false
-          } else {
-            f.active = true
-          }
         })
       }
     }, () => {

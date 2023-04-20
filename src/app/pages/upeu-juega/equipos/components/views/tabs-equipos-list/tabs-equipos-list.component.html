@@ -19,7 +19,7 @@
               </thead>
               <tbody *ngIf="item.equipos.length > 0; else emptyContent">
               <tr *ngFor="let eq of item.equipos" style="font-size: 12px">
-                <td>{{eq.name}} {{eq.nombre}}</td>
+                <td>{{eq.name}}</td>
                 <td>{{eq.color_info}}</td>
                 <td>{{eq.codigo}}</td>
                 <td>{{eq.delegado}}</td>
