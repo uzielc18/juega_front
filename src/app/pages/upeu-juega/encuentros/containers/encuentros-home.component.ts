@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DatePipe} from "@angular/common";
 import {MNewEncuentrosComponent} from "../components/modals/m-new-encuentros/m-new-encuentros.component";
 import {MEncuentrosBarrasComponent} from "../components/modals/m-encuentros-barras/m-encuentros-barras.component";
+import {BehaviorSubject, Observable} from "rxjs";
 @Component({
   selector: 'app-encuentros-home',
   templateUrl: './encuentros-home.component.html',
@@ -25,6 +26,10 @@ export class EncuentrosHomeComponent implements OnInit {
   disciplinasData: any = [];
   mostrar_div:any= false;
   Datas: any [] = [];
+  toogleActivo: boolean = false;
+  listaFiltrada: any [] = [];
+  private listaFiltradaSubject = new BehaviorSubject<any[]>([]);
+
   constructor(private generalService: GeneralService,
               private dialogService: NbDialogService,
               private fb: FormBuilder,
@@ -189,7 +194,6 @@ export class EncuentrosHomeComponent implements OnInit {
     this.Datas.forEach((f: any) => {
       f.encuentros.map((m: any) => {
         if(m.seleccionado===true){
-          console.log(m)
           encuentros_array.push(m);
         }
       })
@@ -202,12 +206,26 @@ export class EncuentrosHomeComponent implements OnInit {
       hora: this.datePipe.transform(forms.hora, 'HH:mm:ss'),
       encuentros:encuentros_array,
     };
-    console.log(encuentros_array);
     this.generalService.addNameData$(serviceName, params).subscribe((res:any) => {
         if (res.success) {
           this.filter();
         }
       }, () => {this.loading = false;}, () => {this.loading = false;});
+  }
+
+  showEstadoEncuentro(event: any) {
+    this.toogleActivo = event.target.checked
+  }
+
+  buscarEncuentros(event: any) {
+    const valorBusqueda = event.target.value.toLowerCase();
+    this.listaFiltrada = this.Datas.map((d: any) => {
+      return {
+        ...d,
+        encuentros: d.encuentros.filter((encuentro: any) => encuentro.local_name.toLowerCase().includes(valorBusqueda))
+      }
+    });
+    // console.log(this.listaFiltrada)
   }
 
 }
