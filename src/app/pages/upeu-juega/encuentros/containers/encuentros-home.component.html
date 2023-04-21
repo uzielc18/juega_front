@@ -87,10 +87,10 @@
     <br>
     <div class="row">
       <div class="col-md-2">
-        <input nbInput fieldSize="small" fullWidth type="search" placeholder="buscar..." (input)="buscarEncuentros($event)">
+        <input nbInput fieldSize="small" fullWidth type="search" placeholder="Buscar por nombre" (input)="buscarEncuentros($event)">
       </div>
       <div class="col-md-1">
-        <nb-toggle (change)="showEstadoEncuentro($event)"></nb-toggle>
+        <nb-toggle (change)="showEstadoEncuentro($event)"></nb-toggle> ocultar
       </div>
     </div>
     <div class="text-center d-flex align-items-center justify-content-center">
@@ -132,11 +132,37 @@
                   <span *ngIf="enc.local" [ngStyle]="{'color':enc.local_color}">{{enc.local}}</span>
                   <span *ngIf="!enc.local" [ngStyle]="{'color':enc.local_color}">{{enc.local_name}}</span>
                   <span *ngIf="enc.estado_encuentro !== 'pendiente'">({{enc.score_equipo}})</span>
+                  <br>
+                  <nb-icon *ngIf="enc.e_p"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
+                  <nb-icon *ngIf="enc.e_u"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
+                  <nb-icon *ngIf="enc.e_c_d_j"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
+                  <nb-icon *ngIf="enc.e_a_c_b"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
+                  <nb-icon *ngIf="enc.e_f_i"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
+                  <nb-icon *ngIf="enc.e_t_r_c_a"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
                 </td>
                 <td (click)="encuentro(enc,'UPDATE')">
                   <span *ngIf="enc.visitante" [ngStyle]="{'color':enc.rival_color}">{{enc.visitante}}</span>
                   <span *ngIf="!enc.visitante" [ngStyle]="{'color':enc.rival_color}">{{enc.rival_name}}</span>
                   <span *ngIf="enc.estado_encuentro !== 'pendiente'">({{enc.score_rival}})</span>
+                  <br>
+                  <nb-icon *ngIf="enc.r_p"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
+                  <nb-icon *ngIf="enc.r_u"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
+                  <nb-icon *ngIf="enc.r_c_d_j"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
+                  <nb-icon *ngIf="enc.r_a_c_b"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
+                  <nb-icon *ngIf="enc.r_f_i"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
+                  <nb-icon *ngIf="enc.r_t_r_c_a"
+                           icon="checkmark-outline" status="success" style="font-size: 12px;"></nb-icon>
                 </td>
                 <td (click)="encuentro(enc,'UPDATE')">{{enc.lugar}}
                   <br>

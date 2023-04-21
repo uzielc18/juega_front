@@ -118,7 +118,7 @@ export class EncuentrosHomeComponent implements OnInit {
       this.generalService.nameParams$(serviceName, parmas).subscribe(res => {
         if(res.success) {
           this.Datas = res.data
-          
+
           this.Datas.forEach((f: any) => {
             f.encuentros.map((m: any) => {
               m.seleccionado = false;
@@ -225,6 +225,7 @@ export class EncuentrosHomeComponent implements OnInit {
       return {
         ...d,
         encuentros: d.encuentros.filter((encuentro: any) => encuentro.local_name.toLowerCase().includes(valorBusqueda))
+
       }
     });
     // console.log(this.listaFiltrada)
