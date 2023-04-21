@@ -5,6 +5,7 @@ import {NebularModule} from "../../../shared/nebular.module";
 import {ControlMessagesModule} from "../../../shared/components/control-messages/control-messages.module";
 import {GeneralService} from "../../../providers";
 import {ResultadosRoutingModule} from "./resultados-routing.module";
+import {NgxPrintModule} from "ngx-print";
 
 const COMPONENTS: any[] = [
   ResultadosHomeComponent,
@@ -14,6 +15,7 @@ const NG_MODULES: any = [
   NebularModule,
 ];
 const NGB_MODULES: any = [
+  NgxPrintModule,
 ];
 const CONTROL_MESSAGGE: any = [
   ControlMessagesModule,

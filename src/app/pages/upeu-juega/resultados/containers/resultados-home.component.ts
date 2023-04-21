@@ -7,6 +7,7 @@ import {AppService} from "../../../../core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DatePipe} from "@angular/common";
 import {MNewEncuentrosComponent} from "../../encuentros/components/modals/m-new-encuentros/m-new-encuentros.component";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-resultados-home',
@@ -132,5 +133,18 @@ export class ResultadosHomeComponent implements OnInit {
         this.filter();
       }
     }, () => {this.loading = false;}, () => {this.loading = false;});
+  }
+
+  exportExel(idHtml: any){
+    /* pass here the table id */
+    let element = document.getElementById(idHtml);
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, idHtml + '.xlsx');
   }
 }

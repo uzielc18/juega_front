@@ -60,127 +60,134 @@
       </div>
     </form>
     <br>
-    <hr class="label" *ngIf="etapasDatas.length>0">
-    <div class="d-flex justify-content-between flex-wrap" *ngIf="etapasDatas.length>0">
-      <nb-card [ngStyle]="{'width': etapasDatas.length===0?'50%':'100%'}" accent="primary"
-               *ngFor="let etapa of etapasDatas, let e = index">
-        <nb-card-header>
-          <strong style="font-size: 13px">{{etapa.nombre}}</strong><br>
-        </nb-card-header>
-        <nb-card-body>
-          <div class="d-flex justify-content-between flex-wrap" *ngIf="etapasDatas.length>0">
-            <nb-card [ngStyle]="{'width':'50%'}" accent="primary"
-                     *ngFor="let encuentro of etapa.encuentros, let ec = index">
-              <nb-card-header>
-                <strong style="font-size: 13px">LLAVE {{ec+1}} {{encuentro.hora}} {{encuentro.fecha | date: 'MMMM d, y': 'UTC'}}
-                  <span *ngIf="encuentro.estado_encuentro==='encurso'" style="color:#1A5848">En curso</span>
-                  <span *ngIf="encuentro.estado_encuentro==='pendiente'" style="color:#1f2323">Pendiente</span>
-                  <span *ngIf="encuentro.estado_encuentro==='finalizado'" style="color:#bb2929">Finalizado</span></strong><br>
-              </nb-card-header>
-              <nb-card-body>
-                <div class="table-responsive">
-                  <table class="table table-sm">
-                    <thead>
-                    <tr>
-                      <th colspan="7" style="text-align: center;">LOCAL <span *ngIf="encuentro.e_ganador===1" style="color:#1A5848"> Ganador</span></th>
-                      <th colspan="7" style="text-align: center;">VISITA <span *ngIf="encuentro.r_ganador===1" style="color:#1A5848"> Ganador</span></th>
-                    </tr>
-                    <tr style="font-size: 12px;">
-                      <th style="width: 1px;">Código</th>
-                      <th>Equipo</th>
-                      <th title="Punos en contra">Puntos/Goles</th>
-                      <th title="Número de penales">Penales</th>
-                      <th colspan="2">-</th>
-                      <th style="width: 1px;">Código</th>
-                      <th>Equipo</th>
-                      <th title="Punos en contra">Puntos/Goles</th>
-                      <th title="Número de penales">Penales</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                      <td>{{encuentro.upeuequipo_id}}</td>
-                      <td>{{encuentro.local}}</td>
-                      <td>{{encuentro.score_equipo}}</td>
-                      <td>{{encuentro.e_penales}}/{{encuentro.numero_penales}}</td>
-                      <td colspan="2">-</td>
-                      <td>{{encuentro.upeurival_id}}</td>
-                      <td>{{encuentro.visitante}}</td>
-                      <td>{{encuentro.score_rival}}</td>
-                      <td>{{encuentro.r_penales}}/{{encuentro.numero_penales}}</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </nb-card-body>
-            </nb-card>
-          </div>
-        </nb-card-body>
-      </nb-card>
+    <div class="d-flex justify-content-end align-items-center" style="margin-bottom: 5px">
+      <button style="margin-right: 4px" nbButton size="tiny" (click)="exportExel('resultados_upeu_juega')">excel</button>
+      <!--<button style="margin-right: 4px" nbButton size="tiny">pdf</button>-->
+      <button nbButton size="tiny"
+              printSectionId="resultados_upeu_juega"
+              [useExistingCss]="true"
+              ngxPrint>print</button>
     </div>
-
     <hr class="label" *ngIf="etapasDatas.length>0">
-
-
-    <h3 class="label">GRUPOS
-      <button nbButton size="small" status="success"
-              (click)="filter()">Recargar
-      </button>
-    </h3>
-    <hr class="label">
-    <div class="d-flex justify-content-between flex-wrap">
-      <nb-card [ngStyle]="{'width': etapasDatas.length===0?'50%':'100%'}" accent="primary"
-               *ngFor="let item of Datas, let j = index">
-        <nb-card-header>
-          <small style="font-size: 10px"><strong>Disciplina: </strong> {{item.disciplina_name}}</small><br>
-          <small style="font-size: 10px"><strong>Categoria: </strong>  {{item.categoria_name}}</small><br>
-          <small style="font-size: 10px"><strong>GRUPO: </strong> {{item.grupo}}</small>
-        </nb-card-header>
-        <nb-card-body>
-          <div class="table-responsive">
-            <table class="table table-sm">
-              <thead>
-              <tr style="font-size: 12px;">
-                <th style="width: 1px;">Código</th>
-                <th>Equipo</th>
-                <th title="Partidos Jugados">PJ</th>
-                <th title="Partidos Ganados">PG</th>
-                <th title="Partidos Perdidos">PP</th>
-                <th title="Partidos Empatados">PE</th>
-                <th title="Puntos a Favor">PF</th>
-                <th title="Punos en contra">PC</th>
-                <th title="Diferencia de puntos">DP</th>
-                <th title="Número de faltas">NF</th>
-                <th title="Tarjetas Rojas">TR</th>
-                <th title="Tarjetas Amarillas">TA</th>
-                <th title="Puntos">PTS</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let enc of item.equipos; let i = index"
-                  [ngStyle]="{'background-color':i==0?'#85C1E9':i==1?'#EAEDED':''}"
-              >
-                <td>
-                  {{enc.upeuequipo_id}}
-                </td>
-                <td>{{enc.name}}</td>
-                <td>{{enc.pj}}</td>
-                <td>{{enc.pg}}</td>
-                <td>{{enc.pp}}</td>
-                <td>{{enc.pe}}</td>
-                <td>{{enc.pf}}</td>
-                <td>{{enc.pc}}</td>
-                <td [ngStyle]="{'color':enc.dp>0?'green':enc.dp<0?'red':''}">{{enc.dp}}</td>
-                <td>{{enc.nf}}</td>
-                <td>{{enc.tr}}</td>
-                <td>{{enc.ta}}</td>
-                <td>{{enc.pts}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </nb-card-body>
-      </nb-card>
+    <div id="resultados_upeu_juega">
+      <div class="d-flex justify-content-between flex-wrap" *ngIf="etapasDatas.length>0">
+        <nb-card [ngStyle]="{'width': etapasDatas.length===0?'50%':'100%'}" accent="primary"
+                 *ngFor="let etapa of etapasDatas, let e = index">
+          <nb-card-header>
+            <strong style="font-size: 13px">{{etapa.nombre}}</strong><br>
+          </nb-card-header>
+          <nb-card-body>
+            <div class="d-flex justify-content-between flex-wrap" *ngIf="etapasDatas.length>0">
+              <nb-card [ngStyle]="{'width':'50%'}" accent="primary"
+                       *ngFor="let encuentro of etapa.encuentros, let ec = index">
+                <nb-card-header>
+                  <strong style="font-size: 13px">LLAVE {{ec+1}} {{encuentro.hora}} {{encuentro.fecha | date: 'MMMM d, y': 'UTC'}}
+                    <span *ngIf="encuentro.estado_encuentro==='encurso'" style="color:#1A5848">En curso</span>
+                    <span *ngIf="encuentro.estado_encuentro==='pendiente'" style="color:#1f2323">Pendiente</span>
+                    <span *ngIf="encuentro.estado_encuentro==='finalizado'" style="color:#bb2929">Finalizado</span></strong><br>
+                </nb-card-header>
+                <nb-card-body>
+                  <div class="table-responsive">
+                    <table class="table table-sm">
+                      <thead>
+                      <tr>
+                        <th colspan="7" style="text-align: center;">LOCAL <span *ngIf="encuentro.e_ganador===1" style="color:#1A5848"> Ganador</span></th>
+                        <th colspan="7" style="text-align: center;">VISITA <span *ngIf="encuentro.r_ganador===1" style="color:#1A5848"> Ganador</span></th>
+                      </tr>
+                      <tr style="font-size: 12px;">
+                        <th style="width: 1px;">Código</th>
+                        <th>Equipo</th>
+                        <th title="Punos en contra">Puntos/Goles</th>
+                        <th title="Número de penales">Penales</th>
+                        <th colspan="2">-</th>
+                        <th style="width: 1px;">Código</th>
+                        <th>Equipo</th>
+                        <th title="Punos en contra">Puntos/Goles</th>
+                        <th title="Número de penales">Penales</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>{{encuentro.upeuequipo_id}}</td>
+                        <td>{{encuentro.local}}</td>
+                        <td>{{encuentro.score_equipo}}</td>
+                        <td>{{encuentro.e_penales}}/{{encuentro.numero_penales}}</td>
+                        <td colspan="2">-</td>
+                        <td>{{encuentro.upeurival_id}}</td>
+                        <td>{{encuentro.visitante}}</td>
+                        <td>{{encuentro.score_rival}}</td>
+                        <td>{{encuentro.r_penales}}/{{encuentro.numero_penales}}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <hr class="label" *ngIf="etapasDatas.length>0">
+      <h3 class="label">GRUPOS
+        <button nbButton size="small" status="success"
+                (click)="filter()">Recargar
+        </button>
+      </h3>
+      <hr class="label">
+      <div class="d-flex justify-content-between flex-wrap">
+        <nb-card [ngStyle]="{'width': etapasDatas.length===0?'50%':'100%'}" accent="primary"
+                 *ngFor="let item of Datas, let j = index">
+          <nb-card-header>
+            <small style="font-size: 10px"><strong>Disciplina: </strong> {{item.disciplina_name}}</small><br>
+            <small style="font-size: 10px"><strong>Categoria: </strong>  {{item.categoria_name}}</small><br>
+            <small style="font-size: 10px"><strong>GRUPO: </strong> {{item.grupo}}</small>
+          </nb-card-header>
+          <nb-card-body>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                <tr style="font-size: 12px;">
+                  <th style="width: 1px;">Código</th>
+                  <th>Equipo</th>
+                  <th title="Partidos Jugados">PJ</th>
+                  <th title="Partidos Ganados">PG</th>
+                  <th title="Partidos Perdidos">PP</th>
+                  <th title="Partidos Empatados">PE</th>
+                  <th title="Puntos a Favor">PF</th>
+                  <th title="Punos en contra">PC</th>
+                  <th title="Diferencia de puntos">DP</th>
+                  <th title="Número de faltas">NF</th>
+                  <th title="Tarjetas Rojas">TR</th>
+                  <th title="Tarjetas Amarillas">TA</th>
+                  <th title="Puntos">PTS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let enc of item.equipos; let i = index"
+                    [ngStyle]="{'background-color':i==0?'#85C1E9':i==1?'#EAEDED':''}"
+                >
+                  <td>
+                    {{enc.upeuequipo_id}}
+                  </td>
+                  <td>{{enc.name}}</td>
+                  <td>{{enc.pj}}</td>
+                  <td>{{enc.pg}}</td>
+                  <td>{{enc.pp}}</td>
+                  <td>{{enc.pe}}</td>
+                  <td>{{enc.pf}}</td>
+                  <td>{{enc.pc}}</td>
+                  <td [ngStyle]="{'color':enc.dp>0?'green':enc.dp<0?'red':''}">{{enc.dp}}</td>
+                  <td>{{enc.nf}}</td>
+                  <td>{{enc.tr}}</td>
+                  <td>{{enc.ta}}</td>
+                  <td>{{enc.pts}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
     </div>
   </nb-card-body>
 </nb-card>
