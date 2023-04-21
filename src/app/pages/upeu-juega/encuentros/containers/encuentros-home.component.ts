@@ -118,12 +118,14 @@ export class EncuentrosHomeComponent implements OnInit {
       this.generalService.nameParams$(serviceName, parmas).subscribe(res => {
         if(res.success) {
           this.Datas = res.data
+          
           this.Datas.forEach((f: any) => {
             f.encuentros.map((m: any) => {
               m.seleccionado = false;
               this.mostrar_div=false;
             })
           })
+          this.listaFiltrada = this.Datas
         }
       }, () => {this.loading = false}, () => {this.loading = false})
   }
