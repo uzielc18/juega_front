@@ -32,7 +32,6 @@
               </div>
             </div>
           </div>
-          <br>
           <div class="row" *ngIf="code === 'NEW'">
             <label class="label col-md-3">Fecha y hora</label>
             <div class="col-md-4">
@@ -55,7 +54,6 @@
               </nb-form-field>
             </div>
           </div>
-          <br>
           <div class="row">
             <label class="label col-md-3">Lugar</label>
             <div class="col-md-9 mb-2 mb-md-0">
@@ -64,7 +62,6 @@
               </nb-form-field>
             </div>
           </div>
-          <br>
           <div class="row">
             <label class="label col-md-3">Etapa</label>
             <div class="col-md-9 mb-2 mb-md-0">
@@ -74,7 +71,6 @@
               </nb-form-field>
             </div>
           </div>
-          <br>
           <div class="row" *ngIf="item.estado_encuentro === 'finalizado' && item.empate === 1 && item.etapa !== 'grupos'">
             <label class="label col-md-3">Numero de penales</label>
             <div class="col-md-9 mb-2 mb-md-0">
@@ -84,7 +80,6 @@
               </nb-form-field>
             </div>
           </div>
-          <br>
           <div class="row" *ngIf="item.estado_encuentro === 'pendiente'">
             <div class="col mb-2 mb-md-0">
               <button *ngIf="code !== 'NEW'"
@@ -99,7 +94,6 @@
               </button>
             </div>
           </div>
-          <br>
           <div class="row">
             <div class="col" >
               <h5 style="font-size: 12px;">Local {{item.local}} {{item.local_name}}</h5>

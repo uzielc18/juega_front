@@ -224,7 +224,11 @@ export class EncuentrosHomeComponent implements OnInit {
     this.listaFiltrada = this.Datas.map((d: any) => {
       return {
         ...d,
-        encuentros: d.encuentros.filter((encuentro: any) => encuentro.local_name.toLowerCase().includes(valorBusqueda))
+        encuentros: d.encuentros.filter((encuentro: any) => {
+          return encuentro.local_name.toLowerCase().includes(valorBusqueda)
+            || encuentro.local.toLowerCase().includes(valorBusqueda)
+            || encuentro.local.toLowerCase().includes(valorBusqueda)
+          })
 
       }
     });

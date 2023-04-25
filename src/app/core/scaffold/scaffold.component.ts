@@ -202,7 +202,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
     this.configurationCollapse()
     this.setConfiguartion();
     this.fieldReactive();
-    this.appService.configurations.filter((f: any) => {
+    this.appService?.configurations?.filter((f: any) => {
       if(f.nombre === 'NOTIFICATION'){
         this.notificationCount = f.valor
       }
@@ -375,7 +375,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
 
     // this.roles = this.appService.rol.filter((rol: any) => ['Estudiante', 'Docente'].includes(rol.name));
     this.roles = this.appService.rol;
-    if (this.roles.length > 0) {
+    if (this.roles?.length > 0) {
       const rolDefault = this.appService.user.person.id_select || '';
       const rolDef = this.roles.find((r: any) => r.id_select === rolDefault);
       if (rolDef && rolDef.id_select) {
@@ -569,7 +569,7 @@ export class ScaffoldComponent implements OnInit, OnDestroy {
   }
 
   getLanguages() {
-    this.formHeader.controls['lenguaje'].setValue(this.appService.user.lang || 'es');
+    this.formHeader.controls['lenguaje'].setValue(this.appService.user?.lang || 'es');
     setTimeout(() => {
       this.changesLangs();
     }, 200);
