@@ -1,9 +1,0 @@
-<nb-card [nbSpinner]="loading" nbSpinnerStatus="primary" nbSpinnerSize="large">
-  <nb-card-header>
-    <strong>Comentarios:</strong>
-  </nb-card-header>
-  <nb-card-body *ngIf="pending?.student_pending?.pending_forum">
-    <app-children-comments [element]="element" [userInfo]="userInfo" [list]="listResponses || []" [options]="false" [viewRespond]="false">
-    </app-children-comments>
-  </nb-card-body>
-</nb-card>
